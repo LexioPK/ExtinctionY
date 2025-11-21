@@ -4,9 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ROM Hack Pokedex</title>
+
+<!-- Lexend font -->
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
   /* General layout */
-  body { font-family: Arial, sans-serif; margin:0; background:#f5f5f5; }
+  body { font-family: 'Lexend', sans-serif; margin:0; background:#f5f5f5; }
   header { background:#222; color:white; padding:15px; text-align:center; font-size:24px; }
 
   .content { padding:20px; }
@@ -19,8 +23,18 @@
   /* Sprites */
   .sprite { width:96px; height:96px; display:block; margin-bottom:8px; }
 
-  /* Type icons */
-  .type-icon { width:40px; height:16px; margin-right:4px; vertical-align:middle; }
+  /* Type badges */
+  .type-badge {
+    display:inline-block;
+    padding:4px 10px;
+    margin-right:4px;
+    border-radius:8px;
+    color:white;
+    font-weight:600;
+    font-size:12px;
+    text-align:center;
+    font-family:'Lexend', sans-serif;
+  }
 
   h3, h4 { margin:5px 0; }
   ul { margin:5px 0; padding-left:20px; }
@@ -35,6 +49,27 @@
 </div>
 
 <script>
+const typeColors = {
+  Normal: "#A8A77A",
+  Fire: "#EE8130",
+  Water: "#6390F0",
+  Electric: "#F7D02C",
+  Grass: "#7AC74C",
+  Ice: "#96D9D6",
+  Fighting: "#C22E28",
+  Poison: "#A33EA1",
+  Ground: "#E2BF65",
+  Flying: "#A98FF3",
+  Psychic: "#F95587",
+  Bug: "#A6B91A",
+  Rock: "#B6A136",
+  Ghost: "#735797",
+  Dragon: "#6F35FC",
+  Dark: "#705746",
+  Steel: "#B7B7CE",
+  Fairy: "#D685AD"
+};
+
 fetch('data/pokedex.json')
   .then(r => r.json())
   .then(data => {
@@ -57,14 +92,7 @@ fetch('data/pokedex.json')
           <h3>#${mon.SpeciesIdx} ${name}</h3>
           <img src="${imageUrl}" alt="${name}" class="sprite" />
           <div>
-            ${types.map(t => {
-              // Map type to Bulbapedia icon
-              let fileName = t.replace(/ /g,'_') + '_icon.png';
-              // Adjust first letter folder (Bulbapedia media upload structure)
-              const folder = fileName.charAt(0).toUpperCase();
-              const url = `https://archives.bulbagarden.net/media/upload/${folder}/${fileName}`;
-              return `<img src="${url}" alt="${t}" class="type-icon"/>`;
-            }).join('')}
+            ${types.map(t => `<span class="type-badge" style="background-color: ${typeColors[t] || '#777'}">${t}</span>`).join('')}
           </div>
           <h4>Base Stats</h4>
           <ul>
