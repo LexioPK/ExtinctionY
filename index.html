@@ -57,7 +57,14 @@ fetch('data/pokedex.json')
           <h3>#${mon.SpeciesIdx} ${name}</h3>
           <img src="${imageUrl}" alt="${name}" class="sprite" />
           <div>
-            ${types.map(t => `<img src="http://play.pokemonshowdown.com/sprites/types/${t}.png" alt="${t}" class="type-icon"/>`).join('')}
+            ${types.map(t => {
+              // Map type to Bulbapedia icon
+              let fileName = t.replace(/ /g,'_') + '_icon.png';
+              // Adjust first letter folder (Bulbapedia media upload structure)
+              const folder = fileName.charAt(0).toUpperCase();
+              const url = `https://archives.bulbagarden.net/media/upload/${folder}/${fileName}`;
+              return `<img src="${url}" alt="${t}" class="type-icon"/>`;
+            }).join('')}
           </div>
           <h4>Base Stats</h4>
           <ul>
