@@ -103,7 +103,7 @@
       event.target.classList.add('active');
     }
 
-  fetch('pokedex.json')
+  fetch('data/pokedex.json')
     .then(r => r.json())
     .then(data => {
       const container = document.getElementById('pokedexGrid');
