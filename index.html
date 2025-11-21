@@ -95,35 +95,47 @@
       event.target.classList.add('active');
     }
 
-    fetch('data/pokedex.json')
-      .then(r => r.json())
-      .then(data => {
-        let container = document.getElementById('pokedexGrid');
-        container.innerHTML = '';
+  fetch('data/pokedex.json')
+  .then(r => r.json())
+  .then(data => {
+    const container = document.getElementById('pokedexGrid');
+    container.innerHTML = '';
 
-        let entries = Object.entries(data.pokemon).sort(([,a],[,b]) => a.dex - b.dex);
+    // Convert entries to array and sort by SpeciesIdx
+    const entries = Object.entries(data).sort(
+      ([,a],[,b]) => a.SpeciesIdx - b.SpeciesIdx
+    );
 
-        entries.forEach(([name, mon]) => {
-          let card = document.createElement('div');
-          card.className = 'mon-card';
+    entries.forEach(([name, mon]) => {
+      const types = [mon.Type1, mon.Type2].filter((t, i, arr) => t && arr.indexOf(t) === i);
 
-          card.innerHTML = `
-            <h3>#${mon.dex} ${name}</h3>
-            <div>${mon.types.map(t => `<span class='type'>${t}</span>`).join('')}</div>
-            <h4>Base Stats</h4>
-            <ul>
-              <li>HP: ${mon.stats[0]}</li>
-              <li>Atk: ${mon.stats[1]}</li>
-              <li>Def: ${mon.stats[2]}</li>
-              <li>SpA: ${mon.stats[3]}</li>
-              <li>SpD: ${mon.stats[4]}</li>
-              <li>Spe: ${mon.stats[5]}</li>
-            </ul>
-          `;
+      const card = document.createElement('div');
+      card.className = 'mon-card';
 
-          container.appendChild(card);
-        });
-      });
+      card.innerHTML = `
+        <h3>#${mon.SpeciesIdx} ${name}</h3>
+        <div>${types.map(t => `<span class='type'>${t}</span>`).join('')}</div>
+        <h4>Base Stats</h4>
+        <ul>
+          <li>HP: ${mon.BaseStats.HP}</li>
+          <li>Atk: ${mon.BaseStats.Atk}</li>
+          <li>Def: ${mon.BaseStats.Def}</li>
+          <li>SpA: ${mon.BaseStats.SpA}</li>
+          <li>SpD: ${mon.BaseStats.SpD}</li>
+          <li>Spe: ${mon.BaseStats.Spe}</li>
+        </ul>
+        <h4>Abilities</h4>
+        <ul>
+          <li>${mon.Ability1}</li>
+          <li>${mon.Ability2}</li>
+          <li>Hidden: ${mon.AbilityH}</li>
+        </ul>
+      `;
+
+      container.appendChild(card);
+    });
+  });
+
   </script>
 
 </body>
