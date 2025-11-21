@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROM Hack Pokedex</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: #222;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .tabs {
+      display: flex;
+      background: #333;
+      padding: 10px;
+    }
+
+    .tab {
+      color: white;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-right: 10px;
+      border-radius: 6px;
+    }
+
+    .tab.active {
+      background: #555;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .pokedex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .mon-card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .type {
+      display: inline-block;
+      background: #ddd;
+      padding: 4px 8px;
+      margin-right: 6px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>ROM Hack Database</header>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('pokedex')">Pokedex</div>
+    <div class="tab" onclick="showTab('moves')">Moves</div>
+    <div class="tab" onclick="showTab('items')">Items</div>
+  </div>
+
+  <div class="content" id="pokedex">
+    <h2>Pokedex</h2>
+    <div id="pokedexGrid" class="pokedex-grid">Loading…</div>
+  </div>
+
+  <div class="content" id="moves" style="display:none;">
+    <h2>Moves (Coming Soon)</h2>
+  </div>
+
+  <div class="content" id="items" style="display:none;">
+    <h2>Items (Coming Soon)</h2>
+  </div>
+
+  <script>
+    function showTab(name) {
+      document.querySelectorAll('.content').forEach(c => c.style.display = 'none');
+      document.getElementById(name).style.display = 'block';
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    fetch('data/pokedex.json')
+      .then(r => r.json())
+      .then(data => {
+        let container = document.getElementById('pokedexGrid');
+        container.innerHTML = '';
+
+        let entries = Object.entries(data.pokemon).sort(([,a],[,b]) => a.dex - b.dex);
+
+        entries.forEach(([name, mon]) => {
+          let card = document.createElement('div');
+          card.className = 'mon-card';
+
+          card.innerHTML = `
+            <h3>#${mon.dex} ${name}</h3>
+            <div>${mon.types.map(t => `<span class='type'>${t}</span>`).join('')}</div>
+            <h4>Base Stats</h4>
+            <ul>
+              <li>HP: ${mon.stats[0]}</li>
+              <li>Atk: ${mon.stats[1]}</li>
+              <li>Def: ${mon.stats[2]}</li>
+              <li>SpA: ${mon.stats[3]}</li>
+              <li>SpD: ${mon.stats[4]}</li>
+              <li>Spe: ${mon.stats[5]}</li>
+            </ul>
+          `;
+
+          container.appendChild(card);
+        });
+      });
+  </script>
+
+</body>
+</html>
