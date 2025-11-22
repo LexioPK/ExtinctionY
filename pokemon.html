@@ -195,37 +195,34 @@ function loadEvolutions(currentName, data) {
 
     evoContainer.innerHTML = "";
 
-    const baseImg = `https://play.pokemonshowdown.com/sprites/gen5/${currentName.toLowerCase()}.png`;
-    // Base Pokémon block
-    evoContainer.innerHTML += `
-        <div class="evo-block">
-            <img class="evo-img" src="${baseImg}">
-            <div class="evo-name">${currentName}</div>
-        </div>
-    `;
+    const renderChain = (base, evolvesInto) => {
+        // Base Pokémon
+        const baseImg = `https://play.pokemonshowdown.com/sprites/gen5/${base.toLowerCase()}.png`;
+        const baseBlock = document.createElement("div");
+        baseBlock.className = "evo-block";
+        baseBlock.innerHTML = `<img class="evo-img" src="${baseImg}"><div class="evo-name">${base}</div>`;
+        evoContainer.appendChild(baseBlock);
 
-    const evolvesInto = data[currentName].EvolvesInto;
-    if (evolvesInto && Object.keys(evolvesInto).length > 0) {
-        const arrowContainer = document.createElement("div");
-        arrowContainer.style.display = "flex";
-        arrowContainer.style.alignItems = "flex-start";
-        arrowContainer.style.gap = "40px";
+        if (!evolvesInto || Object.keys(evolvesInto).length === 0) return;
 
+        // For each evolution
         Object.entries(evolvesInto).forEach(([evoName, method]) => {
-            const evoImg = `https://play.pokemonshowdown.com/sprites/gen5/${evoName.toLowerCase()}.png`;
+            // Arrow and method
+            const arrowBlock = document.createElement("div");
+            arrowBlock.className = "evo-arrow-block";
+            arrowBlock.innerHTML = `<div class="method-text">${method}</div><div class="arrow">→</div>`;
+            evoContainer.appendChild(arrowBlock);
+
+            // Evolution Pokémon
+            const evoImgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${evoName.toLowerCase()}.png`;
             const evoBlock = document.createElement("div");
             evoBlock.className = "evo-block";
-            evoBlock.style.textAlign = "center";
-            evoBlock.innerHTML = `
-                <div class="method-text">${method}</div>
-                <img class="evo-img" src="${evoImg}">
-                <div class="evo-name">${evoName}</div>
-            `;
-            arrowContainer.appendChild(evoBlock);
+            evoBlock.innerHTML = `<img class="evo-img" src="${evoImgSrc}"><div class="evo-name">${evoName}</div>`;
+            evoContainer.appendChild(evoBlock);
         });
+    };
 
-        evoContainer.appendChild(arrowContainer);
-    }
+    renderChain(currentName, data[currentName].EvolvesInto);
 }
 </script>
 
