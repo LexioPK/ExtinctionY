@@ -155,37 +155,11 @@ Promise.all([
 <div class="section evolutions">
   <h2>Evolutions</h2>
   <div id="evolution-chain">
-    <!-- Example generation from JSON -->
-    <!-- Replace monName with the current Pokémon and evolutionsData with your JSON -->
-    <!-- JavaScript example to populate it dynamically: -->
+    Slowpoke → Slowbro
+    <br>
+    Slowpoke → Slowking
   </div>
 </div>
-
-<script>
-fetch('data/evolutions.json')
-  .then(r => r.json())
-  .then(evolutionsData => {
-    const evoContainer = document.getElementById('evolution-chain');
-    const evo = evolutionsData[monName];
-    if (!evo || !evo.EvolvesInto || Object.keys(evo.EvolvesInto).length === 0) {
-      evoContainer.innerHTML = "<p>No evolutions</p>";
-      return;
-    }
-
-    // Clear any existing content
-    evoContainer.innerHTML = "";
-
-    // Loop through each branching evolution
-    Object.entries(evo.EvolvesInto).forEach(([target, method]) => {
-      const line = document.createElement('div');
-      line.textContent = `${monName} → ${target}`;
-      // Optional: include method if desired
-      // line.textContent = `${monName} → ${target} (${method})`;
-      evoContainer.appendChild(line);
-    });
-  })
-  .catch(err => console.error("Error loading evolutions:", err));
-</script>
 
     <!-- Moves Section -->
     <div class="section moves">
