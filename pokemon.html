@@ -115,32 +115,32 @@ Promise.all([
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
     <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
-    <!-- UPDATED INFO LAYOUT -->
-    <div class="section info">
-      <h2>Info</h2>
+   <!-- Info Section -->
+<div class="section info">
+  <h2>Info</h2>
 
-      <div class="info-grid">
-        <div>Type</div>
-        <div>Abilities</div>
-        <div>Additional Info</div>
-      </div>
+  <div class="info-grid" style="text-decoration: underline;">
+    <div>Type</div>
+    <div>Abilities</div>
+    <div>Additional Info</div>
+  </div>
 
-      <div class="info-values">
-        <div>
-          ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
-        </div>
-
-        <div>
-          <ul>
-            <li>${mon.Ability1}</li>
-            <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
-            <li><em>Hidden:</em> ${mon.AbilityH}</li>
-          </ul>
-        </div>
-
-        <div id="additionalInfo"></div>
-      </div>
+  <div class="info-values">
+    <div>
+      ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
     </div>
+
+    <div>
+      <ul>
+        <li>1. ${mon.Ability1}</li>
+        <li>${mon.Ability2 ? `2. ${mon.Ability2}` : ""}</li>
+        <li><em>Hidden:</em> ${mon.AbilityH}</li>
+      </ul>
+    </div>
+
+    <div id="additionalInfo"></div>
+  </div>
+</div>
 
     <!-- Base Stats Section -->
     <div class="section stats">
