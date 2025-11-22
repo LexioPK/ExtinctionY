@@ -195,17 +195,17 @@ function loadEvolutions(currentName, data) {
         return;
     }
 
-    // Recursive function to build evolution lines
-    function buildChain(name) {
+    // Recursive function to build all evolution chains
+    function buildChains(name) {
         const evolvesInto = data[name]?.EvolvesInto;
         if (!evolvesInto || Object.keys(evolvesInto).length === 0) return [[{ name, method: null }]];
 
         const chains = [];
         for (const nextName in evolvesInto) {
             const method = evolvesInto[nextName];
-            const subChains = buildChain(nextName);
+            const subChains = buildChains(nextName);
             subChains.forEach(subChain => {
-                chains.push([{ name, method: null }, ...subChain]);
+                chains.push([{ name, method: null }, { name: nextName, method }, ...subChain.slice(1)]);
             });
         }
         return chains;
@@ -215,9 +215,9 @@ function loadEvolutions(currentName, data) {
     let pointer = currentName;
     while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
 
-    const allChains = buildChain(pointer);
+    const allChains = buildChains(pointer);
 
-    // Render each chain
+    // Render each chain as a separate line
     evoContainer.innerHTML = "";
     allChains.forEach(chain => {
         const lineDiv = document.createElement("div");
@@ -238,8 +238,8 @@ function loadEvolutions(currentName, data) {
             `;
             lineDiv.appendChild(evoBlock);
 
-            // Arrow block
-            if (step.method && idx < chain.length - 1) {
+            // Arrow + method block
+            if (step.method) {
                 const arrowBlock = document.createElement("div");
                 arrowBlock.className = "evo-arrow-block";
                 arrowBlock.innerHTML = `
