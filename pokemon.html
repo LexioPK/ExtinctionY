@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pokémon Stats</title>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-    body { font-family: "Lexend", sans-serif; background: #f0f0f0; margin:0; padding:20px; }
+    body { font-family:"Lexend", sans-serif; background:#f0f0f0; margin:0; padding:20px; }
     a.back { color:#4285F4; text-decoration:none; display:inline-block; margin-bottom:20px; }
     h1 { text-align:center; margin-bottom:20px; }
     .card { background:white; padding:20px; border-radius:15px; box-shadow:0 3px 8px rgba(0,0,0,0.15); max-width:800px; margin:auto; }
@@ -44,26 +44,30 @@
 
 <script>
 const typeColors = {
-  Normal: "#9099a1", Fire: "#ff9c54", Water: "#4f90d9", Electric: "#f3d23b", Grass: "#63bb5b",
-  Ice: "#74cec0", Fighting: "#ce4069", Poison: "#aa5caf", Ground: "#d97746", Flying: "#92aade",
-  Psychic: "#f97176", Bug: "#90c12c", Rock: "#c7b78b", Ghost: "#5269ac", Dragon: "#096dc4",
-  Dark: "#5a5366", Steel: "#5a8ea2", Fairy: "#ec8fe6"
+  Normal:"#9099a1", Fire:"#ff9c54", Water:"#4f90d9", Electric:"#f3d23b", Grass:"#63bb5b",
+  Ice:"#74cec0", Fighting:"#ce4069", Poison:"#aa5caf", Ground:"#d97746", Flying:"#92aade",
+  Psychic:"#f97176", Bug:"#90c12c", Rock:"#c7b78b", Ghost:"#5269ac", Dragon:"#096dc4",
+  Dark:"#5a5366", Steel:"#5a8ea2", Fairy:"#ec8fe6"
 };
 
+// Get Pokémon name from URL query string
 const monName = new URL(window.location.href).searchParams.get("name");
 
 Promise.all([
-  fetch('data/pokedex.json').then(r=>r.json()),
-  fetch('data/movesets.json').then(r=>r.json())
+  fetch('data/pokedex.json').then(r => r.json()),
+  fetch('data/movesets.json').then(r => r.json())
 ])
 .then(([pokedexData, movesetsData]) => {
   const mon = pokedexData[monName];
-  if(!mon) { document.getElementById("pokemonCard").textContent = "Pokémon not found."; return; }
+  if (!mon) {
+    document.getElementById("pokemonCard").textContent = "Pokémon not found.";
+    return;
+  }
 
   const types = [mon.Type1, mon.Type2].filter((t,i,a)=>t && a.indexOf(t)===i);
   const spriteName = monName.toLowerCase().replace(/\s+/g,'-');
   const imageUrl = `https://play.pokemonshowdown.com/sprites/gen5/${spriteName}.png`;
-  const bst = mon.BST ?? (mon.BaseStats.HP+mon.BaseStats.Atk+mon.BaseStats.Def+mon.BaseStats.SpA+mon.BaseStats.SpD+mon.BaseStats.Spe);
+  const bst = mon.BST ?? (mon.BaseStats.HP + mon.BaseStats.Atk + mon.BaseStats.Def + mon.BaseStats.SpA + mon.BaseStats.SpD + mon.BaseStats.Spe);
   const moves = movesetsData[monName] || [];
 
   document.getElementById("pokemonCard").innerHTML = `
@@ -92,12 +96,28 @@ Promise.all([
       <li><strong>BST: ${bst}</strong></li>
     </ul>
 
-    ${mon.TMs ? `<p class="label">TMs</p><ul>${mon.TMs.map(tm=>`<li>${tm.Label}: ${tm.Move}</li>`).join("")}</ul>` : ""}
+    <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
+      ${mon.TMs ? `
+        <div style="flex:1; min-width:200px;">
+          <p class="label">TMs</p>
+          <ul>
+            ${mon.TMs.map(tm=>`<li>${tm.Label}: ${tm.Move}</li>`).join("")}
+          </ul>
+        </div>
+      ` : ""}
 
-    ${moves.length ? `<p class="label">Level-up Moves</p><ul class="moves-list">${moves.map(m=>`<li>Lvl ${m.Level}: ${m.Move}</li>`).join("")}</ul>` : ""}
+      ${moves.length ? `
+        <div style="flex:1; min-width:200px;">
+          <p class="label">Level-up Moves</p>
+          <ul class="moves-list">
+            ${moves.map(m=>`<li>Lvl ${m.Level}: ${m.Move}</li>`).join("")}
+          </ul>
+        </div>
+      ` : ""}
+    </div>
   `;
 })
-.catch(err=>console.error("Error loading data:", err));
+.catch(err => console.error("Error loading data:", err));
 </script>
 
 </body>
