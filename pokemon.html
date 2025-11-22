@@ -107,19 +107,35 @@ Promise.all([
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
     <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
-    <!-- Info Section (Reverted) -->
-    <div class="section info">
-      <h2>Info</h2>
+    <!-- Info Section (Horizontal subheadings) -->
+<div class="section info">
+  <h2>Info</h2>
+  <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+    <!-- Type -->
+    <div style="flex:1; min-width:200px;">
+      <h3 style="text-decoration:underline;">Type</h3>
       <div class="types">
         ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
       </div>
-      <p class="label">Abilities</p>
+    </div>
+
+    <!-- Abilities -->
+    <div style="flex:1; min-width:200px;">
+      <h3 style="text-decoration:underline;">Abilities</h3>
       <ul>
         <li>1. ${mon.Ability1}</li>
         <li>${mon.Ability2 ? `2. ${mon.Ability2}` : ""}</li>
         <li><em>Hidden:</em> ${mon.AbilityH}</li>
       </ul>
     </div>
+
+    <!-- Additional Info -->
+    <div style="flex:1; min-width:200px;">
+      <h3 style="text-decoration:underline;">Additional Info</h3>
+      <p>Data will come from the additional info JSON.</p>
+    </div>
+  </div>
+</div>
 
     <!-- Base Stats Section -->
     <div class="section stats">
