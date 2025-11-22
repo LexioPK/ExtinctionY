@@ -8,7 +8,7 @@
 <style>
   body { font-family:"Lexend", sans-serif; background:#f0f0f0; margin:0; padding:20px; }
   a.back { color:#4285F4; text-decoration:none; display:inline-block; margin-bottom:20px; }
-  h1 { text-align:center; margin-bottom:20px; }
+  h1 { text-align:center; margin-bottom:10px; }
   .card { background:white; padding:20px; border-radius:15px; box-shadow:0 3px 8px rgba(0,0,0,0.15); max-width:800px; margin:auto; position:relative; }
 
   /* Section Styling */
@@ -98,11 +98,11 @@ Promise.all([
     </button>
 
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
+    <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
     <!-- Info Section -->
     <div class="section info">
       <h2>Info</h2>
-      <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
       <div class="types">
         ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
       </div>
