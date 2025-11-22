@@ -107,7 +107,7 @@ Promise.all([
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
     <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
-   <!-- Info Section (Horizontal subheadings with centered Type) -->
+   <!-- Info Section -->
 <div class="section info">
   <h2>Info</h2>
   <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;">
@@ -155,6 +155,11 @@ Promise.all([
 <div class="section evolutions">
   <h2>Evolutions</h2>
   <div id="evolution-chain">
+    ${(() => {
+        const evo = evolutionsData[monName];
+        if (!evo || !evo.EvolvesInto) return "No evolutions";
+        return Object.keys(evo.EvolvesInto).map(target => `${monName} → ${target}`).join("<br>");
+    })()}
   </div>
 </div>
 
@@ -181,57 +186,7 @@ Promise.all([
       </div>
     </div>
   `;
-
-  // Load evolution chain
-  loadEvolutions(monName, evolutionsData);
 });
-
-function loadEvolutions(currentName, data) {
-    const evoContainer = document.getElementById("evolution-chain");
-    evoContainer.innerHTML = "<p>Loading...</p>";
-
-    if (!data[currentName]) {
-        evoContainer.innerHTML = "<p>No evolution data available.</p>";
-        return;
-    }
-
-    let chain = [];
-
-    // Go to earliest stage
-    let pointer = currentName;
-    while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
-
-    // Walk forward
-    while (pointer) {
-        chain.push(pointer);
-        const evolvesInto = data[pointer].EvolvesInto;
-        const next = evolvesInto && Object.keys(evolvesInto).length > 0
-            ? Object.keys(evolvesInto)[0] : null;
-        pointer = next;
-    }
-
-    evoContainer.innerHTML = "";
-    for (let i = 0; i < chain.length; i++) {
-        const name = chain[i];
-        const imgSrc = `images/${name.toLowerCase()}.png`;
-        evoContainer.innerHTML += `
-            <div class="evo-block">
-                <img src="${imgSrc}" class="evo-img">
-                <div class="evo-name">${name}</div>
-            </div>
-        `;
-
-        if (i < chain.length - 1) {
-            const method = Object.values(data[chain[i]].EvolvesInto)[0];
-            evoContainer.innerHTML += `
-                <div class="evo-arrow-block">
-                    <div class="method-text">${method}</div>
-                    <div class="arrow">→</div>
-                </div>
-            `;
-        }
-    }
-}
 </script>
 
 </body>
