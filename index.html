@@ -1,176 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Pokedex</title>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
-    body {
-        font-family: "Lexend", sans-serif;
-        background: #f0f0f0;
-        margin: 0;
-        padding: 20px;
-    }
+card.innerHTML = `
+    <h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${name}</h3>
 
-    h1 {
-        text-align: center;
-        margin-bottom: 25px;
-    }
+    <img class="sprite"
+         src="https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png">
 
-    #pokedex {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-        padding: 10px;
-    }
+    <div class="types">
+        <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
+        ${mon.Type2 && mon.Type2 !== mon.Type1
+            ? `<span class="type type-${mon.Type2.toLowerCase()}">${mon.Type2}</span>`
+            : ""}
+    </div>
 
-    .pokemon-card {
-        background: white;
-        border-radius: 15px;
-        padding: 15px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-        transition: transform 0.2s;
-        cursor: pointer;
-    }
+    <p class="label">Abilities</p>
+    <ul>
+        <li>${mon.Ability1}</li>
+        <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
+        <li><em>Hidden:</em> ${mon.AbilityH}</li>
+    </ul>
 
-    .pokemon-card:hover {
-        transform: translateY(-4px);
-    }
-
-    .sprite {
-        display: block;
-        margin: 0 auto;
-        width: 96px;
-        height: 96px;
-        image-rendering: pixelated;
-    }
-
-    h3 {
-        text-align: center;
-        margin: 10px 0;
-    }
-
-    .dex {
-        color: #777;
-        font-size: 0.9em;
-    }
-
-    .types {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .type {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 12px;
-        font-size: 0.85em;
-        color: white;
-        margin: 3px;
-    }
-
-    /* Official game colors (custom icons earlier removed) */
-    .type-grass { background: #63bb5b; }
-    .type-poison { background: #aa5caf; }
-    .type-fire { background: #ff9c54; }
-    .type-water { background: #4f90d9; }
-    .type-normal { background: #9099a1; }
-    .type-electric { background: #f3d23b; }
-    .type-ice { background: #74cec0; }
-    .type-fighting { background: #ce4069; }
-    .type-ground { background: #d97746; }
-    .type-flying { background: #92aade; }
-    .type-psychic { background: #f97176; }
-    .type-bug { background: #90c12c; }
-    .type-rock { background: #c7b78b; }
-    .type-ghost { background: #5269ac; }
-    .type-dark { background: #5a5366; }
-    .type-dragon { background: #096dc4; }
-    .type-steel { background: #5a8ea2; }
-    .type-fairy { background: #ec8fe6; }
-
-    ul {
-        list-style: none;
-        padding-left: 0;
-        margin: 0;
-    }
-
-    .label {
-        font-weight: bold;
-        margin-top: 10px;
-        margin-bottom: 3px;
-    }
-</style>
-</head>
-<body>
-
-<h1>Pokédex</h1>
-
-<div id="pokedex"></div>
-
-<script>
-function loadPokedex() {
-    fetch("data/pokedex.json")
-        .then(r => r.json())
-        .then(data => {
-            const container = document.getElementById("pokedex");
-
-            const entries = Object.entries(data)
-                .sort((a, b) => a[1].SpeciesIdx - b[1].SpeciesIdx);
-
-            entries.forEach(([name, mon]) => {
-                const bst = mon.BST ??
-                    (mon.BaseStats.HP +
-                     mon.BaseStats.Atk +
-                     mon.BaseStats.Def +
-                     mon.BaseStats.SpA +
-                     mon.BaseStats.SpD +
-                     mon.BaseStats.Spe);
-
-                const card = document.createElement("div");
-                card.className = "pokemon-card";
-                card.onclick = () =>
-                    (window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`);
-
-                card.innerHTML = `
-                    <img class="sprite" src="https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png">
-                    <h3>${name} <span class="dex">#${mon.SpeciesIdx}</span></h3>
-
-                    <div class="types">
-                        <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
-                        ${mon.Type2 && mon.Type2 !== mon.Type1
-                            ? `<span class="type type-${mon.Type2.toLowerCase()}">${mon.Type2}</span>`
-                            : ""}
-                    </div>
-
-                    <p class="label">Abilities</p>
-                    <ul>
-                        <li>${mon.Ability1}</li>
-                        <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
-                        <li><em>Hidden:</em> ${mon.AbilityH}</li>
-                    </ul>
-
-                    <p class="label">Base Stats</p>
-                    <ul>
-                        <li>HP: ${mon.BaseStats.HP}</li>
-                        <li>Atk: ${mon.BaseStats.Atk}</li>
-                        <li>Def: ${mon.BaseStats.Def}</li>
-                        <li>SpA: ${mon.BaseStats.SpA}</li>
-                        <li>SpD: ${mon.BaseStats.SpD}</li>
-                        <li>Spe: ${mon.BaseStats.Spe}</li>
-                        <li><strong>Total: ${bst}</strong></li>
-                    </ul>
-                `;
-
-                container.appendChild(card);
-            });
-        })
-        .catch(err => console.error("JSON Load Error:", err));
-}
-
-loadPokedex();
-</script>
-
-</body>
-</html>
+    <p class="label">Base Stats</p>
+    <ul>
+        <li>HP: ${mon.BaseStats.HP}</li>
+        <li>Atk: ${mon.BaseStats.Atk}</li>
+        <li>Def: ${mon.BaseStats.Def}</li>
+        <li>SpA: ${mon.BaseStats.SpA}</li>
+        <li>SpD: ${mon.BaseStats.SpD}</li>
+        <li>Spe: ${mon.BaseStats.Spe}</li>
+        <li><strong>Total: ${bst}</strong></li>
+    </ul>
+`;
