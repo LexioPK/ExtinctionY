@@ -1,124 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pokémon Info</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokédex</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Lexend font -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;700&display=swap" rel="stylesheet">
 
-<style>
-  body { font-family: 'Lexend', sans-serif; margin: 0; background: #f5f5f5; }
-  header { background:#222; color:white; padding:15px; text-align:center; font-size:24px; }
-  .content { padding:20px; max-width:800px; margin:auto; }
+  <style>
+    body {
+      font-family: 'Lexend', sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
 
-  .sprite { width:128px; height:128px; image-rendering:pixelated; }
+    .pokedex {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      padding: 10px;
+    }
 
-  .type-badge {
-    display:inline-block;
-    padding:4px 10px;
-    margin-right:4px;
-    border-radius:8px;
-    color:white;
-    font-weight:600;
-    font-size:14px;
-  }
+    .pokemon-card {
+      background: white;
+      border-radius: 16px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: transform .15s ease;
+    }
+    .pokemon-card:hover {
+      transform: scale(1.04);
+    }
 
-  .card {
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.15);
-  }
+    .pokemon-img {
+      width: 96px;
+      height: 96px;
+      image-rendering: pixelated;
+    }
 
-  h2 { margin:5px 0; }
-  ul { padding-left:20px; }
-  a.back { color:#4285F4; font-size:16px; text-decoration:none; }
-</style>
+    .pokemon-name {
+      font-size: 18px;
+      margin-top: 10px;
+      font-weight: 700;
+    }
+
+    .pokemon-types {
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .type-icon {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    /* Colors taken directly from modern Pokémon games */
+    .type-normal { background: #A8A77A; }
+    .type-fire { background: #EE8130; }
+    .type-water { background: #6390F0; }
+    .type-electric { background: #F7D02C; }
+    .type-grass { background: #7AC74C; }
+    .type-ice { background: #96D9D6; }
+    .type-fighting { background: #C22E28; }
+    .type-poison { background: #A33EA1; }
+    .type-ground { background: #E2BF65; }
+    .type-flying { background: #A98FF3; }
+    .type-psychic { background: #F95587; }
+    .type-bug { background: #A6B91A; }
+    .type-rock { background: #B6A136; }
+    .type-ghost { background: #735797; }
+    .type-dragon { background: #6F35FC; }
+    .type-dark { background: #705746; }
+    .type-steel { background: #B7B7CE; }
+    .type-fairy { background: #D685AD; }
+
+    .pokemon-stats {
+      margin-top: 10px;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .stat-label {
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
+  <h1>Pokédex</h1>
+  <div class="pokedex" id="pokedex"></div>
 
-<header id="header">Pokémon Info</header>
+  <script>
+    async function loadPokedex() {
+      const response = await fetch("data/pokedex.json");
+      const pokedex = await response.json();
 
-<div class="content">
-  <a class="back" href="index.html">← Back to Pokedex</a>
-  <div id="pokemonCard" class="card" style="margin-top:20px;">Loading…</div>
-</div>
+      const container = document.getElementById("pokedex");
+      container.innerHTML = "";
 
-<script>
-const typeColors = {
-  Normal: "#A8A77A",
-  Fire: "#EE8130",
-  Water: "#6390F0",
-  Electric: "#F7D02C",
-  Grass: "#7AC74C",
-  Ice: "#96D9D6",
-  Fighting: "#C22E28",
-  Poison: "#A33EA1",
-  Ground: "#E2BF65",
-  Flying: "#A98FF3",
-  Psychic: "#F95587",
-  Bug: "#A6B91A",
-  Rock: "#B6A136",
-  Ghost: "#735797",
-  Dragon: "#6F35FC",
-  Dark: "#705746",
-  Steel: "#B7B7CE",
-  Fairy: "#D685AD"
-};
+      pokedex.forEach(pokemon => {
+        const card = document.createElement("div");
+        card.className = "pokemon-card";
 
-// Parse the ?mon= parameter
-const url = new URL(window.location.href);
-const monName = url.searchParams.get("mon");
+        // Make cards clickable
+        card.onclick = () => {
+          window.location.href = `pokemon.html?id=${pokemon.id}`;
+        };
 
-fetch('data/pokedex.json')
-  .then(r => r.json())
-  .then(data => {
-    if (!data[monName]) {
-      document.getElementById("pokemonCard").textContent = "Pokémon not found.";
-      return;
+        // Showdown sprite
+        const spriteUrl = `https://play.pokemonshowdown.com/sprites/gen5/${pokemon.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.png`;
+
+        const bst = pokemon.bst || "—"; // Will show once you add it to the JSON
+
+        card.innerHTML = `
+          <img class="pokemon-img" src="${spriteUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
+          <div class="pokemon-name">${pokemon.name}</div>
+
+          <div class="pokemon-types">
+            ${pokemon.types.map(type =>
+              `<div class="type-icon type-${type.toLowerCase()}">${type}</div>`
+            ).join("")}
+          </div>
+
+          <div class="pokemon-stats">
+            <div><span class="stat-label">HP:</span> ${pokemon.hp}</div>
+            <div><span class="stat-label">Atk:</span> ${pokemon.attack}</div>
+            <div><span class="stat-label">Def:</span> ${pokemon.defense}</div>
+            <div><span class="stat-label">SpA:</span> ${pokemon.sp_atk}</div>
+            <div><span class="stat-label">SpD:</span> ${pokemon.sp_def}</div>
+            <div><span class="stat-label">Spe:</span> ${pokemon.speed}</div>
+
+            <div><span class="stat-label">BST:</span> <b>${bst}</b></div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
     }
 
-    const mon = data[monName];
-    const types = [mon.Type1, mon.Type2].filter((t, i, a) => t && a.indexOf(t) === i);
-
-    const spriteName = monName.toLowerCase().replace(/\s+/g,'-');
-    const imageUrl = `http://play.pokemonshowdown.com/sprites/gen5/${spriteName}.png`;
-
-    document.getElementById("header").textContent = monName;
-
-    document.getElementById("pokemonCard").innerHTML = `
-      <h2>#${mon.SpeciesIdx} ${monName}</h2>
-      <img class="sprite" src="${imageUrl}" />
-      <div style="margin:10px 0;">
-        ${types.map(t => `<span class="type-badge" style="background:${typeColors[t]}">${t}</span>`).join("")}
-      </div>
-
-      <h3>Base Stats</h3>
-      <ul>
-        <li>HP: ${mon.BaseStats.HP}</li>
-        <li>Atk: ${mon.BaseStats.Atk}</li>
-        <li>Def: ${mon.BaseStats.Def}</li>
-        <li>SpA: ${mon.BaseStats.SpA}</li>
-        <li>SpD: ${mon.BaseStats.SpD}</li>
-        <li>Spe: ${mon.BaseStats.Spe}</li>
-      </ul>
-
-      <h3>Abilities</h3>
-      <ul>
-        <li>${mon.Ability1}</li>
-        <li>${mon.Ability2}</li>
-        <li>Hidden: ${mon.AbilityH}</li>
-      </ul>
-
-      <h3>TMs</h3>
-      <ul>
-        ${mon.TMs.map(tm => `<li>${tm.Label}: ${tm.Move}</li>`).join("")}
-      </ul>
-    `;
-  });
-</script>
-
+    loadPokedex();
+  </script>
 </body>
 </html>
