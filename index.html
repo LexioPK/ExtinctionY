@@ -100,55 +100,63 @@
   <h1>Pokédex</h1>
   <div class="pokedex" id="pokedex"></div>
 
-  <script>
-    async function loadPokedex() {
-      const response = await fetch("data/pokedex.json");
-      const pokedex = await response.json();
-
+ <script>
+function loadPokedex() {
+  fetch("data/pokedex.json")
+    .then(response => response.json())
+    .then(data => {
       const container = document.getElementById("pokedex");
-      container.innerHTML = "";
 
-      pokedex.forEach(pokemon => {
+      const entries = Object.entries(data)
+        .sort((a, b) => a[1].SpeciesIdx - b[1].SpeciesIdx);
+
+      entries.forEach(([name, mon]) => {
+        const bst = mon.BST ??
+          (mon.BaseStats.HP +
+           mon.BaseStats.Atk +
+           mon.BaseStats.Def +
+           mon.BaseStats.SpA +
+           mon.BaseStats.SpD +
+           mon.BaseStats.Spe);
+
         const card = document.createElement("div");
         card.className = "pokemon-card";
-
-        // Make cards clickable
         card.onclick = () => {
-          window.location.href = `pokemon.html?id=${pokemon.id}`;
+          window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`;
         };
 
-        // Showdown sprite
-        const spriteUrl = `https://play.pokemonshowdown.com/sprites/gen5/${pokemon.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.png`;
-
-        const bst = pokemon.bst || "—"; // Will show once you add it to the JSON
-
         card.innerHTML = `
-          <img class="pokemon-img" src="${spriteUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
-          <div class="pokemon-name">${pokemon.name}</div>
+          <img class="sprite" src="https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png" />
+          <h3>${name} <span class="dex">#${mon.SpeciesIdx}</span></h3>
 
-          <div class="pokemon-types">
-            ${pokemon.types.map(type =>
-              `<div class="type-icon type-${type.toLowerCase()}">${type}</div>`
-            ).join("")}
+          <div class="types">
+            <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
+            ${mon.Type2 && mon.Type2 !== mon.Type1
+              ? `<span class="type type-${mon.Type2.toLowerCase()}">${mon.Type2}</span>`
+              : ""}
           </div>
 
-          <div class="pokemon-stats">
-            <div><span class="stat-label">HP:</span> ${pokemon.hp}</div>
-            <div><span class="stat-label">Atk:</span> ${pokemon.attack}</div>
-            <div><span class="stat-label">Def:</span> ${pokemon.defense}</div>
-            <div><span class="stat-label">SpA:</span> ${pokemon.sp_atk}</div>
-            <div><span class="stat-label">SpD:</span> ${pokemon.sp_def}</div>
-            <div><span class="stat-label">Spe:</span> ${pokemon.speed}</div>
-
-            <div><span class="stat-label">BST:</span> <b>${bst}</b></div>
+          <div class="stats">
+            <p><strong>Base Stats</strong></p>
+            <ul>
+              <li>HP: ${mon.BaseStats.HP}</li>
+              <li>Atk: ${mon.BaseStats.Atk}</li>
+              <li>Def: ${mon.BaseStats.Def}</li>
+              <li>SpA: ${mon.BaseStats.SpA}</li>
+              <li>SpD: ${mon.BaseStats.SpD}</li>
+              <li>Spe: ${mon.BaseStats.Spe}</li>
+              <li><strong>Total: ${bst}</strong></li>
+            </ul>
           </div>
         `;
 
         container.appendChild(card);
       });
-    }
+    })
+    .catch(err => console.error("Error loading pokedex.json:", err));
+}
 
-    loadPokedex();
-  </script>
+loadPokedex();
+</script>
 </body>
 </html>
