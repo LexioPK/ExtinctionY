@@ -79,7 +79,7 @@ const monName = new URL(window.location.href).searchParams.get("name");
 Promise.all([
   fetch('data/pokedex.json').then(r => r.json()),
   fetch('data/movesets.json').then(r => r.json()),
-  fetch('json/evolutions.json').then(r => r.json())
+  fetch('data/evolutions.json').then(r => r.json())
 ])
 .then(([pokedexData, movesetsData, evolutionsData]) => {
   const mon = pokedexData[monName];
