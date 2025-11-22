@@ -56,9 +56,6 @@
   .evo-arrow-block { text-align:center; }
   .method-text { font-size:14px; font-weight:600; text-decoration:underline; margin-bottom:5px; }
   .arrow { font-size:30px; font-weight:bold; }
-
-  /* Info subheading underline */
-  .info h3 { text-decoration:underline; display:inline-block; margin-right:20px; }
 </style>
 </head>
 <body>
@@ -79,7 +76,7 @@ const monName = new URL(window.location.href).searchParams.get("name");
 Promise.all([
   fetch('data/pokedex.json').then(r => r.json()),
   fetch('data/movesets.json').then(r => r.json()),
-  fetch('data/evolutions.json').then(r => r.json())
+  fetch('data/evolution.json').then(r => r.json())
 ])
 .then(([pokedexData, movesetsData, evolutionsData]) => {
   const mon = pokedexData[monName];
@@ -110,18 +107,16 @@ Promise.all([
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
     <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
-    <!-- Info Section -->
+    <!-- Info Section (Reverted) -->
     <div class="section info">
       <h2>Info</h2>
-      <h3>Type</h3>
-      <h3>Abilities</h3>
-      <h3>Additional Info</h3>
       <div class="types">
         ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
       </div>
+      <p class="label">Abilities</p>
       <ul>
         <li>1. ${mon.Ability1}</li>
-        <li>${mon.Ability2?`2. ${mon.Ability2}`:""}</li>
+        <li>${mon.Ability2 ? `2. ${mon.Ability2}` : ""}</li>
         <li><em>Hidden:</em> ${mon.AbilityH}</li>
       </ul>
     </div>
