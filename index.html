@@ -1,178 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Pokedex</title>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokémon Info</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-    body {
-        font-family: "Lexend", sans-serif;
-        background: #f0f0f0;
-        margin: 0;
-        padding: 20px;
-    }
+  body {
+    font-family: 'Lexend', sans-serif;
+    margin: 0;
+    background: #f5f5f5;
+  }
 
-    h1 {
-        text-align: center;
-        margin-bottom: 25px;
-    }
+  header {
+    background:#222;
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-size:24px;
+  }
 
-    #pokedex {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-        padding: 10px;
-    }
+  .content {
+    padding:20px;
+    max-width:800px;
+    margin:auto;
+  }
 
-    .pokemon-card {
-        background: white;
-        border-radius: 15px;
-        padding: 15px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-        transition: transform 0.2s;
-        cursor: pointer;
-    }
+  .sprite {
+    width:128px;
+    height:128px;
+    display:block;
+    margin:10px auto;
+    image-rendering:pixelated;
+  }
 
-    .pokemon-card:hover {
-        transform: translateY(-4px);
-    }
+  .type-badge {
+    display:inline-block;
+    padding:4px 10px;
+    margin-right:4px;
+    border-radius:12px;
+    color:white;
+    font-weight:600;
+    font-size:14px;
+    margin-bottom:10px;
+  }
 
-    .sprite {
-        display: block;
-        margin: 0 auto;
-        width: 96px;
-        height: 96px;
-        image-rendering: pixelated;
-    }
+  .card {
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.15);
+  }
 
-    h3 {
-        text-align: center;
-        margin: 10px 0;
-    }
+  h2, h3 {
+    margin:5px 0;
+    text-align:center;
+  }
 
-    .dex {
-        color: #777;
-        font-size: 0.9em;
-    }
+  ul {
+    padding-left:20px;
+  }
 
-    .types {
-        text-align: center;
-        margin-bottom: 10px;
-    }
+  a.back {
+    color:#4285F4;
+    font-size:16px;
+    text-decoration:none;
+  }
 
-    .type {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 12px;
-        font-size: 0.85em;
-        color: white;
-        margin: 3px;
-    }
-
-    /* Official game colors (custom icons earlier removed) */
-    .type-grass { background: #63bb5b; }
-    .type-poison { background: #aa5caf; }
-    .type-fire { background: #ff9c54; }
-    .type-water { background: #4f90d9; }
-    .type-normal { background: #9099a1; }
-    .type-electric { background: #f3d23b; }
-    .type-ice { background: #74cec0; }
-    .type-fighting { background: #ce4069; }
-    .type-ground { background: #d97746; }
-    .type-flying { background: #92aade; }
-    .type-psychic { background: #f97176; }
-    .type-bug { background: #90c12c; }
-    .type-rock { background: #c7b78b; }
-    .type-ghost { background: #5269ac; }
-    .type-dark { background: #5a5366; }
-    .type-dragon { background: #096dc4; }
-    .type-steel { background: #5a8ea2; }
-    .type-fairy { background: #ec8fe6; }
-
-    ul {
-        list-style: none;
-        padding-left: 0;
-        margin: 0;
-    }
-
-    .label {
-        font-weight: bold;
-        margin-top: 10px;
-        margin-bottom: 3px;
-    }
+  .moves-list li {
+    margin-bottom:4px;
+  }
 </style>
 </head>
 <body>
 
-<h1>Pokédex</h1>
+<header id="header">Pokémon Info</header>
 
-<div id="pokedex"></div>
+<div class="content">
+  <a class="back" href="index.html">← Back to Pokédex</a>
+  <div id="pokemonCard" class="card" style="margin-top:20px;">Loading…</div>
+</div>
 
 <script>
-function loadPokedex() {
-    fetch("data/pokedex.json")
-        .then(r => r.json())
-        .then(data => {
-            const container = document.getElementById("pokedex");
+const typeColors = {
+  Normal: "#A8A77A",
+  Fire: "#EE8130",
+  Water: "#6390F0",
+  Electric: "#F7D02C",
+  Grass: "#7AC74C",
+  Ice: "#96D9D6",
+  Fighting: "#C22E28",
+  Poison: "#A33EA1",
+  Ground: "#E2BF65",
+  Flying: "#A98FF3",
+  Psychic: "#F95587",
+  Bug: "#A6B91A",
+  Rock: "#B6A136",
+  Ghost: "#735797",
+  Dragon: "#6F35FC",
+  Dark: "#705746",
+  Steel: "#B7B7CE",
+  Fairy: "#D685AD"
+};
 
-            const entries = Object.entries(data)
-                .sort((a, b) => a[1].SpeciesIdx - b[1].SpeciesIdx);
+const monName = new URL(window.location.href).searchParams.get("name");
 
-            entries.forEach(([name, mon]) => {
-                const bst = mon.BST ??
-                    (mon.BaseStats.HP +
-                     mon.BaseStats.Atk +
-                     mon.BaseStats.Def +
-                     mon.BaseStats.SpA +
-                     mon.BaseStats.SpD +
-                     mon.BaseStats.Spe);
+Promise.all([
+  fetch('data/pokedex.json').then(r => r.json()),
+  fetch('data/movesets.json').then(r => r.json())
+])
+.then(([pokedexData, movesetsData]) => {
+  const mon = pokedexData[monName];
+  if (!mon) {
+    document.getElementById("pokemonCard").textContent = "Pokémon not found.";
+    return;
+  }
 
-                const card = document.createElement("div");
-                card.className = "pokemon-card";
-                card.onclick = () =>
-                    (window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`);
+  const types = [mon.Type1, mon.Type2].filter((t,i,a)=>t && a.indexOf(t)===i);
+  const spriteName = monName.toLowerCase().replace(/\s+/g,'-');
+  const imageUrl = `https://play.pokemonshowdown.com/sprites/gen5/${spriteName}.png`;
+  const bst = mon.BST ??
+    (mon.BaseStats.HP +
+     mon.BaseStats.Atk +
+     mon.BaseStats.Def +
+     mon.BaseStats.SpA +
+     mon.BaseStats.SpD +
+     mon.BaseStats.Spe);
 
-                card.innerHTML = `
-    <h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${name}</h3>
+  const moves = movesetsData[monName] || [];
 
-    <img class="sprite"
-         src="https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png">
+  document.getElementById("header").textContent = `#${String(mon.SpeciesIdx).padStart(3,'0')} ${monName}`;
 
-    <div class="types">
-        <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
-        ${mon.Type2 && mon.Type2 !== mon.Type1
-            ? `<span class="type type-${mon.Type2.toLowerCase()}">${mon.Type2}</span>`
-            : ""}
+  document.getElementById("pokemonCard").innerHTML = `
+    <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
+
+    <div style="text-align:center; margin-bottom:10px;">
+      ${types.map(t=>`<span class="type-badge" style="background:${typeColors[t]}">${t}</span>`).join("")}
     </div>
 
-    <p class="label">Abilities</p>
+    <h3>Abilities</h3>
     <ul>
-        <li>${mon.Ability1}</li>
-        <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
-        <li><em>Hidden:</em> ${mon.AbilityH}</li>
+      <li>${mon.Ability1}</li>
+      <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
+      <li>Hidden: ${mon.AbilityH}</li>
     </ul>
 
-    <p class="label">Base Stats</p>
+    <h3>Base Stats</h3>
     <ul>
-        <li>HP: ${mon.BaseStats.HP}</li>
-        <li>Atk: ${mon.BaseStats.Atk}</li>
-        <li>Def: ${mon.BaseStats.Def}</li>
-        <li>SpA: ${mon.BaseStats.SpA}</li>
-        <li>SpD: ${mon.BaseStats.SpD}</li>
-        <li>Spe: ${mon.BaseStats.Spe}</li>
-        <li><strong>Base Stat Total: ${bst}</strong></li>
+      <li>HP: ${mon.BaseStats.HP}</li>
+      <li>Atk: ${mon.BaseStats.Atk}</li>
+      <li>Def: ${mon.BaseStats.Def}</li>
+      <li>SpA: ${mon.BaseStats.SpA}</li>
+      <li>SpD: ${mon.BaseStats.SpD}</li>
+      <li>Spe: ${mon.BaseStats.Spe}</li>
+      <li><strong>Total: ${bst}</strong></li>
     </ul>
-`;
 
+    ${mon.TMs ? `<h3>TMs</h3>
+      <ul>${mon.TMs.map(tm=>`<li>${tm.Label}: ${tm.Move}</li>`).join("")}</ul>` : ""}
 
-                container.appendChild(card);
-            });
-        })
-        .catch(err => console.error("JSON Load Error:", err));
-}
-
-loadPokedex();
+    ${moves.length ? `<h3>Level-up Moves</h3>
+      <ul class="moves-list">
+        ${moves.map(m=>`<li>Lvl ${m.Level}: ${m.Move}</li>`).join("")}
+      </ul>` : ""}
+  `;
+})
+.catch(err => console.error("Error loading data:", err));
 </script>
 
 </body>
