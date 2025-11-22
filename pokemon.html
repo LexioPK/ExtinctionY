@@ -154,19 +154,38 @@ Promise.all([
     <!-- Evolutions Section -->
 <div class="section evolutions">
   <h2>Evolutions</h2>
-  <div style="display:flex; justify-content:center; gap:40px; flex-wrap:wrap; align-items:flex-start;">
-    ${evolutionsData[monName] && evolutionsData[monName].EvolvesInto
-      ? Object.entries(evolutionsData[monName].EvolvesInto).map(([name, method]) =>
-          `<div style="text-align:center;">
-             <img src="images/${name.toLowerCase()}.png" class="evo-img">
-             <div class="evo-name">${name}</div>
-             <div class="method-text">${method}</div>
-           </div>`
-        ).join("")
-      : "<p>No evolutions</p>"
-    }
-  </div>
+  <div id="evolution-chain" style="display:flex; justify-content:center; gap:40px; flex-wrap:wrap; align-items:flex-start;"></div>
 </div>
+
+<script>
+fetch('data/evolution.json')
+  .then(r => r.json())
+  .then(evolutionsData => {
+    const evoContainer = document.getElementById('evolution-chain');
+    const evo = evolutionsData[monName];
+
+    if (!evo || !evo.EvolvesInto || Object.keys(evo.EvolvesInto).length === 0) {
+      evoContainer.innerHTML = "<p>No evolutions</p>";
+      return;
+    }
+
+    // Loop through all possible evolutions
+    Object.entries(evo.EvolvesInto).forEach(([name, method]) => {
+      const evoDiv = document.createElement('div');
+      evoDiv.style.textAlign = 'center';
+      evoDiv.style.margin = '0 10px';
+
+      evoDiv.innerHTML = `
+        <img src="images/${name.toLowerCase()}.png" class="evo-img">
+        <div class="evo-name">${name}</div>
+        <div class="method-text">${method}</div>
+      `;
+
+      evoContainer.appendChild(evoDiv);
+    });
+  })
+  .catch(err => console.error('Error loading evolutions:', err));
+</script>
 
     <!-- Moves Section -->
     <div class="section moves">
