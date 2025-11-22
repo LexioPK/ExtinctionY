@@ -49,7 +49,7 @@
   .type-fairy { background: #ec8fe6; }
 
   /* Evolution Styles */
-  #evolution-chain { display:flex; align-items:flex-start; justify-content:center; gap:40px; flex-wrap:wrap; margin-top:10px; }
+  #evolution-chain { display:flex; align-items:center; justify-content:center; gap:40px; flex-wrap:nowrap; margin-top:10px; }
   .evo-block { text-align:center; }
   .evo-img { width:120px; height:120px; image-rendering:pixelated; display:block; margin:0 auto 5px; }
   .evo-name { font-weight:bold; font-size:18px; }
@@ -107,7 +107,7 @@ Promise.all([
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
     <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
-   <!-- Info Section -->
+   <!-- Info Section (Horizontal subheadings with centered Type) -->
 <div class="section info">
   <h2>Info</h2>
   <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;">
@@ -154,7 +154,8 @@ Promise.all([
   <!-- Evolutions Section -->
 <div class="section evolutions">
   <h2>Evolutions</h2>
-  <div id="evolution-chain"></div>
+  <div id="evolution-chain">
+  </div>
 </div>
 
     <!-- Moves Section -->
@@ -181,48 +182,76 @@ Promise.all([
     </div>
   `;
 
-  // Load evolution chain (supports split evolutions)
+  // Load evolution chain
   loadEvolutions(monName, evolutionsData);
 });
 
-// Keep your original loadEvolutions() function but expand to support split evolutions
 function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
+    evoContainer.innerHTML = "<p>Loading...</p>";
+
     if (!data[currentName]) {
-        evoContainer.innerHTML = "No evolution data available.";
+        evoContainer.innerHTML = "<p>No evolution data available.</p>";
         return;
     }
 
+    // Recursive function to build evolution lines
+    function buildChain(name) {
+        const evolvesInto = data[name]?.EvolvesInto;
+        if (!evolvesInto || Object.keys(evolvesInto).length === 0) return [[{ name, method: null }]];
+
+        const chains = [];
+        for (const nextName in evolvesInto) {
+            const method = evolvesInto[nextName];
+            const subChains = buildChain(nextName);
+            subChains.forEach(subChain => {
+                chains.push([{ name, method: null }, ...subChain]);
+            });
+        }
+        return chains;
+    }
+
+    // Go to earliest stage
+    let pointer = currentName;
+    while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
+
+    const allChains = buildChain(pointer);
+
+    // Render each chain
     evoContainer.innerHTML = "";
+    allChains.forEach(chain => {
+        const lineDiv = document.createElement("div");
+        lineDiv.style.display = "flex";
+        lineDiv.style.alignItems = "center";
+        lineDiv.style.justifyContent = "center";
+        lineDiv.style.gap = "40px";
+        lineDiv.style.marginBottom = "15px";
 
-    const renderChain = (base, evolvesInto) => {
-        // Base Pokémon
-        const baseImg = `https://play.pokemonshowdown.com/sprites/gen5/${base.toLowerCase()}.png`;
-        const baseBlock = document.createElement("div");
-        baseBlock.className = "evo-block";
-        baseBlock.innerHTML = `<img class="evo-img" src="${baseImg}"><div class="evo-name">${base}</div>`;
-        evoContainer.appendChild(baseBlock);
-
-        if (!evolvesInto || Object.keys(evolvesInto).length === 0) return;
-
-        // For each evolution
-        Object.entries(evolvesInto).forEach(([evoName, method]) => {
-            // Arrow and method
-            const arrowBlock = document.createElement("div");
-            arrowBlock.className = "evo-arrow-block";
-            arrowBlock.innerHTML = `<div class="method-text">${method}</div><div class="arrow">→</div>`;
-            evoContainer.appendChild(arrowBlock);
-
-            // Evolution Pokémon
-            const evoImgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${evoName.toLowerCase()}.png`;
+        chain.forEach((step, idx) => {
+            // Pokémon block
             const evoBlock = document.createElement("div");
             evoBlock.className = "evo-block";
-            evoBlock.innerHTML = `<img class="evo-img" src="${evoImgSrc}"><div class="evo-name">${evoName}</div>`;
-            evoContainer.appendChild(evoBlock);
-        });
-    };
+            const imgSrc = `images/${step.name.toLowerCase()}.png`;
+            evoBlock.innerHTML = `
+                <img src="${imgSrc}" class="evo-img">
+                <div class="evo-name">${step.name}</div>
+            `;
+            lineDiv.appendChild(evoBlock);
 
-    renderChain(currentName, data[currentName].EvolvesInto);
+            // Arrow block
+            if (step.method && idx < chain.length - 1) {
+                const arrowBlock = document.createElement("div");
+                arrowBlock.className = "evo-arrow-block";
+                arrowBlock.innerHTML = `
+                    <div class="method-text">${step.method}</div>
+                    <div class="arrow">→</div>
+                `;
+                lineDiv.appendChild(arrowBlock);
+            }
+        });
+
+        evoContainer.appendChild(lineDiv);
+    });
 }
 </script>
 
