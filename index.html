@@ -3,27 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROM Hack Pokedex</title>
+<title>Pokémon Info</title>
 
-<!-- Lexend font -->
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-  /* General layout */
-  body { font-family: 'Lexend', sans-serif; margin:0; background:#f5f5f5; }
+  body { font-family: 'Lexend', sans-serif; margin: 0; background: #f5f5f5; }
   header { background:#222; color:white; padding:15px; text-align:center; font-size:24px; }
+  .content { padding:20px; max-width:800px; margin:auto; }
 
-  .content { padding:20px; }
-  .pokedex-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:15px; }
+  .sprite { width:128px; height:128px; image-rendering:pixelated; }
 
-  /* Pokémon card */
-  .mon-card { background:white; padding:15px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-  .mon-card:hover { transform:scale(1.02); transition:0.2s; }
-
-  /* Sprites */
-  .sprite { width:96px; height:96px; display:block; margin-bottom:8px; }
-
-  /* Type badges */
   .type-badge {
     display:inline-block;
     padding:4px 10px;
@@ -31,21 +21,29 @@
     border-radius:8px;
     color:white;
     font-weight:600;
-    font-size:12px;
-    text-align:center;
-    font-family:'Lexend', sans-serif;
+    font-size:14px;
   }
 
-  h3, h4 { margin:5px 0; }
-  ul { margin:5px 0; padding-left:20px; }
+  .card {
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.15);
+  }
+
+  h2 { margin:5px 0; }
+  ul { padding-left:20px; }
+  a.back { color:#4285F4; font-size:16px; text-decoration:none; }
 </style>
 </head>
+
 <body>
 
-<header>ROM Hack Pokedex</header>
+<header id="header">Pokémon Info</header>
 
-<div class="content" id="pokedex">
-  <div id="pokedexGrid" class="pokedex-grid">Loading...</div>
+<div class="content">
+  <a class="back" href="index.html">← Back to Pokedex</a>
+  <div id="pokemonCard" class="card" style="margin-top:20px;">Loading…</div>
 </div>
 
 <script>
@@ -70,52 +68,55 @@ const typeColors = {
   Fairy: "#D685AD"
 };
 
+// Parse the ?mon= parameter
+const url = new URL(window.location.href);
+const monName = url.searchParams.get("mon");
+
 fetch('data/pokedex.json')
   .then(r => r.json())
   .then(data => {
-    const container = document.getElementById('pokedexGrid');
-    container.innerHTML = '';
+    if (!data[monName]) {
+      document.getElementById("pokemonCard").textContent = "Pokémon not found.";
+      return;
+    }
 
-    Object.entries(data)
-      .sort(([,a],[,b]) => a.SpeciesIdx - b.SpeciesIdx)
-      .forEach(([name, mon]) => {
-        const types = [mon.Type1, mon.Type2].filter((t,i,a)=>t && a.indexOf(t)===i);
+    const mon = data[monName];
+    const types = [mon.Type1, mon.Type2].filter((t, i, a) => t && a.indexOf(t) === i);
 
-        // Showdown Gen5 sprite
-        const spriteName = name.toLowerCase().replace(/\s+/g,'-').replace(/\./g,'');
-        const imageUrl = `http://play.pokemonshowdown.com/sprites/gen5/${spriteName}.png`;
+    const spriteName = monName.toLowerCase().replace(/\s+/g,'-');
+    const imageUrl = `http://play.pokemonshowdown.com/sprites/gen5/${spriteName}.png`;
 
-        const card = document.createElement('div');
-        card.className = 'mon-card';
+    document.getElementById("header").textContent = monName;
 
-        card.innerHTML = `
-          <h3>#${mon.SpeciesIdx} ${name}</h3>
-          <img src="${imageUrl}" alt="${name}" class="sprite" />
-          <div>
-            ${types.map(t => `<span class="type-badge" style="background-color: ${typeColors[t] || '#777'}">${t}</span>`).join('')}
-          </div>
-          <h4>Base Stats</h4>
-          <ul>
-            <li>HP: ${mon.BaseStats.HP}</li>
-            <li>Atk: ${mon.BaseStats.Atk}</li>
-            <li>Def: ${mon.BaseStats.Def}</li>
-            <li>SpA: ${mon.BaseStats.SpA}</li>
-            <li>SpD: ${mon.BaseStats.SpD}</li>
-            <li>Spe: ${mon.BaseStats.Spe}</li>
-          </ul>
-          <h4>Abilities</h4>
-          <ul>
-            <li>${mon.Ability1}</li>
-            <li>${mon.Ability2}</li>
-            <li>Hidden: ${mon.AbilityH}</li>
-          </ul>
-        `;
-        container.appendChild(card);
-      });
-  })
-  .catch(err => {
-    document.getElementById('pokedexGrid').textContent = "Error loading JSON.";
-    console.error(err);
+    document.getElementById("pokemonCard").innerHTML = `
+      <h2>#${mon.SpeciesIdx} ${monName}</h2>
+      <img class="sprite" src="${imageUrl}" />
+      <div style="margin:10px 0;">
+        ${types.map(t => `<span class="type-badge" style="background:${typeColors[t]}">${t}</span>`).join("")}
+      </div>
+
+      <h3>Base Stats</h3>
+      <ul>
+        <li>HP: ${mon.BaseStats.HP}</li>
+        <li>Atk: ${mon.BaseStats.Atk}</li>
+        <li>Def: ${mon.BaseStats.Def}</li>
+        <li>SpA: ${mon.BaseStats.SpA}</li>
+        <li>SpD: ${mon.BaseStats.SpD}</li>
+        <li>Spe: ${mon.BaseStats.Spe}</li>
+      </ul>
+
+      <h3>Abilities</h3>
+      <ul>
+        <li>${mon.Ability1}</li>
+        <li>${mon.Ability2}</li>
+        <li>Hidden: ${mon.AbilityH}</li>
+      </ul>
+
+      <h3>TMs</h3>
+      <ul>
+        ${mon.TMs.map(tm => `<li>${tm.Label}: ${tm.Move}</li>`).join("")}
+      </ul>
+    `;
   });
 </script>
 
