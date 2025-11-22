@@ -107,12 +107,12 @@ Promise.all([
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
     <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
-    <!-- Info Section (Horizontal subheadings) -->
+   <!-- Info Section (Horizontal subheadings with centered Type) -->
 <div class="section info">
   <h2>Info</h2>
   <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;">
     <!-- Type -->
-    <div style="flex:1; min-width:200px;">
+    <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Type</h3>
       <div class="types">
         ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
