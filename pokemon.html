@@ -183,7 +183,7 @@ Promise.all([
   `;
 
   // Load evolution chain
-  function loadEvolutions(currentName, data) {
+ function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
     evoContainer.innerHTML = "<p>Loading...</p>";
 
@@ -192,40 +192,44 @@ Promise.all([
         return;
     }
 
-    // Build all paths recursively: each path = [ {name}, {name, method}, ... ]
+    // Build all evolution paths
     function buildChains(name) {
         const evolvesInto = data[name]?.EvolvesInto;
 
-        // No further evolutions: return chain with single node
-        if (!evolvesInto || Object.keys(evolvesInto).length === 0)
+        if (!evolvesInto || Object.keys(evolvesInto).length === 0) {
             return [[{ name }]];
+        }
 
-        const result = [];
+        const results = [];
 
         for (const nextName in evolvesInto) {
             const method = evolvesInto[nextName];
             const subChains = buildChains(nextName);
 
             subChains.forEach(chain => {
-                // Prepend current name, then the next Pokémon with its method
-                result.push([{ name }, { name: nextName, method }, ...chain.slice(1)]);
+                const newChain = [
+                    { name },
+                    { name: nextName, method },
+                    ...chain.slice(1)
+                ];
+                results.push(newChain);
             });
         }
 
-        return result;
+        return results;
     }
 
-    // Go back to earliest stage
-    let pointer = currentName;
-    while (data[pointer] && data[pointer].EvolvesFrom)
-        pointer = data[pointer].EvolvesFrom;
+    // Find earliest pre-evolution
+    let root = currentName;
+    while (data[root] && data[root].EvolvesFrom) {
+        root = data[root].EvolvesFrom;
+    }
 
-    const allChains = buildChains(pointer);
+    const chains = buildChains(root);
 
-    // Render chains
     evoContainer.innerHTML = "";
-    allChains.forEach(chain => {
 
+    chains.forEach(chain => {
         const lineDiv = document.createElement("div");
         lineDiv.style.display = "flex";
         lineDiv.style.alignItems = "center";
@@ -233,32 +237,35 @@ Promise.all([
         lineDiv.style.gap = "40px";
         lineDiv.style.marginBottom = "15px";
 
-        chain.forEach((step, idx) => {
+        for (let i = 0; i < chain.length; i++) {
+            const step = chain[i];
+
             // Pokémon block
             const evoBlock = document.createElement("div");
             evoBlock.className = "evo-block";
             const imgSrc = `images/${step.name.toLowerCase()}.png`;
+
             evoBlock.innerHTML = `
                 <img src="${imgSrc}" class="evo-img">
                 <div class="evo-name">${step.name}</div>
             `;
             lineDiv.appendChild(evoBlock);
 
-            // Arrow + method goes BETWEEN Pokémon only
-            if (idx < chain.length - 1) {
-                const nextStep = chain[idx + 1];
+            // Arrow + method between Pokémon
+            if (i < chain.length - 1) {
+                const nextStep = chain[i + 1];
 
-                if (nextStep.method) {
-                    const arrowBlock = document.createElement("div");
-                    arrowBlock.className = "evo-arrow-block";
-                    arrowBlock.innerHTML = `
-                        <div class="method-text">${nextStep.method}</div>
-                        <div class="arrow">→</div>
-                    `;
-                    lineDiv.appendChild(arrowBlock);
-                }
+                const arrowBlock = document.createElement("div");
+                arrowBlock.className = "evo-arrow-block";
+
+                arrowBlock.innerHTML = `
+                    <div class="method-text">${nextStep.method || ""}</div>
+                    <div class="arrow">→</div>
+                `;
+
+                lineDiv.appendChild(arrowBlock);
             }
-        });
+        }
 
         evoContainer.appendChild(lineDiv);
     });
