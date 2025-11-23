@@ -188,7 +188,6 @@ Promise.all([
 
 function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
-    evoContainer.innerHTML = "<p>Loading...</p>";
 
     if (!data[currentName]) {
         evoContainer.innerHTML = "<p>No evolution data available.</p>";
@@ -242,9 +241,10 @@ function loadEvolutions(currentName, data) {
         });
     };
 
+    // Clear container before rendering
+    evoContainer.innerHTML = "";
     traverseChain(pointer);
 }
-
 </script>
 
 </body>
