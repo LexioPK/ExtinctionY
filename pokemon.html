@@ -200,16 +200,18 @@ function loadEvolutions(currentName, data) {
     const rendered = new Set(); // Track rendered Pokémon
 
     const renderEvo = (name) => {
-        if (rendered.has(name)) return "";
-        rendered.add(name);
-        const imgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png`;
-        return `
-            <div class="evo-block">
+    if (rendered.has(name)) return "";
+    rendered.add(name);
+    const imgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png`;
+    return `
+        <div class="evo-block">
+            <a href="pokemon.html?name=${encodeURIComponent(name)}" style="text-decoration:none; color:inherit;">
                 <img src="${imgSrc}" class="evo-img">
                 <div class="evo-name">${name}</div>
-            </div>
-        `;
-    };
+            </a>
+        </div>
+    `;
+};
 
     const traverseChain = (name) => {
         const evolvesInto = data[name].EvolvesInto || {};
