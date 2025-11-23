@@ -50,12 +50,12 @@
 
   /* Evolution Styles */
   #evolution-chain { display:flex; align-items:center; justify-content:center; gap:40px; flex-wrap:nowrap; margin-top:10px; }
-  .evo-block { text-align:center; display:flex; flex-direction:column; align-items:center; }
+  .evo-block { text-align:center; }
   .evo-img { width:120px; height:120px; image-rendering:pixelated; display:block; margin:0 auto 5px; }
   .evo-name { font-weight:bold; font-size:18px; }
-  .evo-arrow-block { text-align:center; display:flex; flex-direction:column; justify-content:center; }
-  .method-text { font-size:14px; font-weight:600; text-decoration:underline; margin-bottom:5px; text-align:right; }
-  .arrow { font-size:30px; font-weight:bold; text-align:right; }
+  .evo-arrow-block { text-align:center; }
+  .method-text { font-size:14px; font-weight:600; text-decoration:underline; margin-bottom:5px; }
+  .arrow { font-size:30px; font-weight:bold; }
 </style>
 </head>
 <body>
@@ -107,35 +107,35 @@ Promise.all([
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
     <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
-    <!-- Info Section -->
-    <div class="section info">
-      <h2>Info</h2>
-      <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;">
-        <!-- Type -->
-        <div style="flex:1; min-width:200px; text-align:center;">
-          <h3 style="text-decoration:underline;">Type</h3>
-          <div class="types">
-            ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
-          </div>
-        </div>
-
-        <!-- Abilities -->
-        <div style="flex:1; min-width:200px;">
-          <h3 style="text-decoration:underline;">Abilities</h3>
-          <ul>
-            <li>1. ${mon.Ability1}</li>
-            <li>${mon.Ability2 ? `2. ${mon.Ability2}` : ""}</li>
-            <li><em>Hidden:</em> ${mon.AbilityH}</li>
-          </ul>
-        </div>
-
-        <!-- Additional Info -->
-        <div style="flex:1; min-width:200px;">
-          <h3 style="text-decoration:underline;">Additional Info</h3>
-          <p>Data will come from the additional info JSON.</p>
-        </div>
+   <!-- Info Section (Horizontal subheadings with centered Type) -->
+<div class="section info">
+  <h2>Info</h2>
+  <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+    <!-- Type -->
+    <div style="flex:1; min-width:200px; text-align:center;">
+      <h3 style="text-decoration:underline;">Type</h3>
+      <div class="types">
+        ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
       </div>
     </div>
+
+    <!-- Abilities -->
+    <div style="flex:1; min-width:200px;">
+      <h3 style="text-decoration:underline;">Abilities</h3>
+      <ul>
+        <li>1. ${mon.Ability1}</li>
+        <li>${mon.Ability2 ? `2. ${mon.Ability2}` : ""}</li>
+        <li><em>Hidden:</em> ${mon.AbilityH}</li>
+      </ul>
+    </div>
+
+    <!-- Additional Info -->
+    <div style="flex:1; min-width:200px;">
+      <h3 style="text-decoration:underline;">Additional Info</h3>
+      <p>Data will come from the additional info JSON.</p>
+    </div>
+  </div>
+</div>
 
     <!-- Base Stats Section -->
     <div class="section stats">
@@ -151,11 +151,11 @@ Promise.all([
       </ul>
     </div>
 
-    <!-- Evolutions Section -->
-    <div class="section evolutions">
-      <h2>Evolutions</h2>
-      <div id="evolution-chain"></div>
-    </div>
+  <!-- Evolutions Section -->
+<div class="section evolutions">
+  <h2>Evolutions</h2>
+  <div id="evolution-chain"></div>
+</div>
 
     <!-- Moves Section -->
     <div class="section moves">
@@ -181,18 +181,23 @@ Promise.all([
     </div>
   `;
 
-  // Load evolution chain
+  // Load evolution chain (kept exact same formatting as original)
   loadEvolutions(monName, evolutionsData);
 });
 
 function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
+
     if (!data[currentName]) {
-        evoContainer.innerHTML = "<p>N/A</p>";
+        evoContainer.innerHTML = "<p>No evolution data available.</p>";
         return;
     }
 
-    let rendered = new Set();
+    // Find earliest stage
+    let pointer = currentName;
+    while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
+
+    const rendered = new Set(); // Track rendered Pokémon
 
     const renderEvo = (name) => {
         if (rendered.has(name)) return "";
@@ -200,46 +205,65 @@ function loadEvolutions(currentName, data) {
         const imgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png`;
         return `
             <div class="evo-block">
-                <a href="pokemon.html?name=${encodeURIComponent(name)}" style="text-decoration:none; color:inherit;">
-                    <img src="${imgSrc}" class="evo-img">
-                    <div class="evo-name">${name}</div>
-                </a>
+                <img src="${imgSrc}" class="evo-img">
+                <div class="evo-name">${name}</div>
             </div>
         `;
     };
 
-    const appendChain = (name) => {
-        const evolvesInto = data[name].EvolvesInto;
+    const traverseChain = (name) => {
+        const evolvesInto = data[name].EvolvesInto || {};
         const keys = Object.keys(evolvesInto);
 
-        if (keys.length === 0) {
-            return renderEvo(name);
-        } else if (keys.length === 1) {
-            return renderEvo(name) + `
+        if (!rendered.has(name)) {
+            evoContainer.innerHTML += renderEvo(name);
+        }
+
+        if (keys.length === 0) return; // End of chain
+
+        if (keys.length === 1) {
+            // Single evolution
+            const nextName = keys[0];
+            const method = evolvesInto[nextName];
+            evoContainer.innerHTML += `
                 <div class="evo-arrow-block">
-                    <div class="method-text">${Object.values(evolvesInto)[0]}</div>
+                    <div class="method-text">${method}</div>
                     <div class="arrow">→</div>
-                </div>` + appendChain(keys[0]);
+                </div>
+            `;
+            evoContainer.innerHTML += renderEvo(nextName);
+            traverseChain(nextName);
         } else {
-            // Split evolution
-            let branchHtml = renderEvo(name);
-            branchHtml += `<div style="display:flex; flex-direction:column; align-items:center; gap:20px; margin-left:20px;">`;
-            keys.forEach(k => {
-                branchHtml += `<div style="display:flex; align-items:center;">
-                    <div class="evo-arrow-block">
-                        <div class="method-text">${evolvesInto[k]}</div>
-                        <div class="arrow">→</div>
-                    </div>
-                    ${appendChain(k)}
-                </div>`;
+            // Split evolutions stacked vertically with arrow/method on left
+            evoContainer.innerHTML += `
+                <div style="display:flex; flex-direction:column; align-items:flex-start; gap:10px;">
+                    ${keys.map(nextName => {
+                        const method = evolvesInto[nextName];
+                        return `
+                            <div style="display:flex; align-items:center; gap:5px;">
+                                <div class="evo-arrow-block">
+                                    <div class="method-text">${method}</div>
+                                    <div class="arrow">→</div>
+                                </div>
+                                ${renderEvo(nextName)}
+                            </div>
+                        `;
+                    }).join("")}
+                </div>
+            `;
+
+            // Recurse each branch in case of further evolutions
+            keys.forEach(nextName => {
+                if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
+                    traverseChain(nextName);
+                }
             });
-            branchHtml += `</div>`;
-            return branchHtml;
         }
     };
 
-    evoContainer.innerHTML = appendChain(currentName);
-}
+    evoContainer.innerHTML = "";
+    traverseChain(pointer);
+};
 </script>
 
 </body>
