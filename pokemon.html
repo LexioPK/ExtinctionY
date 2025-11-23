@@ -198,6 +198,14 @@ function loadEvolutions(currentName, data) {
     let pointer = currentName;
     while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
 
+    const evolvesInto = data[pointer].EvolvesInto || {};
+    const hasEvolutions = Object.keys(evolvesInto).length > 0;
+
+    if (!hasEvolutions) {
+        evoContainer.innerHTML = "N/A";
+        return;
+    }
+
     const rendered = new Set(); // Track which Pokémon are already rendered
 
     const renderEvo = (name) => {
