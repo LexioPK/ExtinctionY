@@ -198,6 +198,58 @@ function loadEvolutions(currentName, data) {
     let pointer = currentName;
     while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
 
+    const rendered = new Set();
+
+    const renderEvo = (name) => {
+        if (rendered.has(name)) return "";
+        rendered.add(name);
+        const imgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png`;
+        return `
+            <div class="evo-block">
+                <img src="${imgSrc}" class="evo-img">
+                <div class="evo-name">${name}</div>
+            </div>
+        `;
+    };
+
+    const traverseChain = (name) => {
+        const evolvesInto = data[name].EvolvesInto || {};
+        const keys = Object.keys(evolvesInto);
+
+        // Render current Pokémon
+        if (!rendered.has(name)) {
+            evoContainer.innerHTML += renderEvo(name);
+        }
+
+        if (keys.length > 0) {
+            // Flex container for branching evolutions
+            evoContainer.innerHTML += `<div style="display:flex; gap:40px; align-items:center; margin-top:10px;">`;
+
+            keys.forEach(nextName => {
+                const method = evolvesInto[nextName];
+
+                evoContainer.innerHTML += `
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <div class="evo-arrow-block">
+                            <div class="arrow">→</div>
+                            <div class="method-text">${method}</div>
+                        </div>
+                        ${renderEvo(nextName)}
+                    </div>
+                `;
+            });
+
+            evoContainer.innerHTML += `</div>`;
+
+            // Recursively render further evolutions for each branch
+            keys.forEach(nextName => {
+                if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
+                    traverseChain(nextName);
+                }
+            });
+        }
+    };
+
     // Handle N/A
     if (!data[pointer].EvolvesInto || Object.keys(data[pointer].EvolvesInto).length === 0) {
         evoContainer.innerHTML = "N/A";
@@ -205,55 +257,7 @@ function loadEvolutions(currentName, data) {
     }
 
     evoContainer.innerHTML = "";
-
-    const processed = new Set();
-
-    const renderChain = (fromName, toName, method) => {
-        const fromImg = `https://play.pokemonshowdown.com/sprites/gen5/${fromName.toLowerCase()}.png`;
-        const toImg = `https://play.pokemonshowdown.com/sprites/gen5/${toName.toLowerCase()}.png`;
-        return `
-            <div style="display:flex; align-items:center; gap:20px; margin-bottom:10px;">
-                <div class="evo-block">
-                    <img src="${fromImg}" class="evo-img">
-                    <div class="evo-name">${fromName}</div>
-                </div>
-                <div class="evo-arrow-block">
-                    <div class="method-text">${method}</div>
-                    <div class="arrow">→</div>
-                </div>
-                <div class="evo-block">
-                    <img src="${toImg}" class="evo-img">
-                    <div class="evo-name">${toName}</div>
-                </div>
-            </div>
-        `;
-    };
-
-    const traverse = (name) => {
-        const evolvesInto = data[name].EvolvesInto || {};
-        const keys = Object.keys(evolvesInto);
-        if (keys.length === 1) {
-            // Single evolution: follow the original chain style
-            const nextName = keys[0];
-            const method = evolvesInto[nextName];
-            if (!processed.has(`${name}->${nextName}`)) {
-                evoContainer.innerHTML += renderChain(name, nextName, method);
-                processed.add(`${name}->${nextName}`);
-                traverse(nextName);
-            }
-        } else if (keys.length > 1) {
-            // Split evolution: stack each evolution vertically
-            keys.forEach(nextName => {
-                const method = evolvesInto[nextName];
-                if (!processed.has(`${name}->${nextName}`)) {
-                    evoContainer.innerHTML += renderChain(name, nextName, method);
-                    processed.add(`${name}->${nextName}`);
-                }
-            });
-        }
-    };
-
-    traverse(pointer);
+    traverseChain(pointer);
 }
 </script>
 
