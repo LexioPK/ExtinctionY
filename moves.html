@@ -129,11 +129,11 @@ function loadMoves() {
 
                 tr.onclick = () => window.location.href = `move.html?name=${encodeURIComponent(name)}`;
 
-                // Map category to image
+                // Map category to image (no text)
                 let catImg = '';
                 if(mv.Category) {
                     const catLower = mv.Category.toLowerCase();
-                    catImg = `<img src="img/${catLower}.png" alt="${mv.Category}" style="width:24px;height:24px;">`;
+                    catImg = `<img src="image/${catLower}.png" alt="${mv.Category}" style="width:24px;height:24px;">`;
                 }
 
                 tr.innerHTML = `
