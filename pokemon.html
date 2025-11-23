@@ -235,19 +235,23 @@ function loadEvolutions(currentName, data) {
             evoContainer.innerHTML += renderEvo(nextName);
             traverseChain(nextName);
         } else {
-            // Split evolution
+            // Split evolution stacked vertically
             evoContainer.innerHTML += `
-                <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
-                    <div class="evo-arrow-block" style="margin-bottom:10px;">
-                        <div class="arrow">→</div>
-                    </div>
-                    <div style="display:flex; justify-content:center; gap:40px;">
-                        ${keys.map(nextName => renderEvo(nextName)).join("")}
-                    </div>
+                <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                    ${keys.map(nextName => {
+                        const method = evolvesInto[nextName];
+                        return `
+                            <div class="evo-arrow-block">
+                                <div class="method-text">${method}</div>
+                                <div class="arrow">→</div>
+                            </div>
+                            ${renderEvo(nextName)}
+                        `;
+                    }).join("")}
                 </div>
             `;
 
-            // Recurse each branch
+            // Recurse each branch in case they have further evolutions
             keys.forEach(nextName => {
                 if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
                     traverseChain(nextName);
