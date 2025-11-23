@@ -49,13 +49,16 @@
   .type-fairy { background: #ec8fe6; }
 
   /* Evolution Styles */
-  #evolution-chain { display:flex; align-items:center; justify-content:center; gap:40px; flex-wrap:nowrap; margin-top:10px; }
-  .evo-block { text-align:center; }
-  .evo-img { width:120px; height:120px; image-rendering:pixelated; display:block; margin:0 auto 5px; }
-  .evo-name { font-weight:bold; font-size:18px; }
-  .evo-arrow-block { text-align:center; }
-  .method-text { font-size:14px; font-weight:600; text-decoration:underline; margin-bottom:5px; }
-  .arrow { font-size:30px; font-weight:bold; }
+#evolution-chain { 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    gap:40px; 
+    flex-wrap:nowrap; 
+    margin-top:10px; 
+    overflow-x:auto;        /* allow horizontal scroll */
+    padding-bottom:10px;    /* optional: space for scroll bar */
+}
 </style>
 </head>
 <body>
