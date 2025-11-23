@@ -198,10 +198,17 @@ function loadEvolutions(currentName, data) {
     let pointer = currentName;
     while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
 
-    const rendered = new Set(); // Track which Pokémon are already rendered
+    const evolvesInto = data[pointer].EvolvesInto || {};
+    const hasEvolutions = Object.keys(evolvesInto).length > 0;
 
+    if (!hasEvolutions) {
+        evoContainer.innerHTML = "N/A";
+        return;
+    }
+
+    const rendered = new Set(); // Track rendered Pokémon
     const renderEvo = (name) => {
-        if (rendered.has(name)) return ""; // Skip duplicates
+        if (rendered.has(name)) return "";
         rendered.add(name);
         const imgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png`;
         return `
@@ -221,10 +228,27 @@ function loadEvolutions(currentName, data) {
             evoContainer.innerHTML += renderEvo(name);
         }
 
-        keys.forEach((nextName, i) => {
-            const method = evolvesInto[nextName];
-            // Render arrow + method only if next Pokémon isn't already rendered
-            if (!rendered.has(nextName)) {
+        if (keys.length > 0) {
+            // If multiple evolutions, wrap them in a horizontal flex container
+            if (keys.length > 1) {
+                evoContainer.innerHTML += `<div style="display:flex; justify-content:center; gap:40px; margin-top:10px;">`;
+                keys.forEach((nextName, i) => {
+                    const method = evolvesInto[nextName];
+                    evoContainer.innerHTML += `
+                        <div>
+                            <div class="evo-arrow-block">
+                                <div class="method-text">${method}</div>
+                                <div class="arrow">→</div>
+                            </div>
+                            ${renderEvo(nextName)}
+                        </div>
+                    `;
+                });
+                evoContainer.innerHTML += `</div>`;
+            } else {
+                // Single evolution, same as before
+                const nextName = keys[0];
+                const method = evolvesInto[nextName];
                 evoContainer.innerHTML += `
                     <div class="evo-arrow-block">
                         <div class="method-text">${method}</div>
@@ -234,14 +258,15 @@ function loadEvolutions(currentName, data) {
                 evoContainer.innerHTML += renderEvo(nextName);
             }
 
-            // Recursively render evolutions of the next Pokémon
-            if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
-                traverseChain(nextName);
-            }
-        });
+            // Recursively render evolutions for each branch
+            keys.forEach(nextName => {
+                if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
+                    traverseChain(nextName);
+                }
+            });
+        }
     };
 
-    // Clear container before rendering
     evoContainer.innerHTML = "";
     traverseChain(pointer);
 }
