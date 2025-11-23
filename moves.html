@@ -31,49 +31,43 @@
         color: black;
         box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
-    .tab:hover {
-        background: #e4e4e4;
-    }
-    .active {
-        background: #d0ffd6;
-        font-weight: bold;
-    }
+    .tab:hover { background: #e4e4e4; }
+    .active { background: #d0ffd6; font-weight: bold; }
 
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+    h1 { text-align: center; margin-bottom: 20px; }
 
-    #movelist {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-        padding: 10px;
-    }
-
-    .move-card {
-        background: white;
-        border-radius: 15px;
-        padding: 15px;
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
         box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-        transition: transform 0.2s;
-        cursor: pointer;
+        border-radius: 12px;
+        overflow: hidden;
     }
 
-    .move-card:hover {
-        transform: translateY(-4px);
+    th, td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid #ddd;
+        font-size: 0.9em;
     }
+
+    th {
+        background: #f5f5f5;
+        font-weight: 600;
+    }
+
+    tr:hover { background: #f0f0f0; }
 
     .type {
         display: inline-block;
-        padding: 4px 10px;
-        border-radius: 12px;
+        padding: 2px 8px;
+        border-radius: 10px;
+        color: #fff;
         font-size: 0.85em;
-        color: white;
-        margin-top: 8px;
     }
 
-    /* Type colors (same as Pokédex) */
+    /* Type Colors */
     .type-fairy { background:#ec8fe6; }
     .type-normal { background:#9099a1; }
     .type-fire { background:#ff9c54; }
@@ -92,17 +86,11 @@
     .type-dark { background:#5a5366; }
     .type-dragon { background:#096dc4; }
     .type-steel { background:#5a8ea2; }
-
-    .label {
-        font-weight: bold;
-        margin-top: 10px;
-    }
 </style>
 </head>
-
 <body>
 
-<!-- Top Navigation Tabs -->
+<!-- Navigation Tabs -->
 <div class="tabs">
     <a class="tab" href="index.html">Pokédex</a>
     <a class="tab active" href="moves.html">Moves</a>
@@ -111,42 +99,47 @@
 
 <h1>Move List</h1>
 
-<div id="movelist"></div>
+<table id="moves-table">
+    <thead>
+        <tr>
+            <th>Move Name</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Power</th>
+            <th>Accuracy</th>
+            <th>PP</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Moves will be populated here -->
+    </tbody>
+</table>
 
 <script>
 function loadMoves() {
     fetch("data/moves.json")
         .then(r => r.json())
         .then(moves => {
-            const container = document.getElementById("movelist");
-
-            const sorted = Object.entries(moves)
-                .sort((a, b) => a[0].localeCompare(b[0]));
+            const tbody = document.querySelector("#moves-table tbody");
+            const sorted = Object.entries(moves).sort((a, b) => a[0].localeCompare(b[0]));
 
             sorted.forEach(([name, mv]) => {
-                const card = document.createElement("div");
-                card.className = "move-card";
+                const tr = document.createElement("tr");
 
-                card.onclick = () =>
-                    (window.location.href = `move.html?name=${encodeURIComponent(name)}`);
+                tr.onclick = () => window.location.href = `move.html?name=${encodeURIComponent(name)}`;
 
-                card.innerHTML = `
-                    <h2>${name}</h2>
-                    <span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span>
-
-                    <p class="label">Details</p>
-                    <ul>
-                        <li>Category: ${mv.Category}</li>
-                        <li>Power: ${mv.Power ?? "—"}</li>
-                        <li>Accuracy: ${mv.Acc ?? "—"}%</li>
-                        <li>PP: ${mv.PP}</li>
-                    </ul>
-
-                    <p class="label">Description</p>
-                    <p>${mv.Description}</p>
+                tr.innerHTML = `
+                    <td>${name}</td>
+                    <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+                    <td>${mv.Category}</td>
+                    <td>${mv.Power ?? "—"}</td>
+                    <td>${mv.Acc ?? "—"}%</td>
+                    <td>${mv.PP}</td>
+                    <td>${mv.Description}</td>
                 `;
 
-                container.appendChild(card);
+                tbody.appendChild(tr);
             });
         })
         .catch(err => console.error("Move JSON Load Error:", err));
