@@ -183,10 +183,7 @@ Promise.all([
   `;
 
   // Load evolution chain
-  loadEvolutions(monName, evolutionsData);
-});
-
-function loadEvolutions(currentName, data) {
+  function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
     evoContainer.innerHTML = "<p>Loading...</p>";
 
@@ -195,31 +192,40 @@ function loadEvolutions(currentName, data) {
         return;
     }
 
-    // Recursive function to build all evolution chains
+    // Build all paths recursively: each path = [ {name}, {name, method}, ... ]
     function buildChains(name) {
         const evolvesInto = data[name]?.EvolvesInto;
-        if (!evolvesInto || Object.keys(evolvesInto).length === 0) return [[{ name, method: null }]];
 
-        const chains = [];
+        // No further evolutions: return chain with single node
+        if (!evolvesInto || Object.keys(evolvesInto).length === 0)
+            return [[{ name }]];
+
+        const result = [];
+
         for (const nextName in evolvesInto) {
             const method = evolvesInto[nextName];
             const subChains = buildChains(nextName);
-            subChains.forEach(subChain => {
-                chains.push([{ name, method: null }, { name: nextName, method }, ...subChain.slice(1)]);
+
+            subChains.forEach(chain => {
+                // Prepend current name, then the next Pokémon with its method
+                result.push([{ name }, { name: nextName, method }, ...chain.slice(1)]);
             });
         }
-        return chains;
+
+        return result;
     }
 
-    // Go to earliest stage
+    // Go back to earliest stage
     let pointer = currentName;
-    while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
+    while (data[pointer] && data[pointer].EvolvesFrom)
+        pointer = data[pointer].EvolvesFrom;
 
     const allChains = buildChains(pointer);
 
-    // Render each chain as a separate line
+    // Render chains
     evoContainer.innerHTML = "";
     allChains.forEach(chain => {
+
         const lineDiv = document.createElement("div");
         lineDiv.style.display = "flex";
         lineDiv.style.alignItems = "center";
@@ -238,15 +244,19 @@ function loadEvolutions(currentName, data) {
             `;
             lineDiv.appendChild(evoBlock);
 
-            // Arrow + method block
-            if (step.method) {
-                const arrowBlock = document.createElement("div");
-                arrowBlock.className = "evo-arrow-block";
-                arrowBlock.innerHTML = `
-                    <div class="method-text">${step.method}</div>
-                    <div class="arrow">→</div>
-                `;
-                lineDiv.appendChild(arrowBlock);
+            // Arrow + method goes BETWEEN Pokémon only
+            if (idx < chain.length - 1) {
+                const nextStep = chain[idx + 1];
+
+                if (nextStep.method) {
+                    const arrowBlock = document.createElement("div");
+                    arrowBlock.className = "evo-arrow-block";
+                    arrowBlock.innerHTML = `
+                        <div class="method-text">${nextStep.method}</div>
+                        <div class="arrow">→</div>
+                    `;
+                    lineDiv.appendChild(arrowBlock);
+                }
             }
         });
 
