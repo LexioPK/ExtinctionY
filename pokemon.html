@@ -216,50 +216,43 @@ function loadEvolutions(currentName, data) {
         const evolvesInto = data[name].EvolvesInto || {};
         const keys = Object.keys(evolvesInto);
 
-        // Render current Pokémon if not already rendered
         if (!rendered.has(name)) {
             evoContainer.innerHTML += renderEvo(name);
         }
 
-        if (keys.length > 0) {
-            if (keys.length === 1) {
-                // Single evolution, same as before
-                const nextName = keys[0];
-                const method = evolvesInto[nextName];
-                evoContainer.innerHTML += `
-                    <div class="evo-arrow-block">
-                        <div class="method-text">${method}</div>
+        if (keys.length === 0) return; // End of chain
+
+        if (keys.length === 1) {
+            // Single evolution, same as before
+            const nextName = keys[0];
+            const method = evolvesInto[nextName];
+            evoContainer.innerHTML += `
+                <div class="evo-arrow-block">
+                    <div class="method-text">${method}</div>
+                    <div class="arrow">→</div>
+                </div>
+            `;
+            evoContainer.innerHTML += renderEvo(nextName);
+            traverseChain(nextName);
+        } else {
+            // Split evolution
+            evoContainer.innerHTML += `
+                <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
+                    <div class="evo-arrow-block" style="margin-bottom:10px;">
                         <div class="arrow">→</div>
                     </div>
-                `;
-                evoContainer.innerHTML += renderEvo(nextName);
+                    <div style="display:flex; justify-content:center; gap:40px;">
+                        ${keys.map(nextName => renderEvo(nextName)).join("")}
+                    </div>
+                </div>
+            `;
 
-                // Recurse if the next Pokémon has further evolutions
+            // Recurse each branch
+            keys.forEach(nextName => {
                 if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
                     traverseChain(nextName);
                 }
-            } else {
-                // Split evolution (multiple evolutions from one Pokémon)
-                evoContainer.innerHTML += `<div style="display:flex; justify-content:center; gap:40px; margin-top:10px;">`;
-                keys.forEach(nextName => {
-                    const method = evolvesInto[nextName];
-                    evoContainer.innerHTML += `
-                        <div>
-                            <div class="evo-arrow-block">
-                                <div class="method-text">${method}</div>
-                                <div class="arrow">→</div>
-                            </div>
-                            ${renderEvo(nextName)}
-                        </div>
-                    `;
-
-                    // Recursively render further evolutions of this branch
-                    if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
-                        traverseChain(nextName);
-                    }
-                });
-                evoContainer.innerHTML += `</div>`;
-            }
+            });
         }
     };
 
