@@ -206,11 +206,13 @@ function loadEvolutions(currentName, data) {
 
     evoContainer.innerHTML = "";
 
+    const processed = new Set();
+
     const renderChain = (fromName, toName, method) => {
         const fromImg = `https://play.pokemonshowdown.com/sprites/gen5/${fromName.toLowerCase()}.png`;
         const toImg = `https://play.pokemonshowdown.com/sprites/gen5/${toName.toLowerCase()}.png`;
         return `
-            <div style="display:flex; align-items:center; gap:20px; margin-bottom:20px;">
+            <div style="display:flex; align-items:center; gap:20px; margin-bottom:10px;">
                 <div class="evo-block">
                     <img src="${fromImg}" class="evo-img">
                     <div class="evo-name">${fromName}</div>
@@ -227,21 +229,28 @@ function loadEvolutions(currentName, data) {
         `;
     };
 
-    const processed = new Set();
-
     const traverse = (name) => {
         const evolvesInto = data[name].EvolvesInto || {};
-        Object.keys(evolvesInto).forEach(nextName => {
+        const keys = Object.keys(evolvesInto);
+        if (keys.length === 1) {
+            // Single evolution: follow the original chain style
+            const nextName = keys[0];
             const method = evolvesInto[nextName];
             if (!processed.has(`${name}->${nextName}`)) {
                 evoContainer.innerHTML += renderChain(name, nextName, method);
                 processed.add(`${name}->${nextName}`);
-                // Recurse further for chains
-                if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
-                    traverse(nextName);
-                }
+                traverse(nextName);
             }
-        });
+        } else if (keys.length > 1) {
+            // Split evolution: stack each evolution vertically
+            keys.forEach(nextName => {
+                const method = evolvesInto[nextName];
+                if (!processed.has(`${name}->${nextName}`)) {
+                    evoContainer.innerHTML += renderChain(name, nextName, method);
+                    processed.add(`${name}->${nextName}`);
+                }
+            });
+        }
     };
 
     traverse(pointer);
