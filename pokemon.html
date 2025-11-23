@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,8 +154,7 @@ Promise.all([
   <!-- Evolutions Section -->
 <div class="section evolutions">
   <h2>Evolutions</h2>
-  <div id="evolution-chain">
-  </div>
+  <div id="evolution-chain"></div>
 </div>
 
     <!-- Moves Section -->
@@ -183,54 +181,42 @@ Promise.all([
     </div>
   `;
 
-  // Load evolution chain
+  // Load evolution chain (kept exact same formatting as original)
   loadEvolutions(monName, evolutionsData);
 });
 
 function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
-    evoContainer.innerHTML = "<p>Loading...</p>";
+    evoContainer.innerHTML = "";
 
     if (!data[currentName]) {
-        evoContainer.innerHTML = "<p>No evolution data available.</p>";
+        evoContainer.innerHTML = "No evolution data available.";
         return;
     }
 
-    let chain = [];
+    // Collect all evolutions for display
+    const baseImg = `https://play.pokemonshowdown.com/sprites/gen5/${currentName.toLowerCase()}.png`;
+    evoContainer.innerHTML += `
+        <div class="evo-block">
+            <img class="evo-img" src="${baseImg}">
+            <div class="evo-name">${currentName}</div>
+        </div>
+    `;
 
-    // Go to earliest stage
-    let pointer = currentName;
-    while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
-
-    // Walk forward
-    while (pointer) {
-        chain.push(pointer);
-        const evolvesInto = data[pointer].EvolvesInto;
-        const next = evolvesInto && Object.keys(evolvesInto).length > 0
-            ? Object.keys(evolvesInto)[0] : null;
-        pointer = next;
-    }
-
-    evoContainer.innerHTML = "";
-    for (let i = 0; i < chain.length; i++) {
-        const name = chain[i];
-        const imgSrc = `images/${name.toLowerCase()}.png`;
-        evoContainer.innerHTML += `
-            <div class="evo-block">
-                <img src="${imgSrc}" class="evo-img">
-                <div class="evo-name">${name}</div>
-            </div>
-        `;
-
-        if (i < chain.length - 1) {
-            const method = Object.values(data[chain[i]].EvolvesInto)[0];
+    const evolvesInto = data[currentName].EvolvesInto;
+    if (evolvesInto && Object.keys(evolvesInto).length > 0) {
+        Object.entries(evolvesInto).forEach(([evoName, method], idx) => {
             evoContainer.innerHTML += `
                 <div class="evo-arrow-block">
                     <div class="method-text">${method}</div>
                     <div class="arrow">→</div>
                 </div>
+                <div class="evo-block">
+                    <img class="evo-img" src="https://play.pokemonshowdown.com/sprites/gen5/${evoName.toLowerCase()}.png">
+                    <div class="evo-name">${evoName}</div>
+                </div>
             `;
-        }
+        });
     }
 }
 </script>
