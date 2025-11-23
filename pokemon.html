@@ -223,7 +223,7 @@ function loadEvolutions(currentName, data) {
         if (keys.length === 0) return; // End of chain
 
         if (keys.length === 1) {
-            // Single evolution, same as before
+            // Single evolution
             const nextName = keys[0];
             const method = evolvesInto[nextName];
             evoContainer.innerHTML += `
@@ -235,23 +235,25 @@ function loadEvolutions(currentName, data) {
             evoContainer.innerHTML += renderEvo(nextName);
             traverseChain(nextName);
         } else {
-            // Split evolution stacked vertically
+            // Split evolutions stacked vertically with arrow/method on left
             evoContainer.innerHTML += `
-                <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+                <div style="display:flex; flex-direction:column; align-items:flex-start; gap:10px;">
                     ${keys.map(nextName => {
                         const method = evolvesInto[nextName];
                         return `
-                            <div class="evo-arrow-block">
-                                <div class="method-text">${method}</div>
-                                <div class="arrow">→</div>
+                            <div style="display:flex; align-items:center; gap:5px;">
+                                <div class="evo-arrow-block">
+                                    <div class="method-text">${method}</div>
+                                    <div class="arrow">→</div>
+                                </div>
+                                ${renderEvo(nextName)}
                             </div>
-                            ${renderEvo(nextName)}
                         `;
                     }).join("")}
                 </div>
             `;
 
-            // Recurse each branch in case they have further evolutions
+            // Recurse each branch in case of further evolutions
             keys.forEach(nextName => {
                 if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
                     traverseChain(nextName);
