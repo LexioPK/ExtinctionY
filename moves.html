@@ -125,22 +125,28 @@ function loadMoves() {
             const sorted = Object.entries(moves).sort((a, b) => a[0].localeCompare(b[0]));
 
             sorted.forEach(([name, mv]) => {
-                const tr = document.createElement("tr");
+    const tr = document.createElement("tr");
 
-                tr.onclick = () => window.location.href = `move.html?name=${encodeURIComponent(name)}`;
+    tr.onclick = () => window.location.href = `move.html?name=${encodeURIComponent(name)}`;
 
-                tr.innerHTML = `
-                    <td>${name}</td>
-                    <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                    <td>${mv.Category}</td>
-                    <td>${mv.Power ?? "—"}</td>
-                    <td>${mv.Acc ?? "—"}%</td>
-                    <td>${mv.PP}</td>
-                    <td>${mv.Description}</td>
-                `;
+    const categoryIcon = {
+        Physical: "https://play.pokemonshowdown.com/sprites/categories/physical.png",
+        Special: "https://play.pokemonshowdown.com/sprites/categories/special.png",
+        Status: "https://play.pokemonshowdown.com/sprites/categories/status.png"
+    }[mv.Category] ?? "";
 
-                tbody.appendChild(tr);
-            });
+    tr.innerHTML = `
+        <td>${name}</td>
+        <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+        <td>${categoryIcon ? `<img src="${categoryIcon}" alt="${mv.Category}" style="width:24px; height:24px;">` : mv.Category}</td>
+        <td>${mv.Power ?? "—"}</td>
+        <td>${mv.Acc ?? "—"}%</td>
+        <td>${mv.PP}</td>
+        <td>${mv.Description}</td>
+    `;
+
+    tbody.appendChild(tr);
+});
         })
         .catch(err => console.error("Move JSON Load Error:", err));
 }
