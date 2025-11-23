@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,16 +50,13 @@
   .type-fairy { background: #ec8fe6; }
 
   /* Evolution Styles */
-#evolution-chain { 
-    display:flex; 
-    align-items:center; 
-    justify-content:center; 
-    gap:40px; 
-    flex-wrap:nowrap; 
-    margin-top:10px; 
-    overflow-x:auto;        /* allow horizontal scroll */
-    padding-bottom:10px;    /* optional: space for scroll bar */
-}
+  #evolution-chain { display:flex; align-items:center; justify-content:center; gap:40px; flex-wrap:nowrap; margin-top:10px; }
+  .evo-block { text-align:center; }
+  .evo-img { width:120px; height:120px; image-rendering:pixelated; display:block; margin:0 auto 5px; }
+  .evo-name { font-weight:bold; font-size:18px; }
+  .evo-arrow-block { text-align:center; }
+  .method-text { font-size:14px; font-weight:600; text-decoration:underline; margin-bottom:5px; }
+  .arrow { font-size:30px; font-weight:bold; }
 </style>
 </head>
 <body>
@@ -190,37 +188,61 @@ Promise.all([
 
 function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
-    evoContainer.innerHTML = "";
+    evoContainer.innerHTML = "<p>Loading...</p>";
 
     if (!data[currentName]) {
-        evoContainer.innerHTML = "No evolution data available.";
+        evoContainer.innerHTML = "<p>No evolution data available.</p>";
         return;
     }
 
-    // Collect all evolutions for display
-    const baseImg = `https://play.pokemonshowdown.com/sprites/gen5/${currentName.toLowerCase()}.png`;
-    evoContainer.innerHTML += `
-        <div class="evo-block">
-            <img class="evo-img" src="${baseImg}">
-            <div class="evo-name">${currentName}</div>
-        </div>
-    `;
+    // Go to earliest stage
+    let pointer = currentName;
+    while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
 
-    const evolvesInto = data[currentName].EvolvesInto;
-    if (evolvesInto && Object.keys(evolvesInto).length > 0) {
-        Object.entries(evolvesInto).forEach(([evoName, method], idx) => {
+    // Build chains including split evolutions
+    evoContainer.innerHTML = "";
+
+    const renderEvo = (name) => {
+        const imgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png`;
+        return `
+            <div class="evo-block">
+                <img src="${imgSrc}" class="evo-img">
+                <div class="evo-name">${name}</div>
+            </div>
+        `;
+    };
+
+    const traverseChain = (name) => {
+        const evolvesInto = data[name].EvolvesInto;
+        const keys = Object.keys(evolvesInto || {});
+        if (!keys.length) {
+            // Only render the last Pokémon
+            evoContainer.innerHTML += renderEvo(name);
+            return;
+        }
+
+        // Render current Pokémon
+        evoContainer.innerHTML += renderEvo(name);
+
+        // For each evolution, render arrow and the evolved Pokémon
+        keys.forEach((nextName, i) => {
+            const method = evolvesInto[nextName];
             evoContainer.innerHTML += `
                 <div class="evo-arrow-block">
                     <div class="method-text">${method}</div>
                     <div class="arrow">→</div>
                 </div>
-                <div class="evo-block">
-                    <img class="evo-img" src="https://play.pokemonshowdown.com/sprites/gen5/${evoName.toLowerCase()}.png">
-                    <div class="evo-name">${evoName}</div>
-                </div>
             `;
+            evoContainer.innerHTML += renderEvo(nextName);
+
+            // If this evolution has its own evolutions, recurse
+            if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
+                traverseChain(nextName);
+            }
         });
-    }
+    };
+
+    traverseChain(pointer);
 }
 </script>
 
