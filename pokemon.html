@@ -195,14 +195,15 @@ function loadEvolutions(currentName, data) {
         return;
     }
 
-    // Go to earliest stage
+    // Find earliest stage
     let pointer = currentName;
     while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
 
-    // Build chains including split evolutions
-    evoContainer.innerHTML = "";
+    const rendered = new Set(); // Track which Pokémon are already rendered
 
     const renderEvo = (name) => {
+        if (rendered.has(name)) return ""; // Skip duplicates
+        rendered.add(name);
         const imgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png`;
         return `
             <div class="evo-block">
@@ -213,29 +214,28 @@ function loadEvolutions(currentName, data) {
     };
 
     const traverseChain = (name) => {
-        const evolvesInto = data[name].EvolvesInto;
-        const keys = Object.keys(evolvesInto || {});
-        if (!keys.length) {
-            // Only render the last Pokémon
+        const evolvesInto = data[name].EvolvesInto || {};
+        const keys = Object.keys(evolvesInto);
+
+        // Render current Pokémon if not already rendered
+        if (!rendered.has(name)) {
             evoContainer.innerHTML += renderEvo(name);
-            return;
         }
 
-        // Render current Pokémon
-        evoContainer.innerHTML += renderEvo(name);
-
-        // For each evolution, render arrow and the evolved Pokémon
         keys.forEach((nextName, i) => {
             const method = evolvesInto[nextName];
-            evoContainer.innerHTML += `
-                <div class="evo-arrow-block">
-                    <div class="method-text">${method}</div>
-                    <div class="arrow">→</div>
-                </div>
-            `;
-            evoContainer.innerHTML += renderEvo(nextName);
+            // Render arrow + method only if next Pokémon isn't already rendered
+            if (!rendered.has(nextName)) {
+                evoContainer.innerHTML += `
+                    <div class="evo-arrow-block">
+                        <div class="method-text">${method}</div>
+                        <div class="arrow">→</div>
+                    </div>
+                `;
+                evoContainer.innerHTML += renderEvo(nextName);
+            }
 
-            // If this evolution has its own evolutions, recurse
+            // Recursively render evolutions of the next Pokémon
             if (data[nextName] && Object.keys(data[nextName].EvolvesInto || {}).length > 0) {
                 traverseChain(nextName);
             }
@@ -244,6 +244,7 @@ function loadEvolutions(currentName, data) {
 
     traverseChain(pointer);
 }
+
 </script>
 
 </body>
