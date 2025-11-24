@@ -222,35 +222,34 @@ Promise.all([
       </table>
     </div>
 
-    <!-- TM/HM/Tutor Moves Table (Right) -->
-    <div style="flex:1; min-width:200px;">
-      <table class="moves-table">
-        <thead>
-          <tr>
-            <th style="text-align:left; width:120px;">TM/HM/Tutor</th>
-            <th style="text-align:left; width:60px;">Type</th>
-            <th style="text-align:left; width:40px;">Cat</th>
-            <th style="text-align:left; width:40px;">Pow</th>
-            <th style="text-align:left; width:40px;">Acc</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${
-            mon.TMs ? mon.TMs.map(tm => {
-              const mv = movesData[tm.Move];
-              return `<tr>
-                <td>${tm.Move}</td>
-                <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
-                <td>${mv.Power ?? "—"}</td>
-                <td>${mv.Acc ?? "—"}%</td>
-              </tr>`;
-            }).join("") : "<tr><td colspan='5'>No TMs/HMs/Tutor moves</td></tr>"
-          }
-        </tbody>
-      </table>
-    </div>
-
+   <!-- TM/HM/Tutor Moves Table (Right) -->
+<div style="flex:1; min-width:200px;">
+  <table class="moves-table">
+    <thead>
+      <tr>
+        <th style="text-align:left; width:120px;">TM/HM/Tutor</th>
+        <th style="text-align:left; width:60px;">Type</th>
+        <th style="text-align:left; width:40px;">Cat</th>
+        <th style="text-align:left; width:40px;">Pow</th>
+        <th style="text-align:left; width:40px;">Acc</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${
+        mon.TMs ? mon.TMs.map(tm => {
+          const mv = movesData[tm.Move];
+          return `<tr>
+            <td>${tm.Label}: ${tm.Move}</td>
+            <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+            <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
+            <td>${mv.Power ?? "—"}</td>
+            <td>${mv.Acc ?? "—"}%</td>
+          </tr>`;
+        }).join("") : "<tr><td colspan='5'>No TMs/HMs/Tutor moves</td></tr>"
+      }
+    </tbody>
+  </table>
+</div>
   </div>
 </div>
   `;
