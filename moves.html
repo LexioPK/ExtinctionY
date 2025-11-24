@@ -15,12 +15,22 @@
         padding: 20px;
     }
 
+    /* Sticky Container (Tabs + Search) */
+    .top-bar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #f0f0f0;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
     /* Navigation Tabs */
     .tabs {
         display: flex;
         justify-content: center;
         gap: 20px;
-        margin-bottom: 25px;
+        margin-bottom: 10px;
     }
     .tab {
         font-size: 1.1em;
@@ -33,6 +43,22 @@
     }
     .tab:hover { background: #e4e4e4; }
     .active { background: #d0ffd6; font-weight: bold; }
+
+    /* Search bar */
+    .search-container {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+
+    #searchInput {
+        padding: 8px 12px;
+        width: 250px;
+        font-size: 1em;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
 
     h1 { text-align: center; margin-bottom: 20px; }
 
@@ -50,7 +76,6 @@
         padding: 10px 12px;
         border-bottom: 1px solid #ddd;
         font-size: 0.9em;
-        vertical-align: middle; /* Centers content vertically */
     }
 
     th {
@@ -87,21 +112,21 @@
     .type-dark { background:#5a5366; }
     .type-dragon { background:#096dc4; }
     .type-steel { background:#5a8ea2; }
-
-    /* Center category images */
-    td img {
-        display: block;
-        margin: 0 auto;
-    }
 </style>
 </head>
 <body>
 
-<!-- Navigation Tabs -->
-<div class="tabs">
-    <a class="tab" href="index.html">Pokédex</a>
-    <a class="tab active" href="moves.html">Moves</a>
-    <a class="tab" href="trainers.html">Trainers</a>
+<!-- 🔥 Sticky Area (Tabs + Search) -->
+<div class="top-bar">
+    <div class="tabs">
+        <a class="tab" href="index.html">Pokédex</a>
+        <a class="tab active" href="moves.html">Moves</a>
+        <a class="tab" href="trainers.html">Trainers</a>
+    </div>
+
+    <div class="search-container">
+        <input id="searchInput" type="text" placeholder="Search Pokémon...">
+    </div>
 </div>
 
 <h1>Move List</h1>
@@ -119,7 +144,7 @@
         </tr>
     </thead>
     <tbody>
-        <!-- Moves will be populated here -->
+        <!-- Moves go here -->
     </tbody>
 </table>
 
@@ -136,17 +161,10 @@ function loadMoves() {
 
                 tr.onclick = () => window.location.href = `move.html?name=${encodeURIComponent(name)}`;
 
-                // Map category to image (no text)
-                let catImg = '';
-                if(mv.Category) {
-                    const catLower = mv.Category.toLowerCase();
-                    catImg = `<img src="image/${catLower}.png" alt="${mv.Category}" style="width:24px;height:24px;">`;
-                }
-
                 tr.innerHTML = `
                     <td>${name}</td>
                     <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                    <td>${catImg}</td>
+                    <td>${mv.Category}</td>
                     <td>${mv.Power ?? "—"}</td>
                     <td>${mv.Acc ?? "—"}%</td>
                     <td>${mv.PP}</td>
@@ -160,6 +178,15 @@ function loadMoves() {
 }
 
 loadMoves();
+
+/* Pokémon Search → Goes to pokemon.html */
+document.getElementById("searchInput").addEventListener("keypress", e => {
+    if (e.key === "Enter") {
+        const name = e.target.value.trim();
+        if (name.length > 0)
+            window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`;
+    }
+});
 </script>
 
 </body>
