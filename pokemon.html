@@ -189,9 +189,10 @@ Promise.all([
    <!-- Moves -->
 <div class="section moves">
   <h2>Moves</h2>
-  <div class="moves-section">
-    <!-- Level-up Moves (Left) -->
-    <div class="moves-table-container">
+  <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
+
+    <!-- Level-up Moves Table (Left) -->
+    <div style="flex:1; min-width:200px;">
       <table class="moves-table">
         <thead>
           <tr>
@@ -205,29 +206,28 @@ Promise.all([
         </thead>
         <tbody>
           ${
-            levelMoves.map(m => {
-                const mv = movesData[m.Move];
-                return `<tr>
-                  <td>${m.Level}</td>
-                  <td>${m.Move}</td>
-                  <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                  <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
-                  <td>${mv.Power ?? "—"}</td>
-                  <td>${mv.Acc ?? "—"}%</td>
-                </tr>`;
+            moveList.map(m => {
+              const mv = movesData[m.Move];
+              return `<tr>
+                <td>${m.Level}</td>
+                <td>${m.Move}</td>
+                <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+                <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
+                <td>${mv.Power ?? "—"}</td>
+                <td>${mv.Acc ?? "—"}%</td>
+              </tr>`;
             }).join("")
           }
         </tbody>
       </table>
     </div>
 
-    <!-- TM/HM/Tutor Moves (Right) -->
-    <div class="moves-table-container">
+    <!-- TM/HM/Tutor Moves Table (Right) -->
+    <div style="flex:1; min-width:200px;">
       <table class="moves-table">
         <thead>
           <tr>
-            <th style="text-align:left; width:60px;">TM/HM/Tutor</th>
-            <th style="text-align:left; width:120px;">Move</th>
+            <th style="text-align:left; width:120px;">TM/HM/Tutor</th>
             <th style="text-align:left; width:60px;">Type</th>
             <th style="text-align:left; width:40px;">Cat</th>
             <th style="text-align:left; width:40px;">Pow</th>
@@ -236,21 +236,21 @@ Promise.all([
         </thead>
         <tbody>
           ${
-            tmMoves.map(m => {
-                const mv = movesData[m.Move];
-                return `<tr>
-                  <td>${m.Type}</td>
-                  <td>${m.Move}</td>
-                  <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                  <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
-                  <td>${mv.Power ?? "—"}</td>
-                  <td>${mv.Acc ?? "—"}%</td>
-                </tr>`;
-            }).join("")
+            mon.TMs ? mon.TMs.map(tm => {
+              const mv = movesData[tm.Move];
+              return `<tr>
+                <td>${tm.Move}</td>
+                <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+                <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
+                <td>${mv.Power ?? "—"}</td>
+                <td>${mv.Acc ?? "—"}%</td>
+              </tr>`;
+            }).join("") : "<tr><td colspan='5'>No TMs/HMs/Tutor moves</td></tr>"
           }
         </tbody>
       </table>
     </div>
+
   </div>
 </div>
   `;
