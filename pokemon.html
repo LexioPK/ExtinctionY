@@ -79,6 +79,35 @@
   .moves-table tr:hover { background:#f0f0f0; }
   .category-icon { width:24px; height:24px; display:block; margin:auto; }
   .moves-table-container { flex:1; min-width:280px; }
+
+  /* ⭐ Base Stats Bars */
+  .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 3px 0;
+  }
+  .stat-name {
+      width: 35px;
+      font-weight: bold;
+      text-align: right;
+  }
+  .stat-num {
+      width: 30px;
+      text-align: left;
+      font-size: 0.9em;
+  }
+  .stat-bar-bg {
+      flex-grow: 1;
+      height: 8px;
+      border-radius: 4px;
+      background: #ddd;
+      overflow: hidden;
+  }
+  .stat-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+  }
 </style>
 </head>
 <body>
@@ -130,6 +159,26 @@ Promise.all([
   const categoryIcons = { "Physical":"image/physical.png", "Special":"image/special.png", "Status":"image/status.png" };
 
   const cardDiv = document.getElementById("pokemonCard");
+
+  /* ⭐ Helper for stat bars */
+  function createStatRow(label, value, min, max, color) {
+      const pct = Math.max(3, Math.min(100, (value - min) / (max - min) * 100));
+      return `
+          <div class="stat-row">
+              <div class="stat-name">${label}</div>
+              <div class="stat-num">${value}</div>
+              <div class="stat-bar-bg">
+                  <div class="stat-bar-fill" style="width:${pct}%; background:${color};"></div>
+              </div>
+          </div>
+      `;
+  }
+
+  const statColors = {
+      HP: "#FF5959", Atk: "#F5AC78", Def: "#FAE078",
+      SpA: "#9DB7F5", SpD: "#A7DB8D", Spe: "#FA92B2", BST: "#B88CFF"
+  };
+
   cardDiv.innerHTML = `
     <button class="nav-btn prev-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(prevMon)}'">
       ← #${String(prevMonData.SpeciesIdx).padStart(3,"0")} ${prevMon}
@@ -169,15 +218,15 @@ Promise.all([
    <!-- Base Stats -->
    <div class="section stats">
      <h2>Base Stats</h2>
-     <ul>
-       <li>HP: ${mon.BaseStats.HP}</li>
-       <li>Atk: ${mon.BaseStats.Atk}</li>
-       <li>Def: ${mon.BaseStats.Def}</li>
-       <li>SpA: ${mon.BaseStats.SpA}</li>
-       <li>SpD: ${mon.BaseStats.SpD}</li>
-       <li>Spe: ${mon.BaseStats.Spe}</li>
-       <li><strong>BST: ${bst}</strong></li>
-     </ul>
+     <div id="stat-bars">
+       ${createStatRow("HP", mon.BaseStats.HP, 15, 180, statColors.HP)}
+       ${createStatRow("Atk", mon.BaseStats.Atk, 15, 180, statColors.Atk)}
+       ${createStatRow("Def", mon.BaseStats.Def, 15, 180, statColors.Def)}
+       ${createStatRow("SpA", mon.BaseStats.SpA, 15, 180, statColors.SpA)}
+       ${createStatRow("SpD", mon.BaseStats.SpD, 15, 180, statColors.SpD)}
+       ${createStatRow("Spe", mon.BaseStats.Spe, 15, 180, statColors.Spe)}
+       ${createStatRow("BST", bst, 250, 600, statColors.BST)}
+     </div>
    </div>
 
    <!-- Evolutions -->
@@ -187,76 +236,70 @@ Promise.all([
    </div>
 
    <!-- Moves -->
-<div class="section moves">
-  <h2>Moves</h2>
-  <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
+   <div class="section moves">
+     <h2>Moves</h2>
+     <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
+       <!-- Level-up Moves Table (Left) -->
+       <div style="flex:1; min-width:200px;">
+         <table class="moves-table">
+           <thead>
+             <tr>
+               <th style="text-align:left; width:40px;">Lvl</th>
+               <th style="text-align:left; width:120px;">Move</th>
+               <th style="text-align:left; width:60px;">Type</th>
+               <th style="text-align:left; width:40px;">Cat</th>
+               <th style="text-align:left; width:40px;">Pow</th>
+               <th style="text-align:left; width:40px;">Acc</th>
+             </tr>
+           </thead>
+           <tbody>
+             ${moveList.map(m => {
+               const mv = movesData[m.Move];
+               return `<tr>
+                 <td>${m.Level}</td>
+                 <td>${m.Move}</td>
+                 <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+                 <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
+                 <td>${mv.Power ?? "—"}</td>
+                 <td>${mv.Acc ?? "—"}%</td>
+               </tr>`;
+             }).join("")}
+           </tbody>
+         </table>
+       </div>
 
-    <!-- Level-up Moves Table (Left) -->
-    <div style="flex:1; min-width:200px;">
-      <table class="moves-table">
-        <thead>
-          <tr>
-            <th style="text-align:left; width:40px;">Lvl</th>
-            <th style="text-align:left; width:120px;">Move</th>
-            <th style="text-align:left; width:60px;">Type</th>
-            <th style="text-align:left; width:40px;">Cat</th>
-            <th style="text-align:left; width:40px;">Pow</th>
-            <th style="text-align:left; width:40px;">Acc</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${
-            moveList.map(m => {
-              const mv = movesData[m.Move];
-              return `<tr>
-                <td>${m.Level}</td>
-                <td>${m.Move}</td>
-                <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
-                <td>${mv.Power ?? "—"}</td>
-                <td>${mv.Acc ?? "—"}%</td>
-              </tr>`;
-            }).join("")
-          }
-        </tbody>
-      </table>
-    </div>
-
-   <!-- TM/HM/Tutor Moves Table (Right) -->
-<div style="flex:1; min-width:200px;">
-  <table class="moves-table">
-    <thead>
-      <tr>
-        <th style="text-align:left; width:120px;">TM/HM/Tutor</th>
-        <th style="text-align:left; width:60px;">Type</th>
-        <th style="text-align:left; width:40px;">Cat</th>
-        <th style="text-align:left; width:40px;">Pow</th>
-        <th style="text-align:left; width:40px;">Acc</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${
-        mon.TMs ? mon.TMs.map(tm => {
-          const mv = movesData[tm.Move];
-          return `<tr>
-            <td>${tm.Label}: ${tm.Move}</td>
-            <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-            <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
-            <td>${mv.Power ?? "—"}</td>
-            <td>${mv.Acc ?? "—"}%</td>
-          </tr>`;
-        }).join("") : "<tr><td colspan='5'>No TMs/HMs/Tutor moves</td></tr>"
-      }
-    </tbody>
-  </table>
-</div>
-  </div>
-</div>
+       <!-- TM/HM/Tutor Moves Table (Right) -->
+       <div style="flex:1; min-width:200px;">
+         <table class="moves-table">
+           <thead>
+             <tr>
+               <th style="text-align:left; width:120px;">TM/HM/Tutor</th>
+               <th style="text-align:left; width:60px;">Type</th>
+               <th style="text-align:left; width:40px;">Cat</th>
+               <th style="text-align:left; width:40px;">Pow</th>
+               <th style="text-align:left; width:40px;">Acc</th>
+             </tr>
+           </thead>
+           <tbody>
+             ${mon.TMs ? mon.TMs.map(tm => {
+               const mv = movesData[tm.Move];
+               return `<tr>
+                 <td>${tm.Label}: ${tm.Move}</td>
+                 <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+                 <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
+                 <td>${mv.Power ?? "—"}</td>
+                 <td>${mv.Acc ?? "—"}%</td>
+               </tr>`;
+             }).join("") : "<tr><td colspan='5'>No TMs/HMs/Tutor moves</td></tr>"}
+           </tbody>
+         </table>
+       </div>
+     </div>
+   </div>
   `;
 
   loadEvolutions(monName, evolutionsData);
 });
-
 
 /* evolution renderer unchanged */
 function loadEvolutions(currentName, data) {
@@ -319,4 +362,4 @@ function loadEvolutions(currentName, data) {
 </script>
 
 </body>
-</html>
+</
