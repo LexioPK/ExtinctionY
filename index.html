@@ -224,7 +224,7 @@ function loadPokedex() {
                 .sort((a, b) => a[1].SpeciesIdx - b[1].SpeciesIdx);
 
             /* ⭐ Multi-folder sprite folders */
-            const spriteFolders = ["pokemon_sprites", "pokemon_sprites2"];
+            const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
             const getPokemonImage = (pokeName) => {
                 const lowerName = pokeName.toLowerCase().replace(/\s+/g,'-');
                 return `${spriteFolders[0]}/${lowerName}.png`;
