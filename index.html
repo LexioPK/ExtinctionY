@@ -18,7 +18,6 @@
         margin-bottom: 25px;
     }
 
-    /* ⭐ Sticky Tabs & Search Container */
     .top-bar {
         position: sticky;
         top: 0;
@@ -31,7 +30,6 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    /* Navigation Tabs */
     .tabs {
         display: flex;
         justify-content: flex-start;
@@ -49,7 +47,6 @@
     .tab:hover { background: #e4e4e4; }
     .active { background: #d0ffd6; font-weight: bold; }
 
-    /* Search Bar */
     #search {
         width: 250px;
         padding: 8px;
@@ -87,9 +84,7 @@
         cursor: pointer;
     }
 
-    .pokemon-card:hover {
-        transform: translateY(-4px);
-    }
+    .pokemon-card:hover { transform: translateY(-4px); }
 
     .sprite {
         display: block;
@@ -143,22 +138,36 @@
     .type-steel { background: #5a8ea2; }
     .type-fairy { background: #ec8fe6; }
 
-    ul {
-        list-style: none;
-        padding-left: 0;
-        margin: 0;
-    }
+    ul { list-style: none; padding-left: 0; margin: 0; }
 
     .label {
         font-weight: bold;
         margin-top: 10px;
         margin-bottom: 3px;
     }
+
+    /* ⭐ Stat Bar Style (Option 1) */
+    .stat-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 3px 0;
+    }
+    .stat-name {
+        width: 35px;
+        font-weight: bold;
+    }
+    .stat-bar {
+        height: 8px;
+        border-radius: 4px;
+        flex-grow: 1;
+        background: linear-gradient(90deg, red, yellow, green);
+    }
 </style>
 </head>
 <body>
 
-<!-- ⭐ Top Bar: Tabs + Search -->
+<!-- Top Bar -->
 <div class="top-bar">
     <div class="tabs">
         <a class="tab active" href="index.html">Pokédex</a>
@@ -184,7 +193,6 @@ function loadPokedex() {
         .then(r => r.json())
         .then(data => {
             allPokemon = data;
-
             const container = document.getElementById("pokedex");
 
             const entries = Object.entries(data)
@@ -202,8 +210,16 @@ function loadPokedex() {
                 const card = document.createElement("div");
                 card.className = "pokemon-card";
 
-                card.onclick = () => 
+                card.onclick = () =>
                     (window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`);
+
+                /* ⭐ INSERTED STAT BARS BELOW */
+                const statHTML = (label, value) => `
+                    <div class="stat-row">
+                        <div class="stat-name">${label}</div>
+                        <div class="stat-bar" style="width:${value/255*100}%"></div>
+                        <div>${value}</div>
+                    </div>`;
 
                 card.innerHTML = `
     <h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${name}</h3>
@@ -227,15 +243,13 @@ function loadPokedex() {
     </ul>
 
     <p class="label">Base Stats</p>
-    <ul>
-        <li>HP: ${mon.BaseStats.HP}</li>
-        <li>Atk: ${mon.BaseStats.Atk}</li>
-        <li>Def: ${mon.BaseStats.Def}</li>
-        <li>SpA: ${mon.BaseStats.SpA}</li>
-        <li>SpD: ${mon.BaseStats.SpD}</li>
-        <li>Spe: ${mon.BaseStats.Spe}</li>
-        <li><strong>BST: ${bst}</strong></li>
-    </ul>
+    ${statHTML("HP", mon.BaseStats.HP)}
+    ${statHTML("Atk", mon.BaseStats.Atk)}
+    ${statHTML("Def", mon.BaseStats.Def)}
+    ${statHTML("SpA", mon.BaseStats.SpA)}
+    ${statHTML("SpD", mon.BaseStats.SpD)}
+    ${statHTML("Spe", mon.BaseStats.Spe)}
+    <p><strong>BST: ${bst}</strong></p>
 `;
 
                 container.appendChild(card);
@@ -268,7 +282,7 @@ function searchPokemon() {
 
     resultsBox.innerHTML = matches
         .map(name => `
-            <div style="padding:8px; cursor:pointer;" 
+            <div style="padding:8px; cursor:pointer;"
                  onclick="window.location.href='pokemon.html?name=${encodeURIComponent(name)}'">
                 ${name}
             </div>
