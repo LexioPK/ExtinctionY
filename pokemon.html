@@ -216,19 +216,20 @@ Promise.all([
    </div>
 
   <!-- Base Stats -->
+<!-- Base Stats -->
 <div class="section stats">
   <h2>Base Stats</h2>
   <div style="display:flex; gap:20px; flex-wrap:wrap;">
     <!-- Old Stats Column (Left) -->
-    <div style="flex:1; min-width:200px;">
+    <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Old Stats</h3>
       <!-- Leave empty for now -->
     </div>
 
     <!-- Updated Stats Column (Right) -->
-    <div style="flex:1; min-width:200px;">
+    <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Updated Stats</h3>
-      <div id="stat-bars">
+      <div id="stat-bars" style="text-align:left; margin-top:10px;">
         ${createStatRow("HP", mon.BaseStats.HP, 15, 180, statColors.HP)}
         ${createStatRow("Atk", mon.BaseStats.Atk, 15, 180, statColors.Atk)}
         ${createStatRow("Def", mon.BaseStats.Def, 15, 180, statColors.Def)}
