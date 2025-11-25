@@ -126,13 +126,35 @@ const typeColors = {
 
 const monName = new URL(window.location.href).searchParams.get("name");
 
+// --- Multi-folder sprite support ---
+const spriteFolders = ["pokemon_sprites_1", "pokemon_sprites_2"];
+function getPokemonImage(name) {
+    const spriteName = name.toLowerCase().replace(/\s+/g, '-');
+    return new Promise(resolve => {
+        let index = 0;
+        function tryNext() {
+            if(index >= spriteFolders.length){
+                resolve('pokemon_sprites_unknown/unknown.png');
+                return;
+            }
+            const url = `${spriteFolders[index]}/${spriteName}.png`;
+            const img = new Image();
+            img.onload = () => resolve(url);
+            img.onerror = () => { index++; tryNext(); };
+            img.src = url;
+        }
+        tryNext();
+    });
+}
+
+// Fetch data
 Promise.all([
   fetch('data/pokedex.json').then(r => r.json()),
   fetch('data/movesets.json').then(r => r.json()),
   fetch('data/moves.json').then(r => r.json()),
   fetch('data/evolutions.json').then(r => r.json())
 ])
-.then(([pokedexData, movesetsData, movesData, evolutionsData]) => {
+.then(async ([pokedexData, movesetsData, movesData, evolutionsData]) => {
 
   const mon = pokedexData[monName];
   if (!mon) { document.getElementById("pokemonCard").textContent = "Pokémon not found."; return; }
@@ -146,15 +168,12 @@ Promise.all([
 
   const types = [mon.Type1, mon.Type2].filter((t,i,a)=>t && a.indexOf(t)===i);
 
-  const spriteName = monName.toLowerCase().replace(/\s+/g,'-');
-  const imageUrl = `pokemon_sprites/${spriteName}.png`;
+  // --- Use multi-folder system ---
+  const spriteUrl = await getPokemonImage(monName);
 
   const bst = mon.BST ?? (mon.BaseStats.HP+mon.BaseStats.Atk+mon.BaseStats.Def+mon.BaseStats.SpA+mon.BaseStats.SpD+mon.BaseStats.Spe);
 
   const moveList = movesetsData[monName] || [];
-
-  const levelMoves = moveList.filter(m => m.Type === "Level");
-  const tmMoves = moveList.filter(m => m.Type !== "Level");
 
   const categoryIcons = { "Physical":"image/physical.png", "Special":"image/special.png", "Status":"image/status.png" };
 
@@ -179,6 +198,7 @@ Promise.all([
       SpA: "#9DB7F5", SpD: "#A7DB8D", Spe: "#FA92B2", BST: "#B88CFF"
   };
 
+  // --- Everything else unchanged ---
   cardDiv.innerHTML = `
     <button class="nav-btn prev-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(prevMon)}'">
       ← #${String(prevMonData.SpeciesIdx).padStart(3,"0")} ${prevMon}
@@ -188,7 +208,7 @@ Promise.all([
     </button>
 
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
-    <img class="sprite" src="${imageUrl}" onerror="this.src='pokemon_sprites/unknown.png'">
+    <img class="sprite" src="${spriteUrl}" onerror="this.src='pokemon_sprites_unknown/unknown.png'">
 
    <!-- Info / Type / Abilities -->
    <div class="section info">
@@ -219,13 +239,9 @@ Promise.all([
 <div class="section stats">
   <h2>Base Stats</h2>
   <div style="display:flex; gap:20px; flex-wrap:wrap;">
-    <!-- Old Stats Column (Left) -->
     <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Old Stats</h3>
-      <!-- Leave empty for now -->
     </div>
-
-    <!-- Updated Stats Column (Right) -->
     <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Updated Stats</h3>
       <div id="stat-bars" style="text-align:left; margin-top:10px;">
@@ -251,7 +267,6 @@ Promise.all([
    <div class="section moves">
      <h2>Moves</h2>
      <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
-       <!-- Level-up Moves Table (Left) -->
        <div style="flex:1; min-width:200px;">
          <table class="moves-table">
            <thead>
@@ -280,7 +295,6 @@ Promise.all([
          </table>
        </div>
 
-       <!-- TM/HM/Tutor Moves Table (Right) -->
        <div style="flex:1; min-width:200px;">
          <table class="moves-table">
            <thead>
@@ -313,7 +327,7 @@ Promise.all([
   loadEvolutions(monName, evolutionsData);
 });
 
-/* evolution renderer unchanged */
+// evolution renderer unchanged except multi-folder sprite support
 function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
     if (!data[currentName]) { evoContainer.innerHTML = "<p>No evolution data available.</p>"; return; }
@@ -322,53 +336,56 @@ function loadEvolutions(currentName, data) {
     while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
 
     const rendered = new Set();
+
     const renderEvo = (name) => {
-      if (rendered.has(name)) return "";
-      rendered.add(name);
-      const imgSrc = `pokemon_sprites/${name.toLowerCase()}.png`;
-      return `
-        <div class="evo-block">
-          <a href="pokemon.html?name=${encodeURIComponent(name)}" style="text-decoration:none; color:inherit;">
-            <img src="${imgSrc}" class="evo-img">
-            <div class="evo-name">${name}</div>
-          </a>
-        </div>`;
+        if(rendered.has(name)) return "";
+        rendered.add(name);
+
+        const imgSrcPromise = getPokemonImage(name);
+        return imgSrcPromise.then(imgSrc => `
+            <div class="evo-block">
+              <a href="pokemon.html?name=${encodeURIComponent(name)}" style="text-decoration:none; color:inherit;">
+                <img src="${imgSrc}" class="evo-img">
+                <div class="evo-name">${name}</div>
+              </a>
+            </div>
+        `);
     };
 
-    const traverseChain = (name) => {
+    const traverseChain = async (name) => {
         const evolvesInto = data[name].EvolvesInto || {};
         const keys = Object.keys(evolvesInto);
-        if (!rendered.has(name)) evoContainer.innerHTML += renderEvo(name);
-        if (keys.length === 0) return;
+        if(!rendered.has(name)){
+            evoContainer.innerHTML += await renderEvo(name);
+        }
+        if(keys.length === 0) return;
 
-        if (keys.length === 1) {
+        if(keys.length === 1){
             const nextName = keys[0];
             const method = evolvesInto[nextName];
             evoContainer.innerHTML += `
               <div class="evo-arrow-block">
                 <div class="method-text">${method}</div>
                 <div class="arrow">→</div>
-              </div>`;
-            evoContainer.innerHTML += renderEvo(nextName);
-            traverseChain(nextName);
+              </div>
+            `;
+            evoContainer.innerHTML += await renderEvo(nextName);
+            await traverseChain(nextName);
         } else {
-            evoContainer.innerHTML += `
-              <div style="display:flex; flex-direction:column; align-items:flex-start; gap:10px;">
-                ${keys.map(nextName => `
-                  <div style="display:flex; align-items:center; gap:5px;">
-                    <div class="evo-arrow-block">
-                      <div class="method-text">${evolvesInto[nextName]}</div>
-                      <div class="arrow">→</div>
-                    </div>
-                    ${renderEvo(nextName)}
+            for(const nextName of keys){
+                const method = evolvesInto[nextName];
+                evoContainer.innerHTML += `
+                  <div class="evo-arrow-block">
+                    <div class="method-text">${method}</div>
+                    <div class="arrow">→</div>
                   </div>
-                `).join("")}
-              </div>`;
-            keys.forEach(nextName => traverseChain(nextName));
+                `;
+                evoContainer.innerHTML += await renderEvo(nextName);
+                await traverseChain(nextName);
+            }
         }
     };
 
-    evoContainer.innerHTML = "";
     traverseChain(pointer);
 }
 </script>
