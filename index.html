@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,6 +144,14 @@
         font-weight: bold;
         margin-top: 10px;
         margin-bottom: 3px;
+        border-bottom: 1px solid #ccc; /* thin underline for headers */
+        padding-bottom: 2px;
+    }
+
+    .section-divider {
+        height: 1px;
+        background: #ccc;
+        margin: 10px 0;
     }
 
     /* ⭐ Stat Bar Style */
@@ -226,66 +233,58 @@ function loadPokedex() {
                     (window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`);
 
                 /* ⭐ Stat bar generator */
-               const statBar = (label, value) => {
-    const colors = {
-        HP: "#FF5959",
-        Atk: "#F5AC78",
-        Def: "#FAE078",
-        SpA: "#9DB7F5",
-        SpD: "#A7DB8D",
-        Spe: "#FA92B2",
-        BST: "#B88CFF"
-    };
-
-    // Determine min/max
-    let min = (label === "BST") ? 250 : 15;
-    let max = (label === "BST") ? 600 : 180;
-
-    // Scale width
-    let pct = ((value - min) / (max - min)) * 100;
-    pct = Math.max(3, Math.min(100, pct)); // ensure a sliver for very low stats
-
-    return `
-        <div class="stat-row">
-            <div class="stat-name">${label}</div>
-            <div class="stat-num">${value}</div>
-            <div class="stat-bar-bg">
-                <div class="stat-bar-fill" style="width:${pct}%; background:${colors[label]};"></div>
-            </div>
-        </div>
-    `;
-};
-
+                const statBar = (label, value) => {
+                    const colors = {
+                        HP: "#FF5959",
+                        Atk: "#F5AC78",
+                        Def: "#FAE078",
+                        SpA: "#9DB7F5",
+                        SpD: "#A7DB8D",
+                        Spe: "#FA92B2",
+                        BST: "#B88CFF"
+                    };
+                    return `
+                        <div class="stat-row">
+                            <div class="stat-name">${label}</div>
+                            <div class="stat-num">${value}</div>
+                            <div class="stat-bar-bg">
+                                <div class="stat-bar-fill" style="width:${value/255*100}%; background:${colors[label]};"></div>
+                            </div>
+                        </div>
+                    `;
+                };
 
                 card.innerHTML = `
-    <h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${name}</h3>
+<h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${name}</h3>
 
-    <img class="sprite"
-         src="https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png"
-         onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
+<img class="sprite"
+     src="https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png"
+     onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
-    <div class="types">
-        <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
-        ${mon.Type2 && mon.Type2 !== mon.Type1
-            ? `<span class="type type-${mon.Type2.toLowerCase()}">${mon.Type2}</span>`
-            : ""}
-    </div>
+<div class="types">
+    <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
+    ${mon.Type2 && mon.Type2 !== mon.Type1
+        ? `<span class="type type-${mon.Type2.toLowerCase()}">${mon.Type2}</span>`
+        : ""}
+</div>
 
-    <p class="label">Abilities</p>
-    <ul>
-        <li>${mon.Ability1}</li>
-        <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
-        <li><em>(H):</em> ${mon.AbilityH}</li>
-    </ul>
+<p class="label">Abilities</p>
+<ul>
+    <li>${mon.Ability1}</li>
+    <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
+    <li><em>(H):</em> ${mon.AbilityH}</li>
+</ul>
 
-    <p class="label">Base Stats</p>
-    ${statBar("HP", mon.BaseStats.HP)}
-    ${statBar("Atk", mon.BaseStats.Atk)}
-    ${statBar("Def", mon.BaseStats.Def)}
-    ${statBar("SpA", mon.BaseStats.SpA)}
-    ${statBar("SpD", mon.BaseStats.SpD)}
-    ${statBar("Spe", mon.BaseStats.Spe)}
-    ${statBar("BST", bst)}
+<div class="section-divider"></div> <!-- Divider line between Abilities and Base Stats -->
+
+<p class="label">Base Stats</p>
+${statBar("HP", mon.BaseStats.HP)}
+${statBar("Atk", mon.BaseStats.Atk)}
+${statBar("Def", mon.BaseStats.Def)}
+${statBar("SpA", mon.BaseStats.SpA)}
+${statBar("SpD", mon.BaseStats.SpD)}
+${statBar("Spe", mon.BaseStats.Spe)}
+<p><strong>BST: ${bst}</strong></p>
 `;
 
                 container.appendChild(card);
