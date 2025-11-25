@@ -203,9 +203,10 @@ function loadPokedex() {
                 card.onclick = () => window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`;
 
                 /* Stat Bar Helper */
-                const makeStatBar = (label, value, color, min=15, max=180) => {
-                    let pct = ((value - min) / (max - min)) * 100;
-                    pct = Math.max(3, Math.min(100, pct)); // ensure minimal visible bar
+                const makeStatBar = (label, value, color) => {
+                    // Scale with min=15, max=180
+                    let pct = ((value - 15) / (180 - 15)) * 100;
+                    pct = Math.max(3, Math.min(100, pct));
                     return `<div class="stat-row">
                                 <div class="stat-name">${label}</div>
                                 <div class="stat-bar" style="width:${pct}%; background:${color}"></div>
@@ -214,8 +215,9 @@ function loadPokedex() {
                 };
 
                 /* BST Bar Helper */
-                const makeBSTBar = (value, min=250, max=600) => {
-                    let pct = ((value - min) / (max - min)) * 100;
+                const makeBSTBar = (value) => {
+                    // Scale with min=250, max=600
+                    let pct = ((value - 250) / (600 - 250)) * 100;
                     pct = Math.max(3, Math.min(100, pct));
                     return `<div class="stat-row">
                                 <div class="stat-name">BST</div>
