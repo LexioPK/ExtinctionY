@@ -274,8 +274,8 @@ function loadPokedex() {
     <h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${name}</h3>
 
     <img class="sprite"
-         src="https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png"
-         onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
+     src="pokemon_sprites/${name.toLowerCase()}.png"
+     onerror="this.src='pokemon_sprites/unknown.png'">
 
     <div class="types">
         <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
