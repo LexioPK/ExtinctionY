@@ -113,7 +113,7 @@
 <body>
 
 <a class="back" href="index.html">← Back to Pokédex</a>
-<div id="pokemonCard" class="card">Loading…</div>
+<div id="pokemon" class="">Loading…</div>
 
 <script>
 const typeColors = {
@@ -135,7 +135,7 @@ Promise.all([
 .then(([pokedexData, movesetsData, movesData, evolutionsData]) => {
 
   const mon = pokedexData[monName];
-  if (!mon) { document.getElementById("pokemonCard").textContent = "Pokémon not found."; return; }
+  if (!mon) { document.getElementById("pokemon").textContent = "Pokémon not found."; return; }
 
   const sortedMonNames = Object.entries(pokedexData).sort((a,b)=>a[1].SpeciesIdx-b[1].SpeciesIdx).map(([name])=>name);
   const currentIndex = sortedMonNames.indexOf(monName);
@@ -158,7 +158,7 @@ Promise.all([
 
   const categoryIcons = { "Physical":"image/physical.png", "Special":"image/special.png", "Status":"image/status.png" };
 
-  const cardDiv = document.getElementById("pokemonCard");
+  const Div = document.getElementById("pokemon");
 
   /* ⭐ Helper for stat bars */
   function createStatRow(label, value, min, max, color) {
@@ -188,7 +188,7 @@ Promise.all([
     </button>
 
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
-    <img class="sprite" src="${imageUrl}" onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
+    <img class="sprite" src="pokemon_sprites/${spriteName}.png" onerror="this.src='pokemon_sprites/unknown.png'">
 
    <!-- Info / Type / Abilities -->
    <div class="section info">
@@ -216,7 +216,6 @@ Promise.all([
    </div>
 
   <!-- Base Stats -->
-<!-- Base Stats -->
 <div class="section stats">
   <h2>Base Stats</h2>
   <div style="display:flex; gap:20px; flex-wrap:wrap;">
