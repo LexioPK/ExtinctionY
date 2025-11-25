@@ -146,39 +146,26 @@
         margin-bottom: 3px;
     }
 
-    /* ⭐ Stat Bar Style */
+    /* Stat Bars */
     .stat-row {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
         margin: 3px 0;
     }
     .stat-name {
         width: 35px;
         font-weight: bold;
-        text-align: right;
     }
-    .stat-num {
-        width: 30px;
-        text-align: left;
-        font-size: 0.9em;
-    }
-    .stat-bar-bg {
+    .stat-bar {
+        height: 12px;
+        border-radius: 4px;
         flex-grow: 1;
-        height: 8px;
-        border-radius: 4px;
-        background: #ddd;
-        overflow: hidden;
-    }
-    .stat-bar-fill {
-        height: 100%;
-        border-radius: 4px;
     }
 </style>
 </head>
 <body>
 
-<!-- Top Bar -->
 <div class="top-bar">
     <div class="tabs">
         <a class="tab active" href="index.html">Pokédex</a>
@@ -193,7 +180,6 @@
 </div>
 
 <h1>Pokédex</h1>
-
 <div id="pokedex"></div>
 
 <script>
@@ -210,71 +196,61 @@ function loadPokedex() {
                 .sort((a, b) => a[1].SpeciesIdx - b[1].SpeciesIdx);
 
             entries.forEach(([name, mon]) => {
-                const bst = mon.BST ??
-                    (mon.BaseStats.HP +
-                     mon.BaseStats.Atk +
-                     mon.BaseStats.Def +
-                     mon.BaseStats.SpA +
-                     mon.BaseStats.SpD +
-                     mon.BaseStats.Spe);
+                const bst = mon.BST ?? (mon.BaseStats.HP + mon.BaseStats.Atk + mon.BaseStats.Def + mon.BaseStats.SpA + mon.BaseStats.SpD + mon.BaseStats.Spe);
 
                 const card = document.createElement("div");
                 card.className = "pokemon-card";
+                card.onclick = () => window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`;
 
-                card.onclick = () =>
-                    (window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`);
+                /* Stat Bar Helper */
+                const makeStatBar = (label, value, color, min=15, max=180) => {
+                    let pct = ((value - min) / (max - min)) * 100;
+                    pct = Math.max(3, Math.min(100, pct)); // ensure minimal visible bar
+                    return `<div class="stat-row">
+                                <div class="stat-name">${label}</div>
+                                <div class="stat-bar" style="width:${pct}%; background:${color}"></div>
+                                <div>${value}</div>
+                            </div>`;
+                };
 
-                /* ⭐ Stat bar generator */
-                const statBar = (label, value) => {
-                    const colors = {
-                        HP: "#FF5959",
-                        Atk: "#F5AC78",
-                        Def: "#FAE078",
-                        SpA: "#9DB7F5",
-                        SpD: "#A7DB8D",
-                        Spe: "#FA92B2",
-                        BST: "#B88CFF"
-                    };
-                    return `
-                        <div class="stat-row">
-                            <div class="stat-name">${label}</div>
-                            <div class="stat-num">${value}</div>
-                            <div class="stat-bar-bg">
-                                <div class="stat-bar-fill" style="width:${value/255*100}%; background:${colors[label]};"></div>
-                            </div>
-                        </div>
-                    `;
+                /* BST Bar Helper */
+                const makeBSTBar = (value, min=250, max=600) => {
+                    let pct = ((value - min) / (max - min)) * 100;
+                    pct = Math.max(3, Math.min(100, pct));
+                    return `<div class="stat-row">
+                                <div class="stat-name">BST</div>
+                                <div class="stat-bar" style="width:${pct}%; background:#B88CFF"></div>
+                                <div>${value}</div>
+                            </div>`;
                 };
 
                 card.innerHTML = `
-    <h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${name}</h3>
+<h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3,"0")}</span> ${name}</h3>
 
-    <img class="sprite"
-         src="https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png"
-         onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
+<img class="sprite"
+     src="https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png"
+     onerror="this.src='https://play.pokemonshowdown.com/sprites/gen5/unknown.png'">
 
-    <div class="types">
-        <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
-        ${mon.Type2 && mon.Type2 !== mon.Type1
-            ? `<span class="type type-${mon.Type2.toLowerCase()}">${mon.Type2}</span>`
-            : ""}
-    </div>
+<div class="types">
+    <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
+    ${mon.Type2 && mon.Type2 !== mon.Type1 ? `<span class="type type-${mon.Type2.toLowerCase()}">${mon.Type2}</span>` : ""}
+</div>
 
-    <p class="label">Abilities</p>
-    <ul>
-        <li>${mon.Ability1}</li>
-        <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
-        <li><em>(H):</em> ${mon.AbilityH}</li>
-    </ul>
+<p class="label">Abilities</p>
+<ul>
+    <li>${mon.Ability1}</li>
+    <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
+    <li><em>(H):</em> ${mon.AbilityH}</li>
+</ul>
 
-    <p class="label">Base Stats</p>
-    ${statBar("HP", mon.BaseStats.HP)}
-    ${statBar("Atk", mon.BaseStats.Atk)}
-    ${statBar("Def", mon.BaseStats.Def)}
-    ${statBar("SpA", mon.BaseStats.SpA)}
-    ${statBar("SpD", mon.BaseStats.SpD)}
-    ${statBar("Spe", mon.BaseStats.Spe)}
-    ${statBar("BST", bst)}
+<p class="label">Base Stats</p>
+${makeStatBar("HP", mon.BaseStats.HP, "#FF5959")}
+${makeStatBar("Atk", mon.BaseStats.Atk, "#F5AC78")}
+${makeStatBar("Def", mon.BaseStats.Def, "#FAE078")}
+${makeStatBar("SpA", mon.BaseStats.SpA, "#9DB7F5")}
+${makeStatBar("SpD", mon.BaseStats.SpD, "#A7DB8D")}
+${makeStatBar("Spe", mon.BaseStats.Spe, "#FA92B2")}
+${makeBSTBar(bst)}
 `;
 
                 container.appendChild(card);
@@ -306,12 +282,7 @@ function searchPokemon() {
     resultsBox.style.display = "block";
 
     resultsBox.innerHTML = matches
-        .map(name => `
-            <div style="padding:8px; cursor:pointer;"
-                 onclick="window.location.href='pokemon.html?name=${encodeURIComponent(name)}'">
-                ${name}
-            </div>
-        `)
+        .map(name => `<div style="padding:8px; cursor:pointer;" onclick="window.location.href='pokemon.html?name=${encodeURIComponent(name)}'">${name}</div>`)
         .join("");
 }
 
