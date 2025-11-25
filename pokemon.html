@@ -127,7 +127,7 @@ const typeColors = {
 const monName = new URL(window.location.href).searchParams.get("name");
 
 // --- Multi-folder sprite support ---
-const spriteFolders = ["pokemon_sprites_1", "pokemon_sprites_2"];
+const spriteFolders = ["pokemon_sprites", "pokemon_sprites2"];
 function getPokemonImage(name) {
     const spriteName = name.toLowerCase().replace(/\s+/g, '-');
     return new Promise(resolve => {
