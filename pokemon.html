@@ -113,7 +113,7 @@
 <body>
 
 <a class="back" href="index.html">← Back to Pokédex</a>
-<div id="pokemon" class="">Loading…</div>
+<div id="pokemonCard" class="card">Loading…</div>
 
 <script>
 const typeColors = {
@@ -135,7 +135,7 @@ Promise.all([
 .then(([pokedexData, movesetsData, movesData, evolutionsData]) => {
 
   const mon = pokedexData[monName];
-  if (!mon) { document.getElementById("pokemon").textContent = "Pokémon not found."; return; }
+  if (!mon) { document.getElementById("pokemonCard").textContent = "Pokémon not found."; return; }
 
   const sortedMonNames = Object.entries(pokedexData).sort((a,b)=>a[1].SpeciesIdx-b[1].SpeciesIdx).map(([name])=>name);
   const currentIndex = sortedMonNames.indexOf(monName);
@@ -147,7 +147,7 @@ Promise.all([
   const types = [mon.Type1, mon.Type2].filter((t,i,a)=>t && a.indexOf(t)===i);
 
   const spriteName = monName.toLowerCase().replace(/\s+/g,'-');
-  const imageUrl = `https://play.pokemonshowdown.com/sprites/gen5/${spriteName}.png`;
+  const imageUrl = `pokemon_sprites/${spriteName}.png`;
 
   const bst = mon.BST ?? (mon.BaseStats.HP+mon.BaseStats.Atk+mon.BaseStats.Def+mon.BaseStats.SpA+mon.BaseStats.SpD+mon.BaseStats.Spe);
 
@@ -158,7 +158,7 @@ Promise.all([
 
   const categoryIcons = { "Physical":"image/physical.png", "Special":"image/special.png", "Status":"image/status.png" };
 
-  const Div = document.getElementById("pokemon");
+  const cardDiv = document.getElementById("pokemonCard");
 
   /* ⭐ Helper for stat bars */
   function createStatRow(label, value, min, max, color) {
@@ -188,7 +188,7 @@ Promise.all([
     </button>
 
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
-    <img class="sprite" src="pokemon_sprites/${spriteName}.png" onerror="this.src='pokemon_sprites/unknown.png'">
+    <img class="sprite" src="${imageUrl}" onerror="this.src='pokemon_sprites/unknown.png'">
 
    <!-- Info / Type / Abilities -->
    <div class="section info">
@@ -325,7 +325,7 @@ function loadEvolutions(currentName, data) {
     const renderEvo = (name) => {
       if (rendered.has(name)) return "";
       rendered.add(name);
-      const imgSrc = `https://play.pokemonshowdown.com/sprites/gen5/${name.toLowerCase()}.png`;
+      const imgSrc = `pokemon_sprites/${name.toLowerCase()}.png`;
       return `
         <div class="evo-block">
           <a href="pokemon.html?name=${encodeURIComponent(name)}" style="text-decoration:none; color:inherit;">
@@ -374,4 +374,4 @@ function loadEvolutions(currentName, data) {
 </script>
 
 </body>
-</
+</html>
