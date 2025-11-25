@@ -215,19 +215,31 @@ Promise.all([
      </div>
    </div>
 
-   <!-- Base Stats -->
-   <div class="section stats">
-     <h2>Base Stats</h2>
-     <div id="stat-bars">
-       ${createStatRow("HP", mon.BaseStats.HP, 15, 180, statColors.HP)}
-       ${createStatRow("Atk", mon.BaseStats.Atk, 15, 180, statColors.Atk)}
-       ${createStatRow("Def", mon.BaseStats.Def, 15, 180, statColors.Def)}
-       ${createStatRow("SpA", mon.BaseStats.SpA, 15, 180, statColors.SpA)}
-       ${createStatRow("SpD", mon.BaseStats.SpD, 15, 180, statColors.SpD)}
-       ${createStatRow("Spe", mon.BaseStats.Spe, 15, 180, statColors.Spe)}
-       ${createStatRow("BST", bst, 250, 600, statColors.BST)}
-     </div>
-   </div>
+  <!-- Base Stats -->
+<div class="section stats">
+  <h2>Base Stats</h2>
+  <div style="display:flex; gap:20px; flex-wrap:wrap;">
+    <!-- Old Stats Column (Left) -->
+    <div style="flex:1; min-width:200px;">
+      <h3 style="text-decoration:underline;">Old Stats</h3>
+      <!-- Leave empty for now -->
+    </div>
+
+    <!-- Updated Stats Column (Right) -->
+    <div style="flex:1; min-width:200px;">
+      <h3 style="text-decoration:underline;">Updated Stats</h3>
+      <div id="stat-bars">
+        ${createStatRow("HP", mon.BaseStats.HP, 15, 180, statColors.HP)}
+        ${createStatRow("Atk", mon.BaseStats.Atk, 15, 180, statColors.Atk)}
+        ${createStatRow("Def", mon.BaseStats.Def, 15, 180, statColors.Def)}
+        ${createStatRow("SpA", mon.BaseStats.SpA, 15, 180, statColors.SpA)}
+        ${createStatRow("SpD", mon.BaseStats.SpD, 15, 180, statColors.SpD)}
+        ${createStatRow("Spe", mon.BaseStats.Spe, 15, 180, statColors.Spe)}
+        ${createStatRow("BST", bst, 250, 600, statColors.BST)}
+      </div>
+    </div>
+  </div>
+</div>
 
    <!-- Evolutions -->
    <div class="section evolutions">
