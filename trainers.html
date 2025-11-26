@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -173,100 +172,116 @@
 
     <script>
         let trainerData = {};
-        let currentRoute = null;
+        let groupedRoutes = {};
 
         async function loadTrainers() {
-            const container = document.getElementById("trainerSection");
             const sidebar = document.getElementById("sidebar");
 
             trainerData = await fetch("data/trainers.json").then(r => r.json());
 
-            // Build Route Tabs
-            for (const area in trainerData) {
+            /* -----------------------------
+               GROUP ROUTES BY BASE NAME
+               ex: "Route 6 - East", "Route 6 - West"
+               become one tab: "Route 6"
+            ------------------------------ */
+            for (const fullName in trainerData) {
+                const base = fullName.split(" - ")[0];
+
+                if (!groupedRoutes[base]) groupedRoutes[base] = [];
+                groupedRoutes[base].push(fullName);
+            }
+
+            /* Build sidebar tabs */
+            Object.keys(groupedRoutes).forEach(base => {
                 const tab = document.createElement("div");
                 tab.className = "route-tab";
-                tab.textContent = area;
+                tab.textContent = base;
 
                 tab.onclick = () => {
                     document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                     tab.classList.add("active");
-
-                    currentRoute = area;
-                    displayRoute(area);
+                    displayRoute(base);
                 };
 
                 sidebar.appendChild(tab);
-            }
+            });
 
-            // Auto-load first route
-            const firstRoute = Object.keys(trainerData)[0];
+            /* Auto-load first route */
             sidebar.children[0].classList.add("active");
-            displayRoute(firstRoute);
+            displayRoute(Object.keys(groupedRoutes)[0]);
         }
 
-        // Display trainers for selected route
-        function displayRoute(area) {
+        /* Display all sub-routes under one combined tab */
+        function displayRoute(baseName) {
             const container = document.getElementById("trainerSection");
             container.innerHTML = "";
 
-            const areaData = trainerData[area];
-
             const areaTitle = document.createElement("div");
             areaTitle.className = "area-title";
-            areaTitle.textContent = area;
+            areaTitle.textContent = baseName;
             container.appendChild(areaTitle);
 
-            areaData.Trainers.forEach(tr => {
-                const card = document.createElement("div");
-                card.className = "trainer-card";
+            /* Loop sub-areas (e.g. East, West, B1F…) */
+            groupedRoutes[baseName].forEach(subArea => {
+                const subHeader = document.createElement("h2");
+                subHeader.textContent = subArea;
+                subHeader.style.marginTop = "25px";
+                container.appendChild(subHeader);
 
-                const row = document.createElement("div");
-                row.className = "trainer-row";
+                const areaData = trainerData[subArea];
 
-                // Trainer info
-                const trainerInfo = document.createElement("div");
-                trainerInfo.innerHTML = `
-                    <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
-                    <div class="trainer-sub">
-                        <strong>Battle Type:</strong> ${tr.BattleType}<br>
-                        <strong></strong> ${tr.Required || "N/A"}<br>
-                        <strong>Reward:</strong> N/A
-                    </div>
-                `;
-                row.appendChild(trainerInfo);
+                areaData.Trainers.forEach(tr => {
+                    const card = document.createElement("div");
+                    card.className = "trainer-card";
 
-                // Pokémon columns
-                tr.Pokemon.forEach(p => {
-                    const pDiv = document.createElement("div");
-                    pDiv.className = "pokemon-col";
+                    const row = document.createElement("div");
+                    row.className = "trainer-row";
 
-                    const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
-
-                    pDiv.innerHTML = `
-                        <div class="poke-name">${p.Name} — Lv ${p.Level}</div>
-
-                        <img class="poke-img"
-                             src="pokemon_sprites/${spriteName}.png"
-                             onerror="this.onerror=null;
-                                      this.src='pokemon_sprties2/${spriteName}.png';
-                                      this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
-
-                        <div class="poke-details">
-                            <strong>Ability:</strong> ${p.Ability}<br>
-                            <strong>Nature:</strong> ${p.Nature}<br>
-                            <strong>Item:</strong> ${p.HeldItem}
-                        </div>
-
-                        <div class="move-list"><strong>Moves:</strong><br>
-                            • ${p.Moves.join("<br>• ")}
+                    /* Trainer Info */
+                    const trainerInfo = document.createElement("div");
+                    trainerInfo.innerHTML = `
+                        <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
+                        <div class="trainer-sub">
+                            <strong>Battle Type:</strong> ${tr.BattleType}<br>
+                            <strong></strong> ${tr.Required || "N/A"}<br>
+                            <strong>Reward:</strong> N/A
                         </div>
                     `;
+                    row.appendChild(trainerInfo);
 
-                    row.appendChild(pDiv);
+                    /* Pokémon Columns */
+                    tr.Pokemon.forEach(p => {
+                        const pDiv = document.createElement("div");
+                        pDiv.className = "pokemon-col";
+
+                        const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+                        pDiv.innerHTML = `
+                            <div class="poke-name">${p.Name} — Lv ${p.Level}</div>
+
+                            <img class="poke-img"
+                                 src="pokemon_sprites/${spriteName}.png"
+                                 onerror="this.onerror=null;
+                                          this.src='pokemon_sprties2/${spriteName}.png';
+                                          this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+
+                            <div class="poke-details">
+                                <strong>Ability:</strong> ${p.Ability}<br>
+                                <strong>Nature:</strong> ${p.Nature}<br>
+                                <strong>Item:</strong> ${p.HeldItem}
+                            </div>
+
+                            <div class="move-list"><strong>Moves:</strong><br>
+                                • ${p.Moves.join("<br>• ")}
+                            </div>
+                        `;
+
+                        row.appendChild(pDiv);
+                    });
+
+                    card.appendChild(row);
+                    container.appendChild(card);
                 });
-
-                card.appendChild(row);
-                container.appendChild(card);
             });
         }
 
