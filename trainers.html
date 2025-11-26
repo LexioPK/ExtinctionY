@@ -164,7 +164,7 @@
             const sidebar = document.getElementById("sidebar");
 
             // ✅ UPDATED PATH
-            trainerData = await fetch("data/trainers/trainers.json").then(r => r.json());
+            trainerData = await fetch("data/trainers.json").then(r => r.json());
 
             // Build Route Tabs
             for (const area in trainerData) {
