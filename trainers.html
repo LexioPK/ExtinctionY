@@ -181,8 +181,6 @@
 
             /* -----------------------------
                GROUP ROUTES BY BASE NAME
-               ex: "Route 6 - East", "Route 6 - West"
-               become one tab: "Route 6"
             ------------------------------ */
             for (const fullName in trainerData) {
                 const base = fullName.split(" - ")[0];
@@ -221,12 +219,20 @@
             areaTitle.textContent = baseName;
             container.appendChild(areaTitle);
 
-            /* Loop sub-areas (e.g. East, West, B1F…) */
-            groupedRoutes[baseName].forEach(subArea => {
-                const subHeader = document.createElement("h2");
-                subHeader.textContent = subArea;
-                subHeader.style.marginTop = "25px";
-                container.appendChild(subHeader);
+            const subs = groupedRoutes[baseName];
+            const multipleSubs = subs.length > 1;
+
+            /* Loop sub-areas */
+            subs.forEach(subArea => {
+
+                /* NEW BEHAVIOR: Show subheader only if >1 subsection */
+                if (multipleSubs) {
+                    const subHeader = document.createElement("h2");
+                    subHeader.textContent = subArea;
+                    subHeader.style.marginTop = "25px";
+                    subHeader.style.textDecoration = "underline"; /* underline added */
+                    container.appendChild(subHeader);
+                }
 
                 const areaData = trainerData[subArea];
 
