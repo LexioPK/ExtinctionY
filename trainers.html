@@ -75,8 +75,8 @@
             font-weight: 600;
         }
 
-        /* TRAINER CONTENT AREA */
-        .trainer-section {
+        /*  CONTENT AREA */
+        .-section {
             padding: 20px;
             max-width: 900px;
             margin-left: 240px;
@@ -90,7 +90,7 @@
             font-weight: 700;
         }
 
-        .trainer-card {
+        .-card {
             background: white;
             padding: 15px 20px;
             border-radius: 12px;
@@ -98,20 +98,20 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .trainer-header {
+        .-header {
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 5px;
         }
 
-        .trainer-sub {
+        .-sub {
             font-size: 0.95rem;
             color: #666;
             margin-bottom: 12px;
         }
 
-        /* NEW — horizontal trainer layout */
-        .trainer-row {
+        /* NEW — horizontal  layout */
+        .-row {
             display: flex;
             align-items: flex-start;
             gap: 25px;
@@ -155,21 +155,21 @@
     <div class="header">
         <a href="index.html">Pokédex</a>
         <a href="moves.html">Moves</a>
-        <a href="trainers.html" class="active">Trainers</a>
+        <a href="s.html" class="active">s</a>
     </div>
 
     <!-- SIDEBAR ROUTE TABS -->
     <div class="sidebar" id="sidebar"></div>
 
-    <!-- TRAINER CARDS -->
-    <div class="trainer-section" id="trainerSection"></div>
+    <!--  CARDS -->
+    <div class="-section" id="Section"></div>
 
     <script>
-        let trainerData = {};
+        let Data = {};
         let currentRoute = null;
 
-        async function loadTrainers() {
-            const container = document.getElementById("trainerSection");
+        async function loads() {
+            const container = document.getElementById("Section");
             const sidebar = document.getElementById("sidebar");
 
             trainerData = await fetch("data/trainers.json").then(r => r.json());
