@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainers</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        /* HEADER */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 20;
+        }
+
+        .header a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: 65px;
+            left: 0;
+            width: 220px;
+            height: calc(100vh - 65px);
+            background: white;
+            overflow-y: auto;
+            box-shadow: 3px 0 8px rgba(0,0,0,0.07);
+            padding: 15px;
+        }
+
+        .route-tab {
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: #f2f2f2;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .route-tab:hover {
+            background: #e3e3e3;
+        }
+
+        .route-tab.active {
+            background: #1976d2;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* TRAINER CONTENT AREA */
+        .trainer-section {
+            padding: 20px;
+            max-width: 900px;
+            margin-left: 240px;
+            margin-top: 90px;
+            width: calc(100% - 240px);
+        }
+
+        .area-title {
+            font-size: 1.8rem;
+            margin-top: 30px;
+            font-weight: 700;
+        }
+
+        .trainer-card {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .trainer-header {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .trainer-sub {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .pokemon-block {
+            background: #fafafa;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border-left: 4px solid #3b4cca;
+        }
+
+        .poke-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .poke-details {
+            font-size: 0.95rem;
+            margin-top: 4px;
+            color: #444;
+        }
+
+        .move-list {
+            margin-top: 6px;
+            font-size: 0.9rem;
+        }
+
+        .poke-img {
+            width: 70px;
+            height: 70px;
+            image-rendering: pixelated;
+            display: block;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <a href="index.html">Pokédex</a>
+        <a href="moves.html">Moves</a>
+        <a href="trainers.html" style="color:#1976d2;">Trainers</a>
+    </div>
+
+    <!-- SIDEBAR ROUTE TABS -->
+    <div class="sidebar" id="sidebar"></div>
+
+    <!-- TRAINER CARDS -->
+    <div class="trainer-section" id="trainerSection"></div>
+
+    <script>
+        let trainerData = {};
+        let currentRoute = null;
+
+        async function loadTrainers() {
+            const container = document.getElementById("trainerSection");
+            const sidebar = document.getElementById("sidebar");
+
+            // ✅ UPDATED PATH
+            trainerData = await fetch("data/trainers/trainers.json").then(r => r.json());
+
+            // Build Route Tabs
+            for (const area in trainerData) {
+                const tab = document.createElement("div");
+                tab.className = "route-tab";
+                tab.textContent = area;
+
+                tab.onclick = () => {
+                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+
+                    currentRoute = area;
+                    displayRoute(area);
+                };
+
+                sidebar.appendChild(tab);
+            }
+
+            // Auto-load first route
+            const firstRoute = Object.keys(trainerData)[0];
+            sidebar.children[0].classList.add("active");
+            displayRoute(firstRoute);
+        }
+
+        // Display trainers for selected route
+        function displayRoute(area) {
+            const container = document.getElementById("trainerSection");
+            container.innerHTML = "";
+
+            const areaData = trainerData[area];
+
+            const areaTitle = document.createElement("div");
+            areaTitle.className = "area-title";
+            areaTitle.textContent = area;
+            container.appendChild(areaTitle);
+
+            areaData.Trainers.forEach(tr => {
+                const card = document.createElement("div");
+                card.className = "trainer-card";
+
+                card.innerHTML = `
+                    <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
+                    <div class="trainer-sub">
+                        <strong>Battle Type:</strong> ${tr.BattleType}<br>
+                        <strong>Route:</strong> ${tr.Route}
+                    </div>
+                `;
+
+                tr.Pokemon.forEach(p => {
+                    const pDiv = document.createElement("div");
+                    pDiv.className = "pokemon-block";
+
+                    const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+                    pDiv.innerHTML = `
+                        <img class="poke-img"
+                             src="pokemon_sprites/${spriteName}.png"
+                             onerror="this.onerror=null;
+                                      this.src='pokemon_sprites2/${spriteName}.png';
+                                      this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; };">
+
+                        <div class="poke-name">${p.Name} — Lv ${p.Level}</div>
+                        <div class="poke-details">
+                            <strong>Ability:</strong> ${p.Ability}<br>
+                            <strong>Nature:</strong> ${p.Nature}<br>
+                            <strong>Item:</strong> ${p.HeldItem}
+                        </div>
+                        <div class="move-list"><strong>Moves:</strong><br>
+                            • ${p.Moves.join("<br>• ")}
+                        </div>
+                    `;
+                    card.appendChild(pDiv);
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        loadTrainers();
+    </script>
+
+</body>
+</html>
