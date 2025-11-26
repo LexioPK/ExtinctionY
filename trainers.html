@@ -174,39 +174,175 @@
         let trainerData = {};
         let groupedRoutes = {};
 
+        // exact order you requested
+        const orderedRoutes = [
+"aquacorde town".replace(/(^\w)|(\s\w)/g, c=>c.toUpperCase()).trim(), // placeholder will be replaced below in code to exact strings
+"Aquacorde Town",
+"Route 2",
+"Santalune Forest",
+"Route 3",
+"Route 22",
+"Route 22 - Part 2",
+"Santalune City",
+"Santalune City Gym",
+"Route 4",
+"Lumiose City",
+"Route 5",
+"Camphier Town",
+"Route 6 - Pathway",
+"Route 6 - East",
+"Route 6 - West",
+"Route 7",
+"Connecting Cave",
+"Route 8 - Upper",
+"Route 8 - Lower",
+"Route 8 - Sea",
+"Route 9",
+"Glittering Cave",
+"Ambrette Town Aqaurium",
+"Route 10",
+"Cyllage City",
+"Cyllage City Gym",
+"Geosenge Town",
+"Geosenge Town - Part 2",
+"Route 11",
+"Reflection Cave - 1F",
+"Reflection Cave - B1F",
+"Tower of Mastery",
+"Shalour City Gym",
+"Route 12",
+"Azure Bay",
+"Coumarine City - Seaside",
+"Coumarine City - Cliffside",
+"Coumarine City Gym",
+"Route 13/Power Plant",
+"Lumiose City Gym",
+"Route 14",
+"Laverre City",
+"Laverre City Gym",
+"Poke Ball Factory",
+"Route 15",
+"Route 16",
+"Lost Hotel",
+"Dendemille Town",
+"Frost Cavern - Outside",
+"Frost Cavern - 1F",
+"Frost Cavern - 2F",
+"Frost Cavern - 3F",
+"Anistar City",
+"Anistar City Gym",
+"Flare Cafe/Lysandre Labs",
+"Lysandre Labs - B1",
+"Lysandre Labs - B3",
+"Team Flare Secret HQ - Entrance",
+"Team Flare Secret HQ - Walkway",
+"Route 18",
+"Terminus Cave - B1F",
+"Terminus Cave - B2F",
+"Couriway Town",
+"Route 19",
+"Route 20",
+"Snowbelle City",
+"Snowbelly City Gym",
+"Route 21",
+"Victory Road - Entrance",
+"Victory Road - Inside 1",
+"Victory Road - Outside 2",
+"Victory Road - Inside 2",
+"Victory Road - Outside 3",
+"Victory Road - Inside 3",
+"Victory Road - Outside 4",
+"Victory Road - Inside 4",
+"Elite 4/Champion",
+"Lumiose City Parade"
+        ];
+
+        // Normalize helper
+        function baseKey(name) {
+            // get part before ' - ' (the base for grouping)
+            return name.split(" - ")[0].trim();
+        }
+
         async function loadTrainers() {
             const sidebar = document.getElementById("sidebar");
 
             trainerData = await fetch("data/trainers.json").then(r => r.json());
 
-            /* -----------------------------
-               GROUP ROUTES BY BASE NAME
-            ------------------------------ */
-            for (const fullName in trainerData) {
-                const base = fullName.split(" - ")[0];
+            // Build groupedRoutes by matching trainerData keys to the orderedRoutes list.
+            // For entries in orderedRoutes that contain '/', treat them as combined: match either side.
+            const used = new Set();
 
-                if (!groupedRoutes[base]) groupedRoutes[base] = [];
-                groupedRoutes[base].push(fullName);
+            orderedRoutes.forEach(routeLabel => {
+                groupedRoutes[routeLabel] = [];
+
+                // if this routeLabel contains a slash, split and match either part
+                if (routeLabel.includes("/")) {
+                    const parts = routeLabel.split("/").map(s => s.trim());
+                    for (const fullName in trainerData) {
+                        const b = baseKey(fullName);
+                        if (parts.includes(b) || parts.some(p => b.toLowerCase() === p.toLowerCase())) {
+                            groupedRoutes[routeLabel].push(fullName);
+                            used.add(fullName);
+                        }
+                    }
+                } else {
+                    // normal route label: match trainerData whose baseKey equals routeLabel (case-insensitive)
+                    for (const fullName in trainerData) {
+                        const b = baseKey(fullName);
+                        if (b.toLowerCase() === routeLabel.toLowerCase()) {
+                            groupedRoutes[routeLabel].push(fullName);
+                            used.add(fullName);
+                        }
+                    }
+                }
+            });
+
+            // Add any remaining routes from trainerData that weren't in orderedRoutes at the end (preserve original order)
+            for (const fullName in trainerData) {
+                if (!used.has(fullName)) {
+                    const base = baseKey(fullName);
+                    if (!groupedRoutes[base]) groupedRoutes[base] = [];
+                    groupedRoutes[base].push(fullName);
+                }
             }
 
-            /* Build sidebar tabs */
-            Object.keys(groupedRoutes).forEach(base => {
+            // Build sidebar tabs in the order of orderedRoutes, but only include those with matches (or any remaining keys)
+            const seenTabs = new Set();
+            orderedRoutes.forEach(routeLabel => {
+                if (!groupedRoutes[routeLabel] || groupedRoutes[routeLabel].length === 0) return;
                 const tab = document.createElement("div");
                 tab.className = "route-tab";
-                tab.textContent = base;
-
+                tab.textContent = routeLabel;
                 tab.onclick = () => {
                     document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                     tab.classList.add("active");
-                    displayRoute(base);
+                    displayRoute(routeLabel);
                 };
-
                 sidebar.appendChild(tab);
+                seenTabs.add(routeLabel);
             });
 
-            /* Auto-load first route */
-            sidebar.children[0].classList.add("active");
-            displayRoute(Object.keys(groupedRoutes)[0]);
+            // Append groupedRoutes keys that weren't in orderedRoutes (fallback)
+            for (const key in groupedRoutes) {
+                if (seenTabs.has(key)) continue;
+                if (!groupedRoutes[key] || groupedRoutes[key].length === 0) continue;
+                const tab = document.createElement("div");
+                tab.className = "route-tab";
+                tab.textContent = key;
+                tab.onclick = () => {
+                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+                    displayRoute(key);
+                };
+                sidebar.appendChild(tab);
+            }
+
+            // Activate first available tab
+            const firstTab = sidebar.querySelector(".route-tab");
+            if (firstTab) {
+                firstTab.classList.add("active");
+                displayRoute(firstTab.textContent);
+            }
         }
 
         /* Display all sub-routes under one combined tab */
@@ -219,22 +355,22 @@
             areaTitle.textContent = baseName;
             container.appendChild(areaTitle);
 
-            const subs = groupedRoutes[baseName];
+            const subs = groupedRoutes[baseName] || [];
             const multipleSubs = subs.length > 1;
 
-            /* Loop sub-areas */
+            /* Loop sub-areas (e.g. East, West, B1F…) */
             subs.forEach(subArea => {
-
-                /* NEW BEHAVIOR: Show subheader only if >1 subsection */
+                // Show subheader only if there are multiple sub-areas for this base tab
                 if (multipleSubs) {
                     const subHeader = document.createElement("h2");
                     subHeader.textContent = subArea;
                     subHeader.style.marginTop = "25px";
-                    subHeader.style.textDecoration = "underline"; /* underline added */
+                    subHeader.style.textDecoration = "underline";
                     container.appendChild(subHeader);
                 }
 
                 const areaData = trainerData[subArea];
+                if (!areaData) return;
 
                 areaData.Trainers.forEach(tr => {
                     const card = document.createElement("div");
