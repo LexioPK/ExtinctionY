@@ -75,8 +75,8 @@
             font-weight: 600;
         }
 
-        /*  CONTENT AREA */
-        .-section {
+        /* TRAINER CONTENT AREA */
+        .trainer-section {
             padding: 20px;
             max-width: 900px;
             margin-left: 240px;
@@ -90,7 +90,7 @@
             font-weight: 700;
         }
 
-        .-card {
+        .trainer-card {
             background: white;
             padding: 15px 20px;
             border-radius: 12px;
@@ -98,20 +98,20 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .-header {
+        .trainer-header {
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 5px;
         }
 
-        .-sub {
+        .trainer-sub {
             font-size: 0.95rem;
             color: #666;
             margin-bottom: 12px;
         }
 
-        /* NEW — horizontal  layout */
-        .-row {
+        /* NEW — horizontal trainer layout */
+        .trainer-row {
             display: flex;
             align-items: flex-start;
             gap: 25px;
@@ -155,77 +155,116 @@
     <div class="header">
         <a href="index.html">Pokédex</a>
         <a href="moves.html">Moves</a>
-        <a href="trainers.html" class="active">s</a>
+        <a href="trainers.html" class="active">Trainers</a>
     </div>
 
     <!-- SIDEBAR ROUTE TABS -->
     <div class="sidebar" id="sidebar"></div>
 
-    <!--  CARDS -->
-    <div class="-section" id="Section"></div>
+    <!-- TRAINER CARDS -->
+    <div class="trainer-section" id="trainerSection"></div>
 
     <script>
-    async function loadTrainers() {
-        const routeList = document.getElementById("route-list");
-        const trainerContainer = document.getElementById("trainer-container");
+        let trainerData = {};
+        let currentRoute = null;
 
-        try {
-            // Load your JSON file
-            const response = await fetch("data/trainers.json");
-            const data = await response.json();
+        async function loadTrainers() {
+            const container = document.getElementById("trainerSection");
+            const sidebar = document.getElementById("sidebar");
 
-            // Populate left-side route tabs
-            Object.keys(data).forEach(routeName => {
-                const li = document.createElement("li");
-                li.textContent = routeName;
-                li.addEventListener("click", () => displayRoute(routeName, data[routeName]));
-                routeList.appendChild(li);
-            });
+            trainerData = await fetch("data/trainers.json").then(r => r.json());
 
-        } catch (error) {
-            console.error("Error loading trainer data:", error);
+            // Build Route Tabs
+            for (const area in trainerData) {
+                const tab = document.createElement("div");
+                tab.className = "route-tab";
+                tab.textContent = area;
+
+                tab.onclick = () => {
+                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+
+                    currentRoute = area;
+                    displayRoute(area);
+                };
+
+                sidebar.appendChild(tab);
+            }
+
+            // Auto-load first route
+            const firstRoute = Object.keys(trainerData)[0];
+            sidebar.children[0].classList.add("active");
+            displayRoute(firstRoute);
         }
-    }
 
-    function displayRoute(routeName, routeData) {
-        const trainerContainer = document.getElementById("trainer-container");
-        trainerContainer.innerHTML = ""; // clear previous trainers
+        // Display trainers for selected route
+        function displayRoute(area) {
+            const container = document.getElementById("trainerSection");
+            container.innerHTML = "";
 
-        routeData.Trainers.forEach(tr => {
-            const trainerCard = document.createElement("div");
-            trainerCard.className = "trainer-card";
+            const areaData = trainerData[area];
 
-            // Trainer info section
-            let trainerHTML = `
-                <div class="trainer-info">
-                    <h2>${tr.TrainerName} (${tr.TrainerClass})</h2>
-                    <p><strong>Battle Type:</strong> ${tr.BattleType}</p>
-                    <p><strong>Mandatory:</strong> ${tr.Required || "N/A"}</p>
-                    <p><strong>Reward:</strong> N/A</p>
-                </div>
-            `;
+            const areaTitle = document.createElement("div");
+            areaTitle.className = "area-title";
+            areaTitle.textContent = area;
+            container.appendChild(areaTitle);
 
-            // Pokémon section
-            trainerHTML += `<div class="trainer-pokemon-row">`;
-            tr.Pokemon.forEach(p => {
-                trainerHTML += `
-                    <div class="pokemon-box">
-                        <div class="pokemon-label">${p.Name} Lv.${p.Level}</div>
-                        <img src="sprites/pokemon/${p.Name.toLowerCase()}.png" 
-                             onerror="this.src='sprites/pokemon/default.png'">
+            areaData.Trainers.forEach(tr => {
+                const card = document.createElement("div");
+                card.className = "trainer-card";
+
+                const row = document.createElement("div");
+                row.className = "trainer-row";
+
+                // Trainer info
+                const trainerInfo = document.createElement("div");
+                trainerInfo.innerHTML = `
+                    <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
+                    <div class="trainer-sub">
+                        <strong>Battle Type:</strong> ${tr.BattleType}<br>
+                        <strong>Mandatory:</strong> ${tr.Required || "N/A"}<br>
+                        <strong>Reward:</strong> N/A
                     </div>
                 `;
+                row.appendChild(trainerInfo);
+
+                // Pokémon columns
+                tr.Pokemon.forEach(p => {
+                    const pDiv = document.createElement("div");
+                    pDiv.className = "pokemon-col";
+
+                    const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+                    pDiv.innerHTML = `
+                        <div class="poke-name">${p.Name} — Lv ${p.Level}</div>
+
+                        <img class="poke-img"
+                             src="pokemon_sprites/${spriteName}.png"
+                             onerror="this.onerror=null;
+                                      this.src='pokemon_sprties2/${spriteName}.png';
+                                      this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; };">
+
+                        <div class="poke-details">
+                            <strong>Ability:</strong> ${p.Ability}<br>
+                            <strong>Nature:</strong> ${p.Nature}<br>
+                            <strong>Item:</strong> ${p.HeldItem}
+                        </div>
+
+                        <div class="move-list"><strong>Moves:</strong><br>
+                            • ${p.Moves.join("<br>• ")}
+                        </div>
+                    `;
+
+                    row.appendChild(pDiv);
+                });
+
+                card.appendChild(row);
+                container.appendChild(card);
             });
-            trainerHTML += `</div>`;
+        }
 
-            trainerCard.innerHTML = trainerHTML;
-            trainerContainer.appendChild(trainerCard);
-        });
-    }
-
-    // Run on load
-    loadTrainers();
-</script>
+        loadTrainers();
+    </script>
 
 </body>
 </html>
