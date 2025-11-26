@@ -17,7 +17,7 @@
             display: flex;
         }
 
-        /* HEADER */
+        /* HEADER (from index.html exactly) */
         .header {
             position: fixed;
             top: 0;
@@ -37,6 +37,10 @@
             color: #333;
             font-weight: 600;
             font-size: 1.2rem;
+        }
+
+        .header a.active {
+            color: #1976d2;
         }
 
         /* SIDEBAR */
@@ -106,17 +110,30 @@
             margin-bottom: 12px;
         }
 
-        .pokemon-block {
-            background: #fafafa;
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 10px;
-            border-left: 4px solid #3b4cca;
+        /* NEW — horizontal trainer layout */
+        .trainer-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+        }
+
+        .pokemon-col {
+            text-align: center;
+            width: 150px;
+        }
+
+        .poke-img {
+            width: 96px;
+            height: 96px;
+            image-rendering: pixelated;
+            margin: 5px auto;
+            display: block;
         }
 
         .poke-name {
             font-size: 1.1rem;
             font-weight: 600;
+            margin-bottom: 4px;
         }
 
         .poke-details {
@@ -129,14 +146,6 @@
             margin-top: 6px;
             font-size: 0.9rem;
         }
-
-        .poke-img {
-            width: 70px;
-            height: 70px;
-            image-rendering: pixelated;
-            display: block;
-            margin-bottom: 8px;
-        }
     </style>
 </head>
 
@@ -146,7 +155,7 @@
     <div class="header">
         <a href="index.html">Pokédex</a>
         <a href="moves.html">Moves</a>
-        <a href="trainers.html" style="color:#1976d2;">Trainers</a>
+        <a href="trainers.html" class="active">Trainers</a>
     </div>
 
     <!-- SIDEBAR ROUTE TABS -->
@@ -163,7 +172,6 @@
             const container = document.getElementById("trainerSection");
             const sidebar = document.getElementById("sidebar");
 
-            // ✅ UPDATED PATH
             trainerData = await fetch("data/trainers.json").then(r => r.json());
 
             // Build Route Tabs
@@ -205,40 +213,52 @@
                 const card = document.createElement("div");
                 card.className = "trainer-card";
 
-                card.innerHTML = `
+                const row = document.createElement("div");
+                row.className = "trainer-row";
+
+                // Trainer info
+                const trainerInfo = document.createElement("div");
+                trainerInfo.innerHTML = `
                     <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
                     <div class="trainer-sub">
                         <strong>Battle Type:</strong> ${tr.BattleType}<br>
-                        <strong>Route:</strong> ${tr.Route}
+                        <strong>Mandatory:</strong> ${tr.Required || "N/A"}<br>
+                        <strong>Reward:</strong> N/A
                     </div>
                 `;
+                row.appendChild(trainerInfo);
 
+                // Pokémon columns
                 tr.Pokemon.forEach(p => {
                     const pDiv = document.createElement("div");
-                    pDiv.className = "pokemon-block";
+                    pDiv.className = "pokemon-col";
 
                     const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
 
                     pDiv.innerHTML = `
+                        <div class="poke-name">${p.Name} — Lv ${p.Level}</div>
+
                         <img class="poke-img"
                              src="pokemon_sprites/${spriteName}.png"
                              onerror="this.onerror=null;
                                       this.src='pokemon_sprites2/${spriteName}.png';
                                       this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; };">
 
-                        <div class="poke-name">${p.Name} — Lv ${p.Level}</div>
                         <div class="poke-details">
                             <strong>Ability:</strong> ${p.Ability}<br>
                             <strong>Nature:</strong> ${p.Nature}<br>
                             <strong>Item:</strong> ${p.HeldItem}
                         </div>
+
                         <div class="move-list"><strong>Moves:</strong><br>
                             • ${p.Moves.join("<br>• ")}
                         </div>
                     `;
-                    card.appendChild(pDiv);
+
+                    row.appendChild(pDiv);
                 });
 
+                card.appendChild(row);
                 container.appendChild(card);
             });
         }
