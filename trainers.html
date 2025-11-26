@@ -174,7 +174,6 @@
         let trainerData = {};
         let groupedRoutes = {};
 
-        // CUSTOM ORDER
         const routeOrder = [
             "Aquacorde Town",
             "Route 2",
@@ -241,7 +240,6 @@
             "Lysandre Cafe/Lysandre Labs - Lysandre Cafe",
             "Lysandre Labs - B1",
             "Lysandre Labs - B3",
-            "Team Flare Secret HQ",
             "Team Flare Secret HQ - Entrance",
             "Team Flare Secret HQ - Walkway",
             "Route 18",
@@ -285,6 +283,15 @@
 
                 if (!groupedRoutes[base]) groupedRoutes[base] = [];
                 groupedRoutes[base].push(fullName);
+            }
+
+            // SORT SUBROUTES ACCORDING TO routeOrder
+            for (let base in groupedRoutes) {
+                groupedRoutes[base].sort((a,b) => {
+                    const aIndex = routeOrder.indexOf(a);
+                    const bIndex = routeOrder.indexOf(b);
+                    return aIndex - bIndex;
+                });
             }
 
             // BUILD SIDEBAR IN CUSTOM ORDER
