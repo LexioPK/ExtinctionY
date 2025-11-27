@@ -293,7 +293,8 @@
                         const pDiv = document.createElement("div");
                         pDiv.className = "pokemon-col";
                         const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
-                        const moves = [...p.Moves]; while (moves.length < 4) moves.push("---");
+                        const moves = [...p.Moves];
+                        while (moves.length < 4) moves.push("---"); // ensure 4 moves
 
                         pDiv.innerHTML = `
                             <div class="poke-name" style="padding: 10px; text-align:center; font-weight:bold;">
@@ -321,8 +322,9 @@
                             </div>
 
                             <div class="info-box move-list">
-                                <strong>Moves:</strong><br>
-                                ${moves.join("<br>")}
+                                <strong>Moves:</strong>
+                                <hr style="border: none; border-top: 1px solid #ddd; margin: 4px 0;">
+                                ${moves.map(move => `${move}<hr style="border: none; border-top: 1px solid #eee; margin: 2px 0;">`).join('')}
                             </div>
                         `;
 
