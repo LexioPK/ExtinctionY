@@ -130,6 +130,9 @@
             padding: 0;
             border: none;
             background: #fafafa;
+            outline: 1px solid #ccc; /* outline for entire Pokémon box */
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
 
         .poke-img {
@@ -141,7 +144,7 @@
         }
 
         .info-box {
-            border-top: 1px solid #dcdcdc;
+            border-top: 2px solid #dcdcdc; /* thicker separator */
             padding: 8px 10px;
             margin: 0;
             border-radius: 0;
@@ -157,6 +160,19 @@
         .nature-colored {
             font-weight: 700;
         }
+
+        .move-list strong {
+            border-bottom: 2px solid #dcdcdc; /* thicker line for moves header */
+            display: block;
+            padding-bottom: 3px;
+            margin-bottom: 5px;
+        }
+
+        .move-list div {
+            border-bottom: 1px solid #e0e0e0; /* subtle line for each move */
+            padding: 2px 0;
+        }
+
     </style>
 </head>
 
@@ -293,8 +309,10 @@
                         const pDiv = document.createElement("div");
                         pDiv.className = "pokemon-col";
                         const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
-                        const moves = [...p.Moves];
-                        while (moves.length < 4) moves.push("---"); // ensure 4 moves
+
+                        // ensure 4 moves, fill missing with '---'
+                        const moves = Array.isArray(p.Moves) ? [...p.Moves] : [];
+                        while (moves.length < 4) moves.push("---");
 
                         pDiv.innerHTML = `
                             <div class="poke-name" style="padding: 10px; text-align:center; font-weight:bold;">
@@ -323,8 +341,7 @@
 
                             <div class="info-box move-list">
                                 <strong>Moves:</strong>
-                                <hr style="border: none; border-top: 1px solid #ddd; margin: 4px 0;">
-                                ${moves.map(move => `${move}<hr style="border: none; border-top: 1px solid #eee; margin: 2px 0;">`).join('')}
+                                ${moves.map(m => `<div>${m}</div>`).join("")}
                             </div>
                         `;
 
