@@ -157,35 +157,6 @@
         .nature-colored {
             font-weight: 700;
         }
-
-        .type-badge {
-            display: inline-block;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-            margin: 0 2px;
-        }
-
-        .type-normal  { background:#A8A77A; }
-        .type-fire    { background:#EE8130; }
-        .type-water   { background:#6390F0; }
-        .type-electric{ background:#F7D02C; }
-        .type-grass   { background:#7AC74C; }
-        .type-ice     { background:#96D9D6; }
-        .type-fighting{ background:#C22E28; }
-        .type-poison  { background:#A33EA1; }
-        .type-ground  { background:#E2BF65; }
-        .type-flying  { background:#A98FF3; }
-        .type-psychic { background:#F95587; }
-        .type-bug     { background:#A6B91A; }
-        .type-rock    { background:#B6A136; }
-        .type-ghost   { background:#735797; }
-        .type-dragon  { background:#6F35FC; }
-        .type-dark    { background:#705746; }
-        .type-steel   { background:#B7B7CE; }
-        .type-fairy   { background:#D685AD; }
     </style>
 </head>
 
@@ -324,12 +295,8 @@
                         const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
                         const moves = [...p.Moves]; while (moves.length < 4) moves.push("---");
 
-                        const typeHTML = p.Types && p.Types.length
-                            ? p.Types.map(t => `<span class="type-badge type-${t.toLowerCase()}">${t}</span>`).join(" ")
-                            : "<span class='type-badge'>???</span>";
-
                         pDiv.innerHTML = `
-                            <div class="poke-name" style="padding: 10px;">
+                            <div class="poke-name" style="padding: 10px; text-align:center; font-weight:bold;">
                                 <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
                                     ${p.Name} — Lv ${p.Level}
                                 </a>
@@ -340,10 +307,6 @@
                                      src="pokemon_sprites/${spriteName}.png"
                                      onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
                             </a>
-
-                            <div style="text-align:center; padding-bottom:8px; font-size:0.85rem;">
-                                ${typeHTML}
-                            </div>
 
                             <div class="info-box">
                                 <strong>Ability:</strong> ${p.Ability || "---"}
