@@ -90,6 +90,12 @@
             font-weight: 700;
         }
 
+        .sub-header {
+            margin-top: 25px;
+            font-size: 1.4rem;
+            text-decoration: underline;
+        }
+
         .trainer-card {
             background: white;
             padding: 15px 20px;
@@ -124,8 +130,13 @@
             max-width: 200px;
         }
 
+        /* Pokémon box */
         .pokemon-col {
             text-align: center;
+            padding: 10px;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            background: #fafafa;
         }
 
         .poke-img {
@@ -134,6 +145,14 @@
             image-rendering: pixelated;
             margin: 5px auto;
             display: block;
+        }
+
+        .info-box {
+            border: 1px solid #dcdcdc;
+            padding: 6px;
+            border-radius: 6px;
+            margin-top: 6px;
+            background: #ffffff;
         }
 
         .poke-name {
@@ -149,8 +168,9 @@
         }
 
         .move-list {
-            margin-top: 6px;
             font-size: 0.9rem;
+            margin-top: 6px;
+            text-align: left;
         }
     </style>
 </head>
@@ -173,98 +193,31 @@
     <script>
         let trainerData = {};
         let groupedRoutes = {};
-
-        const routeOrder = [
-            "Aquacorde Town",
-            "Route 2",
-            "Santalune Forest",
-            "Route 3",
-            "Route 22",
-            "Route 22 - Part 2",
-            "Santalune City",
-            "Santalune Gym",
-            "Route 4",
-            "Lumiose City",
-            "Route 5",
-            "Camphier Town",
-            "Route 6",
-            "Route 6 - Pathway",
-            "Route 6 - East",
-            "Route 6 - West",
-            "Route 7",
-            "Connecting Cave",
-            "Route 8",
-            "Route 8 - Upper",
-            "Route 8 - Lower",
-            "Route 8 - Sea",
-            "Route 9",
-            "Glittering Cave",
-            "Ambrette Town Aqaurium",
-            "Route 10",
-            "Cyllage City",
-            "Cyllage Gym",
-            "Geosenge Town",
-            "Geosenge Town - Part 2",
-            "Route 11",
-            "Reflection Cave",
-            "Reflection Cave - 1F",
-            "Reflection Cave - B1F",
-            "Tower of Mastery",
-            "Shalour Gym",
-            "Route 12",
-            "Azure Bay",
-            "Coumarine City",
-            "Coumarine City - Seaside",
-            "Coumarine City - Cliffside",
-            "Coumarine Gym",
-            "Route 13/Power Plant",
-            "Route 13/Power Plant - Route 13",
-            "Route 13/Power Plant - Kalos Power Plant",
-            "Lumiose Gym",
-            "Route 14",
-            "Laverre City",
-            "Laverre Gym",
-            "Poke Ball Factory",
-            "Route 15",
-            "Route 16",
-            "Lost Hotel",
-            "Dendemille Town",
-            "Frost Cavern",
-            "Frost Cavern - Outside",
-            "Frost Cavern - 1F",
-            "Frost Cavern - 2F",
-            "Frost Cavern - 3F",
-            "Anistar City",
-            "Anistar Gym",
-            "Lysandre Cafe/Lysandre Labs",
-            "Lysandre Cafe/Lysandre Labs - Lysandre Cafe",
-            "Lysandre Labs - B1",
-            "Lysandre Labs - B3",
-            "Team Flare Secret HQ - Entrance",
-            "Team Flare Secret HQ - Walkway",
-            "Route 18",
-            "Terminus Cave",
-            "Terminus Cave - B1F",
-            "Terminus Cave - B2F",
-            "Couriway Town",
-            "Route 19",
-            "Route 20",
-            "Snowbelle City",
-            "Snowbelle Gym",
-            "Route 21",
-            "Victory Road",
-            "Victory Road - Entrance",
-            "Victory Road - Inside 1",
-            "Victory Road - Outside 2",
-            "Victory Road - Inside 2",
-            "Victory Road - Outside 3",
-            "Victory Road - Inside 3",
-            "Victory Road - Outside 4",
-            "Victory Road - Inside 4",
-            "Elite Four/Kalos League Champion",
+        let routeOrder = [
+            "Aquacorde Town","Route 2","Santalune Forest","Route 3","Route 22","Route 22 - Part 2",
+            "Santalune City","Santalune Gym","Route 4","Lumiose City","Route 5","Camphier Town",
+            "Route 6","Route 6 - Pathway","Route 6 - East","Route 6 - West","Route 7",
+            "Connecting Cave","Route 8","Route 8 - Upper","Route 8 - Lower","Route 8 - Sea",
+            "Route 9","Glittering Cave","Ambrette Town Aqaurium","Route 10","Cyllage City",
+            "Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11","Reflection Cave",
+            "Reflection Cave - 1F","Reflection Cave - B1F","Tower of Mastery","Shalour Gym",
+            "Route 12","Azure Bay","Coumarine City","Coumarine City - Seaside",
+            "Coumarine City - Cliffside","Coumarine Gym","Route 13/Power Plant",
+            "Route 13/Power Plant - Route 13","Route 13/Power Plant - Kalos Power Plant",
+            "Lumiose Gym","Route 14","Laverre City","Laverre Gym","Poke Ball Factory","Route 15",
+            "Route 16","Lost Hotel","Dendemille Town","Frost Cavern",
+            "Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F",
+            "Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs",
+            "Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Labs - B1",
+            "Lysandre Labs - B3","Team Flare Secret HQ - Entrance",
+            "Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
+            "Terminus Cave - B2F","Couriway Town","Route 19","Route 20","Snowbelle City",
+            "Snowbelle Gym","Route 21","Victory Road","Victory Road - Entrance",
+            "Victory Road - Inside 1","Victory Road - Outside 2","Victory Road - Inside 2",
+            "Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4",
+            "Victory Road - Inside 4","Elite Four/Kalos League Champion",
             "Elite Four/Kalos League Champion - Elite Four",
-            "Elite Four/Kalos League Champion - Kalos League Champion",
-            "Lumiose Parade"
+            "Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade"
         ];
 
         async function loadTrainers() {
@@ -272,50 +225,48 @@
 
             trainerData = await fetch("data/trainers.json").then(r => r.json());
 
-            // GROUP ROUTES BY BASE NAME
+            /* GROUP ROUTES */
             for (const fullName in trainerData) {
-                let base;
-                if (fullName.includes("/")) {
-                    base = fullName.split("/")[0] + "/" + fullName.split("/")[1];
-                } else {
-                    base = fullName.split(" - ")[0];
-                }
-
+                const base = fullName.split(" - ")[0];
                 if (!groupedRoutes[base]) groupedRoutes[base] = [];
                 groupedRoutes[base].push(fullName);
             }
 
-            // SORT SUBROUTES ACCORDING TO routeOrder
-            for (let base in groupedRoutes) {
-                groupedRoutes[base].sort((a,b) => {
-                    const aIndex = routeOrder.indexOf(a);
-                    const bIndex = routeOrder.indexOf(b);
-                    return aIndex - bIndex;
-                });
-            }
-
-            // BUILD SIDEBAR IN CUSTOM ORDER
-            routeOrder.forEach(base => {
-                if (groupedRoutes[base]) {
-                    const tab = document.createElement("div");
-                    tab.className = "route-tab";
-                    tab.textContent = base;
-
-                    tab.onclick = () => {
-                        document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
-                        tab.classList.add("active");
-                        displayRoute(base);
-                    };
-
-                    sidebar.appendChild(tab);
-                }
+            /* ORDER sub-sections */
+            Object.keys(groupedRoutes).forEach(base => {
+                groupedRoutes[base].sort((a, b) =>
+                    routeOrder.indexOf(a) - routeOrder.indexOf(b)
+                );
             });
 
-            // AUTO-LOAD FIRST ROUTE
+            /* BUILD SIDEBAR */
+            routeOrder.forEach(name => {
+                const base = name.split(" - ")[0];
+
+                if (!groupedRoutes[base]) return;
+                if (groupedRoutes[base][0] !== name && !name.includes(" - ")) return;
+
+                if (sidebar.querySelector(`[data-base='${base}']`)) return;
+
+                const tab = document.createElement("div");
+                tab.className = "route-tab";
+                tab.dataset.base = base;
+                tab.textContent = base;
+
+                tab.onclick = () => {
+                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+                    displayRoute(base);
+                };
+
+                sidebar.appendChild(tab);
+            });
+
             sidebar.children[0].classList.add("active");
-            displayRoute(routeOrder.find(r => groupedRoutes[r]));
+            displayRoute(sidebar.children[0].dataset.base);
         }
 
+        /* DISPLAY ROUTE */
         function displayRoute(baseName) {
             const container = document.getElementById("trainerSection");
             container.innerHTML = "";
@@ -325,15 +276,12 @@
             areaTitle.textContent = baseName;
             container.appendChild(areaTitle);
 
-            const subs = groupedRoutes[baseName];
-            const multipleSubs = subs.length > 1;
+            groupedRoutes[baseName].forEach(subArea => {
 
-            subs.forEach(subArea => {
-                if (multipleSubs) {
-                    const subHeader = document.createElement("h2");
+                if (groupedRoutes[baseName].length > 1) {
+                    const subHeader = document.createElement("div");
+                    subHeader.className = "sub-header";
                     subHeader.textContent = subArea;
-                    subHeader.style.marginTop = "25px";
-                    subHeader.style.textDecoration = "underline";
                     container.appendChild(subHeader);
                 }
 
@@ -346,6 +294,7 @@
                     const row = document.createElement("div");
                     row.className = "trainer-row";
 
+                    /* Trainer Info */
                     const trainerInfo = document.createElement("div");
                     trainerInfo.innerHTML = `
                         <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
@@ -357,26 +306,40 @@
                     `;
                     row.appendChild(trainerInfo);
 
+                    /* Pokémon Columns */
                     tr.Pokemon.forEach(p => {
                         const pDiv = document.createElement("div");
                         pDiv.className = "pokemon-col";
 
                         const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
 
+                        const moves = [...p.Moves];
+                        while (moves.length < 4) moves.push("---");
+
                         pDiv.innerHTML = `
                             <div class="poke-name">${p.Name} — Lv ${p.Level}</div>
+
                             <img class="poke-img"
                                  src="pokemon_sprites/${spriteName}.png"
                                  onerror="this.onerror=null;
-                                          this.src='pokemon_sprties2/${spriteName}.png';
+                                          this.src='pokemon_sprites2/${spriteName}.png';
                                           this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
-                            <div class="poke-details">
-                                <strong>Ability:</strong> ${p.Ability}<br>
-                                <strong>Nature:</strong> ${p.Nature}<br>
-                                <strong>Item:</strong> ${p.HeldItem}
+
+                            <div class="info-box">
+                                <strong>Ability:</strong> ${p.Ability || "---"}
                             </div>
-                            <div class="move-list"><strong>Moves:</strong><br>
-                                • ${p.Moves.join("<br>• ")}
+
+                            <div class="info-box">
+                                <strong>Nature:</strong> ${p.Nature || "---"}
+                            </div>
+
+                            <div class="info-box">
+                                <strong>Item:</strong> ${p.HeldItem || "---"}
+                            </div>
+
+                            <div class="info-box move-list">
+                                <strong>Moves:</strong><br>
+                                ${moves.join("<br>")}
                             </div>
                         `;
 
