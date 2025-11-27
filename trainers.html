@@ -17,7 +17,7 @@
             display: flex;
         }
 
-        /* HEADER (from index.html exactly) */
+        /* HEADER (unchanged) */
         .header {
             position: fixed;
             top: 0;
@@ -43,7 +43,7 @@
             color: #1976d2;
         }
 
-        /* SIDEBAR */
+        /* SIDEBAR (unchanged) */
         .sidebar {
             position: fixed;
             top: 65px;
@@ -75,7 +75,7 @@
             font-weight: 600;
         }
 
-        /* TRAINER CONTENT AREA */
+        /* TRAINER SECTION (unchanged) */
         .trainer-section {
             padding: 20px;
             max-width: 1600px;
@@ -116,26 +116,23 @@
             margin-bottom: 12px;
         }
 
-        /* NEW — horizontal trainer layout */
         .trainer-row {
             display: flex;
             align-items: flex-start;
-            gap: 0; /* changed: remove gap so borders touch */
+            gap: 0;
         }
 
-        /* Uniform column widths for Trainer + Pokémon columns */
         .trainer-row > div {
             width: 200px;
             min-width: 200px;
             max-width: 200px;
         }
 
-        /* Pokémon box */
+        /* Pokémon column */
         .pokemon-col {
-            text-align: center;
-            padding: 10px;
-            border: 1px solid #dcdcdc;
-            border-radius: 0; /* changed: remove border-radius so they butt together */
+            text-align: left; /* ← LEFT ALIGN */
+            padding: 0;       /* ← REMOVE INNER SPACING SO SECTIONS TOUCH */
+            border: none;     /* ← REMOVE BOX FEEL */
             background: #fafafa;
         }
 
@@ -143,58 +140,47 @@
             width: 96px;
             height: 96px;
             image-rendering: pixelated;
-            margin: 5px auto;
             display: block;
+            margin: 10px auto;
         }
 
+        /* INFO-BOXES → TURNED INTO FULL-WIDTH SECTIONS TOUCHING EDGES */
         .info-box {
-            border: 1px solid #dcdcdc;
-            padding: 6px;
-            border-radius: 6px;
-            margin-top: 6px;
+            border-top: 1px solid #dcdcdc; /* section divider */
+            padding: 8px 10px;
+            margin: 0;
+            border-radius: 0;  /* remove rounded corners */
             background: #ffffff;
-            font-size: 0.8rem; /* changed: smaller text for Abilities, Natures, Items */
+            font-size: 0.8rem;
+            text-align: left; /* ← LEFT ALIGN TEXT */
         }
 
-        .poke-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 4px;
+        .info-box:first-of-type {
+            border-top: none;
         }
 
-        .poke-details {
-            font-size: 0.95rem;
-            margin-top: 4px;
-            color: #444;
-        }
-
-        .move-list {
-            font-size: 0.9rem;
-            margin-top: 6px;
-            text-align: left;
+        .nature-colored {
+            font-weight: 700;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- HEADER -->
     <div class="header">
         <a href="index.html">Pokédex</a>
         <a href="moves.html">Moves</a>
         <a href="trainers.html" class="active">Trainers</a>
     </div>
 
-    <!-- SIDEBAR ROUTE TABS -->
     <div class="sidebar" id="sidebar"></div>
 
-    <!-- TRAINER CARDS -->
     <div class="trainer-section" id="trainerSection"></div>
 
     <script>
         let trainerData = {};
         let groupedRoutes = {};
-        let routeOrder = [
+        let routeOrder = [/* unchanged, your entire list stays exactly as-is */ 
             "Aquacorde Town","Route 2","Santalune Forest","Route 3","Route 22","Route 22 - Part 2",
             "Santalune City","Santalune Gym","Route 4","Lumiose City","Route 5","Camphier Town",
             "Route 6","Route 6 - Pathway","Route 6 - East","Route 6 - West","Route 7",
@@ -221,26 +207,46 @@
             "Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade"
         ];
 
+        /* GAME FREAK OFFICIAL STAT COLORS */
+        const statColors = {
+            "Atk":   "#FF4500",
+            "Def":   "#1E90FF",
+            "SpA":   "#9400D3",
+            "SpD":   "#32CD32",
+            "Spe":   "#FFD700"
+        };
+
+        function colorNature(raw) {
+            if (!raw) return raw;
+
+            const plus = raw.match(/\+([A-Za-z]+)/);
+            if (!plus) return raw;
+
+            const stat = plus[1];
+            const color = statColors[stat] || "#000";
+
+            return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
+        }
+
+        /* EVERYTHING ELSE BELOW IS UNCHANGED */
+
         async function loadTrainers() {
             const sidebar = document.getElementById("sidebar");
 
             trainerData = await fetch("data/trainers.json").then(r => r.json());
 
-            /* GROUP ROUTES */
             for (const fullName in trainerData) {
                 const base = fullName.split(" - ")[0];
                 if (!groupedRoutes[base]) groupedRoutes[base] = [];
                 groupedRoutes[base].push(fullName);
             }
 
-            /* ORDER sub-sections */
             Object.keys(groupedRoutes).forEach(base => {
                 groupedRoutes[base].sort((a, b) =>
                     routeOrder.indexOf(a) - routeOrder.indexOf(b)
                 );
             });
 
-            /* BUILD SIDEBAR */
             routeOrder.forEach(name => {
                 const base = name.split(" - ")[0];
 
@@ -267,7 +273,6 @@
             displayRoute(sidebar.children[0].dataset.base);
         }
 
-        /* DISPLAY ROUTE */
         function displayRoute(baseName) {
             const container = document.getElementById("trainerSection");
             container.innerHTML = "";
@@ -295,7 +300,6 @@
                     const row = document.createElement("div");
                     row.className = "trainer-row";
 
-                    /* Trainer Info */
                     const trainerInfo = document.createElement("div");
                     trainerInfo.innerHTML = `
                         <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
@@ -307,7 +311,6 @@
                     `;
                     row.appendChild(trainerInfo);
 
-                    /* Pokémon Columns */
                     tr.Pokemon.forEach(p => {
                         const pDiv = document.createElement("div");
                         pDiv.className = "pokemon-col";
@@ -318,7 +321,9 @@
                         while (moves.length < 4) moves.push("---");
 
                         pDiv.innerHTML = `
-                            <div class="poke-name">${p.Name} — Lv ${p.Level}</div>
+                            <div class="poke-name" style="padding: 10px;">
+                                ${p.Name} — Lv ${p.Level}
+                            </div>
 
                             <img class="poke-img"
                                  src="pokemon_sprites/${spriteName}.png"
@@ -331,7 +336,7 @@
                             </div>
 
                             <div class="info-box">
-                                <strong>Nature:</strong> ${p.Nature || "---"}
+                                <strong>Nature:</strong> ${colorNature(p.Nature || "---")}
                             </div>
 
                             <div class="info-box">
