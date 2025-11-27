@@ -157,6 +157,35 @@
         .nature-colored {
             font-weight: 700;
         }
+
+        .type-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            margin: 0 2px;
+        }
+
+        .type-normal  { background:#A8A77A; }
+        .type-fire    { background:#EE8130; }
+        .type-water   { background:#6390F0; }
+        .type-electric{ background:#F7D02C; }
+        .type-grass   { background:#7AC74C; }
+        .type-ice     { background:#96D9D6; }
+        .type-fighting{ background:#C22E28; }
+        .type-poison  { background:#A33EA1; }
+        .type-ground  { background:#E2BF65; }
+        .type-flying  { background:#A98FF3; }
+        .type-psychic { background:#F95587; }
+        .type-bug     { background:#A6B91A; }
+        .type-rock    { background:#B6A136; }
+        .type-ghost   { background:#735797; }
+        .type-dragon  { background:#6F35FC; }
+        .type-dark    { background:#705746; }
+        .type-steel   { background:#B7B7CE; }
+        .type-fairy   { background:#D685AD; }
     </style>
 </head>
 
@@ -202,30 +231,25 @@
             "Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade"
         ];
 
-        /* UPDATED: YOUR NEW SWAPPED COLORS */
         const statColors = {
             "Atk": "#FF4500",
-            "Def": "#FFD700",  // YELLOW (was blue)
-            "SpA": "#1E90FF",  // BLUE (was purple)
+            "Def": "#FFD700",
+            "SpA": "#1E90FF",
             "SpD": "#32CD32",
-            "Spe": "#9400D3"   // PURPLE (was yellow)
+            "Spe": "#9400D3"
         };
 
         function colorNature(raw) {
             if (!raw) return raw;
-
             const plus = raw.match(/\+([A-Za-z]+)/);
             if (!plus) return raw;
-
             const stat = plus[1];
             const color = statColors[stat] || "#000";
-
             return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
         }
 
         async function loadTrainers() {
             const sidebar = document.getElementById("sidebar");
-
             trainerData = await fetch("data/trainers.json").then(r => r.json());
 
             for (const fullName in trainerData) {
@@ -235,30 +259,23 @@
             }
 
             Object.keys(groupedRoutes).forEach(base => {
-                groupedRoutes[base].sort((a, b) =>
-                    routeOrder.indexOf(a) - routeOrder.indexOf(b)
-                );
+                groupedRoutes[base].sort((a, b) => routeOrder.indexOf(a) - routeOrder.indexOf(b));
             });
 
             routeOrder.forEach(name => {
                 const base = name.split(" - ")[0];
-
                 if (!groupedRoutes[base]) return;
                 if (groupedRoutes[base][0] !== name && !name.includes(" - ")) return;
-
                 if (sidebar.querySelector(`[data-base='${base}']`)) return;
-
                 const tab = document.createElement("div");
                 tab.className = "route-tab";
                 tab.dataset.base = base;
                 tab.textContent = base;
-
                 tab.onclick = () => {
                     document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                     tab.classList.add("active");
                     displayRoute(base);
                 };
-
                 sidebar.appendChild(tab);
             });
 
@@ -269,14 +286,12 @@
         function displayRoute(baseName) {
             const container = document.getElementById("trainerSection");
             container.innerHTML = "";
-
             const areaTitle = document.createElement("div");
             areaTitle.className = "area-title";
             areaTitle.textContent = baseName;
             container.appendChild(areaTitle);
 
             groupedRoutes[baseName].forEach(subArea => {
-
                 if (groupedRoutes[baseName].length > 1) {
                     const subHeader = document.createElement("div");
                     subHeader.className = "sub-header";
@@ -289,7 +304,6 @@
                 areaData.Trainers.forEach(tr => {
                     const card = document.createElement("div");
                     card.className = "trainer-card";
-
                     const row = document.createElement("div");
                     row.className = "trainer-row";
 
@@ -307,22 +321,29 @@
                     tr.Pokemon.forEach(p => {
                         const pDiv = document.createElement("div");
                         pDiv.className = "pokemon-col";
-
                         const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
+                        const moves = [...p.Moves]; while (moves.length < 4) moves.push("---");
 
-                        const moves = [...p.Moves];
-                        while (moves.length < 4) moves.push("---");
+                        const typeHTML = p.Types && p.Types.length
+                            ? p.Types.map(t => `<span class="type-badge type-${t.toLowerCase()}">${t}</span>`).join(" ")
+                            : "<span class='type-badge'>???</span>";
 
                         pDiv.innerHTML = `
                             <div class="poke-name" style="padding: 10px;">
-                                ${p.Name} — Lv ${p.Level}
+                                <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
+                                    ${p.Name} — Lv ${p.Level}
+                                </a>
                             </div>
 
-                            <img class="poke-img"
-                                 src="pokemon_sprites/${spriteName}.png"
-                                 onerror="this.onerror=null;
-                                          this.src='pokemon_sprties2/${spriteName}.png';
-                                          this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                            <a href="pokemon.html?name=${encodeURIComponent(p.Name)}">
+                                <img class="poke-img"
+                                     src="pokemon_sprites/${spriteName}.png"
+                                     onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                            </a>
+
+                            <div style="text-align:center; padding-bottom:8px; font-size:0.85rem;">
+                                ${typeHTML}
+                            </div>
 
                             <div class="info-box">
                                 <strong>Ability:</strong> ${p.Ability || "---"}
