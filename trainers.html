@@ -120,7 +120,7 @@
         .trainer-row {
             display: flex;
             align-items: flex-start;
-            gap: 25px;
+            gap: 0; /* changed: remove gap so borders touch */
         }
 
         /* Uniform column widths for Trainer + Pokémon columns */
@@ -135,7 +135,7 @@
             text-align: center;
             padding: 10px;
             border: 1px solid #dcdcdc;
-            border-radius: 10px;
+            border-radius: 0; /* changed: remove border-radius so they butt together */
             background: #fafafa;
         }
 
@@ -153,6 +153,7 @@
             border-radius: 6px;
             margin-top: 6px;
             background: #ffffff;
+            font-size: 0.8rem; /* changed: smaller text for Abilities, Natures, Items */
         }
 
         .poke-name {
@@ -322,7 +323,7 @@
                             <img class="poke-img"
                                  src="pokemon_sprites/${spriteName}.png"
                                  onerror="this.onerror=null;
-                                          this.src='pokemon_sprites2/${spriteName}.png';
+                                          this.src='pokemon_sprties2/${spriteName}.png';
                                           this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
 
                             <div class="info-box">
