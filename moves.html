@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pokémon Stats</title>
+<title>Moves - Extinction Y</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
 
 <!-- Standardized header styles & script -->
@@ -11,388 +12,151 @@
 <script src="header.js" defer></script>
 
 <style>
-  body { font-family:"Lexend", sans-serif; background:#f0f0f0; margin:0; padding:20px; }
-  a.back { color:#4285F4; text-decoration:none; display:inline-block; margin-bottom:20px; }
-  h1 { text-align:center; margin-bottom:10px; }
-  .card { background:white; padding:20px; border-radius:15px; box-shadow:0 3px 8px rgba(0,0,0,0.15); max-width:1200px; margin:auto; position:relative; }
+    body {
+        font-family: "Lexend", sans-serif;
+        background: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
 
-  .section { margin-bottom:25px; background:#fafafa; padding:15px 20px; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
-  .section h2 { margin-top:0; border-bottom:1px solid #ddd; padding-bottom:5px; margin-bottom:10px; }
+    /* Tabs row */
+    .tabs-row {
+        display: flex;
+        justify-content: space-between; /* left ← tabs | search → right */
+        align-items: center;
+        margin-bottom: 10px;
+    }
 
-  .sprite { display:block; margin:10px auto; width:128px; height:128px; image-rendering:pixelated; }
-  .types { text-align:center; margin-bottom:10px; }
-  .type { display:inline-block; padding:4px 10px; border-radius:12px; font-size:0.85em; color:white; margin:3px; }
+    /* Navigation Tabs */
+    .tabs {
+        display: flex;
+        gap: 20px;
+    }
 
-  .nav-btn { position:absolute; top:20px; padding:6px 12px; background:#4285F4; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold; }
-  .prev-btn { left:20px; }
-  .next-btn { right:20px; }
-  .nav-btn:hover { background:#3367d6; }
+    .tab {
+        font-size: 1.1em;
+        padding: 10px 18px;
+        background: #ffffff;
+        border-radius: 10px;
+        text-decoration: none;
+        color: black;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
 
-  ul { list-style:none; padding-left:0; margin:0 0 10px 0; }
-  .label { font-weight:bold; margin-top:10px; margin-bottom:3px; }
+    .tab:hover { background: #e4e4e4; }
+    .active { background: #d0ffd6; font-weight: bold; }
 
-  /* Type Colors */
-  .type-grass { background: #63bb5b; }
-  .type-poison { background: #aa5caf; }
-  .type-fire { background: #ff9c54; }
-  .type-water { background: #4f90d9; }
-  .type-normal { background: #9099a1; }
-  .type-electric { background: #f3d23b; }
-  .type-ice { background: #74cec0; }
-  .type-fighting { background: #ce4069; }
-  .type-ground { background: #d97746; }
-  .type-flying { background: #92aade; }
-  .type-psychic { background: #f97176; }
-  .type-bug { background: #90c12c; }
-  .type-rock { background: #c7b78b; }
-  .type-ghost { background: #5269ac; }
-  .type-dark { background: #5a5366; }
-  .type-dragon { background: #096dc4; }
-  .type-steel { background: #5a8ea2; }
-  .type-fairy { background: #ec8fe6; }
+    /* Sticky centered title */
+    h1 {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
 
-  /* Evolution Styles */
-  #evolution-chain { display:flex; align-items:center; justify-content:center; gap:40px; flex-wrap:nowrap; margin-top:10px; }
-  .evo-block { text-align:center; }
-  .evo-img { width:120px; height:120px; image-rendering:pixelated; display:block; margin:0 auto 5px; }
-  .evo-name { font-weight:bold; font-size:18px; }
-  .evo-arrow-block { text-align:center; }
-  .method-text { font-size:14px; font-weight:600; text-decoration:underline; margin-bottom:5px; }
-  .arrow { font-size:30px; font-weight:bold; }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        border-radius: 12px;
+        overflow: hidden;
+    }
 
-  /* Moves Table */
-  .moves-section {
-      display:flex;
-      gap:20px;
-      flex-wrap:wrap;
-  }
-  .moves-table {
-      width:100%;
-      border-collapse: collapse;
-      margin-top:10px;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      font-size:0.85em;
-  }
-  .moves-table th, .moves-table td {
-      padding:6px 8px;
-      border-bottom:1px solid #ddd;
-      text-align:left;
-  }
-  .moves-table th { background:#f5f5f5; font-weight:600; }
-  .moves-table tr:hover { background:#f0f0f0; }
-  .category-icon { width:24px; height:24px; display:block; margin:auto; }
-  .moves-table-container { flex:1; min-width:280px; }
+    th, td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid #ddd;
+        font-size: 0.9em;
+    }
 
-  /* ⭐ Base Stats Bars */
-  .stat-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin: 3px 0;
-  }
-  .stat-name {
-      width: 35px;
-      font-weight: bold;
-      text-align: right;
-  }
-  .stat-num {
-      width: 30px;
-      text-align: left;
-      font-size: 0.9em;
-  }
-  .stat-bar-bg {
-      flex-grow: 1;
-      height: 8px;
-      border-radius: 4px;
-      background: #ddd;
-      overflow: hidden;
-  }
-  .stat-bar-fill {
-      height: 100%;
-      border-radius: 4px;
-  }
+    th {
+        background: #f5f5f5;
+        font-weight: 600;
+    }
+
+    tr:hover { background: #f0f0f0; }
+
+    .type {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 0.85em;
+    }
+
+    /* Type Colors */
+    .type-fairy { background:#ec8fe6; }
+    .type-normal { background:#9099a1; }
+    .type-fire { background:#ff9c54; }
+    .type-water { background:#4f90d9; }
+    .type-grass { background:#63bb5b; }
+    .type-electric { background:#f3d23b; }
+    .type-ice { background:#74cec0; }
+    .type-fighting { background:#ce4069; }
+    .type-poison { background:#aa5caf; }
+    .type-ground { background:#d97746; }
+    .type-flying { background:#92aade; }
+    .type-psychic { background:#f97176; }
+    .type-bug { background:#90c12c; }
+    .type-rock { background:#c7b78b; }
+    .type-ghost { background:#5269ac; }
+    .type-dark { background:#5a5366; }
+    .type-dragon { background:#096dc4; }
+    .type-steel { background:#5a8ea2; }
 </style>
 </head>
 <body>
 
-<a class="back" href="index.html">← Back to Pokédex</a>
-<div id="pokemonCard" class="card">Loading…</div>
+<h1>Move List</h1>
+
+<table id="moves-table">
+    <thead>
+        <tr>
+            <th>Move Name</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Power</th>
+            <th>Accuracy</th>
+            <th>PP</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Moves will be populated here -->
+    </tbody>
+</table>
 
 <script>
-const typeColors = {
-  Normal:"#9099a1", Fire:"#ff9c54", Water:"#4f90d9", Electric:"#f3d23b",
-  Grass:"#63bb5b", Ice:"#74cec0", Fighting:"#ce4069", Poison:"#aa5caf",
-  Ground:"#d97746", Flying:"#92aade", Psychic:"#f97176", Bug:"#90c12c",
-  Rock:"#c7b78b", Ghost:"#5269ac", Dragon:"#096dc4", Dark:"#5a5366",
-  Steel:"#5a8ea2", Fairy:"#ec8fe6"
-};
+function loadMoves() {
+    fetch("data/moves.json")
+        .then(r => r.json())
+        .then(moves => {
+            const tbody = document.querySelector("#moves-table tbody");
+            const sorted = Object.entries(moves).sort((a, b) => a[0].localeCompare(b[0]));
 
-const monName = new URL(window.location.href).searchParams.get("name");
+            sorted.forEach(([name, mv]) => {
+                const tr = document.createElement("tr");
 
-// --- Multi-folder sprite support ---
-const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
-function getPokemonImage(name) {
-    const spriteName = name.toLowerCase().replace(/\s+/g, '-');
-    return new Promise(resolve => {
-        let index = 0;
-        function tryNext() {
-            if(index >= spriteFolders.length){
-                resolve('pokemon_sprites_unknown/unknown.png');
-                return;
-            }
-            const url = `${spriteFolders[index]}/${spriteName}.png`;
-            const img = new Image();
-            img.onload = () => resolve(url);
-            img.onerror = () => { index++; tryNext(); };
-            img.src = url;
-        }
-        tryNext();
-    });
-}
+                tr.onclick = () =>
+                    window.location.href = `move.html?name=${encodeURIComponent(name)}`;
 
-// Fetch data
-Promise.all([
-  fetch('data/pokedex.json').then(r => r.json()),
-  fetch('data/movesets.json').then(r => r.json()),
-  fetch('data/moves.json').then(r => r.json()),
-  fetch('data/evolutions.json').then(r => r.json())
-])
-.then(async ([pokedexData, movesetsData, movesData, evolutionsData]) => {
-
-  const mon = pokedexData[monName];
-  if (!mon) { document.getElementById("pokemonCard").textContent = "Pokémon not found."; return; }
-
-  const sortedMonNames = Object.entries(pokedexData).sort((a,b)=>a[1].SpeciesIdx-b[1].SpeciesIdx).map(([name])=>name);
-  const currentIndex = sortedMonNames.indexOf(monName);
-  const prevMon = sortedMonNames[(currentIndex-1+sortedMonNames.length)%sortedMonNames.length];
-  const nextMon = sortedMonNames[(currentIndex+1)%sortedMonNames.length];
-  const prevMonData = pokedexData[prevMon];
-  const nextMonData = pokedexData[nextMon];
-
-  const types = [mon.Type1, mon.Type2].filter((t,i,a)=>t && a.indexOf(t)===i);
-
-  // --- Use multi-folder system ---
-  const spriteUrl = await getPokemonImage(monName);
-
-  const bst = mon.BST ?? (mon.BaseStats.HP+mon.BaseStats.Atk+mon.BaseStats.Def+mon.BaseStats.SpA+mon.BaseStats.SpD+mon.BaseStats.Spe);
-
-  const moveList = movesetsData[monName] || [];
-
-  const categoryIcons = { "Physical":"image/physical.png", "Special":"image/special.png", "Status":"image/status.png" };
-
-  const cardDiv = document.getElementById("pokemonCard");
-
-  /* ⭐ Helper for stat bars */
-  function createStatRow(label, value, min, max, color) {
-      const pct = Math.max(3, Math.min(100, (value - min) / (max - min) * 100));
-      return `
-          <div class="stat-row">
-              <div class="stat-name">${label}</div>
-              <div class="stat-num">${value}</div>
-              <div class="stat-bar-bg">
-                  <div class="stat-bar-fill" style="width:${pct}%; background:${color};"></div>
-              </div>
-          </div>
-      `;
-  }
-
-  const statColors = {
-      HP: "#FF5959", Atk: "#F5AC78", Def: "#FAE078",
-      SpA: "#9DB7F5", SpD: "#A7DB8D", Spe: "#FA92B2", BST: "#B88CFF"
-  };
-
-  // --- Everything else unchanged ---
-  cardDiv.innerHTML = `
-    <button class="nav-btn prev-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(prevMon)}'">
-      ← #${String(prevMonData.SpeciesIdx).padStart(3,"0")} ${prevMon}
-    </button>
-    <button class="nav-btn next-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(nextMon)}'">
-      #${String(nextMonData.SpeciesIdx).padStart(3,"0")} ${nextMon} →
-    </button>
-
-    <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
-    <img class="sprite" src="${spriteUrl}" onerror="this.src='pokemon_sprites_unknown/unknown.png'">
-
-   <!-- Info / Type / Abilities -->
-   <div class="section info">
-     <h2>Info</h2>
-     <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; text-align:center; align-items:flex-start;">
-       <div style="flex:1; min-width:200px; text-align:center;">
-         <h3 style="text-decoration:underline;">Type</h3>
-         <div class="types">
-           ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
-         </div>
-       </div>
-       <div style="flex:1; min-width:200px;">
-         <h3 style="text-decoration:underline;">Abilities</h3>
-         <ul>
-           <li>1. ${mon.Ability1}</li>
-           <li>${mon.Ability2 ? `2. ${mon.Ability2}` : ""}</li>
-           <li><em>(H):</em> ${mon.AbilityH}</li>
-         </ul>
-       </div>
-       <div style="flex:1; min-width:200px;">
-         <h3 style="text-decoration:underline;">Additional Info</h3>
-         <p>Data will come from the additional info JSON.</p>
-       </div>
-     </div>
-   </div>
-
-  <!-- Base Stats -->
-<div class="section stats">
-  <h2>Base Stats</h2>
-  <div style="display:flex; gap:20px; flex-wrap:wrap;">
-    <div style="flex:1; min-width:200px; text-align:center;">
-      <h3 style="text-decoration:underline;">Old Stats</h3>
-    </div>
-    <div style="flex:1; min-width:200px; text-align:center;">
-      <h3 style="text-decoration:underline;">Updated Stats</h3>
-      <div id="stat-bars" style="text-align:left; margin-top:10px;">
-        ${createStatRow("HP", mon.BaseStats.HP, 15, 180, statColors.HP)}
-        ${createStatRow("Atk", mon.BaseStats.Atk, 15, 180, statColors.Atk)}
-        ${createStatRow("Def", mon.BaseStats.Def, 15, 180, statColors.Def)}
-        ${createStatRow("SpA", mon.BaseStats.SpA, 15, 180, statColors.SpA)}
-        ${createStatRow("SpD", mon.BaseStats.SpD, 15, 180, statColors.SpD)}
-        ${createStatRow("Spe", mon.BaseStats.Spe, 15, 180, statColors.Spe)}
-        ${createStatRow("BST", bst, 250, 600, statColors.BST)}
-      </div>
-    </div>
-  </div>
-</div>
-
-   <!-- Evolutions -->
-   <div class="section evolutions">
-     <h2>Evolutions</h2>
-     <div id="evolution-chain"></div>
-   </div>
-
-   <!-- Moves -->
-   <div class="section moves">
-     <h2>Moves</h2>
-     <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
-       <div style="flex:1; min-width:200px;">
-         <table class="moves-table">
-           <thead>
-             <tr>
-               <th style="text-align:left; width:40px;">Lvl</th>
-               <th style="text-align:left; width:120px;">Move</th>
-               <th style="text-align:left; width:60px;">Type</th>
-               <th style="text-align:left; width:40px;">Cat</th>
-               <th style="text-align:left; width:40px;">Pow</th>
-               <th style="text-align:left; width:40px;">Acc</th>
-             </tr>
-           </thead>
-           <tbody>
-             ${moveList.map(m => {
-               const mv = movesData[m.Move];
-               return `<tr>
-                 <td>${m.Level}</td>
-                 <td>${m.Move}</td>
-                 <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                 <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
-                 <td>${mv.Power ?? "—"}</td>
-                 <td>${mv.Acc ?? "—"}%</td>
-               </tr>`;
-             }).join("")}
-           </tbody>
-         </table>
-       </div>
-
-       <div style="flex:1; min-width:200px;">
-         <table class="moves-table">
-           <thead>
-             <tr>
-               <th style="text-align:left; width:120px;">TM/HM/Tutor</th>
-               <th style="text-align:left; width:60px;">Type</th>
-               <th style="text-align:left; width:40px;">Cat</th>
-               <th style="text-align:left; width:40px;">Pow</th>
-               <th style="text-align:left; width:40px;">Acc</th>
-             </tr>
-           </thead>
-           <tbody>
-             ${mon.TMs ? mon.TMs.map(tm => {
-               const mv = movesData[tm.Move];
-               return `<tr>
-                 <td>${tm.Label}: ${tm.Move}</td>
-                 <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                 <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
-                 <td>${mv.Power ?? "—"}</td>
-                 <td>${mv.Acc ?? "—"}%</td>
-               </tr>`;
-             }).join("") : "<tr><td colspan='5'>No TMs/HMs/Tutor moves</td></tr>"}
-           </tbody>
-         </table>
-       </div>
-     </div>
-   </div>
-  `;
-
-  loadEvolutions(monName, evolutionsData);
-});
-
-// evolution renderer unchanged except multi-folder sprite support
-function loadEvolutions(currentName, data) {
-    const evoContainer = document.getElementById("evolution-chain");
-    if (!data[currentName]) { evoContainer.innerHTML = "<p>No evolution data available.</p>"; return; }
-
-    let pointer = currentName;
-    while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
-
-    const rendered = new Set();
-
-    const renderEvo = (name) => {
-        if(rendered.has(name)) return "";
-        rendered.add(name);
-
-        const imgSrcPromise = getPokemonImage(name);
-        return imgSrcPromise.then(imgSrc => `
-            <div class="evo-block">
-              <a href="pokemon.html?name=${encodeURIComponent(name)}" style="text-decoration:none; color:inherit;">
-                <img src="${imgSrc}" class="evo-img">
-                <div class="evo-name">${name}</div>
-              </a>
-            </div>
-        `);
-    };
-
-    const traverseChain = async (name) => {
-        const evolvesInto = data[name].EvolvesInto || {};
-        const keys = Object.keys(evolvesInto);
-        if(!rendered.has(name)){
-            evoContainer.innerHTML += await renderEvo(name);
-        }
-        if(keys.length === 0) return;
-
-        if(keys.length === 1){
-            const nextName = keys[0];
-            const method = evolvesInto[nextName];
-            evoContainer.innerHTML += `
-              <div class="evo-arrow-block">
-                <div class="method-text">${method}</div>
-                <div class="arrow">→</div>
-              </div>
-            `;
-            evoContainer.innerHTML += await renderEvo(nextName);
-            await traverseChain(nextName);
-        } else {
-            for(const nextName of keys){
-                const method = evolvesInto[nextName];
-                evoContainer.innerHTML += `
-                  <div class="evo-arrow-block">
-                    <div class="method-text">${method}</div>
-                    <div class="arrow">→</div>
-                  </div>
+                tr.innerHTML = `
+                    <td>${name}</td>
+                    <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+                    <td>${mv.Category}</td>
+                    <td>${mv.Power ?? "—"}</td>
+                    <td>${mv.Acc ?? "—"}%</td>
+                    <td>${mv.PP}</td>
+                    <td>${mv.Description}</td>
                 `;
-                evoContainer.innerHTML += await renderEvo(nextName);
-                await traverseChain(nextName);
-            }
-        }
-    };
 
-    traverseChain(pointer);
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(err => console.error("Move JSON Load Error:", err));
 }
+
+loadMoves();
 </script>
 
 </body>
