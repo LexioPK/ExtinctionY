@@ -72,6 +72,13 @@
     gap:8px;
   }
 
+  .category-icon {
+    width:22px;
+    height:22px;
+    display:inline-block;
+    vertical-align:middle;
+  }
+
   .description {
     margin-top:14px;
     line-height:1.45;
@@ -100,16 +107,30 @@
   }
 
   h2.section-title {
-    margin: 18px 0 10px 0;
+    margin: 0 0 10px 0;
     font-size:1.1rem;
     font-weight:700;
+  }
+
+  /* Two-column learner layout */
+  .learn-columns {
+    display:flex;
+    gap:20px;
+    align-items:flex-start; /* align both columns at same Y */
+    margin-top:12px;
+    flex-wrap:wrap;
+  }
+
+  .learn-col {
+    flex:1;
+    min-width:300px;
   }
 
   .learn-list {
     display:flex;
     flex-direction:column;
-    gap:0; /* we'll use borders to separate */
-    width: 420px; /* shortened width so name/image sit close to level */
+    gap:0; /* we'll use subtle borders to separate items */
+    width:100%;
   }
 
   .learn-item {
@@ -127,12 +148,21 @@
     border-bottom: none;
   }
 
+  .learn-item a.poke-link {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:inherit;
+  }
+
   .learn-item img {
     width:48px; /* slightly smaller so it sits closer */
     height:48px;
     image-rendering:pixelated;
     display:block;
     border-radius:6px;
+    flex-shrink:0;
   }
 
   .learn-item .meta {
@@ -143,7 +173,7 @@
     min-width: 0;
   }
 
-  .learn-item .meta .poke-link {
+  .learn-item .meta .poke-link-name {
     font-weight:700;
     color:#111;
     text-decoration:none;
@@ -193,8 +223,8 @@
   .center { text-align:center; }
 
   @media (max-width:900px) {
-    .learn-list { width:100%; }
-    .learn-item .meta .poke-link { max-width:140px; }
+    .learn-columns { flex-direction:column; }
+    .learn-item .meta .poke-link-name { max-width:140px; }
   }
 
   @media (max-width:720px) {
@@ -211,14 +241,16 @@
       Loading move…
     </div>
 
-    <div id="learnersLevel" class="move-card" style="display:none;">
-      <h2 class="section-title">Learned by Level-Up</h2>
-      <div id="levelList" class="learn-list"></div>
-    </div>
+    <div class="learn-columns">
+      <div id="learnersLevel" class="move-card learn-col" style="display:none;">
+        <h2 class="section-title">Learned by Level-Up</h2>
+        <div id="levelList" class="learn-list"></div>
+      </div>
 
-    <div id="learnersTM" class="move-card" style="display:none;">
-      <h2 class="section-title">Learned by TM / Tutor / Egg</h2>
-      <div id="tmList" class="learn-list"></div>
+      <div id="learnersTM" class="move-card learn-col" style="display:none;">
+        <h2 class="section-title">Learned by TM / Tutor / Egg</h2>
+        <div id="tmList" class="learn-list"></div>
+      </div>
     </div>
   </div>
 
@@ -255,6 +287,13 @@
   // We'll need the sorted list of moves to compute "next"
   let sortedMoveNames = [];
 
+  // Helper: category -> icon path
+  const categoryIcons = {
+    Physical: 'image/physical.png',
+    Special:  'image/special.png',
+    Status:   'image/status.png'
+  };
+
   // load all required data
   Promise.all([
     fetch('data/moves.json').then(r => r.json()),
@@ -283,13 +322,17 @@
     const nextIndex = (currentIndex >= 0) ? (currentIndex + 1) % sortedMoveNames.length : -1;
     const nextMoveName = (nextIndex >= 0) ? sortedMoveNames[nextIndex] : null;
 
-    // Render top section: name, type badge, category, power, acc, PP, description
+    // Render top section: name, type badge, category (icon), power, acc, PP, description
     const typeHtml = mv.Type ? `<span class="type-badge type-${mv.Type.toLowerCase()}">${mv.Type}</span>` : '';
     const categoryLabel = mv.Category || '';
     const power = mv.Power ?? '—';
     const acc = (mv.Acc === undefined || mv.Acc === null) ? '—' : `${mv.Acc}%`;
     const pp = mv.PP ?? '—';
     const desc = mv.Description || 'No description available.';
+
+    // Determine category icon (fallback to text if missing)
+    const catIcon = categoryIcons[categoryLabel] || '';
+    const catHtml = catIcon ? `<img src="${catIcon}" class="category-icon" alt="${escapeHtml(categoryLabel)}">` : escapeHtml(categoryLabel);
 
     // Create top-controls including Next button
     const nextButtonHtml = nextMoveName
@@ -309,7 +352,7 @@
       </div>
 
       <div class="move-stats">
-        <div class="stat-pill"><span class="muted">Category</span> ${escapeHtml(categoryLabel)}</div>
+        <div class="stat-pill"><span class="muted">Category</span> ${catHtml}</div>
         <div class="stat-pill"><span class="muted">Power</span> ${escapeHtml(String(power))}</div>
         <div class="stat-pill"><span class="muted">Accuracy</span> ${escapeHtml(String(acc))}</div>
         <div class="stat-pill"><span class="muted">PP</span> ${escapeHtml(String(pp))}</div>
@@ -371,7 +414,7 @@
     // Sort tm learners alphabetically
     tmLearners.sort((a,b) => a.pokeName.localeCompare(b.pokeName));
 
-    // Render level learners (compact layout)
+    // Render level learners (compact layout). Make image+name clickable to pokemon page.
     if (levelLearners.length) {
       learnersLevelSection.style.display = 'block';
       for (const ln of levelLearners) {
@@ -383,18 +426,23 @@
         // image url
         const imgUrl = await getPokemonImage(name);
 
+        // Anchor wraps image and name so the pokemon is clickable
+        const pokeHref = `pokemon.html?name=${encodeURIComponent(name)}`;
+
         entry.innerHTML = `
-          <img src="${imgUrl}" alt="${escapeHtml(name)}">
-          <div class="meta">
-            <a class="poke-link" href="pokemon.html?name=${encodeURIComponent(name)}">${escapeHtml(name)}</a>
-          </div>
+          <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
+            <img src="${imgUrl}" alt="${escapeHtml(name)}">
+            <div class="meta">
+              <div class="poke-link-name">${escapeHtml(name)}</div>
+            </div>
+          </a>
           <div class="learn-type">${lvl ? 'Lv ' + escapeHtml(String(lvl)) : 'Lv'}</div>
         `;
         levelList.appendChild(entry);
       }
     }
 
-    // Render TM learners
+    // Render TM learners. Also make clickable.
     if (tmLearners.length) {
       learnersTMSection.style.display = 'block';
       for (const tn of tmLearners) {
@@ -404,12 +452,15 @@
         entry.className = 'learn-item';
 
         const imgUrl = await getPokemonImage(name);
+        const pokeHref = `pokemon.html?name=${encodeURIComponent(name)}`;
 
         entry.innerHTML = `
-          <img src="${imgUrl}" alt="${escapeHtml(name)}">
-          <div class="meta">
-            <a class="poke-link" href="pokemon.html?name=${encodeURIComponent(name)}">${escapeHtml(name)}</a>
-          </div>
+          <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
+            <img src="${imgUrl}" alt="${escapeHtml(name)}">
+            <div class="meta">
+              <div class="poke-link-name">${escapeHtml(name)}</div>
+            </div>
+          </a>
           <div class="learn-type">${escapeHtml(String(label))}</div>
         `;
         tmList.appendChild(entry);
