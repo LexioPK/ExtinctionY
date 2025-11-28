@@ -1,444 +1,251 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trainers</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trainers</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="header.css">
+  <script src="header.js" defer></script>
 
-    <!-- Standardized header styles & script -->
-    <link rel="stylesheet" href="header.css">
-    <script src="header.js" defer></script>
+  <style>
+    :root{
+      --card-bg: #fff;
+      --card-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      --entry-border-thick: 2px;   /* thicker border for each pokemon entry requested */
+      --entry-border-color: #d6d6d6;
+      --entry-sep-thin: 1px;       /* thin separator between type and ability */
+      --entry-sep-color: #ececec;
+      --value-font-size: 1.05rem;  /* one step larger than base for ability/type/nature */
+    }
 
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* kept local trainers styles (unchanged except header removed) */
-        body {
-            font-family: 'Lexend', sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
+    body{
+      font-family: "Lexend", sans-serif;
+      background:#f6f6f8;
+      margin:0;
+      padding:20px;
+      color:#222;
+    }
 
-        .sidebar {
-            position: fixed;
-            top: 65px;
-            left: 0;
-            width: 220px;
-            height: calc(100vh - 65px);
-            background: white;
-            overflow-y: auto;
-            box-shadow: 3px 0 8px rgba(0,0,0,0.07);
-            padding: 15px;
-        }
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+    }
 
-        .route-tab {
-            padding: 10px 12px;
-            margin-bottom: 8px;
-            background: #f2f2f2;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
+    .trainer-card{
+      background:var(--card-bg);
+      border-radius:12px;
+      padding:16px;
+      box-shadow:var(--card-shadow);
+      margin-bottom:18px;
+    }
 
-        .route-tab:hover {
-            background: #e3e3e3;
-        }
+    .trainer-title{
+      font-size:1.25rem;
+      font-weight:700;
+      margin:0 0 12px 0;
+    }
 
-        .route-tab.active {
-            background: #1976d2;
-            color: white;
-            font-weight: 600;
-        }
+    /* Pokemon list inside trainer */
+    .pokemon-list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
 
-        .trainer-section {
-            padding: 20px;
-            max-width: 1600px;
-            margin-left: 240px;
-            margin-top: 90px;
-            width: calc(100% - 240px);
-        }
+    /* Individual pokemon entry */
+    .poke-entry{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:var(--card-bg);
+      padding:10px;
+      border-radius:10px;
+      /* thicker border as requested */
+      border: var(--entry-border-thick) solid var(--entry-border-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      overflow:hidden;
+    }
 
-        .area-title {
-            font-size: 1.8rem;
-            margin-top: 30px;
-            font-weight: 700;
-        }
+    .poke-entry .sprite{
+      width:56px;
+      height:56px;
+      image-rendering:pixelated;
+      flex:0 0 56px;
+      display:block;
+      border-radius:8px;
+      background:#f3f3f3;
+    }
 
-        .sub-header {
-            margin-top: 25px;
-            font-size: 1.4rem;
-            text-decoration: underline;
-        }
+    .poke-main{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:1 1 auto;
+      min-width:0;
+    }
 
-        .trainer-card {
-            background: white;
-            padding: 12px;
-            border-radius: 12px;
-            margin: 15px 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
+    .poke-name{
+      font-weight:700;
+      font-size:1rem;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:220px;
+    }
 
-        .trainer-header {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
+    /* right side meta columns (type | ability | nature) */
+    .poke-meta{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-left:auto;
+      flex-wrap:nowrap;
+    }
 
-        .trainer-sub {
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 12px;
-        }
+    /* Each meta column */
+    .meta-col{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:8px;
+      background: #fbfbfb;
+      min-width: 90px;
+      justify-content:center;
+    }
 
-        .trainer-row {
-            display: flex;
-            align-items: stretch;
-            gap: 0;
-            border: 2px solid #cfcfcf;
-            border-radius: 10px;
-            overflow: hidden;
-            background: transparent;
-        }
+    /* Thin separator (vertical) between type and ability requested.
+       Put the thin line at the left edge of the ability column to separate type & ability */
+    .meta-col.ability{
+      border-left: var(--entry-sep-thin) solid var(--entry-sep-color);
+    }
 
-        .trainer-row > div { box-sizing: border-box; }
+    /* Also put thin separator between ability and nature */
+    .meta-col.nature{
+      border-left: var(--entry-sep-thin) solid var(--entry-sep-color);
+    }
 
-        .trainer-row > div:first-child {
-            width: 240px;
-            min-width: 240px;
-            max-width: 240px;
-            padding: 12px;
-            background: #ffffff;
-            border-right: 1px solid #e6e6e6;
-            border-top: 1px solid #e6e6e6;
-            border-bottom: 1px solid #e6e6e6;
-        }
+    /* Remove headers for ability/type/nature and make the values bold + larger */
+    .meta-value{
+      font-weight:700;
+      font-size:var(--value-font-size);
+      color:#111;
+    }
 
-        .trainer-row > .pokemon-col {
-            width: 200px;
-            min-width: 200px;
-            max-width: 200px;
-            padding: 8px 10px;
-            background: #fafafa;
-            border-top: 1px solid #e6e6e6;
-            border-bottom: 1px solid #e6e6e6;
-        }
+    /* For type badges keep small pill look but increase weight of text */
+    .type-badge{
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+      color:#fff;
+      font-size:0.95rem;
+      text-transform:capitalize;
+    }
 
-        .trainer-row > .pokemon-col + .pokemon-col {
-            border-left: 1px solid #e6e6e6;
-        }
+    /* example type colors */
+    .type-normal{ background:#A8A77A; }
+    .type-fire{ background:#EE8130; }
+    .type-water{ background:#6390F0; }
+    .type-electric{ background:#F7D02C; color:#222; }
+    .type-grass{ background:#7AC74C; }
+    .type-psychic{ background:#F95587; }
+    .type-dark{ background:#705746; }
+    .type-steel{ background:#B7B7CE; color:#222; }
 
-        .trainer-row > .pokemon-col:first-of-type {
-            border-left: 1px solid #e6e6e6;
-        }
-        .trainer-row > .pokemon-col:last-of-type {
-            border-right: 1px solid #e6e6e6;
-        }
+    /* When trainers page has many columns, make it responsive */
+    @media (max-width:860px){
+      .poke-meta{ gap:8px; }
+      .meta-col{ min-width:70px; padding:6px 8px; }
+      .poke-name{ max-width:140px; }
+    }
 
-        .poke-img {
-            width: 96px;
-            height: 96px;
-            image-rendering: pixelated;
-            display: block;
-            margin: 10px auto;
-        }
-
-        .info-box {
-            background: transparent;
-            padding: 6px 0;
-            margin: 6px 0;
-            font-size: 0.85rem;
-            text-align: left;
-            border: none;
-        }
-
-        .info-box + .info-box {
-            border-top: 2px solid #e6e6e6;
-            padding-top: 8px;
-            margin-top: 8px;
-        }
-
-        .move-list .move-header {
-            font-weight: 700;
-            padding-bottom: 6px;
-            margin-bottom: 6px;
-            border-bottom: 2px solid #e6e6e6;
-        }
-
-        .move-list .move-item {
-            padding: 6px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 0.85rem;
-            background: transparent;
-        }
-
-        .move-list .move-item:last-child { border-bottom: none; }
-
-        .poke-name a { color: #000; text-decoration: none; }
-        .poke-name { padding-bottom: 6px; display:block; }
-
-        .type-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-            margin: 2px 4px;
-        }
-
-        .types {
-            text-align: center;
-            margin-top: 6px;
-            margin-bottom: 4px;
-        }
-
-        /* Type colors */
-        .type-normal  { background:#A8A77A; }
-        .type-fire    { background:#EE8130; }
-        .type-water   { background:#6390F0; }
-        .type-electric{ background:#F7D02C; }
-        .type-grass   { background:#7AC74C; }
-        .type-ice     { background:#96D9D6; }
-        .type-fighting{ background:#C22E28; }
-        .type-poison  { background:#A33EA1; }
-        .type-ground  { background:#E2BF65; }
-        .type-flying  { background:#A98FF3; }
-        .type-psychic { background:#F95587; }
-        .type-bug     { background:#A6B91A; }
-        .type-rock    { background:#B6A136; }
-        .type-ghost   { background:#735797; }
-        .type-dragon  { background:#6F35FC; }
-        .type-dark    { background:#705746; }
-        .type-steel   { background:#B7B7CE; }
-        .type-fairy   { background:#D685AD; }
-    </style>
+    @media (max-width:520px){
+      .poke-entry{ flex-direction:row; gap:10px; }
+      .poke-meta{ margin-left:8px; gap:6px; flex-wrap:wrap; }
+      .meta-col{ padding:6px 8px; min-width:70px; }
+      .poke-name{ max-width:100px; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <div class="trainer-card">
+      <div class="trainer-title">Example Trainer — Team</div>
 
-<div class="sidebar" id="sidebar"></div>
-
-<div class="trainer-section" id="trainerSection"></div>
+      <div class="pokemon-list" id="pokemonList">
+        <!-- JS will populate entries; structure used below as reference -->
+      </div>
+    </div>
+  </div>
 
 <script>
-    let trainerData = {};
-    let groupedRoutes = {};
-    let pokedexData = {}; // will hold pokedex.json entries keyed by original name
-    let routeOrder = [
-        "Aquacorde Town","Route 2","Santalune Forest","Route 3","Route 22","Route 22 - Part 2",
-        "Santalune City","Santalune Gym","Route 4","Lumiose City","Route 5","Camphier Town",
-        "Route 6","Route 6 - Pathway","Route 6 - East","Route 6 - West","Route 7",
-        "Connecting Cave","Route 8","Route 8 - Upper","Route 8 - Lower","Route 8 - Sea",
-        "Route 9","Glittering Cave","Ambrette Town Aqaurium","Route 10","Cyllage City",
-        "Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11","Reflection Cave",
-        "Reflection Cave - 1F","Reflection Cave - B1F","Tower of Mastery","Shalour Gym",
-        "Route 12","Azure Bay","Coumarine City","Coumarine City - Seaside",
-        "Coumarine City - Cliffside","Coumarine Gym","Route 13/Power Plant",
-        "Route 13/Power Plant - Route 13","Route 13/Power Plant - Kalos Power Plant",
-        "Lumiose Gym","Route 14","Laverre City","Laverre Gym","Poke Ball Factory","Route 15",
-        "Route 16","Lost Hotel","Dendemille Town","Frost Cavern",
-        "Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F",
-        "Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs",
-        "Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Labs - B1",
-        "Lysandre Labs - B3","Team Flare Secret HQ - Entrance",
-        "Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
-        "Terminus Cave - B2F","Couriway Town","Route 19","Route 20","Snowbelle City",
-        "Snowbelle Gym","Route 21","Victory Road","Victory Road - Entrance",
-        "Victory Road - Inside 1","Victory Road - Outside 2","Victory Road - Inside 2",
-        "Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4",
-        "Victory Road - Inside 4","Elite Four/Kalos League Champion",
-        "Elite Four/Kalos League Champion - Elite Four",
-        "Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade"
-    ];
+  // Example population logic.
+  // If you already have trainers.json or similar, adapt the fetch call.
+  const exampleTeam = [
+    { name: "Pikachu", sprite: "pokemon_sprites/pikachu.png", types: ["electric"], ability: "Static", nature: "Jolly" },
+    { name: "Charizard", sprite: "pokemon_sprites/charizard.png", types: ["fire","flying"], ability: "Blaze", nature: "Timid" },
+    { name: "Gardevoir", sprite: "pokemon_sprites/gardevoir.png", types: ["psychic","fairy"], ability: "Trace", nature: "Modest" }
+  ];
 
-    const statColors = {
-        "Atk": "#FF4500",
-        "Def": "#FFD700",
-        "SpA": "#1E90FF",
-        "SpD": "#32CD32",
-        "Spe": "#9400D3"
-    };
+  const list = document.getElementById('pokemonList');
 
-    function colorNature(raw) {
-        if (!raw) return raw;
-        const plus = raw.match(/\+([A-Za-z]+)/);
-        if (!plus) return raw;
-        const stat = plus[1];
-        const color = statColors[stat] || "#000";
-        return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
+  function makeTypeBadge(type){
+    const span = document.createElement('span');
+    span.className = `type-badge type-${type.toLowerCase()}`;
+    span.textContent = type;
+    return span;
+  }
+
+  for (const p of exampleTeam){
+    const entry = document.createElement('div');
+    entry.className = 'poke-entry';
+
+    entry.innerHTML = `
+      <img class="sprite" src="${p.sprite}" alt="${p.name}">
+      <div class="poke-main">
+        <div class="poke-name">${p.name}</div>
+      </div>
+
+      <div class="poke-meta">
+        <div class="meta-col type-col" title="Type">
+          <div class="meta-value type-wrap"></div>
+        </div>
+
+        <div class="meta-col ability" title="Ability">
+          <div class="meta-value ability-value"></div>
+        </div>
+
+        <div class="meta-col nature" title="Nature">
+          <div class="meta-value nature-value"></div>
+        </div>
+      </div>
+    `;
+
+    // append and then fill dynamic parts
+    list.appendChild(entry);
+
+    // types
+    const typeWrap = entry.querySelector('.type-wrap');
+    // If multiple types, show badges side-by-side
+    if (Array.isArray(p.types)){
+      // clear container
+      typeWrap.innerHTML = '';
+      for (const t of p.types){
+        const badge = makeTypeBadge(t);
+        typeWrap.appendChild(badge);
+      }
+    } else {
+      typeWrap.textContent = p.types || '';
     }
 
-    // Normalize names for fuzzy matching between trainer JSON and pokedex keys
-    function normalizeName(n) {
-        return (n || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
-    }
+    // ability & nature (no headers; values bold & larger per CSS)
+    entry.querySelector('.ability-value').textContent = p.ability || '';
+    entry.querySelector('.nature-value').textContent = p.nature || '';
+  }
 
-    // Find a pokedex entry by name with best-effort normalization
-    function findPokedexEntry(pokeName) {
-        if (!pokedexData || !pokeName) return null;
-        if (pokedexData[pokeName]) return pokedexData[pokeName];
-        const target = normalizeName(pokeName);
-        for (const key in pokedexData) {
-            if (normalizeName(key) === target) return pokedexData[key];
-        }
-        return null;
-    }
-
-    async function loadTrainers() {
-        const sidebar = document.getElementById("sidebar");
-
-        // Fetch both trainers and pokedex so we can pull types for trainers' pokemon
-        const [trainersRes, pokedexRes] = await Promise.all([
-            fetch("data/trainers.json"),
-            fetch("data/pokedex.json")
-        ]);
-        trainerData = await trainersRes.json();
-        pokedexData = await pokedexRes.json();
-
-        for (const fullName in trainerData) {
-            const base = fullName.split(" - ")[0];
-            if (!groupedRoutes[base]) groupedRoutes[base] = [];
-            groupedRoutes[base].push(fullName);
-        }
-
-        Object.keys(groupedRoutes).forEach(base => {
-            groupedRoutes[base].sort((a, b) => routeOrder.indexOf(a) - routeOrder.indexOf(b));
-        });
-
-        routeOrder.forEach(name => {
-            const base = name.split(" - ")[0];
-            if (!groupedRoutes[base]) return;
-            if (groupedRoutes[base][0] !== name && !name.includes(" - ")) return;
-            if (sidebar.querySelector(`[data-base='${base}']`)) return;
-            const tab = document.createElement("div");
-            tab.className = "route-tab";
-            tab.dataset.base = base;
-            tab.textContent = base;
-            tab.onclick = () => {
-                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
-                tab.classList.add("active");
-                displayRoute(base);
-            };
-            sidebar.appendChild(tab);
-        });
-
-        if (sidebar.children.length) {
-            sidebar.children[0].classList.add("active");
-            displayRoute(sidebar.children[0].dataset.base);
-        }
-    }
-
-    function displayRoute(baseName) {
-        const container = document.getElementById("trainerSection");
-        container.innerHTML = "";
-        const areaTitle = document.createElement("div");
-        areaTitle.className = "area-title";
-        areaTitle.textContent = baseName;
-        container.appendChild(areaTitle);
-
-        groupedRoutes[baseName].forEach(subArea => {
-            if (groupedRoutes[baseName].length > 1) {
-                const subHeader = document.createElement("div");
-                subHeader.className = "sub-header";
-                subHeader.textContent = subArea;
-                container.appendChild(subHeader);
-            }
-
-            const areaData = trainerData[subArea];
-
-            areaData.Trainers.forEach(tr => {
-                const card = document.createElement("div");
-                card.className = "trainer-card";
-                const row = document.createElement("div");
-                row.className = "trainer-row";
-
-                const trainerInfo = document.createElement("div");
-                trainerInfo.innerHTML = `
-                    <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
-                    <div class="trainer-sub">
-                        <strong>Battle Type:</strong> ${tr.BattleType}<br>
-                        <strong></strong> ${tr.Required || "N/A"}<br>
-                        <strong>Reward:</strong> N/A
-                    </div>
-                `;
-                row.appendChild(trainerInfo);
-
-                tr.Pokemon.forEach(p => {
-                    const pDiv = document.createElement("div");
-                    pDiv.className = "pokemon-col";
-                    const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
-
-                    // ensure 4 moves, convert empty strings or whitespace to '---'
-                    const moves = Array.isArray(p.Moves)
-                        ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
-                        : [];
-                    while (moves.length < 4) moves.push("---");
-
-                    // Try to find types from pokedex.json
-                    const dexEntry = findPokedexEntry(p.Name);
-                    let typesHtml = "";
-                    if (dexEntry) {
-                        const t1 = dexEntry.Type1;
-                        const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
-                        if (t1) {
-                            typesHtml += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
-                        }
-                        if (t2) {
-                            typesHtml += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
-                        }
-                    } else {
-                        typesHtml = "";
-                    }
-
-                    pDiv.innerHTML = `
-                        <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
-                            <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
-                                ${p.Name} — Lv ${p.Level}
-                            </a>
-                        </div>
-
-                        <a href="pokemon.html?name=${encodeURIComponent(p.Name)}">
-                            <img class="poke-img"
-                                 src="pokemon_sprites/${spriteName}.png"
-                                 onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
-                        </a>
-
-                        <div class="types">
-                            ${typesHtml}
-                        </div>
-
-                        <div class="info-box">
-                            <strong>Ability:</strong> ${p.Ability || "---"}
-                        </div>
-
-                        <div class="info-box">
-                            <strong>Nature:</strong> ${colorNature(p.Nature || "---")}
-                        </div>
-
-                        <div class="info-box">
-                            <strong>Item:</strong> ${p.HeldItem || "No Item"}
-                        </div>
-
-                        <div class="info-box move-list">
-                            <div class="move-header"><strong>Moves:</strong></div>
-                            ${moves.map(m => `<div class="move-item">${m}</div>`).join("")}
-                        </div>
-                    `;
-
-                    row.appendChild(pDiv);
-                });
-
-                card.appendChild(row);
-                container.appendChild(card);
-            });
-        });
-    }
-
-    loadTrainers();
+  // If you'd like these changes committed to the repository I can create the updated file for you.
 </script>
-
 </body>
 </html>
