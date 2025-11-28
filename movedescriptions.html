@@ -13,7 +13,9 @@
 
 <style>
   :root {
-    --learn-width: 420px; /* canonical width used for "level" column when single, and column width when equal */
+    --learn-gap: 20px;   /* gap between columns */
+    --container-max: 1100px;
+    --move-padding: 18px; /* matches .move-card padding */
   }
 
   body {
@@ -24,14 +26,14 @@
   }
 
   .container {
-    max-width: 1100px;
+    max-width: var(--container-max);
     margin: 0 auto;
   }
 
   .move-card {
     background: white;
     border-radius: 12px;
-    padding: 18px;
+    padding: var(--move-padding);
     box-shadow: 0 3px 12px rgba(0,0,0,0.08);
     margin-bottom: 18px;
   }
@@ -117,41 +119,48 @@
     font-weight:700;
   }
 
-  /* Two-column learner layout */
+  /* Learn columns container is sized to match the inner content area of the top move-card.
+     Calculation: container width minus the move-card horizontal padding on both sides. */
   .learn-columns {
     display:flex;
-    gap:20px;
-    align-items:flex-start; /* align both columns at same Y */
+    gap: var(--learn-gap);
+    align-items:flex-start;
     margin-top:12px;
+
+    /* match the inner width of the .move-card so edges align with its inner content */
+    width: calc(100% - (var(--move-padding) * 2));
+    max-width: calc(var(--container-max) - (var(--move-padding) * 2));
+    margin-left: auto;
+    margin-right: auto;
     flex-wrap:wrap;
   }
 
+  /* When both columns present: make them equal (each fills 50% of learn-columns space) */
+  .learn-columns.equal .learn-col {
+    flex: 1 1 0;
+    max-width: none;
+    min-width: 0;
+  }
+
+  /* When only one column present: make it the same size as one column when both present,
+     i.e. half of the learn-columns width, and center it. */
   .learn-columns.single {
-    justify-content:center; /* center the single column */
+    justify-content: center;
+  }
+  .learn-columns.single .learn-col {
+    flex: 0 0 calc((100% - var(--learn-gap)) / 2);
+    max-width: calc((100% - var(--learn-gap)) / 2);
+    min-width: 200px;
   }
 
   .learn-col {
-    flex: 1 1 0;
-    min-width:300px;
-  }
-
-  /* when both present and we want equal columns, apply .equal */
-  .learn-columns.equal .learn-col {
-    flex: 0 0 var(--learn-width);
-    max-width: var(--learn-width);
-  }
-
-  /* when only level is present, keep it at canonical width and centered via .single */
-  .learn-columns.single .learn-col.learn-level {
-    flex: 0 0 var(--learn-width);
-    max-width: var(--learn-width);
-    margin: 0 auto;
+    background: transparent;
   }
 
   .learn-list {
     display:flex;
     flex-direction:column;
-    gap:0; /* we'll use subtle borders to separate items */
+    gap:0;
     width:100%;
   }
 
@@ -179,7 +188,7 @@
   }
 
   .learn-item img {
-    width:48px; /* slightly smaller so it sits closer */
+    width:48px;
     height:48px;
     image-rendering:pixelated;
     display:block;
@@ -202,7 +211,7 @@
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
-    max-width:180px; /* keep name compact near level */
+    max-width:180px;
     display:inline-block;
     vertical-align:middle;
   }
@@ -220,7 +229,7 @@
     text-align:center;
   }
 
-  /* type colors (subset - matches other pages) */
+  /* type colors */
   .type-normal  { background:#A8A77A; }
   .type-fire    { background:#EE8130; }
   .type-water   { background:#6390F0; }
@@ -240,14 +249,22 @@
   .type-steel   { background:#B7B7CE; color:#222; }
   .type-fairy   { background:#D685AD; color:#222; }
 
-  /* small helpers */
-  .muted { color:#666; font-weight:600; }
-  .center { text-align:center; }
-
+  /* responsive fallback: stack columns full width */
   @media (max-width:900px) {
-    .learn-columns { flex-direction:column; }
+    .learn-columns {
+      width: 100%;
+      max-width: 100%;
+      gap: 12px;
+    }
+    .learn-columns.equal .learn-col,
+    .learn-columns.single .learn-col {
+      flex: 1 1 auto;
+      max-width: 100%;
+    }
+    .learn-columns.single .learn-col {
+      margin: 0;
+    }
     .learn-item .meta .poke-link-name { max-width:140px; }
-    .learn-columns.equal .learn-col, .learn-columns.single .learn-col.learn-level { max-width:100%; flex:1 1 auto; margin:0; }
   }
 
   @media (max-width:720px) {
@@ -265,12 +282,12 @@
     </div>
 
     <div class="learn-columns" id="learnColumns">
-      <div id="learnersLevel" class="move-card learn-col learn-level" style="display:none;">
+      <div id="learnersLevel" class="move-card learn-col" style="display:none;">
         <h2 class="section-title">Learned by Level-Up</h2>
         <div id="levelList" class="learn-list"></div>
       </div>
 
-      <div id="learnersTM" class="move-card learn-col learn-tm" style="display:none;">
+      <div id="learnersTM" class="move-card learn-col" style="display:none;">
         <h2 class="section-title">Learned by TM / Tutor / Egg</h2>
         <div id="tmList" class="learn-list"></div>
       </div>
@@ -406,7 +423,7 @@
       });
     }
 
-    // Clear previous lists (important if the page is navigated to via JS)
+    // Clear previous lists (important when the page is navigated to via JS)
     levelList.innerHTML = '';
     tmList.innerHTML = '';
 
@@ -463,13 +480,12 @@
     learnersTMSection.style.display = hasTM ? 'block' : 'none';
 
     // set classes:
-    // - if both present -> .equal so both columns use canonical width and are equal
-    // - if only level present -> .single so level column uses canonical width and is centered
-    // - otherwise remove modifiers
+    // - if both present -> .equal so both columns share the learn-columns width equally
+    // - if only one present -> .single so the single column becomes half the width and is centered
     learnColumns.classList.remove('equal','single');
     if (hasLevel && hasTM) {
       learnColumns.classList.add('equal');
-    } else if (hasLevel && !hasTM) {
+    } else if (hasLevel || hasTM) {
       learnColumns.classList.add('single');
     }
 
