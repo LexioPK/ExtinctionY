@@ -130,9 +130,6 @@
             padding: 0;
             border: none;
             background: #fafafa;
-            outline: 1px solid #ccc; /* outline for entire Pokémon box */
-            border-radius: 8px;
-            margin-bottom: 15px;
         }
 
         .poke-img {
@@ -144,7 +141,7 @@
         }
 
         .info-box {
-            border-top: 2px solid #dcdcdc; /* thicker separator */
+            border-top: 1px solid #dcdcdc;
             padding: 8px 10px;
             margin: 0;
             border-radius: 0;
@@ -161,18 +158,34 @@
             font-weight: 700;
         }
 
-        .move-list strong {
-            border-bottom: 2px solid #dcdcdc; /* thicker line for moves header */
-            display: block;
-            padding-bottom: 3px;
-            margin-bottom: 5px;
+        .type-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            margin: 0 2px;
         }
 
-        .move-list div {
-            border-bottom: 1px solid #e0e0e0; /* subtle line for each move */
-            padding: 2px 0;
-        }
-
+        .type-normal  { background:#A8A77A; }
+        .type-fire    { background:#EE8130; }
+        .type-water   { background:#6390F0; }
+        .type-electric{ background:#F7D02C; }
+        .type-grass   { background:#7AC74C; }
+        .type-ice     { background:#96D9D6; }
+        .type-fighting{ background:#C22E28; }
+        .type-poison  { background:#A33EA1; }
+        .type-ground  { background:#E2BF65; }
+        .type-flying  { background:#A98FF3; }
+        .type-psychic { background:#F95587; }
+        .type-bug     { background:#A6B91A; }
+        .type-rock    { background:#B6A136; }
+        .type-ghost   { background:#735797; }
+        .type-dragon  { background:#6F35FC; }
+        .type-dark    { background:#705746; }
+        .type-steel   { background:#B7B7CE; }
+        .type-fairy   { background:#D685AD; }
     </style>
 </head>
 
@@ -310,8 +323,10 @@
                         pDiv.className = "pokemon-col";
                         const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-                        // ensure 4 moves, fill missing with '---'
-                        const moves = Array.isArray(p.Moves) ? [...p.Moves] : [];
+                        // ensure 4 moves, convert empty strings or whitespace to '---'
+                        const moves = Array.isArray(p.Moves)
+                            ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
+                            : [];
                         while (moves.length < 4) moves.push("---");
 
                         pDiv.innerHTML = `
