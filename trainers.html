@@ -95,7 +95,7 @@
 
         .trainer-card {
             background: white;
-            padding: 15px 20px;
+            padding: 12px;
             border-radius: 12px;
             margin: 15px 0;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
@@ -113,29 +113,45 @@
             margin-bottom: 12px;
         }
 
+        /* Layout for trainer row: shared borders between columns (single vertical lines) */
         .trainer-row {
             display: flex;
-            align-items: flex-start;
-            gap: 0;
+            align-items: stretch;
+            gap: 0; /* no double gaps so borders touch */
+            border: 2px solid #cfcfcf; /* slightly thicker overall border around the whole trainer row */
+            border-radius: 10px;
+            overflow: hidden; /* keep inner separators as single lines */
+            background: transparent;
         }
 
-        /* ensure padding/borders are included inside the width */
+        /* Ensure consistent sizing and box model */
         .trainer-row > div {
-            width: 200px;
-            min-width: 200px;
-            max-width: 200px;
             box-sizing: border-box;
         }
 
-        /* Pokemon column / individual pokemon box */
-        .pokemon-col {
-            text-align: left;
-            padding: 8px;
+        /* Left column with trainer info */
+        .trainer-row > div:first-child {
+            width: 240px;
+            min-width: 240px;
+            max-width: 240px;
+            padding: 12px;
+            background: #ffffff;
+            /* single separator line between trainer info and first pokemon */
+            border-right: 1px solid #e6e6e6;
+        }
+
+        /* Pokemon columns - they will share the vertical borders, not have full boxes */
+        .trainer-row > .pokemon-col {
+            width: 200px;
+            min-width: 200px;
+            max-width: 200px;
+            padding: 8px 10px;
             background: #fafafa;
-            border-radius: 10px;
-            /* slightly thicker border around the pokemon's entire box */
-            border: 3px solid #d0d0d0;
-            margin: 6px;
+        }
+
+        /* Add a single vertical separator between adjacent pokemon columns */
+        .trainer-row > .pokemon-col + .pokemon-col {
+            border-left: 1px solid #e6e6e6;
         }
 
         .poke-img {
@@ -146,21 +162,21 @@
             margin: 10px auto;
         }
 
-        /* Info boxes (Ability, Nature, Item, Moves container header) */
+        /* Info lines: make them look like thin lines rather than boxed sections */
         .info-box {
-            /* slightly thicker border around ability, nature, item and move header container */
-            border: 2px solid #cfcfcf;
-            padding: 8px 10px;
-            margin: 8px 0;
-            border-radius: 8px;
-            background: #ffffff;
-            font-size: 0.8rem;
+            background: transparent;
+            padding: 6px 0;
+            margin: 6px 0;
+            font-size: 0.85rem;
             text-align: left;
+            border: none;
         }
 
-        /* small tweak: first info-box can keep same spacing, remove any previous border-top logic */
-        .info-box:first-of-type {
-            /* to keep consistent visual spacing; no-op kept for compatibility */
+        /* use a subtle bottom rule to separate each info line (ability, nature, item, moves header) */
+        .info-box + .info-box {
+            border-top: 1px solid #ececec;
+            padding-top: 8px;
+            margin-top: 8px;
         }
 
         .nature-colored {
@@ -177,27 +193,35 @@
             margin: 0 2px;
         }
 
-        /* Moves specific styling */
+        /* Moves: header is a simple inline label with a separating line below;
+           each move is an individual line with a thin bottom border so they look like rows */
         .move-list {
-            /* already has .info-box styling; this container holds the header + move items */
+            padding: 0;
+            margin: 0;
         }
 
         .move-list .move-header {
-            display: block;
-            margin-bottom: 6px;
-            /* emphasize the moves header visually */
             font-weight: 700;
+            padding-bottom: 6px;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #ececec;
         }
 
-        /* thin borders around each pokemon's moves */
         .move-list .move-item {
-            border: 1px solid #e6e6e6;
-            padding: 6px 8px;
-            margin: 6px 0;
-            border-radius: 6px;
-            background: #fff;
+            padding: 6px 0;
+            border-bottom: 1px solid #f0f0f0;
             font-size: 0.85rem;
+            background: transparent;
         }
+
+        /* remove border from the last move to avoid extra line at the bottom */
+        .move-list .move-item:last-child {
+            border-bottom: none;
+        }
+
+        /* small visual tweaks */
+        .poke-name a { color: #000; text-decoration: none; }
+        .poke-name { padding-bottom: 6px; display:block; }
 
         .type-normal  { background:#A8A77A; }
         .type-fire    { background:#EE8130; }
@@ -363,7 +387,7 @@
                         while (moves.length < 4) moves.push("---");
 
                         pDiv.innerHTML = `
-                            <div class="poke-name" style="padding: 10px; text-align:center; font-weight:bold;">
+                            <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
                                 <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
                                     ${p.Name} — Lv ${p.Level}
                                 </a>
