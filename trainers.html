@@ -117,9 +117,9 @@
         }
 
         /*
-          Make the individual pokemon columns have a thicker outer border so each entry reads as a distinct block.
-          Keep the thin separators between adjacent pokemon columns (left borders) as a thinner line so there's a
-          clear thin division between neighboring entries.
+          Each pokemon column now has a full 2px border so every Pokémon box is fully outlined,
+          including the last one. We still keep thin visual separators where helpful by keeping a
+          1px left border on adjacent columns to preserve the thin divider look between neighbors.
         */
         .trainer-row > .pokemon-col {
             width: 200px;
@@ -127,27 +127,24 @@
             max-width: 200px;
             padding: 8px 10px;
             background: #fafafa;
-            /* thicker border around each pokemon column */
+            /* thicker border around each pokemon column (full box) */
             border: 2px solid #cfcfcf;
-            /* remove top/bottom thin borders from before; we'll visually separate with the 2px border */
-            border-top: none;
-            border-bottom: none;
             box-sizing: border-box;
+            background-clip: padding-box;
         }
 
-        /* keep thin vertical separators between adjacent pokemon columns */
+        /* keep a thin visual divider between adjacent pokemon columns */
         .trainer-row > .pokemon-col + .pokemon-col {
+            margin-left: -2px; /* collapse overlapping edges so the thin line appears consistently */
             border-left: 1px solid #e6e6e6;
         }
 
-        /* ensure first and last still look aligned with the row */
+        /* ensure first and last columns visually align with the row */
         .trainer-row > .pokemon-col:first-of-type {
-            /* visually keep left edge consistent */
-            border-left: none;
+            /* nothing to remove; full border ensures left edge has a border */
         }
         .trainer-row > .pokemon-col:last-of-type {
-            /* visually keep right edge consistent */
-            border-right: none;
+            /* nothing to remove; full border ensures right edge has a border */
         }
 
         .poke-img {
@@ -159,10 +156,8 @@
         }
 
         /*
-          Info boxes previously used a 2px line between ability/nature (info-box + info-box).
-          The user requested that the separator between Type and Ability be a thin line like the one between Ability and Nature.
-          We'll make both separators thin (1px) for visual consistency, and also increase the value font-size + boldness and
-          remove the textual headers ("Ability:", "Nature:", etc.) so only the values appear.
+          Info boxes: thin separators between stacked info-boxes (ability <-> nature) and between
+          types and the first info-box. Values are bold and slightly larger; headers removed.
         */
         .info-box {
             background: transparent;
@@ -257,7 +252,7 @@
         @media (max-width:520px){
             .trainer-section { margin-left: 16px; width: calc(100% - 16px); }
             .trainer-row { flex-direction: column; gap: 12px; border: none; background: transparent; }
-            .trainer-row > .pokemon-col { width: 100%; min-width: 0; max-width: 100%; border: 2px solid #cfcfcf; }
+            .trainer-row > .pokemon-col { width: 100%; min-width: 0; max-width: 100%; border: 2px solid #cfcfcf; margin-left: 0; }
             .trainer-row > div:first-child { width: 100%; min-width: 0; max-width: 100%; }
         }
     </style>
@@ -467,7 +462,7 @@
                         </div>
 
                         <div class="info-box">
-                            <strong>Item:</strong> ${p.HeldItem || "No Item"}
+                            ${p.HeldItem || "No Item"}
                         </div>
 
                         <div class="info-box move-list">
