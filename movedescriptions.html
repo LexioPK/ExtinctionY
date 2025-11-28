@@ -78,6 +78,27 @@
     color:#222;
   }
 
+  .top-controls {
+    margin-left:auto;
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+
+  button.nav-btn-move {
+    background:#4285F4;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+  }
+  button.nav-btn-move:disabled {
+    background:#9bb8f2;
+    cursor:default;
+  }
+
   h2.section-title {
     margin: 18px 0 10px 0;
     font-size:1.1rem;
@@ -87,37 +108,51 @@
   .learn-list {
     display:flex;
     flex-direction:column;
-    gap:8px;
+    gap:0; /* we'll use borders to separate */
+    width: 420px; /* shortened width so name/image sit close to level */
   }
 
   .learn-item {
     background: white;
-    border-radius: 10px;
+    border-radius: 6px;
     padding:8px 10px;
     display:flex;
     align-items:center;
     gap:12px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+    border-bottom: 1px solid #eee; /* subtle line between items */
+  }
+
+  .learn-item:last-child {
+    border-bottom: none;
   }
 
   .learn-item img {
-    width:56px;
-    height:56px;
+    width:48px; /* slightly smaller so it sits closer */
+    height:48px;
     image-rendering:pixelated;
     display:block;
+    border-radius:6px;
   }
 
   .learn-item .meta {
     display:flex;
-    gap:12px;
+    gap:10px;
     align-items:center;
-    flex-wrap:wrap;
+    flex-wrap:nowrap;
+    min-width: 0;
   }
 
-  .learn-item a.poke-link {
+  .learn-item .meta .poke-link {
     font-weight:700;
     color:#111;
     text-decoration:none;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:180px; /* keep name compact near level */
+    display:inline-block;
+    vertical-align:middle;
   }
 
   .learn-item .learn-type {
@@ -129,6 +164,8 @@
     background:#f7f7f7;
     border-radius:8px;
     border:1px solid #eee;
+    min-width:64px;
+    text-align:center;
   }
 
   /* type colors (subset - matches other pages) */
@@ -155,10 +192,16 @@
   .muted { color:#666; font-weight:600; }
   .center { text-align:center; }
 
+  @media (max-width:900px) {
+    .learn-list { width:100%; }
+    .learn-item .meta .poke-link { max-width:140px; }
+  }
+
   @media (max-width:720px) {
     .move-head { flex-direction:column; align-items:flex-start; gap:10px; }
     .move-stats { width:100%; }
     .learn-item { padding:10px; }
+    .top-controls { width:100%; justify-content:flex-start; margin-top:8px; }
   }
 </style>
 </head>
@@ -189,7 +232,7 @@
   const learnersTMSection = document.getElementById("learnersTM");
 
   // Multi-folder sprite support (same approach as pokemon.html)
-  const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];  
+  const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
   function getPokemonImage(name) {
     const spriteName = name.toLowerCase().replace(/\s+/g, '-');
     return new Promise(resolve => {
@@ -209,24 +252,36 @@
     });
   }
 
+  // We'll need the sorted list of moves to compute "next"
+  let sortedMoveNames = [];
+
   // load all required data
   Promise.all([
     fetch('data/moves.json').then(r => r.json()),
     fetch('data/pokedex.json').then(r => r.json()),
     fetch('data/movesets.json').then(r => r.json())
   ]).then(async ([movesData, pokedexData, movesetsData]) => {
+    // Prepare sorted move name list (preserve canonical keys order)
+    sortedMoveNames = Object.keys(movesData).sort((a,b) => a.localeCompare(b));
+
     if (!moveName) {
       moveCard.innerHTML = '<div class="muted">No move specified.</div>';
       return;
     }
 
-    const moveKey = moveName; // moves.json keys expected to match exactly as used elsewhere
-    const mv = movesData[moveKey] || Object.values(movesData).find((m, k) => k.toLowerCase() === moveKey.toLowerCase());
+    // try direct lookup then case-insensitive fallback
+    const canonicalKey = Object.keys(movesData).find(k => k.toLowerCase() === moveName.toLowerCase()) || moveName;
+    const mv = movesData[canonicalKey];
 
     if (!mv) {
-      moveCard.innerHTML = `<div class="muted">Move "${moveName}" not found in data/moves.json.</div>`;
+      moveCard.innerHTML = `<div class="muted">Move "${escapeHtml(moveName)}" not found in data/moves.json.</div>`;
       return;
     }
+
+    // Build next-move button
+    const currentIndex = sortedMoveNames.findIndex(n => n.toLowerCase() === canonicalKey.toLowerCase());
+    const nextIndex = (currentIndex >= 0) ? (currentIndex + 1) % sortedMoveNames.length : -1;
+    const nextMoveName = (nextIndex >= 0) ? sortedMoveNames[nextIndex] : null;
 
     // Render top section: name, type badge, category, power, acc, PP, description
     const typeHtml = mv.Type ? `<span class="type-badge type-${mv.Type.toLowerCase()}">${mv.Type}</span>` : '';
@@ -236,23 +291,40 @@
     const pp = mv.PP ?? '—';
     const desc = mv.Description || 'No description available.';
 
+    // Create top-controls including Next button
+    const nextButtonHtml = nextMoveName
+      ? `<button id="nextMoveBtn" class="nav-btn-move">Next: ${escapeHtml(nextMoveName)}</button>`
+      : `<button id="nextMoveBtn" class="nav-btn-move" disabled>Next</button>`;
+
     moveCard.innerHTML = `
       <div class="move-head">
         <div>
-          <div class="move-name">${moveKey}</div>
+          <div class="move-name">${escapeHtml(canonicalKey)}</div>
           <div style="margin-top:6px">${typeHtml}</div>
         </div>
 
-        <div style="margin-left:auto; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-          <div class="stat-pill"><span class="muted">Category</span> ${categoryLabel}</div>
-          <div class="stat-pill"><span class="muted">Power</span> ${power}</div>
-          <div class="stat-pill"><span class="muted">Accuracy</span> ${acc}</div>
-          <div class="stat-pill"><span class="muted">PP</span> ${pp}</div>
+        <div class="top-controls">
+          ${nextButtonHtml}
         </div>
       </div>
 
-      <div class="description">${desc}</div>
+      <div class="move-stats">
+        <div class="stat-pill"><span class="muted">Category</span> ${escapeHtml(categoryLabel)}</div>
+        <div class="stat-pill"><span class="muted">Power</span> ${escapeHtml(String(power))}</div>
+        <div class="stat-pill"><span class="muted">Accuracy</span> ${escapeHtml(String(acc))}</div>
+        <div class="stat-pill"><span class="muted">PP</span> ${escapeHtml(String(pp))}</div>
+      </div>
+
+      <div class="description">${escapeHtml(desc)}</div>
     `;
+
+    // wire next button
+    const nextBtn = document.getElementById('nextMoveBtn');
+    if (nextBtn && nextMoveName) {
+      nextBtn.addEventListener('click', () => {
+        location.href = `movedescriptions.html?name=${encodeURIComponent(nextMoveName)}`;
+      });
+    }
 
     // Find learners by level-up: iterate movesetsData (movesetsData[pokemon] => array of {Level, Move})
     const levelLearners = [];
@@ -260,8 +332,7 @@
       if (!Array.isArray(movelist)) continue;
       for (const entry of movelist) {
         if (!entry || !entry.Move) continue;
-        if (entry.Move === moveKey || entry.Move.toLowerCase() === moveKey.toLowerCase()) {
-          // Level may be string or number; normalize
+        if (entry.Move === canonicalKey || entry.Move.toLowerCase() === canonicalKey.toLowerCase()) {
           const lvl = (entry.Level === undefined || entry.Level === null) ? null : entry.Level;
           levelLearners.push({ pokeName, level: lvl });
         }
@@ -273,18 +344,17 @@
     for (const [pokeName, mon] of Object.entries(pokedexData || {})) {
       if (!mon) continue;
       const tms = mon.TMs || [];
-      if (!Array.isArray(tms)) continue;
-      for (const tm of tms) {
-        if (!tm || !tm.Move) continue;
-        if (tm.Move === moveKey || tm.Move.toLowerCase() === moveKey.toLowerCase()) {
-          // tm.Label may exist (TM number) — show label if present else show 'TM'
-          const label = tm.Label || 'TM';
-          tmLearners.push({ pokeName, label });
+      if (Array.isArray(tms)) {
+        for (const tm of tms) {
+          if (!tm || !tm.Move) continue;
+          if (tm.Move === canonicalKey || tm.Move.toLowerCase() === canonicalKey.toLowerCase()) {
+            const label = tm.Label || 'TM';
+            tmLearners.push({ pokeName, label });
+          }
         }
       }
-      // Also consider egg moves? if pokedex has mon.EggMoves or similar - try EggMoves
       if (Array.isArray(mon.EggMoves)) {
-        if (mon.EggMoves.includes(moveKey) || mon.EggMoves.map(m=>m.toLowerCase()).includes(moveKey.toLowerCase())) {
+        if (mon.EggMoves.includes(canonicalKey) || mon.EggMoves.map(m=>m.toLowerCase()).includes(canonicalKey.toLowerCase())) {
           tmLearners.push({ pokeName, label: 'Egg' });
         }
       }
@@ -301,7 +371,7 @@
     // Sort tm learners alphabetically
     tmLearners.sort((a,b) => a.pokeName.localeCompare(b.pokeName));
 
-    // Render level learners
+    // Render level learners (compact layout)
     if (levelLearners.length) {
       learnersLevelSection.style.display = 'block';
       for (const ln of levelLearners) {
@@ -314,11 +384,11 @@
         const imgUrl = await getPokemonImage(name);
 
         entry.innerHTML = `
-          <img src="${imgUrl}" alt="${name}">
+          <img src="${imgUrl}" alt="${escapeHtml(name)}">
           <div class="meta">
-            <a class="poke-link" href="pokemon.html?name=${encodeURIComponent(name)}">${name}</a>
+            <a class="poke-link" href="pokemon.html?name=${encodeURIComponent(name)}">${escapeHtml(name)}</a>
           </div>
-          <div class="learn-type">${lvl ? 'Level ' + String(lvl) : 'Level'}</div>
+          <div class="learn-type">${lvl ? 'Lv ' + escapeHtml(String(lvl)) : 'Lv'}</div>
         `;
         levelList.appendChild(entry);
       }
@@ -336,11 +406,11 @@
         const imgUrl = await getPokemonImage(name);
 
         entry.innerHTML = `
-          <img src="${imgUrl}" alt="${name}">
+          <img src="${imgUrl}" alt="${escapeHtml(name)}">
           <div class="meta">
-            <a class="poke-link" href="pokemon.html?name=${encodeURIComponent(name)}">${name}</a>
+            <a class="poke-link" href="pokemon.html?name=${encodeURIComponent(name)}">${escapeHtml(name)}</a>
           </div>
-          <div class="learn-type">${String(label)}</div>
+          <div class="learn-type">${escapeHtml(String(label))}</div>
         `;
         tmList.appendChild(entry);
       }
@@ -357,8 +427,16 @@
 
   }).catch(err => {
     console.error(err);
-    moveCard.innerHTML = `<div class="muted">Error loading move data: ${String(err)}</div>`;
+    moveCard.innerHTML = `<div class="muted">Error loading move data: ${escapeHtml(String(err))}</div>`;
   });
+
+  // small helper for safety
+  function escapeHtml(s) {
+    if (s === undefined || s === null) return '';
+    return String(s).replace(/[&<>"']/g, c => {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
 </script>
 </body>
 </html>
