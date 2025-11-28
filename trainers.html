@@ -199,12 +199,19 @@
 
         .type-badge {
             display: inline-block;
-            padding: 2px 6px;
-            border-radius: 6px;
+            padding: 4px 8px;
+            border-radius: 12px;
             font-size: 0.75rem;
             font-weight: 600;
             color: white;
-            margin: 0 2px;
+            margin: 2px 4px;
+        }
+
+        /* types container under sprite */
+        .types {
+            text-align: center;
+            margin-top: 6px;
+            margin-bottom: 4px;
         }
 
         /* Moves: make move header rule slightly thicker and keep move rows thin */
@@ -236,6 +243,7 @@
         .poke-name a { color: #000; text-decoration: none; }
         .poke-name { padding-bottom: 6px; display:block; }
 
+        /* Type colors (kept from earlier styles; these match index.html colors fairly well) */
         .type-normal  { background:#A8A77A; }
         .type-fire    { background:#EE8130; }
         .type-water   { background:#6390F0; }
@@ -272,6 +280,7 @@
     <script>
         let trainerData = {};
         let groupedRoutes = {};
+        let pokedexData = {}; // will hold pokedex.json entries keyed by original name
         let routeOrder = [
             "Aquacorde Town","Route 2","Santalune Forest","Route 3","Route 22","Route 22 - Part 2",
             "Santalune City","Santalune Gym","Route 4","Lumiose City","Route 5","Camphier Town",
@@ -316,9 +325,32 @@
             return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
         }
 
+        // Normalize names for fuzzy matching between trainer JSON and pokedex keys
+        function normalizeName(n) {
+            return (n || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
+        }
+
+        // Find a pokedex entry by name with best-effort normalization
+        function findPokedexEntry(pokeName) {
+            if (!pokedexData || !pokeName) return null;
+            if (pokedexData[pokeName]) return pokedexData[pokeName];
+            const target = normalizeName(pokeName);
+            for (const key in pokedexData) {
+                if (normalizeName(key) === target) return pokedexData[key];
+            }
+            return null;
+        }
+
         async function loadTrainers() {
             const sidebar = document.getElementById("sidebar");
-            trainerData = await fetch("data/trainers.json").then(r => r.json());
+
+            // Fetch both trainers and pokedex so we can pull types for trainers' pokemon
+            const [trainersRes, pokedexRes] = await Promise.all([
+                fetch("data/trainers.json"),
+                fetch("data/pokedex.json")
+            ]);
+            trainerData = await trainersRes.json();
+            pokedexData = await pokedexRes.json();
 
             for (const fullName in trainerData) {
                 const base = fullName.split(" - ")[0];
@@ -399,6 +431,23 @@
                             : [];
                         while (moves.length < 4) moves.push("---");
 
+                        // Try to find types from pokedex.json
+                        const dexEntry = findPokedexEntry(p.Name);
+                        let typesHtml = "";
+                        if (dexEntry) {
+                            const t1 = dexEntry.Type1;
+                            const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
+                            if (t1) {
+                                typesHtml += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
+                            }
+                            if (t2) {
+                                typesHtml += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
+                            }
+                        } else {
+                            // fallback: attempt to infer type from sprite filename (not reliable) or leave blank
+                            typesHtml = ""; // empty if not found
+                        }
+
                         pDiv.innerHTML = `
                             <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
                                 <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
@@ -411,6 +460,10 @@
                                      src="pokemon_sprites/${spriteName}.png"
                                      onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
                             </a>
+
+                            <div class="types">
+                                ${typesHtml}
+                            </div>
 
                             <div class="info-box">
                                 <strong>Ability:</strong> ${p.Ability || "---"}
