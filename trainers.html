@@ -116,25 +116,38 @@
             border-bottom: 1px solid #e6e6e6;
         }
 
+        /*
+          Make the individual pokemon columns have a thicker outer border so each entry reads as a distinct block.
+          Keep the thin separators between adjacent pokemon columns (left borders) as a thinner line so there's a
+          clear thin division between neighboring entries.
+        */
         .trainer-row > .pokemon-col {
             width: 200px;
             min-width: 200px;
             max-width: 200px;
             padding: 8px 10px;
             background: #fafafa;
-            border-top: 1px solid #e6e6e6;
-            border-bottom: 1px solid #e6e6e6;
+            /* thicker border around each pokemon column */
+            border: 2px solid #cfcfcf;
+            /* remove top/bottom thin borders from before; we'll visually separate with the 2px border */
+            border-top: none;
+            border-bottom: none;
+            box-sizing: border-box;
         }
 
+        /* keep thin vertical separators between adjacent pokemon columns */
         .trainer-row > .pokemon-col + .pokemon-col {
             border-left: 1px solid #e6e6e6;
         }
 
+        /* ensure first and last still look aligned with the row */
         .trainer-row > .pokemon-col:first-of-type {
-            border-left: 1px solid #e6e6e6;
+            /* visually keep left edge consistent */
+            border-left: none;
         }
         .trainer-row > .pokemon-col:last-of-type {
-            border-right: 1px solid #e6e6e6;
+            /* visually keep right edge consistent */
+            border-right: none;
         }
 
         .poke-img {
@@ -145,17 +158,34 @@
             margin: 10px auto;
         }
 
+        /*
+          Info boxes previously used a 2px line between ability/nature (info-box + info-box).
+          The user requested that the separator between Type and Ability be a thin line like the one between Ability and Nature.
+          We'll make both separators thin (1px) for visual consistency, and also increase the value font-size + boldness and
+          remove the textual headers ("Ability:", "Nature:", etc.) so only the values appear.
+        */
         .info-box {
             background: transparent;
             padding: 6px 0;
             margin: 6px 0;
-            font-size: 0.85rem;
+            font-size: 0.95rem; /* slightly larger for values */
             text-align: left;
             border: none;
+            /* values should appear bold and slightly larger */
+            font-weight: 700;
+            color: #111;
         }
 
+        /* thin separator between stacked info-boxes (ability <-> nature) */
         .info-box + .info-box {
-            border-top: 2px solid #e6e6e6;
+            border-top: 1px solid #e6e6e6;
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        /* thin separator between types block and the first info-box (type <-> ability) */
+        .types + .info-box {
+            border-top: 1px solid #e6e6e6;
             padding-top: 8px;
             margin-top: 8px;
         }
@@ -214,6 +244,22 @@
         .type-dark    { background:#705746; }
         .type-steel   { background:#B7B7CE; }
         .type-fairy   { background:#D685AD; }
+
+        /* responsive tweaks */
+        @media (max-width:1000px) {
+            .trainer-section { width: calc(100% - 240px); }
+            .trainer-row > .pokemon-col { min-width: 160px; max-width: 160px; }
+        }
+        @media (max-width:860px){
+            .poke-name { max-width:140px; }
+        }
+
+        @media (max-width:520px){
+            .trainer-section { margin-left: 16px; width: calc(100% - 16px); }
+            .trainer-row { flex-direction: column; gap: 12px; border: none; background: transparent; }
+            .trainer-row > .pokemon-col { width: 100%; min-width: 0; max-width: 100%; border: 2px solid #cfcfcf; }
+            .trainer-row > div:first-child { width: 100%; min-width: 0; max-width: 100%; }
+        }
     </style>
 </head>
 
@@ -410,12 +456,14 @@
                             ${typesHtml}
                         </div>
 
-                        <div class="info-box">
-                            <strong>Ability:</strong> ${p.Ability || "---"}
+                        <!-- Removed the 'Ability:' and 'Nature:' headers per request.
+                             Values are bold and slightly larger via .info-box CSS. -->
+                        <div class="info-box ability-box">
+                            ${p.Ability || "---"}
                         </div>
 
-                        <div class="info-box">
-                            <strong>Nature:</strong> ${colorNature(p.Nature || "---")}
+                        <div class="info-box nature-box">
+                            ${colorNature(p.Nature || "---")}
                         </div>
 
                         <div class="info-box">
