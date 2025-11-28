@@ -7,22 +7,16 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
 
+<!-- Standardized header styles & script -->
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+
 <style>
     body {
         font-family: "Lexend", sans-serif;
         background: #f0f0f0;
         margin: 0;
         padding: 20px;
-    }
-
-    /* Sticky Header (Tabs + Search + Title) */
-    .sticky-header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background: #f0f0f0;
-        padding-bottom: 10px;
-        padding-top: 10px;
     }
 
     /* Tabs row */
@@ -51,15 +45,6 @@
 
     .tab:hover { background: #e4e4e4; }
     .active { background: #d0ffd6; font-weight: bold; }
-
-    /* Search bar */
-    #searchInput {
-        padding: 8px 12px;
-        width: 250px;
-        font-size: 1em;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-    }
 
     /* Sticky centered title */
     h1 {
@@ -118,29 +103,11 @@
     .type-dark { background:#5a5366; }
     .type-dragon { background:#096dc4; }
     .type-steel { background:#5a8ea2; }
-
 </style>
 </head>
 <body>
 
-<!-- 🔥 Sticky Header (tabs + search + title) -->
-<div class="sticky-header">
-
-    <!-- Tabs + Search row (same layout as index.html) -->
-    <div class="tabs-row">
-        <div class="tabs">
-            <a class="tab" href="index.html">Pokédex</a>
-            <a class="tab active" href="moves.html">Moves</a>
-            <a class="tab" href="trainers.html">Trainers</a>
-        </div>
-
-        <input id="searchInput" type="text" placeholder="Search Pokémon...">
-    </div>
-
-    <!-- Sticky Centered Title -->
-    <h1>Move List</h1>
-
-</div>
+<h1>Move List</h1>
 
 <table id="moves-table">
     <thead>
@@ -190,15 +157,6 @@ function loadMoves() {
 }
 
 loadMoves();
-
-/* Pokémon Search → Press Enter to open Pokémon page */
-document.getElementById("searchInput").addEventListener("keypress", e => {
-    if (e.key === "Enter") {
-        const name = e.target.value.trim();
-        if (name.length > 0)
-            window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`;
-    }
-});
 </script>
 
 </body>
