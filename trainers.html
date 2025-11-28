@@ -2,44 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trainers</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
 
+    <!-- Standardized header styles & script -->
+    <link rel="stylesheet" href="header.css">
+    <script src="header.js" defer></script>
+
+    <link rel="stylesheet" href="style.css">
     <style>
+        /* kept local trainers styles (unchanged except header removed) */
         body {
             font-family: 'Lexend', sans-serif;
             background: #f5f5f5;
             margin: 0;
             padding: 0;
             display: flex;
-        }
-
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 20;
-        }
-
-        .header a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .header a.active {
-            color: #1976d2;
         }
 
         .sidebar {
@@ -113,54 +93,43 @@
             margin-bottom: 12px;
         }
 
-        /* Layout for trainer row: shared vertical separators, plus top/bottom lines per pokemon */
         .trainer-row {
             display: flex;
             align-items: stretch;
-            gap: 0; /* no double gaps so borders touch */
-            border: 2px solid #cfcfcf; /* outer frame for the whole trainer row */
+            gap: 0;
+            border: 2px solid #cfcfcf;
             border-radius: 10px;
-            overflow: hidden; /* keep inner separators as single lines */
+            overflow: hidden;
             background: transparent;
         }
 
-        /* Ensure consistent sizing and box model */
-        .trainer-row > div {
-            box-sizing: border-box;
-        }
+        .trainer-row > div { box-sizing: border-box; }
 
-        /* Left column with trainer info */
         .trainer-row > div:first-child {
             width: 240px;
             min-width: 240px;
             max-width: 240px;
             padding: 12px;
             background: #ffffff;
-            /* single separator line between trainer info and first pokemon */
             border-right: 1px solid #e6e6e6;
-            /* make top/bottom lines consistent with pokemon rows */
             border-top: 1px solid #e6e6e6;
             border-bottom: 1px solid #e6e6e6;
         }
 
-        /* Pokemon columns - top/bottom and shared vertical separators */
         .trainer-row > .pokemon-col {
             width: 200px;
             min-width: 200px;
             max-width: 200px;
             padding: 8px 10px;
             background: #fafafa;
-            /* top/bottom borders to make each pokemon have a full box outline */
             border-top: 1px solid #e6e6e6;
             border-bottom: 1px solid #e6e6e6;
         }
 
-        /* Add a single vertical separator between adjacent pokemon columns */
         .trainer-row > .pokemon-col + .pokemon-col {
             border-left: 1px solid #e6e6e6;
         }
 
-        /* Ensure end pokemon also have left/right borders so the box looks complete */
         .trainer-row > .pokemon-col:first-of-type {
             border-left: 1px solid #e6e6e6;
         }
@@ -176,7 +145,6 @@
             margin: 10px auto;
         }
 
-        /* Info lines: keep them as lines but make separators slightly thicker */
         .info-box {
             background: transparent;
             padding: 6px 0;
@@ -186,16 +154,30 @@
             border: none;
         }
 
-        /* use a slightly thicker top rule to separate each info line (ability, nature, item, moves header) */
         .info-box + .info-box {
             border-top: 2px solid #e6e6e6;
             padding-top: 8px;
             margin-top: 8px;
         }
 
-        .nature-colored {
+        .move-list .move-header {
             font-weight: 700;
+            padding-bottom: 6px;
+            margin-bottom: 6px;
+            border-bottom: 2px solid #e6e6e6;
         }
+
+        .move-list .move-item {
+            padding: 6px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.85rem;
+            background: transparent;
+        }
+
+        .move-list .move-item:last-child { border-bottom: none; }
+
+        .poke-name a { color: #000; text-decoration: none; }
+        .poke-name { padding-bottom: 6px; display:block; }
 
         .type-badge {
             display: inline-block;
@@ -207,43 +189,13 @@
             margin: 2px 4px;
         }
 
-        /* types container under sprite */
         .types {
             text-align: center;
             margin-top: 6px;
             margin-bottom: 4px;
         }
 
-        /* Moves: make move header rule slightly thicker and keep move rows thin */
-        .move-list {
-            padding: 0;
-            margin: 0;
-        }
-
-        .move-list .move-header {
-            font-weight: 700;
-            padding-bottom: 6px;
-            margin-bottom: 6px;
-            border-bottom: 2px solid #e6e6e6; /* slightly thicker line for header */
-        }
-
-        .move-list .move-item {
-            padding: 6px 0;
-            border-bottom: 1px solid #f0f0f0; /* thin lines between moves */
-            font-size: 0.85rem;
-            background: transparent;
-        }
-
-        /* remove border from the last move to avoid extra line at the bottom */
-        .move-list .move-item:last-child {
-            border-bottom: none;
-        }
-
-        /* small visual tweaks */
-        .poke-name a { color: #000; text-decoration: none; }
-        .poke-name { padding-bottom: 6px; display:block; }
-
-        /* Type colors (kept from earlier styles; these match index.html colors fairly well) */
+        /* Type colors */
         .type-normal  { background:#A8A77A; }
         .type-fire    { background:#EE8130; }
         .type-water   { background:#6390F0; }
@@ -267,233 +219,226 @@
 
 <body>
 
-    <div class="header">
-        <a href="index.html">Pokédex</a>
-        <a href="moves.html">Moves</a>
-        <a href="trainers.html" class="active">Trainers</a>
-    </div>
+<div class="sidebar" id="sidebar"></div>
 
-    <div class="sidebar" id="sidebar"></div>
+<div class="trainer-section" id="trainerSection"></div>
 
-    <div class="trainer-section" id="trainerSection"></div>
+<script>
+    let trainerData = {};
+    let groupedRoutes = {};
+    let pokedexData = {}; // will hold pokedex.json entries keyed by original name
+    let routeOrder = [
+        "Aquacorde Town","Route 2","Santalune Forest","Route 3","Route 22","Route 22 - Part 2",
+        "Santalune City","Santalune Gym","Route 4","Lumiose City","Route 5","Camphier Town",
+        "Route 6","Route 6 - Pathway","Route 6 - East","Route 6 - West","Route 7",
+        "Connecting Cave","Route 8","Route 8 - Upper","Route 8 - Lower","Route 8 - Sea",
+        "Route 9","Glittering Cave","Ambrette Town Aqaurium","Route 10","Cyllage City",
+        "Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11","Reflection Cave",
+        "Reflection Cave - 1F","Reflection Cave - B1F","Tower of Mastery","Shalour Gym",
+        "Route 12","Azure Bay","Coumarine City","Coumarine City - Seaside",
+        "Coumarine City - Cliffside","Coumarine Gym","Route 13/Power Plant",
+        "Route 13/Power Plant - Route 13","Route 13/Power Plant - Kalos Power Plant",
+        "Lumiose Gym","Route 14","Laverre City","Laverre Gym","Poke Ball Factory","Route 15",
+        "Route 16","Lost Hotel","Dendemille Town","Frost Cavern",
+        "Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F",
+        "Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs",
+        "Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Labs - B1",
+        "Lysandre Labs - B3","Team Flare Secret HQ - Entrance",
+        "Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
+        "Terminus Cave - B2F","Couriway Town","Route 19","Route 20","Snowbelle City",
+        "Snowbelle Gym","Route 21","Victory Road","Victory Road - Entrance",
+        "Victory Road - Inside 1","Victory Road - Outside 2","Victory Road - Inside 2",
+        "Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4",
+        "Victory Road - Inside 4","Elite Four/Kalos League Champion",
+        "Elite Four/Kalos League Champion - Elite Four",
+        "Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade"
+    ];
 
-    <script>
-        let trainerData = {};
-        let groupedRoutes = {};
-        let pokedexData = {}; // will hold pokedex.json entries keyed by original name
-        let routeOrder = [
-            "Aquacorde Town","Route 2","Santalune Forest","Route 3","Route 22","Route 22 - Part 2",
-            "Santalune City","Santalune Gym","Route 4","Lumiose City","Route 5","Camphier Town",
-            "Route 6","Route 6 - Pathway","Route 6 - East","Route 6 - West","Route 7",
-            "Connecting Cave","Route 8","Route 8 - Upper","Route 8 - Lower","Route 8 - Sea",
-            "Route 9","Glittering Cave","Ambrette Town Aqaurium","Route 10","Cyllage City",
-            "Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11","Reflection Cave",
-            "Reflection Cave - 1F","Reflection Cave - B1F","Tower of Mastery","Shalour Gym",
-            "Route 12","Azure Bay","Coumarine City","Coumarine City - Seaside",
-            "Coumarine City - Cliffside","Coumarine Gym","Route 13/Power Plant",
-            "Route 13/Power Plant - Route 13","Route 13/Power Plant - Kalos Power Plant",
-            "Lumiose Gym","Route 14","Laverre City","Laverre Gym","Poke Ball Factory","Route 15",
-            "Route 16","Lost Hotel","Dendemille Town","Frost Cavern",
-            "Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F",
-            "Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs",
-            "Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Labs - B1",
-            "Lysandre Labs - B3","Team Flare Secret HQ - Entrance",
-            "Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
-            "Terminus Cave - B2F","Couriway Town","Route 19","Route 20","Snowbelle City",
-            "Snowbelle Gym","Route 21","Victory Road","Victory Road - Entrance",
-            "Victory Road - Inside 1","Victory Road - Outside 2","Victory Road - Inside 2",
-            "Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4",
-            "Victory Road - Inside 4","Elite Four/Kalos League Champion",
-            "Elite Four/Kalos League Champion - Elite Four",
-            "Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade"
-        ];
+    const statColors = {
+        "Atk": "#FF4500",
+        "Def": "#FFD700",
+        "SpA": "#1E90FF",
+        "SpD": "#32CD32",
+        "Spe": "#9400D3"
+    };
 
-        const statColors = {
-            "Atk": "#FF4500",
-            "Def": "#FFD700",
-            "SpA": "#1E90FF",
-            "SpD": "#32CD32",
-            "Spe": "#9400D3"
-        };
+    function colorNature(raw) {
+        if (!raw) return raw;
+        const plus = raw.match(/\+([A-Za-z]+)/);
+        if (!plus) return raw;
+        const stat = plus[1];
+        const color = statColors[stat] || "#000";
+        return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
+    }
 
-        function colorNature(raw) {
-            if (!raw) return raw;
-            const plus = raw.match(/\+([A-Za-z]+)/);
-            if (!plus) return raw;
-            const stat = plus[1];
-            const color = statColors[stat] || "#000";
-            return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
+    // Normalize names for fuzzy matching between trainer JSON and pokedex keys
+    function normalizeName(n) {
+        return (n || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
+    }
+
+    // Find a pokedex entry by name with best-effort normalization
+    function findPokedexEntry(pokeName) {
+        if (!pokedexData || !pokeName) return null;
+        if (pokedexData[pokeName]) return pokedexData[pokeName];
+        const target = normalizeName(pokeName);
+        for (const key in pokedexData) {
+            if (normalizeName(key) === target) return pokedexData[key];
+        }
+        return null;
+    }
+
+    async function loadTrainers() {
+        const sidebar = document.getElementById("sidebar");
+
+        // Fetch both trainers and pokedex so we can pull types for trainers' pokemon
+        const [trainersRes, pokedexRes] = await Promise.all([
+            fetch("data/trainers.json"),
+            fetch("data/pokedex.json")
+        ]);
+        trainerData = await trainersRes.json();
+        pokedexData = await pokedexRes.json();
+
+        for (const fullName in trainerData) {
+            const base = fullName.split(" - ")[0];
+            if (!groupedRoutes[base]) groupedRoutes[base] = [];
+            groupedRoutes[base].push(fullName);
         }
 
-        // Normalize names for fuzzy matching between trainer JSON and pokedex keys
-        function normalizeName(n) {
-            return (n || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
-        }
+        Object.keys(groupedRoutes).forEach(base => {
+            groupedRoutes[base].sort((a, b) => routeOrder.indexOf(a) - routeOrder.indexOf(b));
+        });
 
-        // Find a pokedex entry by name with best-effort normalization
-        function findPokedexEntry(pokeName) {
-            if (!pokedexData || !pokeName) return null;
-            if (pokedexData[pokeName]) return pokedexData[pokeName];
-            const target = normalizeName(pokeName);
-            for (const key in pokedexData) {
-                if (normalizeName(key) === target) return pokedexData[key];
+        routeOrder.forEach(name => {
+            const base = name.split(" - ")[0];
+            if (!groupedRoutes[base]) return;
+            if (groupedRoutes[base][0] !== name && !name.includes(" - ")) return;
+            if (sidebar.querySelector(`[data-base='${base}']`)) return;
+            const tab = document.createElement("div");
+            tab.className = "route-tab";
+            tab.dataset.base = base;
+            tab.textContent = base;
+            tab.onclick = () => {
+                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+                displayRoute(base);
+            };
+            sidebar.appendChild(tab);
+        });
+
+        if (sidebar.children.length) {
+            sidebar.children[0].classList.add("active");
+            displayRoute(sidebar.children[0].dataset.base);
+        }
+    }
+
+    function displayRoute(baseName) {
+        const container = document.getElementById("trainerSection");
+        container.innerHTML = "";
+        const areaTitle = document.createElement("div");
+        areaTitle.className = "area-title";
+        areaTitle.textContent = baseName;
+        container.appendChild(areaTitle);
+
+        groupedRoutes[baseName].forEach(subArea => {
+            if (groupedRoutes[baseName].length > 1) {
+                const subHeader = document.createElement("div");
+                subHeader.className = "sub-header";
+                subHeader.textContent = subArea;
+                container.appendChild(subHeader);
             }
-            return null;
-        }
 
-        async function loadTrainers() {
-            const sidebar = document.getElementById("sidebar");
+            const areaData = trainerData[subArea];
 
-            // Fetch both trainers and pokedex so we can pull types for trainers' pokemon
-            const [trainersRes, pokedexRes] = await Promise.all([
-                fetch("data/trainers.json"),
-                fetch("data/pokedex.json")
-            ]);
-            trainerData = await trainersRes.json();
-            pokedexData = await pokedexRes.json();
+            areaData.Trainers.forEach(tr => {
+                const card = document.createElement("div");
+                card.className = "trainer-card";
+                const row = document.createElement("div");
+                row.className = "trainer-row";
 
-            for (const fullName in trainerData) {
-                const base = fullName.split(" - ")[0];
-                if (!groupedRoutes[base]) groupedRoutes[base] = [];
-                groupedRoutes[base].push(fullName);
-            }
+                const trainerInfo = document.createElement("div");
+                trainerInfo.innerHTML = `
+                    <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
+                    <div class="trainer-sub">
+                        <strong>Battle Type:</strong> ${tr.BattleType}<br>
+                        <strong></strong> ${tr.Required || "N/A"}<br>
+                        <strong>Reward:</strong> N/A
+                    </div>
+                `;
+                row.appendChild(trainerInfo);
 
-            Object.keys(groupedRoutes).forEach(base => {
-                groupedRoutes[base].sort((a, b) => routeOrder.indexOf(a) - routeOrder.indexOf(b));
-            });
+                tr.Pokemon.forEach(p => {
+                    const pDiv = document.createElement("div");
+                    pDiv.className = "pokemon-col";
+                    const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-            routeOrder.forEach(name => {
-                const base = name.split(" - ")[0];
-                if (!groupedRoutes[base]) return;
-                if (groupedRoutes[base][0] !== name && !name.includes(" - ")) return;
-                if (sidebar.querySelector(`[data-base='${base}']`)) return;
-                const tab = document.createElement("div");
-                tab.className = "route-tab";
-                tab.dataset.base = base;
-                tab.textContent = base;
-                tab.onclick = () => {
-                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
-                    tab.classList.add("active");
-                    displayRoute(base);
-                };
-                sidebar.appendChild(tab);
-            });
+                    // ensure 4 moves, convert empty strings or whitespace to '---'
+                    const moves = Array.isArray(p.Moves)
+                        ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
+                        : [];
+                    while (moves.length < 4) moves.push("---");
 
-            if (sidebar.children.length) {
-                sidebar.children[0].classList.add("active");
-                displayRoute(sidebar.children[0].dataset.base);
-            }
-        }
+                    // Try to find types from pokedex.json
+                    const dexEntry = findPokedexEntry(p.Name);
+                    let typesHtml = "";
+                    if (dexEntry) {
+                        const t1 = dexEntry.Type1;
+                        const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
+                        if (t1) {
+                            typesHtml += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
+                        }
+                        if (t2) {
+                            typesHtml += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
+                        }
+                    } else {
+                        typesHtml = "";
+                    }
 
-        function displayRoute(baseName) {
-            const container = document.getElementById("trainerSection");
-            container.innerHTML = "";
-            const areaTitle = document.createElement("div");
-            areaTitle.className = "area-title";
-            areaTitle.textContent = baseName;
-            container.appendChild(areaTitle);
+                    pDiv.innerHTML = `
+                        <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
+                            <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
+                                ${p.Name} — Lv ${p.Level}
+                            </a>
+                        </div>
 
-            groupedRoutes[baseName].forEach(subArea => {
-                if (groupedRoutes[baseName].length > 1) {
-                    const subHeader = document.createElement("div");
-                    subHeader.className = "sub-header";
-                    subHeader.textContent = subArea;
-                    container.appendChild(subHeader);
-                }
+                        <a href="pokemon.html?name=${encodeURIComponent(p.Name)}">
+                            <img class="poke-img"
+                                 src="pokemon_sprites/${spriteName}.png"
+                                 onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                        </a>
 
-                const areaData = trainerData[subArea];
+                        <div class="types">
+                            ${typesHtml}
+                        </div>
 
-                areaData.Trainers.forEach(tr => {
-                    const card = document.createElement("div");
-                    card.className = "trainer-card";
-                    const row = document.createElement("div");
-                    row.className = "trainer-row";
+                        <div class="info-box">
+                            <strong>Ability:</strong> ${p.Ability || "---"}
+                        </div>
 
-                    const trainerInfo = document.createElement("div");
-                    trainerInfo.innerHTML = `
-                        <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
-                        <div class="trainer-sub">
-                            <strong>Battle Type:</strong> ${tr.BattleType}<br>
-                            <strong></strong> ${tr.Required || "N/A"}<br>
-                            <strong>Reward:</strong> N/A
+                        <div class="info-box">
+                            <strong>Nature:</strong> ${colorNature(p.Nature || "---")}
+                        </div>
+
+                        <div class="info-box">
+                            <strong>Item:</strong> ${p.HeldItem || "No Item"}
+                        </div>
+
+                        <div class="info-box move-list">
+                            <div class="move-header"><strong>Moves:</strong></div>
+                            ${moves.map(m => `<div class="move-item">${m}</div>`).join("")}
                         </div>
                     `;
-                    row.appendChild(trainerInfo);
 
-                    tr.Pokemon.forEach(p => {
-                        const pDiv = document.createElement("div");
-                        pDiv.className = "pokemon-col";
-                        const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
-
-                        // ensure 4 moves, convert empty strings or whitespace to '---'
-                        const moves = Array.isArray(p.Moves)
-                            ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
-                            : [];
-                        while (moves.length < 4) moves.push("---");
-
-                        // Try to find types from pokedex.json
-                        const dexEntry = findPokedexEntry(p.Name);
-                        let typesHtml = "";
-                        if (dexEntry) {
-                            const t1 = dexEntry.Type1;
-                            const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
-                            if (t1) {
-                                typesHtml += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
-                            }
-                            if (t2) {
-                                typesHtml += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
-                            }
-                        } else {
-                            // fallback: attempt to infer type from sprite filename (not reliable) or leave blank
-                            typesHtml = ""; // empty if not found
-                        }
-
-                        pDiv.innerHTML = `
-                            <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
-                                <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
-                                    ${p.Name} — Lv ${p.Level}
-                                </a>
-                            </div>
-
-                            <a href="pokemon.html?name=${encodeURIComponent(p.Name)}">
-                                <img class="poke-img"
-                                     src="pokemon_sprites/${spriteName}.png"
-                                     onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
-                            </a>
-
-                            <div class="types">
-                                ${typesHtml}
-                            </div>
-
-                            <div class="info-box">
-                                <strong>Ability:</strong> ${p.Ability || "---"}
-                            </div>
-
-                            <div class="info-box">
-                                <strong>Nature:</strong> ${colorNature(p.Nature || "---")}
-                            </div>
-
-                            <div class="info-box">
-                                <strong>Item:</strong> ${p.HeldItem || "No Item"}
-                            </div>
-
-                            <div class="info-box move-list">
-                                <div class="move-header"><strong>Moves:</strong></div>
-                                ${moves.map(m => `<div class="move-item">${m}</div>`).join("")}
-                            </div>
-                        `;
-
-                        row.appendChild(pDiv);
-                    });
-
-                    card.appendChild(row);
-                    container.appendChild(card);
+                    row.appendChild(pDiv);
                 });
-            });
-        }
 
-        loadTrainers();
-    </script>
+                card.appendChild(row);
+                container.appendChild(card);
+            });
+        });
+    }
+
+    loadTrainers();
+</script>
 
 </body>
 </html>
