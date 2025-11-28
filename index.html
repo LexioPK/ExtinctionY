@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Extinction Y Pokédex</title>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Standardized header styles & script -->
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+
 <style>
     body {
         font-family: "Lexend", sans-serif;
@@ -16,18 +21,6 @@
     h1 {
         text-align: center;
         margin-bottom: 25px;
-    }
-
-    .top-bar {
-        position: sticky;
-        top: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #f0f0f0;
-        padding: 10px 20px;
-        z-index: 100;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .tabs {
@@ -47,13 +40,6 @@
     .tab:hover { background: #e4e4e4; }
     .active { background: #d0ffd6; font-weight: bold; }
 
-    #search {
-        width: 250px;
-        padding: 8px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        font-size: 1em;
-    }
     #search-results {
         background: white;
         width: 250px;
@@ -191,20 +177,6 @@
 </style>
 </head>
 <body>
-
-<!-- Top Bar -->
-<div class="top-bar">
-    <div class="tabs">
-        <a class="tab active" href="index.html">Pokédex</a>
-        <a class="tab" href="moves.html">Moves</a>
-        <a class="tab" href="trainers.html">Trainers</a>
-    </div>
-
-    <div style="position:relative;">
-        <input id="search" type="text" placeholder="Search Pokémon..." oninput="searchPokemon()">
-        <div id="search-results"></div>
-    </div>
-</div>
 
 <h1>Pokédex</h1>
 
