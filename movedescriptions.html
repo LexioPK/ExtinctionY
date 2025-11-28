@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Move — Details</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- shared header -->
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+
+<style>
+  body {
+    font-family: "Lexend", sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .move-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    margin-bottom: 18px;
+  }
+
+  .move-head {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .move-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .type-badge {
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:12px;
+    color: #fff;
+    font-weight:700;
+    margin-right:6px;
+    font-size:0.95rem;
+  }
+
+  .move-stats {
+    display:flex;
+    gap:14px;
+    margin-top:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+
+  .stat-pill {
+    background:#fafafa;
+    border:1px solid #e6e6e6;
+    padding:8px 12px;
+    border-radius:10px;
+    font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .description {
+    margin-top:14px;
+    line-height:1.45;
+    color:#222;
+  }
+
+  h2.section-title {
+    margin: 18px 0 10px 0;
+    font-size:1.1rem;
+    font-weight:700;
+  }
+
+  .learn-list {
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .learn-item {
+    background: white;
+    border-radius: 10px;
+    padding:8px 10px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .learn-item img {
+    width:56px;
+    height:56px;
+    image-rendering:pixelated;
+    display:block;
+  }
+
+  .learn-item .meta {
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+
+  .learn-item a.poke-link {
+    font-weight:700;
+    color:#111;
+    text-decoration:none;
+  }
+
+  .learn-item .learn-type {
+    margin-left:auto;
+    font-weight:700;
+    color:#555;
+    font-size:0.95rem;
+    padding:6px 8px;
+    background:#f7f7f7;
+    border-radius:8px;
+    border:1px solid #eee;
+  }
+
+  /* type colors (subset - matches other pages) */
+  .type-normal  { background:#A8A77A; }
+  .type-fire    { background:#EE8130; }
+  .type-water   { background:#6390F0; }
+  .type-electric{ background:#F7D02C; color:#222; }
+  .type-grass   { background:#7AC74C; }
+  .type-ice     { background:#96D9D6; color:#222; }
+  .type-fighting{ background:#C22E28; }
+  .type-poison  { background:#A33EA1; }
+  .type-ground  { background:#E2BF65; color:#222; }
+  .type-flying  { background:#A98FF3; }
+  .type-psychic { background:#F95587; }
+  .type-bug     { background:#A6B91A; }
+  .type-rock    { background:#B6A136; color:#222; }
+  .type-ghost   { background:#735797; }
+  .type-dragon  { background:#6F35FC; }
+  .type-dark    { background:#705746; }
+  .type-steel   { background:#B7B7CE; color:#222; }
+  .type-fairy   { background:#D685AD; color:#222; }
+
+  /* small helpers */
+  .muted { color:#666; font-weight:600; }
+  .center { text-align:center; }
+
+  @media (max-width:720px) {
+    .move-head { flex-direction:column; align-items:flex-start; gap:10px; }
+    .move-stats { width:100%; }
+    .learn-item { padding:10px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div id="moveCard" class="move-card">
+      Loading move…
+    </div>
+
+    <div id="learnersLevel" class="move-card" style="display:none;">
+      <h2 class="section-title">Learned by Level-Up</h2>
+      <div id="levelList" class="learn-list"></div>
+    </div>
+
+    <div id="learnersTM" class="move-card" style="display:none;">
+      <h2 class="section-title">Learned by TM / Tutor / Egg</h2>
+      <div id="tmList" class="learn-list"></div>
+    </div>
+  </div>
+
+<script>
+  // get move name from ?name=...
+  const moveName = decodeURIComponent(new URL(window.location.href).searchParams.get("name") || "").trim();
+  const moveCard = document.getElementById("moveCard");
+  const levelList = document.getElementById("levelList");
+  const tmList = document.getElementById("tmList");
+  const learnersLevelSection = document.getElementById("learnersLevel");
+  const learnersTMSection = document.getElementById("learnersTM");
+
+  // Multi-folder sprite support (same approach as pokemon.html)
+  const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];  
+  function getPokemonImage(name) {
+    const spriteName = name.toLowerCase().replace(/\s+/g, '-');
+    return new Promise(resolve => {
+      let i = 0;
+      function tryOne() {
+        if (i >= spriteFolders.length) {
+          resolve('pokemon_sprites_unknown/unknown.png');
+          return;
+        }
+        const url = `${spriteFolders[i]}/${spriteName}.png`;
+        const img = new Image();
+        img.onload = () => resolve(url);
+        img.onerror = () => { i++; tryOne(); };
+        img.src = url;
+      }
+      tryOne();
+    });
+  }
+
+  // load all required data
+  Promise.all([
+    fetch('data/moves.json').then(r => r.json()),
+    fetch('data/pokedex.json').then(r => r.json()),
+    fetch('data/movesets.json').then(r => r.json())
+  ]).then(async ([movesData, pokedexData, movesetsData]) => {
+    if (!moveName) {
+      moveCard.innerHTML = '<div class="muted">No move specified.</div>';
+      return;
+    }
+
+    const moveKey = moveName; // moves.json keys expected to match exactly as used elsewhere
+    const mv = movesData[moveKey] || Object.values(movesData).find((m, k) => k.toLowerCase() === moveKey.toLowerCase());
+
+    if (!mv) {
+      moveCard.innerHTML = `<div class="muted">Move "${moveName}" not found in data/moves.json.</div>`;
+      return;
+    }
+
+    // Render top section: name, type badge, category, power, acc, PP, description
+    const typeHtml = mv.Type ? `<span class="type-badge type-${mv.Type.toLowerCase()}">${mv.Type}</span>` : '';
+    const categoryLabel = mv.Category || '';
+    const power = mv.Power ?? '—';
+    const acc = (mv.Acc === undefined || mv.Acc === null) ? '—' : `${mv.Acc}%`;
+    const pp = mv.PP ?? '—';
+    const desc = mv.Description || 'No description available.';
+
+    moveCard.innerHTML = `
+      <div class="move-head">
+        <div>
+          <div class="move-name">${moveKey}</div>
+          <div style="margin-top:6px">${typeHtml}</div>
+        </div>
+
+        <div style="margin-left:auto; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <div class="stat-pill"><span class="muted">Category</span> ${categoryLabel}</div>
+          <div class="stat-pill"><span class="muted">Power</span> ${power}</div>
+          <div class="stat-pill"><span class="muted">Accuracy</span> ${acc}</div>
+          <div class="stat-pill"><span class="muted">PP</span> ${pp}</div>
+        </div>
+      </div>
+
+      <div class="description">${desc}</div>
+    `;
+
+    // Find learners by level-up: iterate movesetsData (movesetsData[pokemon] => array of {Level, Move})
+    const levelLearners = [];
+    for (const [pokeName, movelist] of Object.entries(movesetsData || {})) {
+      if (!Array.isArray(movelist)) continue;
+      for (const entry of movelist) {
+        if (!entry || !entry.Move) continue;
+        if (entry.Move === moveKey || entry.Move.toLowerCase() === moveKey.toLowerCase()) {
+          // Level may be string or number; normalize
+          const lvl = (entry.Level === undefined || entry.Level === null) ? null : entry.Level;
+          levelLearners.push({ pokeName, level: lvl });
+        }
+      }
+    }
+
+    // Find learners by TM/HM/Tutor/Egg via pokedexData (mon.TMs array used by pokemon.html)
+    const tmLearners = [];
+    for (const [pokeName, mon] of Object.entries(pokedexData || {})) {
+      if (!mon) continue;
+      const tms = mon.TMs || [];
+      if (!Array.isArray(tms)) continue;
+      for (const tm of tms) {
+        if (!tm || !tm.Move) continue;
+        if (tm.Move === moveKey || tm.Move.toLowerCase() === moveKey.toLowerCase()) {
+          // tm.Label may exist (TM number) — show label if present else show 'TM'
+          const label = tm.Label || 'TM';
+          tmLearners.push({ pokeName, label });
+        }
+      }
+      // Also consider egg moves? if pokedex has mon.EggMoves or similar - try EggMoves
+      if (Array.isArray(mon.EggMoves)) {
+        if (mon.EggMoves.includes(moveKey) || mon.EggMoves.map(m=>m.toLowerCase()).includes(moveKey.toLowerCase())) {
+          tmLearners.push({ pokeName, label: 'Egg' });
+        }
+      }
+    }
+
+    // Sort level learners by level (nulls after)
+    levelLearners.sort((a,b) => {
+      const la = a.level === null ? 9999 : Number(a.level);
+      const lb = b.level === null ? 9999 : Number(b.level);
+      if (la === lb) return a.pokeName.localeCompare(b.pokeName);
+      return la - lb;
+    });
+
+    // Sort tm learners alphabetically
+    tmLearners.sort((a,b) => a.pokeName.localeCompare(b.pokeName));
+
+    // Render level learners
+    if (levelLearners.length) {
+      learnersLevelSection.style.display = 'block';
+      for (const ln of levelLearners) {
+        const name = ln.pokeName;
+        const lvl = ln.level;
+        const entry = document.createElement('div');
+        entry.className = 'learn-item';
+
+        // image url
+        const imgUrl = await getPokemonImage(name);
+
+        entry.innerHTML = `
+          <img src="${imgUrl}" alt="${name}">
+          <div class="meta">
+            <a class="poke-link" href="pokemon.html?name=${encodeURIComponent(name)}">${name}</a>
+          </div>
+          <div class="learn-type">${lvl ? 'Level ' + String(lvl) : 'Level'}</div>
+        `;
+        levelList.appendChild(entry);
+      }
+    }
+
+    // Render TM learners
+    if (tmLearners.length) {
+      learnersTMSection.style.display = 'block';
+      for (const tn of tmLearners) {
+        const name = tn.pokeName;
+        const label = tn.label || 'TM';
+        const entry = document.createElement('div');
+        entry.className = 'learn-item';
+
+        const imgUrl = await getPokemonImage(name);
+
+        entry.innerHTML = `
+          <img src="${imgUrl}" alt="${name}">
+          <div class="meta">
+            <a class="poke-link" href="pokemon.html?name=${encodeURIComponent(name)}">${name}</a>
+          </div>
+          <div class="learn-type">${String(label)}</div>
+        `;
+        tmList.appendChild(entry);
+      }
+    }
+
+    // If neither, show a helpful message
+    if (!levelLearners.length && !tmLearners.length) {
+      const note = document.createElement('div');
+      note.className = 'muted';
+      note.style.padding = '8px 6px';
+      note.textContent = 'No Pokémon found that learn this move (according to data/movesets.json and data/pokedex.json).';
+      moveCard.appendChild(note);
+    }
+
+  }).catch(err => {
+    console.error(err);
+    moveCard.innerHTML = `<div class="muted">Error loading move data: ${String(err)}</div>`;
+  });
+</script>
+</body>
+</html>
