@@ -90,6 +90,7 @@
     display:flex;
     gap:10px;
     align-items:center;
+    flex-wrap:wrap;
   }
 
   button.nav-btn-move {
@@ -121,9 +122,30 @@
     flex-wrap:wrap;
   }
 
+  .learn-columns.single {
+    justify-content:center; /* center the single column */
+  }
+
   .learn-col {
     flex:1;
     min-width:300px;
+  }
+
+  /* make left (level) column narrower when both present */
+  .learn-col.learn-level {
+    flex: 0 0 420px;
+    max-width: 420px;
+  }
+  .learn-col.learn-tm {
+    flex: 1 1 420px;
+    min-width:320px;
+  }
+
+  /* when single (only level) make it shorter and centered */
+  .learn-columns.single .learn-col.learn-level {
+    flex: 0 0 420px;
+    max-width: 420px;
+    margin: 0 auto;
   }
 
   .learn-list {
@@ -225,6 +247,8 @@
   @media (max-width:900px) {
     .learn-columns { flex-direction:column; }
     .learn-item .meta .poke-link-name { max-width:140px; }
+    .learn-col.learn-level, .learn-col.learn-tm { flex: 1 1 auto; max-width:100%; }
+    .learn-columns.single .learn-col.learn-level { margin: 0; }
   }
 
   @media (max-width:720px) {
@@ -241,13 +265,13 @@
       Loading move…
     </div>
 
-    <div class="learn-columns">
-      <div id="learnersLevel" class="move-card learn-col" style="display:none;">
+    <div class="learn-columns" id="learnColumns">
+      <div id="learnersLevel" class="move-card learn-col learn-level" style="display:none;">
         <h2 class="section-title">Learned by Level-Up</h2>
         <div id="levelList" class="learn-list"></div>
       </div>
 
-      <div id="learnersTM" class="move-card learn-col" style="display:none;">
+      <div id="learnersTM" class="move-card learn-col learn-tm" style="display:none;">
         <h2 class="section-title">Learned by TM / Tutor / Egg</h2>
         <div id="tmList" class="learn-list"></div>
       </div>
@@ -262,6 +286,7 @@
   const tmList = document.getElementById("tmList");
   const learnersLevelSection = document.getElementById("learnersLevel");
   const learnersTMSection = document.getElementById("learnersTM");
+  const learnColumns = document.getElementById("learnColumns");
 
   // Multi-folder sprite support (same approach as pokemon.html)
   const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
@@ -284,7 +309,7 @@
     });
   }
 
-  // We'll need the sorted list of moves to compute "next"
+  // We'll need the sorted list of moves to compute "next" and "prev"
   let sortedMoveNames = [];
 
   // Helper: category -> icon path
@@ -317,10 +342,12 @@
       return;
     }
 
-    // Build next-move button
+    // Build next-move and prev-move buttons
     const currentIndex = sortedMoveNames.findIndex(n => n.toLowerCase() === canonicalKey.toLowerCase());
     const nextIndex = (currentIndex >= 0) ? (currentIndex + 1) % sortedMoveNames.length : -1;
+    const prevIndex = (currentIndex >= 0) ? (currentIndex - 1 + sortedMoveNames.length) % sortedMoveNames.length : -1;
     const nextMoveName = (nextIndex >= 0) ? sortedMoveNames[nextIndex] : null;
+    const prevMoveName = (prevIndex >= 0) ? sortedMoveNames[prevIndex] : null;
 
     // Render top section: name, type badge, category (icon), power, acc, PP, description
     const typeHtml = mv.Type ? `<span class="type-badge type-${mv.Type.toLowerCase()}">${mv.Type}</span>` : '';
@@ -334,7 +361,11 @@
     const catIcon = categoryIcons[categoryLabel] || '';
     const catHtml = catIcon ? `<img src="${catIcon}" class="category-icon" alt="${escapeHtml(categoryLabel)}">` : escapeHtml(categoryLabel);
 
-    // Create top-controls including Next button
+    // Create top-controls including Prev & Next buttons
+    const prevButtonHtml = prevMoveName
+      ? `<button id="prevMoveBtn" class="nav-btn-move">Prev: ${escapeHtml(prevMoveName)}</button>`
+      : `<button id="prevMoveBtn" class="nav-btn-move" disabled>Prev</button>`;
+
     const nextButtonHtml = nextMoveName
       ? `<button id="nextMoveBtn" class="nav-btn-move">Next: ${escapeHtml(nextMoveName)}</button>`
       : `<button id="nextMoveBtn" class="nav-btn-move" disabled>Next</button>`;
@@ -347,6 +378,7 @@
         </div>
 
         <div class="top-controls">
+          ${prevButtonHtml}
           ${nextButtonHtml}
         </div>
       </div>
@@ -361,11 +393,17 @@
       <div class="description">${escapeHtml(desc)}</div>
     `;
 
-    // wire next button
+    // wire prev/next buttons
     const nextBtn = document.getElementById('nextMoveBtn');
     if (nextBtn && nextMoveName) {
       nextBtn.addEventListener('click', () => {
         location.href = `movedescriptions.html?name=${encodeURIComponent(nextMoveName)}`;
+      });
+    }
+    const prevBtn = document.getElementById('prevMoveBtn');
+    if (prevBtn && prevMoveName) {
+      prevBtn.addEventListener('click', () => {
+        location.href = `movedescriptions.html?name=${encodeURIComponent(prevMoveName)}`;
       });
     }
 
@@ -414,9 +452,21 @@
     // Sort tm learners alphabetically
     tmLearners.sort((a,b) => a.pokeName.localeCompare(b.pokeName));
 
+    // Show/hide sections and apply layout class
+    const hasLevel = levelLearners.length > 0;
+    const hasTM = tmLearners.length > 0;
+
+    learnersLevelSection.style.display = hasLevel ? 'block' : 'none';
+    learnersTMSection.style.display = hasTM ? 'block' : 'none';
+
+    if (hasLevel && !hasTM) {
+      learnColumns.classList.add('single');
+    } else {
+      learnColumns.classList.remove('single');
+    }
+
     // Render level learners (compact layout). Make image+name clickable to pokemon page.
-    if (levelLearners.length) {
-      learnersLevelSection.style.display = 'block';
+    if (hasLevel) {
       for (const ln of levelLearners) {
         const name = ln.pokeName;
         const lvl = ln.level;
@@ -443,8 +493,7 @@
     }
 
     // Render TM learners. Also make clickable.
-    if (tmLearners.length) {
-      learnersTMSection.style.display = 'block';
+    if (hasTM) {
       for (const tn of tmLearners) {
         const name = tn.pokeName;
         const label = tn.label || 'TM';
@@ -468,7 +517,7 @@
     }
 
     // If neither, show a helpful message
-    if (!levelLearners.length && !tmLearners.length) {
+    if (!hasLevel && !hasTM) {
       const note = document.createElement('div');
       note.className = 'muted';
       note.style.padding = '8px 6px';
