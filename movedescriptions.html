@@ -12,6 +12,10 @@
 <script src="header.js" defer></script>
 
 <style>
+  :root {
+    --learn-width: 420px; /* canonical width used for "level" column when single, and column width when equal */
+  }
+
   body {
     font-family: "Lexend", sans-serif;
     background: #f0f0f0;
@@ -127,24 +131,20 @@
   }
 
   .learn-col {
-    flex:1;
+    flex: 1 1 0;
     min-width:300px;
   }
 
-  /* make left (level) column narrower when both present */
-  .learn-col.learn-level {
-    flex: 0 0 420px;
-    max-width: 420px;
-  }
-  .learn-col.learn-tm {
-    flex: 1 1 420px;
-    min-width:320px;
+  /* when both present and we want equal columns, apply .equal */
+  .learn-columns.equal .learn-col {
+    flex: 0 0 var(--learn-width);
+    max-width: var(--learn-width);
   }
 
-  /* when single (only level) make it shorter and centered */
+  /* when only level is present, keep it at canonical width and centered via .single */
   .learn-columns.single .learn-col.learn-level {
-    flex: 0 0 420px;
-    max-width: 420px;
+    flex: 0 0 var(--learn-width);
+    max-width: var(--learn-width);
     margin: 0 auto;
   }
 
@@ -247,8 +247,7 @@
   @media (max-width:900px) {
     .learn-columns { flex-direction:column; }
     .learn-item .meta .poke-link-name { max-width:140px; }
-    .learn-col.learn-level, .learn-col.learn-tm { flex: 1 1 auto; max-width:100%; }
-    .learn-columns.single .learn-col.learn-level { margin: 0; }
+    .learn-columns.equal .learn-col, .learn-columns.single .learn-col.learn-level { max-width:100%; flex:1 1 auto; margin:0; }
   }
 
   @media (max-width:720px) {
@@ -407,6 +406,10 @@
       });
     }
 
+    // Clear previous lists (important if the page is navigated to via JS)
+    levelList.innerHTML = '';
+    tmList.innerHTML = '';
+
     // Find learners by level-up: iterate movesetsData (movesetsData[pokemon] => array of {Level, Move})
     const levelLearners = [];
     for (const [pokeName, movelist] of Object.entries(movesetsData || {})) {
@@ -452,17 +455,22 @@
     // Sort tm learners alphabetically
     tmLearners.sort((a,b) => a.pokeName.localeCompare(b.pokeName));
 
-    // Show/hide sections and apply layout class
+    // Show/hide sections and apply layout classes
     const hasLevel = levelLearners.length > 0;
     const hasTM = tmLearners.length > 0;
 
     learnersLevelSection.style.display = hasLevel ? 'block' : 'none';
     learnersTMSection.style.display = hasTM ? 'block' : 'none';
 
-    if (hasLevel && !hasTM) {
+    // set classes:
+    // - if both present -> .equal so both columns use canonical width and are equal
+    // - if only level present -> .single so level column uses canonical width and is centered
+    // - otherwise remove modifiers
+    learnColumns.classList.remove('equal','single');
+    if (hasLevel && hasTM) {
+      learnColumns.classList.add('equal');
+    } else if (hasLevel && !hasTM) {
       learnColumns.classList.add('single');
-    } else {
-      learnColumns.classList.remove('single');
     }
 
     // Render level learners (compact layout). Make image+name clickable to pokemon page.
