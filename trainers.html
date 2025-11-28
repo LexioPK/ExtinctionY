@@ -113,12 +113,12 @@
             margin-bottom: 12px;
         }
 
-        /* Layout for trainer row: shared borders between columns (single vertical lines) */
+        /* Layout for trainer row: shared vertical separators, plus top/bottom lines per pokemon */
         .trainer-row {
             display: flex;
             align-items: stretch;
             gap: 0; /* no double gaps so borders touch */
-            border: 2px solid #cfcfcf; /* slightly thicker overall border around the whole trainer row */
+            border: 2px solid #cfcfcf; /* outer frame for the whole trainer row */
             border-radius: 10px;
             overflow: hidden; /* keep inner separators as single lines */
             background: transparent;
@@ -138,20 +138,34 @@
             background: #ffffff;
             /* single separator line between trainer info and first pokemon */
             border-right: 1px solid #e6e6e6;
+            /* make top/bottom lines consistent with pokemon rows */
+            border-top: 1px solid #e6e6e6;
+            border-bottom: 1px solid #e6e6e6;
         }
 
-        /* Pokemon columns - they will share the vertical borders, not have full boxes */
+        /* Pokemon columns - top/bottom and shared vertical separators */
         .trainer-row > .pokemon-col {
             width: 200px;
             min-width: 200px;
             max-width: 200px;
             padding: 8px 10px;
             background: #fafafa;
+            /* top/bottom borders to make each pokemon have a full box outline */
+            border-top: 1px solid #e6e6e6;
+            border-bottom: 1px solid #e6e6e6;
         }
 
         /* Add a single vertical separator between adjacent pokemon columns */
         .trainer-row > .pokemon-col + .pokemon-col {
             border-left: 1px solid #e6e6e6;
+        }
+
+        /* Ensure end pokemon also have left/right borders so the box looks complete */
+        .trainer-row > .pokemon-col:first-of-type {
+            border-left: 1px solid #e6e6e6;
+        }
+        .trainer-row > .pokemon-col:last-of-type {
+            border-right: 1px solid #e6e6e6;
         }
 
         .poke-img {
@@ -162,7 +176,7 @@
             margin: 10px auto;
         }
 
-        /* Info lines: make them look like thin lines rather than boxed sections */
+        /* Info lines: keep them as lines but make separators slightly thicker */
         .info-box {
             background: transparent;
             padding: 6px 0;
@@ -172,9 +186,9 @@
             border: none;
         }
 
-        /* use a subtle bottom rule to separate each info line (ability, nature, item, moves header) */
+        /* use a slightly thicker top rule to separate each info line (ability, nature, item, moves header) */
         .info-box + .info-box {
-            border-top: 1px solid #ececec;
+            border-top: 2px solid #e6e6e6;
             padding-top: 8px;
             margin-top: 8px;
         }
@@ -193,8 +207,7 @@
             margin: 0 2px;
         }
 
-        /* Moves: header is a simple inline label with a separating line below;
-           each move is an individual line with a thin bottom border so they look like rows */
+        /* Moves: make move header rule slightly thicker and keep move rows thin */
         .move-list {
             padding: 0;
             margin: 0;
@@ -204,12 +217,12 @@
             font-weight: 700;
             padding-bottom: 6px;
             margin-bottom: 6px;
-            border-bottom: 1px solid #ececec;
+            border-bottom: 2px solid #e6e6e6; /* slightly thicker line for header */
         }
 
         .move-list .move-item {
             padding: 6px 0;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0; /* thin lines between moves */
             font-size: 0.85rem;
             background: transparent;
         }
