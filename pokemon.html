@@ -77,8 +77,12 @@
   }
   .moves-table th { background:#f5f5f5; font-weight:600; }
   .moves-table tr:hover { background:#f0f0f0; }
-  .category-icon { width:24px; height:24px; display:block; margin:auto; }
+  .category-icon { width:24px; height:24px; display:block; margin:0 auto; }
   .moves-table-container { flex:1; min-width:280px; }
+
+  /* center the Cat column header and images under it */
+  .moves-table th.cat, .moves-table td.cat { text-align:center; }
+  .moves-table th.cat { vertical-align:middle; }
 
   /* ⭐ Base Stats Bars */
   .stat-row {
@@ -108,6 +112,22 @@
       height: 100%;
       border-radius: 4px;
   }
+
+  /* Info section columns - make 4 equal width and evenly spaced */
+  .info .info-cols {
+    display:flex;
+    gap:20px;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .info .info-cols > div {
+    flex:1;
+    min-width:180px;
+    text-align:center;
+  }
+  .info .info-cols h3 { margin:0 0 8px 0; text-decoration:underline; }
+
 </style>
 </head>
 <body>
@@ -198,7 +218,7 @@ Promise.all([
       SpA: "#9DB7F5", SpD: "#A7DB8D", Spe: "#FA92B2", BST: "#B88CFF"
   };
 
-  // --- Everything else unchanged ---
+  // --- Everything else unchanged, with requested layout changes ---
   cardDiv.innerHTML = `
     <button class="nav-btn prev-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(prevMon)}'">
       ← #${String(prevMonData.SpeciesIdx).padStart(3,"0")} ${prevMon}
@@ -210,27 +230,34 @@ Promise.all([
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
     <img class="sprite" src="${spriteUrl}" onerror="this.src='pokemon_sprites_unknown/unknown.png'">
 
-   <!-- Info / Type / Abilities -->
+   <!-- Info / Type / Abilities / Location / Additional Info -->
    <div class="section info">
      <h2>Info</h2>
-     <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; text-align:center; align-items:flex-start;">
-       <div style="flex:1; min-width:200px; text-align:center;">
-         <h3 style="text-decoration:underline;">Type</h3>
+     <div class="info-cols">
+       <div>
+         <h3>Type</h3>
          <div class="types">
            ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
          </div>
        </div>
-       <div style="flex:1; min-width:200px;">
-         <h3 style="text-decoration:underline;">Abilities</h3>
-         <ul>
+
+       <div>
+         <h3>Abilities</h3>
+         <ul style="text-align:left; display:inline-block;">
            <li>1. ${mon.Ability1}</li>
            <li>${mon.Ability2 ? `2. ${mon.Ability2}` : ""}</li>
            <li><em>(H):</em> ${mon.AbilityH}</li>
          </ul>
        </div>
-       <div style="flex:1; min-width:200px;">
-         <h3 style="text-decoration:underline;">Additional Info</h3>
-         <p>Data will come from the additional info JSON.</p>
+
+       <div>
+         <h3>Location</h3>
+         <p style="margin:0;">Data will come from the location JSON.</p>
+       </div>
+
+       <div>
+         <h3>Additional Info</h3>
+         <p style="margin:0;">Data will come from the additional info JSON.</p>
        </div>
      </div>
    </div>
@@ -240,10 +267,7 @@ Promise.all([
   <h2>Base Stats</h2>
   <div style="display:flex; gap:20px; flex-wrap:wrap;">
     <div style="flex:1; min-width:200px; text-align:center;">
-      <h3 style="text-decoration:underline;">Old Stats</h3>
-    </div>
-    <div style="flex:1; min-width:200px; text-align:center;">
-      <h3 style="text-decoration:underline;">Updated Stats</h3>
+      <h3 style="text-decoration:underline;">Updated stats</h3>
       <div id="stat-bars" style="text-align:left; margin-top:10px;">
         ${createStatRow("HP", mon.BaseStats.HP, 15, 180, statColors.HP)}
         ${createStatRow("Atk", mon.BaseStats.Atk, 15, 180, statColors.Atk)}
@@ -252,6 +276,13 @@ Promise.all([
         ${createStatRow("SpD", mon.BaseStats.SpD, 15, 180, statColors.SpD)}
         ${createStatRow("Spe", mon.BaseStats.Spe, 15, 180, statColors.Spe)}
         ${createStatRow("BST", bst, 250, 600, statColors.BST)}
+      </div>
+    </div>
+
+    <div style="flex:1; min-width:200px; text-align:center;">
+      <h3 style="text-decoration:underline;">Stat Changes</h3>
+      <div style="text-align:left; margin-top:10px;">
+        <p style="margin:0;">No stat change data available for this Pokémon.</p>
       </div>
     </div>
   </div>
@@ -274,7 +305,7 @@ Promise.all([
                <th style="text-align:left; width:40px;">Lvl</th>
                <th style="text-align:left; width:120px;">Move</th>
                <th style="text-align:left; width:60px;">Type</th>
-               <th style="text-align:left; width:40px;">Cat</th>
+               <th class="cat" style="text-align:center; width:40px;">Cat</th>
                <th style="text-align:left; width:40px;">Pow</th>
                <th style="text-align:left; width:40px;">Acc</th>
              </tr>
@@ -286,7 +317,7 @@ Promise.all([
                  <td>${m.Level}</td>
                  <td>${m.Move}</td>
                  <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                 <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
+                 <td class="cat"><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
                  <td>${mv.Power ?? "—"}</td>
                  <td>${mv.Acc ?? "—"}%</td>
                </tr>`;
@@ -301,7 +332,7 @@ Promise.all([
              <tr>
                <th style="text-align:left; width:120px;">TM/HM/Tutor</th>
                <th style="text-align:left; width:60px;">Type</th>
-               <th style="text-align:left; width:40px;">Cat</th>
+               <th class="cat" style="text-align:center; width:40px;">Cat</th>
                <th style="text-align:left; width:40px;">Pow</th>
                <th style="text-align:left; width:40px;">Acc</th>
              </tr>
@@ -312,7 +343,7 @@ Promise.all([
                return `<tr>
                  <td>${tm.Label}: ${tm.Move}</td>
                  <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                 <td><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
+                 <td class="cat"><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
                  <td>${mv.Power ?? "—"}</td>
                  <td>${mv.Acc ?? "—"}%</td>
                </tr>`;
