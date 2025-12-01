@@ -16,6 +16,7 @@
         :root{
             --poke-border: 2px;
             --trainer-border-color: #6f6f6f; /* darker trainer-row border */
+            --pokemon-border-color: #555555;  /* darker border for each pokemon entry (changed) */
             --inner-padding-x: 10px;
             --inner-padding-y: 12px;
             --moves-separator-thick: 4px; /* thickness for separators (use same thickness everywhere) */
@@ -137,7 +138,8 @@
             max-width: 200px;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
-            border: var(--poke-border) solid #cfcfcf;
+            /* full, darker border around each pokemon column */
+            border: var(--poke-border) solid var(--pokemon-border-color);
             box-sizing: border-box;
             background-clip: padding-box;
             position: relative;
@@ -147,10 +149,11 @@
         .trainer-row > .pokemon-col:nth-child(2n) { background: #fbfbfc; }
         .trainer-row > .pokemon-col:nth-child(2n+1) { background: #fafafa; }
 
-        /* when adjacent columns appear, keep a thin visual divider by overlapping edges */
+        /* when adjacent columns appear, keep a thin visual divider by overlapping edges.
+           use a slightly darker thin divider to match darker pokemon borders */
         .trainer-row > .pokemon-col + .pokemon-col {
             margin-left: -2px; /* collapse overlapping edges so the thin line appears consistently */
-            border-left: 1px solid #e6e6e6;
+            border-left: 1px solid var(--pokemon-border-color);
         }
 
         .pokemon-inner {
@@ -277,7 +280,7 @@
         @media (max-width:520px){
             .trainer-section { margin-left: 16px; width: calc(100% - 16px); }
             .trainer-row { flex-direction: column; gap: 12px; border: none; background: transparent; }
-            .trainer-row > .pokemon-col { width: 100%; min-width: 0; max-width: 100%; border: var(--poke-border) solid #cfcfcf; margin-left: 0; }
+            .trainer-row > .pokemon-col { width: 100%; min-width: 0; max-width: 100%; border: var(--poke-border) solid var(--pokemon-border-color); margin-left: 0; }
             .trainer-row > div:first-child { width: 100%; min-width: 0; max-width: 100%; }
             .pokemon-inner { padding: var(--inner-padding-y) var(--inner-padding-x); }
         }
