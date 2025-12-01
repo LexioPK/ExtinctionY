@@ -156,8 +156,8 @@
         }
 
         /*
-          Info boxes: thin separators between stacked info-boxes (ability <-> nature) and between
-          types and the first info-box. Values are bold and slightly larger; headers removed.
+          Info boxes: increase the separators between Ability, Nature, Item and the Types block.
+          Values are bold and slightly larger; headers removed.
         */
         .info-box {
             background: transparent;
@@ -171,25 +171,26 @@
             color: #111;
         }
 
-        /* thin separator between stacked info-boxes (ability <-> nature) */
+        /* thicker separator between stacked info-boxes (ability <-> nature and nature <-> item) */
         .info-box + .info-box {
-            border-top: 1px solid #e6e6e6;
+            border-top: 2px solid #e6e6e6;
             padding-top: 8px;
             margin-top: 8px;
         }
 
-        /* thin separator between types block and the first info-box (type <-> ability) */
+        /* thicker separator between types block and the first info-box (type <-> ability) */
         .types + .info-box {
-            border-top: 1px solid #e6e6e6;
+            border-top: 2px solid #e6e6e6;
             padding-top: 8px;
             margin-top: 8px;
         }
 
+        /* Make the moves header divider a bit more pronounced */
         .move-list .move-header {
             font-weight: 700;
             padding-bottom: 6px;
             margin-bottom: 6px;
-            border-bottom: 2px solid #e6e6e6;
+            border-bottom: 3px solid #e6e6e6;
         }
 
         .move-list .move-item {
