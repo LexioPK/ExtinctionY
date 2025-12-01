@@ -15,10 +15,11 @@
     <style>
         :root{
             --poke-border: 2px;
+            --trainer-border-color: #8a8a8a; /* darker trainer-row border */
             --inner-padding-x: 10px;
             --inner-padding-y: 8px;
-            --separator-thick: 2px; /* thickness for ability/nature/item separators */
-            --moves-separator-thick: 3px; /* thickness for moves header separator */
+            --separator-thick: 3px; /* thickness for ability/nature/item/type separators */
+            --moves-separator-thick: 4px; /* thickness for separator between move header and moves */
             --sep-color: #e6e6e6;
         }
 
@@ -102,11 +103,12 @@
             margin-bottom: 12px;
         }
 
+        /* darker border for trainer entry rows */
         .trainer-row {
             display: flex;
             align-items: stretch;
             gap: 0;
-            border: var(--poke-border) solid #cfcfcf;
+            border: var(--poke-border) solid var(--trainer-border-color);
             border-radius: 10px;
             overflow: hidden;
             background: transparent;
@@ -126,16 +128,15 @@
         }
 
         /*
-          Each pokemon column now has a full border. To allow separators between internal sections
-          to visually reach the left/right border, we move inner content into .pokemon-inner and
-          draw separators via absolutely-positioned pseudo-elements that stretch from
-          -inner-padding-x to +inner-padding-x relative to .pokemon-inner.
+          Each pokemon column has a full border. To allow separators between internal sections
+          to visually reach the left/right border, inner content is in .pokemon-inner and
+          separators are drawn with absolutely-positioned pseudo-elements that span edge-to-edge.
         */
         .trainer-row > .pokemon-col {
             width: 200px;
             min-width: 200px;
             max-width: 200px;
-            padding: 0; /* removed so inner wrapper controls padding */
+            padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
             /* full border around each pokemon column */
             border: var(--poke-border) solid #cfcfcf;
@@ -186,7 +187,12 @@
             padding: 6px 0;
         }
 
-        /* draw thick separators using pseudo-elements so they reach the left/right edges */
+        /*
+          draw thick separators using pseudo-elements so they reach the left/right edges
+          - types + info-box ::before  => separates types from ability (and spans full inner width)
+          - info-box + info-box ::before => between ability/nature/item
+          - move-list ::before => separates item from move header
+        */
         .pokemon-inner .types + .info-box::before,
         .pokemon-inner .info-box + .info-box::before,
         .pokemon-inner .move-list::before {
@@ -197,25 +203,29 @@
             height: var(--separator-thick);
             background: var(--sep-color);
             top: 0; /* sit at the top edge of the element (so it visually separates above it) */
-            z-index: 1;
+            z-index: 3;
         }
 
-        /* moves header separator slightly thicker; apply to move-list via ::before (override height) */
+        /* make the separator above the move header use the same separator-thick */
         .pokemon-inner .move-list::before {
-            height: var(--moves-separator-thick);
+            height: var(--separator-thick);
         }
 
-        /* ensure move header itself doesn't also render its own border and has spacing below the separator */
+        /* add back separator between move header and the moves themselves (thicker) */
+        .move-list .move-header {
+            font-weight: 700;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            border-bottom: var(--moves-separator-thick) solid var(--sep-color); /* thicker under-header separator */
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ensure move-list spacing and that the pseudo separator doesn't overlap header text */
         .move-list {
             margin: 8px 0 0 0;
             position: relative;
             padding-top: 8px;
-        }
-        .move-list .move-header {
-            font-weight: 700;
-            padding-bottom: 6px;
-            margin-bottom: 6px;
-            border-bottom: none; /* removed because we draw separator with ::before on .move-list */
         }
 
         .move-list .move-item {
