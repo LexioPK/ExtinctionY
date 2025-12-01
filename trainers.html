@@ -15,15 +15,14 @@
     <style>
         :root{
             --poke-border: 2px;
-            --trainer-border-color: #8a8a8a; /* darker trainer-row border */
+            --trainer-border-color: #6f6f6f; /* darker trainer-row border */
             --inner-padding-x: 10px;
-            --inner-padding-y: 8px;
-            --separator-thick: 3px; /* thickness for ability/nature/item/type separators */
-            --moves-separator-thick: 4px; /* thickness for separator between move header and moves */
+            --inner-padding-y: 12px;
+            --moves-separator-thick: 4px; /* thickness for separators (use same thickness everywhere) */
             --sep-color: #e6e6e6;
         }
 
-        /* kept local trainers styles (unchanged except header removed) */
+        /* base layout */
         body {
             font-family: 'Lexend', sans-serif;
             background: #f5f5f5;
@@ -128,9 +127,9 @@
         }
 
         /*
-          Each pokemon column has a full border. To allow separators between internal sections
-          to visually reach the left/right border, inner content is in .pokemon-inner and
-          separators are drawn with absolutely-positioned pseudo-elements that span edge-to-edge.
+          Each pokemon column has a full border. Inner content lives in .pokemon-inner.
+          Separators between sections are implemented as pseudo-elements on the target
+          elements and are sized so they connect to the outer borders of the pokemon column.
         */
         .trainer-row > .pokemon-col {
             width: 200px;
@@ -138,12 +137,15 @@
             max-width: 200px;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
-            /* full border around each pokemon column */
             border: var(--poke-border) solid #cfcfcf;
             box-sizing: border-box;
             background-clip: padding-box;
             position: relative;
         }
+
+        /* slightly alternate backgrounds to improve readability */
+        .trainer-row > .pokemon-col:nth-child(2n) { background: #fbfbfc; }
+        .trainer-row > .pokemon-col:nth-child(2n+1) { background: #fafafa; }
 
         /* when adjacent columns appear, keep a thin visual divider by overlapping edges */
         .trainer-row > .pokemon-col + .pokemon-col {
@@ -165,15 +167,15 @@
         }
 
         /*
-          Info boxes: remove margins so layout is determined by padding inside pokemon-inner.
-          We'll place separators (thicker lines) using pseudo-elements that span the full inner width
-          and extend to the left/right edges of the pokemon-col by offsetting by the inner padding.
+          Info boxes: remove margins so layout is deterministic.
+          We'll draw separators via ::before pseudo-elements so they span from the left outer border
+          to the right outer border of the pokemon-col.
         */
         .pokemon-inner .info-box {
             background: transparent;
-            padding: 10px 0; /* vertical spacing inside each info block */
-            margin: 0; /* remove margins so separators and spacing are consistent */
-            font-size: 0.95rem; /* slightly larger for values */
+            padding: 12px 0; /* vertical spacing inside each info block so top/bottom equal to separator */
+            margin: 0;
+            font-size: 0.95rem;
             text-align: left;
             font-weight: 700;
             color: #111;
@@ -182,41 +184,34 @@
 
         .pokemon-inner .types {
             text-align: center;
-            margin: 0 0 8px 0;
+            margin: 0 0 0 0;
             position: relative;
-            padding: 6px 0;
+            padding: 12px 0; /* match spacing of info-box so separators align evenly */
         }
 
         /*
-          draw thick separators using pseudo-elements so they reach the left/right edges
-          - types + info-box ::before  => separates types from ability (and spans full inner width)
-          - info-box + info-box ::before => between ability/nature/item
-          - move-list ::before => separates item from move header
+          Draw thick separators using pseudo-elements so they reach the left/right outer borders.
+          The left/right offsets include --inner-padding-x plus the border width so the line meets the border.
         */
         .pokemon-inner .types + .info-box::before,
         .pokemon-inner .info-box + .info-box::before,
         .pokemon-inner .move-list::before {
             content: "";
             position: absolute;
-            left: calc(-1 * var(--inner-padding-x));
-            right: calc(-1 * var(--inner-padding-x));
-            height: var(--separator-thick);
+            left: calc(-1 * var(--inner-padding-x) - var(--poke-border));
+            right: calc(-1 * var(--inner-padding-x) - var(--poke-border));
+            height: var(--moves-separator-thick);
             background: var(--sep-color);
-            top: 0; /* sit at the top edge of the element (so it visually separates above it) */
-            z-index: 3;
+            top: 0; /* sits at top edge of the element */
+            z-index: 2;
         }
 
-        /* make the separator above the move header use the same separator-thick */
-        .pokemon-inner .move-list::before {
-            height: var(--separator-thick);
-        }
-
-        /* add back separator between move header and the moves themselves (thicker) */
+        /* make separator between move header and the moves themselves pronounced as well */
         .move-list .move-header {
             font-weight: 700;
             padding-bottom: 8px;
             margin-bottom: 8px;
-            border-bottom: var(--moves-separator-thick) solid var(--sep-color); /* thicker under-header separator */
+            border-bottom: var(--moves-separator-thick) solid var(--sep-color); /* thick under-header separator */
             position: relative;
             z-index: 2;
         }
@@ -254,21 +249,21 @@
         .type-normal  { background:#A8A77A; }
         .type-fire    { background:#EE8130; }
         .type-water   { background:#6390F0; }
-        .type-electric{ background:#F7D02C; }
+        .type-electric{ background:#F7D02C; color:#222; }
         .type-grass   { background:#7AC74C; }
-        .type-ice     { background:#96D9D6; }
+        .type-ice     { background:#96D9D6; color:#222; }
         .type-fighting{ background:#C22E28; }
         .type-poison  { background:#A33EA1; }
-        .type-ground  { background:#E2BF65; }
+        .type-ground  { background:#E2BF65; color:#222; }
         .type-flying  { background:#A98FF3; }
         .type-psychic { background:#F95587; }
         .type-bug     { background:#A6B91A; }
-        .type-rock    { background:#B6A136; }
+        .type-rock    { background:#B6A136; color:#222; }
         .type-ghost   { background:#735797; }
         .type-dragon  { background:#6F35FC; }
         .type-dark    { background:#705746; }
-        .type-steel   { background:#B7B7CE; }
-        .type-fairy   { background:#D685AD; }
+        .type-steel   { background:#B7B7CE; color:#222; }
+        .type-fairy   { background:#D685AD; color:#222; }
 
         /* responsive tweaks */
         @media (max-width:1000px) {
