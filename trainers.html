@@ -367,10 +367,10 @@
         let i = routeOrder.indexOf(name);
         if (i !== -1) return i;
         // compare left-of-' - ' then left-of-'/' to each routeOrder item
-        const nameLeft = name.split(" - ")[0].split("/")[0].trim();
+        const nameLeft = name.split(" - ")[0].split(/[\/\\]/)[0].trim();
         for (let j = 0; j < routeOrder.length; j++) {
             const candidate = routeOrder[j];
-            const candLeft = candidate.split(" - ")[0].split("/")[0].trim();
+            const candLeft = candidate.split(" - ")[0].split(/[\/\\]/)[0].trim();
             if (candLeft === nameLeft) return j;
         }
         return Infinity;
@@ -387,12 +387,14 @@
         trainerData = await trainersRes.json();
         pokedexData = await pokedexRes.json();
 
-        // Build groupedRoutes keyed by the root left-of-slash base (e.g., "Route 13")
+        // Build groupedRoutes keyed by the root left-of-slash/backslash base (e.g., "Route 13")
         groupedRoutes = {};
         for (const fullName in trainerData) {
-            // Determine the 'displayable left part' which is the left of ' - '
-            const leftOfDash = fullName.split(" - ")[0].trim(); // e.g. "Route 13/Kalos Power Plant"
-            const root = leftOfDash.split("/")[0].trim(); // e.g. "Route 13"
+            // left-of-dash (the "area" portion)
+            const leftOfDash = fullName.split(" - ")[0].trim();
+            // split left-of-dash by / or \ into parts; the root is the first part
+            const leftParts = leftOfDash.split(/[\/\\]/).map(s => s.trim()).filter(Boolean);
+            const root = leftParts[0];
             if (!groupedRoutes[root]) groupedRoutes[root] = [];
             groupedRoutes[root].push(fullName);
         }
@@ -410,7 +412,7 @@
         // Build sidebar in the order of routeOrder (but deduplicated against groupedRoutes roots).
         const added = new Set();
         for (const entry of routeOrder) {
-            const root = entry.split(" - ")[0].split("/")[0].trim();
+            const root = entry.split(" - ")[0].split(/[\/\\]/)[0].trim();
             if (!groupedRoutes[root] || added.has(root)) continue;
             // add tab
             const tab = document.createElement("div");
@@ -449,20 +451,17 @@
         }
     }
 
-    // Helper to produce a normalized header label set for a given subArea key.
-    // We return an array of header tokens for grouping:
-    // - split left-of-dash by '/' => tokens (e.g., ["Route 13","Kalos Power Plant"])
-    // - if there is a right-of-dash (after ' - '), include it if not duplicate
-    function subAreaHeaders(subAreaKey) {
-        const left = subAreaKey.split(" - ")[0].trim();
-        const right = (subAreaKey.includes(" - ") ? subAreaKey.split(" - ")[1].trim() : null);
-        const leftParts = left.split("/").map(s => s.trim()).filter(Boolean);
-        const headers = [];
-        for (const lp of leftParts) {
-            if (!headers.includes(lp)) headers.push(lp);
-        }
-        if (right && !headers.includes(right)) headers.push(right);
-        return headers;
+    // Helper: derive subHeader label for a subArea key
+    // If subArea has a ' - ' part, return that (right side).
+    // Otherwise, if left-of-dash contains '/' or '\', return the last part (e.g., "Power Plant" from "Route 13/Power Plant").
+    // Else return the left-of-dash itself.
+    function getSubHeaderLabel(subAreaKey) {
+        const parts = subAreaKey.split(" - ");
+        if (parts.length > 1 && parts[1].trim()) return parts[1].trim();
+        const left = parts[0].trim();
+        const leftParts = left.split(/[\/\\]/).map(s => s.trim()).filter(Boolean);
+        if (leftParts.length > 1) return leftParts[leftParts.length - 1]; // last part after slash/backslash
+        return left;
     }
 
     function displayRoute(baseName) {
@@ -476,144 +475,113 @@
         // Find the subAreas for this base.
         const subAreas = groupedRoutes[baseName] || [];
 
-        // We'll build a map: headerName -> array of subArea keys that correspond to this header
-        const headerMap = {};
-        for (const sub of subAreas) {
-            const headers = subAreaHeaders(sub);
-            // For each header token, record that this subArea belongs under it
-            for (const h of headers) {
-                if (!headerMap[h]) headerMap[h] = [];
-                headerMap[h].push(sub);
-            }
-        }
-
-        // Determine an ordered list of headers to display.
-        // Prefer the order from routeOrder (matching left-of-root), then alphabetical.
-        const headerOrder = Object.keys(headerMap).sort((a, b) => {
-            // see if a or b matches a routeOrder index
-            const ia = routeIndexFor(a);
-            const ib = routeIndexFor(b);
-            if (ia === ib) return a.localeCompare(b);
-            return ia - ib;
-        });
-
-        // Track which subAreas we've already rendered to avoid duplicates
-        const renderedSubAreas = new Set();
-
-        // Render sections: for each header, output the header then all trainers for its subAreas
-        for (const headerName of headerOrder) {
-            // Build a list of unique subAreas for this header that haven't been rendered yet
-            const subs = (headerMap[headerName] || []).filter(s => !renderedSubAreas.has(s));
-            if (subs.length === 0) continue;
-
-            // Header (shows the token after the dash or part of the left-of-dash split)
+        // If there are multiple subAreas, render each with its own sub-header (the part after the dash if present).
+        // This ensures Route 6 shows "Pathway", "East", "West" etc. as sub-headers under Route 6.
+        // We'll render subAreas in the order they were sorted earlier.
+        subAreas.forEach(subArea => {
+            // Show the sub-header (the part after the dash or the last token after /)
+            const subHeaderLabel = getSubHeaderLabel(subArea);
             const subHeader = document.createElement("div");
             subHeader.className = "sub-header";
-            subHeader.textContent = headerName;
+            subHeader.textContent = subHeaderLabel;
             container.appendChild(subHeader);
 
-            // For each subArea under this header, render its trainers
-            for (const subArea of subs) {
-                const areaData = trainerData[subArea];
-                if (!areaData) continue;
+            const areaData = trainerData[subArea];
+            if (!areaData) continue;
 
-                // Mark rendered so we don't duplicate the same subArea under another header
-                renderedSubAreas.add(subArea);
+            areaData.Trainers.forEach(tr => {
+                const card = document.createElement("div");
+                card.className = "trainer-card";
+                const row = document.createElement("div");
+                row.className = "trainer-row";
 
-                areaData.Trainers.forEach(tr => {
-                    const card = document.createElement("div");
-                    card.className = "trainer-card";
-                    const row = document.createElement("div");
-                    row.className = "trainer-row";
+                const trainerInfo = document.createElement("div");
+                trainerInfo.innerHTML = `
+                    <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
+                    <div class="trainer-sub">
+                        <strong>Battle Type:</strong> ${tr.BattleType}<br>
+                        <strong></strong> ${tr.Required || "N/A"}<br>
+                        <strong>Reward:</strong> N/A
+                    </div>
+                `;
+                row.appendChild(trainerInfo);
 
-                    const trainerInfo = document.createElement("div");
-                    trainerInfo.innerHTML = `
-                        <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
-                        <div class="trainer-sub">
-                            <strong>Battle Type:</strong> ${tr.BattleType}<br>
-                            <strong></strong> ${tr.Required || "N/A"}<br>
-                            <strong>Reward:</strong> N/A
+                tr.Pokemon.forEach(p => {
+                    const pDiv = document.createElement("div");
+                    pDiv.className = "pokemon-col";
+                    const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+                    // ensure 4 moves, convert empty strings or whitespace to '---'
+                    const moves = Array.isArray(p.Moves)
+                        ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
+                        : [];
+                    while (moves.length < 4) moves.push("---");
+
+                    // Try to find types from pokedex.json
+                    const dexEntry = findPokedexEntry(p.Name);
+                    let typesHtml = "";
+                    if (dexEntry) {
+                        const t1 = dexEntry.Type1;
+                        const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
+                        if (t1) {
+                            typesHtml += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
+                        }
+                        if (t2) {
+                            typesHtml += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
+                        }
+                    } else {
+                        typesHtml = "";
+                    }
+
+                    // Wrap inner content in .pokemon-inner so separators can be drawn edge-to-edge
+                    pDiv.innerHTML = `
+                        <div class="pokemon-inner">
+                            <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
+                                <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
+                                    ${p.Name} — Lv ${p.Level}
+                                </a>
+                            </div>
+
+                            <a href="pokemon.html?name=${encodeURIComponent(p.Name)}">
+                                <img class="poke-img"
+                                     src="pokemon_sprites/${spriteName}.png"
+                                     onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                            </a>
+
+                            <div class="types">
+                                ${typesHtml}
+                            </div>
+
+                            <!-- Removed headers; values bold & larger -->
+                            <div class="info-box ability-box">
+                                ${p.Ability || "---"}
+                            </div>
+
+                            <div class="info-box nature-box">
+                                ${colorNature(p.Nature || "---")}
+                            </div>
+
+                            <div class="info-box item-box">
+                                ${p.HeldItem || "No Item"}
+                            </div>
+
+                            <div class="info-box move-list">
+                                <div class="move-header"><strong>Moves:</strong></div>
+                                ${moves.map(m => `<div class="move-item">${m}</div>`).join("")}
+                            </div>
                         </div>
                     `;
-                    row.appendChild(trainerInfo);
 
-                    tr.Pokemon.forEach(p => {
-                        const pDiv = document.createElement("div");
-                        pDiv.className = "pokemon-col";
-                        const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
-
-                        // ensure 4 moves, convert empty strings or whitespace to '---'
-                        const moves = Array.isArray(p.Moves)
-                            ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
-                            : [];
-                        while (moves.length < 4) moves.push("---");
-
-                        // Try to find types from pokedex.json
-                        const dexEntry = findPokedexEntry(p.Name);
-                        let typesHtml = "";
-                        if (dexEntry) {
-                            const t1 = dexEntry.Type1;
-                            const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
-                            if (t1) {
-                                typesHtml += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
-                            }
-                            if (t2) {
-                                typesHtml += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
-                            }
-                        } else {
-                            typesHtml = "";
-                        }
-
-                        // Wrap inner content in .pokemon-inner so separators can be drawn edge-to-edge
-                        pDiv.innerHTML = `
-                            <div class="pokemon-inner">
-                                <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
-                                    <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
-                                        ${p.Name} — Lv ${p.Level}
-                                    </a>
-                                </div>
-
-                                <a href="pokemon.html?name=${encodeURIComponent(p.Name)}">
-                                    <img class="poke-img"
-                                         src="pokemon_sprites/${spriteName}.png"
-                                         onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
-                                </a>
-
-                                <div class="types">
-                                    ${typesHtml}
-                                </div>
-
-                                <!-- Removed headers; values bold & larger -->
-                                <div class="info-box ability-box">
-                                    ${p.Ability || "---"}
-                                </div>
-
-                                <div class="info-box nature-box">
-                                    ${colorNature(p.Nature || "---")}
-                                </div>
-
-                                <div class="info-box item-box">
-                                    ${p.HeldItem || "No Item"}
-                                </div>
-
-                                <div class="info-box move-list">
-                                    <div class="move-header"><strong>Moves:</strong></div>
-                                    ${moves.map(m => `<div class="move-item">${m}</div>`).join("")}
-                                </div>
-                            </div>
-                        `;
-
-                        row.appendChild(pDiv);
-                    });
-
-                    card.appendChild(row);
-                    container.appendChild(card);
+                    row.appendChild(pDiv);
                 });
-            }
-        }
+
+                card.appendChild(row);
+                container.appendChild(card);
+            });
+        });
 
         // If nothing was rendered (edge case), show fallback
-        if (Object.keys(headerMap).length === 0) {
+        if (subAreas.length === 0) {
             const note = document.createElement("div");
             note.className = "muted";
             note.style.padding = "8px 6px";
