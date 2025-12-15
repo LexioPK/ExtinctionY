@@ -366,7 +366,7 @@
         // exact match
         let i = routeOrder.indexOf(name);
         if (i !== -1) return i;
-        // compare left-of-' - ' then left-of-'/' to each routeOrder item
+        // compare left-of-' - ' then left-of-'/' or '\' to each routeOrder item
         const nameLeft = name.split(" - ")[0].split(/[\/\\]/)[0].trim();
         for (let j = 0; j < routeOrder.length; j++) {
             const candidate = routeOrder[j];
@@ -487,7 +487,7 @@
             container.appendChild(subHeader);
 
             const areaData = trainerData[subArea];
-            if (!areaData) continue;
+            if (!areaData) return; // fixed: return inside forEach callback (was 'continue' before)
 
             areaData.Trainers.forEach(tr => {
                 const card = document.createElement("div");
