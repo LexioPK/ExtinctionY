@@ -36,7 +36,7 @@
             position: fixed;
             top: 65px;
             left: 0;
-            width: 220px;
+            width: 320px;
             height: calc(100vh - 65px);
             background: white;
             overflow-y: auto;
@@ -50,7 +50,11 @@
             background: #f2f2f2;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .route-tab:hover {
@@ -66,9 +70,9 @@
         .trainer-section {
             padding: 20px;
             max-width: 1600px;
-            margin-left: 240px;
+            margin-left: 340px;
             margin-top: 90px;
-            width: calc(100% - 240px);
+            width: calc(100% - 340px);
         }
 
         .area-title {
@@ -270,7 +274,7 @@
 
         /* responsive tweaks */
         @media (max-width:1000px) {
-            .trainer-section { width: calc(100% - 240px); }
+            .trainer-section { width: calc(100% - 340px); }
             .trainer-row > .pokemon-col { min-width: 160px; max-width: 160px; }
         }
         @media (max-width:860px){
@@ -308,8 +312,8 @@
         "Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11","Reflection Cave",
         "Reflection Cave - 1F","Reflection Cave - B1F","Tower of Mastery","Shalour Gym",
         "Route 12","Azure Bay","Coumarine City","Coumarine City - Seaside",
-        "Coumarine City - Cliffside","Coumarine Gym","Route 13/Kalos Power Plant",
-        "Route 13/Kalos Power Plant - Route 13","Route 13/Kalos Power Plant - Kalos Power Plant",
+        "Coumarine City - Cliffside","Coumarine Gym","Route 13/Power Plant",
+        "Route 13/Power Plant - Route 13","Route 13/Power Plant - Kalos Power Plant",
         "Lumiose Gym","Route 14","Laverre City","Laverre Gym","Poke Ball Factory","Route 15",
         "Route 16","Lost Hotel","Dendemille Town","Frost Cavern",
         "Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F",
@@ -370,13 +374,12 @@
             const candLeft = (candidate || "").split(" - ")[0].trim();
             const candNorm = normalizeForCompare(candLeft);
 
-            // exact or prefix matches in either direction -> consider them the same root
             if (!candNorm) continue;
             if (leftNorm === candNorm) return candLeft.split(/[\/\\]/)[0].trim();
             if (leftNorm.startsWith(candNorm)) return candLeft.split(/[\/\\]/)[0].trim();
             if (candNorm.startsWith(leftNorm)) return candLeft.split(/[\/\\]/)[0].trim();
 
-            // also check split parts: if candidate contains '/', check parts
+            // check parts for matches (handle "Route 13" vs "Route 13/Power Plant")
             const leftParts = leftOfDash.split(/[\/\\]/).map(p=>p.trim()).filter(Boolean);
             const candParts = candLeft.split(/[\/\\]/).map(p=>p.trim()).filter(Boolean);
             for (const lp of leftParts) {
@@ -391,6 +394,45 @@
         // fallback: use the first token before slash/backslash or the leftOfDash itself
         const root = leftOfDash.split(/[\/\\]/)[0].trim();
         return root || leftOfDash;
+    }
+
+    // Choose a preferred tab label for a grouped root key.
+    // Prefer a routeOrder entry that contains a slash/backslash (e.g. "Route 13/Power Plant"),
+    // or that includes the more specific phrasing. If none, return the root itself.
+    function preferredTabLabelForRoot(rootKey) {
+        const rootNorm = normalizeForCompare(rootKey);
+        // Try to find a routeOrder entry whose left-of-dash normalized equals rootNorm and that contains '/' or '\'
+        for (const candidate of routeOrder) {
+            const left = (candidate || "").split(" - ")[0].trim();
+            if (!left) continue;
+            if (normalizeForCompare(left).startsWith(rootNorm) || rootNorm.startsWith(normalizeForCompare(left))) {
+                if (left.includes("/") || left.includes("\\")) return left;
+            }
+        }
+        // Next prefer any routeOrder entry that contains the root (without requiring slash)
+        for (const candidate of routeOrder) {
+            const left = (candidate || "").split(" - ")[0].trim();
+            if (!left) continue;
+            if (normalizeForCompare(left) === rootNorm) return left;
+        }
+        // else just return the rootKey as-is
+        return rootKey;
+    }
+
+    // routeIndexFor used for sorting subareas in a group
+    function routeIndexFor(name) {
+        if (!name) return Infinity;
+        // exact match
+        let i = routeOrder.indexOf(name);
+        if (i !== -1) return i;
+        // compare left-of-' - ' then left-of-'/' or '\' to each routeOrder item
+        const nameLeft = name.split(" - ")[0].split(/[\/\\]/)[0].trim();
+        for (let j = 0; j < routeOrder.length; j++) {
+            const candidate = routeOrder[j];
+            const candLeft = candidate.split(" - ")[0].split(/[\/\\]/)[0].trim();
+            if (candLeft === nameLeft) return j;
+        }
+        return Infinity;
     }
 
     async function loadTrainers() {
@@ -422,7 +464,7 @@
             });
         });
 
-        // Build sidebar in the order of routeOrder (but deduplicated against groupedRoutes roots).
+        // Build sidebar tabs using routeOrder preference but show preferred labels (may include slash)
         const added = new Set();
         for (const entry of routeOrder) {
             const rootCandidate = (entry || "").split(" - ")[0].split(/[\/\\]/)[0].trim();
@@ -430,11 +472,12 @@
             // find matching groupedRoutes key (case-insensitive/normalized)
             const matchKey = Object.keys(groupedRoutes).find(k => normalizeForCompare(k) === normalizeForCompare(rootCandidate));
             if (!matchKey || added.has(matchKey)) continue;
-            // add tab
+            const displayLabel = preferredTabLabelForRoot(matchKey);
             const tab = document.createElement("div");
             tab.className = "route-tab";
             tab.dataset.base = matchKey;
-            tab.textContent = matchKey;
+            tab.textContent = displayLabel;
+            tab.title = matchKey; // full root on hover
             tab.onclick = () => {
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
@@ -444,13 +487,15 @@
             added.add(matchKey);
         }
 
-        // Append any remaining roots not in routeOrder (alphabetical)
+        // Append any remaining roots not in routeOrder (alphabetical), using preferred labels
         const remaining = Object.keys(groupedRoutes).filter(k => !added.has(k)).sort((a,b) => a.localeCompare(b));
         for (const root of remaining) {
+            const displayLabel = preferredTabLabelForRoot(root);
             const tab = document.createElement("div");
             tab.className = "route-tab";
             tab.dataset.base = root;
-            tab.textContent = root;
+            tab.textContent = displayLabel;
+            tab.title = root;
             tab.onclick = () => {
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
@@ -478,22 +523,6 @@
         const leftParts = left.split(/[\/\\]/).map(s => s.trim()).filter(Boolean);
         if (leftParts.length > 1) return leftParts[leftParts.length - 1]; // last part after slash/backslash
         return left;
-    }
-
-    // routeIndexFor used for sorting subareas in a group
-    function routeIndexFor(name) {
-        if (!name) return Infinity;
-        // exact match
-        let i = routeOrder.indexOf(name);
-        if (i !== -1) return i;
-        // compare left-of-' - ' then left-of-'/' or '\' to each routeOrder item
-        const nameLeft = name.split(" - ")[0].split(/[\/\\]/)[0].trim();
-        for (let j = 0; j < routeOrder.length; j++) {
-            const candidate = routeOrder[j];
-            const candLeft = candidate.split(" - ")[0].split(/[\/\\]/)[0].trim();
-            if (candLeft === nameLeft) return j;
-        }
-        return Infinity;
     }
 
     function displayRoute(baseName) {
