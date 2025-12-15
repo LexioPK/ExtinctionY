@@ -343,37 +343,54 @@
         return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
     }
 
-    // Normalize names for fuzzy matching between trainer JSON and pokedex keys
-    function normalizeName(n) {
-        return (n || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
+    // Normalize helper for comparisons
+    function normalizeForCompare(s) {
+        return (s || "").toString().toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g," ").trim();
     }
 
     // Find a pokedex entry by name with best-effort normalization
     function findPokedexEntry(pokeName) {
         if (!pokedexData || !pokeName) return null;
         if (pokedexData[pokeName]) return pokedexData[pokeName];
-        const target = normalizeName(pokeName);
+        const target = normalizeForCompare(pokeName);
         for (const key in pokedexData) {
-            if (normalizeName(key) === target) return pokedexData[key];
+            if (normalizeForCompare(key) === target) return pokedexData[key];
         }
         return null;
     }
 
-    // Helper to compute a routeOrder index for a given full area name.
-    // We try to find the best match in routeOrder by matching exact, then by matching the left part before '/' or ' - '.
-    function routeIndexFor(name) {
-        if (!name) return Infinity;
-        // exact match
-        let i = routeOrder.indexOf(name);
-        if (i !== -1) return i;
-        // compare left-of-' - ' then left-of-'/' or '\' to each routeOrder item
-        const nameLeft = name.split(" - ")[0].split(/[\/\\]/)[0].trim();
-        for (let j = 0; j < routeOrder.length; j++) {
-            const candidate = routeOrder[j];
-            const candLeft = candidate.split(" - ")[0].split(/[\/\\]/)[0].trim();
-            if (candLeft === nameLeft) return j;
+    // Determine the best "root" tab name for a given full area name by matching against routeOrder,
+    // falling back to the left-most token before a slash/backslash or the original left-of-dash.
+    function findRootForArea(fullAreaName) {
+        const leftOfDash = (fullAreaName || "").split(" - ")[0].trim();
+        const leftNorm = normalizeForCompare(leftOfDash);
+
+        // Try to match against routeOrder entries (prefer exact or prefix matches)
+        for (const candidate of routeOrder) {
+            const candLeft = (candidate || "").split(" - ")[0].trim();
+            const candNorm = normalizeForCompare(candLeft);
+
+            // exact or prefix matches in either direction -> consider them the same root
+            if (!candNorm) continue;
+            if (leftNorm === candNorm) return candLeft.split(/[\/\\]/)[0].trim();
+            if (leftNorm.startsWith(candNorm)) return candLeft.split(/[\/\\]/)[0].trim();
+            if (candNorm.startsWith(leftNorm)) return candLeft.split(/[\/\\]/)[0].trim();
+
+            // also check split parts: if candidate contains '/', check parts
+            const leftParts = leftOfDash.split(/[\/\\]/).map(p=>p.trim()).filter(Boolean);
+            const candParts = candLeft.split(/[\/\\]/).map(p=>p.trim()).filter(Boolean);
+            for (const lp of leftParts) {
+                for (const cp of candParts) {
+                    if (normalizeForCompare(lp) === normalizeForCompare(cp)) {
+                        return candLeft.split(/[\/\\]/)[0].trim();
+                    }
+                }
+            }
         }
-        return Infinity;
+
+        // fallback: use the first token before slash/backslash or the leftOfDash itself
+        const root = leftOfDash.split(/[\/\\]/)[0].trim();
+        return root || leftOfDash;
     }
 
     async function loadTrainers() {
@@ -387,14 +404,10 @@
         trainerData = await trainersRes.json();
         pokedexData = await pokedexRes.json();
 
-        // Build groupedRoutes keyed by the root left-of-slash/backslash base (e.g., "Route 13")
+        // Build groupedRoutes keyed by a root determined by findRootForArea
         groupedRoutes = {};
         for (const fullName in trainerData) {
-            // left-of-dash (the "area" portion)
-            const leftOfDash = fullName.split(" - ")[0].trim();
-            // split left-of-dash by / or \ into parts; the root is the first part
-            const leftParts = leftOfDash.split(/[\/\\]/).map(s => s.trim()).filter(Boolean);
-            const root = leftParts[0];
+            const root = findRootForArea(fullName);
             if (!groupedRoutes[root]) groupedRoutes[root] = [];
             groupedRoutes[root].push(fullName);
         }
@@ -412,24 +425,27 @@
         // Build sidebar in the order of routeOrder (but deduplicated against groupedRoutes roots).
         const added = new Set();
         for (const entry of routeOrder) {
-            const root = entry.split(" - ")[0].split(/[\/\\]/)[0].trim();
-            if (!groupedRoutes[root] || added.has(root)) continue;
+            const rootCandidate = (entry || "").split(" - ")[0].split(/[\/\\]/)[0].trim();
+            if (!rootCandidate) continue;
+            // find matching groupedRoutes key (case-insensitive/normalized)
+            const matchKey = Object.keys(groupedRoutes).find(k => normalizeForCompare(k) === normalizeForCompare(rootCandidate));
+            if (!matchKey || added.has(matchKey)) continue;
             // add tab
             const tab = document.createElement("div");
             tab.className = "route-tab";
-            tab.dataset.base = root;
-            tab.textContent = root;
+            tab.dataset.base = matchKey;
+            tab.textContent = matchKey;
             tab.onclick = () => {
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
-                displayRoute(root);
+                displayRoute(matchKey);
             };
             sidebar.appendChild(tab);
-            added.add(root);
+            added.add(matchKey);
         }
 
-        // If there are grouped roots not covered by routeOrder, append them alphabetically
-        const remaining = Object.keys(groupedRoutes).filter(k => !added.has(k)).sort((a,b) => routeIndexFor(a) - routeIndexFor(b) || a.localeCompare(b));
+        // Append any remaining roots not in routeOrder (alphabetical)
+        const remaining = Object.keys(groupedRoutes).filter(k => !added.has(k)).sort((a,b) => a.localeCompare(b));
         for (const root of remaining) {
             const tab = document.createElement("div");
             tab.className = "route-tab";
@@ -464,6 +480,22 @@
         return left;
     }
 
+    // routeIndexFor used for sorting subareas in a group
+    function routeIndexFor(name) {
+        if (!name) return Infinity;
+        // exact match
+        let i = routeOrder.indexOf(name);
+        if (i !== -1) return i;
+        // compare left-of-' - ' then left-of-'/' or '\' to each routeOrder item
+        const nameLeft = name.split(" - ")[0].split(/[\/\\]/)[0].trim();
+        for (let j = 0; j < routeOrder.length; j++) {
+            const candidate = routeOrder[j];
+            const candLeft = candidate.split(" - ")[0].split(/[\/\\]/)[0].trim();
+            if (candLeft === nameLeft) return j;
+        }
+        return Infinity;
+    }
+
     function displayRoute(baseName) {
         const container = document.getElementById("trainerSection");
         container.innerHTML = "";
@@ -475,11 +507,10 @@
         // Find the subAreas for this base.
         const subAreas = groupedRoutes[baseName] || [];
 
-        // If there are multiple subAreas, render each with its own sub-header (the part after the dash if present).
-        // This ensures Route 6 shows "Pathway", "East", "West" etc. as sub-headers under Route 6.
-        // We'll render subAreas in the order they were sorted earlier.
+        // Render each subArea with its own sub-header (the part after the dash if present,
+        // otherwise the portion after the slash/backslash)
         subAreas.forEach(subArea => {
-            // Show the sub-header (the part after the dash or the last token after /)
+            // Show the sub-header
             const subHeaderLabel = getSubHeaderLabel(subArea);
             const subHeader = document.createElement("div");
             subHeader.className = "sub-header";
@@ -487,7 +518,7 @@
             container.appendChild(subHeader);
 
             const areaData = trainerData[subArea];
-            if (!areaData) return; // fixed: return inside forEach callback (was 'continue' before)
+            if (!areaData) return;
 
             areaData.Trainers.forEach(tr => {
                 const card = document.createElement("div");
