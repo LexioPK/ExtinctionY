@@ -1,96 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abilities</title>
-
-    <link rel="stylesheet" href="header.css">
-    <script src="header.js" defer></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 2rem;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .ability {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: #f9f9f9;
-        }
-        .ability-name {
-            font-weight: bold;
-            color: #1976d2;
-        }
-        .ability-description {
-            color: #555;
-        }
-        .pokemon-count {
-            font-size: 0.9rem;
-            color: #777;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abilities</title>
+  <style>
+    /* Include styling for consistent headers */
+  </style>
 </head>
 <body>
-    <div id="site-header" class="header"></div>
+  <!-- Include the same header structure here -->
+  <header>
+    <nav>
+      <!-- Navigation links -->
+    </nav>
+  </header>
 
-    <div class="container">
-        <h1>All Abilities</h1>
-        <div id="abilities-container">
-            <!-- Dynamic content will be rendered here -->
-        </div>
-    </div>
+  <main>
+    <h1>Abilities Overview</h1>
+    <section id="ability-list">
+      <!-- Dynamically generated ability data will be injected here -->
+    </section>
+  </main>
 
-    <script>
-        async function loadAbilities() {
-            try {
-                const response = await fetch('data/abilities.json');
-                const abilities = await response.json();
-
-                const abilitiesContainer = document.getElementById('abilities-container');
-
-                Object.values(abilities).forEach(abilityData => {
-                    const abilityElement = document.createElement('div');
-                    abilityElement.classList.add('ability');
-
-                    const abilityName = document.createElement('div');
-                    abilityName.classList.add('ability-name');
-                    abilityName.textContent = abilityData.name;
-
-                    const abilityDescription = document.createElement('div');
-                    abilityDescription.classList.add('ability-description');
-                    abilityDescription.textContent = abilityData.shortDesc || 'No description available';
-
-                    const pokemonCount = document.createElement('div');
-                    pokemonCount.classList.add('pokemon-count');
-                    pokemonCount.textContent = `(Appears in ${abilityData.num || 0} Pokémon)`;
-
-                    abilityElement.appendChild(abilityName);
-                    abilityElement.appendChild(abilityDescription);
-                    abilityElement.appendChild(pokemonCount);
-
-                    abilitiesContainer.appendChild(abilityElement);
-                });
-            } catch (error) {
-                console.error('Error loading abilities:', error);
-            }
+  <script>
+    fetch('pokedex.json')
+      .then(response => response.json())
+      .then(pokedex => {
+        const abilityCount = {};
+        pokedex.forEach(pokemon => {
+          const abilities = [pokemon.Ability1, pokemon.Ability2, pokemon.AbilityH].filter(Boolean);
+          const uniqueAbilities = [...new Set(abilities)];
+          uniqueAbilities.forEach(ability => {
+            if (!abilityCount[ability]) abilityCount[ability] = 0;
+            abilityCount[ability]++;
+          });
+        });
+        
+        // Display the abilities dynamically
+        const abilityList = document.getElementById('ability-list');
+        for (const [ability, count] of Object.entries(abilityCount)) {
+          const abilityItem = document.createElement('div');
+          abilityItem.textContent = `${ability}: ${count}`;
+          abilityList.appendChild(abilityItem);
         }
-
-        // Initialize abilities loading
-        document.addEventListener('DOMContentLoaded', loadAbilities);
-    </script>
+      })
+      .catch(error => console.error('Error fetching pokedex:', error));
+  </script>
 </body>
 </html>
