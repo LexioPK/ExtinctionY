@@ -4,35 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abilities</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const abilities = {
-                // Replace with real data; format: 'AbilityName': ['Pokemon1', 'Pokemon2', ...]
-                "Overgrow": ["Bulbasaur", "Ivysaur", "Venusaur", "Chikorita"],
-                "Blaze": ["Charmander", "Charmeleon", "Charizard", "Torchic"],
-                "Torrent": ["Squirtle", "Wartortle", "Blastoise"],
-                "Chlorophyll": ["Oddish", "Gloom", "Vileplume", "Bellossom"]
-            };
 
-            const abilitiesContainer = document.getElementById('abilities-container');
+    <link rel="stylesheet" href="header.css">
+    <script src="header.js" defer></script>
 
-            Object.entries(abilities).forEach(([ability, pokemonList]) => {
-                const abilityElement = document.createElement('div');
-                abilityElement.classList.add('ability');
-                abilityElement.innerHTML = `<strong>${ability}</strong> - ${pokemonList.length} Pokémon`;
-                
-                const pokemonListElement = document.createElement('ul');
-                pokemonList.forEach(pokemon => {
-                    const pokemonItem = document.createElement('li');
-                    pokemonItem.textContent = pokemon;
-                    pokemonListElement.appendChild(pokemonItem);
-                });
-
-                abilityElement.appendChild(pokemonListElement);
-                abilitiesContainer.appendChild(abilityElement);
-            });
-        });
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -56,14 +31,66 @@
             border-radius: 5px;
             background: #f9f9f9;
         }
+        .ability-name {
+            font-weight: bold;
+            color: #1976d2;
+        }
+        .ability-description {
+            color: #555;
+        }
+        .pokemon-count {
+            font-size: 0.9rem;
+            color: #777;
+        }
     </style>
 </head>
 <body>
+    <div id="site-header" class="header"></div>
+
     <div class="container">
-        <h1>Pokémon Abilities</h1>
+        <h1>All Abilities</h1>
         <div id="abilities-container">
-            <!-- Dynamic content will load here -->
+            <!-- Dynamic content will be rendered here -->
         </div>
     </div>
+
+    <script>
+        async function loadAbilities() {
+            try {
+                const response = await fetch('data/abilities.json');
+                const abilities = await response.json();
+
+                const abilitiesContainer = document.getElementById('abilities-container');
+
+                Object.values(abilities).forEach(abilityData => {
+                    const abilityElement = document.createElement('div');
+                    abilityElement.classList.add('ability');
+
+                    const abilityName = document.createElement('div');
+                    abilityName.classList.add('ability-name');
+                    abilityName.textContent = abilityData.name;
+
+                    const abilityDescription = document.createElement('div');
+                    abilityDescription.classList.add('ability-description');
+                    abilityDescription.textContent = abilityData.shortDesc || 'No description available';
+
+                    const pokemonCount = document.createElement('div');
+                    pokemonCount.classList.add('pokemon-count');
+                    pokemonCount.textContent = `(Appears in ${abilityData.num || 0} Pokémon)`;
+
+                    abilityElement.appendChild(abilityName);
+                    abilityElement.appendChild(abilityDescription);
+                    abilityElement.appendChild(pokemonCount);
+
+                    abilitiesContainer.appendChild(abilityElement);
+                });
+            } catch (error) {
+                console.error('Error loading abilities:', error);
+            }
+        }
+
+        // Initialize abilities loading
+        document.addEventListener('DOMContentLoaded', loadAbilities);
+    </script>
 </body>
 </html>
