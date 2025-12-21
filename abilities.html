@@ -1,51 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Abilities</title>
-  <style>
-    /* Include styling for consistent headers */
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abilities - Extinction Y</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Standardized header styles & script -->
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+
+<style>
+    body {
+        font-family: "Lexend", sans-serif;
+        background: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+
+    /* Sticky centered title */
+    h1 {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid #ddd;
+        font-size: 0.9em;
+    }
+
+    th {
+        background: #f5f5f5;
+        font-weight: 600;
+    }
+
+    tr:hover { background: #f0f0f0; }
+
+    /* Make rows clickable */
+    tbody tr {
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
-  <!-- Include the same header structure here -->
-  <header>
-    <nav>
-      <!-- Navigation links -->
-    </nav>
-  </header>
 
-  <main>
-    <h1>Abilities Overview</h1>
-    <section id="ability-list">
-      <!-- Dynamically generated ability data will be injected here -->
-    </section>
-  </main>
+<h1>Ability List</h1>
 
-  <script>
-    fetch('pokedex.json')
-      .then(response => response.json())
-      .then(pokedex => {
+<table id="abilities-table">
+    <thead>
+        <tr>
+            <th>Ability Name</th>
+            <th>Short Description</th>
+            <th>Pokémon Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Abilities will be populated here -->
+    </tbody>
+</table>
+
+<script>
+/**
+ * Load and display abilities in a table format
+ * Fetches data from both abilities.json (for descriptions) and pokedex.json (for counts)
+ */
+function loadAbilities() {
+    // Fetch both data sources in parallel
+    Promise.all([
+        fetch("data/abilities.json").then(r => r.json()),
+        fetch("data/pokedex.json").then(r => r.json())
+    ])
+    .then(([abilities, pokedex]) => {
+        // Count how many Pokémon have each ability
         const abilityCount = {};
-        pokedex.forEach(pokemon => {
-          const abilities = [pokemon.Ability1, pokemon.Ability2, pokemon.AbilityH].filter(Boolean);
-          const uniqueAbilities = [...new Set(abilities)];
-          uniqueAbilities.forEach(ability => {
-            if (!abilityCount[ability]) abilityCount[ability] = 0;
-            abilityCount[ability]++;
-          });
-        });
         
-        // Display the abilities dynamically
-        const abilityList = document.getElementById('ability-list');
-        for (const [ability, count] of Object.entries(abilityCount)) {
-          const abilityItem = document.createElement('div');
-          abilityItem.textContent = `${ability}: ${count}`;
-          abilityList.appendChild(abilityItem);
-        }
-      })
-      .catch(error => console.error('Error fetching pokedex:', error));
-  </script>
+        // Iterate through all Pokémon in the pokedex
+        Object.values(pokedex).forEach(pokemon => {
+            // Get all abilities for this Pokémon (Ability1, Ability2, AbilityH)
+            const pokemonAbilities = [pokemon.Ability1, pokemon.Ability2, pokemon.AbilityH].filter(Boolean);
+            // Remove duplicates in case a Pokémon has the same ability in multiple slots
+            const uniqueAbilities = [...new Set(pokemonAbilities)];
+            
+            // Increment count for each unique ability
+            uniqueAbilities.forEach(ability => {
+                if (!abilityCount[ability]) abilityCount[ability] = 0;
+                abilityCount[ability]++;
+            });
+        });
+
+        // Get the table body element
+        const tbody = document.querySelector("#abilities-table tbody");
+        
+        // Convert abilities object to array and sort alphabetically by ability key
+        const sortedAbilities = Object.entries(abilities).sort((a, b) => {
+            // Use the "name" field for sorting if available, otherwise use the key
+            const nameA = a[1].name || a[0];
+            const nameB = b[1].name || b[0];
+            return nameA.localeCompare(nameB);
+        });
+
+        // Create table rows for each ability
+        sortedAbilities.forEach(([key, ability]) => {
+            const tr = document.createElement("tr");
+
+            // Optional: Add click handler to navigate to ability detail page
+            // Uncomment the following lines when ability detail page is available
+            // tr.onclick = () => 
+            //     window.location.href = `abilitydescriptions.html?name=${encodeURIComponent(ability.name)}`;
+
+            // Get the count for this ability (default to 0 if not found)
+            const count = abilityCount[ability.name] || 0;
+            
+            // Create table cells with ability data
+            tr.innerHTML = `
+                <td>${ability.name}</td>
+                <td>${ability.shortDesc}</td>
+                <td>Appears in ${count} Pokémon</td>
+            `;
+
+            tbody.appendChild(tr);
+        });
+    })
+    .catch(err => console.error("Ability JSON Load Error:", err));
+}
+
+// Initialize the table when the page loads
+loadAbilities();
+</script>
+
 </body>
 </html>
