@@ -39,11 +39,16 @@
         text-align: left;
         padding: 10px 12px;
         border-bottom: 1px solid #ddd;
-        font-size: 0.9em;
+        font-size: 1em;
     }
 
     th {
         background: #f5f5f5;
+        font-weight: 600;
+    }
+    
+    /* Bold ability names */
+    td:first-child {
         font-weight: 600;
     }
 
@@ -78,7 +83,6 @@
         <tr>
             <th>Ability Name</th>
             <th>Description</th>
-            <th># Pokémon</th>
         </tr>
     </thead>
     <tbody>
@@ -149,14 +153,10 @@ function loadAbilities() {
             cell1.textContent = ability.name;
             
             const cell2 = document.createElement("td");
-            cell2.textContent = ability.shortDesc;
-            
-            const cell3 = document.createElement("td");
-            cell3.textContent = `${count} Pokémon`;
+            cell2.textContent = ability.desc;
             
             tr.appendChild(cell1);
             tr.appendChild(cell2);
-            tr.appendChild(cell3);
             
             tbody.appendChild(tr);
             
@@ -164,7 +164,7 @@ function loadAbilities() {
             if (pokemonList.length > 0) {
                 const spriteRow = document.createElement("tr");
                 const spriteCell = document.createElement("td");
-                spriteCell.colSpan = 3;
+                spriteCell.colSpan = 2;
                 
                 const spritesContainer = document.createElement("div");
                 spritesContainer.className = "pokemon-sprites";
