@@ -53,6 +53,20 @@
     tbody tr {
         cursor: pointer;
     }
+
+    /* Pokémon sprites container */
+    .pokemon-sprites {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 5px;
+    }
+
+    .pokemon-sprites img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
 </style>
 </head>
 <body>
@@ -63,8 +77,8 @@
     <thead>
         <tr>
             <th>Ability Name</th>
-            <th>Short Description</th>
-            <th>Pokémon Count</th>
+            <th>Description</th>
+            <th># Pokémon</th>
         </tr>
     </thead>
     <tbody>
@@ -84,20 +98,20 @@ function loadAbilities() {
         fetch("data/pokedex.json").then(r => r.json())
     ])
     .then(([abilities, pokedex]) => {
-        // Count how many Pokémon have each ability
-        const abilityCount = {};
+        // Track which Pokémon have each ability
+        const abilityPokemon = {};
         
         // Iterate through all Pokémon in the pokedex
-        Object.values(pokedex).forEach(pokemon => {
+        Object.entries(pokedex).forEach(([pokemonName, pokemon]) => {
             // Get all abilities for this Pokémon (Ability1, Ability2, AbilityH)
             const pokemonAbilities = [pokemon.Ability1, pokemon.Ability2, pokemon.AbilityH].filter(Boolean);
             // Remove duplicates in case a Pokémon has the same ability in multiple slots
             const uniqueAbilities = [...new Set(pokemonAbilities)];
             
-            // Increment count for each unique ability
+            // Add this Pokémon to each ability's list
             uniqueAbilities.forEach(ability => {
-                if (!abilityCount[ability]) abilityCount[ability] = 0;
-                abilityCount[ability]++;
+                if (!abilityPokemon[ability]) abilityPokemon[ability] = [];
+                abilityPokemon[ability].push(pokemonName);
             });
         });
 
@@ -114,24 +128,66 @@ function loadAbilities() {
 
         // Create table rows for each ability
         sortedAbilities.forEach(([key, ability]) => {
+            // Get the Pokémon list for this ability (default to empty array if not found)
+            const pokemonList = abilityPokemon[ability.name] || [];
+            const count = pokemonList.length;
+            
+            // Filter out abilities with 0 Pokémon, except for "Zen Mode" and "Forecast"
+            if (count === 0 && ability.name !== "Zen Mode" && ability.name !== "Forecast") {
+                return;
+            }
+
             const tr = document.createElement("tr");
 
             // Optional: Add click handler to navigate to ability detail page
             // Uncomment the following lines when ability detail page is available
             // tr.onclick = () => 
             //     window.location.href = `abilitydescriptions.html?name=${encodeURIComponent(ability.name)}`;
-
-            // Get the count for this ability (default to 0 if not found)
-            const count = abilityCount[ability.name] || 0;
             
             // Create table cells with ability data
-            tr.innerHTML = `
-                <td>${ability.name}</td>
-                <td>${ability.shortDesc}</td>
-                <td>Appears in ${count} Pokémon</td>
-            `;
-
+            const cell1 = document.createElement("td");
+            cell1.textContent = ability.name;
+            
+            const cell2 = document.createElement("td");
+            cell2.textContent = ability.shortDesc;
+            
+            const cell3 = document.createElement("td");
+            cell3.textContent = `${count} Pokémon`;
+            
+            tr.appendChild(cell1);
+            tr.appendChild(cell2);
+            tr.appendChild(cell3);
+            
             tbody.appendChild(tr);
+            
+            // Add a row for Pokémon sprites underneath
+            if (pokemonList.length > 0) {
+                const spriteRow = document.createElement("tr");
+                const spriteCell = document.createElement("td");
+                spriteCell.colSpan = 3;
+                
+                const spritesContainer = document.createElement("div");
+                spritesContainer.className = "pokemon-sprites";
+                
+                // Add images for each Pokémon
+                pokemonList.forEach(pokemonName => {
+                    const img = document.createElement("img");
+                    // Convert Pokémon name to lowercase for sprite filename
+                    const spriteName = pokemonName.toLowerCase().replace(/[^a-z0-9-]/g, '');
+                    img.src = `pokemon_sprites/${spriteName}.png`;
+                    img.alt = pokemonName;
+                    img.title = pokemonName;
+                    // Handle missing images gracefully
+                    img.onerror = function() {
+                        this.style.display = 'none';
+                    };
+                    spritesContainer.appendChild(img);
+                });
+                
+                spriteCell.appendChild(spritesContainer);
+                spriteRow.appendChild(spriteCell);
+                tbody.appendChild(spriteRow);
+            }
         });
     })
     .catch(err => console.error("Ability JSON Load Error:", err));
