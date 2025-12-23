@@ -145,13 +145,14 @@
           Separators between sections are implemented as pseudo-elements on the target
           elements and are sized so they connect to the outer borders of the pokemon column.
           
-          Each column has a fixed equal width of 180px so all columns are uniformly sized.
-          When there are 6 columns, they fill the entire available space without requiring horizontal scroll.
+          Each column has a fixed equal width of 170px so all columns are uniformly sized.
+          When there are 6 columns (240px trainer + 6×170px = 1260px total), they fill the 
+          entire available space without requiring horizontal scroll on standard screens.
         */
         .trainer-row > .pokemon-col {
-            width: 180px;
-            min-width: 180px;
-            max-width: 180px;
+            width: 170px;
+            min-width: 170px;
+            max-width: 170px;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
             /* full, darker border around each pokemon column */
@@ -287,7 +288,7 @@
         /* responsive tweaks */
         @media (max-width:1000px) {
             .trainer-section { width: calc(100% - 340px); }
-            .trainer-row > .pokemon-col { width: 160px; min-width: 160px; max-width: 160px; }
+            .trainer-row > .pokemon-col { width: 150px; min-width: 150px; max-width: 150px; }
         }
         @media (max-width:860px){
             .poke-name { max-width:140px; }
