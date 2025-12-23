@@ -146,12 +146,13 @@
           Separators between sections are implemented as pseudo-elements on the target
           elements and are sized so they connect to the outer borders of the pokemon column.
           
-          Columns now use flex: 1 to expand and fill available space.
+          Each column has a fixed width so 6 columns fill the entire available space equally.
+          Using calc() to determine the width based on container size minus trainer info (240px).
         */
         .trainer-row > .pokemon-col {
-            flex: 1;
-            min-width: 180px;
-            max-width: none;
+            width: 220px;
+            min-width: 220px;
+            max-width: 220px;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
             /* full, darker border around each pokemon column */
@@ -287,7 +288,7 @@
         /* responsive tweaks */
         @media (max-width:1000px) {
             .trainer-section { width: calc(100% - 340px); }
-            .trainer-row > .pokemon-col { min-width: 160px; }
+            .trainer-row > .pokemon-col { width: 180px; min-width: 180px; max-width: 180px; }
         }
         @media (max-width:860px){
             .poke-name { max-width:140px; }
