@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,6 +100,16 @@
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trainer-image {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
         .trainer-sub {
@@ -135,11 +146,14 @@
           Each pokemon column has a full border. Inner content lives in .pokemon-inner.
           Separators between sections are implemented as pseudo-elements on the target
           elements and are sized so they connect to the outer borders of the pokemon column.
+          
+          Each column has a fixed equal width of 220px so all columns are uniformly sized.
+          When there are 6 columns, they fill the entire available space.
         */
         .trainer-row > .pokemon-col {
-            width: 200px;
-            min-width: 200px;
-            max-width: 200px;
+            width: 220px;
+            min-width: 220px;
+            max-width: 220px;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
             /* full, darker border around each pokemon column */
@@ -275,7 +289,7 @@
         /* responsive tweaks */
         @media (max-width:1000px) {
             .trainer-section { width: calc(100% - 340px); }
-            .trainer-row > .pokemon-col { min-width: 160px; max-width: 160px; }
+            .trainer-row > .pokemon-col { width: 180px; min-width: 180px; max-width: 180px; }
         }
         @media (max-width:860px){
             .poke-name { max-width:140px; }
@@ -435,6 +449,17 @@
         return Infinity;
     }
 
+    // Helper: generate trainer image filename from trainer class
+    function getTrainerImageFilename(trainerClass) {
+        if (!trainerClass || typeof trainerClass !== 'string') return null;
+        // Convert to lowercase, replace spaces with hyphens, remove special characters
+        const filename = trainerClass.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+        // Return null if filename is empty after processing
+        return filename || null;
+    }
+
     async function loadTrainers() {
         const sidebar = document.getElementById("sidebar");
 
@@ -556,14 +581,40 @@
                 row.className = "trainer-row";
 
                 const trainerInfo = document.createElement("div");
-                trainerInfo.innerHTML = `
-                    <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
-                    <div class="trainer-sub">
-                        <strong>Battle Type:</strong> ${tr.BattleType}<br>
-                        <strong></strong> ${tr.Required || "N/A"}<br>
-                        <strong>Reward:</strong> N/A
-                    </div>
+                
+                // Generate trainer image filename
+                const trainerImageFile = getTrainerImageFilename(tr.TrainerClass);
+                const trainerImagePath = trainerImageFile ? `image/trainer_images/${trainerImageFile}.png` : '';
+                
+                // Create trainer header element safely
+                const trainerHeader = document.createElement("div");
+                trainerHeader.className = "trainer-header";
+                
+                if (trainerImagePath) {
+                    const img = document.createElement("img");
+                    img.src = trainerImagePath;
+                    img.alt = tr.TrainerClass || '';
+                    img.className = "trainer-image";
+                    img.onerror = function() { this.style.display = 'none'; };
+                    trainerHeader.appendChild(img);
+                }
+                
+                const trainerNameSpan = document.createElement("span");
+                trainerNameSpan.textContent = `${tr.TrainerClass} ${tr.TrainerName}`;
+                trainerHeader.appendChild(trainerNameSpan);
+                
+                trainerInfo.appendChild(trainerHeader);
+                
+                // Add trainer sub-info using innerHTML for formatting
+                const trainerSub = document.createElement("div");
+                trainerSub.className = "trainer-sub";
+                trainerSub.innerHTML = `
+                    <strong>Battle Type:</strong> ${tr.BattleType}<br>
+                    <strong></strong> ${tr.Required || "N/A"}<br>
+                    <strong>Reward:</strong> N/A
                 `;
+                trainerInfo.appendChild(trainerSub);
+                
                 row.appendChild(trainerInfo);
 
                 tr.Pokemon.forEach(p => {
