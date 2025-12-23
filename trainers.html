@@ -99,6 +99,16 @@
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trainer-image {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
         .trainer-sub {
@@ -135,11 +145,13 @@
           Each pokemon column has a full border. Inner content lives in .pokemon-inner.
           Separators between sections are implemented as pseudo-elements on the target
           elements and are sized so they connect to the outer borders of the pokemon column.
+          
+          Columns now use flex: 1 to expand and fill available space.
         */
         .trainer-row > .pokemon-col {
-            width: 200px;
-            min-width: 200px;
-            max-width: 200px;
+            flex: 1;
+            min-width: 180px;
+            max-width: none;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
             /* full, darker border around each pokemon column */
@@ -275,7 +287,7 @@
         /* responsive tweaks */
         @media (max-width:1000px) {
             .trainer-section { width: calc(100% - 340px); }
-            .trainer-row > .pokemon-col { min-width: 160px; max-width: 160px; }
+            .trainer-row > .pokemon-col { min-width: 160px; }
         }
         @media (max-width:860px){
             .poke-name { max-width:140px; }
@@ -435,6 +447,15 @@
         return Infinity;
     }
 
+    // Helper: generate trainer image filename from trainer class
+    function getTrainerImageFilename(trainerClass) {
+        if (!trainerClass) return null;
+        // Convert to lowercase, replace spaces with hyphens, remove special characters
+        return trainerClass.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+    }
+
     async function loadTrainers() {
         const sidebar = document.getElementById("sidebar");
 
@@ -556,8 +577,16 @@
                 row.className = "trainer-row";
 
                 const trainerInfo = document.createElement("div");
+                
+                // Generate trainer image filename
+                const trainerImageFile = getTrainerImageFilename(tr.TrainerClass);
+                const trainerImagePath = trainerImageFile ? `data/trainer_images/${trainerImageFile}.png` : '';
+                
                 trainerInfo.innerHTML = `
-                    <div class="trainer-header">${tr.TrainerClass} ${tr.TrainerName}</div>
+                    <div class="trainer-header">
+                        ${trainerImagePath ? `<img src="${trainerImagePath}" alt="${tr.TrainerClass}" class="trainer-image" onerror="this.style.display='none'">` : ''}
+                        <span>${tr.TrainerClass} ${tr.TrainerName}</span>
+                    </div>
                     <div class="trainer-sub">
                         <strong>Battle Type:</strong> ${tr.BattleType}<br>
                         <strong></strong> ${tr.Required || "N/A"}<br>
