@@ -457,7 +457,8 @@
             if (filename) return filename;
         }
         
-        // If trainer class doesn't work, try the trainer's last name
+        // If trainer class doesn't work, try the trainer name
+        // (e.g., "Shauna" → "shauna.png")
         if (trainerName && typeof trainerName === 'string') {
             const filename = trainerName.toLowerCase()
                 .replace(/\s+/g, '-')
@@ -615,7 +616,7 @@
                 trainerSub.className = "trainer-sub";
                 trainerSub.innerHTML = `
                     <strong>Battle Type:</strong> ${tr.BattleType}<br>
-                    <strong></strong> ${tr.Required || "N/A"}<br>
+                    ${tr.Required || "N/A"}<br>
                     <strong>Reward:</strong> N/A
                 `;
                 trainerInfo.appendChild(trainerSub);
