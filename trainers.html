@@ -116,6 +116,39 @@
             color: #666;
             margin-bottom: 12px;
         }
+        
+        /* Bubble badges for battle info */
+        .trainer-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+        }
+        
+        .info-bubble {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            color: white;
+            min-width: 120px;
+        }
+        
+        /* Battle Type colors */
+        .battle-single { background: #6BAED6; } /* Light Blue */
+        .battle-double { background: #D4A017; } /* Dark Yellow */
+        .battle-triple { background: #5CB85C; } /* Green */
+        .battle-rotation { background: #E75480; } /* Pink */
+        
+        /* Mandatory/Optional colors */
+        .battle-mandatory { background: #DC3545; } /* Red */
+        .battle-optional { background: #9B59B6; } /* Purple */
+        
+        /* Reward color */
+        .battle-reward { background: #808080; } /* Grey */
 
         /* darker border for trainer entry rows */
         .trainer-row {
@@ -621,25 +654,32 @@
                 // Build full trainer name for matching (e.g., "Pokemon Trainer Shauna" → "pokemontrainershauna")
                 const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
                 
+                // Check if trainer name contains "&" to handle multiple trainers (e.g., "Tierno & Trevor")
+                const hasMultipleTrainers = tr.TrainerName && tr.TrainerName.includes('&');
+                const trainerNames = hasMultipleTrainers ? tr.TrainerName.split('&').map(n => n.trim()) : [tr.TrainerName];
+                
                 // Generate potential trainer image filenames to try
                 // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png", "acetrainer.png")
                 // We'll check if each potential filename is contained in the full trainer name
                 const imagesToTry = [];
                 
-                // Try trainer name first (e.g., "shauna" from "Pokemon Trainer Shauna")
-                // This handles cases like "shauna.png" for "Pokemon Trainer Shauna"
-                if (tr.TrainerName) {
-                    const normalized = normalizeString(tr.TrainerName);
-                    if (normalized.length > 2 && fullTrainerName.includes(normalized)) {
-                        imagesToTry.push(normalized);
+                // Try each trainer name first (handles "Tierno & Trevor" → ["tierno", "trevor"])
+                trainerNames.forEach(name => {
+                    if (name) {
+                        const normalized = normalizeString(name);
+                        // Allow 2-character names like "az"
+                        if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
+                            imagesToTry.push(normalized);
+                        }
                     }
-                }
+                });
                 
                 // Try full trainer class name normalized (e.g., "acetrainer" from "Ace Trainer")
                 // This handles multi-word class names like "Ace Trainer" → "acetrainer.png"
                 if (tr.TrainerClass) {
                     const normalized = normalizeString(tr.TrainerClass);
-                    if (normalized.length > 2 && fullTrainerName.includes(normalized)) {
+                    // Special handling for "team flare grunt" and similar
+                    if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
                         imagesToTry.push(normalized);
                     }
                     
@@ -647,7 +687,7 @@
                     const words = tr.TrainerClass.toLowerCase().split(/\s+/);
                     words.forEach(word => {
                         const cleanWord = normalizeString(word);
-                        if (cleanWord.length > 2 && fullTrainerName.includes(cleanWord) && !imagesToTry.includes(cleanWord)) {
+                        if (cleanWord.length >= 2 && fullTrainerName.includes(cleanWord) && !imagesToTry.includes(cleanWord)) {
                             imagesToTry.push(cleanWord);
                         }
                     });
@@ -659,43 +699,79 @@
                 trainerHeader.textContent = `${tr.TrainerClass} ${tr.TrainerName}`;
                 trainerInfo.appendChild(trainerHeader);
                 
-                // Try to add trainer image below the name if available
-                // Limit to 2 attempts max to avoid infinite retries
+                // Try to add trainer image(s) below the name if available
+                // For trainers with "&" in name, show multiple images
+                // Limit to 2 attempts max per image to avoid infinite retries
                 if (imagesToTry.length > 0) {
-                    const img = document.createElement("img");
-                    img.alt = tr.TrainerClass || tr.TrainerName || '';
-                    img.className = "trainer-image";
+                    // If multiple trainers (e.g., "Tierno & Trevor"), try to show both images
+                    const imagesToShow = hasMultipleTrainers ? 
+                        imagesToTry.slice(0, trainerNames.length) : 
+                        imagesToTry.slice(0, 1);
                     
-                    let currentTryIndex = 0;
-                    let attemptCount = 0;
-                    const MAX_ATTEMPTS = 2;
-                    
-                    const tryNextImage = () => {
-                        attemptCount++;
-                        if (attemptCount <= MAX_ATTEMPTS && currentTryIndex < imagesToTry.length) {
-                            img.src = `image/trainer_images/${imagesToTry[currentTryIndex]}.png`;
-                            currentTryIndex++;
-                        } else {
-                            // All attempts failed, hide the image
-                            img.style.display = 'none';
-                        }
-                    };
-                    
-                    img.onerror = tryNextImage;
-                    tryNextImage(); // Start with the first attempt
-                    
-                    trainerInfo.appendChild(img);
+                    imagesToShow.forEach((imageFile, idx) => {
+                        const img = document.createElement("img");
+                        img.alt = trainerNames[idx] || tr.TrainerClass || '';
+                        img.className = "trainer-image";
+                        
+                        let attemptCount = 0;
+                        const MAX_ATTEMPTS = 2;
+                        
+                        const tryImage = () => {
+                            attemptCount++;
+                            if (attemptCount <= MAX_ATTEMPTS) {
+                                img.src = `image/trainer-images/${imageFile}.png`;
+                            } else {
+                                // Failed after max attempts, hide the image
+                                img.style.display = 'none';
+                            }
+                        };
+                        
+                        img.onerror = () => {
+                            if (attemptCount < MAX_ATTEMPTS) {
+                                tryImage();
+                            } else {
+                                img.style.display = 'none';
+                            }
+                        };
+                        
+                        tryImage(); // Start with the first attempt
+                        trainerInfo.appendChild(img);
+                    });
                 }
                 
-                // Add trainer sub-info using innerHTML for formatting
-                const trainerSub = document.createElement("div");
-                trainerSub.className = "trainer-sub";
-                trainerSub.innerHTML = `
-                    <strong>Battle Type:</strong> ${tr.BattleType}<br>
-                    ${tr.Required || "N/A"}<br>
-                    <strong>Reward:</strong> N/A
-                `;
-                trainerInfo.appendChild(trainerSub);
+                // Add trainer info badges with bubble styling
+                const trainerBadges = document.createElement("div");
+                trainerBadges.className = "trainer-badges";
+                
+                // Battle Type bubble
+                const battleTypeText = tr.BattleType || "Single";
+                let battleTypeClass = "battle-single";
+                if (battleTypeText.toLowerCase().includes("double")) battleTypeClass = "battle-double";
+                else if (battleTypeText.toLowerCase().includes("triple")) battleTypeClass = "battle-triple";
+                else if (battleTypeText.toLowerCase().includes("rotation")) battleTypeClass = "battle-rotation";
+                
+                const battleTypeBubble = document.createElement("div");
+                battleTypeBubble.className = `info-bubble ${battleTypeClass}`;
+                battleTypeBubble.textContent = battleTypeText;
+                trainerBadges.appendChild(battleTypeBubble);
+                
+                // Mandatory/Optional bubble
+                const requiredText = tr.Required || "N/A";
+                let requiredClass = "battle-mandatory";
+                if (requiredText.toLowerCase().includes("optional")) requiredClass = "battle-optional";
+                
+                const requiredBubble = document.createElement("div");
+                requiredBubble.className = `info-bubble ${requiredClass}`;
+                requiredBubble.textContent = requiredText;
+                trainerBadges.appendChild(requiredBubble);
+                
+                // Reward bubble (currently N/A, but styled for future use)
+                const rewardBubble = document.createElement("div");
+                rewardBubble.className = "info-bubble battle-reward";
+                rewardBubble.textContent = "N/A";
+                trainerBadges.appendChild(rewardBubble);
+                
+                trainerInfo.appendChild(trainerBadges);
                 
                 row.appendChild(trainerInfo);
 
