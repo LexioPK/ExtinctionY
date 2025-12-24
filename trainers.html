@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -664,41 +665,56 @@
                 
                 // Generate potential trainer image filenames to try
                 // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png", "acetrainer.png")
-                // Strategy: Try trainer class FIRST (youngster, lass, team flare grunt), then trainer name as fallback (shauna, joey)
+                // Strategy: Try all words EXCEPT the last word first, then fall back to the last word
                 const imagesToTry = [];
                 
-                // FIRST: Try trainer class (e.g., "Youngster", "Lass", "Team Flare Grunt")
-                // For "Youngster Joey" → try "youngster"
-                // For "Ace Trainer F" → try "acetrainer" (full class), then "ace", "trainer" (individual words)
-                // For "Team Flare Grunt Chi" → try "teamflaregrunt", then "team", "flare", "grunt"
-                if (tr.TrainerClass) {
-                    // Try full trainer class name normalized (e.g., "acetrainer" from "Ace Trainer", "teamflaregrunt" from "Team Flare Grunt")
-                    const normalized = normalizeString(tr.TrainerClass);
-                    if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
-                        imagesToTry.push(normalized);
+                // Split the full trainer name into words
+                const fullNameWords = `${tr.TrainerClass || ''} ${tr.TrainerName || ''}`.trim().split(/\s+/);
+                
+                // FIRST: Try all words EXCEPT the last one (e.g., for "Youngster Joey" → try "youngster")
+                // For "Pokemon Trainer Shauna" → try "pokemon", "trainer"
+                // For "Ace Trainer F" → try "ace", "trainer"
+                // For "Team Flare Grunt Chi" → try "team", "flare", "grunt"
+                if (fullNameWords.length > 1) {
+                    // Get all words except the last one
+                    const wordsBeforeLast = fullNameWords.slice(0, -1);
+                    
+                    // Try full combined name of all words before last (e.g., "pokemontrainer", "acetrainer", "teamflaregrunt")
+                    const combinedBeforeLast = normalizeString(wordsBeforeLast.join(' '));
+                    if (combinedBeforeLast.length >= 2 && fullTrainerName.includes(combinedBeforeLast) && !imagesToTry.includes(combinedBeforeLast)) {
+                        imagesToTry.push(combinedBeforeLast);
                     }
                     
-                    // Also try individual words from trainer class
-                    const words = tr.TrainerClass.toLowerCase().split(/\s+/);
-                    words.forEach(word => {
-                        const cleanWord = normalizeString(word);
-                        if (cleanWord.length >= 2 && fullTrainerName.includes(cleanWord) && !imagesToTry.includes(cleanWord)) {
-                            imagesToTry.push(cleanWord);
+                    // Also try individual words before last
+                    wordsBeforeLast.forEach(word => {
+                        const normalized = normalizeString(word);
+                        if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
+                            imagesToTry.push(normalized);
                         }
                     });
                 }
                 
-                // THEN: Try trainer name as fallback (e.g., "Shauna", "Joey")
+                // THEN: Fall back to the last word (e.g., "joey", "shauna", "chi")
                 // For trainers with "&", try each trainer name (e.g., "Tierno & Trevor" → ["tierno", "trevor"])
-                trainerNames.forEach(name => {
-                    if (name) {
-                        const normalized = normalizeString(name);
-                        // Allow 2-character names like "az"
-                        if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
-                            imagesToTry.push(normalized);
+                if (hasMultipleTrainers) {
+                    // Handle multiple trainers case (e.g., "Tierno & Trevor")
+                    trainerNames.forEach(name => {
+                        if (name) {
+                            const normalized = normalizeString(name);
+                            if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
+                                imagesToTry.push(normalized);
+                            }
                         }
+                    });
+                } else if (fullNameWords.length > 0) {
+                    // Single trainer case - try the last word
+                    const lastWord = fullNameWords[fullNameWords.length - 1];
+                    const normalized = normalizeString(lastWord);
+                    // Allow 2-character names like "az"
+                    if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
+                        imagesToTry.push(normalized);
                     }
-                });
+                }
                 
                 // Create a container for trainer header and image (top section)
                 const trainerTopSection = document.createElement("div");
