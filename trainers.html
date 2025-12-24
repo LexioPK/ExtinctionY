@@ -99,6 +99,7 @@
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 8px;
+            text-align: center;
         }
 
         .trainer-image {
@@ -107,7 +108,7 @@
             object-fit: contain;
             border-radius: 8px;
             display: block;
-            margin: 8px 0;
+            margin: 8px auto;
         }
 
         .trainer-sub {
@@ -621,33 +622,35 @@
                 const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
                 
                 // Generate potential trainer image filenames to try
-                // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png")
+                // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png", "acetrainer.png")
                 // We'll check if each potential filename is contained in the full trainer name
                 const imagesToTry = [];
                 
-                // Try individual words from trainer class (e.g., "youngster" from "Youngster Joey")
-                if (tr.TrainerClass) {
-                    const normalized = normalizeString(tr.TrainerClass);
-                    // Split by common word patterns and add each word
-                    const words = tr.TrainerClass.toLowerCase().split(/\s+/);
-                    words.forEach(word => {
-                        const cleanWord = normalizeString(word);
-                        if (cleanWord.length > 2 && fullTrainerName.includes(cleanWord)) {
-                            imagesToTry.push(cleanWord);
-                        }
-                    });
-                    // Also try the full class name normalized
-                    if (fullTrainerName.includes(normalized)) {
+                // Try trainer name first (e.g., "shauna" from "Pokemon Trainer Shauna")
+                // This handles cases like "shauna.png" for "Pokemon Trainer Shauna"
+                if (tr.TrainerName) {
+                    const normalized = normalizeString(tr.TrainerName);
+                    if (normalized.length > 2 && fullTrainerName.includes(normalized)) {
                         imagesToTry.push(normalized);
                     }
                 }
                 
-                // Try trainer name (e.g., "shauna" from "Pokemon Trainer Shauna")
-                if (tr.TrainerName) {
-                    const normalized = normalizeString(tr.TrainerName);
-                    if (fullTrainerName.includes(normalized)) {
+                // Try full trainer class name normalized (e.g., "acetrainer" from "Ace Trainer")
+                // This handles multi-word class names like "Ace Trainer" → "acetrainer.png"
+                if (tr.TrainerClass) {
+                    const normalized = normalizeString(tr.TrainerClass);
+                    if (normalized.length > 2 && fullTrainerName.includes(normalized)) {
                         imagesToTry.push(normalized);
                     }
+                    
+                    // Also try individual words from trainer class (e.g., "youngster" from "Youngster Joey")
+                    const words = tr.TrainerClass.toLowerCase().split(/\s+/);
+                    words.forEach(word => {
+                        const cleanWord = normalizeString(word);
+                        if (cleanWord.length > 2 && fullTrainerName.includes(cleanWord) && !imagesToTry.includes(cleanWord)) {
+                            imagesToTry.push(cleanWord);
+                        }
+                    });
                 }
                 
                 // Create trainer header element with just the name
