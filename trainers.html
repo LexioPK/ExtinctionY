@@ -103,12 +103,12 @@
         }
 
         .trainer-image {
-            width: 100px;
-            height: 100px;
+            width: 180px;
+            height: 180px;
             object-fit: contain;
             border-radius: 8px;
             display: block;
-            margin: 8px auto;
+            margin: 12px auto;
         }
 
         .trainer-sub {
@@ -117,13 +117,14 @@
             margin-bottom: 12px;
         }
         
-        /* Bubble badges for battle info */
+        /* Bubble badges for battle info - positioned at bottom of trainer card */
         .trainer-badges {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            margin-top: 12px;
+            margin-top: 16px;
             align-items: center;
+            flex-shrink: 0;
         }
         
         .info-bubble {
@@ -172,6 +173,9 @@
             border-right: 1px solid #e6e6e6;
             border-top: 1px solid #e6e6e6;
             border-bottom: 1px solid #e6e6e6;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         /*
@@ -660,10 +664,10 @@
                 
                 // Generate potential trainer image filenames to try
                 // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png", "acetrainer.png")
-                // We'll check if each potential filename is contained in the full trainer name
+                // Strategy: Try the last word (trainer's first name) OR the first few words before the last word (trainer class)
                 const imagesToTry = [];
                 
-                // Try each trainer name first (handles "Tierno & Trevor" → ["tierno", "trevor"])
+                // For trainers with "&", try each trainer name (e.g., "Tierno & Trevor" → ["tierno", "trevor"])
                 trainerNames.forEach(name => {
                     if (name) {
                         const normalized = normalizeString(name);
@@ -674,16 +678,17 @@
                     }
                 });
                 
-                // Try full trainer class name normalized (e.g., "acetrainer" from "Ace Trainer")
-                // This handles multi-word class names like "Ace Trainer" → "acetrainer.png"
+                // Try trainer class (first few words before last word)
+                // For "Youngster Joey" → try "youngster"
+                // For "Ace Trainer F" → try "acetrainer" (full class), then "ace", "trainer" (individual words)
                 if (tr.TrainerClass) {
+                    // Try full trainer class name normalized (e.g., "acetrainer" from "Ace Trainer")
                     const normalized = normalizeString(tr.TrainerClass);
-                    // Special handling for "team flare grunt" and similar
                     if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
                         imagesToTry.push(normalized);
                     }
                     
-                    // Also try individual words from trainer class (e.g., "youngster" from "Youngster Joey")
+                    // Also try individual words from trainer class
                     const words = tr.TrainerClass.toLowerCase().split(/\s+/);
                     words.forEach(word => {
                         const cleanWord = normalizeString(word);
@@ -693,11 +698,15 @@
                     });
                 }
                 
+                // Create a container for trainer header and image (top section)
+                const trainerTopSection = document.createElement("div");
+                trainerTopSection.style.flex = "0 0 auto";
+                
                 // Create trainer header element with just the name
                 const trainerHeader = document.createElement("div");
                 trainerHeader.className = "trainer-header";
                 trainerHeader.textContent = `${tr.TrainerClass} ${tr.TrainerName}`;
-                trainerInfo.appendChild(trainerHeader);
+                trainerTopSection.appendChild(trainerHeader);
                 
                 // Try to add trainer image(s) below the name if available
                 // For trainers with "&" in name, show multiple images
@@ -735,13 +744,16 @@
                         };
                         
                         tryImage(); // Start with the first attempt
-                        trainerInfo.appendChild(img);
+                        trainerTopSection.appendChild(img);
                     });
                 }
                 
-                // Add trainer info badges with bubble styling
+                trainerInfo.appendChild(trainerTopSection);
+                
+                // Add trainer info badges with bubble styling (positioned at bottom)
                 const trainerBadges = document.createElement("div");
                 trainerBadges.className = "trainer-badges";
+                trainerBadges.style.marginTop = "auto"; // Push to bottom
                 
                 // Battle Type bubble
                 const battleTypeText = tr.BattleType || "Single";
