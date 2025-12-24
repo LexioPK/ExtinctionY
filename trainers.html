@@ -248,6 +248,31 @@
             border-bottom: 1px solid #f0f0f0;
             font-size: 0.85rem;
             background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        
+        .move-item .move-name {
+            flex: 1;
+        }
+        
+        .move-item .move-info {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .move-item .type-badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+        }
+        
+        .move-item .category-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
         }
 
         .move-list .move-item:last-child { border-bottom: none; }
@@ -314,6 +339,7 @@
     let trainerData = {};
     let groupedRoutes = {};
     let pokedexData = {}; // will hold pokedex.json entries keyed by original name
+    let movesData = {}; // will hold moves.json entries for type and category info
 
     // When deciding sidebar order we prefer routeOrder; fallback to alphabetical
     let routeOrder = [
@@ -360,6 +386,17 @@
         return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
     }
 
+    // Find a move entry by name with best-effort normalization
+    function findMoveEntry(moveName) {
+        if (!movesData || !moveName || moveName === "---") return null;
+        if (movesData[moveName]) return movesData[moveName];
+        const target = normalizeForCompare(moveName);
+        for (const key in movesData) {
+            if (normalizeForCompare(key) === target) return movesData[key];
+        }
+        return null;
+    }
+
     // Normalize helper for comparisons
     function normalizeForCompare(s) {
         return (s || "").toString().toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g," ").trim();
@@ -382,15 +419,14 @@
         const leftOfDash = (fullAreaName || "").split(" - ")[0].trim();
         const leftNorm = normalizeForCompare(leftOfDash);
 
-        // Try to match against routeOrder entries (prefer exact or prefix matches)
+        // Try to match against routeOrder entries (prefer exact matches only to avoid grouping Route 2 with Route 20/22)
         for (const candidate of routeOrder) {
             const candLeft = (candidate || "").split(" - ")[0].trim();
             const candNorm = normalizeForCompare(candLeft);
 
             if (!candNorm) continue;
+            // Only use exact matches to prevent "Route 2" from matching "Route 20", "Route 22", etc.
             if (leftNorm === candNorm) return candLeft.split(/[\/\\]/)[0].trim();
-            if (leftNorm.startsWith(candNorm)) return candLeft.split(/[\/\\]/)[0].trim();
-            if (candNorm.startsWith(leftNorm)) return candLeft.split(/[\/\\]/)[0].trim();
 
             // check parts for matches (handle "Route 13" vs "Route 13/Power Plant")
             const leftParts = leftOfDash.split(/[\/\\]/).map(p=>p.trim()).filter(Boolean);
@@ -452,13 +488,15 @@
     async function loadTrainers() {
         const sidebar = document.getElementById("sidebar");
 
-        // Fetch both trainers and pokedex so we can pull types for trainers' pokemon
-        const [trainersRes, pokedexRes] = await Promise.all([
+        // Fetch trainers, pokedex, and moves data
+        const [trainersRes, pokedexRes, movesRes] = await Promise.all([
             fetch("data/trainers.json"),
-            fetch("data/pokedex.json")
+            fetch("data/pokedex.json"),
+            fetch("data/moves.json")
         ]);
         trainerData = await trainersRes.json();
         pokedexData = await pokedexRes.json();
+        movesData = await movesRes.json();
 
         // Build groupedRoutes keyed by a root determined by findRootForArea
         groupedRoutes = {};
@@ -658,6 +696,24 @@
                         ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
                         : [];
                     while (moves.length < 4) moves.push("---");
+                    
+                    // Build move HTML with type badges and category icons
+                    const movesHtml = moves.map(moveName => {
+                        const moveEntry = findMoveEntry(moveName);
+                        if (!moveEntry || moveName === "---") {
+                            return `<div class="move-item"><span class="move-name">${moveName}</span></div>`;
+                        }
+                        
+                        const moveType = moveEntry.Type || "";
+                        const moveCategory = moveEntry.Category || "";
+                        const typeBadge = moveType ? `<span class="type-badge type-${moveType.toLowerCase()}">${moveType}</span>` : "";
+                        const categoryIcon = moveCategory ? `<img class="category-icon" src="image/${moveCategory.toLowerCase()}.png" alt="${moveCategory}" title="${moveCategory}">` : "";
+                        
+                        return `<div class="move-item">
+                            <span class="move-name">${moveName}</span>
+                            <span class="move-info">${typeBadge}${categoryIcon}</span>
+                        </div>`;
+                    }).join("");
 
                     // Try to find types from pokedex.json
                     const dexEntry = findPokedexEntry(p.Name);
@@ -709,7 +765,7 @@
 
                             <div class="info-box move-list">
                                 <div class="move-header"><strong>Moves:</strong></div>
-                                ${moves.map(m => `<div class="move-item">${m}</div>`).join("")}
+                                ${movesHtml}
                             </div>
                         </div>
                     `;
