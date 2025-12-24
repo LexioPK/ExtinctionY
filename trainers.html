@@ -609,63 +609,45 @@
 
                 const trainerInfo = document.createElement("div");
                 
-                // Helper function to normalize strings (remove accents, etc.)
+                // Helper function to normalize strings (remove accents, etc.) and make lowercase with no spaces
                 const normalizeString = (str) => {
-                    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Remove diacritics
+                    return str.normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+                        .toLowerCase()
+                        .replace(/\s+/g, ''); // Remove all spaces
                 };
                 
-                // Generate trainer image filenames to try - multiple variations
-                // Try original case/spacing first, then various transformations
+                // Build full trainer name for matching (e.g., "Pokemon Trainer Shauna" → "pokemontrainershauna")
+                const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
+                
+                // Generate potential trainer image filenames to try
+                // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png")
+                // We'll check if each potential filename is contained in the full trainer name
                 const imagesToTry = [];
                 
+                // Try individual words from trainer class (e.g., "youngster" from "Youngster Joey")
                 if (tr.TrainerClass) {
-                    // Normalize the trainer class (remove é → e, etc.)
                     const normalized = normalizeString(tr.TrainerClass);
-                    
-                    // Try with original case and spacing (e.g., "Team Flare Grunt")
-                    imagesToTry.push(normalized);
-                    
-                    // Try lowercase with spaces (e.g., "team flare grunt")
-                    const lowerWithSpaces = normalized.toLowerCase();
-                    if (lowerWithSpaces !== normalized) imagesToTry.push(lowerWithSpaces);
-                    
-                    // Try with hyphens (e.g., "team-flare-grunt")
-                    const withHyphens = normalized.toLowerCase()
-                        .replace(/\s+/g, '-')
-                        .replace(/[^a-z0-9-]/g, '');
-                    if (withHyphens && withHyphens !== lowerWithSpaces) imagesToTry.push(withHyphens);
-                    
-                    // Try individual words from trainer class
-                    const classWords = normalized.toLowerCase()
-                        .replace(/[^a-z0-9\s]/g, '')
-                        .split(/\s+/)
-                        .filter(w => w.length > 2); // skip very short words
-                    imagesToTry.push(...classWords);
+                    // Split by common word patterns and add each word
+                    const words = tr.TrainerClass.toLowerCase().split(/\s+/);
+                    words.forEach(word => {
+                        const cleanWord = normalizeString(word);
+                        if (cleanWord.length > 2 && fullTrainerName.includes(cleanWord)) {
+                            imagesToTry.push(cleanWord);
+                        }
+                    });
+                    // Also try the full class name normalized
+                    if (fullTrainerName.includes(normalized)) {
+                        imagesToTry.push(normalized);
+                    }
                 }
                 
+                // Try trainer name (e.g., "shauna" from "Pokemon Trainer Shauna")
                 if (tr.TrainerName) {
-                    // Normalize the trainer name
-                    const normalizedName = normalizeString(tr.TrainerName);
-                    
-                    // Try trainer name with original case
-                    imagesToTry.push(normalizedName);
-                    
-                    // Try lowercase (e.g., "Shauna" → "shauna")
-                    const lowerName = normalizedName.toLowerCase();
-                    if (lowerName !== normalizedName) imagesToTry.push(lowerName);
-                    
-                    // Try with hyphens (for multi-word names)
-                    const nameWithHyphens = normalizedName.toLowerCase()
-                        .replace(/\s+/g, '-')
-                        .replace(/[^a-z0-9-]/g, '');
-                    if (nameWithHyphens && nameWithHyphens !== lowerName) imagesToTry.push(nameWithHyphens);
-                    
-                    // Try individual words from trainer name
-                    const nameWords = normalizedName.toLowerCase()
-                        .replace(/[^a-z0-9\s]/g, '')
-                        .split(/\s+/)
-                        .filter(w => w.length > 2);
-                    imagesToTry.push(...nameWords);
+                    const normalized = normalizeString(tr.TrainerName);
+                    if (fullTrainerName.includes(normalized)) {
+                        imagesToTry.push(normalized);
+                    }
                 }
                 
                 // Create trainer header element with just the name
@@ -675,16 +657,19 @@
                 trainerInfo.appendChild(trainerHeader);
                 
                 // Try to add trainer image below the name if available
-                // Try each filename variation until one works
+                // Limit to 2 attempts max to avoid infinite retries
                 if (imagesToTry.length > 0) {
                     const img = document.createElement("img");
                     img.alt = tr.TrainerClass || tr.TrainerName || '';
                     img.className = "trainer-image";
                     
                     let currentTryIndex = 0;
+                    let attemptCount = 0;
+                    const MAX_ATTEMPTS = 2;
                     
                     const tryNextImage = () => {
-                        if (currentTryIndex < imagesToTry.length) {
+                        attemptCount++;
+                        if (attemptCount <= MAX_ATTEMPTS && currentTryIndex < imagesToTry.length) {
                             img.src = `image/trainer-images/${imagesToTry[currentTryIndex]}.png`;
                             currentTryIndex++;
                         } else {
