@@ -145,13 +145,14 @@
           Separators between sections are implemented as pseudo-elements on the target
           elements and are sized so they connect to the outer borders of the pokemon column.
           
-          Each column has a fixed equal width of 180px so all columns are uniformly sized.
-          When there are 6 columns, they fill the entire available space without requiring horizontal scroll.
+          Each column has a fixed equal width of 208px so all columns are uniformly sized.
+          When there are 6 columns (240px trainer + 6×208px = 1488px total), they fill the 
+          entire available space without requiring horizontal scroll on standard screens.
         */
         .trainer-row > .pokemon-col {
             width: 208px;
             min-width: 208px;
-            max-width: 208x;
+            max-width: 208px;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
             /* full, darker border around each pokemon column */
@@ -287,7 +288,7 @@
         /* responsive tweaks */
         @media (max-width:1000px) {
             .trainer-section { width: calc(100% - 340px); }
-            .trainer-row > .pokemon-col { width: 160px; min-width: 160px; max-width: 160px; }
+            .trainer-row > .pokemon-col { width: 180px; min-width: 180px; max-width: 180px; }
         }
         @media (max-width:860px){
             .poke-name { max-width:140px; }
@@ -447,27 +448,6 @@
         return Infinity;
     }
 
-    // Helper: generate trainer image filename from trainer class or trainer name
-    function getTrainerImageFilename(trainerClass, trainerName) {
-        // First try the trainer class
-        if (trainerClass && typeof trainerClass === 'string') {
-            const filename = trainerClass.toLowerCase()
-                .replace(/\s+/g, '-')
-                .replace(/[^a-z0-9-]/g, '');
-            if (filename) return filename;
-        }
-        
-        // If trainer class doesn't work, try the trainer name
-        // (e.g., "Shauna" → "shauna.png")
-        if (trainerName && typeof trainerName === 'string') {
-            const filename = trainerName.toLowerCase()
-                .replace(/\s+/g, '-')
-                .replace(/[^a-z0-9-]/g, '');
-            if (filename) return filename;
-        }
-        
-        return null;
-    }
 
     async function loadTrainers() {
         const sidebar = document.getElementById("sidebar");
@@ -591,9 +571,39 @@
 
                 const trainerInfo = document.createElement("div");
                 
-                // Generate trainer image filename - try trainer class first, then trainer name
-                const trainerImageFile = getTrainerImageFilename(tr.TrainerClass, tr.TrainerName);
-                const trainerImagePath = trainerImageFile ? `images/trainer_images/${trainerImageFile}.png` : '';
+                // Generate trainer image filenames to try - multiple variations
+                // Try full class name, then individual words from class, then name
+                const imagesToTry = [];
+                
+                if (tr.TrainerClass) {
+                    // Try full trainer class (e.g., "Team Flare Grunt" → "team-flare-grunt")
+                    const fullClass = tr.TrainerClass.toLowerCase()
+                        .replace(/\s+/g, '-')
+                        .replace(/[^a-z0-9-]/g, '');
+                    if (fullClass) imagesToTry.push(fullClass);
+                    
+                    // Try individual words from trainer class
+                    const classWords = tr.TrainerClass.toLowerCase()
+                        .replace(/[^a-z0-9\s]/g, '')
+                        .split(/\s+/)
+                        .filter(w => w.length > 2); // skip very short words
+                    imagesToTry.push(...classWords);
+                }
+                
+                if (tr.TrainerName) {
+                    // Try full trainer name (e.g., "Shauna" → "shauna")
+                    const fullName = tr.TrainerName.toLowerCase()
+                        .replace(/\s+/g, '-')
+                        .replace(/[^a-z0-9-]/g, '');
+                    if (fullName) imagesToTry.push(fullName);
+                    
+                    // Try individual words from trainer name
+                    const nameWords = tr.TrainerName.toLowerCase()
+                        .replace(/[^a-z0-9\s]/g, '')
+                        .split(/\s+/)
+                        .filter(w => w.length > 2);
+                    imagesToTry.push(...nameWords);
+                }
                 
                 // Create trainer header element with just the name
                 const trainerHeader = document.createElement("div");
@@ -601,13 +611,28 @@
                 trainerHeader.textContent = `${tr.TrainerClass} ${tr.TrainerName}`;
                 trainerInfo.appendChild(trainerHeader);
                 
-                // Add trainer image below the name if available
-                if (trainerImagePath) {
+                // Try to add trainer image below the name if available
+                // Try each filename variation until one works
+                if (imagesToTry.length > 0) {
                     const img = document.createElement("img");
-                    img.src = trainerImagePath;
                     img.alt = tr.TrainerClass || tr.TrainerName || '';
                     img.className = "trainer-image";
-                    img.onerror = function() { this.style.display = 'none'; };
+                    
+                    let currentTryIndex = 0;
+                    
+                    const tryNextImage = () => {
+                        if (currentTryIndex < imagesToTry.length) {
+                            img.src = `images/trainer_images/${imagesToTry[currentTryIndex]}.png`;
+                            currentTryIndex++;
+                        } else {
+                            // All attempts failed, hide the image
+                            img.style.display = 'none';
+                        }
+                    };
+                    
+                    img.onerror = tryNextImage;
+                    tryNextImage(); // Start with the first attempt
+                    
                     trainerInfo.appendChild(img);
                 }
                 
