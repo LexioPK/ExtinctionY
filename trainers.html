@@ -103,11 +103,11 @@
         }
 
         .trainer-image {
-            width: 180px;
-            height: 180px;
+            width: 150px;
+            height: 150px;
             object-fit: contain;
             border-radius: 8px;
-            display: block;
+            display: inline-block;
             margin: 12px auto;
         }
 
@@ -664,25 +664,15 @@
                 
                 // Generate potential trainer image filenames to try
                 // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png", "acetrainer.png")
-                // Strategy: Try the last word (trainer's first name) OR the first few words before the last word (trainer class)
+                // Strategy: Try trainer class FIRST (youngster, lass, team flare grunt), then trainer name as fallback (shauna, joey)
                 const imagesToTry = [];
                 
-                // For trainers with "&", try each trainer name (e.g., "Tierno & Trevor" → ["tierno", "trevor"])
-                trainerNames.forEach(name => {
-                    if (name) {
-                        const normalized = normalizeString(name);
-                        // Allow 2-character names like "az"
-                        if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
-                            imagesToTry.push(normalized);
-                        }
-                    }
-                });
-                
-                // Try trainer class (first few words before last word)
+                // FIRST: Try trainer class (e.g., "Youngster", "Lass", "Team Flare Grunt")
                 // For "Youngster Joey" → try "youngster"
                 // For "Ace Trainer F" → try "acetrainer" (full class), then "ace", "trainer" (individual words)
+                // For "Team Flare Grunt Chi" → try "teamflaregrunt", then "team", "flare", "grunt"
                 if (tr.TrainerClass) {
-                    // Try full trainer class name normalized (e.g., "acetrainer" from "Ace Trainer")
+                    // Try full trainer class name normalized (e.g., "acetrainer" from "Ace Trainer", "teamflaregrunt" from "Team Flare Grunt")
                     const normalized = normalizeString(tr.TrainerClass);
                     if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
                         imagesToTry.push(normalized);
@@ -698,6 +688,18 @@
                     });
                 }
                 
+                // THEN: Try trainer name as fallback (e.g., "Shauna", "Joey")
+                // For trainers with "&", try each trainer name (e.g., "Tierno & Trevor" → ["tierno", "trevor"])
+                trainerNames.forEach(name => {
+                    if (name) {
+                        const normalized = normalizeString(name);
+                        // Allow 2-character names like "az"
+                        if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
+                            imagesToTry.push(normalized);
+                        }
+                    }
+                });
+                
                 // Create a container for trainer header and image (top section)
                 const trainerTopSection = document.createElement("div");
                 trainerTopSection.style.flex = "0 0 auto";
@@ -709,13 +711,28 @@
                 trainerTopSection.appendChild(trainerHeader);
                 
                 // Try to add trainer image(s) below the name if available
-                // For trainers with "&" in name, show multiple images
+                // For trainers with "&" in name, show multiple images side-by-side
+                // For single trainers, center the image
                 // Limit to 2 attempts max per image to avoid infinite retries
                 if (imagesToTry.length > 0) {
-                    // If multiple trainers (e.g., "Tierno & Trevor"), try to show both images
+                    // Create container for images
+                    const imagesContainer = document.createElement("div");
+                    imagesContainer.style.marginTop = "8px";
+                    
+                    // If multiple trainers (e.g., "Tierno & Trevor"), try to show both images side-by-side
                     const imagesToShow = hasMultipleTrainers ? 
                         imagesToTry.slice(0, trainerNames.length) : 
                         imagesToTry.slice(0, 1);
+                    
+                    // Center single images, but keep multiple images side-by-side (not centered)
+                    if (imagesToShow.length === 1) {
+                        imagesContainer.style.textAlign = "center";
+                    } else {
+                        imagesContainer.style.textAlign = "left";
+                        imagesContainer.style.display = "flex";
+                        imagesContainer.style.gap = "8px";
+                        imagesContainer.style.justifyContent = "center";
+                    }
                     
                     imagesToShow.forEach((imageFile, idx) => {
                         const img = document.createElement("img");
@@ -744,8 +761,10 @@
                         };
                         
                         tryImage(); // Start with the first attempt
-                        trainerTopSection.appendChild(img);
+                        imagesContainer.appendChild(img);
                     });
+                    
+                    trainerTopSection.appendChild(imagesContainer);
                 }
                 
                 trainerInfo.appendChild(trainerTopSection);
