@@ -68,7 +68,7 @@ function searchPokemon() {
 function setActiveHeaderLink() {
   const path = window.location.pathname.split("/").pop() || "index.html";
   // Clear all active classes first
-  ["link-pokedex","link-moves","link-trainers"].forEach(id => {
+  ["link-pokedex","link-moves","link-trainers","link-abilities"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove("active");
   });
@@ -78,6 +78,8 @@ function setActiveHeaderLink() {
     const el = document.getElementById("link-moves"); if (el) el.classList.add("active");
   } else if (path.startsWith("trainer") || path.startsWith("trainers")) {
     const el = document.getElementById("link-trainers"); if (el) el.classList.add("active");
+  } else if (path.startsWith("abilities")) {
+    const el = document.getElementById("link-abilities"); if (el) el.classList.add("active");
   } else {
     // if on other pages, highlight pokedex tab by default
     const el = document.getElementById("link-pokedex"); if (el) el.classList.add("active");
