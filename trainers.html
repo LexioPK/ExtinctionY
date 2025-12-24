@@ -609,26 +609,34 @@
 
                 const trainerInfo = document.createElement("div");
                 
+                // Helper function to normalize strings (remove accents, etc.)
+                const normalizeString = (str) => {
+                    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Remove diacritics
+                };
+                
                 // Generate trainer image filenames to try - multiple variations
                 // Try original case/spacing first, then various transformations
                 const imagesToTry = [];
                 
                 if (tr.TrainerClass) {
+                    // Normalize the trainer class (remove é → e, etc.)
+                    const normalized = normalizeString(tr.TrainerClass);
+                    
                     // Try with original case and spacing (e.g., "Team Flare Grunt")
-                    imagesToTry.push(tr.TrainerClass);
+                    imagesToTry.push(normalized);
                     
                     // Try lowercase with spaces (e.g., "team flare grunt")
-                    const lowerWithSpaces = tr.TrainerClass.toLowerCase();
-                    if (lowerWithSpaces !== tr.TrainerClass) imagesToTry.push(lowerWithSpaces);
+                    const lowerWithSpaces = normalized.toLowerCase();
+                    if (lowerWithSpaces !== normalized) imagesToTry.push(lowerWithSpaces);
                     
                     // Try with hyphens (e.g., "team-flare-grunt")
-                    const withHyphens = tr.TrainerClass.toLowerCase()
+                    const withHyphens = normalized.toLowerCase()
                         .replace(/\s+/g, '-')
                         .replace(/[^a-z0-9-]/g, '');
-                    if (withHyphens) imagesToTry.push(withHyphens);
+                    if (withHyphens && withHyphens !== lowerWithSpaces) imagesToTry.push(withHyphens);
                     
                     // Try individual words from trainer class
-                    const classWords = tr.TrainerClass.toLowerCase()
+                    const classWords = normalized.toLowerCase()
                         .replace(/[^a-z0-9\s]/g, '')
                         .split(/\s+/)
                         .filter(w => w.length > 2); // skip very short words
@@ -636,21 +644,24 @@
                 }
                 
                 if (tr.TrainerName) {
+                    // Normalize the trainer name
+                    const normalizedName = normalizeString(tr.TrainerName);
+                    
                     // Try trainer name with original case
-                    imagesToTry.push(tr.TrainerName);
+                    imagesToTry.push(normalizedName);
                     
                     // Try lowercase (e.g., "Shauna" → "shauna")
-                    const lowerName = tr.TrainerName.toLowerCase();
-                    if (lowerName !== tr.TrainerName) imagesToTry.push(lowerName);
+                    const lowerName = normalizedName.toLowerCase();
+                    if (lowerName !== normalizedName) imagesToTry.push(lowerName);
                     
                     // Try with hyphens (for multi-word names)
-                    const nameWithHyphens = tr.TrainerName.toLowerCase()
+                    const nameWithHyphens = normalizedName.toLowerCase()
                         .replace(/\s+/g, '-')
                         .replace(/[^a-z0-9-]/g, '');
-                    if (nameWithHyphens !== lowerName) imagesToTry.push(nameWithHyphens);
+                    if (nameWithHyphens && nameWithHyphens !== lowerName) imagesToTry.push(nameWithHyphens);
                     
                     // Try individual words from trainer name
-                    const nameWords = tr.TrainerName.toLowerCase()
+                    const nameWords = normalizedName.toLowerCase()
                         .replace(/[^a-z0-9\s]/g, '')
                         .split(/\s+/)
                         .filter(w => w.length > 2);
