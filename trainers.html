@@ -610,15 +610,22 @@
                 const trainerInfo = document.createElement("div");
                 
                 // Generate trainer image filenames to try - multiple variations
-                // Try full class name, then individual words from class, then name
+                // Try original case/spacing first, then various transformations
                 const imagesToTry = [];
                 
                 if (tr.TrainerClass) {
-                    // Try full trainer class (e.g., "Team Flare Grunt" → "team-flare-grunt")
-                    const fullClass = tr.TrainerClass.toLowerCase()
+                    // Try with original case and spacing (e.g., "Team Flare Grunt")
+                    imagesToTry.push(tr.TrainerClass);
+                    
+                    // Try lowercase with spaces (e.g., "team flare grunt")
+                    const lowerWithSpaces = tr.TrainerClass.toLowerCase();
+                    if (lowerWithSpaces !== tr.TrainerClass) imagesToTry.push(lowerWithSpaces);
+                    
+                    // Try with hyphens (e.g., "team-flare-grunt")
+                    const withHyphens = tr.TrainerClass.toLowerCase()
                         .replace(/\s+/g, '-')
                         .replace(/[^a-z0-9-]/g, '');
-                    if (fullClass) imagesToTry.push(fullClass);
+                    if (withHyphens) imagesToTry.push(withHyphens);
                     
                     // Try individual words from trainer class
                     const classWords = tr.TrainerClass.toLowerCase()
@@ -629,11 +636,18 @@
                 }
                 
                 if (tr.TrainerName) {
-                    // Try full trainer name (e.g., "Shauna" → "shauna")
-                    const fullName = tr.TrainerName.toLowerCase()
+                    // Try trainer name with original case
+                    imagesToTry.push(tr.TrainerName);
+                    
+                    // Try lowercase (e.g., "Shauna" → "shauna")
+                    const lowerName = tr.TrainerName.toLowerCase();
+                    if (lowerName !== tr.TrainerName) imagesToTry.push(lowerName);
+                    
+                    // Try with hyphens (for multi-word names)
+                    const nameWithHyphens = tr.TrainerName.toLowerCase()
                         .replace(/\s+/g, '-')
                         .replace(/[^a-z0-9-]/g, '');
-                    if (fullName) imagesToTry.push(fullName);
+                    if (nameWithHyphens !== lowerName) imagesToTry.push(nameWithHyphens);
                     
                     // Try individual words from trainer name
                     const nameWords = tr.TrainerName.toLowerCase()
@@ -660,7 +674,7 @@
                     
                     const tryNextImage = () => {
                         if (currentTryIndex < imagesToTry.length) {
-                            img.src = `images/trainer_images/${imagesToTry[currentTryIndex]}.png`;
+                            img.src = `image/trainer-images/${imagesToTry[currentTryIndex]}.png`;
                             currentTryIndex++;
                         } else {
                             // All attempts failed, hide the image
