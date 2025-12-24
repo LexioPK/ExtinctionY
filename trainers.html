@@ -609,37 +609,45 @@
 
                 const trainerInfo = document.createElement("div");
                 
-                // Helper function to normalize strings (remove accents, etc.)
+                // Helper function to normalize strings (remove accents, etc.) and make lowercase with no spaces
                 const normalizeString = (str) => {
-                    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Remove diacritics
+                    return str.normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+                        .toLowerCase()
+                        .replace(/\s+/g, ''); // Remove all spaces
                 };
                 
-                // Generate trainer image filenames to try - multiple variations
-                // Images are named with spaces and proper case (e.g., "Ace Trainer F.png")
+                // Build full trainer name for matching (e.g., "Pokemon Trainer Shauna" → "pokemontrainershauna")
+                const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
+                
+                // Generate potential trainer image filenames to try
+                // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png")
+                // We'll check if each potential filename is contained in the full trainer name
                 const imagesToTry = [];
                 
+                // Try individual words from trainer class (e.g., "youngster" from "Youngster Joey")
                 if (tr.TrainerClass) {
-                    // Normalize the trainer class (remove é → e, etc.) while keeping spaces
                     const normalized = normalizeString(tr.TrainerClass);
-                    
-                    // Try with original case and spacing (e.g., "Ace Trainer F")
-                    imagesToTry.push(normalized);
-                    
-                    // Try lowercase with spaces (e.g., "ace trainer f")
-                    const lowerWithSpaces = normalized.toLowerCase();
-                    if (lowerWithSpaces !== normalized) imagesToTry.push(lowerWithSpaces);
+                    // Split by common word patterns and add each word
+                    const words = tr.TrainerClass.toLowerCase().split(/\s+/);
+                    words.forEach(word => {
+                        const cleanWord = normalizeString(word);
+                        if (cleanWord.length > 2 && fullTrainerName.includes(cleanWord)) {
+                            imagesToTry.push(cleanWord);
+                        }
+                    });
+                    // Also try the full class name normalized
+                    if (fullTrainerName.includes(normalized)) {
+                        imagesToTry.push(normalized);
+                    }
                 }
                 
+                // Try trainer name (e.g., "shauna" from "Pokemon Trainer Shauna")
                 if (tr.TrainerName) {
-                    // Normalize the trainer name
-                    const normalizedName = normalizeString(tr.TrainerName);
-                    
-                    // Try trainer name with original case (e.g., "Shauna")
-                    imagesToTry.push(normalizedName);
-                    
-                    // Try lowercase (e.g., "shauna")
-                    const lowerName = normalizedName.toLowerCase();
-                    if (lowerName !== normalizedName) imagesToTry.push(lowerName);
+                    const normalized = normalizeString(tr.TrainerName);
+                    if (fullTrainerName.includes(normalized)) {
+                        imagesToTry.push(normalized);
+                    }
                 }
                 
                 // Create trainer header element with just the name
