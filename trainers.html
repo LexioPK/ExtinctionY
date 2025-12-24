@@ -673,7 +673,7 @@
                     const tryNextImage = () => {
                         attemptCount++;
                         if (attemptCount <= MAX_ATTEMPTS && currentTryIndex < imagesToTry.length) {
-                            img.src = `image/trainer-images/${imagesToTry[currentTryIndex]}.png`;
+                            img.src = `image/trainer_images/${imagesToTry[currentTryIndex]}.png`;
                             currentTryIndex++;
                         } else {
                             // All attempts failed, hide the image
