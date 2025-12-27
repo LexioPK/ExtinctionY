@@ -75,10 +75,50 @@
             width: calc(100% - 340px);
         }
 
+        .route-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
         .area-title {
             font-size: 1.8rem;
-            margin-top: 30px;
             font-weight: 700;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-button {
+            padding: 10px 20px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.2s;
+            min-width: 120px;
+        }
+        
+        .nav-button:hover:not(:disabled) {
+            background: #1565c0;
+        }
+        
+        .nav-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .nav-button-prev {
+            margin-right: auto;
+        }
+        
+        .nav-button-next {
+            margin-left: auto;
         }
 
         .sub-header {
@@ -164,7 +204,7 @@
 
         .trainer-row > div { box-sizing: border-box; }
 
-        .trainer-row > div:first-child {
+        .trainer-row > .trainer-info-column {
             width: 240px;
             min-width: 240px;
             max-width: 240px;
@@ -178,6 +218,13 @@
             justify-content: center;
             align-items: center;
         }
+        
+        .trainer-row > .pokemon-container {
+            display: flex;
+            flex-wrap: wrap;
+            flex: 1;
+            align-items: stretch;
+        }
 
         /*
           Each pokemon column has a full border. Inner content lives in .pokemon-inner.
@@ -188,7 +235,7 @@
           When there are 6 columns (240px trainer + 6×208px = 1488px total), they fill the 
           entire available space without requiring horizontal scroll on standard screens.
         */
-        .trainer-row > .pokemon-col {
+        .pokemon-container > .pokemon-col {
             width: 208px;
             min-width: 208px;
             max-width: 208px;
@@ -202,12 +249,12 @@
         }
 
         /* slightly alternate backgrounds to improve readability */
-        .trainer-row > .pokemon-col:nth-child(2n) { background: #fbfbfc; }
-        .trainer-row > .pokemon-col:nth-child(2n+1) { background: #fafafa; }
+        .pokemon-container > .pokemon-col:nth-child(2n) { background: #fbfbfc; }
+        .pokemon-container > .pokemon-col:nth-child(2n+1) { background: #fafafa; }
 
         /* when adjacent columns appear, keep a thin visual divider by overlapping edges.
            use a slightly darker thin divider to match darker pokemon borders */
-        .trainer-row > .pokemon-col + .pokemon-col {
+        .pokemon-container > .pokemon-col + .pokemon-col {
             margin-left: -2px; /* collapse overlapping edges so the thin line appears consistently */
             border-left: 1px solid var(--pokemon-border-color);
         }
@@ -649,10 +696,56 @@
     function displayRoute(baseName) {
         const container = document.getElementById("trainerSection");
         container.innerHTML = "";
+        
+        // Get all route tabs to determine navigation
+        const allTabs = Array.from(document.querySelectorAll(".route-tab"));
+        const currentIndex = allTabs.findIndex(tab => tab.dataset.base === baseName);
+        const hasPrev = currentIndex > 0;
+        const hasNext = currentIndex < allTabs.length - 1;
+        
+        // Create header container with navigation buttons
+        const headerContainer = document.createElement("div");
+        headerContainer.className = "route-header-container";
+        
+        // Previous button
+        const prevButton = document.createElement("button");
+        prevButton.className = "nav-button nav-button-prev";
+        prevButton.textContent = "← Previous Route";
+        prevButton.disabled = !hasPrev;
+        if (hasPrev) {
+            prevButton.onclick = () => {
+                const prevTab = allTabs[currentIndex - 1];
+                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                prevTab.classList.add("active");
+                displayRoute(prevTab.dataset.base);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+        }
+        headerContainer.appendChild(prevButton);
+        
+        // Title
         const areaTitle = document.createElement("div");
         areaTitle.className = "area-title";
         areaTitle.textContent = baseName;
-        container.appendChild(areaTitle);
+        headerContainer.appendChild(areaTitle);
+        
+        // Next button
+        const nextButton = document.createElement("button");
+        nextButton.className = "nav-button nav-button-next";
+        nextButton.textContent = "Next Route →";
+        nextButton.disabled = !hasNext;
+        if (hasNext) {
+            nextButton.onclick = () => {
+                const nextTab = allTabs[currentIndex + 1];
+                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                nextTab.classList.add("active");
+                displayRoute(nextTab.dataset.base);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+        }
+        headerContainer.appendChild(nextButton);
+        
+        container.appendChild(headerContainer);
 
         // Find the subAreas for this base.
         const subAreas = groupedRoutes[baseName] || [];
@@ -888,7 +981,13 @@
                 
                 trainerInfo.appendChild(trainerBadges);
                 
+                // Add class to trainer info for styling
+                trainerInfo.className = "trainer-info-column";
                 row.appendChild(trainerInfo);
+                
+                // Create pokemon container for wrapping
+                const pokemonContainer = document.createElement("div");
+                pokemonContainer.className = "pokemon-container";
 
                 tr.Pokemon.forEach(p => {
                     const pDiv = document.createElement("div");
@@ -979,8 +1078,10 @@
                         </div>
                     `;
 
-                    row.appendChild(pDiv);
+                    pokemonContainer.appendChild(pDiv);
                 });
+                
+                row.appendChild(pokemonContainer);
 
                 card.appendChild(row);
                 container.appendChild(card);
