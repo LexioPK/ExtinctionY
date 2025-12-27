@@ -710,16 +710,18 @@
         // Previous button
         const prevButton = document.createElement("button");
         prevButton.className = "nav-button nav-button-prev";
-        prevButton.textContent = "← Previous Route";
-        prevButton.disabled = !hasPrev;
         if (hasPrev) {
+            const prevTab = allTabs[currentIndex - 1];
+            prevButton.textContent = `← ${prevTab.textContent}`;
             prevButton.onclick = () => {
-                const prevTab = allTabs[currentIndex - 1];
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 prevTab.classList.add("active");
                 displayRoute(prevTab.dataset.base);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             };
+        } else {
+            prevButton.textContent = "← Previous Route";
+            prevButton.disabled = true;
         }
         headerContainer.appendChild(prevButton);
         
@@ -732,16 +734,18 @@
         // Next button
         const nextButton = document.createElement("button");
         nextButton.className = "nav-button nav-button-next";
-        nextButton.textContent = "Next Route →";
-        nextButton.disabled = !hasNext;
         if (hasNext) {
+            const nextTab = allTabs[currentIndex + 1];
+            nextButton.textContent = `${nextTab.textContent} →`;
             nextButton.onclick = () => {
-                const nextTab = allTabs[currentIndex + 1];
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 nextTab.classList.add("active");
                 displayRoute(nextTab.dataset.base);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             };
+        } else {
+            nextButton.textContent = "Next Route →";
+            nextButton.disabled = true;
         }
         headerContainer.appendChild(nextButton);
         
