@@ -313,6 +313,22 @@
             height: 20px;
             object-fit: contain;
         }
+        
+        .item-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        
+        .reward-item-icon {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
 
         .move-list .move-item:last-child { border-bottom: none; }
 
@@ -423,6 +439,20 @@
         const stat = plus[1];
         const color = statColors[stat] || "#000";
         return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
+    }
+    
+    // Normalize item name to match image file naming convention (lowercase with hyphens)
+    function normalizeItemName(itemName) {
+        if (!itemName || itemName === "No Item" || itemName === "No Reward") return null;
+        // Convert to lowercase and replace spaces with hyphens
+        return itemName.toLowerCase().replace(/\s+/g, '-');
+    }
+    
+    // Create an item icon image element
+    function createItemIcon(itemName, className = 'item-icon') {
+        const normalized = normalizeItemName(itemName);
+        if (!normalized) return '';
+        return `<img class="${className}" src="image/item/${normalized}.png" alt="${itemName}" title="${itemName}" onerror="this.style.display='none'">`;
     }
 
     // Find a move entry by name with best-effort normalization
@@ -851,7 +881,9 @@
                 // Reward bubble
                 const rewardBubble = document.createElement("div");
                 rewardBubble.className = "info-bubble battle-reward";
-                rewardBubble.textContent = (tr.RewardItem && typeof tr.RewardItem === 'string' && tr.RewardItem.trim()) || "No Reward";
+                const rewardItemText = (tr.RewardItem && typeof tr.RewardItem === 'string' && tr.RewardItem.trim()) || "No Reward";
+                const rewardIcon = createItemIcon(rewardItemText, 'reward-item-icon');
+                rewardBubble.innerHTML = rewardItemText + rewardIcon;
                 trainerBadges.appendChild(rewardBubble);
                 
                 trainerInfo.appendChild(trainerBadges);
@@ -902,6 +934,11 @@
                     } else {
                         typesHtml = "";
                     }
+                    
+                    // Build held item HTML with icon
+                    const heldItemText = p.HeldItem || "No Item";
+                    const heldItemIcon = createItemIcon(heldItemText, 'item-icon');
+                    const heldItemHtml = heldItemText + heldItemIcon;
 
                     // Wrap inner content in .pokemon-inner so separators can be drawn edge-to-edge
                     pDiv.innerHTML = `
@@ -932,7 +969,7 @@
                             </div>
 
                             <div class="info-box item-box">
-                                ${p.HeldItem || "No Item"}
+                                ${heldItemHtml}
                             </div>
 
                             <div class="info-box move-list">
