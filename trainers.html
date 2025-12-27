@@ -442,6 +442,7 @@
     let groupedRoutes = {};
     let pokedexData = {}; // will hold pokedex.json entries keyed by original name
     let movesData = {}; // will hold moves.json entries for type and category info
+    let abilitiesData = {}; // will hold abilities.json entries for tooltips
 
     // When deciding sidebar order we prefer routeOrder; fallback to alphabetical
     let routeOrder = [
@@ -500,6 +501,19 @@
         const normalized = normalizeItemName(itemName);
         if (!normalized) return '';
         return `<img class="${className}" src="image/item/${normalized}.png" alt="${itemName}" title="${itemName}" onerror="this.style.display='none'">`;
+    }
+    
+    // Find an ability entry by name with best-effort normalization
+    function findAbilityEntry(abilityName) {
+        if (!abilitiesData || !abilityName || abilityName === "---") return null;
+        // Try direct lookup first
+        if (abilitiesData[abilityName]) return abilitiesData[abilityName];
+        // Try normalized lookup
+        const target = normalizeForCompare(abilityName);
+        for (const key in abilitiesData) {
+            if (normalizeForCompare(key) === target) return abilitiesData[key];
+        }
+        return null;
     }
 
     // Find a move entry by name with best-effort normalization
@@ -604,15 +618,17 @@
     async function loadTrainers() {
         const sidebar = document.getElementById("sidebar");
 
-        // Fetch trainers, pokedex, and moves data
-        const [trainersRes, pokedexRes, movesRes] = await Promise.all([
+        // Fetch trainers, pokedex, moves, and abilities data
+        const [trainersRes, pokedexRes, movesRes, abilitiesRes] = await Promise.all([
             fetch("data/trainers.json"),
             fetch("data/pokedex.json"),
-            fetch("data/moves.json")
+            fetch("data/moves.json"),
+            fetch("data/abilities.json")
         ]);
         trainerData = await trainersRes.json();
         pokedexData = await pokedexRes.json();
         movesData = await movesRes.json();
+        abilitiesData = await abilitiesRes.json();
 
         // Build groupedRoutes keyed by a root determined by findRootForArea
         groupedRoutes = {};
@@ -710,16 +726,18 @@
         // Previous button
         const prevButton = document.createElement("button");
         prevButton.className = "nav-button nav-button-prev";
-        prevButton.textContent = "← Previous Route";
-        prevButton.disabled = !hasPrev;
         if (hasPrev) {
+            const prevTab = allTabs[currentIndex - 1];
+            prevButton.textContent = `← ${prevTab.textContent}`;
             prevButton.onclick = () => {
-                const prevTab = allTabs[currentIndex - 1];
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 prevTab.classList.add("active");
                 displayRoute(prevTab.dataset.base);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             };
+        } else {
+            prevButton.textContent = "← Previous Route";
+            prevButton.disabled = true;
         }
         headerContainer.appendChild(prevButton);
         
@@ -732,16 +750,18 @@
         // Next button
         const nextButton = document.createElement("button");
         nextButton.className = "nav-button nav-button-next";
-        nextButton.textContent = "Next Route →";
-        nextButton.disabled = !hasNext;
         if (hasNext) {
+            const nextTab = allTabs[currentIndex + 1];
+            nextButton.textContent = `${nextTab.textContent} →`;
             nextButton.onclick = () => {
-                const nextTab = allTabs[currentIndex + 1];
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 nextTab.classList.add("active");
                 displayRoute(nextTab.dataset.base);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             };
+        } else {
+            nextButton.textContent = "Next Route →";
+            nextButton.disabled = true;
         }
         headerContainer.appendChild(nextButton);
         
@@ -1038,6 +1058,14 @@
                     const heldItemText = p.HeldItem || "No Item";
                     const heldItemIcon = createItemIcon(heldItemText, 'item-icon');
                     const heldItemHtml = heldItemText + heldItemIcon;
+                    
+                    // Build ability HTML with tooltip
+                    const abilityText = p.Ability || "---";
+                    const abilityEntry = findAbilityEntry(abilityText);
+                    const abilityTooltip = abilityEntry ? abilityEntry.shortDesc : "";
+                    const abilityHtml = abilityTooltip 
+                        ? `<span title="${abilityTooltip}">${abilityText}</span>`
+                        : abilityText;
 
                     // Wrap inner content in .pokemon-inner so separators can be drawn edge-to-edge
                     pDiv.innerHTML = `
@@ -1060,7 +1088,7 @@
 
                             <!-- Removed headers; values bold & larger -->
                             <div class="info-box ability-box">
-                                ${p.Ability || "---"}
+                                ${abilityHtml}
                             </div>
 
                             <div class="info-box nature-box">
