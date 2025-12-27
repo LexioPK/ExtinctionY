@@ -848,10 +848,10 @@
                 requiredBubble.textContent = requiredText;
                 trainerBadges.appendChild(requiredBubble);
                 
-                // Reward bubble (currently N/A, but styled for future use)
+                // Reward bubble
                 const rewardBubble = document.createElement("div");
                 rewardBubble.className = "info-bubble battle-reward";
-                rewardBubble.textContent = "N/A";
+                rewardBubble.textContent = (tr.RewardItem && tr.RewardItem.trim()) || "No Reward";
                 trainerBadges.appendChild(rewardBubble);
                 
                 trainerInfo.appendChild(trainerBadges);
