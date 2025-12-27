@@ -851,7 +851,7 @@
                 // Reward bubble
                 const rewardBubble = document.createElement("div");
                 rewardBubble.className = "info-bubble battle-reward";
-                rewardBubble.textContent = (tr.RewardItem && tr.RewardItem.trim()) || "No Reward";
+                rewardBubble.textContent = (tr.RewardItem && typeof tr.RewardItem === 'string' && tr.RewardItem.trim()) || "No Reward";
                 trainerBadges.appendChild(rewardBubble);
                 
                 trainerInfo.appendChild(trainerBadges);
