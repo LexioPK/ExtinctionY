@@ -147,8 +147,20 @@
             height: 150px;
             object-fit: contain;
             border-radius: 8px;
-            display: inline-block;
+            display: block;
             margin: 12px auto;
+        }
+        
+        /* Larger tooltip font size */
+        [title] {
+            cursor: help;
+        }
+        
+        /* Override browser default tooltip styling with larger font */
+        @supports (font-size: 16px) {
+            [title]:hover::after {
+                font-size: 16px;
+            }
         }
 
         .trainer-sub {
@@ -529,7 +541,7 @@
 
     // Normalize helper for comparisons
     function normalizeForCompare(s) {
-        return (s || "").toString().toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g," ").trim();
+        return (s || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
     }
 
     // Find a pokedex entry by name with best-effort normalization
@@ -914,16 +926,27 @@
                     const imagesContainer = document.createElement("div");
                     imagesContainer.style.marginTop = "8px";
                     
-                    // If multiple trainers (e.g., "Tierno & Trevor"), try to show both images side-by-side
-                    const imagesToShow = hasMultipleTrainers ? 
-                        imagesToTry.slice(0, trainerNames.length) : 
-                        imagesToTry.slice(0, 1);
+                    // If multiple trainers (e.g., "Tierno & Trevor"), prioritize showing both trainer images
+                    let imagesToShow;
+                    if (hasMultipleTrainers) {
+                        // For dual trainers, find the images that match the trainer names
+                        imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
+                        // If we didn't find both, fall back to the first available images
+                        if (imagesToShow.length < trainerNames.length) {
+                            imagesToShow = imagesToTry.slice(0, trainerNames.length);
+                        }
+                    } else {
+                        // Single trainer - just use the first image
+                        imagesToShow = imagesToTry.slice(0, 1);
+                    }
                     
-                    // Center single images, but keep multiple images side-by-side (not centered)
+                    // Center single images, but keep multiple images side-by-side (centered)
                     if (imagesToShow.length === 1) {
                         imagesContainer.style.textAlign = "center";
+                        imagesContainer.style.display = "flex";
+                        imagesContainer.style.justifyContent = "center";
                     } else {
-                        imagesContainer.style.textAlign = "left";
+                        imagesContainer.style.textAlign = "center";
                         imagesContainer.style.display = "flex";
                         imagesContainer.style.gap = "8px";
                         imagesContainer.style.justifyContent = "center";
