@@ -147,8 +147,20 @@
             height: 150px;
             object-fit: contain;
             border-radius: 8px;
-            display: inline-block;
+            display: block;
             margin: 12px auto;
+        }
+        
+        /* Larger tooltip font size */
+        [title] {
+            cursor: help;
+        }
+        
+        /* Override browser default tooltip styling with larger font */
+        @supports (font-size: 16px) {
+            [title]:hover::after {
+                font-size: 16px;
+            }
         }
 
         .trainer-sub {
@@ -236,9 +248,9 @@
           entire available space without requiring horizontal scroll on standard screens.
         */
         .pokemon-container > .pokemon-col {
-            width: 204px;
-            min-width: 204px;
-            max-width: 204px;
+            width: 208px;
+            min-width: 208px;
+            max-width: 208px;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
             /* full, darker border around each pokemon column */
@@ -529,7 +541,7 @@
 
     // Normalize helper for comparisons
     function normalizeForCompare(s) {
-        return (s || "").toString().toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g," ").trim();
+        return (s || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
     }
 
     // Find a pokedex entry by name with best-effort normalization
@@ -802,9 +814,18 @@
                 // Build full trainer name for matching (e.g., "Pokemon Trainer Shauna" → "pokemontrainershauna")
                 const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
                 
-                // Check if trainer name contains "&" to handle multiple trainers (e.g., "Tierno & Trevor")
-                const hasMultipleTrainers = tr.TrainerName && tr.TrainerName.includes('&');
-                const trainerNames = hasMultipleTrainers ? tr.TrainerName.split('&').map(n => n.trim()) : [tr.TrainerName];
+                // Check if this specific trainer should show two images
+                // Only certain trainers with "&" show dual images:
+                // - Tierno & Trevor, Delta & Gamma
+                // - Any Team Flare trainer with "&" in name
+                const shouldShowDualImages = tr.TrainerName && tr.TrainerName.includes('&') && (
+                    tr.TrainerName.includes('Tierno') || 
+                    tr.TrainerName.includes('Trevor') ||
+                    tr.TrainerName.includes('Delta') ||
+                    tr.TrainerName.includes('Gamma') ||
+                    (tr.TrainerClass && tr.TrainerClass.includes('Team Flare'))
+                );
+                const trainerNames = shouldShowDualImages ? tr.TrainerName.split('&').map(n => n.trim()) : [tr.TrainerName];
                 
                 // Generate potential trainer image filenames to try
                 // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png", "acetrainer.png")
@@ -873,9 +894,9 @@
                     }
                     
                     // THEN: Fall back to the last word (e.g., "joey", "shauna", "chi")
-                    // For trainers with "&", try each trainer name (e.g., "Tierno & Trevor" → ["tierno", "trevor"])
-                    if (hasMultipleTrainers) {
-                        // Handle multiple trainers case (e.g., "Tierno & Trevor")
+                    // For trainers with "&" that should show dual images, try each trainer name
+                    if (shouldShowDualImages) {
+                        // Handle multiple trainers case (e.g., "Tierno & Trevor", "Delta & Gamma")
                         trainerNames.forEach(name => {
                             if (name) {
                                 const normalized = normalizeString(name);
@@ -914,16 +935,27 @@
                     const imagesContainer = document.createElement("div");
                     imagesContainer.style.marginTop = "8px";
                     
-                    // If multiple trainers (e.g., "Tierno & Trevor"), try to show both images side-by-side
-                    const imagesToShow = hasMultipleTrainers ? 
-                        imagesToTry.slice(0, trainerNames.length) : 
-                        imagesToTry.slice(0, 1);
+                    // If should show dual images (e.g., "Tierno & Trevor"), prioritize showing both trainer images
+                    let imagesToShow;
+                    if (shouldShowDualImages) {
+                        // For dual trainers, find the images that match the trainer names
+                        imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
+                        // If we didn't find both, fall back to the first available images
+                        if (imagesToShow.length < trainerNames.length) {
+                            imagesToShow = imagesToTry.slice(0, trainerNames.length);
+                        }
+                    } else {
+                        // Single trainer - just use the first image
+                        imagesToShow = imagesToTry.slice(0, 1);
+                    }
                     
-                    // Center single images, but keep multiple images side-by-side (not centered)
+                    // Center single images, but keep multiple images side-by-side (centered)
                     if (imagesToShow.length === 1) {
                         imagesContainer.style.textAlign = "center";
+                        imagesContainer.style.display = "flex";
+                        imagesContainer.style.justifyContent = "center";
                     } else {
-                        imagesContainer.style.textAlign = "left";
+                        imagesContainer.style.textAlign = "center";
                         imagesContainer.style.display = "flex";
                         imagesContainer.style.gap = "8px";
                         imagesContainer.style.justifyContent = "center";
