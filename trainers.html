@@ -814,9 +814,18 @@
                 // Build full trainer name for matching (e.g., "Pokemon Trainer Shauna" → "pokemontrainershauna")
                 const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
                 
-                // Check if trainer name contains "&" to handle multiple trainers (e.g., "Tierno & Trevor")
-                const hasMultipleTrainers = tr.TrainerName && tr.TrainerName.includes('&');
-                const trainerNames = hasMultipleTrainers ? tr.TrainerName.split('&').map(n => n.trim()) : [tr.TrainerName];
+                // Check if this specific trainer should show two images
+                // Only certain trainers with "&" show dual images:
+                // - Tierno & Trevor, Delta & Gamma
+                // - Any Team Flare trainer with "&" in name
+                const shouldShowDualImages = tr.TrainerName && tr.TrainerName.includes('&') && (
+                    tr.TrainerName.includes('Tierno') || 
+                    tr.TrainerName.includes('Trevor') ||
+                    tr.TrainerName.includes('Delta') ||
+                    tr.TrainerName.includes('Gamma') ||
+                    (tr.TrainerClass && tr.TrainerClass.includes('Team Flare'))
+                );
+                const trainerNames = shouldShowDualImages ? tr.TrainerName.split('&').map(n => n.trim()) : [tr.TrainerName];
                 
                 // Generate potential trainer image filenames to try
                 // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png", "acetrainer.png")
@@ -885,9 +894,9 @@
                     }
                     
                     // THEN: Fall back to the last word (e.g., "joey", "shauna", "chi")
-                    // For trainers with "&", try each trainer name (e.g., "Tierno & Trevor" → ["tierno", "trevor"])
-                    if (hasMultipleTrainers) {
-                        // Handle multiple trainers case (e.g., "Tierno & Trevor")
+                    // For trainers with "&" that should show dual images, try each trainer name
+                    if (shouldShowDualImages) {
+                        // Handle multiple trainers case (e.g., "Tierno & Trevor", "Delta & Gamma")
                         trainerNames.forEach(name => {
                             if (name) {
                                 const normalized = normalizeString(name);
@@ -926,9 +935,9 @@
                     const imagesContainer = document.createElement("div");
                     imagesContainer.style.marginTop = "8px";
                     
-                    // If multiple trainers (e.g., "Tierno & Trevor"), prioritize showing both trainer images
+                    // If should show dual images (e.g., "Tierno & Trevor"), prioritize showing both trainer images
                     let imagesToShow;
-                    if (hasMultipleTrainers) {
+                    if (shouldShowDualImages) {
                         // For dual trainers, find the images that match the trainer names
                         imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
                         // If we didn't find both, fall back to the first available images
