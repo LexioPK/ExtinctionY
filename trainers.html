@@ -138,7 +138,7 @@
         .trainer-header {
             font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
             text-align: center;
         }
 
@@ -148,7 +148,7 @@
             object-fit: contain;
             border-radius: 8px;
             display: block;
-            margin: 30px auto;
+            margin: 48px auto;
         }
         
         /* Larger tooltip font size */
@@ -248,9 +248,9 @@
           entire available space without requiring horizontal scroll on standard screens.
         */
         .pokemon-container > .pokemon-col {
-            width: 204px;
-            min-width: 204px;
-            max-width: 204px;
+            width: 205px;
+            min-width: 205px;
+            max-width: 205px;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
             /* full, darker border around each pokemon column */
@@ -857,13 +857,26 @@
                 // Split the full trainer name into words
                 const fullNameWords = `${tr.TrainerClass || ''} ${tr.TrainerName || ''}`.trim().split(/\s+/);
                 
-                // SPECIAL CASE: If trainer class is in the skip list, only use the trainer name
-                if (shouldSkipToName) {
+                // SPECIAL CASE: If trainer class is in the skip list OR if it's a dual-image trainer, only use the trainer name(s)
+                if (shouldSkipToName || shouldShowDualImages) {
                     // For "Pokemon Trainer Shauna" → only try "shauna"
                     // For "Elite Four Malva" → only try "malva"
                     // For "Champion Diantha" → only try "diantha"
+                    // For "Tierno & Trevor" → try "tierno" and "trevor"
+                    // For "Delta & Gamma" → try "delta" and "gamma"
                     // etc.
-                    if (tr.TrainerName) {
+                    if (shouldShowDualImages) {
+                        // Handle multiple trainers case - split by &
+                        trainerNames.forEach(name => {
+                            if (name) {
+                                const normalized = normalizeString(name);
+                                if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
+                                    imagesToTry.push(normalized);
+                                }
+                            }
+                        });
+                    } else if (tr.TrainerName) {
+                        // Single name case
                         const normalized = normalizeString(tr.TrainerName);
                         if (normalized.length >= 2 && fullTrainerName.includes(normalized)) {
                             imagesToTry.push(normalized);
@@ -894,18 +907,7 @@
                     }
                     
                     // THEN: Fall back to the last word (e.g., "joey", "shauna", "chi")
-                    // For trainers with "&" that should show dual images, try each trainer name
-                    if (shouldShowDualImages) {
-                        // Handle multiple trainers case (e.g., "Tierno & Trevor", "Delta & Gamma")
-                        trainerNames.forEach(name => {
-                            if (name) {
-                                const normalized = normalizeString(name);
-                                if (normalized.length >= 2 && fullTrainerName.includes(normalized) && !imagesToTry.includes(normalized)) {
-                                    imagesToTry.push(normalized);
-                                }
-                            }
-                        });
-                    } else if (fullNameWords.length > 0) {
+                    if (fullNameWords.length > 0) {
                         // Single trainer case - try the last word
                         const lastWord = fullNameWords[fullNameWords.length - 1];
                         const normalized = normalizeString(lastWord);
