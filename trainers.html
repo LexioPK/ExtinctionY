@@ -826,17 +826,23 @@
                 // Build full trainer name for matching (e.g., "Pokemon Trainer Shauna" → "pokemontrainershauna")
                 const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
                 
+                // Check if this is a Team Flare trainer with special Goon/Grunt handling
+                const isTeamFlare = tr.TrainerClass && tr.TrainerClass.includes('Team Flare');
+                const hasGoon = tr.TrainerName && tr.TrainerName.includes('Goon');
+                const hasGrunt = tr.TrainerName && tr.TrainerName.includes('Grunt');
+                const isTeamFlareSpecial = isTeamFlare && (hasGoon || hasGrunt);
+                
                 // Check if this specific trainer should show two images
                 // Only certain trainers with "&" show dual images:
                 // - Tierno & Trevor, Delta & Gamma
-                // - Any Team Flare trainer with "&" in name
+                // - Team Flare trainers with BOTH Goon AND Grunt (e.g., "Team Flare Goon Mu & Grunt Nu")
                 // NOTE: Twins should NOT use dual images - they use a single "twins.png" based on trainer class
                 const shouldShowDualImages = tr.TrainerName && tr.TrainerName.includes('&') && (
                     tr.TrainerName.includes('Tierno') || 
                     tr.TrainerName.includes('Trevor') ||
                     tr.TrainerName.includes('Delta') ||
                     tr.TrainerName.includes('Gamma') ||
-                    (tr.TrainerClass && tr.TrainerClass.includes('Team Flare') && tr.TrainerClass !== 'Twins')
+                    (isTeamFlare && hasGoon && hasGrunt) // Only if both Goon AND Grunt are present
                 );
                 const trainerNames = shouldShowDualImages ? tr.TrainerName.split('&').map(n => n.trim()) : [tr.TrainerName];
                 
@@ -870,8 +876,20 @@
                 // Split the full trainer name into words
                 const fullNameWords = `${tr.TrainerClass || ''} ${tr.TrainerName || ''}`.trim().split(/\s+/);
                 
+                // SPECIAL CASE: Team Flare trainers with Goon/Grunt
+                // For "Team Flare Goon" → try "teamflaregoon"
+                // For "Team Flare Grunt" → try "teamflaregrunt"
+                // For "Team Flare Goon Mu & Grunt Nu" → try both "teamflaregoon" and "teamflaregrunt"
+                if (isTeamFlareSpecial) {
+                    if (hasGoon) {
+                        imagesToTry.push('teamflaregoon');
+                    }
+                    if (hasGrunt) {
+                        imagesToTry.push('teamflaregrunt');
+                    }
+                }
                 // SPECIAL CASE: If trainer class is in the skip list OR if it's a dual-image trainer, only use the trainer name(s)
-                if (shouldSkipToName || shouldShowDualImages) {
+                else if (shouldSkipToName || shouldShowDualImages) {
                     // For "Pokemon Trainer Shauna" → only try "shauna"
                     // For "Elite Four Malva" → only try "malva"
                     // For "Champion Diantha" → only try "diantha"
