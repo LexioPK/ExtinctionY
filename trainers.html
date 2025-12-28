@@ -148,7 +148,7 @@
             object-fit: contain;
             border-radius: 8px;
             display: block;
-            margin: 48px auto;
+            margin: 24px auto 12px auto;
         }
         
         /* Larger tooltip font size */
@@ -248,9 +248,9 @@
           entire available space without requiring horizontal scroll on standard screens.
         */
         .pokemon-container > .pokemon-col {
-            width: 205px;
-            min-width: 205px;
-            max-width: 205px;
+            width: 208px;
+            min-width: 208px;
+            max-width: 208px;
             padding: 0; /* inner wrapper controls padding */
             background: #fafafa;
             /* full, darker border around each pokemon column */
@@ -808,7 +808,7 @@
                     return str.normalize('NFD')
                         .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
                         .toLowerCase()
-                        .replace(/\s+/g, ''); // Remove all spaces
+                        .replace(/[^a-z0-9]/g, ''); // Remove all non-alphanumeric characters (spaces, &, etc.)
                 };
                 
                 // Build full trainer name for matching (e.g., "Pokemon Trainer Shauna" → "pokemontrainershauna")
@@ -951,16 +951,16 @@
                         imagesToShow = imagesToTry.slice(0, 1);
                     }
                     
-                    // Center single images, but keep multiple images side-by-side (centered)
-                    if (imagesToShow.length === 1) {
-                        imagesContainer.style.textAlign = "center";
-                        imagesContainer.style.display = "flex";
-                        imagesContainer.style.justifyContent = "center";
-                    } else {
-                        imagesContainer.style.textAlign = "center";
-                        imagesContainer.style.display = "flex";
+                    // Center single images, stack multiple images vertically
+                    imagesContainer.style.textAlign = "center";
+                    imagesContainer.style.display = "flex";
+                    imagesContainer.style.justifyContent = "center";
+                    imagesContainer.style.alignItems = "center";
+                    
+                    if (imagesToShow.length > 1) {
+                        // Stack multiple images vertically
+                        imagesContainer.style.flexDirection = "column";
                         imagesContainer.style.gap = "8px";
-                        imagesContainer.style.justifyContent = "center";
                     }
                     
                     imagesToShow.forEach((imageFile, idx) => {
