@@ -731,52 +731,64 @@
         const hasPrev = currentIndex > 0;
         const hasNext = currentIndex < allTabs.length - 1;
         
-        // Create header container with navigation buttons
-        const headerContainer = document.createElement("div");
-        headerContainer.className = "route-header-container";
-        
-        // Previous button
-        const prevButton = document.createElement("button");
-        prevButton.className = "nav-button nav-button-prev";
-        if (hasPrev) {
-            const prevTab = allTabs[currentIndex - 1];
-            prevButton.textContent = `← ${prevTab.textContent}`;
-            prevButton.onclick = () => {
-                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
-                prevTab.classList.add("active");
-                displayRoute(prevTab.dataset.base);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
-        } else {
-            prevButton.textContent = "← Previous Route";
-            prevButton.disabled = true;
+        // Helper function to create navigation buttons (used at top and bottom)
+        function createNavigationButtons(includeTitle = true) {
+            const navContainer = document.createElement("div");
+            navContainer.className = "route-header-container";
+            
+            // Previous button
+            const prevButton = document.createElement("button");
+            prevButton.className = "nav-button nav-button-prev";
+            if (hasPrev) {
+                const prevTab = allTabs[currentIndex - 1];
+                prevButton.textContent = `← ${prevTab.textContent}`;
+                prevButton.onclick = () => {
+                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                    prevTab.classList.add("active");
+                    displayRoute(prevTab.dataset.base);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            } else {
+                prevButton.textContent = "← Previous Route";
+                prevButton.disabled = true;
+            }
+            navContainer.appendChild(prevButton);
+            
+            // Title (only for top navigation)
+            if (includeTitle) {
+                const areaTitle = document.createElement("div");
+                areaTitle.className = "area-title";
+                areaTitle.textContent = baseName;
+                navContainer.appendChild(areaTitle);
+            } else {
+                // Empty spacer for bottom navigation
+                const spacer = document.createElement("div");
+                navContainer.appendChild(spacer);
+            }
+            
+            // Next button
+            const nextButton = document.createElement("button");
+            nextButton.className = "nav-button nav-button-next";
+            if (hasNext) {
+                const nextTab = allTabs[currentIndex + 1];
+                nextButton.textContent = `${nextTab.textContent} →`;
+                nextButton.onclick = () => {
+                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                    nextTab.classList.add("active");
+                    displayRoute(nextTab.dataset.base);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            } else {
+                nextButton.textContent = "Next Route →";
+                nextButton.disabled = true;
+            }
+            navContainer.appendChild(nextButton);
+            
+            return navContainer;
         }
-        headerContainer.appendChild(prevButton);
         
-        // Title
-        const areaTitle = document.createElement("div");
-        areaTitle.className = "area-title";
-        areaTitle.textContent = baseName;
-        headerContainer.appendChild(areaTitle);
-        
-        // Next button
-        const nextButton = document.createElement("button");
-        nextButton.className = "nav-button nav-button-next";
-        if (hasNext) {
-            const nextTab = allTabs[currentIndex + 1];
-            nextButton.textContent = `${nextTab.textContent} →`;
-            nextButton.onclick = () => {
-                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
-                nextTab.classList.add("active");
-                displayRoute(nextTab.dataset.base);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
-        } else {
-            nextButton.textContent = "Next Route →";
-            nextButton.disabled = true;
-        }
-        headerContainer.appendChild(nextButton);
-        
+        // Add navigation buttons at the top (with title)
+        const headerContainer = createNavigationButtons(true);
         container.appendChild(headerContainer);
 
         // Find the subAreas for this base.
@@ -1162,6 +1174,11 @@
             note.textContent = 'No trainers found for this area.';
             container.appendChild(note);
         }
+        
+        // Add navigation buttons at the bottom (without title)
+        const footerContainer = createNavigationButtons(false);
+        footerContainer.style.marginTop = "30px"; // Add spacing from content above
+        container.appendChild(footerContainer);
     }
 
     loadTrainers();
