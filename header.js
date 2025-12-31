@@ -68,11 +68,13 @@ function searchPokemon() {
 function setActiveHeaderLink() {
   const path = window.location.pathname.split("/").pop() || "index.html";
   // Clear all active classes first
-  ["link-pokedex","link-moves","link-trainers","link-abilities"].forEach(id => {
+  ["link-info","link-pokedex","link-moves","link-trainers","link-abilities","link-encounters"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove("active");
   });
-  if (path.startsWith("index") || path === "" ) {
+  if (path.startsWith("info")) {
+    const el = document.getElementById("link-info"); if (el) el.classList.add("active");
+  } else if (path.startsWith("index") || path === "" ) {
     const el = document.getElementById("link-pokedex"); if (el) el.classList.add("active");
   } else if (path.startsWith("moves") || path.startsWith("movedescriptions")) {
     const el = document.getElementById("link-moves"); if (el) el.classList.add("active");
@@ -80,6 +82,8 @@ function setActiveHeaderLink() {
     const el = document.getElementById("link-trainers"); if (el) el.classList.add("active");
   } else if (path.startsWith("abilities")) {
     const el = document.getElementById("link-abilities"); if (el) el.classList.add("active");
+  } else if (path.startsWith("encounters")) {
+    const el = document.getElementById("link-encounters"); if (el) el.classList.add("active");
   } else {
     // if on other pages, highlight pokedex tab by default
     const el = document.getElementById("link-pokedex"); if (el) el.classList.add("active");
