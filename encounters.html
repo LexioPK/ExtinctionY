@@ -495,11 +495,7 @@
                     };
                     box.appendChild(icon);
 
-                    // Show combined percentage
-                    const chance = document.createElement("div");
-                    chance.className = "pokemon-chance";
-                    chance.textContent = `${totalPercentage}%`;
-                    box.appendChild(chance);
+                    // Don't show individual percentages for hordes since they appear together
 
                     grid.appendChild(box);
                 });
