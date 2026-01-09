@@ -1,72 +1,507 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Encounters & Items - Pokemon Extinction Y</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wild Encounters</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
 
-<!-- Standardized header styles & script -->
-<link rel="stylesheet" href="header.css">
-<script src="header.js" defer></script>
+    <!-- Standardized header styles & script -->
+    <link rel="stylesheet" href="header.css">
+    <script src="header.js" defer></script>
 
-<style>
-    body {
-        font-family: "Lexend", sans-serif;
-        background: #f0f0f0;
-        margin: 0;
-        padding: 20px;
-    }
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --border-thick: 2px;
+            --border-color: #6f6f6f;
+            --pokemon-border-color: #555555;
+            --inner-padding-x: 10px;
+            --inner-padding-y: 12px;
+            --separator-thick: 4px;
+            --sep-color: #e6e6e6;
+        }
 
-    .container {
-        max-width: 900px;
-        margin: 0 auto;
-        background: white;
-        border-radius: 12px;
-        padding: 60px 40px;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        text-align: center;
-    }
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
 
-    h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        color: #333;
-    }
+        .sidebar {
+            position: fixed;
+            top: 65px;
+            left: 0;
+            width: 320px;
+            height: calc(100vh - 65px);
+            background: white;
+            overflow-y: auto;
+            box-shadow: 3px 0 8px rgba(0,0,0,0.07);
+            padding: 15px;
+        }
 
-    .wip-message {
-        font-size: 1.3rem;
-        color: #666;
-        margin-bottom: 15px;
-    }
+        .location-tab {
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: #f2f2f2;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-    .wip-icon {
-        font-size: 4rem;
-        margin-bottom: 20px;
-    }
+        .location-tab:hover {
+            background: #e3e3e3;
+        }
 
-    .description {
-        font-size: 1.05rem;
-        color: #888;
-        line-height: 1.6;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-</style>
+        .location-tab.active {
+            background: #1976d2;
+            color: white;
+            font-weight: 600;
+        }
+
+        .encounters-section {
+            padding: 20px;
+            max-width: 1600px;
+            margin-left: 340px;
+            margin-top: 90px;
+            width: calc(100% - 340px);
+        }
+
+        .location-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .area-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-button {
+            padding: 10px 20px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.2s;
+            min-width: 120px;
+        }
+        
+        .nav-button:hover:not(:disabled) {
+            background: #1565c0;
+        }
+        
+        .nav-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .encounter-type-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .encounter-type-header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #1976d2;
+        }
+
+        .items-section {
+            background: #fff9e6;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        .pokemon-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pokemon-box {
+            background: #fafafa;
+            border: 2px solid var(--pokemon-border-color);
+            border-radius: 10px;
+            padding: 15px;
+            width: 140px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .pokemon-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .pokemon-icon {
+            width: 80px;
+            height: 80px;
+            image-rendering: pixelated;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .pokemon-details {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .pokemon-chance {
+            font-weight: 600;
+            color: #1976d2;
+            margin-top: 5px;
+        }
+
+        .na-message {
+            color: #999;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 520px) {
+            .sidebar {
+                display: none;
+            }
+            .encounters-section { 
+                margin-left: 16px; 
+                width: calc(100% - 16px); 
+            }
+            .pokemon-box {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="wip-icon">🚧</div>
-    <h1>Encounters & Items</h1>
-    <p class="wip-message">Currently Under Construction</p>
-    <p class="description">
-        This page will contain information about wild Pokemon encounters in different locations, 
-        as well as details about items available throughout the game. Check back soon!
-    </p>
-</div>
+<div class="sidebar" id="sidebar"></div>
+
+<div class="encounters-section" id="encountersSection"></div>
+
+<script>
+    let encounterData = [];
+    let pokedexData = {};
+
+    async function loadEncounters() {
+        const sidebar = document.getElementById("sidebar");
+
+        try {
+            // Fetch encounters and pokedex data
+            const [encountersRes, pokedexRes] = await Promise.all([
+                fetch("data/encounters.json"),
+                fetch("data/pokedex.json")
+            ]);
+            
+            if (!encountersRes.ok || !pokedexRes.ok) {
+                throw new Error("Failed to load encounter data");
+            }
+            
+            encounterData = await encountersRes.json();
+            pokedexData = await pokedexRes.json();
+        } catch (error) {
+            console.error("Error loading encounters:", error);
+            sidebar.innerHTML = '<div style="padding: 20px; color: #d32f2f;">Error loading encounter data. Please refresh the page.</div>';
+            return;
+        }
+
+        // Build sidebar tabs from encounter locations
+        encounterData.forEach((location, index) => {
+            const tab = document.createElement("div");
+            tab.className = "location-tab";
+            tab.textContent = location.LocationName;
+            tab.onclick = () => {
+                document.querySelectorAll(".location-tab").forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+                displayLocation(index);
+            };
+            sidebar.appendChild(tab);
+        });
+
+        // Activate first tab if present
+        if (sidebar.children.length) {
+            sidebar.children[0].classList.add("active");
+            displayLocation(0);
+        }
+    }
+
+    function normalizeForCompare(s) {
+        return (s || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
+    }
+
+    function findPokedexEntry(pokeName) {
+        if (!pokedexData || !pokeName) return null;
+        if (pokedexData[pokeName]) return pokedexData[pokeName];
+        const target = normalizeForCompare(pokeName);
+        for (const key in pokedexData) {
+            if (normalizeForCompare(key) === target) return pokedexData[key];
+        }
+        return null;
+    }
+
+    function getPokemonIconPath(pokemonName) {
+        // Normalize the pokemon name for the icon filename
+        const normalized = pokemonName.toLowerCase().replace(/[^a-z0-9]/g, "");
+        return `image/icons/${normalized}.png`;
+    }
+
+    function displayLocation(locationIndex) {
+        const container = document.getElementById("encountersSection");
+        container.innerHTML = "";
+        
+        const location = encounterData[locationIndex];
+        if (!location) return;
+
+        // Get all location tabs to determine navigation
+        const allTabs = Array.from(document.querySelectorAll(".location-tab"));
+        const currentIndex = locationIndex;
+        const hasPrev = currentIndex > 0;
+        const hasNext = currentIndex < allTabs.length - 1;
+        
+        // Helper function to create navigation buttons
+        function createNavigationButtons(includeTitle = true) {
+            const navContainer = document.createElement("div");
+            navContainer.className = "location-header-container";
+            
+            // Previous button
+            const prevButton = document.createElement("button");
+            prevButton.className = "nav-button";
+            if (hasPrev) {
+                const prevLocation = encounterData[currentIndex - 1];
+                prevButton.textContent = `← ${prevLocation.LocationName}`;
+                prevButton.onclick = () => {
+                    document.querySelectorAll(".location-tab").forEach(t => t.classList.remove("active"));
+                    allTabs[currentIndex - 1].classList.add("active");
+                    displayLocation(currentIndex - 1);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            } else {
+                prevButton.textContent = "← Previous Location";
+                prevButton.disabled = true;
+            }
+            navContainer.appendChild(prevButton);
+            
+            // Title (only for top navigation)
+            if (includeTitle) {
+                const areaTitle = document.createElement("div");
+                areaTitle.className = "area-title";
+                areaTitle.textContent = location.LocationName;
+                navContainer.appendChild(areaTitle);
+            } else {
+                const spacer = document.createElement("div");
+                navContainer.appendChild(spacer);
+            }
+            
+            // Next button
+            const nextButton = document.createElement("button");
+            nextButton.className = "nav-button";
+            if (hasNext) {
+                const nextLocation = encounterData[currentIndex + 1];
+                nextButton.textContent = `${nextLocation.LocationName} →`;
+                nextButton.onclick = () => {
+                    document.querySelectorAll(".location-tab").forEach(t => t.classList.remove("active"));
+                    allTabs[currentIndex + 1].classList.add("active");
+                    displayLocation(currentIndex + 1);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            } else {
+                nextButton.textContent = "Next Location →";
+                nextButton.disabled = true;
+            }
+            navContainer.appendChild(nextButton);
+            
+            return navContainer;
+        }
+        
+        // Add navigation buttons at the top (with title)
+        const headerContainer = createNavigationButtons(true);
+        container.appendChild(headerContainer);
+
+        // Group encounters by type
+        const encountersByType = {
+            grass: [],
+            fishing: [],
+            rockSmash: [],
+            surfing: [],
+            hordes: []
+        };
+
+        // Categorize encounters - validate that Encounters array exists
+        if (location.Encounters && Array.isArray(location.Encounters)) {
+            location.Encounters.forEach(encounter => {
+                const type = encounter.EncounterType.toLowerCase();
+            
+            if (type.includes('horde')) {
+                encountersByType.hordes.push(encounter);
+            } else if (type.includes('rock smash')) {
+                encountersByType.rockSmash.push(encounter);
+            } else if (type.includes('surf')) {
+                encountersByType.surfing.push(encounter);
+            } else if (type.includes('rod')) {
+                encountersByType.fishing.push(encounter);
+            } else {
+                // Grass, flowers, rough terrain, etc.
+                encountersByType.grass.push(encounter);
+            }
+        });
+        }
+
+        // Display Grass/Terrain encounters
+        displayEncounterSection(container, "Grass / Terrain Encounters", encountersByType.grass);
+
+        // Display Fishing encounters
+        displayEncounterSection(container, "Fishing", encountersByType.fishing);
+
+        // Display Rock Smash encounters
+        displayEncounterSection(container, "Rock Smash", encountersByType.rockSmash);
+
+        // Display Surfing encounters
+        displayEncounterSection(container, "Surfing", encountersByType.surfing);
+
+        // Display Horde encounters
+        displayEncounterSection(container, "Horde Encounters", encountersByType.hordes);
+
+        // Display Items section (placeholder)
+        const itemsSection = document.createElement("div");
+        itemsSection.className = "items-section";
+        itemsSection.innerHTML = `
+            <h3>Items</h3>
+            <p>Items information will be added in a future update.</p>
+        `;
+        container.appendChild(itemsSection);
+
+        // Add navigation buttons at the bottom (without title)
+        const footerContainer = createNavigationButtons(false);
+        footerContainer.style.marginTop = "30px";
+        container.appendChild(footerContainer);
+    }
+
+    function displayEncounterSection(container, sectionTitle, encounters) {
+        const section = document.createElement("div");
+        section.className = "encounter-type-section";
+
+        const header = document.createElement("div");
+        header.className = "encounter-type-header";
+        header.textContent = sectionTitle;
+        section.appendChild(header);
+
+        if (encounters.length === 0) {
+            const naMessage = document.createElement("div");
+            naMessage.className = "na-message";
+            naMessage.textContent = "N/A";
+            section.appendChild(naMessage);
+        } else {
+            // Display each encounter type with its pokemon
+            encounters.forEach((encounter, idx) => {
+                // Show sub-header only if it's different from the main section title
+                // and also different from the previous encounter type
+                const showSubHeader = encounter.EncounterType !== sectionTitle && 
+                                     (idx === 0 || encounters[idx - 1].EncounterType !== encounter.EncounterType);
+                
+                if (showSubHeader) {
+                    const subHeader = document.createElement("div");
+                    subHeader.style.fontSize = "1.1rem";
+                    subHeader.style.fontWeight = "600";
+                    subHeader.style.marginTop = "15px";
+                    subHeader.style.marginBottom = "10px";
+                    subHeader.style.color = "#555";
+                    subHeader.textContent = encounter.EncounterType;
+                    section.appendChild(subHeader);
+                }
+
+                const grid = document.createElement("div");
+                grid.className = "pokemon-grid";
+
+                encounter.Slots.forEach(slot => {
+                    const box = document.createElement("div");
+                    box.className = "pokemon-box";
+
+                    // Pokemon name
+                    const name = document.createElement("div");
+                    name.className = "pokemon-name";
+                    name.textContent = slot.Species;
+                    box.appendChild(name);
+
+                    // Pokemon icon
+                    const icon = document.createElement("img");
+                    icon.className = "pokemon-icon";
+                    icon.src = getPokemonIconPath(slot.Species);
+                    icon.alt = slot.Species;
+                    let iconFailed = false;
+                    icon.onerror = function() {
+                        if (!iconFailed) {
+                            iconFailed = true;
+                            this.src = 'image/icons/unknown.png';
+                        } else {
+                            // If even the fallback fails, hide the image
+                            this.style.display = 'none';
+                        }
+                    };
+                    box.appendChild(icon);
+
+                    // Pokemon details (level range)
+                    const details = document.createElement("div");
+                    details.className = "pokemon-details";
+                    if (slot.MinLevel === slot.MaxLevel) {
+                        details.textContent = `Lv ${slot.MinLevel}`;
+                    } else {
+                        details.textContent = `Lv ${slot.MinLevel}-${slot.MaxLevel}`;
+                    }
+                    box.appendChild(details);
+
+                    // Encounter chance
+                    if (slot.Chance) {
+                        const chance = document.createElement("div");
+                        chance.className = "pokemon-chance";
+                        chance.textContent = slot.Chance;
+                        box.appendChild(chance);
+                    }
+
+                    grid.appendChild(box);
+                });
+
+                section.appendChild(grid);
+            });
+        }
+
+        container.appendChild(section);
+    }
+
+    loadEncounters();
+</script>
 
 </body>
 </html>
