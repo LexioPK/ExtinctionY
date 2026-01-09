@@ -191,6 +191,9 @@
         }
 
         @media (max-width: 520px) {
+            .sidebar {
+                display: none;
+            }
             .encounters-section { 
                 margin-left: 16px; 
                 width: calc(100% - 16px); 
@@ -215,13 +218,24 @@
     async function loadEncounters() {
         const sidebar = document.getElementById("sidebar");
 
-        // Fetch encounters and pokedex data
-        const [encountersRes, pokedexRes] = await Promise.all([
-            fetch("data/encounters.json"),
-            fetch("data/pokedex.json")
-        ]);
-        encounterData = await encountersRes.json();
-        pokedexData = await pokedexRes.json();
+        try {
+            // Fetch encounters and pokedex data
+            const [encountersRes, pokedexRes] = await Promise.all([
+                fetch("data/encounters.json"),
+                fetch("data/pokedex.json")
+            ]);
+            
+            if (!encountersRes.ok || !pokedexRes.ok) {
+                throw new Error("Failed to load encounter data");
+            }
+            
+            encounterData = await encountersRes.json();
+            pokedexData = await pokedexRes.json();
+        } catch (error) {
+            console.error("Error loading encounters:", error);
+            sidebar.innerHTML = '<div style="padding: 20px; color: #d32f2f;">Error loading encounter data. Please refresh the page.</div>';
+            return;
+        }
 
         // Build sidebar tabs from encounter locations
         encounterData.forEach((location, index) => {
@@ -344,9 +358,10 @@
             hordes: []
         };
 
-        // Categorize encounters
-        location.Encounters.forEach(encounter => {
-            const type = encounter.EncounterType.toLowerCase();
+        // Categorize encounters - validate that Encounters array exists
+        if (location.Encounters && Array.isArray(location.Encounters)) {
+            location.Encounters.forEach(encounter => {
+                const type = encounter.EncounterType.toLowerCase();
             
             if (type.includes('horde')) {
                 encountersByType.hordes.push(encounter);
@@ -361,6 +376,7 @@
                 encountersByType.grass.push(encounter);
             }
         });
+        }
 
         // Display Grass/Terrain encounters
         displayEncounterSection(container, "Grass / Terrain Encounters", encountersByType.grass);
@@ -408,8 +424,13 @@
             section.appendChild(naMessage);
         } else {
             // Display each encounter type with its pokemon
-            encounters.forEach(encounter => {
-                if (encounter.EncounterType !== sectionTitle) {
+            encounters.forEach((encounter, idx) => {
+                // Show sub-header only if it's different from the main section title
+                // and also different from the previous encounter type
+                const showSubHeader = encounter.EncounterType !== sectionTitle && 
+                                     (idx === 0 || encounters[idx - 1].EncounterType !== encounter.EncounterType);
+                
+                if (showSubHeader) {
                     const subHeader = document.createElement("div");
                     subHeader.style.fontSize = "1.1rem";
                     subHeader.style.fontWeight = "600";
@@ -438,10 +459,15 @@
                     icon.className = "pokemon-icon";
                     icon.src = getPokemonIconPath(slot.Species);
                     icon.alt = slot.Species;
+                    let iconFailed = false;
                     icon.onerror = function() {
-                        this.style.display = 'none';
-                        // Try to show a placeholder or default icon
-                        this.src = 'image/icons/unknown.png';
+                        if (!iconFailed) {
+                            iconFailed = true;
+                            this.src = 'image/icons/unknown.png';
+                        } else {
+                            // If even the fallback fails, hide the image
+                            this.style.display = 'none';
+                        }
                     };
                     box.appendChild(icon);
 
