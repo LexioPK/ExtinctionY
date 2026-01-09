@@ -150,31 +150,25 @@
             background: #fafafa;
             border: 2px solid var(--pokemon-border-color);
             border-radius: 10px;
-            padding: 15px;
-            width: 140px;
+            padding: 10px;
+            width: 100px;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .pokemon-name {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             color: #333;
         }
 
         .pokemon-icon {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             image-rendering: pixelated;
-            margin: 10px auto;
+            margin: 5px auto;
             display: block;
-        }
-
-        .pokemon-details {
-            font-size: 0.85rem;
-            color: #666;
-            margin-top: 8px;
         }
 
         .pokemon-chance {
@@ -423,77 +417,195 @@
             naMessage.textContent = "N/A";
             section.appendChild(naMessage);
         } else {
-            // Display each encounter type with its pokemon
-            encounters.forEach((encounter, idx) => {
-                // Show sub-header only if it's different from the main section title
-                // and also different from the previous encounter type
-                const showSubHeader = encounter.EncounterType !== sectionTitle && 
-                                     (idx === 0 || encounters[idx - 1].EncounterType !== encounter.EncounterType);
+            // For horde encounters, combine all into one
+            const isHordeSection = sectionTitle.toLowerCase().includes('horde');
+            
+            if (isHordeSection) {
+                // Calculate overall level range for all hordes
+                let minLevel = Infinity;
+                let maxLevel = -Infinity;
+                const allPokemonMap = new Map();
+                let totalPercentage = 0;
                 
-                if (showSubHeader) {
-                    const subHeader = document.createElement("div");
-                    subHeader.style.fontSize = "1.1rem";
-                    subHeader.style.fontWeight = "600";
-                    subHeader.style.marginTop = "15px";
-                    subHeader.style.marginBottom = "10px";
-                    subHeader.style.color = "#555";
-                    subHeader.textContent = encounter.EncounterType;
-                    section.appendChild(subHeader);
+                encounters.forEach(encounter => {
+                    // Get horde percentage
+                    const hordeChance = encounter.EncounterType.match(/\((\d+)%\)/)?.[1];
+                    if (hordeChance) {
+                        totalPercentage += parseFloat(hordeChance);
+                    }
+                    
+                    // Track level ranges
+                    encounter.Slots.forEach(slot => {
+                        minLevel = Math.min(minLevel, slot.MinLevel);
+                        maxLevel = Math.max(maxLevel, slot.MaxLevel);
+                        
+                        // Combine pokemon
+                        const species = slot.Species;
+                        if (!allPokemonMap.has(species)) {
+                            allPokemonMap.set(species, {
+                                Species: species,
+                                count: 0
+                            });
+                        }
+                    });
+                });
+                
+                // Create combined header with level range
+                let levelRange = "";
+                if (minLevel !== Infinity && maxLevel !== -Infinity) {
+                    levelRange = minLevel === maxLevel ? ` (Lv. ${minLevel})` : ` (Lv. ${minLevel}-${maxLevel})`;
                 }
-
+                
+                const subHeader = document.createElement("div");
+                subHeader.style.fontSize = "1.1rem";
+                subHeader.style.fontWeight = "600";
+                subHeader.style.marginTop = "15px";
+                subHeader.style.marginBottom = "10px";
+                subHeader.style.color = "#555";
+                subHeader.textContent = `Horde (${totalPercentage}%)${levelRange}`;
+                section.appendChild(subHeader);
+                
                 const grid = document.createElement("div");
                 grid.className = "pokemon-grid";
-
-                encounter.Slots.forEach(slot => {
+                
+                // Display all unique Pokemon
+                Array.from(allPokemonMap.values()).forEach(pokemonData => {
                     const box = document.createElement("div");
                     box.className = "pokemon-box";
 
                     // Pokemon name
                     const name = document.createElement("div");
                     name.className = "pokemon-name";
-                    name.textContent = slot.Species;
+                    name.textContent = pokemonData.Species;
                     box.appendChild(name);
 
                     // Pokemon icon
                     const icon = document.createElement("img");
                     icon.className = "pokemon-icon";
-                    icon.src = getPokemonIconPath(slot.Species);
-                    icon.alt = slot.Species;
+                    icon.src = getPokemonIconPath(pokemonData.Species);
+                    icon.alt = pokemonData.Species;
                     let iconFailed = false;
                     icon.onerror = function() {
                         if (!iconFailed) {
                             iconFailed = true;
                             this.src = 'image/icons/unknown.png';
                         } else {
-                            // If even the fallback fails, hide the image
                             this.style.display = 'none';
                         }
                     };
                     box.appendChild(icon);
 
-                    // Pokemon details (level range)
-                    const details = document.createElement("div");
-                    details.className = "pokemon-details";
-                    if (slot.MinLevel === slot.MaxLevel) {
-                        details.textContent = `Lv ${slot.MinLevel}`;
-                    } else {
-                        details.textContent = `Lv ${slot.MinLevel}-${slot.MaxLevel}`;
-                    }
-                    box.appendChild(details);
-
-                    // Encounter chance
-                    if (slot.Chance) {
-                        const chance = document.createElement("div");
-                        chance.className = "pokemon-chance";
-                        chance.textContent = slot.Chance;
-                        box.appendChild(chance);
-                    }
+                    // Show combined percentage
+                    const chance = document.createElement("div");
+                    chance.className = "pokemon-chance";
+                    chance.textContent = `${totalPercentage}%`;
+                    box.appendChild(chance);
 
                     grid.appendChild(box);
                 });
-
+                
                 section.appendChild(grid);
-            });
+            } else {
+                // Display each encounter type with its pokemon
+                encounters.forEach((encounter, idx) => {
+                    // Calculate level range for this encounter
+                    let minLevel = Infinity;
+                    let maxLevel = -Infinity;
+                    encounter.Slots.forEach(slot => {
+                        minLevel = Math.min(minLevel, slot.MinLevel);
+                        maxLevel = Math.max(maxLevel, slot.MaxLevel);
+                    });
+                    
+                    // Format level range
+                    let levelRange = "";
+                    if (minLevel !== Infinity && maxLevel !== -Infinity) {
+                        if (minLevel === maxLevel) {
+                            levelRange = ` (Lv. ${minLevel})`;
+                        } else {
+                            levelRange = ` (Lv. ${minLevel}-${maxLevel})`;
+                        }
+                    }
+                    
+                    // Show sub-header only if it's different from the main section title
+                    // and also different from the previous encounter type
+                    const showSubHeader = encounter.EncounterType !== sectionTitle && 
+                                         (idx === 0 || encounters[idx - 1].EncounterType !== encounter.EncounterType);
+                    
+                    if (showSubHeader) {
+                        const subHeader = document.createElement("div");
+                        subHeader.style.fontSize = "1.1rem";
+                        subHeader.style.fontWeight = "600";
+                        subHeader.style.marginTop = "15px";
+                        subHeader.style.marginBottom = "10px";
+                        subHeader.style.color = "#555";
+                        subHeader.textContent = encounter.EncounterType + levelRange;
+                        section.appendChild(subHeader);
+                    }
+
+                    // Combine duplicate Pokemon and sum their chances
+                    const pokemonMap = new Map();
+                    
+                    encounter.Slots.forEach(slot => {
+                        const species = slot.Species;
+                        if (pokemonMap.has(species)) {
+                            const existing = pokemonMap.get(species);
+                            // Parse and sum percentages
+                            const existingChance = parseFloat(existing.Chance.replace('%', '')) || 0;
+                            const newChance = parseFloat(slot.Chance.replace('%', '')) || 0;
+                            existing.Chance = `${existingChance + newChance}%`;
+                        } else {
+                            pokemonMap.set(species, {
+                                Species: species,
+                                Chance: slot.Chance || ""
+                            });
+                        }
+                    });
+
+                    const grid = document.createElement("div");
+                    grid.className = "pokemon-grid";
+
+                    // Convert map to array and display
+                    Array.from(pokemonMap.values()).forEach(pokemonData => {
+                        const box = document.createElement("div");
+                        box.className = "pokemon-box";
+
+                        // Pokemon name
+                        const name = document.createElement("div");
+                        name.className = "pokemon-name";
+                        name.textContent = pokemonData.Species;
+                        box.appendChild(name);
+
+                        // Pokemon icon
+                        const icon = document.createElement("img");
+                        icon.className = "pokemon-icon";
+                        icon.src = getPokemonIconPath(pokemonData.Species);
+                        icon.alt = pokemonData.Species;
+                        let iconFailed = false;
+                        icon.onerror = function() {
+                            if (!iconFailed) {
+                                iconFailed = true;
+                                this.src = 'image/icons/unknown.png';
+                            } else {
+                                // If even the fallback fails, hide the image
+                                this.style.display = 'none';
+                            }
+                        };
+                        box.appendChild(icon);
+
+                        // Encounter chance
+                        if (pokemonData.Chance) {
+                            const chance = document.createElement("div");
+                            chance.className = "pokemon-chance";
+                            chance.textContent = pokemonData.Chance;
+                            box.appendChild(chance);
+                        }
+
+                        grid.appendChild(box);
+                    });
+
+                    section.appendChild(grid);
+                });
+            }
         }
 
         container.appendChild(section);
