@@ -225,6 +225,98 @@
             
             encounterData = await encountersRes.json();
             pokedexData = await pokedexRes.json();
+            
+            // Define the desired order of locations
+            const locationOrder = [
+                "Vaniville Town",
+                "Route 1",
+                "Aquacorde Town",
+                "Route 2",
+                "Santalune Forest",
+                "Route 3",
+                "Santalune City",
+                "Route 22",
+                "Route 4",
+                "Lumiose City",
+                "Route 5",
+                "Camphrier Town",
+                "Kalos Hotels",
+                "Route 6",
+                "Berry Fields",
+                "Parfum Palace",
+                "Route 7",
+                "Connecting Cave",
+                "Route 8",
+                "Ambrette Town",
+                "Route 9",
+                "Glittering Cave",
+                "Cyllage City",
+                "Route 10",
+                "Geosenge Town",
+                "Route 11",
+                "Reflection Cave",
+                "Reflection Cave - Floor 1, B Floor 1",
+                "Reflection Cave - B Floor 2-3",
+                "Shalour City",
+                "Tower of Mastery",
+                "Route 12",
+                "Azure Bay",
+                "Coumarine City",
+                "Route 13",
+                "Kalos Power Plant",
+                "Route 14",
+                "Laverre City",
+                "Poke Ball Factory",
+                "Route 15",
+                "Route 16",
+                "Lost Hotel",
+                "Dendemille Town",
+                "Frost Cavern",
+                "Route 17",
+                "Anistar City",
+                "Route 18",
+                "Terminus Cave",
+                "Terminus Cave - Floor 1-2, B Floor 1",
+                "Terminus Cave - B Floor 2-3",
+                "Couriway Town",
+                "Route 19",
+                "Snowbelle City",
+                "Route 20",
+                "Pokemon Village",
+                "Route 21",
+                "Chamber of Emptiness",
+                "Victory Road",
+                "Victory Road - Room 1 & 2",
+                "Victory Road - Room 3 & 4",
+                "Victory Road - Outside",
+                "Unknown Dungeon",
+                "Kiloude City"
+            ];
+            
+            // Reorder encounterData based on locationOrder
+            const orderedEncounterData = [];
+            const encounterMap = new Map();
+            
+            // Create a map for quick lookup
+            encounterData.forEach(location => {
+                encounterMap.set(location.LocationName, location);
+            });
+            
+            // Add locations in the specified order
+            locationOrder.forEach(locationName => {
+                if (encounterMap.has(locationName)) {
+                    orderedEncounterData.push(encounterMap.get(locationName));
+                    encounterMap.delete(locationName);
+                }
+            });
+            
+            // Add any remaining locations not in the order list
+            encounterMap.forEach(location => {
+                orderedEncounterData.push(location);
+            });
+            
+            // Replace encounterData with ordered version
+            encounterData = orderedEncounterData;
         } catch (error) {
             console.error("Error loading encounters:", error);
             sidebar.innerHTML = '<div style="padding: 20px; color: #d32f2f;">Error loading encounter data. Please refresh the page.</div>';
@@ -417,90 +509,135 @@
             naMessage.textContent = "N/A";
             section.appendChild(naMessage);
         } else {
-            // For horde encounters, combine all into one
+            // Check if this is a horde section - handle specially
             const isHordeSection = sectionTitle.toLowerCase().includes('horde');
             
             if (isHordeSection) {
-                // Calculate overall level range for all hordes
-                let minLevel = Infinity;
-                let maxLevel = -Infinity;
-                const allPokemonMap = new Map();
-                let totalPercentage = 0;
+                // For hordes, first group by Pokemon species across all horde types
+                const pokemonBySpecies = new Map();
+                const hordeTypes = new Map(); // Track which horde types have which Pokemon
                 
                 encounters.forEach(encounter => {
-                    // Get horde percentage
-                    const hordeChance = encounter.EncounterType.match(/\((\d+)%\)/)?.[1];
-                    if (hordeChance) {
-                        totalPercentage += parseFloat(hordeChance);
-                    }
+                    const hordeMatch = encounter.EncounterType.match(/Horde \((\d+)%\)/);
+                    const hordePercent = hordeMatch ? parseInt(hordeMatch[1]) : 0;
                     
-                    // Track level ranges
                     encounter.Slots.forEach(slot => {
-                        minLevel = Math.min(minLevel, slot.MinLevel);
-                        maxLevel = Math.max(maxLevel, slot.MaxLevel);
-                        
-                        // Combine pokemon
                         const species = slot.Species;
-                        if (!allPokemonMap.has(species)) {
-                            allPokemonMap.set(species, {
+                        if (!pokemonBySpecies.has(species)) {
+                            pokemonBySpecies.set(species, {
                                 Species: species,
-                                count: 0
+                                hordeTypes: [],
+                                totalPercent: 0,
+                                minLevel: Infinity,
+                                maxLevel: -Infinity
                             });
                         }
+                        const pokemonData = pokemonBySpecies.get(species);
+                        if (!pokemonData.hordeTypes.includes(hordePercent)) {
+                            pokemonData.hordeTypes.push(hordePercent);
+                            pokemonData.totalPercent += hordePercent;
+                        }
+                        pokemonData.minLevel = Math.min(pokemonData.minLevel, slot.MinLevel);
+                        pokemonData.maxLevel = Math.max(pokemonData.maxLevel, slot.MaxLevel);
                     });
                 });
                 
-                // Create combined header with level range
-                let levelRange = "";
-                if (minLevel !== Infinity && maxLevel !== -Infinity) {
-                    levelRange = minLevel === maxLevel ? ` (Lv. ${minLevel})` : ` (Lv. ${minLevel}-${maxLevel})`;
-                }
+                // Now display by horde type, but combine Pokemon if they appear in multiple types
+                const displayedSpecies = new Set();
                 
-                const subHeader = document.createElement("div");
-                subHeader.style.fontSize = "1.1rem";
-                subHeader.style.fontWeight = "600";
-                subHeader.style.marginTop = "15px";
-                subHeader.style.marginBottom = "10px";
-                subHeader.style.color = "#555";
-                subHeader.textContent = `Horde (${totalPercentage}%)${levelRange}`;
-                section.appendChild(subHeader);
-                
-                const grid = document.createElement("div");
-                grid.className = "pokemon-grid";
-                
-                // Display all unique Pokemon
-                Array.from(allPokemonMap.values()).forEach(pokemonData => {
-                    const box = document.createElement("div");
-                    box.className = "pokemon-box";
-
-                    // Pokemon name
-                    const name = document.createElement("div");
-                    name.className = "pokemon-name";
-                    name.textContent = pokemonData.Species;
-                    box.appendChild(name);
-
-                    // Pokemon icon
-                    const icon = document.createElement("img");
-                    icon.className = "pokemon-icon";
-                    icon.src = getPokemonIconPath(pokemonData.Species);
-                    icon.alt = pokemonData.Species;
-                    let iconFailed = false;
-                    icon.onerror = function() {
-                        if (!iconFailed) {
-                            iconFailed = true;
-                            this.src = 'image/icons/unknown.png';
-                        } else {
-                            this.style.display = 'none';
+                encounters.forEach((encounter, idx) => {
+                    const hordeMatch = encounter.EncounterType.match(/Horde \((\d+)%\)/);
+                    const hordePercent = hordeMatch ? parseInt(hordeMatch[1]) : 0;
+                    
+                    // Calculate level range for this horde
+                    let minLevel = Infinity;
+                    let maxLevel = -Infinity;
+                    encounter.Slots.forEach(slot => {
+                        minLevel = Math.min(minLevel, slot.MinLevel);
+                        maxLevel = Math.max(maxLevel, slot.MaxLevel);
+                    });
+                    
+                    let levelRange = "";
+                    if (minLevel !== Infinity && maxLevel !== -Infinity) {
+                        levelRange = minLevel === maxLevel ? ` (Lv. ${minLevel})` : ` (Lv. ${minLevel}-${maxLevel})`;
+                    }
+                    
+                    // Show sub-header
+                    const showSubHeader = encounter.EncounterType !== sectionTitle && 
+                                         (idx === 0 || encounters[idx - 1].EncounterType !== encounter.EncounterType);
+                    
+                    if (showSubHeader) {
+                        const subHeader = document.createElement("div");
+                        subHeader.style.fontSize = "1.1rem";
+                        subHeader.style.fontWeight = "600";
+                        subHeader.style.marginTop = "15px";
+                        subHeader.style.marginBottom = "10px";
+                        subHeader.style.color = "#555";
+                        subHeader.textContent = encounter.EncounterType + levelRange;
+                        section.appendChild(subHeader);
+                    }
+                    
+                    const grid = document.createElement("div");
+                    grid.className = "pokemon-grid";
+                    
+                    // Get unique Pokemon for this horde
+                    const uniqueSpecies = new Set();
+                    encounter.Slots.forEach(slot => uniqueSpecies.add(slot.Species));
+                    
+                    uniqueSpecies.forEach(species => {
+                        // If this Pokemon appears in multiple horde types and hasn't been displayed yet
+                        const pokemonData = pokemonBySpecies.get(species);
+                        const appearsInMultipleHordes = pokemonData.hordeTypes.length > 1;
+                        
+                        if (appearsInMultipleHordes && displayedSpecies.has(species)) {
+                            return; // Skip - already displayed with combined percentage
                         }
-                    };
-                    box.appendChild(icon);
+                        
+                        displayedSpecies.add(species);
+                        
+                        const box = document.createElement("div");
+                        box.className = "pokemon-box";
 
-                    // Don't show individual percentages for hordes since they appear together
+                        // Pokemon name
+                        const name = document.createElement("div");
+                        name.className = "pokemon-name";
+                        name.textContent = species;
+                        box.appendChild(name);
 
-                    grid.appendChild(box);
+                        // Pokemon icon
+                        const icon = document.createElement("img");
+                        icon.className = "pokemon-icon";
+                        icon.src = getPokemonIconPath(species);
+                        icon.alt = species;
+                        let iconFailed = false;
+                        icon.onerror = function() {
+                            if (!iconFailed) {
+                                iconFailed = true;
+                                this.src = 'image/icons/unknown.png';
+                            } else {
+                                this.style.display = 'none';
+                            }
+                        };
+                        box.appendChild(icon);
+
+                        // Show percentage - combined if appears in multiple hordes
+                        if (appearsInMultipleHordes) {
+                            const chance = document.createElement("div");
+                            chance.className = "pokemon-chance";
+                            chance.textContent = `${pokemonData.totalPercent}%`;
+                            box.appendChild(chance);
+                        } else {
+                            const chance = document.createElement("div");
+                            chance.className = "pokemon-chance";
+                            chance.textContent = `${hordePercent}%`;
+                            box.appendChild(chance);
+                        }
+
+                        grid.appendChild(box);
+                    });
+                    
+                    section.appendChild(grid);
                 });
-                
-                section.appendChild(grid);
             } else {
                 // Display each encounter type with its pokemon
                 encounters.forEach((encounter, idx) => {
