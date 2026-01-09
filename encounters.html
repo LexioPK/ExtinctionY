@@ -208,15 +208,17 @@
 <script>
     let encounterData = [];
     let pokedexData = {};
+    let itemsData = [];
 
     async function loadEncounters() {
         const sidebar = document.getElementById("sidebar");
 
         try {
-            // Fetch encounters and pokedex data
-            const [encountersRes, pokedexRes] = await Promise.all([
+            // Fetch encounters, pokedex, and items data
+            const [encountersRes, pokedexRes, itemsRes] = await Promise.all([
                 fetch("data/encounters.json"),
-                fetch("data/pokedex.json")
+                fetch("data/pokedex.json"),
+                fetch("data/items.json").catch(() => null) // Handle if items.json doesn't exist yet
             ]);
             
             if (!encountersRes.ok || !pokedexRes.ok) {
@@ -225,6 +227,11 @@
             
             encounterData = await encountersRes.json();
             pokedexData = await pokedexRes.json();
+            
+            // Load items data if available
+            if (itemsRes && itemsRes.ok) {
+                itemsData = await itemsRes.json();
+            }
             
             // Rename Terminus Cave entries based on LocationID
             // First 3 (343, 344, 345) -> "Terminus Cave - Floor 1-2, B Floor 1"
@@ -491,14 +498,8 @@
         // Display Horde encounters
         displayEncounterSection(container, "Horde Encounters", encountersByType.hordes);
 
-        // Display Items section (placeholder)
-        const itemsSection = document.createElement("div");
-        itemsSection.className = "items-section";
-        itemsSection.innerHTML = `
-            <h3>Items</h3>
-            <p>Items information will be added in a future update.</p>
-        `;
-        container.appendChild(itemsSection);
+        // Display Items section
+        displayItemsSection(container, location.LocationName);
 
         // Add navigation buttons at the bottom (without title)
         const footerContainer = createNavigationButtons(false);
@@ -506,7 +507,163 @@
         container.appendChild(footerContainer);
     }
 
+    function getItemIconPath(itemName) {
+        // Convert item name to filename format (lowercase, replace spaces with hyphens)
+        const filename = itemName.toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+            .replace(/\s+/g, '-') // Replace spaces with hyphens
+            .replace(/-+/g, '-'); // Replace multiple hyphens with single
+        return `image/item/${filename}.png`;
+    }
+
+    function parseAreaAndSubArea(area) {
+        // Extract sub-area from parentheses
+        const match = area.match(/^(.+?)\s*\((.+?)\)$/);
+        if (match) {
+            return {
+                mainArea: match[1].trim(),
+                subArea: match[2].trim()
+            };
+        }
+        return {
+            mainArea: area,
+            subArea: ""
+        };
+    }
+
+    function displayItemsSection(container, locationName) {
+        const itemsSection = document.createElement("div");
+        itemsSection.className = "items-section";
+        itemsSection.style.marginTop = "30px";
+
+        const header = document.createElement("h3");
+        header.textContent = "Items";
+        header.style.borderBottom = "2px solid #2196F3";
+        header.style.paddingBottom = "10px";
+        header.style.marginBottom = "20px";
+        itemsSection.appendChild(header);
+
+        // Filter items for this location
+        const locationItems = itemsData.filter(item => {
+            const parsed = parseAreaAndSubArea(item.Area);
+            return parsed.mainArea === locationName;
+        });
+
+        if (locationItems.length === 0) {
+            const noItems = document.createElement("p");
+            noItems.textContent = "Items information will be added in a future update.";
+            noItems.style.color = "#999";
+            noItems.style.textAlign = "center";
+            noItems.style.padding = "20px";
+            itemsSection.appendChild(noItems);
+        } else {
+            // Group items by sub-area
+            const itemsBySubArea = new Map();
+            locationItems.forEach(item => {
+                const parsed = parseAreaAndSubArea(item.Area);
+                const subArea = parsed.subArea || "General";
+                if (!itemsBySubArea.has(subArea)) {
+                    itemsBySubArea.set(subArea, []);
+                }
+                itemsBySubArea.get(subArea).push(item);
+            });
+
+            // Display items grouped by sub-area
+            itemsBySubArea.forEach((items, subArea) => {
+                // Sub-area header (if not "General")
+                if (subArea !== "General") {
+                    const subAreaHeader = document.createElement("div");
+                    subAreaHeader.textContent = subArea;
+                    subAreaHeader.style.fontSize = "1.1rem";
+                    subAreaHeader.style.fontWeight = "600";
+                    subAreaHeader.style.marginTop = "20px";
+                    subAreaHeader.style.marginBottom = "10px";
+                    subAreaHeader.style.color = "#555";
+                    itemsSection.appendChild(subAreaHeader);
+                }
+
+                // Create items table
+                const table = document.createElement("table");
+                table.style.width = "100%";
+                table.style.borderCollapse = "collapse";
+                table.style.marginBottom = "20px";
+
+                // Table header
+                const thead = document.createElement("thead");
+                thead.innerHTML = `
+                    <tr style="background-color: #f5f5f5; border-bottom: 2px solid #ddd;">
+                        <th style="padding: 10px; text-align: center; width: 60px;">Icon</th>
+                        <th style="padding: 10px; text-align: center;">Item</th>
+                        <th style="padding: 10px; text-align: center;">Location/Price</th>
+                        <th style="padding: 10px; text-align: center; width: 120px;">Sub Area</th>
+                    </tr>
+                `;
+                table.appendChild(thead);
+
+                // Table body
+                const tbody = document.createElement("tbody");
+                items.forEach((item, idx) => {
+                    const row = document.createElement("tr");
+                    row.style.borderBottom = "1px solid #eee";
+                    if (idx % 2 === 0) {
+                        row.style.backgroundColor = "#fafafa";
+                    }
+
+                    // Icon cell
+                    const iconCell = document.createElement("td");
+                    iconCell.style.padding = "10px";
+                    iconCell.style.textAlign = "center";
+                    const icon = document.createElement("img");
+                    icon.src = getItemIconPath(item.Item);
+                    icon.alt = item.Item;
+                    icon.style.width = "40px";
+                    icon.style.height = "40px";
+                    icon.onerror = function() {
+                        this.src = 'image/item/unknown.png';
+                        this.onerror = function() {
+                            this.style.display = 'none';
+                        };
+                    };
+                    iconCell.appendChild(icon);
+                    row.appendChild(iconCell);
+
+                    // Item name cell
+                    const nameCell = document.createElement("td");
+                    nameCell.style.padding = "10px";
+                    nameCell.style.fontWeight = "600";
+                    nameCell.textContent = item.Item;
+                    row.appendChild(nameCell);
+
+                    // Location/Price cell
+                    const locationCell = document.createElement("td");
+                    locationCell.style.padding = "10px";
+                    locationCell.textContent = item["Location/Price"];
+                    row.appendChild(locationCell);
+
+                    // Sub Area cell
+                    const subAreaCell = document.createElement("td");
+                    subAreaCell.style.padding = "10px";
+                    subAreaCell.style.color = "#666";
+                    subAreaCell.textContent = subArea !== "General" ? subArea : "-";
+                    row.appendChild(subAreaCell);
+
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+
+                itemsSection.appendChild(table);
+            });
+        }
+
+        container.appendChild(itemsSection);
+    }
+
     function displayEncounterSection(container, sectionTitle, encounters) {
+        // Skip empty encounter sections entirely
+        if (encounters.length === 0) {
+            return;
+        }
+
         const section = document.createElement("div");
         section.className = "encounter-type-section";
 
@@ -515,16 +672,10 @@
         header.textContent = sectionTitle;
         section.appendChild(header);
 
-        if (encounters.length === 0) {
-            const naMessage = document.createElement("div");
-            naMessage.className = "na-message";
-            naMessage.textContent = "N/A";
-            section.appendChild(naMessage);
-        } else {
-            // Check if this is a horde section - handle specially
-            const isHordeSection = sectionTitle.toLowerCase().includes('horde');
-            
-            if (isHordeSection) {
+        // Check if this is a horde section - handle specially
+        const isHordeSection = sectionTitle.toLowerCase().includes('horde');
+        
+        if (isHordeSection) {
                 // For hordes, combine all Pokemon across all horde types
                 const pokemonBySpecies = new Map();
                 
@@ -690,7 +841,6 @@
                     section.appendChild(grid);
                 });
             }
-        }
 
         container.appendChild(section);
     }
