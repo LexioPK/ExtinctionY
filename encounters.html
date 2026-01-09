@@ -592,10 +592,10 @@
                 const thead = document.createElement("thead");
                 thead.innerHTML = `
                     <tr style="background-color: #f5f5f5; border-bottom: 2px solid #ddd;">
-                        <th style="padding: 10px; text-align: left; width: 60px;">Icon</th>
-                        <th style="padding: 10px; text-align: left;">Item</th>
-                        <th style="padding: 10px; text-align: left;">Location/Price</th>
-                        <th style="padding: 10px; text-align: left; width: 120px;">Sub Area</th>
+                        <th style="padding: 10px; text-align: center; width: 60px;">Icon</th>
+                        <th style="padding: 10px; text-align: center;">Item</th>
+                        <th style="padding: 10px; text-align: center;">Location/Price</th>
+                        <th style="padding: 10px; text-align: center; width: 120px;">Sub Area</th>
                     </tr>
                 `;
                 table.appendChild(thead);
@@ -659,6 +659,11 @@
     }
 
     function displayEncounterSection(container, sectionTitle, encounters) {
+        // Skip empty encounter sections entirely
+        if (encounters.length === 0) {
+            return;
+        }
+
         const section = document.createElement("div");
         section.className = "encounter-type-section";
 
@@ -667,16 +672,10 @@
         header.textContent = sectionTitle;
         section.appendChild(header);
 
-        if (encounters.length === 0) {
-            const naMessage = document.createElement("div");
-            naMessage.className = "na-message";
-            naMessage.textContent = "N/A";
-            section.appendChild(naMessage);
-        } else {
-            // Check if this is a horde section - handle specially
-            const isHordeSection = sectionTitle.toLowerCase().includes('horde');
-            
-            if (isHordeSection) {
+        // Check if this is a horde section - handle specially
+        const isHordeSection = sectionTitle.toLowerCase().includes('horde');
+        
+        if (isHordeSection) {
                 // For hordes, combine all Pokemon across all horde types
                 const pokemonBySpecies = new Map();
                 
@@ -842,7 +841,6 @@
                     section.appendChild(grid);
                 });
             }
-        }
 
         container.appendChild(section);
     }
