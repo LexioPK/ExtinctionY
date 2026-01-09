@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,7 +130,7 @@
         }
 
         .items-section {
-            background: #fff9e6;
+            background: #6a6a6a;
             padding: 20px;
             border-radius: 12px;
             margin: 20px 0;
@@ -233,18 +234,9 @@
                 itemsData = await itemsRes.json();
             }
             
-            // Rename Terminus Cave entries based on LocationID
-            // First 3 (343, 344, 345) -> "Terminus Cave - Floor 1-2, B Floor 1"
-            // Last 2 (347, 348) -> "Terminus Cave - B Floor 2-3"
-            encounterData.forEach(location => {
-                if (location.LocationName === "Terminus Cave") {
-                    if (location.LocationID === 343 || location.LocationID === 344 || location.LocationID === 345) {
-                        location.LocationName = "Terminus Cave - Floor 1-2, B Floor 1";
-                    } else if (location.LocationID === 347 || location.LocationID === 348) {
-                        location.LocationName = "Terminus Cave - B Floor 2-3";
-                    }
-                }
-            });
+            // Terminus Cave entries - keep all as "Terminus Cave" 
+            // They will be displayed as separate encounter sections under one location
+            // No renaming needed - all 5 LocationIDs (343, 344, 345, 347, 348) stay as "Terminus Cave"
             
             // Define the desired order of locations
             const locationOrder = [
@@ -295,8 +287,7 @@
                 "Route 17",
                 "Anistar City",
                 "Route 18",
-                "Terminus Cave - Floor 1-2, B Floor 1",
-                "Terminus Cave - B Floor 2-3",
+                "Terminus Cave",
                 "Couriway Town",
                 "Route 19",
                 "Snowbelle City",
@@ -313,25 +304,30 @@
             ];
             
             // Reorder encounterData based on locationOrder
+            // Group locations by name to handle duplicates (like Terminus Cave)
             const orderedEncounterData = [];
             const encounterMap = new Map();
             
-            // Create a map for quick lookup
+            // Create a map with arrays for locations with same name
             encounterData.forEach(location => {
-                encounterMap.set(location.LocationName, location);
+                if (!encounterMap.has(location.LocationName)) {
+                    encounterMap.set(location.LocationName, []);
+                }
+                encounterMap.get(location.LocationName).push(location);
             });
             
             // Add locations in the specified order
             locationOrder.forEach(locationName => {
                 if (encounterMap.has(locationName)) {
-                    orderedEncounterData.push(encounterMap.get(locationName));
+                    // Add all instances of this location name
+                    orderedEncounterData.push(...encounterMap.get(locationName));
                     encounterMap.delete(locationName);
                 }
             });
             
             // Add any remaining locations not in the order list
-            encounterMap.forEach(location => {
-                orderedEncounterData.push(location);
+            encounterMap.forEach(locationsList => {
+                orderedEncounterData.push(...locationsList);
             });
             
             // Replace encounterData with ordered version
@@ -342,24 +338,133 @@
             return;
         }
 
-        // Build sidebar tabs from encounter locations
+        // Build sidebar tabs from encounter locations (unique names only)
+        const uniqueLocationNames = [];
+        const locationNameToIndices = new Map();
+        
         encounterData.forEach((location, index) => {
+            if (!locationNameToIndices.has(location.LocationName)) {
+                uniqueLocationNames.push(location.LocationName);
+                locationNameToIndices.set(location.LocationName, []);
+            }
+            locationNameToIndices.get(location.LocationName).push(index);
+        });
+        
+        uniqueLocationNames.forEach((locationName) => {
             const tab = document.createElement("div");
             tab.className = "location-tab";
-            tab.textContent = location.LocationName;
+            tab.textContent = locationName;
             tab.onclick = () => {
                 document.querySelectorAll(".location-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
-                displayLocation(index);
+                // Display all encounters for this location name
+                displayLocationByName(locationName, locationNameToIndices.get(locationName));
             };
             sidebar.appendChild(tab);
         });
 
         // Activate first tab if present
-        if (sidebar.children.length) {
+        if (sidebar.children.length && uniqueLocationNames.length > 0) {
             sidebar.children[0].classList.add("active");
-            displayLocation(0);
+            displayLocationByName(uniqueLocationNames[0], locationNameToIndices.get(uniqueLocationNames[0]));
         }
+    }
+
+    function displayLocationByName(locationName, indices) {
+        const container = document.getElementById("encountersSection");
+        container.innerHTML = "";
+        
+        // Get navigation info
+        const allTabs = Array.from(document.querySelectorAll(".location-tab"));
+        const currentTabIndex = allTabs.findIndex(tab => tab.textContent === locationName);
+        const hasPrev = currentTabIndex > 0;
+        const hasNext = currentTabIndex < allTabs.length - 1;
+        
+        // Helper function to create navigation buttons
+        function createNavigationButtons(includeTitle = true) {
+            const navContainer = document.createElement("div");
+            navContainer.className = "location-header-container";
+            
+            // Previous button
+            const prevButton = document.createElement("button");
+            prevButton.className = "nav-button";
+            prevButton.innerHTML = "← " + (hasPrev ? allTabs[currentTabIndex - 1].textContent : "Previous Location");
+            prevButton.disabled = !hasPrev;
+            if (hasPrev) {
+                prevButton.onclick = () => allTabs[currentTabIndex - 1].click();
+            }
+            navContainer.appendChild(prevButton);
+            
+            // Title (optional)
+            if (includeTitle) {
+                const title = document.createElement("h2");
+                title.textContent = locationName;
+                title.style.margin = "0 20px";
+                navContainer.appendChild(title);
+            }
+            
+            // Next button
+            const nextButton = document.createElement("button");
+            nextButton.className = "nav-button";
+            nextButton.innerHTML = (hasNext ? allTabs[currentTabIndex + 1].textContent : "Next Location") + " →";
+            nextButton.disabled = !hasNext;
+            if (hasNext) {
+                nextButton.onclick = () => allTabs[currentTabIndex + 1].click();
+            }
+            navContainer.appendChild(nextButton);
+            
+            return navContainer;
+        }
+        
+        // Add navigation at the top
+        container.appendChild(createNavigationButtons(true));
+        
+        // Aggregate all encounters from all LocationIDs for this location name
+        const aggregatedEncounters = {
+            grass: [],
+            fishing: [],
+            rockSmash: [],
+            surfing: [],
+            hordes: []
+        };
+        
+        // Collect all encounters across all indices
+        indices.forEach((locationIndex) => {
+            const location = encounterData[locationIndex];
+            if (!location || !location.Encounters || !Array.isArray(location.Encounters)) return;
+            
+            location.Encounters.forEach(encounter => {
+                const type = encounter.EncounterType.toLowerCase();
+                
+                if (type.includes('horde')) {
+                    aggregatedEncounters.hordes.push(encounter);
+                } else if (type.includes('rock smash')) {
+                    aggregatedEncounters.rockSmash.push(encounter);
+                } else if (type.includes('surf')) {
+                    aggregatedEncounters.surfing.push(encounter);
+                } else if (type.includes('rod')) {
+                    aggregatedEncounters.fishing.push(encounter);
+                } else {
+                    // Grass, flowers, rough terrain, etc.
+                    aggregatedEncounters.grass.push(encounter);
+                }
+            });
+        });
+        
+        // Display each encounter type section
+        displayEncounterSection(container, "Grass / Terrain Encounters", aggregatedEncounters.grass);
+        displayEncounterSection(container, "Fishing", aggregatedEncounters.fishing);
+        displayEncounterSection(container, "Rock Smash", aggregatedEncounters.rockSmash);
+        displayEncounterSection(container, "Surfing", aggregatedEncounters.surfing);
+        displayEncounterSection(container, "Horde Encounters", aggregatedEncounters.hordes);
+        
+        // Display Items section
+        displayItemsSection(container, locationName);
+        
+        // Add navigation buttons at the bottom (without title)
+        const footerContainer = createNavigationButtons(false);
+        footerContainer.style.marginTop = "30px";
+        container.appendChild(footerContainer);
     }
 
     function normalizeForCompare(s) {
@@ -380,131 +485,6 @@
         // Normalize the pokemon name for the icon filename
         const normalized = pokemonName.toLowerCase().replace(/[^a-z0-9]/g, "");
         return `image/icons/${normalized}.png`;
-    }
-
-    function displayLocation(locationIndex) {
-        const container = document.getElementById("encountersSection");
-        container.innerHTML = "";
-        
-        const location = encounterData[locationIndex];
-        if (!location) return;
-
-        // Get all location tabs to determine navigation
-        const allTabs = Array.from(document.querySelectorAll(".location-tab"));
-        const currentIndex = locationIndex;
-        const hasPrev = currentIndex > 0;
-        const hasNext = currentIndex < allTabs.length - 1;
-        
-        // Helper function to create navigation buttons
-        function createNavigationButtons(includeTitle = true) {
-            const navContainer = document.createElement("div");
-            navContainer.className = "location-header-container";
-            
-            // Previous button
-            const prevButton = document.createElement("button");
-            prevButton.className = "nav-button";
-            if (hasPrev) {
-                const prevLocation = encounterData[currentIndex - 1];
-                prevButton.textContent = `← ${prevLocation.LocationName}`;
-                prevButton.onclick = () => {
-                    document.querySelectorAll(".location-tab").forEach(t => t.classList.remove("active"));
-                    allTabs[currentIndex - 1].classList.add("active");
-                    displayLocation(currentIndex - 1);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
-            } else {
-                prevButton.textContent = "← Previous Location";
-                prevButton.disabled = true;
-            }
-            navContainer.appendChild(prevButton);
-            
-            // Title (only for top navigation)
-            if (includeTitle) {
-                const areaTitle = document.createElement("div");
-                areaTitle.className = "area-title";
-                areaTitle.textContent = location.LocationName;
-                navContainer.appendChild(areaTitle);
-            } else {
-                const spacer = document.createElement("div");
-                navContainer.appendChild(spacer);
-            }
-            
-            // Next button
-            const nextButton = document.createElement("button");
-            nextButton.className = "nav-button";
-            if (hasNext) {
-                const nextLocation = encounterData[currentIndex + 1];
-                nextButton.textContent = `${nextLocation.LocationName} →`;
-                nextButton.onclick = () => {
-                    document.querySelectorAll(".location-tab").forEach(t => t.classList.remove("active"));
-                    allTabs[currentIndex + 1].classList.add("active");
-                    displayLocation(currentIndex + 1);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
-            } else {
-                nextButton.textContent = "Next Location →";
-                nextButton.disabled = true;
-            }
-            navContainer.appendChild(nextButton);
-            
-            return navContainer;
-        }
-        
-        // Add navigation buttons at the top (with title)
-        const headerContainer = createNavigationButtons(true);
-        container.appendChild(headerContainer);
-
-        // Group encounters by type
-        const encountersByType = {
-            grass: [],
-            fishing: [],
-            rockSmash: [],
-            surfing: [],
-            hordes: []
-        };
-
-        // Categorize encounters - validate that Encounters array exists
-        if (location.Encounters && Array.isArray(location.Encounters)) {
-            location.Encounters.forEach(encounter => {
-                const type = encounter.EncounterType.toLowerCase();
-            
-            if (type.includes('horde')) {
-                encountersByType.hordes.push(encounter);
-            } else if (type.includes('rock smash')) {
-                encountersByType.rockSmash.push(encounter);
-            } else if (type.includes('surf')) {
-                encountersByType.surfing.push(encounter);
-            } else if (type.includes('rod')) {
-                encountersByType.fishing.push(encounter);
-            } else {
-                // Grass, flowers, rough terrain, etc.
-                encountersByType.grass.push(encounter);
-            }
-        });
-        }
-
-        // Display Grass/Terrain encounters
-        displayEncounterSection(container, "Grass / Terrain Encounters", encountersByType.grass);
-
-        // Display Fishing encounters
-        displayEncounterSection(container, "Fishing", encountersByType.fishing);
-
-        // Display Rock Smash encounters
-        displayEncounterSection(container, "Rock Smash", encountersByType.rockSmash);
-
-        // Display Surfing encounters
-        displayEncounterSection(container, "Surfing", encountersByType.surfing);
-
-        // Display Horde encounters
-        displayEncounterSection(container, "Horde Encounters", encountersByType.hordes);
-
-        // Display Items section
-        displayItemsSection(container, location.LocationName);
-
-        // Add navigation buttons at the bottom (without title)
-        const footerContainer = createNavigationButtons(false);
-        footerContainer.style.marginTop = "30px";
-        container.appendChild(footerContainer);
     }
 
     function getItemIconPath(itemName) {
@@ -541,6 +521,7 @@
         header.style.borderBottom = "2px solid #2196F3";
         header.style.paddingBottom = "10px";
         header.style.marginBottom = "20px";
+        header.style.color = "#ffffff";
         itemsSection.appendChild(header);
 
         // Filter items for this location
@@ -552,7 +533,7 @@
         if (locationItems.length === 0) {
             const noItems = document.createElement("p");
             noItems.textContent = "Items information will be added in a future update.";
-            noItems.style.color = "#999";
+            noItems.style.color = "#cccccc";
             noItems.style.textAlign = "center";
             noItems.style.padding = "20px";
             itemsSection.appendChild(noItems);
@@ -578,7 +559,7 @@
                     subAreaHeader.style.fontWeight = "600";
                     subAreaHeader.style.marginTop = "20px";
                     subAreaHeader.style.marginBottom = "10px";
-                    subAreaHeader.style.color = "#555";
+                    subAreaHeader.style.color = "#ffffff";
                     itemsSection.appendChild(subAreaHeader);
                 }
 
@@ -595,7 +576,6 @@
                         <th style="padding: 10px; text-align: center; width: 60px;">Icon</th>
                         <th style="padding: 10px; text-align: center;">Item</th>
                         <th style="padding: 10px; text-align: center;">Location/Price</th>
-                        <th style="padding: 10px; text-align: center; width: 120px;">Sub Area</th>
                     </tr>
                 `;
                 table.appendChild(thead);
@@ -639,13 +619,6 @@
                     locationCell.style.padding = "10px";
                     locationCell.textContent = item["Location/Price"];
                     row.appendChild(locationCell);
-
-                    // Sub Area cell
-                    const subAreaCell = document.createElement("td");
-                    subAreaCell.style.padding = "10px";
-                    subAreaCell.style.color = "#666";
-                    subAreaCell.textContent = subArea !== "General" ? subArea : "-";
-                    row.appendChild(subAreaCell);
 
                     tbody.appendChild(row);
                 });
