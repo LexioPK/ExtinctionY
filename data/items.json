@@ -1,0 +1,3702 @@
+[
+  {
+    "Item": "Lansat Berry-2",
+    "Area": "Ambrette Town",
+    "Location/Price": "In the southwestern corner outside of Hotel Ambrette (hidden)"
+  },
+  {
+    "Item": "Genesect Drives",
+    "Area": "Ambrette Town",
+    "Location/Price": "From a Hiker in the Fossil Lab after showing him a Genesect"
+  },
+  {
+    "Item": "Rocky Helmet",
+    "Area": "Ambrette Town",
+    "Location/Price": "From a Beauty in the gate to Route 9 after visiting the Fossil Lab"
+  },
+  {
+    "Item": "Old Rod",
+    "Area": "Ambrette Town",
+    "Location/Price": "From a Fisherman on the lower floor of the Aquarium"
+  },
+  {
+    "Item": "Rare Candy",
+    "Area": "Ambrette Town",
+    "Location/Price": "Along the coast, near three breakable rocks against the cliff face, five steps south and five steps west of the southernmost rock (hidden)"
+  },
+  {
+    "Item": "Aerodactylite",
+    "Area": "Ambrette Town",
+    "Location/Price": "From a male Scientist in the Fossil Lab after returning from Glittering Cave"
+  },
+  {
+    "Item": "Dive Ball",
+    "Area": "Ambrette Town",
+    "Location/Price": "Exchange a Pok\u00e9 Ball with the Punk Guy next to the Fossil Lab (daily)"
+  },
+  {
+    "Item": "TM94: Rock Smash",
+    "Area": "Ambrette Town",
+    "Location/Price": "From a girl outside of the Aquarium"
+  },
+  {
+    "Item": "TM96: Nature Power",
+    "Area": "Ambrette Town",
+    "Location/Price": "From a Beauty on the right side of the lobby in Hotel Ambrette"
+  },
+  {
+    "Item": "Pearl",
+    "Area": "Ambrette Town",
+    "Location/Price": "Along the coast, at the foot of the cliff on the south side of the town"
+  },
+  {
+    "Item": "Shell Bell",
+    "Area": "Ambrette Town Aquarium",
+    "Location/Price": "Reward for beating Hoenn Leader Wallace"
+  },
+  {
+    "Item": "Petaya Berry-3",
+    "Area": "Anistar City",
+    "Location/Price": "In the bush closest to the Anistar Sundial on its right side (hidden)"
+  },
+  {
+    "Item": "Wiki Berry-5",
+    "Area": "Anistar City",
+    "Location/Price": "On the ground at the mouth of the alley next to the Boutique (hidden)"
+  },
+  {
+    "Item": "Mental Herb-3",
+    "Area": "Anistar City",
+    "Location/Price": "In the fourth bush from the west on the south side of the northern bridge (hidden, regenerates occasionally)"
+  },
+  {
+    "Item": "White Herb-2",
+    "Area": "Anistar City",
+    "Location/Price": "In the middle of the terrace east of the Gym (hidden)"
+  },
+  {
+    "Item": "Repeat Ball-10",
+    "Area": "Anistar City",
+    "Location/Price": "From Professor Sycamore's assistant Sina upon entering the city"
+  },
+  {
+    "Item": "TM04: Calm Mind",
+    "Area": "Anistar City",
+    "Location/Price": "Reward for beating Leader Olympia"
+  },
+  {
+    "Item": "TM10: Hidden Power",
+    "Area": "Anistar City",
+    "Location/Price": "From the Psychic in the house next to the Boutique"
+  },
+  {
+    "Item": "TM32: Double Team",
+    "Area": "Anistar City",
+    "Location/Price": "From a Hex Maniac in the Pok\u00e9mon Center (4:00 AM-10:59 AM)"
+  },
+  {
+    "Item": "TM35: Flamethrower",
+    "Area": "Anistar City",
+    "Location/Price": "From a Hex Maniac in the Pok\u00e9mon Center (11:00 AM-5:59 PM)"
+  },
+  {
+    "Item": "TM77: Zen Headbutt",
+    "Area": "Anistar City",
+    "Location/Price": "From a Hex Maniac in the Pok\u00e9mon Center (6:00 PM-7:59 PM)"
+  },
+  {
+    "Item": "TM90: Substitute",
+    "Area": "Anistar City",
+    "Location/Price": "From a Hex Maniac in the Pok\u00e9mon Center (8:00 PM-3:59 AM)"
+  },
+  {
+    "Item": "Comet Shard",
+    "Area": "Anistar City",
+    "Location/Price": "In the house south of the Gym, after giving the man a Pok\u00e9mon and then entering the Hall of Fame"
+  },
+  {
+    "Item": "TM14: Blizzard",
+    "Area": "Anistar City (Mart)",
+    "Location/Price": "$15,000.00"
+  },
+  {
+    "Item": "TM15: Hyper Beam",
+    "Area": "Anistar City (Mart)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "TM25: Thunder",
+    "Area": "Anistar City (Mart)",
+    "Location/Price": "$15,000.00"
+  },
+  {
+    "Item": "TM38: Fire Blast",
+    "Area": "Anistar City (Mart)",
+    "Location/Price": "$15,000.00"
+  },
+  {
+    "Item": "TM52: Focus Blast",
+    "Area": "Anistar City (Mart)",
+    "Location/Price": "$15,000.00"
+  },
+  {
+    "Item": "Blue Orb",
+    "Area": "Anistar City (Middle House)",
+    "Location/Price": "Reward for beating Hoenn Leader Norman"
+  },
+  {
+    "Item": "Rare Candy",
+    "Area": "Aquacorde Town",
+    "Location/Price": "East Shop"
+  },
+  {
+    "Item": "Pok\u00e9 Ball",
+    "Area": "Aquacorde Town",
+    "Location/Price": "West Shop"
+  },
+  {
+    "Item": "Custap Berry-2",
+    "Area": "Azure Bay",
+    "Location/Price": "On the rock northwest of the sign at the southern end of the long isle on the west side of the bay (hidden)"
+  },
+  {
+    "Item": "Rindo Berry",
+    "Area": "Azure Bay",
+    "Location/Price": "Reward for beating Fisherman Ewan"
+  },
+  {
+    "Item": "Wacan Berry",
+    "Area": "Azure Bay",
+    "Location/Price": "Reward for beating Swimmer M Kieran"
+  },
+  {
+    "Item": "Deep Sea Scale",
+    "Area": "Azure Bay",
+    "Location/Price": "Among the grass on the southwestern island, towards the south"
+  },
+  {
+    "Item": "Deep Sea Tooth",
+    "Area": "Azure Bay",
+    "Location/Price": "Among the grass on the southwestern island, towards the northeast"
+  },
+  {
+    "Item": "Splash Plate",
+    "Area": "Azure Bay",
+    "Location/Price": "On the northeast corner of the shore around the Sea Spirit's Den in the north"
+  },
+  {
+    "Item": "Water Gem",
+    "Area": "Azure Bay",
+    "Location/Price": "Reward for beating Swimmer F Isla"
+  },
+  {
+    "Item": "Ampharosite",
+    "Area": "Azure Bay",
+    "Location/Price": "Gift from the old man on the isle at the mouth of the bay"
+  },
+  {
+    "Item": "Dive Ball-10",
+    "Area": "Azure Bay",
+    "Location/Price": "On the rock among the grass on the southwestern island (hidden)"
+  },
+  {
+    "Item": "Lure Ball-10",
+    "Area": "Azure Bay",
+    "Location/Price": "At the north end of the long isle on the west side of the bay"
+  },
+  {
+    "Item": "TM18: Rain Dance",
+    "Area": "Azure Bay",
+    "Location/Price": "Reward for beating Swimmer F Romy"
+  },
+  {
+    "Item": "TM81: X-Scissor",
+    "Area": "Azure Bay",
+    "Location/Price": "At the south end of the southwestern island"
+  },
+  {
+    "Item": "Big Pearl-3",
+    "Area": "Azure Bay",
+    "Location/Price": "On the isle with the grass in the shape of an arrow on the east side of the bay"
+  },
+  {
+    "Item": "Star Piece",
+    "Area": "Azure Bay",
+    "Location/Price": "On the rock on the small isle on the east side of the bay, northeast of the isle with the arrow-shaped grass (hidden)"
+  },
+  {
+    "Item": "Micle Berry-5",
+    "Area": "Berry Fields",
+    "Location/Price": "In the southwest corner of the fields"
+  },
+  {
+    "Item": "Oran Berry-5",
+    "Area": "Berry Fields",
+    "Location/Price": "From the Berry grower after agreeing to help him grow Berries"
+  },
+  {
+    "Item": "Pecha Berry-5",
+    "Area": "Berry Fields",
+    "Location/Price": "From the Berry grower after agreeing to help him grow Berries"
+  },
+  {
+    "Item": "Sprinklotad",
+    "Area": "Berry Fields",
+    "Location/Price": "From the Berry grower after agreeing to help him grow Berries"
+  },
+  {
+    "Item": "Aspear Berry",
+    "Area": "Camphier Town",
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+  },
+  {
+    "Item": "Cheri Berry",
+    "Area": "Camphier Town",
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+  },
+  {
+    "Item": "Chesto Berry",
+    "Area": "Camphier Town",
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+  },
+  {
+    "Item": "Pecha Berry",
+    "Area": "Camphier Town",
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+  },
+  {
+    "Item": "Rawst Berry",
+    "Area": "Camphier Town",
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+  },
+  {
+    "Item": "Berry Juice",
+    "Area": "Camphier Town",
+    "Location/Price": "From a girl west of the fountain"
+  },
+  {
+    "Item": "Iron Ball",
+    "Area": "Camphier Town",
+    "Location/Price": "In the southwestern corner of town, over the ledge"
+  },
+  {
+    "Item": "Full Heal",
+    "Area": "Camphier Town",
+    "Location/Price": "From the Rising Star in the lobby of Hotel Camphrier"
+  },
+  {
+    "Item": "PP UP-2",
+    "Area": "Camphier Town",
+    "Location/Price": "Directly past the Star Piece in the wooded area to the south of town, in the bush (hidden)"
+  },
+  {
+    "Item": "Sweet Heart",
+    "Area": "Camphier Town",
+    "Location/Price": "From a Maid in the northwestern-most house (daily; 5 given on February 14 and March 14)"
+  },
+  {
+    "Item": "Ultra Ball",
+    "Area": "Camphier Town",
+    "Location/Price": "From the man pacing around outside of the Pok\u00e9mon Center"
+  },
+  {
+    "Item": "TM46: Thief",
+    "Area": "Camphier Town",
+    "Location/Price": "From a Punk Girl in Cassius's house"
+  },
+  {
+    "Item": "TM48: Round",
+    "Area": "Camphier Town",
+    "Location/Price": "Reward for beating Hoenn Elite Glacia"
+  },
+  {
+    "Item": "Star Piece",
+    "Area": "Camphier Town",
+    "Location/Price": "At the end of the wooded path at the south of the town"
+  },
+  {
+    "Item": "Stardust-3",
+    "Area": "Camphier Town",
+    "Location/Price": "In the bush northwest of the center fountain (hidden)"
+  },
+  {
+    "Item": "Lucky Egg",
+    "Area": "Camphier Town (Shabboneau Castle)",
+    "Location/Price": "In the castle at the bottom of the second floor. "
+  },
+  {
+    "Item": "Lava Cookie",
+    "Area": "Camphier Town (Hotel)",
+    "Location/Price": "On 2F of Hotel Camphrier if the player is talking to the Madame for the fourth time"
+  },
+  {
+    "Item": "Strange Souvenir",
+    "Area": "Camphier Town (Hotel)",
+    "Location/Price": "On 2F of Hotel Camphrier if the player is talking to the Backpacker for the fourth time"
+  },
+  {
+    "Item": "Everstone",
+    "Area": "Connecting Cave",
+    "Location/Price": "Reward for beating Breeder Mercy"
+  },
+  {
+    "Item": "TM21: Slice",
+    "Area": "Connecting Cave",
+    "Location/Price": "In the cave's north branch, from a Backpacker near the middle Strength boulder"
+  },
+  {
+    "Item": "TM73: Thunder Wave",
+    "Area": "Connecting Cave",
+    "Location/Price": "In the cave's north branch, directly across from the Cyllage City entrance/exit (requires Strength)"
+  },
+  {
+    "Item": "Dubious Disc",
+    "Area": "Coumarine City (Cliffside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Reaper Cloth",
+    "Area": "Coumarine City (Cliffside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Up Grade",
+    "Area": "Coumarine City (Cliffside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Dawn Stone",
+    "Area": "Coumarine City (Seaside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Dusk Stone",
+    "Area": "Coumarine City (Seaside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Fire Stone",
+    "Area": "Coumarine City (Seaside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Leaf Stone",
+    "Area": "Coumarine City (Seaside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Moon Stone",
+    "Area": "Coumarine City (Seaside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Shiny Stone",
+    "Area": "Coumarine City (Seaside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Sun Stone",
+    "Area": "Coumarine City (Seaside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Thunder Stone",
+    "Area": "Coumarine City (Seaside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Water Stone",
+    "Area": "Coumarine City (Seaside Section Mart)",
+    "Location/Price": "$2,100.00"
+  },
+  {
+    "Item": "Air Balloon",
+    "Area": "Coumarine City (Cliffside Section)",
+    "Location/Price": "Between the house and the sign west of the Pok\u00e9mon Center (hidden)"
+  },
+  {
+    "Item": "Black Sludge",
+    "Area": "Coumarine City (Cliffside Section)",
+    "Location/Price": "From the Punk Guy in the Route 13 Gate"
+  },
+  {
+    "Item": "Grass Gem",
+    "Area": "Coumarine City (Cliffside Section)",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Maurice"
+  },
+  {
+    "Item": "Metronome",
+    "Area": "Coumarine City (Cliffside Section)",
+    "Location/Price": "From a man in the Hillcrest Station"
+  },
+  {
+    "Item": "Pok\u00e9 Toy",
+    "Area": "Coumarine City (Cliffside Section)",
+    "Location/Price": "From the Waitress in the eastern house south of the Pok\u00e9mon Center, after answering her quiz correctly"
+  },
+  {
+    "Item": "Sky Plate",
+    "Area": "Coumarine City (Cliffside Section)",
+    "Location/Price": "On the edge of the cliff north of the Pok\u00e9mon Center"
+  },
+  {
+    "Item": "Heart Scale",
+    "Area": "Coumarine City (Cliffside Section)",
+    "Location/Price": "From Tierno on the cliff north of the Pok\u00e9mon Center, after showing him a Pok\u00e9mon with the dance move he requests (post-game) (daily)"
+  },
+  {
+    "Item": "TM86: Grass Knot",
+    "Area": "Coumarine City (Cliffside Section)",
+    "Location/Price": "Reward for beating Leader Ramos"
+  },
+  {
+    "Item": "Aspear Berry",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "Randomly obtained from the unoccupied stall on the marina (daily)"
+  },
+  {
+    "Item": "Cheri Berry",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "Randomly obtained from the unoccupied stall on the marina (daily)"
+  },
+  {
+    "Item": "Chesto Berry",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "Randomly obtained from the unoccupied stall on the marina (daily)"
+  },
+  {
+    "Item": "Figy Berry",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "In the corner behind the unoccupied stall on the marina (hidden)"
+  },
+  {
+    "Item": "Pecha Berry",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "Randomly obtained from the unoccupied stall on the marina (daily)"
+  },
+  {
+    "Item": "Rawst Berry",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "Randomly obtained from the unoccupied stall on the marina (daily)"
+  },
+  {
+    "Item": "Lucky Egg",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "From the Lady on the left side of the hotel lobby upon showing her a Pok\u00e9mon with maximum friendship"
+  },
+  {
+    "Item": "Silk Scarf",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "From the Monsieur in the house next to the lighthouse"
+  },
+  {
+    "Item": "Good Rod",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "From a Fisherman east of the Incense and Berry stalls on the marina"
+  },
+  {
+    "Item": "PP Up-2",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "On the northwestern bollard on the pier in the west of the marina (hidden)"
+  },
+  {
+    "Item": "HM02: Fly",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "From Professor Sycamore in the Seaside Station"
+  },
+  {
+    "Item": "TM100: Air Slash",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "From the Veteran west of Hotel Coumarine after answering her quiz correctly (random, one TM per day)"
+  },
+  {
+    "Item": "TM16: Light Screen",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "Reward for beating Hoenn Leader Liza"
+  },
+  {
+    "Item": "TM33: Reflect",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "Reward for beating Hoenn Leader Tate"
+  },
+  {
+    "Item": "TM62: Acrobatics",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "From the Veteran west of Hotel Coumarine after answering her quiz correctly (random, one TM per day)"
+  },
+  {
+    "Item": "TM63: Fire Punch",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "From the Veteran west of Hotel Coumarine after answering her quiz correctly (random, one TM per day)"
+  },
+  {
+    "Item": "TM92: Trick Room",
+    "Area": "Coumarine City (Seaside Section)",
+    "Location/Price": "From the Veteran west of Hotel Coumarine after answering her quiz correctly (random, one TM per day)"
+  },
+  {
+    "Item": "Oran Berry",
+    "Area": "Couriway Town",
+    "Location/Price": "From the man east of the hotel after buying Fresh Water (daily)"
+  },
+  {
+    "Item": "Passho Berry-10",
+    "Area": "Couriway Town",
+    "Location/Price": "In the corner by the three waterfalls northeast of the hotel"
+  },
+  {
+    "Item": "Charcoal",
+    "Area": "Couriway Town",
+    "Location/Price": "From the Beauty in the house by the Route 19 Gate if the player answers her quiz correctly (if the player chose Fennekin)"
+  },
+  {
+    "Item": "Choice Specs",
+    "Area": "Couriway Town",
+    "Location/Price": "Up the waterfall southeast of the hotel (requires Surf and Waterfall, also should be red but is yellow)"
+  },
+  {
+    "Item": "Flying Gem-10",
+    "Area": "Couriway Town",
+    "Location/Price": "At the east end of the train station"
+  },
+  {
+    "Item": "Miracle Seed",
+    "Area": "Couriway Town",
+    "Location/Price": "From the Beauty in the house by the Route 19 Gate if the player answers her quiz correctly (if the player chose Chespin)"
+  },
+  {
+    "Item": "Mystic Water",
+    "Area": "Couriway Town",
+    "Location/Price": "From the Beauty in the house by the Route 19 Gate if the player answers her quiz correctly (if the player chose Froakie)"
+  },
+  {
+    "Item": "Water Gem-10",
+    "Area": "Couriway Town",
+    "Location/Price": "On the isolated, single tile of land by the three waterfalls northeast of the Couriway Hotel (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Fresh Water",
+    "Area": "Couriway Town",
+    "Location/Price": "From the man east of the hotel for $300 (daily)"
+  },
+  {
+    "Item": "PP Max-4",
+    "Area": "Couriway Town",
+    "Location/Price": "In the corner of the first landing of the stairs east of the Pok\u00e9mon Center (hidden)"
+  },
+  {
+    "Item": "Revive",
+    "Area": "Couriway Town",
+    "Location/Price": "From the Schoolgirl in the house south of the Pok\u00e9mon Center if the player has a Pok\u00e9mon with Nuzzle in their party"
+  },
+  {
+    "Item": "Lure Ball-10",
+    "Area": "Couriway Town",
+    "Location/Price": "In between the two benches at the train station (hidden)"
+  },
+  {
+    "Item": "Quick Ball-10",
+    "Area": "Couriway Town",
+    "Location/Price": "In front of the southern bench on the pier southeast of the Pok\u00e9mon Center (hidden)"
+  },
+  {
+    "Item": "TM55: Scald",
+    "Area": "Couriway Town",
+    "Location/Price": "From the Schoolgirl in the lobby of Hotel Couriway if the player answers her quiz correctly"
+  },
+  {
+    "Item": "TM89: U-turn",
+    "Area": "Couriway Town",
+    "Location/Price": "From the Madame at the train station, east of the Pok\u00e9mon Center"
+  },
+  {
+    "Item": "Pearl String",
+    "Area": "Couriway Town",
+    "Location/Price": "In the bush just south of the Pok\u00e9mon Center (hidden)"
+  },
+  {
+    "Item": "Weakness Policy",
+    "Area": "Couriway Town (Hotel Room 2)",
+    "Location/Price": "Reward for beating Hoenn Leader Wattson"
+  },
+  {
+    "Item": "Charti Berry",
+    "Area": "Cyllage City",
+    "Location/Price": "From the boy in the house on the island off the southwestern coast (requires Surf)"
+  },
+  {
+    "Item": "Liechi Berry",
+    "Area": "Cyllage City",
+    "Location/Price": "On the southernmost rock in front of the Gym (hidden)"
+  },
+  {
+    "Item": "Persim Berry-3",
+    "Area": "Cyllage City",
+    "Location/Price": "A prize for correctly answering the quiz from the Rising Star girl in the house behind the Pok\u00e9mon Center"
+  },
+  {
+    "Item": "Salac Berry",
+    "Area": "Cyllage City",
+    "Location/Price": "At the bottom of the hill of the bike path, two spaces south and one east from the biker (hidden)"
+  },
+  {
+    "Item": "Destiny Knot",
+    "Area": "Cyllage City",
+    "Location/Price": "On 2F of Hotel Cyllage, from the Maid at the top of the stairs"
+  },
+  {
+    "Item": "Rock Gem",
+    "Area": "Cyllage City",
+    "Location/Price": "Behind the benches by the bottom of the hill of the bike path"
+  },
+  {
+    "Item": "Rock Gem",
+    "Area": "Cyllage City",
+    "Location/Price": "West of the Gym, down the dirt ramp"
+  },
+  {
+    "Item": "Rock Gem",
+    "Area": "Cyllage City",
+    "Location/Price": "On the strip of dirt halfway down the hill of the bike path"
+  },
+  {
+    "Item": "Bike",
+    "Area": "Cyllage City",
+    "Location/Price": "From the owner of the bike shop east of the Pok\u00e9mon Center; choice of green or yellow"
+  },
+  {
+    "Item": "PP Max",
+    "Area": "Cyllage City",
+    "Location/Price": "On the rock behind the southernmost house (hidden)"
+  },
+  {
+    "Item": "Soda Pop",
+    "Area": "Cyllage City",
+    "Location/Price": "Sold by the girl roaming northeast of the Pok\u00e9mon Center for $300"
+  },
+  {
+    "Item": "HM04: Strength",
+    "Area": "Cyllage City",
+    "Location/Price": "From Grant on the bike path ramp leading to the Gym"
+  },
+  {
+    "Item": "TM10: Hidden Power",
+    "Area": "Cyllage City",
+    "Location/Price": "Reward for beating Hoenn Elite Pheobe"
+  },
+  {
+    "Item": "TM39: Rock Tomb",
+    "Area": "Cyllage City",
+    "Location/Price": "Reward for beating Leader Grant"
+  },
+  {
+    "Item": "TM44: Rest",
+    "Area": "Cyllage City",
+    "Location/Price": "From the male Tourist in the lobby of Hotel Cyllage"
+  },
+  {
+    "Item": "TM88: Sleep Talk",
+    "Area": "Cyllage City",
+    "Location/Price": "From the female Tourist in the lobby of Hotel Cyllage"
+  },
+  {
+    "Item": "Pearl-2",
+    "Area": "Cyllage City",
+    "Location/Price": "On the northern bit of protruding dry land on the sandbar west of the city, on the sole rock (hidden)"
+  },
+  {
+    "Item": "Lucky Punch",
+    "Area": "Cyllage City (Mart)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Metal Powder",
+    "Area": "Cyllage City (Mart)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Quick Powder",
+    "Area": "Cyllage City (Mart)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Leppa Berry",
+    "Area": "Dendemille Town",
+    "Location/Price": "From the Ace Trainer girl in the house southwest of the windmill, after showing her a specific TM (daily)"
+  },
+  {
+    "Item": "Salac Berry-2",
+    "Area": "Dendemille Town",
+    "Location/Price": "In the northwestern-most corner of town, on the north railing (hidden)"
+  },
+  {
+    "Item": "Sitrus Berry",
+    "Area": "Dendemille Town",
+    "Location/Price": "From the Artist girl in the Pok\u00e9mon Center"
+  },
+  {
+    "Item": "Sitrus Berry-50",
+    "Area": "Dendemille Town",
+    "Location/Price": "On the south edge of the farm field"
+  },
+  {
+    "Item": "Shell Bell",
+    "Area": "Dendemille Town",
+    "Location/Price": "From the man in the house northeast of the windmill, after seeing 70 or more Pok\u00e9mon in the Mountain Kalos Pok\u00e9dex"
+  },
+  {
+    "Item": "Heal Ball-10",
+    "Area": "Dendemille Town",
+    "Location/Price": "In the bush in the corner just southwest of the Pok\u00e9mon Center's entrance (hidden)"
+  },
+  {
+    "Item": "TM42: Facade",
+    "Area": "Dendemille Town",
+    "Location/Price": "From the Youngster in the house southwest of the windmill"
+  },
+  {
+    "Item": "Big Nugget",
+    "Area": "Dendemille Town",
+    "Location/Price": "From the Preschooler boy in the house northwest of the windmill after showing him a Super Size Gourgeist"
+  },
+  {
+    "Item": "Big Nugget-3",
+    "Area": "Dendemille Town",
+    "Location/Price": "In the middle of the southwest plowed area of the farm field (hidden)"
+  },
+  {
+    "Item": "Aguav Berry-5",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "On the stalagmite on the right side of the corridor connecting the 1F and 3F staircases, accessed via the west area of 1F via the main exit of 2F (hidden)"
+  },
+  {
+    "Item": "Yache Berry",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "Reward for beating Black Belt Alonzo"
+  },
+  {
+    "Item": "Yache Berry-10",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "North of Hiker Delmon"
+  },
+  {
+    "Item": "PP Max",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "On the left stalagmite in the dead-end area, accessed via the left staircase in the northeast of 1F (hidden)"
+  },
+  {
+    "Item": "PP Up-4",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "On the stalagmite to the west of the entrance (hidden)"
+  },
+  {
+    "Item": "PP Up-7",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "On the north wall to the right of the pit near Abomasnow in the north of 3F (hidden)"
+  },
+  {
+    "Item": "Aggronite",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "Reward for beating Hiker Brent"
+  },
+  {
+    "Item": "Focus Sash",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "On the stalagmite on the right after sliding north from the main entrance to 2F (hidden)"
+  },
+  {
+    "Item": "Icy Rock",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "In the room with the Ice Rock, accessed via the stairs on 2F across the stream west of Battle Girl Kinsey (requires Surf)"
+  },
+  {
+    "Item": "Psychic Gem-10",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "In the southwest corner of 2F, at the end of the stream (requires Surf)"
+  },
+  {
+    "Item": "Weakness Policy",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "In the area to the east of the main entrance to 3F, on the stalagmite next to Battle Girl Gabrielle (hidden)"
+  },
+  {
+    "Item": "Abomasite",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "Given by the Abomasnow after rescuing it from Team Flare"
+  },
+  {
+    "Item": "Darmanitite",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "Reward for beating Brains & Brawn Eoin & Wolf"
+  },
+  {
+    "Item": "Heracronite",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "Reward for beating Ace Trainer Neil"
+  },
+  {
+    "Item": "Dusk Ball-10",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "In the northeast, on the north wall of the corner west of Ace Trainer Neil (hidden)"
+  },
+  {
+    "Item": "Wiki Berry-5",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "In the southeast of 3F, in the eastward branch of the path just north of the stairs to 2F"
+  },
+  {
+    "Item": "TM35: Flamethrower",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "In the middle of the ice on the west side of 3F"
+  },
+  {
+    "Item": "TM64: Aura Sphere",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "At the southeastern end of the ice west of Battle Girl Kinsey"
+  },
+  {
+    "Item": "TM79: Frost Breath",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "In a chamber accessed via the southeast staircase on 3F; reaching the TM requires the player to slide diagonally"
+  },
+  {
+    "Item": "TM90: Substitute",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "South of the Ace Trainer girl who heals the player's Pok\u00e9mon, in the west area accessed via 2F's main exit"
+  },
+  {
+    "Item": "Comet Shard",
+    "Area": "Frost Cavern (Inside)",
+    "Location/Price": "On the fifth stalagmite (counting north to south) in the ice west of Battle Girl Kinsey (hidden)"
+  },
+  {
+    "Item": "Apicot Berry-5",
+    "Area": "Frost Cavern (Outside)",
+    "Location/Price": "In the corner north of Artist Salvador (hidden)"
+  },
+  {
+    "Item": "Iapapa Berry-4",
+    "Area": "Frost Cavern (Outside)",
+    "Location/Price": "Just west of the cave entrance, facing northwest into the corner (hidden)"
+  },
+  {
+    "Item": "Bright Powder",
+    "Area": "Frost Cavern (Outside)",
+    "Location/Price": "Reward for beating Artist Salvador"
+  },
+  {
+    "Item": "Choice Band",
+    "Area": "Frost Cavern (Outside)",
+    "Location/Price": "Down the waterfall, immediately to the northeast (requires Surf and Waterfall)"
+  },
+  {
+    "Item": "TM71: Stone Edge",
+    "Area": "Frost Cavern (Outside)",
+    "Location/Price": "Down the waterfall, at the far east end of the river in a clearing on the south bank (requires Surf and Waterfall)"
+  },
+  {
+    "Item": "Lum Berry-5",
+    "Area": "Geosenge Town",
+    "Location/Price": "Behind Hotel Marine Snow"
+  },
+  {
+    "Item": "Sitrus Berry-5",
+    "Area": "Geosenge Town",
+    "Location/Price": "In the southwestern corner of the town"
+  },
+  {
+    "Item": "Everstone",
+    "Area": "Geosenge Town",
+    "Location/Price": "From the Scientist in the house northwest of the Pok\u00e9mon Center"
+  },
+  {
+    "Item": "TM66: Payback",
+    "Area": "Geosenge Town",
+    "Location/Price": "From the Monsieur inside the Pok\u00e9mon Center, just outside the changing room"
+  },
+  {
+    "Item": "TM43: Flame Charge",
+    "Area": "Geosenge Town/Kalos Power Plant",
+    "Location/Price": "Reward for beating Hoenn Leader Flannery/From a Worker after defeating Team Flare"
+  },
+  {
+    "Item": "Charti Berry-5",
+    "Area": "Glittering Cave",
+    "Location/Price": "At the end of the second detour (leftwards) from the entrance of the cave"
+  },
+  {
+    "Item": "Escape Rope",
+    "Area": "Glittering Cave",
+    "Location/Price": "In the deep part of the cave, south of the Fossil assistant"
+  },
+  {
+    "Item": "Jaw Fossil",
+    "Area": "Glittering Cave",
+    "Location/Price": "In the deep part of the cave, from the Fossil assistant if the player chooses it instead of the Sail Fossil"
+  },
+  {
+    "Item": "Sail Fossil",
+    "Area": "Glittering Cave",
+    "Location/Price": "In the deep part of the cave, from the Fossil assistant if the player chooses it instead of the Jaw Fossil"
+  },
+  {
+    "Item": "TM65: Shadow Claw",
+    "Area": "Glittering Cave",
+    "Location/Price": "At the end of the third detour (leftwards) from the entrance of the cave"
+  },
+  {
+    "Item": "Magnet",
+    "Area": "Kalos Power Plant",
+    "Location/Price": "From a female Scientist after defeating Team Flare"
+  },
+  {
+    "Item": "Zap Plate",
+    "Area": "Kalos Power Plant",
+    "Location/Price": "In the northeast corner of the room with the plant staff"
+  },
+  {
+    "Item": "Fresh Water",
+    "Area": "Kalos Power Plant",
+    "Location/Price": "Sold by the plant staff person in a suit for $300/$100 per bottle"
+  },
+  {
+    "Item": "Full Restore-2",
+    "Area": "Kalos Power Plant",
+    "Location/Price": "From Dexio immediately after defeating Team Flare"
+  },
+  {
+    "Item": "Max Revive",
+    "Area": "Kiloude City",
+    "Location/Price": "From the Schoolgirl in the TMV station after answering her question correctly"
+  },
+  {
+    "Item": "PP Up",
+    "Area": "Kiloude City",
+    "Location/Price": "In the potted plant on the side of the path in front of the Friend Safari (hidden)"
+  },
+  {
+    "Item": "DNA Splicers",
+    "Area": "Kiloude City",
+    "Location/Price": "From the Punk Girl in the second northwestern-most house when she is shown a Kyurem"
+  },
+  {
+    "Item": "Vs. Recorder",
+    "Area": "Kiloude City",
+    "Location/Price": "From a Monsieur upon entering the city"
+  },
+  {
+    "Item": "Revive",
+    "Area": "Kiloude City",
+    "Location/Price": "From the Hex Maniac in the house by the TMV station for showing her a Pok\u00e9mon that knows Petal Blizzard"
+  },
+  {
+    "Item": "Master Ball-10",
+    "Area": "Kiloude City",
+    "Location/Price": "In the north of the city in the corner north of the Artist girl (hidden)"
+  },
+  {
+    "Item": "Nugget",
+    "Area": "Kiloude City",
+    "Location/Price": "To the east of the Battle Maison"
+  },
+  {
+    "Item": "Mago Berry-2",
+    "Area": "Laverre City",
+    "Location/Price": "In the corner south of the staircase west of the Gym (hidden)"
+  },
+  {
+    "Item": "Dusk Stone",
+    "Area": "Laverre City",
+    "Location/Price": "From a Team Flare Grunt northwest of the Gym after entering the Hall of Fame"
+  },
+  {
+    "Item": "Fairy Gem-10",
+    "Area": "Laverre City",
+    "Location/Price": "Behind the clothing shop, via the narrow path between it and its neighbor"
+  },
+  {
+    "Item": "Pok\u00e9 Doll",
+    "Area": "Laverre City",
+    "Location/Price": "From the man near the Route 15 gate after showing him a Pok\u00e9mon with a height of less than 1' (daily)"
+  },
+  {
+    "Item": "Pok\u00e9 Doll",
+    "Area": "Laverre City",
+    "Location/Price": "From the Lass outside the caf\u00e9 after showing her a Pok\u00e9mon with height of at least 9'10\" (daily)"
+  },
+  {
+    "Item": "Gengarite",
+    "Area": "Laverre City",
+    "Location/Price": "From the Hex Maniac in front of the houses northwest of the Gym, if the player has seen Gastly, Haunter, or Gengar"
+  },
+  {
+    "Item": "Friend Ball-10",
+    "Area": "Laverre City",
+    "Location/Price": "Among the mushrooms growing next to the caf\u00e9 in the northeast (hidden)"
+  },
+  {
+    "Item": "TM41: Ice Punch",
+    "Area": "Laverre City",
+    "Location/Price": "From the boy looking at the mushrooms growing north of the Route 14 entrance"
+  },
+  {
+    "Item": "TM99: Dazzling Gleam",
+    "Area": "Laverre City",
+    "Location/Price": "Reward for beating Leader Valerie"
+  },
+  {
+    "Item": "Big Mushroom-3",
+    "Area": "Laverre City",
+    "Location/Price": "From the mushrooms growing north of the Route 14 entrance (hidden, regenerates occasionally)"
+  },
+  {
+    "Item": "TM02: Dragon Claw",
+    "Area": "Laverre City (Mart)",
+    "Location/Price": "$10,000.00"
+  },
+  {
+    "Item": "TM03: Psyshock",
+    "Area": "Laverre City (Mart)",
+    "Location/Price": "$10,000.00"
+  },
+  {
+    "Item": "TM07: Hail",
+    "Area": "Laverre City (Mart)",
+    "Location/Price": "$12,500.00"
+  },
+  {
+    "Item": "TM11: Sunny Day",
+    "Area": "Laverre City (Mart)",
+    "Location/Price": "$12,500.00"
+  },
+  {
+    "Item": "TM37: Sandstorm",
+    "Area": "Laverre City (Mart)",
+    "Location/Price": "$12,500.00"
+  },
+  {
+    "Item": "TM84: Poison Jab",
+    "Area": "Laverre City (Mart)",
+    "Location/Price": "$10,000.00"
+  },
+  {
+    "Item": "TM08: Bulk Up",
+    "Area": "Laverre City (Right Most House) /Snowbelle City",
+    "Location/Price": "Reward for beating Hoenn Leader Brawly/From the Battle Girl in the leftmost of the two houses north of the Pok\u00e9mon Center"
+  },
+  {
+    "Item": "Electric Gem",
+    "Area": "Lost Hotel",
+    "Location/Price": "Reward for beating Punk Guy"
+  },
+  {
+    "Item": "Kasib Berry-10",
+    "Area": "Lost Hotel (Route 15)",
+    "Location/Price": "Route 15 side, at the end of the hall east of the Twirling Whirlwind (requires that the player know the skate tricks 360 and Backflip)"
+  },
+  {
+    "Item": "Fire Gem",
+    "Area": "Lost Hotel (Route 15)",
+    "Location/Price": "Reward for beating Punk Couple Zoya & Asa"
+  },
+  {
+    "Item": "Scope Lens",
+    "Area": "Lost Hotel (Route 15)",
+    "Location/Price": "Reward for beating Hoenn Elite Drake"
+  },
+  {
+    "Item": "Toxic Orb",
+    "Area": "Lost Hotel (Route 15)",
+    "Location/Price": "Route 15 side, at the south end of the first hall"
+  },
+  {
+    "Item": "Houndoominite",
+    "Area": "Lost Hotel (Route 15)",
+    "Location/Price": "Reward for beating Punk Girl Jeanne"
+  },
+  {
+    "Item": "TM97: Dark Pulse",
+    "Area": "Lost Hotel (Route 15)",
+    "Location/Price": "Route 15 side, in the blocked-off room east of the Twirling Whirlwind (requires Rock Smash and that the player know the skate tricks 360 and Backflip)"
+  },
+  {
+    "Item": "Salac Berry-2",
+    "Area": "Lost Hotel (Route 16)",
+    "Location/Price": "Route 16 side, far west end, south of Punk Girl Cecile between a pair of cracked walls (requires Rock Smash)"
+  },
+  {
+    "Item": "Dread Plate",
+    "Area": "Lost Hotel (Route 16)",
+    "Location/Price": "Route 16 side, behind the middle cracked wall in the south hall (requires Rock Smash)"
+  },
+  {
+    "Item": "Flame Orb",
+    "Area": "Lost Hotel (Route 16)",
+    "Location/Price": "Reward for beating Hoenn Elite Sidney"
+  },
+  {
+    "Item": "Poison Gem",
+    "Area": "Lost Hotel (Route 16)",
+    "Location/Price": "Reward for beating Punk Girl Cecile"
+  },
+  {
+    "Item": "Pinsirite",
+    "Area": "Lost Hotel (Route 16)",
+    "Location/Price": "Reward for beating Punk Guy Jacques"
+  },
+  {
+    "Item": "TM56: Nasty Plot",
+    "Area": "Lost Hotel (Route 16)",
+    "Location/Price": "Route 16 side, from the Roller Skater at the west end of the south hall"
+  },
+  {
+    "Item": "Elixir",
+    "Area": "Lumiose City (Back Alleys)",
+    "Location/Price": "From Beauty Anais after defeating her (repeatable)"
+  },
+  {
+    "Item": "Destiny Knot",
+    "Area": "Lumiose City (Back Alleys)",
+    "Location/Price": "From Beauty Aimee after defeating her (repeatable)"
+  },
+  {
+    "Item": "Nugget",
+    "Area": "Lumiose City (Back Alleys)",
+    "Location/Price": "From Beauty Cassandra after defeating her (repeatable)"
+  },
+  {
+    "Item": "Pheonix's Blessing",
+    "Area": "Lumiose City (Herborsite)",
+    "Location/Price": "$10.00"
+  },
+  {
+    "Item": "Energy Root",
+    "Area": "Lumiose City (Herborsite)",
+    "Location/Price": "$800.00"
+  },
+  {
+    "Item": "Heal Powder",
+    "Area": "Lumiose City (Herborsite)",
+    "Location/Price": "$450.00"
+  },
+  {
+    "Item": "Lava Cookie",
+    "Area": "Lumiose City (Herborsite)",
+    "Location/Price": "$200.00"
+  },
+  {
+    "Item": "Black Sludge",
+    "Area": "Lumiose City (North Mart)",
+    "Location/Price": "$50,000.00"
+  },
+  {
+    "Item": "Eviolite",
+    "Area": "Lumiose City (North Mart)",
+    "Location/Price": "$50,000.00"
+  },
+  {
+    "Item": "Leftovers",
+    "Area": "Lumiose City (North Mart)",
+    "Location/Price": "$50,000.00"
+  },
+  {
+    "Item": "Dive Ball",
+    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Dusk Ball",
+    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Heal Ball",
+    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Luxury Ball",
+    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Nest Ball",
+    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Net Ball",
+    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Quick Ball",
+    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Location/Price": "$500.00"
+  },
+  {
+    "Item": "Repeat Ball",
+    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Location/Price": "$500.00"
+  },
+  {
+    "Item": "Timer Ball",
+    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Location/Price": "$1,000.00"
+  },
+  {
+    "Item": "Expert Belt",
+    "Area": "Lumiose City (Post Power Plant)",
+    "Location/Price": "3F, from a girl"
+  },
+  {
+    "Item": "King's Rock",
+    "Area": "Lumiose City (Post Power Plant)",
+    "Location/Price": "From Lysandre after defeating Clemont (Lysandre Cafe)"
+  },
+  {
+    "Item": "Revive",
+    "Area": "Lumiose City (Post Power Plant)",
+    "Location/Price": "From a female Scientist if the player has a Pok\u00e9mon that knows Eerie Impulse (Trevor's House)"
+  },
+  {
+    "Item": "TM24: Thunderbolt",
+    "Area": "Lumiose City (Post Power Plant)",
+    "Location/Price": "Reward for beating Leader Clemont"
+  },
+  {
+    "Item": "TM49: Power Gem",
+    "Area": "Lumiose City (Post Power Plant)",
+    "Location/Price": "5F, given by a Lady inside a bathroom (Hotel Richissime)"
+  },
+  {
+    "Item": "TM82: Dragon Tail",
+    "Area": "Lumiose City (Post Power Plant)",
+    "Location/Price": "1F, from an Ace Trainer in the west wing (Lumiose Museum)"
+  },
+  {
+    "Item": "Star Piece",
+    "Area": "Lumiose City (Post Power Plant)",
+    "Location/Price": "1F, from a female Scientist if the player has a Pok\u00e9mon with Aroma Veil, Flower Veil, or Sweet Veil"
+  },
+  {
+    "Item": "Lens Case",
+    "Area": "Lumiose City (Pre-Power Plant)",
+    "Location/Price": "From a Punk Girl in PR Video Studio"
+  },
+  {
+    "Item": "Quick Claw",
+    "Area": "Lumiose City (Pre-Power Plant)",
+    "Location/Price": "From a female Rising Star on the 1F of the building across the street from Shutterbug Caf\u00e9"
+  },
+  {
+    "Item": "Quick Ball-3",
+    "Area": "Lumiose City (Pre-Power Plant)",
+    "Location/Price": "From a man on 2F of the building across the street from Shutterbug Caf\u00e9"
+  },
+  {
+    "Item": "Timer Ball-3",
+    "Area": "Lumiose City (Pre-Power Plant)",
+    "Location/Price": "From a man on 2F of the building across the street from Shutterbug Caf\u00e9"
+  },
+  {
+    "Item": "Red Orb",
+    "Area": "Lumiose City (Prism Tower)",
+    "Location/Price": "Reward for beating Hoenn Champion Steven"
+  },
+  {
+    "Item": "Scope Lens",
+    "Area": "Lumiose City (Shutterbug Caf\u00e9)",
+    "Location/Price": "From a Backpacker after taking 15 or more photos at any Photo Spot"
+  },
+  {
+    "Item": "Wide Lens",
+    "Area": "Lumiose City (Shutterbug Caf\u00e9)",
+    "Location/Price": "From a Backpacker after taking at least one photo at a Photo Spot"
+  },
+  {
+    "Item": "Zoom Lens",
+    "Area": "Lumiose City (Shutterbug Caf\u00e9)",
+    "Location/Price": "From a Backpacker after taking 30 or more photos at any Photo Spot"
+  },
+  {
+    "Item": "TM05: Roar",
+    "Area": "Lumiose City (South Mart)",
+    "Location/Price": "$2,500.00"
+  },
+  {
+    "Item": "TM23: Smack Down",
+    "Area": "Lumiose City (South Mart)",
+    "Location/Price": "$5,000.00"
+  },
+  {
+    "Item": "TM59: Incinerate",
+    "Area": "Lumiose City (South Mart)",
+    "Location/Price": "$5,000.00"
+  },
+  {
+    "Item": "TM76: Stuggle Bug",
+    "Area": "Lumiose City (South Mart)",
+    "Location/Price": "$5,000.00"
+  },
+  {
+    "Item": "TM78: Bulldoze",
+    "Area": "Lumiose City (South Mart)",
+    "Location/Price": "$5,000.00"
+  },
+  {
+    "Item": "Blastoisinite",
+    "Area": "Lumiose City (Stone Emporium)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "Charizardite Y",
+    "Area": "Lumiose City (Stone Emporium)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "Venusaurite",
+    "Area": "Lumiose City (Stone Emporium)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "PP Max",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "2F, from the Pok\u00e9 Radar Scientist, for a chain length of 21-30 Pok\u00e9mon with the Pok\u00e9 Radar"
+  },
+  {
+    "Item": "PP Up",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "2F, from the Pok\u00e9 Radar Scientist, for a chain length of 11-20 Pok\u00e9mon with the Pok\u00e9 Radar"
+  },
+  {
+    "Item": "Rare Candy",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "2F, from the Pok\u00e9 Radar Scientist, for a chain length of at least 31 Pok\u00e9mon with the Pok\u00e9 Radar"
+  },
+  {
+    "Item": "Charcoal",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "On Cyndaquil"
+  },
+  {
+    "Item": "Miracle Seed",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "On Chikorita"
+  },
+  {
+    "Item": "Mystic Water",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "On Totodile"
+  },
+  {
+    "Item": "Oval Charm",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "3F, from Professor Sycamore after showing him a Pok\u00e9dex with all* Kalos Pok\u00e9mon seen"
+  },
+  {
+    "Item": "Pok\u00e9 Radar",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "2F, from a male Scientist on the second floor after entering the Hall of Fame"
+  },
+  {
+    "Item": "Shiny Charm",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "3F, from Professor Sycamore after showing him a complete National Pok\u00e9dex"
+  },
+  {
+    "Item": "Blastoisinite",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "Given by Professor Sycamore if Totodile is chosen"
+  },
+  {
+    "Item": "Charizardite Y",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "Given by Professor Sycamore if Cyndaquil is chosen"
+  },
+  {
+    "Item": "Venusaurite",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "Given by Professor Sycamore if Chikorita is chosen"
+  },
+  {
+    "Item": "Luxury Ball-5",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "2F, from a female Scientist"
+  },
+  {
+    "Item": "Ultra Ball",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "2F, from the Pok\u00e9 Radar Scientist, for a chain length of 1-10 Pok\u00e9mon with the Pok\u00e9 Radar"
+  },
+  {
+    "Item": "TM54: False Swipe",
+    "Area": "Lumiose City (Sycamore's Lab)",
+    "Location/Price": "3F, from a female Scientist after encountering at least 20 Pok\u00e9mon in the Central Kalos Pok\u00e9dex"
+  },
+  {
+    "Item": "Assault Vest",
+    "Area": "Lysandre Labs",
+    "Location/Price": "B1, in the middle room on the north side of the floor, accessible via the green warp panel north of the location of the Dark Gems"
+  },
+  {
+    "Item": "Dark Gem-10",
+    "Area": "Lysandre Labs",
+    "Location/Price": "B1, in the northeast, accessible via the green warp panel on the west side of the elevator"
+  },
+  {
+    "Item": "Focus Sash-3",
+    "Area": "Lysandre Labs",
+    "Location/Price": "B1, in the area accessible via the green warp panel northwest of the Team Flare Grunt in the southeast corner of the floor"
+  },
+  {
+    "Item": "Weakness Policy-2",
+    "Area": "Lysandre Labs",
+    "Location/Price": "B1, in the room with the beds on the west side of the floor"
+  },
+  {
+    "Item": "Elevator Key",
+    "Area": "Lysandre Labs",
+    "Location/Price": "B1, from Mable in the room on the east side of the floor, after defeating her"
+  },
+  {
+    "Item": "Revive-3",
+    "Area": "Lysandre Labs",
+    "Location/Price": "B1, from the Masked Heroes in the room north of the second Team Flare Grunt"
+  },
+  {
+    "Item": "TM12: Taunt",
+    "Area": "Lysandre Labs",
+    "Location/Price": "B1, from the first Team Flare Grunt in the room with the beds on the west side of the floor"
+  },
+  {
+    "Item": "Lum Berry-2",
+    "Area": "Parfum Palace",
+    "Location/Price": "Courtyard: along the east edge, between two trees in planters opposite the middle exit of the northeast maze"
+  },
+  {
+    "Item": "Oran Berry",
+    "Area": "Parfum Palace",
+    "Location/Price": "Entrance: from a Tourist on the dirt path"
+  },
+  {
+    "Item": "Rindo Berry-10",
+    "Area": "Parfum Palace",
+    "Location/Price": "Courtyard: in the southeast hedge maze, just north of the center"
+  },
+  {
+    "Item": "Rare Candy",
+    "Area": "Parfum Palace",
+    "Location/Price": "Courtyard: on the north edge of the center fountain (hidden)"
+  },
+  {
+    "Item": "Amulet Coin",
+    "Area": "Parfum Palace",
+    "Location/Price": "2F: in front of the fireplace in the room closest to the western staircase"
+  },
+  {
+    "Item": "Berry Juice-3",
+    "Area": "Parfum Palace",
+    "Location/Price": "Courtyard: in the southwest maze, in the northwestern area"
+  },
+  {
+    "Item": "Big Root",
+    "Area": "Parfum Palace",
+    "Location/Price": "Courtyard: in the northwest corner"
+  },
+  {
+    "Item": "Normal Gem-10",
+    "Area": "Parfum Palace",
+    "Location/Price": "Entrance: northwest corner"
+  },
+  {
+    "Item": "Pok\u00e9 Flute",
+    "Area": "Parfum Palace",
+    "Location/Price": "Balcony: from the Butler after catching Furfrou"
+  },
+  {
+    "Item": "HM01: Cut",
+    "Area": "Parfum Palace",
+    "Location/Price": "Courtyard: in the southwest maze, just east of the center"
+  },
+  {
+    "Item": "TM17: Protect",
+    "Area": "Parfum Palace",
+    "Location/Price": "Balcony: from the Butler after catching Furfrou"
+  },
+  {
+    "Item": "Big Pearl",
+    "Area": "Parfum Palace",
+    "Location/Price": "Courtyard: in the northeast maze, in the westernmost lone tree (the center of Solrock's left eye) (hidden)"
+  },
+  {
+    "Item": "Star Piece",
+    "Area": "Parfum Palace",
+    "Location/Price": "Courtyard: in the southwest maze, in the small clearing west of the center (the center of Chandelure's left eye) (hidden)"
+  },
+  {
+    "Item": "Babiri Berry-10",
+    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Location/Price": "On the east side of the middle stairway, at the end of the path between it and the conveyor belt"
+  },
+  {
+    "Item": "Steel Gem-10",
+    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Location/Price": "In the far northwest corner of the factory"
+  },
+  {
+    "Item": "Master Ball",
+    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Location/Price": "Gift from the President after defeating Team Flare"
+  },
+  {
+    "Item": "TM51: Iron Head",
+    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Location/Price": "In the northeast of the factory, by the conveyor belt (In a red Pokeball cause game doesn't like it in a yellow one)"
+  },
+  {
+    "Item": "Big Nugget",
+    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Location/Price": "Gift from the President after defeating Team Flare"
+  },
+  {
+    "Item": "Wacan Berry-10",
+    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Location/Price": "In the east hedge maze"
+  },
+  {
+    "Item": "Electric Gem-10",
+    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Location/Price": "In the west hedge maze, through the northmost entrance"
+  },
+  {
+    "Item": "Dusk Ball-10",
+    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Location/Price": "At the far northwest corner of the factory area, on the back wall (hidden)"
+  },
+  {
+    "Item": "Level Ball-10",
+    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Location/Price": "In the west hedge maze, through the middle entrance, at the end of the north branch (hidden)"
+  },
+  {
+    "Item": "Luxury Ball-10",
+    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Location/Price": "In the west hedge maze, through the entrance closest to the factory gates, at the end of the path (hidden)"
+  },
+  {
+    "Item": "Repeat Ball-10",
+    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Location/Price": "In the east hedge maze, at the end of the dead end nestled in the northeastern corner (hidden)"
+  },
+  {
+    "Item": "Chople Berry",
+    "Area": "Pok\u00e9mon Village",
+    "Location/Price": "From a Furfrou, initially by the entrance or else in the southeast"
+  },
+  {
+    "Item": "PP Max-10",
+    "Area": "Pok\u00e9mon Village",
+    "Location/Price": "On the hill south of the entrance to Route 20"
+  },
+  {
+    "Item": "Air Balloon-10",
+    "Area": "Pok\u00e9mon Village",
+    "Location/Price": "At the top of the waterfall (requires Surf and Waterfall)"
+  },
+  {
+    "Item": "Fairy Gem-10",
+    "Area": "Pok\u00e9mon Village",
+    "Location/Price": "On the tire in the middle of the field of yellow flowers (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Pixie Plate",
+    "Area": "Pok\u00e9mon Village",
+    "Location/Price": "In the patch of yellow flowers on the western bank of the river (requires Surf)"
+  },
+  {
+    "Item": "Psychic Gem-10",
+    "Area": "Pok\u00e9mon Village",
+    "Location/Price": "On the mat under the empty western canopy (hidden)"
+  },
+  {
+    "Item": "Weakness Policy-2",
+    "Area": "Pok\u00e9mon Village",
+    "Location/Price": "Northwest of the empty western canopy"
+  },
+  {
+    "Item": "Honey-10",
+    "Area": "Pok\u00e9mon Village",
+    "Location/Price": "Among the yellow flowers on the western bank of the river (requires Surf) (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Pretty Wing",
+    "Area": "Pok\u00e9mon Village",
+    "Location/Price": "From a Fletchling, initially by the entrance or else in the southwest, by the river"
+  },
+  {
+    "Item": "Chilan Berry",
+    "Area": "Reflection Cave",
+    "Location/Price": "Reward for beating Ace Trainer Emil"
+  },
+  {
+    "Item": "Chople Berry",
+    "Area": "Reflection Cave",
+    "Location/Price": "Reward for beating Tourist Haruto"
+  },
+  {
+    "Item": "Jaboca Berry-10",
+    "Area": "Reflection Cave",
+    "Location/Price": "1F, at the end of the thin path northeast from the junction nearest the Route 11 entrance"
+  },
+  {
+    "Item": "Rowap Berry-10",
+    "Area": "Reflection Cave",
+    "Location/Price": "1F, in the south, on top of the small hill south of Battle Girl Hedvig"
+  },
+  {
+    "Item": "Metal Coat",
+    "Area": "Reflection Cave",
+    "Location/Price": "B1F, in the northwest corner of the floor"
+  },
+  {
+    "Item": "Bug Gem",
+    "Area": "Reflection Cave",
+    "Location/Price": "Reward for beating Honeymooners Yuu & Ami"
+  },
+  {
+    "Item": "Earth Plate",
+    "Area": "Reflection Cave",
+    "Location/Price": "B2F, in the northeast, north of the stairs from B1F"
+  },
+  {
+    "Item": "Expert Belt",
+    "Area": "Reflection Cave",
+    "Location/Price": "B1F, on the hill in the south, north of Black Belt Igor"
+  },
+  {
+    "Item": "Fighting Gem",
+    "Area": "Reflection Cave",
+    "Location/Price": "Reward for beating Black Belt Igor"
+  },
+  {
+    "Item": "Fighting Gem-10",
+    "Area": "Reflection Cave",
+    "Location/Price": "B1F, on top of the hill in the middle of the floor, directly east from the southern entrance from 1F"
+  },
+  {
+    "Item": "King's Rock",
+    "Area": "Reflection Cave",
+    "Location/Price": "Reward for beating Hiker Dunstan"
+  },
+  {
+    "Item": "Light Ball",
+    "Area": "Reflection Cave",
+    "Location/Price": "Reward for beating Ace Trainer Monique"
+  },
+  {
+    "Item": "Light Clay",
+    "Area": "Reflection Cave",
+    "Location/Price": "B1F, in the northeast corner of the floor"
+  },
+  {
+    "Item": "Rock Gem",
+    "Area": "Reflection Cave",
+    "Location/Price": "Reward for beating Battle Girl Hedvig"
+  },
+  {
+    "Item": "Zoom Lens",
+    "Area": "Reflection Cave",
+    "Location/Price": "Reward for beating Tourist Monami"
+  },
+  {
+    "Item": "Moon Ball-10",
+    "Area": "Reflection Cave",
+    "Location/Price": "1F, at the end of the northernmost branch (north from the junction nearest the Route 11 entrance)"
+  },
+  {
+    "Item": "Reveal Glass",
+    "Area": "Reflection Cave",
+    "Location/Price": "1F, from the Scientist just west of the Shalour City entrance, if the player has Tornadus, Thundurus, or Landorus in their party"
+  },
+  {
+    "Item": "TM70: Icy Wind",
+    "Area": "Reflection Cave",
+    "Location/Price": "B1F, gift from Tierno in the south"
+  },
+  {
+    "Item": "TM74: Gyro Ball",
+    "Area": "Reflection Cave",
+    "Location/Price": "B2F, inside the passageway whose entrance is in the northwest of the floor"
+  },
+  {
+    "Item": "Ganlon berry",
+    "Area": "Roue 8 (Costal Area)",
+    "Location/Price": "Reward for beating Fisherman Shad"
+  },
+  {
+    "Item": "Iapapa Berry",
+    "Area": "Route 10",
+    "Location/Price": "In front of the Berry tree at the first bend in the road north from Cyllage City (regenerates after 7 days)"
+  },
+  {
+    "Item": "Kee Berry-2",
+    "Area": "Route 10",
+    "Location/Price": "In the southeast corner of the middle rock-bordered field of large menhirs (hidden)"
+  },
+  {
+    "Item": "Kee Berry-5",
+    "Area": "Route 10",
+    "Location/Price": "In the northwest corner of the middle rock-bordered field of large menhirs"
+  },
+  {
+    "Item": "Lum Berry-2",
+    "Area": "Route 10",
+    "Location/Price": "One space south of the northeast corner of the southern rock-bordered field of large menhirs (hidden)"
+  },
+  {
+    "Item": "Berry Juice-5",
+    "Area": "Route 10",
+    "Location/Price": "On the southwestern-most menhir among the northeastern bed of yellow flowers north of the Cyllage City entrance (requires Strength) (hidden)"
+  },
+  {
+    "Item": "Lax Incense",
+    "Area": "Route 10",
+    "Location/Price": "In the northwest corner of the southern rock-bordered field of large menhirs"
+  },
+  {
+    "Item": "Mind Plate",
+    "Area": "Route 10",
+    "Location/Price": "In the southeast corner of the southern rock-bordered field of large menhirs"
+  },
+  {
+    "Item": "Psychic Gem",
+    "Area": "Route 10",
+    "Location/Price": "Reward for beating Psychic Sayid"
+  },
+  {
+    "Item": "Rock Incense",
+    "Area": "Route 10",
+    "Location/Price": "Past two Strength puzzles north of the Cyllage City entrance (requires Strength)"
+  },
+  {
+    "Item": "Safety Goggles",
+    "Area": "Route 10",
+    "Location/Price": "Reward for beating Tourist Tomoko"
+  },
+  {
+    "Item": "Smoke Ball",
+    "Area": "Route 10",
+    "Location/Price": "Reward for beating Team Flare Grunt Rho"
+  },
+  {
+    "Item": "Ganlon Berry-2",
+    "Area": "Route 11",
+    "Location/Price": "On the small crystal pillar at the easternmost end of the route (hidden)"
+  },
+  {
+    "Item": "Maranga Berry-5",
+    "Area": "Route 11",
+    "Location/Price": "At the bottom of the first big set of stairs southeast of the entrance to Reflection Cave"
+  },
+  {
+    "Item": "Sitrus Berry",
+    "Area": "Route 11",
+    "Location/Price": "In front of the Berry tree near the entrance from Geosenge Town (regenerates after 7 days)"
+  },
+  {
+    "Item": "Sitrus Berry-2",
+    "Area": "Route 11",
+    "Location/Price": "On the crystal pillar at the top of the westernmost stairs (hidden)"
+  },
+  {
+    "Item": "Stick",
+    "Area": "Route 11",
+    "Location/Price": "Reward for beating Battle Girl Gerardine"
+  },
+  {
+    "Item": "TM69: Rock Polish",
+    "Area": "Route 11",
+    "Location/Price": "North of the Berry tree, via a dirt slope west of Brains & Brawn Frank & Sly (requires Cut)"
+  },
+  {
+    "Item": "Aspear Berry",
+    "Area": "Route 12",
+    "Location/Price": "In front of the Berry tree to the south of the Shalour City Gate (requires Cut) (regenerates after 7 days)"
+  },
+  {
+    "Item": "Jaboca Berry-3",
+    "Area": "Route 12",
+    "Location/Price": "On a rock on a shelf of shallow water northwest from the entrance to Coumarine City (requires Surf) (hidden)"
+  },
+  {
+    "Item": "Metal Coat",
+    "Area": "Route 12",
+    "Location/Price": "Reward for beating Pok\u00e9mon Breeder Amala"
+  },
+  {
+    "Item": "Power Herb-2",
+    "Area": "Route 12",
+    "Location/Price": "South of the southwest end of the ranch (requires riding a Skiddo)"
+  },
+  {
+    "Item": "Pp Up-3",
+    "Area": "Route 12",
+    "Location/Price": "On the beach near the entrance to Coumarine City, two spaces away from the southwestern corner (hidden)"
+  },
+  {
+    "Item": "Focus Sash",
+    "Area": "Route 12",
+    "Location/Price": "In front of the ranch house"
+  },
+  {
+    "Item": "Ghost Gem",
+    "Area": "Route 12",
+    "Location/Price": "Reward for beating Backpacker Joren"
+  },
+  {
+    "Item": "Leftovers",
+    "Area": "Route 12",
+    "Location/Price": "In the southwest of the ranch side of the route, down a path between the fields of yellow flowers"
+  },
+  {
+    "Item": "Mental Herb-2",
+    "Area": "Route 12",
+    "Location/Price": "Northeast of the ranch, beyond three ledges (requires riding a Skiddo)"
+  },
+  {
+    "Item": "Normal Gem",
+    "Area": "Route 12",
+    "Location/Price": "Reward for beating Pok\u00e9mon Breeder Foster"
+  },
+  {
+    "Item": "Razor Claw",
+    "Area": "Route 12",
+    "Location/Price": "Reward for beating Fisherman Murray"
+  },
+  {
+    "Item": "Razor Fang",
+    "Area": "Route 12",
+    "Location/Price": "Reward for beating Swimmer M Alessandro"
+  },
+  {
+    "Item": "Wide Lens",
+    "Area": "Route 12",
+    "Location/Price": "Reward for beating Youngster Aiden"
+  },
+  {
+    "Item": "Safari Ball-5",
+    "Area": "Route 12",
+    "Location/Price": "At the southern end of the beach across the water from the Shalour City Gate, on the northern rock (hidden)"
+  },
+  {
+    "Item": "Honey-5",
+    "Area": "Route 12",
+    "Location/Price": "In the bare, northeast corner of the fenced area north of the Shalour City Gate (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "TM45: Attract",
+    "Area": "Route 12",
+    "Location/Price": "Gift from the girl in the ranch house"
+  },
+  {
+    "Item": "Starf Berry-3",
+    "Area": "Route 13",
+    "Location/Price": "Just southwest of the bottom of the stairs to the Coumarine City Gate, two spaces north and nine west of the route signpost (hidden)"
+  },
+  {
+    "Item": "PP Max",
+    "Area": "Route 13",
+    "Location/Price": "On the ground to the west of the middlemost building on the east, seven spaces west and four north of the first rock to the west (hidden)"
+  },
+  {
+    "Item": "PP Up-2",
+    "Area": "Route 13",
+    "Location/Price": "On the rock west of the Coumarine City entrance across a small ravine, accessible by crossing the two nearby grind rails (hidden)"
+  },
+  {
+    "Item": "Eject Button",
+    "Area": "Route 13",
+    "Location/Price": "On the rock to the west of the middlemost building on the east (hidden)"
+  },
+  {
+    "Item": "Fire Gem-10",
+    "Area": "Route 13",
+    "Location/Price": "At the end of the path east of the Lumiose City Gate post Power Plant (requires Rock Smash)"
+  },
+  {
+    "Item": "Flame Plate",
+    "Area": "Route 13",
+    "Location/Price": "Northeast of the building in the southeast"
+  },
+  {
+    "Item": "Ground Gem-10",
+    "Area": "Route 13",
+    "Location/Price": "To the southwest of the Coumarine City entrance, across a small ravine, accessible by crossing the grind rail to the north (requires Rock Smash)"
+  },
+  {
+    "Item": "Heat Rock",
+    "Area": "Route 13",
+    "Location/Price": "On the rock to the southwest of the northwest grind rail in the open area of the route (hidden)"
+  },
+  {
+    "Item": "Heat Rock",
+    "Area": "Route 13",
+    "Location/Price": "At the end of the ravine path in the west (across two grind rails from the northwest of the open area of the route) (requires Rock Smash)"
+  },
+  {
+    "Item": "Red Card-2",
+    "Area": "Route 13",
+    "Location/Price": "In the ravine path in the west (across two grind rails from the northwest of the open area of the route) on the first rock on the west side of the path (requires Rock Smash) (hidden)"
+  },
+  {
+    "Item": "Rock Gem-7",
+    "Area": "Route 13",
+    "Location/Price": "In a small ravine to the west of the stairs to the Lumiose City Gate, accessible via the nearby grind rail"
+  },
+  {
+    "Item": "Smooth Rock",
+    "Area": "Route 13",
+    "Location/Price": "In the northeast corner of the route, across the grind rail east of the Coumarine City entrance"
+  },
+  {
+    "Item": "Power Plant Pass",
+    "Area": "Route 13",
+    "Location/Price": "In the southwest area of the route, on the large rock near the Team Flare Grunt on the bridge (hidden)"
+  },
+  {
+    "Item": "Heavy Ball-10",
+    "Area": "Route 13",
+    "Location/Price": "At the end of the path behind the middlemost building on the east (hidden)"
+  },
+  {
+    "Item": "Star Piece-2",
+    "Area": "Route 13",
+    "Location/Price": "On the ground south of the northwest grind rail in the open area of the route, three spaces east of the end of the rail and thirteen spaces south (hidden)"
+  },
+  {
+    "Item": "Stardust-5",
+    "Area": "Route 13",
+    "Location/Price": "At the end of the first branch of the path east of the Lumiose City Gate (requires Rock Smash) (hidden)"
+  },
+  {
+    "Item": "Kasib Berry",
+    "Area": "Route 14",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Reed"
+  },
+  {
+    "Item": "Kebia Berry",
+    "Area": "Route 14",
+    "Location/Price": "Reward for beating Fairy Tale Girl Imogen"
+  },
+  {
+    "Item": "Kebia Berry-10",
+    "Area": "Route 14",
+    "Location/Price": "In the south, on the north side of the swing set"
+  },
+  {
+    "Item": "Occa Berry",
+    "Area": "Route 14",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Nash"
+  },
+  {
+    "Item": "Roseli Berry",
+    "Area": "Route 14",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Melina"
+  },
+  {
+    "Item": "Roseli Berry",
+    "Area": "Route 14",
+    "Location/Price": "In front of the Berry tree in the northeastern-most branch of the route (regenerates after 7 days)"
+  },
+  {
+    "Item": "Sitrus Berry-6",
+    "Area": "Route 14",
+    "Location/Price": "In the south, in the center of the sandbox (hidden)"
+  },
+  {
+    "Item": "PP Max",
+    "Area": "Route 14",
+    "Location/Price": "Down the path south of the scary house, on the broken tombstone on the east side of the path (hidden)"
+  },
+  {
+    "Item": "Damp Rock",
+    "Area": "Route 14",
+    "Location/Price": "In the north, across the pond just east of the Laverre City entrance (requires Surf)"
+  },
+  {
+    "Item": "Ghost Gem-10",
+    "Area": "Route 14",
+    "Location/Price": "Down the path south of the scary house, just before the ledge"
+  },
+  {
+    "Item": "Poison Gem-10",
+    "Area": "Route 14",
+    "Location/Price": "In the north, south from the Laverre City entrance on the far side of a dead log"
+  },
+  {
+    "Item": "Banettite",
+    "Area": "Route 14",
+    "Location/Price": "Reward for beating Hex Maniac Anina"
+  },
+  {
+    "Item": "TM06: Toxic",
+    "Area": "Route 14",
+    "Location/Price": "A gift from the Hex Maniac in the north, just east of the Laverre City entrance"
+  },
+  {
+    "Item": "TM61: Will-O-Wisp",
+    "Area": "Route 14",
+    "Location/Price": "In the northeastern-most branch of the route, at the end of a narrow path south"
+  },
+  {
+    "Item": "TM95: Snarl",
+    "Area": "Route 14",
+    "Location/Price": "Near the end of the first eastward branch from the south, east of Pok\u00e9mon Ranger Melina"
+  },
+  {
+    "Item": "Big Mushroom-2",
+    "Area": "Route 14",
+    "Location/Price": "At the first branch in the path from the south, under the leaves at the end of the dead log, east of Pok\u00e9mon Ranger Melina (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Big Mushroom-4",
+    "Area": "Route 14",
+    "Location/Price": "West from the first branch in the path from the south"
+  },
+  {
+    "Item": "Babiri Berry",
+    "Area": "Route 15",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Silas"
+  },
+  {
+    "Item": "Chilan Berry-10",
+    "Area": "Route 15",
+    "Location/Price": "In cul-de-sac south of the Laverre City Gate (pile of leaves)"
+  },
+  {
+    "Item": "Coba Berry",
+    "Area": "Route 15",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Pedro"
+  },
+  {
+    "Item": "Figy Berry-5",
+    "Area": "Route 15",
+    "Location/Price": "To the west of the western bridge (pile of leaves)"
+  },
+  {
+    "Item": "Ganlon Berry-3",
+    "Area": "Route 15",
+    "Location/Price": "On the second floor of the Lost Hotel's ruins, four paces from the northeast corner (hidden)"
+  },
+  {
+    "Item": "Leppa Berry",
+    "Area": "Route 15",
+    "Location/Price": "In front of the Berry tree directly east of the Laverre City Gate (regenerates after 7 days)"
+  },
+  {
+    "Item": "Liechi Berry-2",
+    "Area": "Route 15",
+    "Location/Price": "At the north end of the western stream, in the area on the east side (requires Surf) (pile of leaves)"
+  },
+  {
+    "Item": "Lum Berry-10",
+    "Area": "Route 15",
+    "Location/Price": "On the north wall behind the Leppa Berry tree, on the west side (hidden)"
+  },
+  {
+    "Item": "Passho Berry",
+    "Area": "Route 15",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Dean"
+  },
+  {
+    "Item": "Petaya Berry-2",
+    "Area": "Route 15",
+    "Location/Price": "Behind a cracked wall northeast from the western bridge (requires Rock Smash)"
+  },
+  {
+    "Item": "Roseli Berry-10",
+    "Area": "Route 15",
+    "Location/Price": "At the southwest end of the western stream, accessible via a narrow path on the east side of the stream"
+  },
+  {
+    "Item": "Shuca Berry",
+    "Area": "Route 15",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Keith"
+  },
+  {
+    "Item": "PP Max",
+    "Area": "Route 15",
+    "Location/Price": "Up the waterfall in the eastern stream, on the rock in the southeast of the area (requires Rock Smash, Surf, and Waterfall) (hidden)"
+  },
+  {
+    "Item": "PP Max-3",
+    "Area": "Route 15",
+    "Location/Price": "Directly east from the Laverre City Gate and north of Hex Maniac Luna (pile of leaves)"
+  },
+  {
+    "Item": "Choice Scarf",
+    "Area": "Route 15",
+    "Location/Price": "On the west side of the south part of the eastern stream, accessed from Route 16 (requires Surf, and Waterfall)"
+  },
+  {
+    "Item": "Eject Button-2",
+    "Area": "Route 15",
+    "Location/Price": "In the area south on the eastern stream from the bridge, in the middle of the south wall (requires Surf) (hidden)"
+  },
+  {
+    "Item": "Stone Plate",
+    "Area": "Route 15",
+    "Location/Price": "Up the waterfall in the eastern stream, on the north side of the stream (requires Rock Smash, Surf, and Waterfall)"
+  },
+  {
+    "Item": "Thick Club",
+    "Area": "Route 15",
+    "Location/Price": "Reward for beating Hex Maniac Carrie"
+  },
+  {
+    "Item": "Floettite",
+    "Area": "Route 15",
+    "Location/Price": "Reward for beating Mysterious Sisters Rune & Rime"
+  },
+  {
+    "Item": "TM32: Double Team",
+    "Area": "Route 15",
+    "Location/Price": "Behind a cracked wall northeast from the eastern bridge (requires Rock Smash)"
+  },
+  {
+    "Item": "Big Mushroom-3",
+    "Area": "Route 15",
+    "Location/Price": "Beyond the ledge east of the Leppa Berry tree, one pace north of the small corner in the path (requires Surf) (pile of leaves, hidden)"
+  },
+  {
+    "Item": "Apicot Berry-3",
+    "Area": "Route 16",
+    "Location/Price": "North of the Fishing Shack, on the middle platform, west of Fisherman Seward (hidden)"
+  },
+  {
+    "Item": "Charti Berry",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Roller Skater Jet"
+  },
+  {
+    "Item": "Colbur Berry",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Lee"
+  },
+  {
+    "Item": "Lum Berry",
+    "Area": "Route 16",
+    "Location/Price": "In front of the Berry tree in the southeast of the route (regenerates after 7 days)"
+  },
+  {
+    "Item": "Payapa Berry",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Bjorn"
+  },
+  {
+    "Item": "Sitrus Berry-5",
+    "Area": "Route 16",
+    "Location/Price": "On the second floor of the Lost Hotel's ruins, in the northwestern corner (hidden)"
+  },
+  {
+    "Item": "Dark Gem",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Hex Maniac Osanna"
+  },
+  {
+    "Item": "Fairy Gem",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Fairy Tale Girl Alice"
+  },
+  {
+    "Item": "Fist Plate",
+    "Area": "Route 16",
+    "Location/Price": "Southeast of the Fishing Shack (requires Strength)"
+  },
+  {
+    "Item": "Flying Gem",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Fisherman Finn"
+  },
+  {
+    "Item": "Grass Gem-10",
+    "Area": "Route 16",
+    "Location/Price": "East of the long grass south of the Lum Berry tree, in the southeastern-most corner of the route (pile of leaves)"
+  },
+  {
+    "Item": "Ground Gem",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Fisherman Seward"
+  },
+  {
+    "Item": "Steel Gem",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Fisherman Wade"
+  },
+  {
+    "Item": "Super Rod",
+    "Area": "Route 16",
+    "Location/Price": "From a Fisherman in the Fishing Shack"
+  },
+  {
+    "Item": "Rare Candy-50",
+    "Area": "Route 16",
+    "Location/Price": "Southeast of the Fishing Shack, on the rock at the end of the path (requires Strength) (hidden)"
+  },
+  {
+    "Item": "Absolite",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Mysterious Sisters Achyls & Eos"
+  },
+  {
+    "Item": "Manectite",
+    "Area": "Route 16",
+    "Location/Price": "Reward for beating Roller Skater Olle"
+  },
+  {
+    "Item": "Dive Ball-20",
+    "Area": "Route 16",
+    "Location/Price": "Given by a man in the Fishing Shack if the player pulls up the same Pok\u00e9mon via fishing more than seven times in a row"
+  },
+  {
+    "Item": "TM72: Seed Bomb",
+    "Area": "Route 16",
+    "Location/Price": "At the northeast of the long grass on the west side of the Lost Hotel (requires Cut)"
+  },
+  {
+    "Item": "TM75: Swords Dance",
+    "Area": "Route 16",
+    "Location/Price": "In the northwestern-most corner of the route, north of the Fishing Shack"
+  },
+  {
+    "Item": "Big Mushroom-5",
+    "Area": "Route 16",
+    "Location/Price": "West of the long grass south of the Lum Berry tree, one pace west of the grass and one pace north of the edge of the path (pile of leaves, hidden)"
+  },
+  {
+    "Item": "Occa Berry-10",
+    "Area": "Route 18",
+    "Location/Price": "South of a ledge south of where the main road bends coming out of the Anistar City Gate"
+  },
+  {
+    "Item": "Payapa Berry-10",
+    "Area": "Route 18",
+    "Location/Price": "Down the grind rail by the Wacan Berry tree (requires Cut)"
+  },
+  {
+    "Item": "Salac Berry",
+    "Area": "Route 18",
+    "Location/Price": "Reward for beating Battle Girl Justine"
+  },
+  {
+    "Item": "Sitrus Berry-50",
+    "Area": "Route 18",
+    "Location/Price": "At the base of the elevated tracks, on the middle rock in a vertical line of three (hidden)"
+  },
+  {
+    "Item": "Wacan Berry",
+    "Area": "Route 18",
+    "Location/Price": "In front of the Berry tree north of the west end of the bridge (requires Cut) (regenerates after 7 days)"
+  },
+  {
+    "Item": "PP Max-3",
+    "Area": "Route 18",
+    "Location/Price": "On the wall at the end of the path on the left side of Inver's house (hidden)"
+  },
+  {
+    "Item": "Air Balloon-2",
+    "Area": "Route 18",
+    "Location/Price": "In the southeast, at the end of the east branch of the elevated tracks"
+  },
+  {
+    "Item": "Bug Gem-10",
+    "Area": "Route 18",
+    "Location/Price": "In the northeast corner of the area at the base of the elevated tracks (requires Rock Smash)"
+  },
+  {
+    "Item": "Life Orb",
+    "Area": "Route 18",
+    "Location/Price": "Reward for beating Youngster Jayden"
+  },
+  {
+    "Item": "Gardevoirite",
+    "Area": "Route 18",
+    "Location/Price": "Reward for beating Lass Sara"
+  },
+  {
+    "Item": "Scizorite",
+    "Area": "Route 18",
+    "Location/Price": "Reward for beating Black Belt Yanis"
+  },
+  {
+    "Item": "Love Ball-10",
+    "Area": "Route 18",
+    "Location/Price": "In the bush behind the route sign south of the Anistar City Gate (hidden)"
+  },
+  {
+    "Item": "Honey-5",
+    "Area": "Route 18",
+    "Location/Price": "In the northern patch of red flowers north of Couriway Town, in the empty northeastern corner (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Haban Berry",
+    "Area": "Route 19",
+    "Location/Price": "Reward for beating Rangers Ivy & Orrick"
+  },
+  {
+    "Item": "Petaya Berry",
+    "Area": "Route 19",
+    "Location/Price": "Reward for beating Hex Maniac Josette"
+  },
+  {
+    "Item": "Starf Berry",
+    "Area": "Route 19",
+    "Location/Price": "Reward for beating Fairy Tale Girl Lovelyn"
+  },
+  {
+    "Item": "Starf Berry-10",
+    "Area": "Route 19",
+    "Location/Price": "In the southwest corner of the swamp area (requires Surf)"
+  },
+  {
+    "Item": "Yache Berry",
+    "Area": "Route 19",
+    "Location/Price": "In front of the Berry tree up the stairs and across the bridge at the end of the swamp area (requires Surf) (regenerates after 7 days)"
+  },
+  {
+    "Item": "PP Max-5",
+    "Area": "Route 19",
+    "Location/Price": "At the south end of the patch of yellow flowers at the top of the stairs at the end of the swamp area (requires Surf)"
+  },
+  {
+    "Item": "PP Max-5",
+    "Area": "Route 19",
+    "Location/Price": "In the bare northeast corner of the patch of purple flowers by the Snowbelle City gate (hidden)"
+  },
+  {
+    "Item": "Bug Gem-10",
+    "Area": "Route 19",
+    "Location/Price": "On the rock east of Hex Maniac Josette, south of the Couriway Town Gate (hidden)"
+  },
+  {
+    "Item": "Damp Rock",
+    "Area": "Route 19",
+    "Location/Price": "Under a couple of leaves in the southeast corner of the swamp area, east of Rangers Ivy & Orrick (requires Surf) (hidden)"
+  },
+  {
+    "Item": "Flying Gem-10",
+    "Area": "Route 19",
+    "Location/Price": "On the rock next to Pok\u00e9mon Ranger Clementine in the west part of the swamp area (requires Surf) (hidden)"
+  },
+  {
+    "Item": "Ice Gem",
+    "Area": "Route 19",
+    "Location/Price": "Reward for beating Swimmer Coral"
+  },
+  {
+    "Item": "Poison Gem-10",
+    "Area": "Route 19",
+    "Location/Price": "In the bare southeastern corner of the patch of purple flowers south of Sky Trainer Sera in the east (hidden)"
+  },
+  {
+    "Item": "Toxic Plate",
+    "Area": "Route 19",
+    "Location/Price": "In the far north, at the end of the swamp area (requires Surf and Strength)"
+  },
+  {
+    "Item": "Charizardite X",
+    "Area": "Route 19",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Shinobu"
+  },
+  {
+    "Item": "Kangaskhanite",
+    "Area": "Route 19",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Clementine"
+  },
+  {
+    "Item": "Lucarionite",
+    "Area": "Route 19",
+    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Ambre"
+  },
+  {
+    "Item": "HM05: Waterfall",
+    "Area": "Route 19",
+    "Location/Price": "From Shauna after defeating her, Tierno, and Trevor on the bridge in the south"
+  },
+  {
+    "Item": "TM29: Psychic",
+    "Area": "Route 19",
+    "Location/Price": "In the southeastern-most corner of the route"
+  },
+  {
+    "Item": "TM36: Sludge Bomb",
+    "Area": "Route 19",
+    "Location/Price": "West of the Couriway Town Gate, accessible by traversing the swamp area (requires Surf)"
+  },
+  {
+    "Item": "TM80: Rock Slide",
+    "Area": "Route 19",
+    "Location/Price": "In the middle of the pit of stone pillars"
+  },
+  {
+    "Item": "Pok\u00e9 Ball-10",
+    "Area": "Route 2",
+    "Location/Price": "Gift from Calem/Serena after the catching demonstration"
+  },
+  {
+    "Item": "Haban Berry-10",
+    "Area": "Route 20",
+    "Location/Price": "South, west, north, then west from the Snowbelle City entrance, in the middle of the red flowers"
+  },
+  {
+    "Item": "Kasib Berry",
+    "Area": "Route 20",
+    "Location/Price": "West from the Snowbelle City entrance (regenerates after 7 days)"
+  },
+  {
+    "Item": "Lum Berry-50",
+    "Area": "Route 20",
+    "Location/Price": "West from the Snowbelle City entrance, in the grass east of the Kasib Berry tree"
+  },
+  {
+    "Item": "Sitrus Berry-50",
+    "Area": "Route 20",
+    "Location/Price": "East, west, then south from the Pok\u00e9mon Village entrance, west of the grass at the top of the stairs"
+  },
+  {
+    "Item": "Air Balloon",
+    "Area": "Route 20",
+    "Location/Price": "Reward for beating Hex Maniac Desdemona"
+  },
+  {
+    "Item": "Grass Gem-10",
+    "Area": "Route 20",
+    "Location/Price": "South, west, north, then west from the Snowbelle City entrance, on a stump"
+  },
+  {
+    "Item": "Meadow Plate",
+    "Area": "Route 20",
+    "Location/Price": "South then south again from the Snowbelle City entrance"
+  },
+  {
+    "Item": "Mental Herb-5",
+    "Area": "Route 20",
+    "Location/Price": "East from the Pok\u00e9mon Village entrance, on the south side of the big tree's trunk (hidden)"
+  },
+  {
+    "Item": "Mawilite",
+    "Area": "Route 20",
+    "Location/Price": "Reward for beating Fairy Tale Girl Wynne"
+  },
+  {
+    "Item": "TM53: Energy Ball",
+    "Area": "Route 20",
+    "Location/Price": "East, west, south, then west from the Pok\u00e9mon Village entrance"
+  },
+  {
+    "Item": "Balm Mushroom-5",
+    "Area": "Route 20",
+    "Location/Price": "East, west, then south from the Pok\u00e9mon Village entrance, in the 1\u00d71 empty spot in the grass at the top of the stairs (hidden)"
+  },
+  {
+    "Item": "Big Mushroom-10",
+    "Area": "Route 20",
+    "Location/Price": "East then west from the Pok\u00e9mon Village entrance, in the middle of a patch of bare dirt (hidden)"
+  },
+  {
+    "Item": "Big Nugget-4",
+    "Area": "Route 20",
+    "Location/Price": "South, west, then south from the Snowbelle City entrance, on the south side of the big tree's trunk (hidden)"
+  },
+  {
+    "Item": "Figy Berry",
+    "Area": "Route 21",
+    "Location/Price": "In front of the Berry tree in the far northwest of the route, across the pond (requires Cut, Strength, and Surf) (regenerates after 7 days)"
+  },
+  {
+    "Item": "Mago Berry-5",
+    "Area": "Route 21",
+    "Location/Price": "In the far northwest of the route, on the rock face northwest of the Figy Berry tree (requires Cut, Strength, and Surf) (hidden)"
+  },
+  {
+    "Item": "Elixir",
+    "Area": "Route 21",
+    "Location/Price": "In the southwestern-most corner of the route, by Veteran Trisha (requires Cut)"
+  },
+  {
+    "Item": "PP Max-10",
+    "Area": "Route 21",
+    "Location/Price": "In the far southwest of the route, on the small rock just northeast of Veteran Trisha (hidden)"
+  },
+  {
+    "Item": "Rare Candy",
+    "Area": "Route 21",
+    "Location/Price": "On the south side of the southern leg of the stream (requires Cut, Strength, and Surf)"
+  },
+  {
+    "Item": "Electric Gem-10",
+    "Area": "Route 21",
+    "Location/Price": "On the small rock beyond the red flowers east of Ace Duo Elina & Sean (hidden)"
+  },
+  {
+    "Item": "Insect Plate",
+    "Area": "Route 21",
+    "Location/Price": "North of the Snowbelle City Gate, up the northern leg of the stream (requires Surf)"
+  },
+  {
+    "Item": "Blazikenite",
+    "Area": "Route 21",
+    "Location/Price": "Reward for beating Veteran Louis"
+  },
+  {
+    "Item": "Repeat Ball",
+    "Area": "Route 21",
+    "Location/Price": "In the far northwest of the route, across the pond (requires Strength and Surf)"
+  },
+  {
+    "Item": "TM22: Solar Beam",
+    "Area": "Route 21",
+    "Location/Price": "In the area between the ledge due west of the Snowbelle City Gate and the first Strength depression south of the Victory Road Gate (requires Cut, Strength, and Surf)"
+  },
+  {
+    "Item": "Pearl String-10",
+    "Area": "Route 21",
+    "Location/Price": "In the far north of the route, in the bare area among the purple flowers (requires Strength) (hidden)"
+  },
+  {
+    "Item": "Tanga Berry",
+    "Area": "Route 22",
+    "Location/Price": "Reward for beating Lass Elsa"
+  },
+  {
+    "Item": "Elixir",
+    "Area": "Route 22",
+    "Location/Price": "In the northwest of the route, north of Rising Star Louise"
+  },
+  {
+    "Item": "Berry Juice-5",
+    "Area": "Route 22",
+    "Location/Price": "West of the Victory Road Gate, over two ledges"
+  },
+  {
+    "Item": "Cell Battery",
+    "Area": "Route 22",
+    "Location/Price": "Reward for beating Lass Elin"
+  },
+  {
+    "Item": "Focus Band",
+    "Area": "Route 22",
+    "Location/Price": "Reward for beating Rising Star Loic"
+  },
+  {
+    "Item": "Luminous Moss",
+    "Area": "Route 22",
+    "Location/Price": "Reward for beating Schoolboy Rabbie"
+  },
+  {
+    "Item": "Silk Scarf",
+    "Area": "Route 22",
+    "Location/Price": "Reward for beating Rising Star Louise"
+  },
+  {
+    "Item": "Snowball",
+    "Area": "Route 22",
+    "Location/Price": "Reward for beating Schoolgirl Mackenzie"
+  },
+  {
+    "Item": "Tanga Berry",
+    "Area": "Route 22 (Waterfall)",
+    "Location/Price": "In front of the Berry tree in the southeast of the area down the waterfall (requires Surf and Waterfall) (regenerates after 7 days)"
+  },
+  {
+    "Item": "Draco Plate",
+    "Area": "Route 22 (Waterfall)",
+    "Location/Price": "Up the second waterfall, east after descending the first (requires Surf and Waterfall)"
+  },
+  {
+    "Item": "Fighting Gem-10",
+    "Area": "Route 22 (Waterfall)",
+    "Location/Price": "In the bush on the west side of the southeastern-most Strength depression (requires Surf, Waterfall, and Strength) (hidden)"
+  },
+  {
+    "Item": "Ground Gem-10",
+    "Area": "Route 22 (Waterfall)",
+    "Location/Price": "In the westernmost small rock in the southern part of the area down the waterfall (requires Surf and Waterfall) (hidden)"
+  },
+  {
+    "Item": "Latiasite",
+    "Area": "Route 22 (Waterfall)",
+    "Location/Price": "Reward for beating Ace Trainer Adelbert"
+  },
+  {
+    "Item": "Latiosite",
+    "Area": "Route 22 (Waterfall)",
+    "Location/Price": "Reward for beating Ace Trainer Hilde"
+  },
+  {
+    "Item": "TM26: Earthquake",
+    "Area": "Route 22 (Waterfall)",
+    "Location/Price": "In the northeast of the southern part of the area down the waterfall (requires Surf, Waterfall, and Strength)"
+  },
+  {
+    "Item": "Chesto Berry-5",
+    "Area": "Route 3",
+    "Location/Price": "In the northeastern-most corner of the route"
+  },
+  {
+    "Item": "Dawn Stone",
+    "Area": "Route 3",
+    "Location/Price": "Across the pond by the Santalune Forest entrance (requires Surf)"
+  },
+  {
+    "Item": "Berry Juice-5",
+    "Area": "Route 3",
+    "Location/Price": "South of the Santalune City entrance, to the east of Schoolboy Brighton and south of Schoolgirl Bridget"
+  },
+  {
+    "Item": "Mobile PC Manual",
+    "Area": "Route 3",
+    "Location/Price": "From Calem/Serena upon exiting Santalune Forest"
+  },
+  {
+    "Item": "Jaboca Berry",
+    "Area": "Route 4",
+    "Location/Price": "Reward for beating Gardener Fabian"
+  },
+  {
+    "Item": "Pecha Berry-10",
+    "Area": "Route 4",
+    "Location/Price": "Inside the southwestern hedge maze's northern half"
+  },
+  {
+    "Item": "Rowap Berry",
+    "Area": "Route 4",
+    "Location/Price": "Reward for beating Gardener Grover"
+  },
+  {
+    "Item": "Ether",
+    "Area": "Route 4",
+    "Location/Price": "By the northeastern hedge maze, at its northeast corner"
+  },
+  {
+    "Item": "PP Up-2",
+    "Area": "Route 4",
+    "Location/Price": "Inside the southeastern hedge maze's southern half"
+  },
+  {
+    "Item": "Absorb Bulb",
+    "Area": "Route 4",
+    "Location/Price": "Reward for beating Poke Fan Gabe"
+  },
+  {
+    "Item": "Berry Juice-4",
+    "Area": "Route 4",
+    "Location/Price": "Inside the northeastern hedge maze, at the end of the dead end situated inside its northwestern corner (hidden)"
+  },
+  {
+    "Item": "Berry Juice-5",
+    "Area": "Route 4",
+    "Location/Price": "Inside the southwestern hedge maze's southern half"
+  },
+  {
+    "Item": "Charcoal",
+    "Area": "Route 4",
+    "Location/Price": "Reward for beating Roller Skater Calida"
+  },
+  {
+    "Item": "Float Stone",
+    "Area": "Route 4",
+    "Location/Price": "Reward for beating Preschooler Adrian"
+  },
+  {
+    "Item": "Miracle Seed",
+    "Area": "Route 4",
+    "Location/Price": "Reward for beating Gardener Wheaton"
+  },
+  {
+    "Item": "Mystic Water",
+    "Area": "Route 4",
+    "Location/Price": "Reward for beating Preschooler Mia"
+  },
+  {
+    "Item": "Poison Barb",
+    "Area": "Route 4",
+    "Location/Price": "Between the two middle hedges to the north of the fountain"
+  },
+  {
+    "Item": "Shed Shell",
+    "Area": "Route 4",
+    "Location/Price": "Reward for beating Poke Fan Agnes"
+  },
+  {
+    "Item": "Great Ball-5",
+    "Area": "Route 4",
+    "Location/Price": "Inside the southeastern hedge maze's northern half"
+  },
+  {
+    "Item": "Net Ball-5",
+    "Area": "Route 4",
+    "Location/Price": "By the northwestern hedge maze, at its northwest corner"
+  },
+  {
+    "Item": "Honey-2",
+    "Area": "Route 4",
+    "Location/Price": "Inside the southwestern hedge maze, at the end of the dead end at its southwestern corner (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Honey-2",
+    "Area": "Route 4",
+    "Location/Price": "Inside the northernmost bush in the line of three small bushes directly north of the fountain, west of Pok\u00e9 Fan Agnes (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Honey-2",
+    "Area": "Route 4",
+    "Location/Price": "Inside the northwestern hedge maze, at the spiraling dead end near its north entrance (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "TM27: Weather Ball",
+    "Area": "Route 4",
+    "Location/Price": "Gift from Sina and Dexio at the north end"
+  },
+  {
+    "Item": "Lansat Berry",
+    "Area": "Route 5",
+    "Location/Price": "Reward for beating Youngster Keita"
+  },
+  {
+    "Item": "Lum Berry",
+    "Area": "Route 5",
+    "Location/Price": "In the center of the large bowl in the Skate Park (hidden)"
+  },
+  {
+    "Item": "Oran Berry",
+    "Area": "Route 5",
+    "Location/Price": "In front of the Oran Berry Tree located at the end of a grind rail at the south end of the area where the hill in the middle of the route crests (regenerates after 7 days)"
+  },
+  {
+    "Item": "Sitrus Berry",
+    "Area": "Route 5",
+    "Location/Price": "On a rock at the bottom of the hill in the middle of the route, west of the grind rail (hidden)"
+  },
+  {
+    "Item": "PP Up-2",
+    "Area": "Route 5",
+    "Location/Price": "West of the Skate Park, accessible via a grind rail at the bottom of the hill in the middle of the route"
+  },
+  {
+    "Item": "Binding Band",
+    "Area": "Route 5",
+    "Location/Price": "Reward for beating Rising Star Tyson"
+  },
+  {
+    "Item": "Cleanse Tag",
+    "Area": "Route 5",
+    "Location/Price": "Reward for beating Youngster Keita"
+  },
+  {
+    "Item": "Hard Stone",
+    "Area": "Route 5",
+    "Location/Price": "Reward for beating Backpacker Heike"
+  },
+  {
+    "Item": "Magnet",
+    "Area": "Route 5",
+    "Location/Price": "Reward for beating Youngster Anthony"
+  },
+  {
+    "Item": "Metronome",
+    "Area": "Route 5",
+    "Location/Price": "On the south side of the purple patch of flowers south of Rising Star Tyson"
+  },
+  {
+    "Item": "Ring Target",
+    "Area": "Route 5",
+    "Location/Price": "Reward for beating Roller Skater Winnie"
+  },
+  {
+    "Item": "Sharp Beak",
+    "Area": "Route 5",
+    "Location/Price": "Near the entrance to Camphrier Town, at the end of the northern of the two paths blocked by thorny trees (requires Cut)"
+  },
+  {
+    "Item": "Soft Sand",
+    "Area": "Route 5",
+    "Location/Price": "Reward for beating Roller Skater Florin"
+  },
+  {
+    "Item": "Sticky Barb-2",
+    "Area": "Route 5",
+    "Location/Price": "On the south side of the purple patch of flowers south of Rising Star Tyson"
+  },
+  {
+    "Item": "Twisted Spoon",
+    "Area": "Route 5",
+    "Location/Price": "Reward for beating Rising Star Hamish"
+  },
+  {
+    "Item": "Lava Cookie-3",
+    "Area": "Route 5",
+    "Location/Price": "East of the Skate Park, accessible via a grind rail inside the park"
+  },
+  {
+    "Item": "Cherish Ball-10",
+    "Area": "Route 5",
+    "Location/Price": "South of Twins Faith & Joy, through the grass"
+  },
+  {
+    "Item": "Honey-3",
+    "Area": "Route 5",
+    "Location/Price": "Gift from Trevor after defeating Tierno"
+  },
+  {
+    "Item": "TM01: Hone Claws",
+    "Area": "Route 5",
+    "Location/Price": "Across the south-leading grind rail in the northwestern corner of the route"
+  },
+  {
+    "Item": "Aguav Berry",
+    "Area": "Route 6",
+    "Location/Price": "West side: in front of the Berry tree just west of the center of the area (regenerates after 7 days)"
+  },
+  {
+    "Item": "Apicot Berry",
+    "Area": "Route 6",
+    "Location/Price": "Central path: in the second bush south of the tree that is fifth from the north end of the route (hidden)"
+  },
+  {
+    "Item": "Enigma Berry",
+    "Area": "Route 6",
+    "Location/Price": "Reward for beating Youngster Jacob"
+  },
+  {
+    "Item": "Micle Berry",
+    "Area": "Route 6",
+    "Location/Price": "Reward for beating Backpacker Roderick"
+  },
+  {
+    "Item": "Pecha Berry-5",
+    "Area": "Route 6",
+    "Location/Price": "East side: in a clear strip among the grass along the west side of the north half of the area"
+  },
+  {
+    "Item": "Rawst Berry-5",
+    "Area": "Route 6",
+    "Location/Price": "East side: in the small clearing in the grass to the southeast of the center of the area"
+  },
+  {
+    "Item": "Berry Juice-5",
+    "Area": "Route 6",
+    "Location/Price": "East side: just southeast of the entrance from Parfum Palace"
+  },
+  {
+    "Item": "Black Glasses",
+    "Area": "Route 6",
+    "Location/Price": "Reward for beating Tourist Mari"
+  },
+  {
+    "Item": "Dragon Fang",
+    "Area": "Route 6",
+    "Location/Price": "Reward for beating Tourist Takemi"
+  },
+  {
+    "Item": "Iron Plate",
+    "Area": "Route 6",
+    "Location/Price": "Reward for beating Beauty Brigitte"
+  },
+  {
+    "Item": "Never Melt Ice",
+    "Area": "Route 6",
+    "Location/Price": "Reward for beating Backpacker Jerome"
+  },
+  {
+    "Item": "Pixie Plate",
+    "Area": "Route 6",
+    "Location/Price": "Reward for beating Tourist Eriko"
+  },
+  {
+    "Item": "Pok\u00e9 Doll-2",
+    "Area": "Route 6",
+    "Location/Price": "Central path: down a narrow path immediately on the left after entering from Route 7"
+  },
+  {
+    "Item": "Silver Powder",
+    "Area": "Route 6",
+    "Location/Price": "Reward for beating Youngster Tyler"
+  },
+  {
+    "Item": "Spell Tag",
+    "Area": "Route 6",
+    "Location/Price": "Reward for beating PokeFan Family Jan & Erin"
+  },
+  {
+    "Item": "Safari Ball-5",
+    "Area": "Route 6",
+    "Location/Price": "West side: in the small northeastern clearing in the grass"
+  },
+  {
+    "Item": "Ultra Ball-3",
+    "Area": "Route 6",
+    "Location/Price": "West side: in the southwest corner of the area"
+  },
+  {
+    "Item": "TM09: Venoshock",
+    "Area": "Route 6",
+    "Location/Price": "East side: just north from the southwest corner of the area"
+  },
+  {
+    "Item": "Star Piece-2",
+    "Area": "Route 6",
+    "Location/Price": "West side: in the northwest, up a small path on the west edge"
+  },
+  {
+    "Item": "Tiny Mushroom-3",
+    "Area": "Route 6",
+    "Location/Price": "East side: at the end of the small dead end pushing north along the east edge of the area, in the center of the hillside (hidden)"
+  },
+  {
+    "Item": "Persim Berry",
+    "Area": "Route 7",
+    "Location/Price": "In front of the Berry tree in the southwest corner of the route (regenerates after 7 days)"
+  },
+  {
+    "Item": "Tanga Berry-10",
+    "Area": "Route 7",
+    "Location/Price": "North of the southern Connecting Cave entrance"
+  },
+  {
+    "Item": "Berry Juice-5",
+    "Area": "Route 7",
+    "Location/Price": "At the southwest corner of the middle bed of purple flowers, southeast of Artist Family Mona & Paolo"
+  },
+  {
+    "Item": "Lagging Tail",
+    "Area": "Route 7",
+    "Location/Price": "On static Ditto"
+  },
+  {
+    "Item": "Muscle Band",
+    "Area": "Route 7",
+    "Location/Price": "Reward for beating Artist Georgia"
+  },
+  {
+    "Item": "Wise Glasses",
+    "Area": "Route 7",
+    "Location/Price": "Reward for beating Artist Pierre"
+  },
+  {
+    "Item": "PP Up-3",
+    "Area": "Route 7",
+    "Location/Price": "In the southwest corner of the westernmost flower bed"
+  },
+  {
+    "Item": "Heal Ball-10",
+    "Area": "Route 7",
+    "Location/Price": "Up a narrow northward path just on the east side of the bridge"
+  },
+  {
+    "Item": "Big Pearl",
+    "Area": "Route 7",
+    "Location/Price": "In the southwest corner of the route"
+  },
+  {
+    "Item": "Starf Berry-2",
+    "Area": "Route 8 (Cliffside Area)",
+    "Location/Price": "Cliffside area: on the narrow arm of cliff jutting over the beach, in the space one step east and south from the point of the cliff (hidden)"
+  },
+  {
+    "Item": "Water Stone",
+    "Area": "Route 8 (Cliffside Area)",
+    "Location/Price": "Cliffside area: at the end of the narrow path west of the yellow flowers (requires Strength)"
+  },
+  {
+    "Item": "Berry Juice-2",
+    "Area": "Route 8 (Cliffside Area)",
+    "Location/Price": "Cliffside area: in the rock north of the entrance to Connecting Cave (hidden)"
+  },
+  {
+    "Item": "Berry Juice-5",
+    "Area": "Route 8 (Cliffside Area)",
+    "Location/Price": "On one of the paths in the ledge maze"
+  },
+  {
+    "Item": "Black Belt",
+    "Area": "Route 8 (Cliffside Area)",
+    "Location/Price": "Reward for beating Black Belt Cadoc"
+  },
+  {
+    "Item": "Dragon Gem",
+    "Area": "Route 8 (Cliffside Area)",
+    "Location/Price": "Reward for beating Rising Star Paluette"
+  },
+  {
+    "Item": "Nugget",
+    "Area": "Route 8 (Cliffside Area)",
+    "Location/Price": "Cliffside area: across the mud pit via the second launch point of jumping stones"
+  },
+  {
+    "Item": "Apicot Berry",
+    "Area": "Route 8 (Costal Area)",
+    "Location/Price": "Reward for beating Fisherman Wharton"
+  },
+  {
+    "Item": "Mago Berry",
+    "Area": "Route 8 (Costal Area)",
+    "Location/Price": "Coastal area: in front of the Berry tree northwest of the Aquarium (regenerates after 7 days)"
+  },
+  {
+    "Item": "Dowsing Machine",
+    "Area": "Route 8 (Costal Area)",
+    "Location/Price": "Coastal area: from the Swimmer \u2640 north of the Aquarium after speaking to the Fossil Scientist in Glittering Cave"
+  },
+  {
+    "Item": "Fast Ball-5",
+    "Area": "Route 8 (Costal Area)",
+    "Location/Price": "Coastal area: directly north of the Aquarium stairs, on the southernmost rock in a pair of small rocks (hidden)"
+  },
+  {
+    "Item": "TM19: Roost",
+    "Area": "Route 8 (Costal Area)",
+    "Location/Price": "Coastal area: on the small, shallow island in the northwest of the route (requires Surf)"
+  },
+  {
+    "Item": "Pearl-2",
+    "Area": "Route 8 (Costal Area)",
+    "Location/Price": "Coastal area: by the Swimmer \u2640 who gives the player the Dowsing Machine, two spaces west and four north of the rock directly east of the Mago Berry tree (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Stardust-3",
+    "Area": "Route 8",
+    "Location/Price": "Coastal area: southwest of the Berry tree, seven spaces west and two north of the nearest rock (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Kee Berry",
+    "Area": "Route 8 (Sea)",
+    "Location/Price": "Reward for beating Swimmer Estaban"
+  },
+  {
+    "Item": "Maranga Berry",
+    "Area": "Route 8 (Sea)",
+    "Location/Price": "Reward for beating Swimmer Ramses"
+  },
+  {
+    "Item": "Sitrus Berry-4",
+    "Area": "Route 9",
+    "Location/Price": "On the rock northeast of the Pok\u00e9mon Ranger by the entrance to Glittering Cave (hidden)"
+  },
+  {
+    "Item": "Berry Juice-5",
+    "Area": "Route 9",
+    "Location/Price": "In the walkable area southeast of the middle of the route, past the large breakable rock"
+  },
+  {
+    "Item": "PP Max",
+    "Area": "Route 9",
+    "Location/Price": "In a small northward branch of walkable ground near the middle of the route"
+  },
+  {
+    "Item": "Dusk Ball-10",
+    "Area": "Route 9",
+    "Location/Price": "In the northeast corner of the route"
+  },
+  {
+    "Item": "Star Piece",
+    "Area": "Route 9",
+    "Location/Price": "In the walkable area southeast of the middle of the route, at the end of the narrow path on the edge of the cliff"
+  },
+  {
+    "Item": "Lum Berry",
+    "Area": "Santalune City",
+    "Location/Price": "On the lamppost on the hill in the west of the city (hidden)"
+  },
+  {
+    "Item": "Exp. Share",
+    "Area": "Santalune City",
+    "Location/Price": "From Alexa at the entrance to Route 4, after defeating Viola"
+  },
+  {
+    "Item": "Roller Skates",
+    "Area": "Santalune City",
+    "Location/Price": "From Roller Skater Rinka after defeating her in front of the Gym"
+  },
+  {
+    "Item": "PP UP",
+    "Area": "Santalune City",
+    "Location/Price": "In the flower box on the south side of the caf\u00e9 on the hill in the west, in the second space from the left (hidden)"
+  },
+  {
+    "Item": "Great Ball",
+    "Area": "Santalune City",
+    "Location/Price": "Gift from a boy in the house northeast of the Pok\u00e9mon Center"
+  },
+  {
+    "Item": "Ultra Ball-2",
+    "Area": "Santalune City",
+    "Location/Price": "On the ground in the southeastern corner of the hill in the west of the city (hidden)"
+  },
+  {
+    "Item": "TM40: Aerial Ace",
+    "Area": "Santalune City",
+    "Location/Price": "Reward for beating Hoenn Leader Winona"
+  },
+  {
+    "Item": "TM83: Infestation",
+    "Area": "Santalune City",
+    "Location/Price": "Reward for beating leader Viola"
+  },
+  {
+    "Item": "Bicycle",
+    "Area": "Santalune City Mart",
+    "Location/Price": "$500.00"
+  },
+  {
+    "Item": "Exp. Share",
+    "Area": "Santalune City Mart",
+    "Location/Price": "$500.00  (Does not stack with given Exp.Share)"
+  },
+  {
+    "Item": "Old Rod",
+    "Area": "Santalune City Mart",
+    "Location/Price": "$100.00"
+  },
+  {
+    "Item": "Shiny Charm",
+    "Area": "Santalune City Mart",
+    "Location/Price": "$5,000.00"
+  },
+  {
+    "Item": "Pheonix's Blessing",
+    "Area": "Santalune City Mart",
+    "Location/Price": "$10.00"
+  },
+  {
+    "Item": "Rare Candy",
+    "Area": "Santalune City Mart",
+    "Location/Price": "$10.00"
+  },
+  {
+    "Item": "Escape Rope",
+    "Area": "Santalune City Mart",
+    "Location/Price": "$150.00"
+  },
+  {
+    "Item": "Max Repel",
+    "Area": "Santalune City Mart",
+    "Location/Price": "$10.00"
+  },
+  {
+    "Item": "Oran Berry-10",
+    "Area": "Santalune Forest",
+    "Location/Price": "Northwest of the Route 2 entrance, at the western edge of the forest"
+  },
+  {
+    "Item": "Paralyze Heal",
+    "Area": "Santalune Forest",
+    "Location/Price": "Gift from Shauna when approaching a patch of grass on the eastern edge of the forest"
+  },
+  {
+    "Item": "Pheonix's Blessing-999",
+    "Area": "Santalune Forest",
+    "Location/Price": "West of the Route 2 entrance, in the southwestern-most corner of the forest"
+  },
+  {
+    "Item": "Rare Candy-50",
+    "Area": "Santalune Forest",
+    "Location/Price": "Immediately to the east of the Route 2 entrance"
+  },
+  {
+    "Item": "Pok\u00e9 Ball",
+    "Area": "Santalune Forest",
+    "Location/Price": "Gift from Calem/Serena if spoken to mid-way through the forest"
+  },
+  {
+    "Item": "Pok\u00e9 Ball-10",
+    "Area": "Santalune Forest",
+    "Location/Price": "At the end of the narrow path east of Lass Lise"
+  },
+  {
+    "Item": "Max Repel-999",
+    "Area": "Santalune Forest",
+    "Location/Price": "West of Lass Lise, at the corner of the path south of the Route 3 exit"
+  },
+  {
+    "Item": "Mega Ring",
+    "Area": "Shalour (Tower of Mastery)",
+    "Location/Price": "Top floor, from Korrina after defeating her at the Gym"
+  },
+  {
+    "Item": "Medichamite",
+    "Area": "Shalour (Tower of Mastery)",
+    "Location/Price": "Top floor, held by Gift Medicham"
+  },
+  {
+    "Item": "TM47: Brick Break",
+    "Area": "Shalour (Tower of Mastery)",
+    "Location/Price": "4F, from the Ace Trainer"
+  },
+  {
+    "Item": "Leppa Berry",
+    "Area": "Shalour City",
+    "Location/Price": "From the Psychic in the house next to the Gym, in exchange for a Sitrus Berry"
+  },
+  {
+    "Item": "Petaya Berry",
+    "Area": "Shalour City",
+    "Location/Price": "Behind the bench in front of the Shalour Gym (hidden)"
+  },
+  {
+    "Item": "Sun Stone",
+    "Area": "Shalour City",
+    "Location/Price": "From the Hiker east of the Pok\u00e9mon Center in exchange for the Intriguing Stone, after battling Calem/Serena at the Tower of Mastery"
+  },
+  {
+    "Item": "Eviolite",
+    "Area": "Shalour City",
+    "Location/Price": "From the Scientist in the house east of the Pok\u00e9mon Center after seeing at least 40 Pok\u00e9mon in the Coastal Kalos Pok\u00e9dex"
+  },
+  {
+    "Item": "Soothe Bell",
+    "Area": "Shalour City",
+    "Location/Price": "From the Madame in the house west of the Pok\u00e9mon Center after showing her a Pok\u00e9mon with at least 70 friendship"
+  },
+  {
+    "Item": "Intriguing Stone",
+    "Area": "Shalour City",
+    "Location/Price": "Gift from Tierno upon entering the large beach area"
+  },
+  {
+    "Item": "Sport Ball-10",
+    "Area": "Shalour City",
+    "Location/Price": "In the southern bush east of the entrance to the Tower of Mastery (hidden)"
+  },
+  {
+    "Item": "HM03: Surf",
+    "Area": "Shalour City",
+    "Location/Price": "From Calem/Serena by the Route 12 gate after battling Korrina at the Tower of Mastery"
+  },
+  {
+    "Item": "TM57: Charge Beam",
+    "Area": "Shalour City",
+    "Location/Price": "In front of the south wall around the Tower of Mastery, on the east (Should be Yellow, but is Red)"
+  },
+  {
+    "Item": "TM98: Power-Up Punch",
+    "Area": "Shalour City",
+    "Location/Price": "Reward for beating Leader Korrina"
+  },
+  {
+    "Item": "Stardust-4",
+    "Area": "Shalour City",
+    "Location/Price": "On the southernmost rock in the northwest of the large beach area (hidden)"
+  },
+  {
+    "Item": "Stardust-5",
+    "Area": "Shalour City",
+    "Location/Price": "From a woman in the second building west of the Pok\u00e9mon Center after bringing her a Flying- or Psychic-type Pok\u00e9mon"
+  },
+  {
+    "Item": "TM20: Thunder Punch",
+    "Area": "Shalour City (Mart)",
+    "Location/Price": "$7,500.00"
+  },
+  {
+    "Item": "TM28: Dig",
+    "Area": "Shalour City (Mart)",
+    "Location/Price": "$7,500.00"
+  },
+  {
+    "Item": "TM60: Slam",
+    "Area": "Shalour City (Mart)",
+    "Location/Price": "$7,500.00"
+  },
+  {
+    "Item": "TM67: Retaliate",
+    "Area": "Shalour City (Mart)",
+    "Location/Price": "$7,500.00"
+  },
+  {
+    "Item": "TM87: Swagger",
+    "Area": "Shalour City (Mart)",
+    "Location/Price": "$5,000.00"
+  },
+  {
+    "Item": "Ice Gem-10",
+    "Area": "Snowbelle City",
+    "Location/Price": "In the big tree southwest of the Gym, when standing in front of the house next to it (hidden)"
+  },
+  {
+    "Item": "Icy Rock",
+    "Area": "Snowbelle City",
+    "Location/Price": "In the snow bank by the house north and just east of the Gym, five paces west of the house's door (hidden)"
+  },
+  {
+    "Item": "Mental Herb-5",
+    "Area": "Snowbelle City",
+    "Location/Price": "In the southwest corner of the city, down an ice slope south of the western bridge"
+  },
+  {
+    "Item": "Red Card-3",
+    "Area": "Snowbelle City",
+    "Location/Price": "On the snow bank at the end of the short path on the Gym's west side (hidden)"
+  },
+  {
+    "Item": "Gracidea",
+    "Area": "Snowbelle City",
+    "Location/Price": "From the Beauty in the Pok\u00e9mon Center, if the player has a Shaymin in their party"
+  },
+  {
+    "Item": "Revive",
+    "Area": "Snowbelle City",
+    "Location/Price": "From the man in the house north and just east of the Gym, if the player shows him a Pok\u00e9mon that knows Mat Block"
+  },
+  {
+    "Item": "Jade Orb",
+    "Area": "Snowbelle City",
+    "Location/Price": "Reward for beating Hoenn Leader Roxanne"
+  },
+  {
+    "Item": "TM13: Ice Beam",
+    "Area": "Snowbelle City",
+    "Location/Price": "Reward for beating Leader Wulfric"
+  },
+  {
+    "Item": "TM34: Sludge Wave",
+    "Area": "Snowbelle City (Mart)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "TM50: Overheat",
+    "Area": "Snowbelle City (Mart)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "TM58: Rock Climb",
+    "Area": "Snowbelle City (Mart)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "TM68: Giga Impact",
+    "Area": "Snowbelle City (Mart)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "TM77: Zen Headbutt",
+    "Area": "Snowbelle City (Mart)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "TM91: Flash Cannon",
+    "Area": "Snowbelle City (Mart)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "TM93: Wild Charge",
+    "Area": "Snowbelle City (Mart)",
+    "Location/Price": "$20,000.00"
+  },
+  {
+    "Item": "Chople Berry-10",
+    "Area": "Terminus Cave",
+    "Location/Price": "In the northwestern-most corner, past Black Belt Gunnar who is due north of the entrance from B1F"
+  },
+  {
+    "Item": "Colbur Berry-10",
+    "Area": "Terminus Cave",
+    "Location/Price": "In the far west, west from the maze-like area north of the entrance from B1F"
+  },
+  {
+    "Item": "Custap Berry",
+    "Area": "Terminus Cave",
+    "Location/Price": "Reward for beating Black Belt Gunnar"
+  },
+  {
+    "Item": "Figy Berry-5",
+    "Area": "Terminus Cave",
+    "Location/Price": "On the stalagmite northwest of the bridge that crosses the west branch of the first fork in the path (hidden)"
+  },
+  {
+    "Item": "Kee Berry-10",
+    "Area": "Terminus Cave",
+    "Location/Price": "On a stalagmite on the west side of the cave, just west of the maze-like area north of the entrance from B1F (hidden)"
+  },
+  {
+    "Item": "Liechi Berry",
+    "Area": "Terminus Cave",
+    "Location/Price": "Reward for beating Hiker Bergin"
+  },
+  {
+    "Item": "Liechi Berry-3",
+    "Area": "Terminus Cave",
+    "Location/Price": "On the stalagmite in the northeast (hidden)"
+  },
+  {
+    "Item": "Micle Berry-10",
+    "Area": "Terminus Cave",
+    "Location/Price": "On the stalagmite behind Pok\u00e9mon Ranger Lee, southeast of the pit area (hidden)"
+  },
+  {
+    "Item": "Shuca Berry-10",
+    "Area": "Terminus Cave",
+    "Location/Price": "In the far east, east of Black Belt Gunnar who is due north of the entrance from B1F"
+  },
+  {
+    "Item": "Dragon Gem-10",
+    "Area": "Terminus Cave",
+    "Location/Price": "In the middle of the chamber"
+  },
+  {
+    "Item": "Eject Button",
+    "Area": "Terminus Cave",
+    "Location/Price": "Reward for beating Worker Narek"
+  },
+  {
+    "Item": "Heat Rock",
+    "Area": "Terminus Cave",
+    "Location/Price": "In the southwestern-most corner (requires Rock Smash)"
+  },
+  {
+    "Item": "Iron Plate",
+    "Area": "Terminus Cave",
+    "Location/Price": "East of the entrance from B1F, via the path around the pit in the middle of the cave"
+  },
+  {
+    "Item": "Life Orb",
+    "Area": "Terminus Cave",
+    "Location/Price": "Between the two ledges on the east side"
+  },
+  {
+    "Item": "Normal Gem-10",
+    "Area": "Terminus Cave",
+    "Location/Price": "On the stalagmite at the back of the chamber (hidden, reappears occasionally)"
+  },
+  {
+    "Item": "Red Card",
+    "Area": "Terminus Cave",
+    "Location/Price": "Reward for beating Battle Girl Andrea"
+  },
+  {
+    "Item": "Water Gem-10",
+    "Area": "Terminus Cave",
+    "Location/Price": "In the far north, after sliding down the east slope northeast of Black Belt Gunnar who is due north of the entrance from B1F (requires Rock Smash)"
+  },
+  {
+    "Item": "Alakazite",
+    "Area": "Terminus Cave",
+    "Location/Price": "Reward for beating Hiker Aaron"
+  },
+  {
+    "Item": "Garchompite",
+    "Area": "Terminus Cave",
+    "Location/Price": "Reward for beating Worker Yusif"
+  },
+  {
+    "Item": "Gyaradosite",
+    "Area": "Terminus Cave",
+    "Location/Price": "Reward for beating Rangers Fern & Lee"
+  },
+  {
+    "Item": "Tyranitarite",
+    "Area": "Terminus Cave",
+    "Location/Price": "Reward for beating Worker Dimitri"
+  },
+  {
+    "Item": "Master Ball",
+    "Area": "Terminus Cave",
+    "Location/Price": "Southeast of TM30 (Shadow Ball) at the corner of the pit one tier above the mine cart (requires Rock Smash) (hidden)"
+  },
+  {
+    "Item": "Moon Ball-10",
+    "Area": "Terminus Cave",
+    "Location/Price": "On the small rock just past and southwest of the two ledges on the west branch of the first fork in the path (hidden)"
+  },
+  {
+    "Item": "TM30: Shadow Ball",
+    "Area": "Terminus Cave",
+    "Location/Price": "By the mine cart in the pit area in the middle of the cave (requires Rock Smash)"
+  },
+  {
+    "Item": "TM31: Dragon Pulse",
+    "Area": "Terminus Cave",
+    "Location/Price": "In the back of the chamber"
+  },
+  {
+    "Item": "TM85: Mudslide",
+    "Area": "Terminus Cave",
+    "Location/Price": "West of the two ledges south of the bridge that Hiker Aaron is walking on (Should be yellow but again game does not like, so is red)"
+  },
+  {
+    "Item": "Comet Shard",
+    "Area": "Terminus Cave",
+    "Location/Price": "In the far north at the end of a narrow path on the east side of the cave, on the north wall (requires Rock Smash) (hidden)"
+  },
+  {
+    "Item": "Star Piece-4",
+    "Area": "Terminus Cave",
+    "Location/Price": "At the end of the narrow bridge, on the east branch of the first fork in the path (requires Rock Smash)"
+  },
+  {
+    "Item": "Adamant Orb",
+    "Area": "Terminus Cave (Zygarde's Chamber)",
+    "Location/Price": "Down the southwest path of the chamber"
+  },
+  {
+    "Item": "Griseous Orb",
+    "Area": "Terminus Cave  (Zygarde's Chamber)",
+    "Location/Price": "Down the northwest path of the chamber"
+  },
+  {
+    "Item": "Lustrous Orb",
+    "Area": "Terminus Cave  (Zygarde's Chamber)",
+    "Location/Price": "Down the southeast path of the chamber"
+  },
+  {
+    "Item": "Big Nugget",
+    "Area": "Terminus Cave  (Zygarde's Chamber)",
+    "Location/Price": "Down the northeast path of the chamber, in the middle of the grassy area (hidden"
+  },
+  {
+    "Item": "Holo Caster",
+    "Area": "Vaniville Town",
+    "Location/Price": "Automatically obtained after getting the Town Map and Potion"
+  },
+  {
+    "Item": "Running Shoes",
+    "Area": "Vaniville Town",
+    "Location/Price": "Automatically obtained at the start of the game"
+  },
+  {
+    "Item": "Town Map",
+    "Area": "Vaniville Town",
+    "Location/Price": "Gift from mom after getting the Pok\u00e9dex"
+  },
+  {
+    "Item": "Potion",
+    "Area": "Vaniville Town",
+    "Location/Price": "Gift from mom after getting the Pok\u00e9dex"
+  },
+  {
+    "Item": "Liechi Berry-5",
+    "Area": "Victory Road (Inside 1)",
+    "Location/Price": "On a stalagmite just after crossing the first lake (hidden)"
+  },
+  {
+    "Item": "Focus Sash-3",
+    "Area": "Victory Road (Inside 1)",
+    "Location/Price": "In the southwestern-most corner of the cave, south of Black Belt Markus"
+  },
+  {
+    "Item": "Iapapa Berry-10",
+    "Area": "Victory Road (Inside 2)",
+    "Location/Price": "In the far north, past Black Belt Ander"
+  },
+  {
+    "Item": "Smooth Rock",
+    "Area": "Victory Road (Inside 2)",
+    "Location/Price": "On the wall directly north of the stalagmite by the Carbos (hidden)"
+  },
+  {
+    "Item": "Master Ball",
+    "Area": "Victory Road (Inside 2)",
+    "Location/Price": "On the stalagmite at the north end of the pit of stepping stones, at the end of a narrow path (hidden) (requires Rock Smash)"
+  },
+  {
+    "Item": "Pearl String-5",
+    "Area": "Victory Road (Inside 2)",
+    "Location/Price": "In an isolated cave accessed via the southeast exit (requires Rock Smash) (Should be Red but is Yellow)"
+  },
+  {
+    "Item": "Figy Berry-10",
+    "Area": "Victory Road (Inside 3)",
+    "Location/Price": "South of the end of the ledge maze, near Pok\u00e9mon Ranger Ralf"
+  },
+  {
+    "Item": "Dragon Gem-10",
+    "Area": "Victory Road (Inside 3)",
+    "Location/Price": "On a stalagmite in the northeast corner of the cave, south of Veteran Inga (hidden)"
+  },
+  {
+    "Item": "Steel Gem-10",
+    "Area": "Victory Road (Inside 3)",
+    "Location/Price": "Near the end of the ledge maze, between the two ledges west of the staircase, on the ground in the center (hidden)"
+  },
+  {
+    "Item": "Weakness Policy-3",
+    "Area": "Victory Road (Inside 3)",
+    "Location/Price": "On the east side of the ledge maze, via the slope southwest of Veteran Inga in the northeast"
+  },
+  {
+    "Item": "Meloettanite",
+    "Area": "Victory Road (Inside 3)",
+    "Location/Price": "Reward for beating Veteran Inga"
+  },
+  {
+    "Item": "Comet Shard-5",
+    "Area": "Victory Road (Inside 4)",
+    "Location/Price": "In the middle of the four torches in a square formation before the exit to the Pok\u00e9mon League (hidden)"
+  },
+  {
+    "Item": "Mago Berry-10",
+    "Area": "Victory Road (Outside 2)",
+    "Location/Price": "On the cliff through the northwest exit of the second cave, north of Brains & Brawn Arman & Hugo (requires Strength)"
+  },
+  {
+    "Item": "Dark Gem-10",
+    "Area": "Victory Road (Outside 2)",
+    "Location/Price": "On the small rock on the left just after crossing the bridge (hidden)"
+  },
+  {
+    "Item": "Ghost Gem-10",
+    "Area": "Victory Road (Outside 2)",
+    "Location/Price": "In the bush just west of the entrance to the second cave (hidden)"
+  },
+  {
+    "Item": "Aguav Berry-10",
+    "Area": "Victory Road (Outside 3)",
+    "Location/Price": "In the north part of the area above the third cave's main entrance*"
+  },
+  {
+    "Item": "Starf Berry-10",
+    "Area": "Victory Road (Outside 3)",
+    "Location/Price": "Behind a cracked wall west of the main entrance to the third cave (requires Rock Smash)"
+  },
+  {
+    "Item": "Rock Gem-10",
+    "Area": "Victory Road (Outside 3)",
+    "Location/Price": "On the rock nearest to the southern entrance to the second cave, south of Fairy Tale Girl Corinne (hidden) (requires Strength)"
+  },
+  {
+    "Item": "Max Revive-2",
+    "Area": "Victory Road (Outside 3)",
+    "Location/Price": "From Calem/Serena after defeating them"
+  },
+  {
+    "Item": "PP Max-10",
+    "Area": "Victory Road (Outside 3)",
+    "Location/Price": "North of the main exit from the second cave, past a cracked wall and behind the tower (requires Rock Smash)"
+  },
+  {
+    "Item": "Master Ball",
+    "Area": "Victory Road (Outside 3)",
+    "Location/Price": "In the northeast corner of the grove, behind the stone altar"
+  },
+  {
+    "Item": "Pearl String-5",
+    "Area": "Victory Road (Outside 3)",
+    "Location/Price": "In the area above the third cave's main entrance*, on the rock directly west from the exit (hidden)"
+  },
+  {
+    "Item": "Aguav Berry-10",
+    "Area": "Victory Road (Outside 4)",
+    "Location/Price": "On the second small rock south of Artist Vincent (hidden)"
+  },
+  {
+    "Item": "Wiki Berry-10",
+    "Area": "Victory Road (Outside 4)",
+    "Location/Price": "At the northeast of the area at the top of the waterfall (requires Surf and Waterfall)"
+  },
+  {
+    "Item": "PP Max-10",
+    "Area": "Victory Road (Outside 4)",
+    "Location/Price": "South of TM02 on the side of the path, directly east and one pace north of Hiker Corwin (hidden) (requires Surf and Waterfall)"
+  }
+]

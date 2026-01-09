@@ -1,1 +1,4313 @@
-{"Ivysaur":{"EvolvesFrom":"Bulbasaur","FromMethod":"Level Up: 18","EvolvesInto":{"Venusaur":"Level Up: 36"}},"Bulbasaur":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Ivysaur":"Level Up: 18"}},"Venusaur":{"EvolvesFrom":"Ivysaur","FromMethod":"Level Up: 36","EvolvesInto":{}},"Charmeleon":{"EvolvesFrom":"Charmander","FromMethod":"Level Up: 18","EvolvesInto":{"Charizard":"Level Up: 36"}},"Charmander":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Charmeleon":"Level Up: 18"}},"Charizard":{"EvolvesFrom":"Charmeleon","FromMethod":"Level Up: 36","EvolvesInto":{}},"Wartortle":{"EvolvesFrom":"Squirtle","FromMethod":"Level Up: 18","EvolvesInto":{"Blastoise":"Level Up: 36"}},"Squirtle":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Wartortle":"Level Up: 18"}},"Blastoise":{"EvolvesFrom":"Wartortle","FromMethod":"Level Up: 36","EvolvesInto":{}},"Metapod":{"EvolvesFrom":"Caterpie","FromMethod":"Level Up: 10","EvolvesInto":{"Butterfree":"Level Up: 15"}},"Caterpie":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Metapod":"Level Up: 10"}},"Butterfree":{"EvolvesFrom":"Metapod","FromMethod":"Level Up: 15","EvolvesInto":{}},"Kakuna":{"EvolvesFrom":"Weedle","FromMethod":"Level Up: 10","EvolvesInto":{"Beedrill":"Level Up: 15"}},"Weedle":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Kakuna":"Level Up: 10"}},"Beedrill":{"EvolvesFrom":"Combee","FromMethod":"Level Up: 30 (Male)","EvolvesInto":{}},"Pidgeotto":{"EvolvesFrom":"Pidgey","FromMethod":"Level Up: 16","EvolvesInto":{"Pidgeot":"Level Up: 34"}},"Pidgey":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Pidgeotto":"Level Up: 16"}},"Pidgeot":{"EvolvesFrom":"Pidgeotto","FromMethod":"Level Up: 34","EvolvesInto":{}},"Raticate":{"EvolvesFrom":"Rattata","FromMethod":"Level Up: 22","EvolvesInto":{}},"Rattata":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Raticate":"Level Up: 22"}},"Fearow":{"EvolvesFrom":"Spearow","FromMethod":"Level Up: 25","EvolvesInto":{}},"Spearow":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Fearow":"Level Up: 25"}},"Arbok":{"EvolvesFrom":"Ekans","FromMethod":"Level Up: 22","EvolvesInto":{}},"Ekans":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Arbok":"Level Up: 22"}},"Raichu":{"EvolvesFrom":"Pikachu","FromMethod":"Use Item: Thunder Stone","EvolvesInto":{}},"Pikachu":{"EvolvesFrom":"Pichu","FromMethod":"Level Up: 16","EvolvesInto":{"Raichu":"Use Item: Thunder Stone"}},"Sandslash":{"EvolvesFrom":"Sandshrew","FromMethod":"Level Up: 22","EvolvesInto":{}},"Sandshrew":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Sandslash":"Level Up: 22"}},"Nidorina":{"EvolvesFrom":"Nidoran-F","FromMethod":"Level Up: 16","EvolvesInto":{"Nidoqueen":"Level Up: 35"}},"Nidoran-F":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Nidorina":"Level Up: 16"}},"Nidoqueen":{"EvolvesFrom":"Nidorina","FromMethod":"Level Up: 35","EvolvesInto":{}},"Nidorino":{"EvolvesFrom":"Nidoran-M","FromMethod":"Level Up: 16","EvolvesInto":{"Nidoking":"Level Up: 35"}},"Nidoran-M":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Nidorino":"Level Up: 16"}},"Nidoking":{"EvolvesFrom":"Nidorino","FromMethod":"Level Up: 35","EvolvesInto":{}},"Clefable":{"EvolvesFrom":"Clefairy","FromMethod":"Level Up: 34","EvolvesInto":{}},"Clefairy":{"EvolvesFrom":"Cleffa","FromMethod":"Level Up: 16","EvolvesInto":{"Clefable":"Level Up: 34"}},"Ninetales":{"EvolvesFrom":"Vulpix","FromMethod":"Level Up: 37","EvolvesInto":{}},"Vulpix":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Ninetales":"Level Up: 37"}},"Wigglytuff":{"EvolvesFrom":"Jigglypuff","FromMethod":"Level Up: 34","EvolvesInto":{}},"Jigglypuff":{"EvolvesFrom":"Igglybuff","FromMethod":"Level Up: 16","EvolvesInto":{"Wigglytuff":"Level Up: 34"}},"Golbat":{"EvolvesFrom":"Zubat","FromMethod":"Level Up: 22","EvolvesInto":{"Crobat":"Level Up: 42"}},"Zubat":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Golbat":"Level Up: 22"}},"Crobat":{"EvolvesFrom":"Golbat","FromMethod":"Level Up: 42","EvolvesInto":{}},"Gloom":{"EvolvesFrom":"Oddish","FromMethod":"Level Up: 21","EvolvesInto":{"Vileplume":"Use Item: Leaf Stone","Bellossom":"Use Item: Sun Stone"}},"Oddish":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Gloom":"Level Up: 21"}},"Vileplume":{"EvolvesFrom":"Gloom","FromMethod":"Use Item: Leaf Stone","EvolvesInto":{}},"Bellossom":{"EvolvesFrom":"Gloom","FromMethod":"Use Item: Sun Stone","EvolvesInto":{}},"Parasect":{"EvolvesFrom":"Paras","FromMethod":"Level Up: 24","EvolvesInto":{}},"Paras":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Parasect":"Level Up: 24"}},"Venomoth":{"EvolvesFrom":"Venonat","FromMethod":"Level Up: 29","EvolvesInto":{}},"Venonat":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Venomoth":"Level Up: 29"}},"Dugtrio":{"EvolvesFrom":"Diglett","FromMethod":"Level Up: 26","EvolvesInto":{}},"Diglett":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Dugtrio":"Level Up: 26"}},"Persian":{"EvolvesFrom":"Meowth","FromMethod":"Level Up: 28","EvolvesInto":{}},"Meowth":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Persian":"Level Up: 28"}},"Golduck":{"EvolvesFrom":"Psyduck","FromMethod":"Level Up: 30","EvolvesInto":{}},"Psyduck":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Golduck":"Level Up: 30"}},"Primeape":{"EvolvesFrom":"Mankey","FromMethod":"Level Up: 28","EvolvesInto":{}},"Mankey":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Primeape":"Level Up: 28"}},"Arcanine":{"EvolvesFrom":"Growlithe","FromMethod":"Level Up: 39","EvolvesInto":{}},"Growlithe":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Arcanine":"Level Up: 39"}},"Poliwhirl":{"EvolvesFrom":"Poliwag","FromMethod":"Level Up: 25","EvolvesInto":{"Poliwrath":"Use Item: Water Stone","Politoed":"Use Item: King\u0027s Rock"}},"Poliwag":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Poliwhirl":"Level Up: 25"}},"Poliwrath":{"EvolvesFrom":"Poliwhirl","FromMethod":"Use Item: Water Stone","EvolvesInto":{}},"Politoed":{"EvolvesFrom":"Poliwhirl","FromMethod":"Use Item: King\u0027s Rock","EvolvesInto":{}},"Kadabra":{"EvolvesFrom":"Abra","FromMethod":"Level Up: 16","EvolvesInto":{"Alakazam":"Level Up: 38"}},"Abra":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Kadabra":"Level Up: 16"}},"Alakazam":{"EvolvesFrom":"Kadabra","FromMethod":"Level Up: 38","EvolvesInto":{}},"Machoke":{"EvolvesFrom":"Machop","FromMethod":"Level Up: 28","EvolvesInto":{"Machamp":"Level Up: 40"}},"Machop":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Machoke":"Level Up: 28"}},"Machamp":{"EvolvesFrom":"Machoke","FromMethod":"Level Up: 40","EvolvesInto":{}},"Weepinbell":{"EvolvesFrom":"Bellsprout","FromMethod":"Level Up: 21","EvolvesInto":{"Victreebel":"Use Item: Leaf Stone"}},"Bellsprout":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Weepinbell":"Level Up: 21"}},"Victreebel":{"EvolvesFrom":"Weepinbell","FromMethod":"Use Item: Leaf Stone","EvolvesInto":{}},"Tentacruel":{"EvolvesFrom":"Tentacool","FromMethod":"Level Up: 30","EvolvesInto":{}},"Tentacool":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Tentacruel":"Level Up: 30"}},"Graveler":{"EvolvesFrom":"Geodude","FromMethod":"Level Up: 25","EvolvesInto":{"Golem":"Level Up: 40"}},"Geodude":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Graveler":"Level Up: 25"}},"Golem":{"EvolvesFrom":"Graveler","FromMethod":"Level Up: 40","EvolvesInto":{}},"Rapidash":{"EvolvesFrom":"Ponyta","FromMethod":"Level Up: 35","EvolvesInto":{}},"Ponyta":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Rapidash":"Level Up: 35"}},"Slowbro":{"EvolvesFrom":"Slowpoke","FromMethod":"Level Up: 34","EvolvesInto":{}},"Slowking":{"EvolvesFrom":"Slowpoke","FromMethod":"Use Item: King\u0027s Rock","EvolvesInto":{}},"Slowpoke":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Slowbro":"Level Up: 34","Slowking":"Use Item: King\u0027s Rock"}},"Magneton":{"EvolvesFrom":"Magnemite","FromMethod":"Level Up: 30","EvolvesInto":{"Magnezone":"Level Up: 48"}},"Magnemite":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Magneton":"Level Up: 30"}},"Magnezone":{"EvolvesFrom":"Magneton","FromMethod":"Level Up: 48","EvolvesInto":{}},"Farfetch\u0027d":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Dodrio":{"EvolvesFrom":"Doduo","FromMethod":"Level Up: 31","EvolvesInto":{}},"Doduo":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Dodrio":"Level Up: 31"}},"Dewgong":{"EvolvesFrom":"Seel","FromMethod":"Level Up: 29","EvolvesInto":{}},"Seel":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Dewgong":"Level Up: 29"}},"Muk":{"EvolvesFrom":"Grimer","FromMethod":"Level Up: 31","EvolvesInto":{}},"Grimer":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Muk":"Level Up: 31"}},"Cloyster":{"EvolvesFrom":"Shellder","FromMethod":"Level Up: 32","EvolvesInto":{}},"Shellder":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Cloyster":"Level Up: 32"}},"Haunter":{"EvolvesFrom":"Gastly","FromMethod":"Level Up: 25","EvolvesInto":{"Gengar":"Level Up: 42"}},"Gastly":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Haunter":"Level Up: 25"}},"Gengar":{"EvolvesFrom":"Haunter","FromMethod":"Level Up: 42","EvolvesInto":{}},"Steelix":{"EvolvesFrom":"Onix","FromMethod":"Use Item: Metal Coat","EvolvesInto":{}},"Onix":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Steelix":"Use Item: Metal Coat"}},"Hypno":{"EvolvesFrom":"Drowzee","FromMethod":"Level Up: 26","EvolvesInto":{}},"Drowzee":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Hypno":"Level Up: 26"}},"Kingler":{"EvolvesFrom":"Krabby","FromMethod":"Level Up: 28","EvolvesInto":{}},"Krabby":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Kingler":"Level Up: 28"}},"Electrode":{"EvolvesFrom":"Voltorb","FromMethod":"Level Up: 28","EvolvesInto":{}},"Voltorb":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Electrode":"Level Up: 28"}},"Exeggutor":{"EvolvesFrom":"Exeggcute","FromMethod":"Level Up: 38","EvolvesInto":{}},"Exeggcute":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Exeggutor":"Level Up: 38"}},"Marowak":{"EvolvesFrom":"Cubone","FromMethod":"Level Up: 28","EvolvesInto":{}},"Cubone":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Marowak":"Level Up: 28"}},"Hitmonlee":{"EvolvesFrom":"Tyrogue","FromMethod":"Level Up with Move: Jump Kick","EvolvesInto":{}},"Hitmonchan":{"EvolvesFrom":"Tyrogue","FromMethod":"Level Up with Move: Mega Punch","EvolvesInto":{}},"Lickilicky":{"EvolvesFrom":"Lickitung","FromMethod":"Level Up: 40","EvolvesInto":{}},"Lickitung":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Lickilicky":"Level Up: 40"}},"Weezing":{"EvolvesFrom":"Koffing","FromMethod":"Level Up: 31","EvolvesInto":{}},"Koffing":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Weezing":"Level Up: 31"}},"Rhydon":{"EvolvesFrom":"Rhyhorn","FromMethod":"Level Up: 32","EvolvesInto":{"Rhyperior":"Level Up: 48"}},"Rhyhorn":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Rhydon":"Level Up: 32"}},"Rhyperior":{"EvolvesFrom":"Rhydon","FromMethod":"Level Up: 48","EvolvesInto":{}},"Blissey":{"EvolvesFrom":"Chansey","FromMethod":"Level Up: 48","EvolvesInto":{}},"Chansey":{"EvolvesFrom":"Happiny","FromMethod":"Level Up: 20","EvolvesInto":{"Blissey":"Level Up: 48"}},"Tangrowth":{"EvolvesFrom":"Tangela","FromMethod":"Level Up: 42","EvolvesInto":{}},"Tangela":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Tangrowth":"Level Up: 42"}},"Kangaskhan":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Seadra":{"EvolvesFrom":"Horsea","FromMethod":"Level Up: 32","EvolvesInto":{"Kingdra":"Level Up: 48"}},"Horsea":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Seadra":"Level Up: 32"}},"Kingdra":{"EvolvesFrom":"Seadra","FromMethod":"Level Up: 48","EvolvesInto":{}},"Seaking":{"EvolvesFrom":"Goldeen","FromMethod":"Level Up: 28","EvolvesInto":{}},"Goldeen":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Seaking":"Level Up: 28"}},"Starmie":{"EvolvesFrom":"Staryu","FromMethod":"Level Up: 39","EvolvesInto":{}},"Staryu":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Starmie":"Level Up: 39"}},"Mr. Mime":{"EvolvesFrom":"Mime Jr.","FromMethod":"Level Up: 20","EvolvesInto":{}},"Scizor":{"EvolvesFrom":"Scyther","FromMethod":"Use Item: Metal Coat","EvolvesInto":{}},"Scyther":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Scizor":"Use Item: Metal Coat"}},"Jynx":{"EvolvesFrom":"Smoochum","FromMethod":"Level Up: 30","EvolvesInto":{}},"Electivire":{"EvolvesFrom":"Electabuzz","FromMethod":"Level Up: 48","EvolvesInto":{}},"Electabuzz":{"EvolvesFrom":"Elekid","FromMethod":"Level Up: 30","EvolvesInto":{"Electivire":"Level Up: 48"}},"Magmortar":{"EvolvesFrom":"Magmar","FromMethod":"Level Up: 48","EvolvesInto":{}},"Magmar":{"EvolvesFrom":"Magby","FromMethod":"Level Up: 30","EvolvesInto":{"Magmortar":"Level Up: 48"}},"Pinsir":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Tauros":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Gyarados":{"EvolvesFrom":"Magikarp","FromMethod":"Level Up: 30","EvolvesInto":{}},"Magikarp":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Gyarados":"Level Up: 30"}},"Lapras":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Ditto":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Leafeon":{"EvolvesFrom":"Eevee","FromMethod":"Use Item: Leaf Stone","EvolvesInto":{}},"Glaceon":{"EvolvesFrom":"Eevee","FromMethod":"Use Item: Dawn Stone","EvolvesInto":{}},"Jolteon":{"EvolvesFrom":"Eevee","FromMethod":"Use Item: Thunder Stone","EvolvesInto":{}},"Vaporeon":{"EvolvesFrom":"Eevee","FromMethod":"Use Item: Water Stone","EvolvesInto":{}},"Flareon":{"EvolvesFrom":"Eevee","FromMethod":"Use Item: Fire Stone","EvolvesInto":{}},"Sylveon":{"EvolvesFrom":"Eevee","FromMethod":"Use Item: Shiny Stone","EvolvesInto":{}},"Espeon":{"EvolvesFrom":"Eevee","FromMethod":"Use Item: Sun Stone","EvolvesInto":{}},"Umbreon":{"EvolvesFrom":"Eevee","FromMethod":"Use Item: Moon Stone","EvolvesInto":{}},"Eevee":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Leafeon":"Use Item: Leaf Stone","Glaceon":"Use Item: Dawn Stone","Jolteon":"Use Item: Thunder Stone","Vaporeon":"Use Item: Water Stone","Flareon":"Use Item: Fire Stone","Sylveon":"Use Item: Shiny Stone","Espeon":"Use Item: Sun Stone","Umbreon":"Use Item: Moon Stone"}},"Porygon2":{"EvolvesFrom":"Porygon","FromMethod":"Use Item: Up-Grade","EvolvesInto":{"Porygon-Z":"Use Item: Dubious Disc"}},"Porygon-Z":{"EvolvesFrom":"Porygon2","FromMethod":"Use Item: Dubious Disc","EvolvesInto":{}},"Porygon":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Porygon2":"Use Item: Up-Grade","Porygon-Z":"Use Item: Dubious Disc"}},"Omastar":{"EvolvesFrom":"Omanyte","FromMethod":"Level Up: 35","EvolvesInto":{}},"Omanyte":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Omastar":"Level Up: 35"}},"Kabutops":{"EvolvesFrom":"Kabuto","FromMethod":"Level Up: 35","EvolvesInto":{}},"Kabuto":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Kabutops":"Level Up: 35"}},"Aerodactyl":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Snorlax":{"EvolvesFrom":"Munchlax","FromMethod":"Level Up: 30","EvolvesInto":{}},"Articuno":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Zapdos":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Moltres":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Dragonair":{"EvolvesFrom":"Dratini","FromMethod":"Level Up: 25","EvolvesInto":{"Dragonite":"Level Up: 55"}},"Dratini":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Dragonair":"Level Up: 25"}},"Dragonite":{"EvolvesFrom":"Dragonair","FromMethod":"Level Up: 55","EvolvesInto":{}},"Mewtwo":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Mew":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Bayleef":{"EvolvesFrom":"Chikorita","FromMethod":"Level Up: 18","EvolvesInto":{"Meganium":"Level Up: 36"}},"Chikorita":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Bayleef":"Level Up: 18"}},"Meganium":{"EvolvesFrom":"Bayleef","FromMethod":"Level Up: 36","EvolvesInto":{}},"Quilava":{"EvolvesFrom":"Cyndaquil","FromMethod":"Level Up: 18","EvolvesInto":{"Typhlosion":"Level Up: 36"}},"Cyndaquil":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Quilava":"Level Up: 18"}},"Typhlosion":{"EvolvesFrom":"Quilava","FromMethod":"Level Up: 36","EvolvesInto":{}},"Croconaw":{"EvolvesFrom":"Totodile","FromMethod":"Level Up: 18","EvolvesInto":{"Feraligatr":"Level Up: 36"}},"Totodile":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Croconaw":"Level Up: 18"}},"Feraligatr":{"EvolvesFrom":"Croconaw","FromMethod":"Level Up: 36","EvolvesInto":{}},"Furret":{"EvolvesFrom":"Sentret","FromMethod":"Level Up: 20","EvolvesInto":{}},"Sentret":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Furret":"Level Up: 20"}},"Noctowl":{"EvolvesFrom":"Hoothoot","FromMethod":"Level Up: 24","EvolvesInto":{}},"Hoothoot":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Noctowl":"Level Up: 24"}},"Ledian":{"EvolvesFrom":"Ledyba","FromMethod":"Level Up: 23","EvolvesInto":{}},"Ledyba":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Ledian":"Level Up: 23"}},"Ariados":{"EvolvesFrom":"Spinarak","FromMethod":"Level Up: 23","EvolvesInto":{}},"Spinarak":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Ariados":"Level Up: 23"}},"Lanturn":{"EvolvesFrom":"Chinchou","FromMethod":"Level Up: 27","EvolvesInto":{}},"Chinchou":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Lanturn":"Level Up: 27"}},"Pichu":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Pikachu":"Level Up: 16"}},"Cleffa":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Clefairy":"Level Up: 16"}},"Igglybuff":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Jigglypuff":"Level Up: 16"}},"Togetic":{"EvolvesFrom":"Togepi","FromMethod":"Level Up: 16","EvolvesInto":{"Togekiss":"Level Up: 48"}},"Togepi":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Togetic":"Level Up: 16"}},"Togekiss":{"EvolvesFrom":"Togetic","FromMethod":"Level Up: 48","EvolvesInto":{}},"Xatu":{"EvolvesFrom":"Natu","FromMethod":"Level Up: 25","EvolvesInto":{}},"Natu":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Xatu":"Level Up: 25"}},"Flaaffy":{"EvolvesFrom":"Mareep","FromMethod":"Level Up: 19","EvolvesInto":{"Ampharos":"Level Up: 34"}},"Mareep":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Flaaffy":"Level Up: 19"}},"Ampharos":{"EvolvesFrom":"Flaaffy","FromMethod":"Level Up: 34","EvolvesInto":{}},"Azumarill":{"EvolvesFrom":"Marill","FromMethod":"Level Up: 30","EvolvesInto":{}},"Marill":{"EvolvesFrom":"Azurill","FromMethod":"Level Up: 16","EvolvesInto":{"Azumarill":"Level Up: 30"}},"Sudowoodo":{"EvolvesFrom":"Bonsly","FromMethod":"Level Up: 20","EvolvesInto":{}},"Skiploom":{"EvolvesFrom":"Hoppip","FromMethod":"Level Up: 16","EvolvesInto":{"Jumpluff":"Level Up: 29"}},"Hoppip":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Skiploom":"Level Up: 16"}},"Jumpluff":{"EvolvesFrom":"Skiploom","FromMethod":"Level Up: 29","EvolvesInto":{}},"Ambipom":{"EvolvesFrom":"Aipom","FromMethod":"Level Up: 33","EvolvesInto":{}},"Aipom":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Ambipom":"Level Up: 33"}},"Sunflora":{"EvolvesFrom":"Sunkern","FromMethod":"Level Up: 29","EvolvesInto":{}},"Sunkern":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Sunflora":"Level Up: 29"}},"Yanmega":{"EvolvesFrom":"Yanma","FromMethod":"Level Up: 35","EvolvesInto":{}},"Yanma":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Yanmega":"Level Up: 35"}},"Quagsire":{"EvolvesFrom":"Wooper","FromMethod":"Level Up: 22","EvolvesInto":{}},"Wooper":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Quagsire":"Level Up: 22"}},"Honchkrow":{"EvolvesFrom":"Murkrow","FromMethod":"Level Up: 42","EvolvesInto":{}},"Murkrow":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Honchkrow":"Level Up: 42"}},"Mismagius":{"EvolvesFrom":"Misdreavus","FromMethod":"Level Up: 42","EvolvesInto":{}},"Misdreavus":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Mismagius":"Level Up: 42"}},"Unown":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Wobbuffet":{"EvolvesFrom":"Wynaut","FromMethod":"Level Up: 25","EvolvesInto":{}},"Girafarig":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Forretress":{"EvolvesFrom":"Pineco","FromMethod":"Level Up: 28","EvolvesInto":{}},"Pineco":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Forretress":"Level Up: 28"}},"Dunsparce":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Gliscor":{"EvolvesFrom":"Gligar","FromMethod":"Level Up: 45","EvolvesInto":{}},"Gligar":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Gliscor":"Level Up: 45"}},"Granbull":{"EvolvesFrom":"Snubbull","FromMethod":"Level Up: 26","EvolvesInto":{}},"Snubbull":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Granbull":"Level Up: 26"}},"Qwilfish":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Shuckle":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Heracross":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Weavile":{"EvolvesFrom":"Sneasel","FromMethod":"Level Up: 42","EvolvesInto":{}},"Sneasel":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Weavile":"Level Up: 42"}},"Ursaring":{"EvolvesFrom":"Teddiursa","FromMethod":"Level Up: 34","EvolvesInto":{}},"Teddiursa":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Ursaring":"Level Up: 34"}},"Magcargo":{"EvolvesFrom":"Slugma","FromMethod":"Level Up: 28","EvolvesInto":{}},"Slugma":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Magcargo":"Level Up: 28"}},"Piloswine":{"EvolvesFrom":"Swinub","FromMethod":"Level Up: 29","EvolvesInto":{"Mamoswine":"Level Up: 48"}},"Swinub":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Piloswine":"Level Up: 29"}},"Mamoswine":{"EvolvesFrom":"Piloswine","FromMethod":"Level Up: 48","EvolvesInto":{}},"Corsola":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Octillery":{"EvolvesFrom":"Remoraid","FromMethod":"Level Up: 30","EvolvesInto":{}},"Remoraid":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Octillery":"Level Up: 30"}},"Delibird":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Mantine":{"EvolvesFrom":"Mantyke","FromMethod":"Level Up: 31","EvolvesInto":{}},"Skarmory":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Houndoom":{"EvolvesFrom":"Houndour","FromMethod":"Level Up: 29","EvolvesInto":{}},"Houndour":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Houndoom":"Level Up: 29"}},"Donphan":{"EvolvesFrom":"Phanpy","FromMethod":"Level Up: 28","EvolvesInto":{}},"Phanpy":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Donphan":"Level Up: 28"}},"Stantler":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Smeargle":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Hitmontop":{"EvolvesFrom":"Tyrogue","FromMethod":"Level Up with Move: Drill Run","EvolvesInto":{}},"Tyrogue":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Hitmonchan":"Level Up with Move: Mega Punch","Hitmonlee":"Level Up with Move: Jump Kick","Hitmontop":"Level Up with Move: Drill Run"}},"Smoochum":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Jynx":"Level Up: 30"}},"Elekid":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Electabuzz":"Level Up: 30"}},"Magby":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Magmar":"Level Up: 30"}},"Miltank":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Raikou":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Entei":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Suicune":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Pupitar":{"EvolvesFrom":"Larvitar","FromMethod":"Level Up: 25","EvolvesInto":{"Tyranitar":"Level Up: 55"}},"Larvitar":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Pupitar":"Level Up: 25"}},"Tyranitar":{"EvolvesFrom":"Pupitar","FromMethod":"Level Up: 55","EvolvesInto":{}},"Lugia":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Ho-Oh":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Celebi":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Grovyle":{"EvolvesFrom":"Treecko","FromMethod":"Level Up: 18","EvolvesInto":{"Sceptile":"Level Up: 36"}},"Treecko":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Grovyle":"Level Up: 18"}},"Sceptile":{"EvolvesFrom":"Grovyle","FromMethod":"Level Up: 36","EvolvesInto":{}},"Combusken":{"EvolvesFrom":"Torchic","FromMethod":"Level Up: 18","EvolvesInto":{"Blaziken":"Level Up: 36"}},"Torchic":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Combusken":"Level Up: 18"}},"Blaziken":{"EvolvesFrom":"Combusken","FromMethod":"Level Up: 36","EvolvesInto":{}},"Marshtomp":{"EvolvesFrom":"Mudkip","FromMethod":"Level Up: 18","EvolvesInto":{"Swampert":"Level Up: 36"}},"Mudkip":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Marshtomp":"Level Up: 18"}},"Swampert":{"EvolvesFrom":"Marshtomp","FromMethod":"Level Up: 36","EvolvesInto":{}},"Mightyena":{"EvolvesFrom":"Poochyena","FromMethod":"Level Up: 24","EvolvesInto":{}},"Poochyena":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Mightyena":"Level Up: 24"}},"Linoone":{"EvolvesFrom":"Zigzagoon","FromMethod":"Level Up: 20","EvolvesInto":{}},"Zigzagoon":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Linoone":"Level Up: 20"}},"Silcoon":{"EvolvesFrom":"Wurmple","FromMethod":"Level Up Female: 10","EvolvesInto":{"Beautifly":"Level Up: 15"}},"Cascoon":{"EvolvesFrom":"Wurmple","FromMethod":"Level Up: 10 (Male)","EvolvesInto":{"Dustox":"Level Up: 15"}},"Wurmple":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Silcoon":"Level Up Female: 10","Cascoon":"Level Up: 10 (Male)"}},"Beautifly":{"EvolvesFrom":"Silcoon","FromMethod":"Level Up: 15","EvolvesInto":{}},"Dustox":{"EvolvesFrom":"Cascoon","FromMethod":"Level Up: 15","EvolvesInto":{}},"Lombre":{"EvolvesFrom":"Lotad","FromMethod":"Level Up: 17","EvolvesInto":{"Ludicolo":"Level Up: 35"}},"Lotad":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Lombre":"Level Up: 17"}},"Ludicolo":{"EvolvesFrom":"Lombre","FromMethod":"Level Up: 35","EvolvesInto":{}},"Nuzleaf":{"EvolvesFrom":"Seedot","FromMethod":"Level Up: 17","EvolvesInto":{"Shiftry":"Level Up: 35"}},"Seedot":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Nuzleaf":"Level Up: 17"}},"Shiftry":{"EvolvesFrom":"Nuzleaf","FromMethod":"Level Up: 35","EvolvesInto":{}},"Swellow":{"EvolvesFrom":"Taillow","FromMethod":"Level Up: 22","EvolvesInto":{}},"Taillow":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Swellow":"Level Up: 22"}},"Pelipper":{"EvolvesFrom":"Wingull","FromMethod":"Level Up: 25","EvolvesInto":{}},"Wingull":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Pelipper":"Level Up: 25"}},"Kirlia":{"EvolvesFrom":"Ralts","FromMethod":"Level Up: 20","EvolvesInto":{"Gardevoir":"Level Up Female: 36","Gallade":"Level Up: 36 (Male)"}},"Ralts":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Kirlia":"Level Up: 20"}},"Gardevoir":{"EvolvesFrom":"Kirlia","FromMethod":"Level Up Female: 36","EvolvesInto":{}},"Gallade":{"EvolvesFrom":"Kirlia","FromMethod":"Level Up: 36 (Male)","EvolvesInto":{}},"Masquerain":{"EvolvesFrom":"Surskit","FromMethod":"Level Up: 26","EvolvesInto":{}},"Surskit":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Masquerain":"Level Up: 26"}},"Breloom":{"EvolvesFrom":"Shroomish","FromMethod":"Level Up: 29","EvolvesInto":{}},"Shroomish":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Breloom":"Level Up: 29"}},"Vigoroth":{"EvolvesFrom":"Slakoth","FromMethod":"Level Up: 18","EvolvesInto":{"Slaking":"Level Up: 36"}},"Slakoth":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Vigoroth":"Level Up: 18"}},"Slaking":{"EvolvesFrom":"Vigoroth","FromMethod":"Level Up: 36","EvolvesInto":{}},"Ninjask":{"EvolvesFrom":"Nincada","FromMethod":"Level Up (Ninjask): 20","EvolvesInto":{}},"Nincada":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Ninjask":"Level Up (Ninjask): 20"}},"Shedinja":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Loudred":{"EvolvesFrom":"Whismur","FromMethod":"Level Up: 20","EvolvesInto":{"Exploud":"Level Up: 40"}},"Whismur":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Loudred":"Level Up: 20"}},"Exploud":{"EvolvesFrom":"Loudred","FromMethod":"Level Up: 40","EvolvesInto":{}},"Hariyama":{"EvolvesFrom":"Makuhita","FromMethod":"Level Up: 24","EvolvesInto":{}},"Makuhita":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Hariyama":"Level Up: 24"}},"Azurill":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Marill":"Level Up: 16"}},"Probopass":{"EvolvesFrom":"Nosepass","FromMethod":"Use Item: Thunder Stone","EvolvesInto":{}},"Nosepass":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Probopass":"Use Item: Thunder Stone"}},"Delcatty":{"EvolvesFrom":"Skitty","FromMethod":"Level Up: 27","EvolvesInto":{}},"Skitty":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Delcatty":"Level Up: 27"}},"Sableye":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Mawile":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Lairon":{"EvolvesFrom":"Aron","FromMethod":"Level Up: 25","EvolvesInto":{"Aggron":"Level Up: 42"}},"Aron":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Lairon":"Level Up: 25"}},"Aggron":{"EvolvesFrom":"Lairon","FromMethod":"Level Up: 42","EvolvesInto":{}},"Medicham":{"EvolvesFrom":"Meditite","FromMethod":"Level Up: 32","EvolvesInto":{}},"Meditite":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Medicham":"Level Up: 32"}},"Manectric":{"EvolvesFrom":"Electrike","FromMethod":"Level Up: 26","EvolvesInto":{}},"Electrike":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Manectric":"Level Up: 26"}},"Plusle":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Minun":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Volbeat":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Illumise":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Roserade":{"EvolvesFrom":"Roselia","FromMethod":"Level Up: 42","EvolvesInto":{}},"Roselia":{"EvolvesFrom":"Budew","FromMethod":"Level Up: 16","EvolvesInto":{"Roserade":"Level Up: 42"}},"Swalot":{"EvolvesFrom":"Gulpin","FromMethod":"Level Up: 26","EvolvesInto":{}},"Gulpin":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Swalot":"Level Up: 26"}},"Sharpedo":{"EvolvesFrom":"Carvanha","FromMethod":"Level Up: 30","EvolvesInto":{}},"Carvanha":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Sharpedo":"Level Up: 30"}},"Wailord":{"EvolvesFrom":"Wailmer","FromMethod":"Level Up: 35","EvolvesInto":{}},"Wailmer":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Wailord":"Level Up: 35"}},"Camerupt":{"EvolvesFrom":"Numel","FromMethod":"Level Up: 28","EvolvesInto":{}},"Numel":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Camerupt":"Level Up: 28"}},"Torkoal":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Grumpig":{"EvolvesFrom":"Spoink","FromMethod":"Level Up: 32","EvolvesInto":{}},"Spoink":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Grumpig":"Level Up: 32"}},"Spinda":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Vibrava":{"EvolvesFrom":"Trapinch","FromMethod":"Level Up: 29","EvolvesInto":{"Flygon":"Level Up: 45"}},"Trapinch":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Vibrava":"Level Up: 29"}},"Flygon":{"EvolvesFrom":"Vibrava","FromMethod":"Level Up: 45","EvolvesInto":{}},"Cacturne":{"EvolvesFrom":"Cacnea","FromMethod":"Level Up: 32 (Male)","EvolvesInto":{}},"Maractus":{"EvolvesFrom":"Cacnea","FromMethod":"Level Up Female: 32","EvolvesInto":{}},"Cacnea":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Cacturne":"Level Up: 32 (Male)","Maractus":"Level Up Female: 32"}},"Altaria":{"EvolvesFrom":"Swablu","FromMethod":"Level Up: 34","EvolvesInto":{}},"Swablu":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Altaria":"Level Up: 34"}},"Zangoose":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Seviper":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Lunatone":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Solrock":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Whiscash":{"EvolvesFrom":"Barboach","FromMethod":"Level Up: 30","EvolvesInto":{}},"Barboach":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Whiscash":"Level Up: 30"}},"Crawdaunt":{"EvolvesFrom":"Corphish","FromMethod":"Level Up: 30","EvolvesInto":{}},"Corphish":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Crawdaunt":"Level Up: 30"}},"Claydol":{"EvolvesFrom":"Baltoy","FromMethod":"Level Up: 32","EvolvesInto":{}},"Baltoy":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Claydol":"Level Up: 32"}},"Cradily":{"EvolvesFrom":"Lileep","FromMethod":"Level Up: 35","EvolvesInto":{}},"Lileep":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Cradily":"Level Up: 35"}},"Armaldo":{"EvolvesFrom":"Anorith","FromMethod":"Level Up: 35","EvolvesInto":{}},"Anorith":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Armaldo":"Level Up: 35"}},"Milotic":{"EvolvesFrom":"Feebas","FromMethod":"Level Up: 30","EvolvesInto":{}},"Feebas":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Milotic":"Level Up: 30"}},"Castform":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Kecleon":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Banette":{"EvolvesFrom":"Shuppet","FromMethod":"Level Up: 29","EvolvesInto":{}},"Shuppet":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Banette":"Level Up: 29"}},"Dusclops":{"EvolvesFrom":"Duskull","FromMethod":"Level Up: 30","EvolvesInto":{"Dusknoir":"Use Item: Reaper Cloth"}},"Duskull":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Dusclops":"Level Up: 30"}},"Dusknoir":{"EvolvesFrom":"Dusclops","FromMethod":"Use Item: Reaper Cloth","EvolvesInto":{}},"Tropius":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Chimecho":{"EvolvesFrom":"Chingling","FromMethod":"Level Up: 25","EvolvesInto":{}},"Absol":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Wynaut":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Wobbuffet":"Level Up: 25"}},"Glalie":{"EvolvesFrom":"Snorunt","FromMethod":"Level Up: 42 (Male)","EvolvesInto":{}},"Froslass":{"EvolvesFrom":"Snorunt","FromMethod":"Level Up Female: 42","EvolvesInto":{}},"Snorunt":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Glalie":"Level Up: 42 (Male)","Froslass":"Level Up Female: 42"}},"Sealeo":{"EvolvesFrom":"Spheal","FromMethod":"Level Up: 29","EvolvesInto":{"Walrein":"Level Up: 44"}},"Spheal":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Sealeo":"Level Up: 29"}},"Walrein":{"EvolvesFrom":"Sealeo","FromMethod":"Level Up: 44","EvolvesInto":{}},"Huntail":{"EvolvesFrom":"Clamperl","FromMethod":"Level Up Female: 30","EvolvesInto":{}},"Gorebyss":{"EvolvesFrom":"Clamperl","FromMethod":"Level Up Female: 30","EvolvesInto":{}},"Clamperl":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Huntail":"Level Up Female: 30","Gorebyss":"Level Up Female: 30"}},"Relicanth":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Alomomola":{"EvolvesFrom":"Luvdisc","FromMethod":"Level Up: 39","EvolvesInto":{}},"Luvdisc":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Alomomola":"Level Up: 39"}},"Shelgon":{"EvolvesFrom":"Bagon","FromMethod":"Level Up: 25","EvolvesInto":{"Salamence":"Level Up: 55"}},"Bagon":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Shelgon":"Level Up: 25"}},"Salamence":{"EvolvesFrom":"Shelgon","FromMethod":"Level Up: 55","EvolvesInto":{}},"Metang":{"EvolvesFrom":"Beldum","FromMethod":"Level Up: 20","EvolvesInto":{"Metagross":"Level Up: 55"}},"Beldum":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Metang":"Level Up: 20"}},"Metagross":{"EvolvesFrom":"Metang","FromMethod":"Level Up: 55","EvolvesInto":{}},"Regirock":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Regice":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Registeel":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Latias":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Latios":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Kyogre":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Groudon":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Rayquaza":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Jirachi":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Deoxys":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Grotle":{"EvolvesFrom":"Turtwig","FromMethod":"Level Up: 18","EvolvesInto":{"Torterra":"Level Up: 36"}},"Turtwig":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Grotle":"Level Up: 18"}},"Torterra":{"EvolvesFrom":"Grotle","FromMethod":"Level Up: 36","EvolvesInto":{}},"Monferno":{"EvolvesFrom":"Chimchar","FromMethod":"Level Up: 18","EvolvesInto":{"Infernape":"Level Up: 36"}},"Chimchar":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Monferno":"Level Up: 18"}},"Infernape":{"EvolvesFrom":"Monferno","FromMethod":"Level Up: 36","EvolvesInto":{}},"Prinplup":{"EvolvesFrom":"Piplup","FromMethod":"Level Up: 18","EvolvesInto":{"Empoleon":"Level Up: 36"}},"Piplup":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Prinplup":"Level Up: 18"}},"Empoleon":{"EvolvesFrom":"Prinplup","FromMethod":"Level Up: 36","EvolvesInto":{}},"Staravia":{"EvolvesFrom":"Starly","FromMethod":"Level Up: 17","EvolvesInto":{"Staraptor":"Level Up: 34"}},"Starly":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Staravia":"Level Up: 17"}},"Staraptor":{"EvolvesFrom":"Staravia","FromMethod":"Level Up: 34","EvolvesInto":{}},"Bibarel":{"EvolvesFrom":"Bidoof","FromMethod":"Level Up: 18","EvolvesInto":{}},"Bidoof":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Bibarel":"Level Up: 18"}},"Kricketune":{"EvolvesFrom":"Kricketot","FromMethod":"Level Up: 15","EvolvesInto":{}},"Kricketot":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Kricketune":"Level Up: 15"}},"Luxio":{"EvolvesFrom":"Shinx","FromMethod":"Level Up: 17","EvolvesInto":{"Luxray":"Level Up: 34"}},"Shinx":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Luxio":"Level Up: 17"}},"Luxray":{"EvolvesFrom":"Luxio","FromMethod":"Level Up: 34","EvolvesInto":{}},"Budew":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Roselia":"Level Up: 16"}},"Rampardos":{"EvolvesFrom":"Cranidos","FromMethod":"Level Up: 30","EvolvesInto":{}},"Cranidos":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Rampardos":"Level Up: 30"}},"Bastiodon":{"EvolvesFrom":"Shieldon","FromMethod":"Level Up: 30","EvolvesInto":{}},"Shieldon":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Bastiodon":"Level Up: 30"}},"Wormadam":{"EvolvesFrom":"Burmy","FromMethod":"Level Up Female: 20","EvolvesInto":{}},"Mothim":{"EvolvesFrom":"Burmy","FromMethod":"Level Up: 20 (Male)","EvolvesInto":{}},"Burmy":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Wormadam":"Level Up Female: 20","Mothim":"Level Up: 20 (Male)"}},"Vespiquen":{"EvolvesFrom":"Combee","FromMethod":"Level Up Female: 25","EvolvesInto":{}},"Combee":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Vespiquen":"Level Up Female: 25","Beedrill":"Level Up: 30 (Male)"}},"Pachirisu":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Floatzel":{"EvolvesFrom":"Buizel","FromMethod":"Level Up: 26","EvolvesInto":{}},"Buizel":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Floatzel":"Level Up: 26"}},"Cherrim":{"EvolvesFrom":"Cherubi","FromMethod":"Level Up: 26","EvolvesInto":{}},"Cherubi":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Cherrim":"Level Up: 26"}},"Gastrodon":{"EvolvesFrom":"Shellos","FromMethod":"Level Up: 29","EvolvesInto":{}},"Shellos":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Gastrodon":"Level Up: 29"}},"Drifblim":{"EvolvesFrom":"Drifloon","FromMethod":"Level Up: 28","EvolvesInto":{}},"Drifloon":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Drifblim":"Level Up: 28"}},"Lopunny":{"EvolvesFrom":"Buneary","FromMethod":"Level Up: 30","EvolvesInto":{}},"Buneary":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Lopunny":"Level Up: 30"}},"Purugly":{"EvolvesFrom":"Glameow","FromMethod":"Level Up: 31","EvolvesInto":{}},"Glameow":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Purugly":"Level Up: 31"}},"Chingling":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Chimecho":"Level Up: 25"}},"Skuntank":{"EvolvesFrom":"Stunky","FromMethod":"Level Up: 31","EvolvesInto":{}},"Stunky":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Skuntank":"Level Up: 31"}},"Bronzong":{"EvolvesFrom":"Bronzor","FromMethod":"Level Up: 33","EvolvesInto":{}},"Bronzor":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Bronzong":"Level Up: 33"}},"Bonsly":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Sudowoodo":"Level Up: 20"}},"Mime Jr.":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Mr. Mime":"Level Up: 20"}},"Happiny":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Chansey":"Level Up: 20"}},"Chatot":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Spiritomb":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Gabite":{"EvolvesFrom":"Gible","FromMethod":"Level Up: 24","EvolvesInto":{"Garchomp":"Level Up: 54"}},"Gible":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Gabite":"Level Up: 24"}},"Garchomp":{"EvolvesFrom":"Gabite","FromMethod":"Level Up: 54","EvolvesInto":{}},"Munchlax":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Snorlax":"Level Up: 30"}},"Lucario":{"EvolvesFrom":"Riolu","FromMethod":"Level Up: 30","EvolvesInto":{}},"Riolu":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Lucario":"Level Up: 30"}},"Hippowdon":{"EvolvesFrom":"Hippopotas","FromMethod":"Level Up: 34","EvolvesInto":{}},"Hippopotas":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Hippowdon":"Level Up: 34"}},"Drapion":{"EvolvesFrom":"Skorupi","FromMethod":"Level Up: 34","EvolvesInto":{}},"Skorupi":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Drapion":"Level Up: 34"}},"Toxicroak":{"EvolvesFrom":"Croagunk","FromMethod":"Level Up: 32","EvolvesInto":{}},"Croagunk":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Toxicroak":"Level Up: 32"}},"Carnivine":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Lumineon":{"EvolvesFrom":"Finneon","FromMethod":"Level Up: 29","EvolvesInto":{}},"Finneon":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Lumineon":"Level Up: 29"}},"Mantyke":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Mantine":"Level Up: 31"}},"Abomasnow":{"EvolvesFrom":"Snover","FromMethod":"Level Up: 40","EvolvesInto":{}},"Snover":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Abomasnow":"Level Up: 40"}},"Rotom":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Uxie":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Mesprit":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Azelf":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Dialga":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Palkia":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Heatran":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Regigigas":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Giratina":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Cresselia":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Manaphy":{"EvolvesFrom":"Phione","FromMethod":"Level Up: 80","EvolvesInto":{}},"Phione":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Manaphy":"Level Up: 80"}},"Darkrai":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Shaymin":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Arceus":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Victini":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Servine":{"EvolvesFrom":"Snivy","FromMethod":"Level Up: 18","EvolvesInto":{"Serperior":"Level Up: 36"}},"Snivy":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Servine":"Level Up: 18"}},"Serperior":{"EvolvesFrom":"Servine","FromMethod":"Level Up: 36","EvolvesInto":{}},"Pignite":{"EvolvesFrom":"Tepig","FromMethod":"Level Up: 18","EvolvesInto":{"Emboar":"Level Up: 36"}},"Tepig":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Pignite":"Level Up: 18"}},"Emboar":{"EvolvesFrom":"Pignite","FromMethod":"Level Up: 36","EvolvesInto":{}},"Dewott":{"EvolvesFrom":"Oshawott","FromMethod":"Level Up: 18","EvolvesInto":{"Samurott":"Level Up: 36"}},"Oshawott":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Dewott":"Level Up: 18"}},"Samurott":{"EvolvesFrom":"Dewott","FromMethod":"Level Up: 36","EvolvesInto":{}},"Watchog":{"EvolvesFrom":"Patrat","FromMethod":"Level Up: 22","EvolvesInto":{}},"Patrat":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Watchog":"Level Up: 22"}},"Herdier":{"EvolvesFrom":"Lillipup","FromMethod":"Level Up: 16","EvolvesInto":{"Stoutland":"Level Up: 32"}},"Lillipup":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Herdier":"Level Up: 16"}},"Stoutland":{"EvolvesFrom":"Herdier","FromMethod":"Level Up: 32","EvolvesInto":{}},"Liepard":{"EvolvesFrom":"Purrloin","FromMethod":"Level Up: 22","EvolvesInto":{}},"Purrloin":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Liepard":"Level Up: 22"}},"Simisage":{"EvolvesFrom":"Pansage","FromMethod":"Level Up: 28","EvolvesInto":{}},"Pansage":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Simisage":"Level Up: 28"}},"Simisear":{"EvolvesFrom":"Pansear","FromMethod":"Level Up: 28","EvolvesInto":{}},"Pansear":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Simisear":"Level Up: 28"}},"Simipour":{"EvolvesFrom":"Panpour","FromMethod":"Level Up: 28","EvolvesInto":{}},"Panpour":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Simipour":"Level Up: 28"}},"Musharna":{"EvolvesFrom":"Munna","FromMethod":"Level Up: 29","EvolvesInto":{}},"Munna":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Musharna":"Level Up: 29"}},"Tranquill":{"EvolvesFrom":"Pidove","FromMethod":"Level Up: 17","EvolvesInto":{"Unfezant":"Level Up: 34"}},"Pidove":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Tranquill":"Level Up: 17"}},"Unfezant":{"EvolvesFrom":"Tranquill","FromMethod":"Level Up: 34","EvolvesInto":{}},"Zebstrika":{"EvolvesFrom":"Blitzle","FromMethod":"Level Up: 27","EvolvesInto":{}},"Blitzle":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Zebstrika":"Level Up: 27"}},"Boldore":{"EvolvesFrom":"Roggenrola","FromMethod":"Level Up: 25","EvolvesInto":{"Gigalith":"Level Up: 40"}},"Roggenrola":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Boldore":"Level Up: 25"}},"Gigalith":{"EvolvesFrom":"Boldore","FromMethod":"Level Up: 40","EvolvesInto":{}},"Swoobat":{"EvolvesFrom":"Woobat","FromMethod":"Level Up: 29","EvolvesInto":{}},"Woobat":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Swoobat":"Level Up: 29"}},"Excadrill":{"EvolvesFrom":"Drilbur","FromMethod":"Level Up: 31","EvolvesInto":{}},"Drilbur":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Excadrill":"Level Up: 31"}},"Audino":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Gurdurr":{"EvolvesFrom":"Timburr","FromMethod":"Level Up: 25","EvolvesInto":{"Conkeldurr":"Level Up: 42"}},"Timburr":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Gurdurr":"Level Up: 25"}},"Conkeldurr":{"EvolvesFrom":"Gurdurr","FromMethod":"Level Up: 42","EvolvesInto":{}},"Palpitoad":{"EvolvesFrom":"Tympole","FromMethod":"Level Up: 25","EvolvesInto":{"Seismitoad":"Level Up: 36"}},"Tympole":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Palpitoad":"Level Up: 25"}},"Seismitoad":{"EvolvesFrom":"Palpitoad","FromMethod":"Level Up: 36","EvolvesInto":{}},"Throh":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Sawk":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Swadloon":{"EvolvesFrom":"Sewaddle","FromMethod":"Level Up: 20","EvolvesInto":{"Leavanny":"Level Up: 34"}},"Sewaddle":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Swadloon":"Level Up: 20"}},"Leavanny":{"EvolvesFrom":"Swadloon","FromMethod":"Level Up: 34","EvolvesInto":{}},"Whirlipede":{"EvolvesFrom":"Venipede","FromMethod":"Level Up: 19","EvolvesInto":{"Scolipede":"Level Up: 34"}},"Venipede":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Whirlipede":"Level Up: 19"}},"Scolipede":{"EvolvesFrom":"Whirlipede","FromMethod":"Level Up: 34","EvolvesInto":{}},"Whimsicott":{"EvolvesFrom":"Cottonee","FromMethod":"Level Up: 27","EvolvesInto":{}},"Cottonee":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Whimsicott":"Level Up: 27"}},"Lilligant":{"EvolvesFrom":"Petilil","FromMethod":"Level Up: 27","EvolvesInto":{}},"Petilil":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Lilligant":"Level Up: 27"}},"Basculin":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Krokorok":{"EvolvesFrom":"Sandile","FromMethod":"Level Up: 29","EvolvesInto":{"Krookodile":"Level Up: 40"}},"Sandile":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Krokorok":"Level Up: 29"}},"Krookodile":{"EvolvesFrom":"Krokorok","FromMethod":"Level Up: 40","EvolvesInto":{}},"Darmanitan":{"EvolvesFrom":"Darumaka","FromMethod":"Level Up: 35","EvolvesInto":{}},"Darumaka":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Darmanitan":"Level Up: 35"}},"Crustle":{"EvolvesFrom":"Dwebble","FromMethod":"Level Up: 34","EvolvesInto":{}},"Dwebble":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Crustle":"Level Up: 34"}},"Scrafty":{"EvolvesFrom":"Scraggy","FromMethod":"Level Up: 34","EvolvesInto":{}},"Scraggy":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Scrafty":"Level Up: 34"}},"Sigilyph":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Cofagrigus":{"EvolvesFrom":"Yamask","FromMethod":"Level Up: 34","EvolvesInto":{}},"Yamask":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Cofagrigus":"Level Up: 34"}},"Carracosta":{"EvolvesFrom":"Tirtouga","FromMethod":"Level Up: 35","EvolvesInto":{}},"Tirtouga":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Carracosta":"Level Up: 35"}},"Archeops":{"EvolvesFrom":"Archen","FromMethod":"Level Up: 35","EvolvesInto":{}},"Archen":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Archeops":"Level Up: 35"}},"Garbodor":{"EvolvesFrom":"Trubbish","FromMethod":"Level Up: 31","EvolvesInto":{}},"Trubbish":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Garbodor":"Level Up: 31"}},"Zoroark":{"EvolvesFrom":"Zorua","FromMethod":"Level Up: 30","EvolvesInto":{}},"Zorua":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Zoroark":"Level Up: 30"}},"Cinccino":{"EvolvesFrom":"Minccino","FromMethod":"Level Up: 26","EvolvesInto":{}},"Minccino":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Cinccino":"Level Up: 26"}},"Gothorita":{"EvolvesFrom":"Gothita","FromMethod":"Level Up: 23","EvolvesInto":{"Gothitelle":"Level Up: 41"}},"Gothita":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Gothorita":"Level Up: 23"}},"Gothitelle":{"EvolvesFrom":"Gothorita","FromMethod":"Level Up: 41","EvolvesInto":{}},"Duosion":{"EvolvesFrom":"Solosis","FromMethod":"Level Up: 23","EvolvesInto":{"Reuniclus":"Level Up: 41"}},"Solosis":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Duosion":"Level Up: 23"}},"Reuniclus":{"EvolvesFrom":"Duosion","FromMethod":"Level Up: 41","EvolvesInto":{}},"Swanna":{"EvolvesFrom":"Ducklett","FromMethod":"Level Up: 29","EvolvesInto":{}},"Ducklett":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Swanna":"Level Up: 29"}},"Vanillish":{"EvolvesFrom":"Vanillite","FromMethod":"Level Up: 28","EvolvesInto":{"Vanilluxe":"Level Up: 47"}},"Vanillite":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Vanillish":"Level Up: 28"}},"Vanilluxe":{"EvolvesFrom":"Vanillish","FromMethod":"Level Up: 47","EvolvesInto":{}},"Sawsbuck":{"EvolvesFrom":"Deerling","FromMethod":"Level Up: 34","EvolvesInto":{}},"Deerling":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Sawsbuck":"Level Up: 34"}},"Emolga":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Escavalier":{"EvolvesFrom":"Karrablast","FromMethod":"Level Up: 33","EvolvesInto":{}},"Karrablast":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Escavalier":"Level Up: 33"}},"Amoonguss":{"EvolvesFrom":"Foongus","FromMethod":"Level Up: 35","EvolvesInto":{}},"Foongus":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Amoonguss":"Level Up: 35"}},"Jellicent":{"EvolvesFrom":"Frillish","FromMethod":"Level Up: 33","EvolvesInto":{}},"Frillish":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Jellicent":"Level Up: 33"}},"Galvantula":{"EvolvesFrom":"Joltik","FromMethod":"Level Up: 32","EvolvesInto":{}},"Joltik":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Galvantula":"Level Up: 32"}},"Ferrothorn":{"EvolvesFrom":"Ferroseed","FromMethod":"Level Up: 38","EvolvesInto":{}},"Ferroseed":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Ferrothorn":"Level Up: 38"}},"Klang":{"EvolvesFrom":"Klink","FromMethod":"Level Up: 29","EvolvesInto":{"Klinklang":"Level Up: 49"}},"Klink":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Klang":"Level Up: 29"}},"Klinklang":{"EvolvesFrom":"Klang","FromMethod":"Level Up: 49","EvolvesInto":{}},"Eelektrik":{"EvolvesFrom":"Tynamo","FromMethod":"Level Up: 27","EvolvesInto":{"Eelektross":"Level Up: 41"}},"Tynamo":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Eelektrik":"Level Up: 27"}},"Eelektross":{"EvolvesFrom":"Eelektrik","FromMethod":"Level Up: 41","EvolvesInto":{}},"Beheeyem":{"EvolvesFrom":"Elgyem","FromMethod":"Level Up: 35","EvolvesInto":{}},"Elgyem":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Beheeyem":"Level Up: 35"}},"Lampent":{"EvolvesFrom":"Litwick","FromMethod":"Level Up: 29","EvolvesInto":{"Chandelure":"Level Up: 45"}},"Litwick":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Lampent":"Level Up: 29"}},"Chandelure":{"EvolvesFrom":"Lampent","FromMethod":"Level Up: 45","EvolvesInto":{}},"Fraxure":{"EvolvesFrom":"Axew","FromMethod":"Level Up: 25","EvolvesInto":{"Haxorus":"Level Up: 52"}},"Axew":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Fraxure":"Level Up: 25"}},"Haxorus":{"EvolvesFrom":"Fraxure","FromMethod":"Level Up: 52","EvolvesInto":{}},"Beartic":{"EvolvesFrom":"Cubchoo","FromMethod":"Level Up: 32","EvolvesInto":{}},"Cubchoo":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Beartic":"Level Up: 32"}},"Cryogonal":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Accelgor":{"EvolvesFrom":"Shelmet","FromMethod":"Level Up: 33","EvolvesInto":{}},"Shelmet":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Accelgor":"Level Up: 33"}},"Stunfisk":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Mienshao":{"EvolvesFrom":"Mienfoo","FromMethod":"Level Up: 34","EvolvesInto":{}},"Mienfoo":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Mienshao":"Level Up: 34"}},"Druddigon":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Golurk":{"EvolvesFrom":"Golett","FromMethod":"Level Up: 39","EvolvesInto":{}},"Golett":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Golurk":"Level Up: 39"}},"Bisharp":{"EvolvesFrom":"Pawniard","FromMethod":"Level Up: 38","EvolvesInto":{}},"Pawniard":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Bisharp":"Level Up: 38"}},"Bouffalant":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Braviary":{"EvolvesFrom":"Rufflet","FromMethod":"Level Up: 37","EvolvesInto":{}},"Rufflet":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Braviary":"Level Up: 37"}},"Mandibuzz":{"EvolvesFrom":"Vullaby","FromMethod":"Level Up: 37","EvolvesInto":{}},"Vullaby":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Mandibuzz":"Level Up: 37"}},"Heatmor":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Durant":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Zweilous":{"EvolvesFrom":"Deino","FromMethod":"Level Up: 30","EvolvesInto":{"Hydreigon":"Level Up: 56"}},"Deino":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Zweilous":"Level Up: 30"}},"Hydreigon":{"EvolvesFrom":"Zweilous","FromMethod":"Level Up: 56","EvolvesInto":{}},"Volcarona":{"EvolvesFrom":"Larvesta","FromMethod":"Level Up: 46","EvolvesInto":{}},"Larvesta":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Volcarona":"Level Up: 46"}},"Cobalion":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Terrakion":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Virizion":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Tornadus":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Thundurus":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Reshiram":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Zekrom":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Landorus":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Kyurem":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Keldeo":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Meloetta":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Genesect":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Quilladin":{"EvolvesFrom":"Chespin","FromMethod":"Level Up: 18","EvolvesInto":{"Chesnaught":"Level Up: 36"}},"Chespin":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Quilladin":"Level Up: 18"}},"Chesnaught":{"EvolvesFrom":"Quilladin","FromMethod":"Level Up: 36","EvolvesInto":{}},"Braixen":{"EvolvesFrom":"Fennekin","FromMethod":"Level Up: 18","EvolvesInto":{"Delphox":"Level Up: 36"}},"Fennekin":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Braixen":"Level Up: 18"}},"Delphox":{"EvolvesFrom":"Braixen","FromMethod":"Level Up: 36","EvolvesInto":{}},"Frogadier":{"EvolvesFrom":"Froakie","FromMethod":"Level Up: 18","EvolvesInto":{"Greninja":"Level Up: 36"}},"Froakie":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Frogadier":"Level Up: 18"}},"Greninja":{"EvolvesFrom":"Frogadier","FromMethod":"Level Up: 36","EvolvesInto":{}},"Diggersby":{"EvolvesFrom":"Bunnelby","FromMethod":"Level Up: 25","EvolvesInto":{}},"Bunnelby":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Diggersby":"Level Up: 25"}},"Fletchinder":{"EvolvesFrom":"Fletchling","FromMethod":"Level Up: 17","EvolvesInto":{"Talonflame":"Level Up: 35"}},"Fletchling":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Fletchinder":"Level Up: 17"}},"Talonflame":{"EvolvesFrom":"Fletchinder","FromMethod":"Level Up: 35","EvolvesInto":{}},"Spewpa":{"EvolvesFrom":"Scatterbug","FromMethod":"Level Up: 10","EvolvesInto":{"Vivillon":"Level Up: 15"}},"Scatterbug":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Spewpa":"Level Up: 10"}},"Vivillon":{"EvolvesFrom":"Spewpa","FromMethod":"Level Up: 15","EvolvesInto":{}},"Pyroar":{"EvolvesFrom":"Litleo","FromMethod":"Level Up: 32","EvolvesInto":{}},"Litleo":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Pyroar":"Level Up: 32"}},"Floette":{"EvolvesFrom":"Flab\u00E9b\u00E9","FromMethod":"Level Up: 19","EvolvesInto":{"Florges":"Use Item: Shiny Stone"}},"Flab\u00E9b\u00E9":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Floette":"Level Up: 19"}},"Florges":{"EvolvesFrom":"Floette","FromMethod":"Use Item: Shiny Stone","EvolvesInto":{}},"Gogoat":{"EvolvesFrom":"Skiddo","FromMethod":"Level Up: 32","EvolvesInto":{}},"Skiddo":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Gogoat":"Level Up: 32"}},"Pangoro":{"EvolvesFrom":"Pancham","FromMethod":"Level Up: 32","EvolvesInto":{}},"Pancham":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Pangoro":"Level Up: 32"}},"Furfrou":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Meowstic":{"EvolvesFrom":"Espurr","FromMethod":"Level Up: 25 (Male)","EvolvesInto":{}},"Meowstic-F":{"EvolvesFrom":"Espurr","FromMethod":"Level Up: 25 (Female, Form Change)","EvolvesInto":{}},"Espurr":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Meowstic":"Level Up: 25 (Male)","Meowstic-F":"Level Up: 25 (Female, Form Change)"}},"Doublade":{"EvolvesFrom":"Honedge","FromMethod":"Level Up: 35","EvolvesInto":{"Aegislash":"Level Up: 55"}},"Honedge":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Doublade":"Level Up: 35"}},"Aegislash":{"EvolvesFrom":"Doublade","FromMethod":"Level Up: 55","EvolvesInto":{}},"Aromatisse":{"EvolvesFrom":"Spritzee","FromMethod":"Level Up: 28","EvolvesInto":{}},"Spritzee":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Aromatisse":"Level Up: 28"}},"Slurpuff":{"EvolvesFrom":"Swirlix","FromMethod":"Level Up: 28","EvolvesInto":{}},"Swirlix":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Slurpuff":"Level Up: 28"}},"Malamar":{"EvolvesFrom":"Inkay","FromMethod":"Level Up: 30","EvolvesInto":{}},"Inkay":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Malamar":"Level Up: 30"}},"Barbaracle":{"EvolvesFrom":"Binacle","FromMethod":"Level Up: 34","EvolvesInto":{}},"Binacle":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Barbaracle":"Level Up: 34"}},"Dragalge":{"EvolvesFrom":"Skrelp","FromMethod":"Level Up: 35","EvolvesInto":{}},"Skrelp":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Dragalge":"Level Up: 35"}},"Clawitzer":{"EvolvesFrom":"Clauncher","FromMethod":"Level Up: 34","EvolvesInto":{}},"Clauncher":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Clawitzer":"Level Up: 34"}},"Heliolisk":{"EvolvesFrom":"Helioptile","FromMethod":"Level Up: 31","EvolvesInto":{}},"Helioptile":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Heliolisk":"Level Up: 31"}},"Tyrantrum":{"EvolvesFrom":"Tyrunt","FromMethod":"Level Up: 37","EvolvesInto":{}},"Tyrunt":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Tyrantrum":"Level Up: 37"}},"Aurorus":{"EvolvesFrom":"Amaura","FromMethod":"Level Up: 37","EvolvesInto":{}},"Amaura":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Aurorus":"Level Up: 37"}},"Hawlucha":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Dedenne":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Diancie":{"EvolvesFrom":"Carbink","FromMethod":"Level Up: 80","EvolvesInto":{}},"Carbink":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Diancie":"Level Up: 80"}},"Sliggoo":{"EvolvesFrom":"Goomy","FromMethod":"Level Up: 25","EvolvesInto":{"Goodra":"Level Up: 51"}},"Goomy":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Sliggoo":"Level Up: 25"}},"Goodra":{"EvolvesFrom":"Sliggoo","FromMethod":"Level Up: 51","EvolvesInto":{}},"Klefki":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Trevenant":{"EvolvesFrom":"Phantump","FromMethod":"Level Up: 32","EvolvesInto":{}},"Phantump":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Trevenant":"Level Up: 32"}},"Gourgeist":{"EvolvesFrom":"Pumpkaboo","FromMethod":"Level Up: 32","EvolvesInto":{}},"Pumpkaboo":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Gourgeist":"Level Up: 32"}},"Avalugg":{"EvolvesFrom":"Bergmite","FromMethod":"Level Up: 37","EvolvesInto":{}},"Bergmite":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Avalugg":"Level Up: 37"}},"Noivern":{"EvolvesFrom":"Noibat","FromMethod":"Level Up: 40","EvolvesInto":{}},"Noibat":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{"Noivern":"Level Up: 40"}},"Xerneas":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Yveltal":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Zygarde":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Hoopa":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}},"Volcanion":{"EvolvesFrom":null,"FromMethod":null,"EvolvesInto":{}}}
+{
+  "Ivysaur": {
+    "EvolvesFrom": "Bulbasaur",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Venusaur": "Level Up: 36"
+    }
+  },
+  "Bulbasaur": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Ivysaur": "Level Up: 18"
+    }
+  },
+  "Venusaur": {
+    "EvolvesFrom": "Ivysaur",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Charmeleon": {
+    "EvolvesFrom": "Charmander",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Charizard": "Level Up: 36"
+    }
+  },
+  "Charmander": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Charmeleon": "Level Up: 18"
+    }
+  },
+  "Charizard": {
+    "EvolvesFrom": "Charmeleon",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Wartortle": {
+    "EvolvesFrom": "Squirtle",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Blastoise": "Level Up: 36"
+    }
+  },
+  "Squirtle": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Wartortle": "Level Up: 18"
+    }
+  },
+  "Blastoise": {
+    "EvolvesFrom": "Wartortle",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Metapod": {
+    "EvolvesFrom": "Caterpie",
+    "FromMethod": "Level Up: 10",
+    "EvolvesInto": {
+      "Butterfree": "Level Up: 15"
+    }
+  },
+  "Caterpie": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Metapod": "Level Up: 10"
+    }
+  },
+  "Butterfree": {
+    "EvolvesFrom": "Metapod",
+    "FromMethod": "Level Up: 15",
+    "EvolvesInto": {}
+  },
+  "Kakuna": {
+    "EvolvesFrom": "Weedle",
+    "FromMethod": "Level Up: 10",
+    "EvolvesInto": {
+      "Beedrill": "Level Up: 15"
+    }
+  },
+  "Weedle": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Kakuna": "Level Up: 10"
+    }
+  },
+  "Beedrill": {
+    "EvolvesFrom": "Kakuna",
+    "FromMethod": "Level Up: 15",
+    "EvolvesInto": {}
+  },
+  "Pidgeotto": {
+    "EvolvesFrom": "Pidgey",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Pidgeot": "Level Up: 34"
+    }
+  },
+  "Pidgey": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Pidgeotto": "Level Up: 16"
+    }
+  },
+  "Pidgeot": {
+    "EvolvesFrom": "Pidgeotto",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Raticate": {
+    "EvolvesFrom": "Rattata",
+    "FromMethod": "Level Up: 22",
+    "EvolvesInto": {}
+  },
+  "Rattata": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Raticate": "Level Up: 22"
+    }
+  },
+  "Fearow": {
+    "EvolvesFrom": "Spearow",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {}
+  },
+  "Spearow": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Fearow": "Level Up: 25"
+    }
+  },
+  "Arbok": {
+    "EvolvesFrom": "Ekans",
+    "FromMethod": "Level Up: 22",
+    "EvolvesInto": {}
+  },
+  "Ekans": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Arbok": "Level Up: 22"
+    }
+  },
+  "Raichu": {
+    "EvolvesFrom": "Pikachu",
+    "FromMethod": "Use Item: Thunder Stone",
+    "EvolvesInto": {}
+  },
+  "Pikachu": {
+    "EvolvesFrom": "Pichu",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Raichu": "Use Item: Thunder Stone"
+    }
+  },
+  "Sandslash": {
+    "EvolvesFrom": "Sandshrew",
+    "FromMethod": "Level Up: 22",
+    "EvolvesInto": {}
+  },
+  "Sandshrew": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Sandslash": "Level Up: 22"
+    }
+  },
+  "Nidorina": {
+    "EvolvesFrom": "Nidoran-F",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Nidoqueen": "Level Up: 35"
+    }
+  },
+  "Nidoran-F": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Nidorina": "Level Up: 16"
+    }
+  },
+  "Nidoqueen": {
+    "EvolvesFrom": "Nidorina",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Nidorino": {
+    "EvolvesFrom": "Nidoran-M",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Nidoking": "Level Up: 35"
+    }
+  },
+  "Nidoran-M": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Nidorino": "Level Up: 16"
+    }
+  },
+  "Nidoking": {
+    "EvolvesFrom": "Nidorino",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Clefable": {
+    "EvolvesFrom": "Clefairy",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Clefairy": {
+    "EvolvesFrom": "Cleffa",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Clefable": "Level Up: 34"
+    }
+  },
+  "Ninetales": {
+    "EvolvesFrom": "Vulpix",
+    "FromMethod": "Level Up: 37",
+    "EvolvesInto": {}
+  },
+  "Vulpix": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Ninetales": "Level Up: 37"
+    }
+  },
+  "Wigglytuff": {
+    "EvolvesFrom": "Jigglypuff",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Jigglypuff": {
+    "EvolvesFrom": "Igglybuff",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Wigglytuff": "Level Up: 34"
+    }
+  },
+  "Golbat": {
+    "EvolvesFrom": "Zubat",
+    "FromMethod": "Level Up: 22",
+    "EvolvesInto": {
+      "Crobat": "Level Up: 42"
+    }
+  },
+  "Zubat": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Golbat": "Level Up: 22"
+    }
+  },
+  "Crobat": {
+    "EvolvesFrom": "Golbat",
+    "FromMethod": "Level Up: 42",
+    "EvolvesInto": {}
+  },
+  "Gloom": {
+    "EvolvesFrom": "Oddish",
+    "FromMethod": "Level Up: 21",
+    "EvolvesInto": {
+      "Vileplume": "Use Item: Leaf Stone",
+      "Bellossom": "Use Item: Sun Stone"
+    }
+  },
+  "Oddish": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Gloom": "Level Up: 21"
+    }
+  },
+  "Vileplume": {
+    "EvolvesFrom": "Gloom",
+    "FromMethod": "Use Item: Leaf Stone",
+    "EvolvesInto": {}
+  },
+  "Bellossom": {
+    "EvolvesFrom": "Gloom",
+    "FromMethod": "Use Item: Sun Stone",
+    "EvolvesInto": {}
+  },
+  "Parasect": {
+    "EvolvesFrom": "Paras",
+    "FromMethod": "Level Up: 24",
+    "EvolvesInto": {}
+  },
+  "Paras": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Parasect": "Level Up: 24"
+    }
+  },
+  "Venomoth": {
+    "EvolvesFrom": "Venonat",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Venonat": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Venomoth": "Level Up: 29"
+    }
+  },
+  "Dugtrio": {
+    "EvolvesFrom": "Diglett",
+    "FromMethod": "Level Up: 26",
+    "EvolvesInto": {}
+  },
+  "Diglett": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Dugtrio": "Level Up: 26"
+    }
+  },
+  "Persian": {
+    "EvolvesFrom": "Meowth",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Meowth": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Persian": "Level Up: 28"
+    }
+  },
+  "Golduck": {
+    "EvolvesFrom": "Psyduck",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Psyduck": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Golduck": "Level Up: 30"
+    }
+  },
+  "Primeape": {
+    "EvolvesFrom": "Mankey",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Mankey": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Primeape": "Level Up: 28"
+    }
+  },
+  "Arcanine": {
+    "EvolvesFrom": "Growlithe",
+    "FromMethod": "Level Up: 39",
+    "EvolvesInto": {}
+  },
+  "Growlithe": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Arcanine": "Level Up: 39"
+    }
+  },
+  "Poliwhirl": {
+    "EvolvesFrom": "Poliwag",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Poliwrath": "Use Item: Water Stone",
+      "Politoed": "Use Item: King\u2019s Rock"
+    }
+  },
+  "Poliwag": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Poliwhirl": "Level Up: 25"
+    }
+  },
+  "Poliwrath": {
+    "EvolvesFrom": "Poliwhirl",
+    "FromMethod": "Use Item: Water Stone",
+    "EvolvesInto": {}
+  },
+  "Politoed": {
+    "EvolvesFrom": "Poliwhirl",
+    "FromMethod": "Use Item: King\u2019s Rock",
+    "EvolvesInto": {}
+  },
+  "Kadabra": {
+    "EvolvesFrom": "Abra",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Alakazam": "Level Up: 38"
+    }
+  },
+  "Abra": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Kadabra": "Level Up: 16"
+    }
+  },
+  "Alakazam": {
+    "EvolvesFrom": "Kadabra",
+    "FromMethod": "Level Up: 38",
+    "EvolvesInto": {}
+  },
+  "Machoke": {
+    "EvolvesFrom": "Machop",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {
+      "Machamp": "Level Up: 40"
+    }
+  },
+  "Machop": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Machoke": "Level Up: 28"
+    }
+  },
+  "Machamp": {
+    "EvolvesFrom": "Machoke",
+    "FromMethod": "Level Up: 40",
+    "EvolvesInto": {}
+  },
+  "Weepinbell": {
+    "EvolvesFrom": "Bellsprout",
+    "FromMethod": "Level Up: 21",
+    "EvolvesInto": {
+      "Victreebel": "Use Item: Leaf Stone"
+    }
+  },
+  "Bellsprout": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Weepinbell": "Level Up: 21"
+    }
+  },
+  "Victreebel": {
+    "EvolvesFrom": "Weepinbell",
+    "FromMethod": "Use Item: Leaf Stone",
+    "EvolvesInto": {}
+  },
+  "Tentacruel": {
+    "EvolvesFrom": "Tentacool",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Tentacool": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Tentacruel": "Level Up: 30"
+    }
+  },
+  "Graveler": {
+    "EvolvesFrom": "Geodude",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Golem": "Level Up: 40"
+    }
+  },
+  "Geodude": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Graveler": "Level Up: 25"
+    }
+  },
+  "Golem": {
+    "EvolvesFrom": "Graveler",
+    "FromMethod": "Level Up: 40",
+    "EvolvesInto": {}
+  },
+  "Rapidash": {
+    "EvolvesFrom": "Ponyta",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Ponyta": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Rapidash": "Level Up: 35"
+    }
+  },
+  "Slowbro": {
+    "EvolvesFrom": "Slowpoke",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Slowking": {
+    "EvolvesFrom": "Slowpoke",
+    "FromMethod": "Use Item: King\u2019s Rock",
+    "EvolvesInto": {}
+  },
+  "Slowpoke": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Slowbro": "Level Up: 34",
+      "Slowking": "Use Item: King\u2019s Rock"
+    }
+  },
+  "Magneton": {
+    "EvolvesFrom": "Magnemite",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {
+      "Magnezone": "Level Up: 48"
+    }
+  },
+  "Magnemite": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Magneton": "Level Up: 30"
+    }
+  },
+  "Magnezone": {
+    "EvolvesFrom": "Magneton",
+    "FromMethod": "Level Up: 48",
+    "EvolvesInto": {}
+  },
+  "Farfetch\u0027d": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Dodrio": {
+    "EvolvesFrom": "Doduo",
+    "FromMethod": "Level Up: 31",
+    "EvolvesInto": {}
+  },
+  "Doduo": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Dodrio": "Level Up: 31"
+    }
+  },
+  "Dewgong": {
+    "EvolvesFrom": "Seel",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Seel": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Dewgong": "Level Up: 29"
+    }
+  },
+  "Muk": {
+    "EvolvesFrom": "Grimer",
+    "FromMethod": "Level Up: 31",
+    "EvolvesInto": {}
+  },
+  "Grimer": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Muk": "Level Up: 31"
+    }
+  },
+  "Cloyster": {
+    "EvolvesFrom": "Shellder",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Shellder": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Cloyster": "Level Up: 32"
+    }
+  },
+  "Haunter": {
+    "EvolvesFrom": "Gastly",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Gengar": "Level Up: 42"
+    }
+  },
+  "Gastly": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Haunter": "Level Up: 25"
+    }
+  },
+  "Gengar": {
+    "EvolvesFrom": "Haunter",
+    "FromMethod": "Level Up: 42",
+    "EvolvesInto": {}
+  },
+  "Steelix": {
+    "EvolvesFrom": "Onix",
+    "FromMethod": "Use Item: Metal Coat",
+    "EvolvesInto": {}
+  },
+  "Onix": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Steelix": "Use Item: Metal Coat"
+    }
+  },
+  "Hypno": {
+    "EvolvesFrom": "Drowzee",
+    "FromMethod": "Level Up: 26",
+    "EvolvesInto": {}
+  },
+  "Drowzee": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Hypno": "Level Up: 26"
+    }
+  },
+  "Kingler": {
+    "EvolvesFrom": "Krabby",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Krabby": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Kingler": "Level Up: 28"
+    }
+  },
+  "Electrode": {
+    "EvolvesFrom": "Voltorb",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Voltorb": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Electrode": "Level Up: 28"
+    }
+  },
+  "Exeggutor": {
+    "EvolvesFrom": "Exeggcute",
+    "FromMethod": "Level Up: 38",
+    "EvolvesInto": {}
+  },
+  "Exeggcute": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Exeggutor": "Level Up: 38"
+    }
+  },
+  "Marowak": {
+    "EvolvesFrom": "Cubone",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Cubone": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Marowak": "Level Up: 28"
+    }
+  },
+  "Hitmonlee": {
+    "EvolvesFrom": "Tyrogue",
+    "FromMethod": "Level Up with Move: Jump Kick",
+    "EvolvesInto": {}
+  },
+  "Hitmonchan": {
+    "EvolvesFrom": "Tyrogue",
+    "FromMethod": "Level Up with Move: Mega Punch",
+    "EvolvesInto": {}
+  },
+  "Lickilicky": {
+    "EvolvesFrom": "Lickitung",
+    "FromMethod": "Level Up: 40",
+    "EvolvesInto": {}
+  },
+  "Lickitung": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Lickilicky": "Level Up: 40"
+    }
+  },
+  "Weezing": {
+    "EvolvesFrom": "Koffing",
+    "FromMethod": "Level Up: 31",
+    "EvolvesInto": {}
+  },
+  "Koffing": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Weezing": "Level Up: 31"
+    }
+  },
+  "Rhydon": {
+    "EvolvesFrom": "Rhyhorn",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {
+      "Rhyperior": "Level Up: 48"
+    }
+  },
+  "Rhyhorn": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Rhydon": "Level Up: 32"
+    }
+  },
+  "Rhyperior": {
+    "EvolvesFrom": "Rhydon",
+    "FromMethod": "Level Up: 48",
+    "EvolvesInto": {}
+  },
+  "Blissey": {
+    "EvolvesFrom": "Chansey",
+    "FromMethod": "Level Up: 48",
+    "EvolvesInto": {}
+  },
+  "Chansey": {
+    "EvolvesFrom": "Happiny",
+    "FromMethod": "Level Up: 20",
+    "EvolvesInto": {
+      "Blissey": "Level Up: 48"
+    }
+  },
+  "Tangrowth": {
+    "EvolvesFrom": "Tangela",
+    "FromMethod": "Level Up: 42",
+    "EvolvesInto": {}
+  },
+  "Tangela": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Tangrowth": "Level Up: 42"
+    }
+  },
+  "Kangaskhan": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Seadra": {
+    "EvolvesFrom": "Horsea",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {
+      "Kingdra": "Level Up: 48"
+    }
+  },
+  "Horsea": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Seadra": "Level Up: 32"
+    }
+  },
+  "Kingdra": {
+    "EvolvesFrom": "Seadra",
+    "FromMethod": "Level Up: 48",
+    "EvolvesInto": {}
+  },
+  "Seaking": {
+    "EvolvesFrom": "Goldeen",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Goldeen": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Seaking": "Level Up: 28"
+    }
+  },
+  "Starmie": {
+    "EvolvesFrom": "Staryu",
+    "FromMethod": "Level Up: 39",
+    "EvolvesInto": {}
+  },
+  "Staryu": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Starmie": "Level Up: 39"
+    }
+  },
+  "Mr. Mime": {
+    "EvolvesFrom": "Mime Jr.",
+    "FromMethod": "Level Up: 20",
+    "EvolvesInto": {}
+  },
+  "Scizor": {
+    "EvolvesFrom": "Scyther",
+    "FromMethod": "Use Item: Metal Coat",
+    "EvolvesInto": {}
+  },
+  "Scyther": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Scizor": "Use Item: Metal Coat"
+    }
+  },
+  "Jynx": {
+    "EvolvesFrom": "Smoochum",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Electivire": {
+    "EvolvesFrom": "Electabuzz",
+    "FromMethod": "Level Up: 48",
+    "EvolvesInto": {}
+  },
+  "Electabuzz": {
+    "EvolvesFrom": "Elekid",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {
+      "Electivire": "Level Up: 48"
+    }
+  },
+  "Magmortar": {
+    "EvolvesFrom": "Magmar",
+    "FromMethod": "Level Up: 48",
+    "EvolvesInto": {}
+  },
+  "Magmar": {
+    "EvolvesFrom": "Magby",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {
+      "Magmortar": "Level Up: 48"
+    }
+  },
+  "Pinsir": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Tauros": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Gyarados": {
+    "EvolvesFrom": "Magikarp",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Magikarp": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Gyarados": "Level Up: 30"
+    }
+  },
+  "Lapras": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Ditto": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Leafeon": {
+    "EvolvesFrom": "Eevee",
+    "FromMethod": "Use Item: Leaf Stone",
+    "EvolvesInto": {}
+  },
+  "Glaceon": {
+    "EvolvesFrom": "Eevee",
+    "FromMethod": "Use Item: Dawn Stone",
+    "EvolvesInto": {}
+  },
+  "Jolteon": {
+    "EvolvesFrom": "Eevee",
+    "FromMethod": "Use Item: Thunder Stone",
+    "EvolvesInto": {}
+  },
+  "Vaporeon": {
+    "EvolvesFrom": "Eevee",
+    "FromMethod": "Use Item: Water Stone",
+    "EvolvesInto": {}
+  },
+  "Flareon": {
+    "EvolvesFrom": "Eevee",
+    "FromMethod": "Use Item: Fire Stone",
+    "EvolvesInto": {}
+  },
+  "Sylveon": {
+    "EvolvesFrom": "Eevee",
+    "FromMethod": "Use Item: Shiny Stone",
+    "EvolvesInto": {}
+  },
+  "Espeon": {
+    "EvolvesFrom": "Eevee",
+    "FromMethod": "Use Item: Sun Stone",
+    "EvolvesInto": {}
+  },
+  "Umbreon": {
+    "EvolvesFrom": "Eevee",
+    "FromMethod": "Use Item: Moon Stone",
+    "EvolvesInto": {}
+  },
+  "Eevee": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Leafeon": "Use Item: Leaf Stone",
+      "Glaceon": "Use Item: Dawn Stone",
+      "Jolteon": "Use Item: Thunder Stone",
+      "Vaporeon": "Use Item: Water Stone",
+      "Flareon": "Use Item: Fire Stone",
+      "Sylveon": "Use Item: Shiny Stone",
+      "Espeon": "Use Item: Sun Stone",
+      "Umbreon": "Use Item: Moon Stone"
+    }
+  },
+  "Porygon2": {
+    "EvolvesFrom": "Porygon",
+    "FromMethod": "Use Item: Up-Grade",
+    "EvolvesInto": {
+      "Porygon-Z": "Use Item: Dubious Disc"
+    }
+  },
+  "Porygon-Z": {
+    "EvolvesFrom": "Porygon",
+    "FromMethod": "Use Item: Dubious Disc",
+    "EvolvesInto": {}
+  },
+  "Porygon": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Porygon2": "Use Item: Up-Grade",
+      "Porygon-Z": "Use Item: Dubious Disc"
+    }
+  },
+  "Omastar": {
+    "EvolvesFrom": "Omanyte",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Omanyte": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Omastar": "Level Up: 35"
+    }
+  },
+  "Kabutops": {
+    "EvolvesFrom": "Kabuto",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Kabuto": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Kabutops": "Level Up: 35"
+    }
+  },
+  "Aerodactyl": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Snorlax": {
+    "EvolvesFrom": "Munchlax",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Articuno": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Zapdos": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Moltres": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Dragonair": {
+    "EvolvesFrom": "Dratini",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Dragonite": "Level Up: 55"
+    }
+  },
+  "Dratini": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Dragonair": "Level Up: 25"
+    }
+  },
+  "Dragonite": {
+    "EvolvesFrom": "Dragonair",
+    "FromMethod": "Level Up: 55",
+    "EvolvesInto": {}
+  },
+  "Mewtwo": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Mew": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Bayleef": {
+    "EvolvesFrom": "Chikorita",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Meganium": "Level Up: 36"
+    }
+  },
+  "Chikorita": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Bayleef": "Level Up: 18"
+    }
+  },
+  "Meganium": {
+    "EvolvesFrom": "Bayleef",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Quilava": {
+    "EvolvesFrom": "Cyndaquil",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Typhlosion": "Level Up: 36"
+    }
+  },
+  "Cyndaquil": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Quilava": "Level Up: 18"
+    }
+  },
+  "Typhlosion": {
+    "EvolvesFrom": "Quilava",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Croconaw": {
+    "EvolvesFrom": "Totodile",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Feraligatr": "Level Up: 36"
+    }
+  },
+  "Totodile": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Croconaw": "Level Up: 18"
+    }
+  },
+  "Feraligatr": {
+    "EvolvesFrom": "Croconaw",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Furret": {
+    "EvolvesFrom": "Sentret",
+    "FromMethod": "Level Up: 20",
+    "EvolvesInto": {}
+  },
+  "Sentret": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Furret": "Level Up: 20"
+    }
+  },
+  "Noctowl": {
+    "EvolvesFrom": "Hoothoot",
+    "FromMethod": "Level Up: 24",
+    "EvolvesInto": {}
+  },
+  "Hoothoot": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Noctowl": "Level Up: 24"
+    }
+  },
+  "Ledian": {
+    "EvolvesFrom": "Ledyba",
+    "FromMethod": "Level Up: 23",
+    "EvolvesInto": {}
+  },
+  "Ledyba": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Ledian": "Level Up: 23"
+    }
+  },
+  "Ariados": {
+    "EvolvesFrom": "Spinarak",
+    "FromMethod": "Level Up: 23",
+    "EvolvesInto": {}
+  },
+  "Spinarak": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Ariados": "Level Up: 23"
+    }
+  },
+  "Lanturn": {
+    "EvolvesFrom": "Chinchou",
+    "FromMethod": "Level Up: 27",
+    "EvolvesInto": {}
+  },
+  "Chinchou": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Lanturn": "Level Up: 27"
+    }
+  },
+  "Pichu": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Pikachu": "Level Up: 16"
+    }
+  },
+  "Cleffa": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Clefairy": "Level Up: 16"
+    }
+  },
+  "Igglybuff": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Jigglypuff": "Level Up: 16"
+    }
+  },
+  "Togetic": {
+    "EvolvesFrom": "Togepi",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Togekiss": "Level Up: 48"
+    }
+  },
+  "Togepi": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Togetic": "Level Up: 16"
+    }
+  },
+  "Togekiss": {
+    "EvolvesFrom": "Togetic",
+    "FromMethod": "Level Up: 48",
+    "EvolvesInto": {}
+  },
+  "Xatu": {
+    "EvolvesFrom": "Natu",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {}
+  },
+  "Natu": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Xatu": "Level Up: 25"
+    }
+  },
+  "Flaaffy": {
+    "EvolvesFrom": "Mareep",
+    "FromMethod": "Level Up: 19",
+    "EvolvesInto": {
+      "Ampharos": "Level Up: 34"
+    }
+  },
+  "Mareep": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Flaaffy": "Level Up: 19"
+    }
+  },
+  "Ampharos": {
+    "EvolvesFrom": "Flaaffy",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Azumarill": {
+    "EvolvesFrom": "Marill",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Marill": {
+    "EvolvesFrom": "Azurill",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Azumarill": "Level Up: 30"
+    }
+  },
+  "Sudowoodo": {
+    "EvolvesFrom": "Bonsly",
+    "FromMethod": "Level Up: 20",
+    "EvolvesInto": {}
+  },
+  "Skiploom": {
+    "EvolvesFrom": "Hoppip",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Jumpluff": "Level Up: 29"
+    }
+  },
+  "Hoppip": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Skiploom": "Level Up: 16"
+    }
+  },
+  "Jumpluff": {
+    "EvolvesFrom": "Skiploom",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Ambipom": {
+    "EvolvesFrom": "Aipom",
+    "FromMethod": "Level Up: 33",
+    "EvolvesInto": {}
+  },
+  "Aipom": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Ambipom": "Level Up: 33"
+    }
+  },
+  "Sunflora": {
+    "EvolvesFrom": "Sunkern",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Sunkern": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Sunflora": "Level Up: 29"
+    }
+  },
+  "Yanmega": {
+    "EvolvesFrom": "Yanma",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Yanma": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Yanmega": "Level Up: 35"
+    }
+  },
+  "Quagsire": {
+    "EvolvesFrom": "Wooper",
+    "FromMethod": "Level Up: 22",
+    "EvolvesInto": {}
+  },
+  "Wooper": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Quagsire": "Level Up: 22"
+    }
+  },
+  "Honchkrow": {
+    "EvolvesFrom": "Murkrow",
+    "FromMethod": "Level Up: 42",
+    "EvolvesInto": {}
+  },
+  "Murkrow": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Honchkrow": "Level Up: 42"
+    }
+  },
+  "Mismagius": {
+    "EvolvesFrom": "Misdreavus",
+    "FromMethod": "Level Up: 42",
+    "EvolvesInto": {}
+  },
+  "Misdreavus": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Mismagius": "Level Up: 42"
+    }
+  },
+  "Unown": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Wobbuffet": {
+    "EvolvesFrom": "Wynaut",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {}
+  },
+  "Girafarig": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Forretress": {
+    "EvolvesFrom": "Pineco",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Pineco": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Forretress": "Level Up: 28"
+    }
+  },
+  "Dunsparce": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Gliscor": {
+    "EvolvesFrom": "Gligar",
+    "FromMethod": "Level Up: 45",
+    "EvolvesInto": {}
+  },
+  "Gligar": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Gliscor": "Level Up: 45"
+    }
+  },
+  "Granbull": {
+    "EvolvesFrom": "Snubbull",
+    "FromMethod": "Level Up: 26",
+    "EvolvesInto": {}
+  },
+  "Snubbull": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Granbull": "Level Up: 26"
+    }
+  },
+  "Qwilfish": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Shuckle": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Heracross": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Weavile": {
+    "EvolvesFrom": "Sneasel",
+    "FromMethod": "Level Up: 42",
+    "EvolvesInto": {}
+  },
+  "Sneasel": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Weavile": "Level Up: 42"
+    }
+  },
+  "Ursaring": {
+    "EvolvesFrom": "Teddiursa",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Teddiursa": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Ursaring": "Level Up: 34"
+    }
+  },
+  "Magcargo": {
+    "EvolvesFrom": "Slugma",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Slugma": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Magcargo": "Level Up: 28"
+    }
+  },
+  "Piloswine": {
+    "EvolvesFrom": "Swinub",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {
+      "Mamoswine": "Level Up: 48"
+    }
+  },
+  "Swinub": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Piloswine": "Level Up: 29"
+    }
+  },
+  "Mamoswine": {
+    "EvolvesFrom": "Piloswine",
+    "FromMethod": "Level Up: 48",
+    "EvolvesInto": {}
+  },
+  "Corsola": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Octillery": {
+    "EvolvesFrom": "Remoraid",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Remoraid": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Octillery": "Level Up: 30"
+    }
+  },
+  "Delibird": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Mantine": {
+    "EvolvesFrom": "Mantyke",
+    "FromMethod": "Level Up: 31",
+    "EvolvesInto": {}
+  },
+  "Skarmory": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Houndoom": {
+    "EvolvesFrom": "Houndour",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Houndour": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Houndoom": "Level Up: 29"
+    }
+  },
+  "Donphan": {
+    "EvolvesFrom": "Phanpy",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Phanpy": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Donphan": "Level Up: 28"
+    }
+  },
+  "Stantler": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Smeargle": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Hitmontop": {
+    "EvolvesFrom": "Tyrogue",
+    "FromMethod": "Level Up with Move: Drill Run",
+    "EvolvesInto": {}
+  },
+  "Tyrogue": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Hitmonchan": "Level Up with Move: Mega Punch",
+      "Hitmonlee": "Level Up with Move: Jump Kick",
+      "Hitmontop": "Level Up with Move: Drill Run"
+    }
+  },
+  "Smoochum": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Jynx": "Level Up: 30"
+    }
+  },
+  "Elekid": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Electabuzz": "Level Up: 30"
+    }
+  },
+  "Magby": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Magmar": "Level Up: 30"
+    }
+  },
+  "Miltank": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Raikou": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Entei": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Suicune": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Pupitar": {
+    "EvolvesFrom": "Larvitar",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Tyranitar": "Level Up: 55"
+    }
+  },
+  "Larvitar": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Pupitar": "Level Up: 25"
+    }
+  },
+  "Tyranitar": {
+    "EvolvesFrom": "Pupitar",
+    "FromMethod": "Level Up: 55",
+    "EvolvesInto": {}
+  },
+  "Lugia": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Ho-Oh": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Celebi": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Grovyle": {
+    "EvolvesFrom": "Treecko",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Sceptile": "Level Up: 36"
+    }
+  },
+  "Treecko": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Grovyle": "Level Up: 18"
+    }
+  },
+  "Sceptile": {
+    "EvolvesFrom": "Grovyle",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Combusken": {
+    "EvolvesFrom": "Torchic",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Blaziken": "Level Up: 36"
+    }
+  },
+  "Torchic": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Combusken": "Level Up: 18"
+    }
+  },
+  "Blaziken": {
+    "EvolvesFrom": "Combusken",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Marshtomp": {
+    "EvolvesFrom": "Mudkip",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Swampert": "Level Up: 36"
+    }
+  },
+  "Mudkip": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Marshtomp": "Level Up: 18"
+    }
+  },
+  "Swampert": {
+    "EvolvesFrom": "Marshtomp",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Mightyena": {
+    "EvolvesFrom": "Poochyena",
+    "FromMethod": "Level Up: 24",
+    "EvolvesInto": {}
+  },
+  "Poochyena": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Mightyena": "Level Up: 24"
+    }
+  },
+  "Linoone": {
+    "EvolvesFrom": "Zigzagoon",
+    "FromMethod": "Level Up: 20",
+    "EvolvesInto": {}
+  },
+  "Zigzagoon": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Linoone": "Level Up: 20"
+    }
+  },
+  "Silcoon": {
+    "EvolvesFrom": "Wurmple",
+    "FromMethod": "Level Up Female: 10",
+    "EvolvesInto": {
+      "Beautifly": "Level Up: 15"
+    }
+  },
+  "Cascoon": {
+    "EvolvesFrom": "Wurmple",
+    "FromMethod": "Level Up: 10 (Male)",
+    "EvolvesInto": {
+      "Dustox": "Level Up: 15"
+    }
+  },
+  "Wurmple": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Silcoon": "Level Up Female: 10",
+      "Cascoon": "Level Up: 10 (Male)"
+    }
+  },
+  "Beautifly": {
+    "EvolvesFrom": "Silcoon",
+    "FromMethod": "Level Up: 15",
+    "EvolvesInto": {}
+  },
+  "Dustox": {
+    "EvolvesFrom": "Cascoon",
+    "FromMethod": "Level Up: 15",
+    "EvolvesInto": {}
+  },
+  "Lombre": {
+    "EvolvesFrom": "Lotad",
+    "FromMethod": "Level Up: 17",
+    "EvolvesInto": {
+      "Ludicolo": "Level Up: 35"
+    }
+  },
+  "Lotad": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Lombre": "Level Up: 17"
+    }
+  },
+  "Ludicolo": {
+    "EvolvesFrom": "Lombre",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Nuzleaf": {
+    "EvolvesFrom": "Seedot",
+    "FromMethod": "Level Up: 17",
+    "EvolvesInto": {
+      "Shiftry": "Level Up: 35"
+    }
+  },
+  "Seedot": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Nuzleaf": "Level Up: 17"
+    }
+  },
+  "Shiftry": {
+    "EvolvesFrom": "Nuzleaf",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Swellow": {
+    "EvolvesFrom": "Taillow",
+    "FromMethod": "Level Up: 22",
+    "EvolvesInto": {}
+  },
+  "Taillow": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Swellow": "Level Up: 22"
+    }
+  },
+  "Pelipper": {
+    "EvolvesFrom": "Wingull",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {}
+  },
+  "Wingull": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Pelipper": "Level Up: 25"
+    }
+  },
+  "Kirlia": {
+    "EvolvesFrom": "Ralts",
+    "FromMethod": "Level Up: 20",
+    "EvolvesInto": {
+      "Gardevoir": "Level Up Female: 36 OR Used Item (Male): Shiny Stone",
+      "Gallade": "Level Up: 36 (Male) OR Used Item (Female): Dawn Stone"
+    }
+  },
+  "Ralts": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Kirlia": "Level Up: 20"
+    }
+  },
+  "Gardevoir": {
+    "EvolvesFrom": "Kirlia",
+    "FromMethod": "Level Up Female: 36",
+    "EvolvesInto": {}
+  },
+  "Gallade": {
+    "EvolvesFrom": "Kirlia",
+    "FromMethod": "Level Up: 36 (Male)",
+    "EvolvesInto": {}
+  },
+  "Masquerain": {
+    "EvolvesFrom": "Surskit",
+    "FromMethod": "Level Up: 26",
+    "EvolvesInto": {}
+  },
+  "Surskit": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Masquerain": "Level Up: 26"
+    }
+  },
+  "Breloom": {
+    "EvolvesFrom": "Shroomish",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Shroomish": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Breloom": "Level Up: 29"
+    }
+  },
+  "Vigoroth": {
+    "EvolvesFrom": "Slakoth",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Slaking": "Level Up: 36"
+    }
+  },
+  "Slakoth": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Vigoroth": "Level Up: 18"
+    }
+  },
+  "Slaking": {
+    "EvolvesFrom": "Vigoroth",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Ninjask": {
+    "EvolvesFrom": "Nincada",
+    "FromMethod": "Level Up (Ninjask): 20",
+    "EvolvesInto": {}
+  },
+  "Nincada": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Ninjask": "Level Up (Ninjask): 20"
+    }
+  },
+  "Shedinja": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Loudred": {
+    "EvolvesFrom": "Whismur",
+    "FromMethod": "Level Up: 20",
+    "EvolvesInto": {
+      "Exploud": "Level Up: 40"
+    }
+  },
+  "Whismur": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Loudred": "Level Up: 20"
+    }
+  },
+  "Exploud": {
+    "EvolvesFrom": "Loudred",
+    "FromMethod": "Level Up: 40",
+    "EvolvesInto": {}
+  },
+  "Hariyama": {
+    "EvolvesFrom": "Makuhita",
+    "FromMethod": "Level Up: 24",
+    "EvolvesInto": {}
+  },
+  "Makuhita": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Hariyama": "Level Up: 24"
+    }
+  },
+  "Azurill": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Marill": "Level Up: 16"
+    }
+  },
+  "Probopass": {
+    "EvolvesFrom": "Nosepass",
+    "FromMethod": "Use Item: Thunder Stone",
+    "EvolvesInto": {}
+  },
+  "Nosepass": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Probopass": "Use Item: Thunder Stone"
+    }
+  },
+  "Delcatty": {
+    "EvolvesFrom": "Skitty",
+    "FromMethod": "Level Up: 27",
+    "EvolvesInto": {}
+  },
+  "Skitty": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Delcatty": "Level Up: 27"
+    }
+  },
+  "Sableye": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Mawile": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Lairon": {
+    "EvolvesFrom": "Aron",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Aggron": "Level Up: 42"
+    }
+  },
+  "Aron": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Lairon": "Level Up: 25"
+    }
+  },
+  "Aggron": {
+    "EvolvesFrom": "Lairon",
+    "FromMethod": "Level Up: 42",
+    "EvolvesInto": {}
+  },
+  "Medicham": {
+    "EvolvesFrom": "Meditite",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Meditite": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Medicham": "Level Up: 32"
+    }
+  },
+  "Manectric": {
+    "EvolvesFrom": "Electrike",
+    "FromMethod": "Level Up: 26",
+    "EvolvesInto": {}
+  },
+  "Electrike": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Manectric": "Level Up: 26"
+    }
+  },
+  "Plusle": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Minun": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Volbeat": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Illumise": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Roserade": {
+    "EvolvesFrom": "Roselia",
+    "FromMethod": "Level Up: 42",
+    "EvolvesInto": {}
+  },
+  "Roselia": {
+    "EvolvesFrom": "Budew",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Roserade": "Level Up: 42"
+    }
+  },
+  "Swalot": {
+    "EvolvesFrom": "Gulpin",
+    "FromMethod": "Level Up: 26",
+    "EvolvesInto": {}
+  },
+  "Gulpin": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Swalot": "Level Up: 26"
+    }
+  },
+  "Sharpedo": {
+    "EvolvesFrom": "Carvanha",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Carvanha": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Sharpedo": "Level Up: 30"
+    }
+  },
+  "Wailord": {
+    "EvolvesFrom": "Wailmer",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Wailmer": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Wailord": "Level Up: 35"
+    }
+  },
+  "Camerupt": {
+    "EvolvesFrom": "Numel",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Numel": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Camerupt": "Level Up: 28"
+    }
+  },
+  "Torkoal": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Grumpig": {
+    "EvolvesFrom": "Spoink",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Spoink": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Grumpig": "Level Up: 32"
+    }
+  },
+  "Spinda": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Vibrava": {
+    "EvolvesFrom": "Trapinch",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {
+      "Flygon": "Level Up: 45"
+    }
+  },
+  "Trapinch": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Vibrava": "Level Up: 29"
+    }
+  },
+  "Flygon": {
+    "EvolvesFrom": "Vibrava",
+    "FromMethod": "Level Up: 45",
+    "EvolvesInto": {}
+  },
+  "Cacturne": {
+    "EvolvesFrom": "Cacnea",
+    "FromMethod": "Level Up: 32 (Male)",
+    "EvolvesInto": {}
+  },
+  "Maractus": {
+    "EvolvesFrom": "Cacnea",
+    "FromMethod": "Level Up Female: 32",
+    "EvolvesInto": {}
+  },
+  "Cacnea": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Cacturne": "Level Up: 32 (Male) OR Used Item (Female): Dusk Stone",
+      "Maractus": "Level Up Female: 32 OR Used Item (Male): Water Stone"
+    }
+  },
+  "Altaria": {
+    "EvolvesFrom": "Swablu",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Swablu": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Altaria": "Level Up: 34"
+    }
+  },
+  "Zangoose": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Seviper": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Lunatone": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Solrock": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Whiscash": {
+    "EvolvesFrom": "Barboach",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Barboach": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Whiscash": "Level Up: 30"
+    }
+  },
+  "Crawdaunt": {
+    "EvolvesFrom": "Corphish",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Corphish": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Crawdaunt": "Level Up: 30"
+    }
+  },
+  "Claydol": {
+    "EvolvesFrom": "Baltoy",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Baltoy": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Claydol": "Level Up: 32"
+    }
+  },
+  "Cradily": {
+    "EvolvesFrom": "Lileep",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Lileep": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Cradily": "Level Up: 35"
+    }
+  },
+  "Armaldo": {
+    "EvolvesFrom": "Anorith",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Anorith": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Armaldo": "Level Up: 35"
+    }
+  },
+  "Milotic": {
+    "EvolvesFrom": "Feebas",
+    "FromMethod": "Level Up (Beauty): 170",
+    "EvolvesInto": {}
+  },
+  "Feebas": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Milotic": "Level Up (Beauty): 170 OR Level Up: 30"
+    }
+  },
+  "Castform": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Kecleon": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Banette": {
+    "EvolvesFrom": "Shuppet",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Shuppet": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Banette": "Level Up: 29"
+    }
+  },
+  "Dusclops": {
+    "EvolvesFrom": "Duskull",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {
+      "Dusknoir": "Use Item: Reaper Cloth"
+    }
+  },
+  "Duskull": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Dusclops": "Level Up: 30"
+    }
+  },
+  "Dusknoir": {
+    "EvolvesFrom": "Dusclops",
+    "FromMethod": "Use Item: Reaper Cloth",
+    "EvolvesInto": {}
+  },
+  "Tropius": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Chimecho": {
+    "EvolvesFrom": "Chingling",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {}
+  },
+  "Absol": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Wynaut": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Wobbuffet": "Level Up: 25"
+    }
+  },
+  "Glalie": {
+    "EvolvesFrom": "Snorunt",
+    "FromMethod": "Level Up: 42 (Male)",
+    "EvolvesInto": {}
+  },
+  "Froslass": {
+    "EvolvesFrom": "Snorunt",
+    "FromMethod": "Level Up Female: 42",
+    "EvolvesInto": {}
+  },
+  "Snorunt": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Glalie": "Level Up: 42 (Male) OR Used Item (Female): Dusk Stone",
+      "Froslass": "Level Up Female: 42 OR Used Item (Male): Dawn Stone"
+    }
+  },
+  "Sealeo": {
+    "EvolvesFrom": "Spheal",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {
+      "Walrein": "Level Up: 44"
+    }
+  },
+  "Spheal": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Sealeo": "Level Up: 29"
+    }
+  },
+  "Walrein": {
+    "EvolvesFrom": "Sealeo",
+    "FromMethod": "Level Up: 44",
+    "EvolvesInto": {}
+  },
+  "Huntail": {
+    "EvolvesFrom": "Clamperl",
+    "FromMethod": "Level Up Female: 30",
+    "EvolvesInto": {}
+  },
+  "Gorebyss": {
+    "EvolvesFrom": "Clamperl",
+    "FromMethod": "Level Up Female: 30",
+    "EvolvesInto": {}
+  },
+  "Clamperl": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Huntail": "Level Up Female: 30 OR Used Item (Female): Deep Sea Tooth",
+      "Gorebyss": "Level Up Female: 30 OR Used Item (Male): Deep Sea Scale"
+    }
+  },
+  "Relicanth": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Alomomola": {
+    "EvolvesFrom": "Luvdisc",
+    "FromMethod": "Level Up: 39",
+    "EvolvesInto": {}
+  },
+  "Luvdisc": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Alomomola": "Level Up: 39"
+    }
+  },
+  "Shelgon": {
+    "EvolvesFrom": "Bagon",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Salamence": "Level Up: 55"
+    }
+  },
+  "Bagon": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Shelgon": "Level Up: 25"
+    }
+  },
+  "Salamence": {
+    "EvolvesFrom": "Shelgon",
+    "FromMethod": "Level Up: 55",
+    "EvolvesInto": {}
+  },
+  "Metang": {
+    "EvolvesFrom": "Beldum",
+    "FromMethod": "Level Up: 20",
+    "EvolvesInto": {
+      "Metagross": "Level Up: 55"
+    }
+  },
+  "Beldum": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Metang": "Level Up: 20"
+    }
+  },
+  "Metagross": {
+    "EvolvesFrom": "Metang",
+    "FromMethod": "Level Up: 55",
+    "EvolvesInto": {}
+  },
+  "Regirock": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Regice": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Registeel": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Latias": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Latios": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Kyogre": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Groudon": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Rayquaza": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Jirachi": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Deoxys": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Grotle": {
+    "EvolvesFrom": "Turtwig",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Torterra": "Level Up: 36"
+    }
+  },
+  "Turtwig": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Grotle": "Level Up: 18"
+    }
+  },
+  "Torterra": {
+    "EvolvesFrom": "Grotle",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Monferno": {
+    "EvolvesFrom": "Chimchar",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Infernape": "Level Up: 36"
+    }
+  },
+  "Chimchar": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Monferno": "Level Up: 18"
+    }
+  },
+  "Infernape": {
+    "EvolvesFrom": "Monferno",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Prinplup": {
+    "EvolvesFrom": "Piplup",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Empoleon": "Level Up: 36"
+    }
+  },
+  "Piplup": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Prinplup": "Level Up: 18"
+    }
+  },
+  "Empoleon": {
+    "EvolvesFrom": "Prinplup",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Staravia": {
+    "EvolvesFrom": "Starly",
+    "FromMethod": "Level Up: 17",
+    "EvolvesInto": {
+      "Staraptor": "Level Up: 34"
+    }
+  },
+  "Starly": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Staravia": "Level Up: 17"
+    }
+  },
+  "Staraptor": {
+    "EvolvesFrom": "Staravia",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Bibarel": {
+    "EvolvesFrom": "Bidoof",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {}
+  },
+  "Bidoof": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Bibarel": "Level Up: 18"
+    }
+  },
+  "Kricketune": {
+    "EvolvesFrom": "Kricketot",
+    "FromMethod": "Level Up: 15",
+    "EvolvesInto": {}
+  },
+  "Kricketot": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Kricketune": "Level Up: 15"
+    }
+  },
+  "Luxio": {
+    "EvolvesFrom": "Shinx",
+    "FromMethod": "Level Up: 17",
+    "EvolvesInto": {
+      "Luxray": "Level Up: 34"
+    }
+  },
+  "Shinx": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Luxio": "Level Up: 17"
+    }
+  },
+  "Luxray": {
+    "EvolvesFrom": "Luxio",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Budew": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Roselia": "Level Up: 16"
+    }
+  },
+  "Rampardos": {
+    "EvolvesFrom": "Cranidos",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Cranidos": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Rampardos": "Level Up: 30"
+    }
+  },
+  "Bastiodon": {
+    "EvolvesFrom": "Shieldon",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Shieldon": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Bastiodon": "Level Up: 30"
+    }
+  },
+  "Wormadam": {
+    "EvolvesFrom": "Burmy",
+    "FromMethod": "Level Up Female: 20",
+    "EvolvesInto": {}
+  },
+  "Mothim": {
+    "EvolvesFrom": "Burmy",
+    "FromMethod": "Level Up: 20 (Male)",
+    "EvolvesInto": {}
+  },
+  "Burmy": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Wormadam": "Level Up Female: 20",
+      "Mothim": "Level Up: 20 (Male)"
+    }
+  },
+  "Vespiquen": {
+    "EvolvesFrom": "Combee",
+    "FromMethod": "Level Up Female: 25",
+    "EvolvesInto": {}
+  },
+  "Combee": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Vespiquen": "Level Up Female: 25 OR Used Item (Male): King\u2019s Rock",
+      "Beedrill": "Level Up: 30 (Male)"
+    }
+  },
+  "Pachirisu": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Floatzel": {
+    "EvolvesFrom": "Buizel",
+    "FromMethod": "Level Up: 26",
+    "EvolvesInto": {}
+  },
+  "Buizel": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Floatzel": "Level Up: 26"
+    }
+  },
+  "Cherrim": {
+    "EvolvesFrom": "Cherubi",
+    "FromMethod": "Level Up: 26",
+    "EvolvesInto": {}
+  },
+  "Cherubi": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Cherrim": "Level Up: 26"
+    }
+  },
+  "Gastrodon": {
+    "EvolvesFrom": "Shellos",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Shellos": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Gastrodon": "Level Up: 29"
+    }
+  },
+  "Drifblim": {
+    "EvolvesFrom": "Drifloon",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Drifloon": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Drifblim": "Level Up: 28"
+    }
+  },
+  "Lopunny": {
+    "EvolvesFrom": "Buneary",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Buneary": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Lopunny": "Level Up: 30"
+    }
+  },
+  "Purugly": {
+    "EvolvesFrom": "Glameow",
+    "FromMethod": "Level Up: 31",
+    "EvolvesInto": {}
+  },
+  "Glameow": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Purugly": "Level Up: 31"
+    }
+  },
+  "Chingling": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Chimecho": "Level Up: 25"
+    }
+  },
+  "Skuntank": {
+    "EvolvesFrom": "Stunky",
+    "FromMethod": "Level Up: 31",
+    "EvolvesInto": {}
+  },
+  "Stunky": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Skuntank": "Level Up: 31"
+    }
+  },
+  "Bronzong": {
+    "EvolvesFrom": "Bronzor",
+    "FromMethod": "Level Up: 33",
+    "EvolvesInto": {}
+  },
+  "Bronzor": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Bronzong": "Level Up: 33"
+    }
+  },
+  "Bonsly": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Sudowoodo": "Level Up: 20"
+    }
+  },
+  "Mime Jr.": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Mr. Mime": "Level Up: 20"
+    }
+  },
+  "Happiny": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Chansey": "Level Up: 20"
+    }
+  },
+  "Chatot": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Spiritomb": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Gabite": {
+    "EvolvesFrom": "Gible",
+    "FromMethod": "Level Up: 24",
+    "EvolvesInto": {
+      "Garchomp": "Level Up: 54"
+    }
+  },
+  "Gible": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Gabite": "Level Up: 24"
+    }
+  },
+  "Garchomp": {
+    "EvolvesFrom": "Gabite",
+    "FromMethod": "Level Up: 54",
+    "EvolvesInto": {}
+  },
+  "Munchlax": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Snorlax": "Level Up: 30"
+    }
+  },
+  "Lucario": {
+    "EvolvesFrom": "Riolu",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Riolu": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Lucario": "Level Up: 30"
+    }
+  },
+  "Hippowdon": {
+    "EvolvesFrom": "Hippopotas",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Hippopotas": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Hippowdon": "Level Up: 34"
+    }
+  },
+  "Drapion": {
+    "EvolvesFrom": "Skorupi",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Skorupi": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Drapion": "Level Up: 34"
+    }
+  },
+  "Toxicroak": {
+    "EvolvesFrom": "Croagunk",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Croagunk": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Toxicroak": "Level Up: 32"
+    }
+  },
+  "Carnivine": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Lumineon": {
+    "EvolvesFrom": "Finneon",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Finneon": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Lumineon": "Level Up: 29"
+    }
+  },
+  "Mantyke": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Mantine": "Level Up: 31"
+    }
+  },
+  "Abomasnow": {
+    "EvolvesFrom": "Snover",
+    "FromMethod": "Level Up: 40",
+    "EvolvesInto": {}
+  },
+  "Snover": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Abomasnow": "Level Up: 40"
+    }
+  },
+  "Rotom": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Uxie": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Mesprit": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Azelf": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Dialga": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Palkia": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Heatran": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Regigigas": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Giratina": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Cresselia": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Manaphy": {
+    "EvolvesFrom": "Phione",
+    "FromMethod": "Level Up: 80",
+    "EvolvesInto": {}
+  },
+  "Phione": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Manaphy": "Level Up: 80"
+    }
+  },
+  "Darkrai": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Shaymin": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Arceus": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Victini": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Servine": {
+    "EvolvesFrom": "Snivy",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Serperior": "Level Up: 36"
+    }
+  },
+  "Snivy": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Servine": "Level Up: 18"
+    }
+  },
+  "Serperior": {
+    "EvolvesFrom": "Servine",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Pignite": {
+    "EvolvesFrom": "Tepig",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Emboar": "Level Up: 36"
+    }
+  },
+  "Tepig": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Pignite": "Level Up: 18"
+    }
+  },
+  "Emboar": {
+    "EvolvesFrom": "Pignite",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Dewott": {
+    "EvolvesFrom": "Oshawott",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Samurott": "Level Up: 36"
+    }
+  },
+  "Oshawott": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Dewott": "Level Up: 18"
+    }
+  },
+  "Samurott": {
+    "EvolvesFrom": "Dewott",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Watchog": {
+    "EvolvesFrom": "Patrat",
+    "FromMethod": "Level Up: 22",
+    "EvolvesInto": {}
+  },
+  "Patrat": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Watchog": "Level Up: 22"
+    }
+  },
+  "Herdier": {
+    "EvolvesFrom": "Lillipup",
+    "FromMethod": "Level Up: 16",
+    "EvolvesInto": {
+      "Stoutland": "Level Up: 32"
+    }
+  },
+  "Lillipup": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Herdier": "Level Up: 16"
+    }
+  },
+  "Stoutland": {
+    "EvolvesFrom": "Herdier",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Liepard": {
+    "EvolvesFrom": "Purrloin",
+    "FromMethod": "Level Up: 22",
+    "EvolvesInto": {}
+  },
+  "Purrloin": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Liepard": "Level Up: 22"
+    }
+  },
+  "Simisage": {
+    "EvolvesFrom": "Pansage",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Pansage": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Simisage": "Level Up: 28"
+    }
+  },
+  "Simisear": {
+    "EvolvesFrom": "Pansear",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Pansear": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Simisear": "Level Up: 28"
+    }
+  },
+  "Simipour": {
+    "EvolvesFrom": "Panpour",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Panpour": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Simipour": "Level Up: 28"
+    }
+  },
+  "Musharna": {
+    "EvolvesFrom": "Munna",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Munna": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Musharna": "Level Up: 29"
+    }
+  },
+  "Tranquill": {
+    "EvolvesFrom": "Pidove",
+    "FromMethod": "Level Up: 17",
+    "EvolvesInto": {
+      "Unfezant": "Level Up: 34"
+    }
+  },
+  "Pidove": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Tranquill": "Level Up: 17"
+    }
+  },
+  "Unfezant": {
+    "EvolvesFrom": "Tranquill",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Zebstrika": {
+    "EvolvesFrom": "Blitzle",
+    "FromMethod": "Level Up: 27",
+    "EvolvesInto": {}
+  },
+  "Blitzle": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Zebstrika": "Level Up: 27"
+    }
+  },
+  "Boldore": {
+    "EvolvesFrom": "Roggenrola",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Gigalith": "Level Up: 40"
+    }
+  },
+  "Roggenrola": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Boldore": "Level Up: 25"
+    }
+  },
+  "Gigalith": {
+    "EvolvesFrom": "Boldore",
+    "FromMethod": "Level Up: 40",
+    "EvolvesInto": {}
+  },
+  "Swoobat": {
+    "EvolvesFrom": "Woobat",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Woobat": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Swoobat": "Level Up: 29"
+    }
+  },
+  "Excadrill": {
+    "EvolvesFrom": "Drilbur",
+    "FromMethod": "Level Up: 31",
+    "EvolvesInto": {}
+  },
+  "Drilbur": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Excadrill": "Level Up: 31"
+    }
+  },
+  "Audino": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Gurdurr": {
+    "EvolvesFrom": "Timburr",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Conkeldurr": "Level Up: 42"
+    }
+  },
+  "Timburr": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Gurdurr": "Level Up: 25"
+    }
+  },
+  "Conkeldurr": {
+    "EvolvesFrom": "Gurdurr",
+    "FromMethod": "Level Up: 42",
+    "EvolvesInto": {}
+  },
+  "Palpitoad": {
+    "EvolvesFrom": "Tympole",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Seismitoad": "Level Up: 36"
+    }
+  },
+  "Tympole": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Palpitoad": "Level Up: 25"
+    }
+  },
+  "Seismitoad": {
+    "EvolvesFrom": "Palpitoad",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Throh": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Sawk": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Swadloon": {
+    "EvolvesFrom": "Sewaddle",
+    "FromMethod": "Level Up: 20",
+    "EvolvesInto": {
+      "Leavanny": "Level Up: 34"
+    }
+  },
+  "Sewaddle": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Swadloon": "Level Up: 20"
+    }
+  },
+  "Leavanny": {
+    "EvolvesFrom": "Swadloon",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Whirlipede": {
+    "EvolvesFrom": "Venipede",
+    "FromMethod": "Level Up: 19",
+    "EvolvesInto": {
+      "Scolipede": "Level Up: 34"
+    }
+  },
+  "Venipede": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Whirlipede": "Level Up: 19"
+    }
+  },
+  "Scolipede": {
+    "EvolvesFrom": "Whirlipede",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Whimsicott": {
+    "EvolvesFrom": "Cottonee",
+    "FromMethod": "Level Up: 27",
+    "EvolvesInto": {}
+  },
+  "Cottonee": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Whimsicott": "Level Up: 27"
+    }
+  },
+  "Lilligant": {
+    "EvolvesFrom": "Petilil",
+    "FromMethod": "Level Up: 27",
+    "EvolvesInto": {}
+  },
+  "Petilil": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Lilligant": "Level Up: 27"
+    }
+  },
+  "Basculin": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Krokorok": {
+    "EvolvesFrom": "Sandile",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {
+      "Krookodile": "Level Up: 40"
+    }
+  },
+  "Sandile": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Krokorok": "Level Up: 29"
+    }
+  },
+  "Krookodile": {
+    "EvolvesFrom": "Krokorok",
+    "FromMethod": "Level Up: 40",
+    "EvolvesInto": {}
+  },
+  "Darmanitan": {
+    "EvolvesFrom": "Darumaka",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Darumaka": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Darmanitan": "Level Up: 35"
+    }
+  },
+  "Crustle": {
+    "EvolvesFrom": "Dwebble",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Dwebble": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Crustle": "Level Up: 34"
+    }
+  },
+  "Scrafty": {
+    "EvolvesFrom": "Scraggy",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Scraggy": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Scrafty": "Level Up: 34"
+    }
+  },
+  "Sigilyph": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Cofagrigus": {
+    "EvolvesFrom": "Yamask",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Yamask": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Cofagrigus": "Level Up: 34"
+    }
+  },
+  "Carracosta": {
+    "EvolvesFrom": "Tirtouga",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Tirtouga": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Carracosta": "Level Up: 35"
+    }
+  },
+  "Archeops": {
+    "EvolvesFrom": "Archen",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Archen": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Archeops": "Level Up: 35"
+    }
+  },
+  "Garbodor": {
+    "EvolvesFrom": "Trubbish",
+    "FromMethod": "Level Up: 31",
+    "EvolvesInto": {}
+  },
+  "Trubbish": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Garbodor": "Level Up: 31"
+    }
+  },
+  "Zoroark": {
+    "EvolvesFrom": "Zorua",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Zorua": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Zoroark": "Level Up: 30"
+    }
+  },
+  "Cinccino": {
+    "EvolvesFrom": "Minccino",
+    "FromMethod": "Level Up: 26",
+    "EvolvesInto": {}
+  },
+  "Minccino": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Cinccino": "Level Up: 26"
+    }
+  },
+  "Gothorita": {
+    "EvolvesFrom": "Gothita",
+    "FromMethod": "Level Up: 23",
+    "EvolvesInto": {
+      "Gothitelle": "Level Up: 41"
+    }
+  },
+  "Gothita": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Gothorita": "Level Up: 23"
+    }
+  },
+  "Gothitelle": {
+    "EvolvesFrom": "Gothorita",
+    "FromMethod": "Level Up: 41",
+    "EvolvesInto": {}
+  },
+  "Duosion": {
+    "EvolvesFrom": "Solosis",
+    "FromMethod": "Level Up: 23",
+    "EvolvesInto": {
+      "Reuniclus": "Level Up: 41"
+    }
+  },
+  "Solosis": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Duosion": "Level Up: 23"
+    }
+  },
+  "Reuniclus": {
+    "EvolvesFrom": "Duosion",
+    "FromMethod": "Level Up: 41",
+    "EvolvesInto": {}
+  },
+  "Swanna": {
+    "EvolvesFrom": "Ducklett",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {}
+  },
+  "Ducklett": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Swanna": "Level Up: 29"
+    }
+  },
+  "Vanillish": {
+    "EvolvesFrom": "Vanillite",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {
+      "Vanilluxe": "Level Up: 47"
+    }
+  },
+  "Vanillite": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Vanillish": "Level Up: 28"
+    }
+  },
+  "Vanilluxe": {
+    "EvolvesFrom": "Vanillish",
+    "FromMethod": "Level Up: 47",
+    "EvolvesInto": {}
+  },
+  "Sawsbuck": {
+    "EvolvesFrom": "Deerling",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Deerling": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Sawsbuck": "Level Up: 34"
+    }
+  },
+  "Emolga": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Escavalier": {
+    "EvolvesFrom": "Karrablast",
+    "FromMethod": "Level Up: 33",
+    "EvolvesInto": {}
+  },
+  "Karrablast": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Escavalier": "Level Up: 33"
+    }
+  },
+  "Amoonguss": {
+    "EvolvesFrom": "Foongus",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Foongus": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Amoonguss": "Level Up: 35"
+    }
+  },
+  "Jellicent": {
+    "EvolvesFrom": "Frillish",
+    "FromMethod": "Level Up: 33",
+    "EvolvesInto": {}
+  },
+  "Frillish": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Jellicent": "Level Up: 33"
+    }
+  },
+  "Galvantula": {
+    "EvolvesFrom": "Joltik",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Joltik": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Galvantula": "Level Up: 32"
+    }
+  },
+  "Ferrothorn": {
+    "EvolvesFrom": "Ferroseed",
+    "FromMethod": "Level Up: 38",
+    "EvolvesInto": {}
+  },
+  "Ferroseed": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Ferrothorn": "Level Up: 38"
+    }
+  },
+  "Klang": {
+    "EvolvesFrom": "Klink",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {
+      "Klinklang": "Level Up: 49"
+    }
+  },
+  "Klink": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Klang": "Level Up: 29"
+    }
+  },
+  "Klinklang": {
+    "EvolvesFrom": "Klang",
+    "FromMethod": "Level Up: 49",
+    "EvolvesInto": {}
+  },
+  "Eelektrik": {
+    "EvolvesFrom": "Tynamo",
+    "FromMethod": "Level Up: 27",
+    "EvolvesInto": {
+      "Eelektross": "Level Up: 41"
+    }
+  },
+  "Tynamo": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Eelektrik": "Level Up: 27"
+    }
+  },
+  "Eelektross": {
+    "EvolvesFrom": "Eelektrik",
+    "FromMethod": "Level Up: 41",
+    "EvolvesInto": {}
+  },
+  "Beheeyem": {
+    "EvolvesFrom": "Elgyem",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Elgyem": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Beheeyem": "Level Up: 35"
+    }
+  },
+  "Lampent": {
+    "EvolvesFrom": "Litwick",
+    "FromMethod": "Level Up: 29",
+    "EvolvesInto": {
+      "Chandelure": "Level Up: 45"
+    }
+  },
+  "Litwick": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Lampent": "Level Up: 29"
+    }
+  },
+  "Chandelure": {
+    "EvolvesFrom": "Lampent",
+    "FromMethod": "Level Up: 45",
+    "EvolvesInto": {}
+  },
+  "Fraxure": {
+    "EvolvesFrom": "Axew",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Haxorus": "Level Up: 52"
+    }
+  },
+  "Axew": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Fraxure": "Level Up: 25"
+    }
+  },
+  "Haxorus": {
+    "EvolvesFrom": "Fraxure",
+    "FromMethod": "Level Up: 52",
+    "EvolvesInto": {}
+  },
+  "Beartic": {
+    "EvolvesFrom": "Cubchoo",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Cubchoo": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Beartic": "Level Up: 32"
+    }
+  },
+  "Cryogonal": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Accelgor": {
+    "EvolvesFrom": "Shelmet",
+    "FromMethod": "Level Up: 33",
+    "EvolvesInto": {}
+  },
+  "Shelmet": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Accelgor": "Level Up: 33"
+    }
+  },
+  "Stunfisk": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Mienshao": {
+    "EvolvesFrom": "Mienfoo",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Mienfoo": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Mienshao": "Level Up: 34"
+    }
+  },
+  "Druddigon": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Golurk": {
+    "EvolvesFrom": "Golett",
+    "FromMethod": "Level Up: 39",
+    "EvolvesInto": {}
+  },
+  "Golett": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Golurk": "Level Up: 39"
+    }
+  },
+  "Bisharp": {
+    "EvolvesFrom": "Pawniard",
+    "FromMethod": "Level Up: 38",
+    "EvolvesInto": {}
+  },
+  "Pawniard": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Bisharp": "Level Up: 38"
+    }
+  },
+  "Bouffalant": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Braviary": {
+    "EvolvesFrom": "Rufflet",
+    "FromMethod": "Level Up: 37",
+    "EvolvesInto": {}
+  },
+  "Rufflet": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Braviary": "Level Up: 37"
+    }
+  },
+  "Mandibuzz": {
+    "EvolvesFrom": "Vullaby",
+    "FromMethod": "Level Up: 37",
+    "EvolvesInto": {}
+  },
+  "Vullaby": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Mandibuzz": "Level Up: 37"
+    }
+  },
+  "Heatmor": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Durant": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Zweilous": {
+    "EvolvesFrom": "Deino",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {
+      "Hydreigon": "Level Up: 56"
+    }
+  },
+  "Deino": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Zweilous": "Level Up: 30"
+    }
+  },
+  "Hydreigon": {
+    "EvolvesFrom": "Zweilous",
+    "FromMethod": "Level Up: 56",
+    "EvolvesInto": {}
+  },
+  "Volcarona": {
+    "EvolvesFrom": "Larvesta",
+    "FromMethod": "Level Up: 46",
+    "EvolvesInto": {}
+  },
+  "Larvesta": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Volcarona": "Level Up: 46"
+    }
+  },
+  "Cobalion": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Terrakion": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Virizion": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Tornadus": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Thundurus": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Reshiram": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Zekrom": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Landorus": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Kyurem": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Keldeo": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Meloetta": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Genesect": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Quilladin": {
+    "EvolvesFrom": "Chespin",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Chesnaught": "Level Up: 36"
+    }
+  },
+  "Chespin": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Quilladin": "Level Up: 18"
+    }
+  },
+  "Chesnaught": {
+    "EvolvesFrom": "Quilladin",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Braixen": {
+    "EvolvesFrom": "Fennekin",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Delphox": "Level Up: 36"
+    }
+  },
+  "Fennekin": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Braixen": "Level Up: 18"
+    }
+  },
+  "Delphox": {
+    "EvolvesFrom": "Braixen",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Frogadier": {
+    "EvolvesFrom": "Froakie",
+    "FromMethod": "Level Up: 18",
+    "EvolvesInto": {
+      "Greninja": "Level Up: 36"
+    }
+  },
+  "Froakie": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Frogadier": "Level Up: 18"
+    }
+  },
+  "Greninja": {
+    "EvolvesFrom": "Frogadier",
+    "FromMethod": "Level Up: 36",
+    "EvolvesInto": {}
+  },
+  "Diggersby": {
+    "EvolvesFrom": "Bunnelby",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {}
+  },
+  "Bunnelby": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Diggersby": "Level Up: 25"
+    }
+  },
+  "Fletchinder": {
+    "EvolvesFrom": "Fletchling",
+    "FromMethod": "Level Up: 17",
+    "EvolvesInto": {
+      "Talonflame": "Level Up: 35"
+    }
+  },
+  "Fletchling": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Fletchinder": "Level Up: 17"
+    }
+  },
+  "Talonflame": {
+    "EvolvesFrom": "Fletchinder",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Spewpa": {
+    "EvolvesFrom": "Scatterbug",
+    "FromMethod": "Level Up: 10",
+    "EvolvesInto": {
+      "Vivillon": "Level Up: 15"
+    }
+  },
+  "Scatterbug": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Spewpa": "Level Up: 10"
+    }
+  },
+  "Vivillon": {
+    "EvolvesFrom": "Spewpa",
+    "FromMethod": "Level Up: 15",
+    "EvolvesInto": {}
+  },
+  "Pyroar": {
+    "EvolvesFrom": "Litleo",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Litleo": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Pyroar": "Level Up: 32"
+    }
+  },
+  "Floette": {
+    "EvolvesFrom": "Flab\u00E9b\u00E9",
+    "FromMethod": "Level Up: 19",
+    "EvolvesInto": {
+      "Florges": "Use Item: Shiny Stone"
+    }
+  },
+  "Flab\u00E9b\u00E9": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Floette": "Level Up: 19"
+    }
+  },
+  "Florges": {
+    "EvolvesFrom": "Floette",
+    "FromMethod": "Use Item: Shiny Stone",
+    "EvolvesInto": {}
+  },
+  "Gogoat": {
+    "EvolvesFrom": "Skiddo",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Skiddo": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Gogoat": "Level Up: 32"
+    }
+  },
+  "Pangoro": {
+    "EvolvesFrom": "Pancham",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Pancham": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Pangoro": "Level Up: 32"
+    }
+  },
+  "Furfrou": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Meowstic": {
+    "EvolvesFrom": "Espurr",
+    "FromMethod": "Level Up: 25 (Male)",
+    "EvolvesInto": {}
+  },
+  "Meowstic-F": {
+    "EvolvesFrom": "Espurr",
+    "FromMethod": "Level Up: 25 (Female, Form Change)",
+    "EvolvesInto": {}
+  },
+  "Espurr": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Meowstic": "Level Up: 25 (Male)",
+      "Meowstic-F": "Level Up: 25 (Female, Form Change)"
+    }
+  },
+  "Doublade": {
+    "EvolvesFrom": "Honedge",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {
+      "Aegislash": "Level Up: 55"
+    }
+  },
+  "Honedge": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Doublade": "Level Up: 35"
+    }
+  },
+  "Aegislash": {
+    "EvolvesFrom": "Doublade",
+    "FromMethod": "Level Up: 55",
+    "EvolvesInto": {}
+  },
+  "Aromatisse": {
+    "EvolvesFrom": "Spritzee",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Spritzee": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Aromatisse": "Level Up: 28"
+    }
+  },
+  "Slurpuff": {
+    "EvolvesFrom": "Swirlix",
+    "FromMethod": "Level Up: 28",
+    "EvolvesInto": {}
+  },
+  "Swirlix": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Slurpuff": "Level Up: 28"
+    }
+  },
+  "Malamar": {
+    "EvolvesFrom": "Inkay",
+    "FromMethod": "Level Up: 30",
+    "EvolvesInto": {}
+  },
+  "Inkay": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Malamar": "Level Up: 30"
+    }
+  },
+  "Barbaracle": {
+    "EvolvesFrom": "Binacle",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Binacle": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Barbaracle": "Level Up: 34"
+    }
+  },
+  "Dragalge": {
+    "EvolvesFrom": "Skrelp",
+    "FromMethod": "Level Up: 35",
+    "EvolvesInto": {}
+  },
+  "Skrelp": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Dragalge": "Level Up: 35"
+    }
+  },
+  "Clawitzer": {
+    "EvolvesFrom": "Clauncher",
+    "FromMethod": "Level Up: 34",
+    "EvolvesInto": {}
+  },
+  "Clauncher": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Clawitzer": "Level Up: 34"
+    }
+  },
+  "Heliolisk": {
+    "EvolvesFrom": "Helioptile",
+    "FromMethod": "Level Up: 31",
+    "EvolvesInto": {}
+  },
+  "Helioptile": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Heliolisk": "Level Up: 31"
+    }
+  },
+  "Tyrantrum": {
+    "EvolvesFrom": "Tyrunt",
+    "FromMethod": "Level Up: 37",
+    "EvolvesInto": {}
+  },
+  "Tyrunt": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Tyrantrum": "Level Up: 37"
+    }
+  },
+  "Aurorus": {
+    "EvolvesFrom": "Amaura",
+    "FromMethod": "Level Up: 37",
+    "EvolvesInto": {}
+  },
+  "Amaura": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Aurorus": "Level Up: 37"
+    }
+  },
+  "Hawlucha": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Dedenne": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Diancie": {
+    "EvolvesFrom": "Carbink",
+    "FromMethod": "Level Up: 80",
+    "EvolvesInto": {}
+  },
+  "Carbink": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Diancie": "Level Up: 80"
+    }
+  },
+  "Sliggoo": {
+    "EvolvesFrom": "Goomy",
+    "FromMethod": "Level Up: 25",
+    "EvolvesInto": {
+      "Goodra": "Level Up: 51"
+    }
+  },
+  "Goomy": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Sliggoo": "Level Up: 25"
+    }
+  },
+  "Goodra": {
+    "EvolvesFrom": "Sliggoo",
+    "FromMethod": "Level Up: 51",
+    "EvolvesInto": {}
+  },
+  "Klefki": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Trevenant": {
+    "EvolvesFrom": "Phantump",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Phantump": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Trevenant": "Level Up: 32"
+    }
+  },
+  "Gourgeist": {
+    "EvolvesFrom": "Pumpkaboo",
+    "FromMethod": "Level Up: 32",
+    "EvolvesInto": {}
+  },
+  "Pumpkaboo": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Gourgeist": "Level Up: 32"
+    }
+  },
+  "Avalugg": {
+    "EvolvesFrom": "Bergmite",
+    "FromMethod": "Level Up: 37",
+    "EvolvesInto": {}
+  },
+  "Bergmite": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Avalugg": "Level Up: 37"
+    }
+  },
+  "Noivern": {
+    "EvolvesFrom": "Noibat",
+    "FromMethod": "Level Up: 40",
+    "EvolvesInto": {}
+  },
+  "Noibat": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {
+      "Noivern": "Level Up: 40"
+    }
+  },
+  "Xerneas": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Yveltal": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Zygarde": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Hoopa": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  },
+  "Volcanion": {
+    "EvolvesFrom": null,
+    "FromMethod": null,
+    "EvolvesInto": {}
+  }
+}
