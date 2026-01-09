@@ -1,0 +1,32 @@
+[
+  {
+    "Item": "Lansat Berry",
+    "Area": "Ambrette Town",
+    "Location/Price": "In the southwestern corner outside of Hotel Ambrette (hidden)"
+  },
+  {
+    "Item": "TM14 Blizzard",
+    "Area": "Anistar City (Mart)",
+    "Location/Price": "$15,000.00"
+  },
+  {
+    "Item": "Potion",
+    "Area": "Vaniville Town",
+    "Location/Price": "On the table in your bedroom"
+  },
+  {
+    "Item": "Heal Powder",
+    "Area": "Vaniville Town",
+    "Location/Price": "In the back yard (hidden)"
+  },
+  {
+    "Item": "Max Potion",
+    "Area": "Ambrette Town (Beach)",
+    "Location/Price": "On the beach near the rocks"
+  },
+  {
+    "Item": "TM96 Nature Power",
+    "Area": "Ambrette Town",
+    "Location/Price": "From a tourist in Hotel Ambrette"
+  }
+]
