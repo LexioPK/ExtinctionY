@@ -53,11 +53,12 @@
   .type-fairy { background: #ec8fe6; }
 
   /* Evolution Styles */
-  #evolution-chain { display:flex; align-items:center; justify-content:center; gap:40px; flex-wrap:nowrap; margin-top:10px; }
+  #evolution-chain { display:flex; align-items:flex-start; justify-content:center; gap:20px; flex-wrap:nowrap; margin-top:10px; }
+  .evo-stage { display:flex; flex-direction:column; align-items:center; gap:15px; }
   .evo-block { text-align:center; }
   .evo-img { width:120px; height:120px; image-rendering:pixelated; display:block; margin:0 auto 5px; }
   .evo-name { font-weight:bold; font-size:18px; }
-  .evo-arrow-block { text-align:center; }
+  .evo-arrow-block { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .method-text { font-size:14px; font-weight:600; text-decoration:underline; margin-bottom:5px; }
   .arrow { font-size:30px; font-weight:bold; }
 
@@ -134,6 +135,18 @@
   }
   .info .info-cols h3 { margin:0 0 8px 0; text-decoration:underline; }
 
+  /* Larger tooltip font size for abilities */
+  [title] {
+    cursor: help;
+  }
+  
+  /* Override browser default tooltip styling with larger font */
+  @supports (font-size: 16px) {
+    [title]:hover::after {
+      font-size: 16px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -180,9 +193,10 @@ Promise.all([
   fetch('data/moves.json').then(r => r.json()),
   fetch('data/evolutions.json').then(r => r.json()),
   fetch('data/encounters.json').then(r => r.json()),
-  fetch('data/basegamestats.json').then(r => r.json())
+  fetch('data/basegamestats.json').then(r => r.json()),
+  fetch('data/abilities.json').then(r => r.json())
 ])
-.then(async ([pokedexData, movesetsData, movesData, evolutionsData, encountersData, baseGameStatsData]) => {
+.then(async ([pokedexData, movesetsData, movesData, evolutionsData, encountersData, baseGameStatsData, abilitiesData]) => {
 
   const mon = pokedexData[monName];
   if (!mon) { document.getElementById("pokemonCard").textContent = "Pokémon not found."; return; }
@@ -202,10 +216,11 @@ Promise.all([
   const bst = mon.BST ?? (mon.BaseStats.HP+mon.BaseStats.Atk+mon.BaseStats.Def+mon.BaseStats.SpA+mon.BaseStats.SpD+mon.BaseStats.Spe);
 
   // Extract unique locations where this Pokemon can be found
+  // Use Location field from encounters.json
   const locationSet = new Set();
   encountersData.forEach(encounter => {
     if (encounter.Pokemon === monName) {
-      locationSet.add(encounter.Area);
+      locationSet.add(encounter.Location);
     }
   });
   const locations = Array.from(locationSet).sort();
@@ -264,6 +279,30 @@ Promise.all([
       SpA: "#9DB7F5", SpD: "#A7DB8D", Spe: "#FA92B2", BST: "#B88CFF"
   };
 
+  // Helper function to find ability entry and get tooltip
+  function findAbilityEntry(abilityName) {
+    if (!abilitiesData || !abilityName || abilityName === "---") return null;
+    // Try direct lookup first
+    if (abilitiesData[abilityName]) return abilitiesData[abilityName];
+    // Try normalized lookup
+    const normalizeForCompare = (s) => (s || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
+    const target = normalizeForCompare(abilityName);
+    for (const key in abilitiesData) {
+      if (normalizeForCompare(key) === target) return abilitiesData[key];
+    }
+    return null;
+  }
+
+  // Build ability HTML with tooltips
+  function formatAbilityWithTooltip(abilityName) {
+    if (!abilityName || abilityName === "---") return "";
+    const abilityEntry = findAbilityEntry(abilityName);
+    const abilityTooltip = abilityEntry ? abilityEntry.shortDesc : "";
+    return abilityTooltip 
+      ? `<span title="${abilityTooltip}">${abilityName}</span>`
+      : abilityName;
+  }
+
   // --- Everything else unchanged, with requested layout changes ---
   cardDiv.innerHTML = `
     <button class="nav-btn prev-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(prevMon)}'">
@@ -290,22 +329,22 @@ Promise.all([
        <div>
          <h3>Abilities</h3>
          <ul style="text-align:left; display:inline-block;">
-           <li>1. ${mon.Ability1}</li>
-           <li>${mon.Ability2 ? `2. ${mon.Ability2}` : ""}</li>
-           <li><em>(H):</em> ${mon.AbilityH}</li>
+           <li>1. ${formatAbilityWithTooltip(mon.Ability1)}</li>
+           ${mon.Ability2 ? `<li>2. ${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
+           <li><em>(H):</em> ${formatAbilityWithTooltip(mon.AbilityH)}</li>
          </ul>
        </div>
 
        <div>
          <h3>Location</h3>
          <ul style="text-align:left; display:inline-block; padding-left:20px; margin:0;">
-           ${locations.length > 0 ? locations.map(loc => `<li>${loc}</li>`).join('') : '<li style="list-style:none; padding-left:0;">Not available in wild</li>'}
+           ${locations.length > 0 ? locations.map(loc => `<li>${loc}</li>`).join('') : '<li style="list-style:none; padding-left:0;">N/A</li>'}
          </ul>
        </div>
 
        <div>
          <h3>Additional Info</h3>
-         <p style="margin:0;">Data will come from the additional info JSON.</p>
+         <p style="margin:0;">N/A</p>
        </div>
      </div>
    </div>
@@ -329,8 +368,8 @@ Promise.all([
 
     <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Stat Changes</h3>
-      <div style="text-align:left; margin-top:10px; padding-left:20px;">
-        ${statChanges.length > 0 ? statChanges.join('<br>') : '<p style="margin:0; padding-left:0;">No stat changes from base game</p>'}
+      <div style="text-align:center; margin-top:10px;">
+        ${statChanges.length > 0 ? statChanges.join('<br>') : '<p style="margin:0;">No stat changes from base game</p>'}
       </div>
     </div>
   </div>
@@ -406,66 +445,75 @@ Promise.all([
   loadEvolutions(monName, evolutionsData);
 });
 
-// evolution renderer unchanged except multi-folder sprite support
+// evolution renderer with proper branching support
 function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
     if (!data[currentName]) { evoContainer.innerHTML = "<p>No evolution data available.</p>"; return; }
 
+    // Find the base of the evolution chain
     let pointer = currentName;
     while (data[pointer] && data[pointer].EvolvesFrom) pointer = data[pointer].EvolvesFrom;
 
     const rendered = new Set();
 
-    const renderEvo = (name) => {
+    const renderEvo = async (name) => {
         if(rendered.has(name)) return "";
         rendered.add(name);
 
-        const imgSrcPromise = getPokemonImage(name);
-        return imgSrcPromise.then(imgSrc => `
+        const imgSrc = await getPokemonImage(name);
+        return `
             <div class="evo-block">
               <a href="pokemon.html?name=${encodeURIComponent(name)}" style="text-decoration:none; color:inherit;">
-                <img src="${imgSrc}" class="evo-img">
+                <img src="${imgSrc}" class="evo-img" onerror="this.src='pokemon_sprites_unknown/unknown.png'">
                 <div class="evo-name">${name}</div>
               </a>
             </div>
-        `);
+        `;
     };
 
-    const traverseChain = async (name) => {
+    const renderArrow = (method) => {
+        return `
+          <div class="evo-arrow-block">
+            <div class="method-text">${method}</div>
+            <div class="arrow">→</div>
+          </div>
+        `;
+    };
+
+    const buildChain = async (name) => {
         const evolvesInto = data[name].EvolvesInto || {};
         const keys = Object.keys(evolvesInto);
-        if(!rendered.has(name)){
-            evoContainer.innerHTML += await renderEvo(name);
-        }
-        if(keys.length === 0) return;
-
-        if(keys.length === 1){
+        
+        let html = await renderEvo(name);
+        
+        if(keys.length === 0) {
+            // No more evolutions
+            return html;
+        } else if(keys.length === 1) {
+            // Single evolution path
             const nextName = keys[0];
             const method = evolvesInto[nextName];
-            evoContainer.innerHTML += `
-              <div class="evo-arrow-block">
-                <div class="method-text">${method}</div>
-                <div class="arrow">→</div>
-              </div>
-            `;
-            evoContainer.innerHTML += await renderEvo(nextName);
-            await traverseChain(nextName);
+            html += renderArrow(method);
+            html += await buildChain(nextName);
+            return html;
         } else {
-            for(const nextName of keys){
+            // Branching evolution - create vertical stack of branches
+            const branches = await Promise.all(keys.map(async (nextName) => {
                 const method = evolvesInto[nextName];
-                evoContainer.innerHTML += `
-                  <div class="evo-arrow-block">
-                    <div class="method-text">${method}</div>
-                    <div class="arrow">→</div>
-                  </div>
-                `;
-                evoContainer.innerHTML += await renderEvo(nextName);
-                await traverseChain(nextName);
-            }
+                const arrow = renderArrow(method);
+                const restOfChain = await buildChain(nextName);
+                return arrow + restOfChain;
+            }));
+            
+            // Wrap branches in a column container
+            html += `<div class="evo-stage">${branches.join('')}</div>`;
+            return html;
         }
     };
 
-    traverseChain(pointer);
+    buildChain(pointer).then(chainHtml => {
+        evoContainer.innerHTML = chainHtml;
+    });
 }
 </script>
 
