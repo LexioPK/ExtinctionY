@@ -233,9 +233,11 @@
                 itemsData = await itemsRes.json();
             }
             
-            // Terminus Cave entries - keep all as "Terminus Cave" 
-            // They will be displayed as separate encounter sections under one location
-            // No renaming needed - all 5 LocationIDs (343, 344, 345, 347, 348) stay as "Terminus Cave"
+            // Special cave entries - keep all under unified name
+            // Reflection Cave: LocationIDs 305, 306, 307, 308 → Combined as "Reflection Cave"
+            // Frost Cavern: LocationIDs 313, 314, 315, 316, 317 → Combined as "Frost Cavern"
+            // Terminus Cave: LocationIDs 343, 344, 345, 347, 348 → Combined as "Terminus Cave"
+            // Victory Road: LocationIDs 322, 324, 326, 327, 328 → Combined as "Victory Road"
             
             // Define the desired order of locations
             const locationOrder = [
@@ -266,8 +268,6 @@
                 "Geosenge Town",
                 "Route 11",
                 "Reflection Cave",
-                "Reflection Cave - Floor 1, B Floor 1",
-                "Reflection Cave - B Floor 2-3",
                 "Shalour City",
                 "Tower of Mastery",
                 "Route 12",
@@ -295,9 +295,6 @@
                 "Route 21",
                 "Chamber of Emptiness",
                 "Victory Road",
-                "Victory Road - Room 1 & 2",
-                "Victory Road - Room 3 & 4",
-                "Victory Road - Outside",
                 "Unknown Dungeon",
                 "Kiloude City"
             ];
@@ -418,18 +415,135 @@
         // Add navigation at the top
         container.appendChild(createNavigationButtons(true));
         
-        // Check if this is Terminus Cave - handle specially with floor designations
-        if (locationName === "Terminus Cave") {
-            // Group by LocationID ranges
-            // The first 3 Terminus Caves (343, 344, 345) are identical, so only use the first one
-            // The last 2 Terminus Caves (347, 348) are identical, so only use the first one
-            let floor1Index = null; // LocationIDs 343, 344, 345 (only use first)
-            let floor2Index = null; // LocationIDs 347, 348 (only use first)
+        // Check for special cave locations with floor/room designations
+        if (locationName === "Reflection Cave") {
+            // First 2 (305, 306) → "Floor 1, B Floor 1", Last 2 (307, 308) → "B Floor 2-3"
+            let floor1Index = null;
+            let floor2Index = null;
             
             indices.forEach((locationIndex) => {
                 const location = encounterData[locationIndex];
                 if (!location) return;
+                const locId = location.LocationID;
+                if ((locId === 305 || locId === 306) && floor1Index === null) {
+                    floor1Index = locationIndex;
+                } else if ((locId === 307 || locId === 308) && floor2Index === null) {
+                    floor2Index = locationIndex;
+                }
+            });
+            
+            if (floor1Index !== null) {
+                const floor1Encounters = aggregateEncountersForIndices([floor1Index]);
+                const floorHeader = document.createElement("h3");
+                floorHeader.textContent = "Reflection Cave - Floor 1, B Floor 1";
+                floorHeader.style.marginTop = "30px";
+                floorHeader.style.marginBottom = "20px";
+                floorHeader.style.fontSize = "1.5rem";
+                floorHeader.style.fontWeight = "700";
+                floorHeader.style.color = "#333";
+                container.appendChild(floorHeader);
                 
+                displayEncounterSection(container, "Grass / Terrain Encounters", floor1Encounters.grass);
+                displayEncounterSection(container, "Fishing", floor1Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", floor1Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", floor1Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", floor1Encounters.hordes);
+            }
+            
+            if (floor2Index !== null) {
+                const floor2Encounters = aggregateEncountersForIndices([floor2Index]);
+                const floorHeader = document.createElement("h3");
+                floorHeader.textContent = "Reflection Cave - B Floor 2-3";
+                floorHeader.style.marginTop = "30px";
+                floorHeader.style.marginBottom = "20px";
+                floorHeader.style.fontSize = "1.5rem";
+                floorHeader.style.fontWeight = "700";
+                floorHeader.style.color = "#333";
+                container.appendChild(floorHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", floor2Encounters.grass);
+                displayEncounterSection(container, "Fishing", floor2Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", floor2Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", floor2Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", floor2Encounters.hordes);
+            }
+        } else if (locationName === "Frost Cavern") {
+            // Combine first two (313, 314) only, ignore the rest (315, 316, 317)
+            const frostIndices = [];
+            indices.forEach((locationIndex) => {
+                const location = encounterData[locationIndex];
+                if (!location) return;
+                const locId = location.LocationID;
+                if (locId === 313 || locId === 314) {
+                    frostIndices.push(locationIndex);
+                }
+            });
+            
+            const frostEncounters = aggregateEncountersForIndices(frostIndices);
+            displayEncounterSection(container, "Grass / Terrain Encounters", frostEncounters.grass);
+            displayEncounterSection(container, "Fishing", frostEncounters.fishing);
+            displayEncounterSection(container, "Rock Smash", frostEncounters.rockSmash);
+            displayEncounterSection(container, "Surfing", frostEncounters.surfing);
+            displayEncounterSection(container, "Horde Encounters", frostEncounters.hordes);
+        } else if (locationName === "Victory Road") {
+            // First 2 (322, 324) → "Room 1 & 2", Next 3 (326, 327, 328) → "Room 3 & 4"
+            let room1Index = null;
+            let room3Index = null;
+            
+            indices.forEach((locationIndex) => {
+                const location = encounterData[locationIndex];
+                if (!location) return;
+                const locId = location.LocationID;
+                if ((locId === 322 || locId === 324) && room1Index === null) {
+                    room1Index = locationIndex;
+                } else if ((locId === 326 || locId === 327 || locId === 328) && room3Index === null) {
+                    room3Index = locationIndex;
+                }
+            });
+            
+            if (room1Index !== null) {
+                const room1Encounters = aggregateEncountersForIndices([room1Index]);
+                const roomHeader = document.createElement("h3");
+                roomHeader.textContent = "Victory Road - Room 1 & 2";
+                roomHeader.style.marginTop = "30px";
+                roomHeader.style.marginBottom = "20px";
+                roomHeader.style.fontSize = "1.5rem";
+                roomHeader.style.fontWeight = "700";
+                roomHeader.style.color = "#333";
+                container.appendChild(roomHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", room1Encounters.grass);
+                displayEncounterSection(container, "Fishing", room1Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", room1Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", room1Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", room1Encounters.hordes);
+            }
+            
+            if (room3Index !== null) {
+                const room3Encounters = aggregateEncountersForIndices([room3Index]);
+                const roomHeader = document.createElement("h3");
+                roomHeader.textContent = "Victory Road - Room 3 & 4";
+                roomHeader.style.marginTop = "30px";
+                roomHeader.style.marginBottom = "20px";
+                roomHeader.style.fontSize = "1.5rem";
+                roomHeader.style.fontWeight = "700";
+                roomHeader.style.color = "#333";
+                container.appendChild(roomHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", room3Encounters.grass);
+                displayEncounterSection(container, "Fishing", room3Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", room3Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", room3Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", room3Encounters.hordes);
+            }
+        } else if (locationName === "Terminus Cave") {
+            // First 3 (343, 344, 345) → "Floor 1-2, B Floor 1", Last 2 (347, 348) → "B Floor 2-3"
+            let floor1Index = null;
+            let floor2Index = null;
+            
+            indices.forEach((locationIndex) => {
+                const location = encounterData[locationIndex];
+                if (!location) return;
                 const locId = location.LocationID;
                 if ((locId === 343 || locId === 344 || locId === 345) && floor1Index === null) {
                     floor1Index = locationIndex;
@@ -438,7 +552,6 @@
                 }
             });
             
-            // Display Floor 1-2, B Floor 1 encounters
             if (floor1Index !== null) {
                 const floor1Encounters = aggregateEncountersForIndices([floor1Index]);
                 const floorHeader = document.createElement("h3");
@@ -457,7 +570,6 @@
                 displayEncounterSection(container, "Horde Encounters", floor1Encounters.hordes);
             }
             
-            // Display B Floor 2-3 encounters
             if (floor2Index !== null) {
                 const floor2Encounters = aggregateEncountersForIndices([floor2Index]);
                 const floorHeader = document.createElement("h3");
@@ -553,7 +665,12 @@
 
     function getItemIconPath(itemName) {
         // Strip any trailing dash and number (e.g., "Oran Berry-2" becomes "Oran Berry")
-        const cleanedName = itemName.replace(/-\d+$/, '');
+        let cleanedName = itemName.replace(/-\d+$/, '');
+        
+        // Special handling for TMs - if item starts with "TM", just use "tm" for the icon
+        if (cleanedName.toUpperCase().startsWith('TM')) {
+            return 'image/item/tm.png';
+        }
         
         // Convert item name to filename format (lowercase, replace spaces with hyphens)
         const filename = cleanedName.toLowerCase()
