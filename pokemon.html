@@ -53,14 +53,37 @@
   .type-fairy { background: #ec8fe6; }
 
   /* Evolution Styles */
-  #evolution-chain { display:flex; align-items:flex-start; justify-content:center; gap:20px; flex-wrap:nowrap; margin-top:10px; }
-  .evo-stage { display:flex; flex-direction:column; align-items:center; gap:15px; }
+  #evolution-chain { display:flex; align-items:center; justify-content:center; gap:30px; flex-wrap:wrap; margin-top:20px; min-height:200px; }
+  .evo-stage { display:flex; align-items:center; gap:30px; }
   .evo-block { text-align:center; }
   .evo-img { width:120px; height:120px; image-rendering:pixelated; display:block; margin:0 auto 5px; }
   .evo-name { font-weight:bold; font-size:18px; }
-  .evo-arrow-block { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-  .method-text { font-size:14px; font-weight:600; text-decoration:underline; margin-bottom:5px; }
-  .arrow { font-size:30px; font-weight:bold; }
+  .evo-arrow-block { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:80px; }
+  .method-text { font-size:13px; font-weight:600; text-decoration:underline; margin-bottom:8px; }
+  .arrow { font-size:48px; font-weight:900; color:#4285F4; }
+  
+  /* Branching evolution styles */
+  .branch-container { display:flex; flex-direction:column; align-items:center; gap:30px; position:relative; }
+  .branch-row { display:flex; align-items:center; gap:30px; }
+  .pre-evo-centered { display:flex; align-items:center; gap:30px; }
+  
+  /* Diagonal arrow styling for branches */
+  .diagonal-arrow { position:relative; display:flex; align-items:center; justify-content:center; width:100px; height:60px; }
+  .diagonal-arrow .arrow { font-size:48px; font-weight:900; color:#4285F4; transform:rotate(-45deg); }
+  .diagonal-arrow.down .arrow { transform:rotate(45deg); }
+  .diagonal-arrow .method-text { position:absolute; top:-20px; left:50%; transform:translateX(-50%); white-space:nowrap; }
+  
+  /* Eevee circular layout */
+  .eevee-circle { position:relative; width:600px; height:600px; margin:20px auto; }
+  .eevee-center { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:10; }
+  .eevee-evo { position:absolute; }
+  .eevee-evo .evo-block { position:relative; }
+  .eevee-evo .method-text { position:absolute; top:-25px; left:50%; transform:translateX(-50%); white-space:nowrap; font-size:12px; }
+  .eevee-arrow { position:absolute; font-size:36px; font-weight:900; color:#4285F4; }
+
+  /* Horizontal centering for multi-branch */
+  .multi-branch-container { display:flex; flex-direction:row; align-items:flex-start; gap:50px; }
+  .branch-group { display:flex; flex-direction:column; align-items:center; gap:25px; }
 
   /* Moves Table */
   .moves-section {
@@ -216,12 +239,20 @@ Promise.all([
   const bst = mon.BST ?? (mon.BaseStats.HP+mon.BaseStats.Atk+mon.BaseStats.Def+mon.BaseStats.SpA+mon.BaseStats.SpD+mon.BaseStats.Spe);
 
   // Extract unique locations where this Pokemon can be found
-  // Use Location field from encounters.json
+  // Parse the hierarchical encounters.json structure
   const locationSet = new Set();
-  encountersData.forEach(encounter => {
-    if (encounter.Pokemon === monName) {
-      locationSet.add(encounter.Location);
-    }
+  encountersData.forEach(locationData => {
+    const locationName = locationData.LocationName;
+    const encounterTypes = locationData.Encounters || [];
+    
+    encounterTypes.forEach(encounterType => {
+      const slots = encounterType.Slots || [];
+      slots.forEach(slot => {
+        if (slot.Species === monName) {
+          locationSet.add(locationName);
+        }
+      });
+    });
   });
   const locations = Array.from(locationSet).sort();
 
@@ -445,7 +476,7 @@ Promise.all([
   loadEvolutions(monName, evolutionsData);
 });
 
-// evolution renderer with proper branching support
+// evolution renderer with diagonal branching and Eevee circular layout
 function loadEvolutions(currentName, data) {
     const evoContainer = document.getElementById("evolution-chain");
     if (!data[currentName]) { evoContainer.innerHTML = "<p>No evolution data available.</p>"; return; }
@@ -471,7 +502,15 @@ function loadEvolutions(currentName, data) {
         `;
     };
 
-    const renderArrow = (method) => {
+    const renderArrow = (method, diagonal = false, direction = "") => {
+        if (diagonal) {
+            return `
+              <div class="diagonal-arrow ${direction}">
+                <div class="method-text">${method}</div>
+                <div class="arrow">→</div>
+              </div>
+            `;
+        }
         return `
           <div class="evo-arrow-block">
             <div class="method-text">${method}</div>
@@ -480,9 +519,52 @@ function loadEvolutions(currentName, data) {
         `;
     };
 
+    // Special Eevee circular layout
+    const renderEeveeCircle = async (name) => {
+        const evolvesInto = data[name].EvolvesInto || {};
+        const keys = Object.keys(evolvesInto);
+        
+        if (keys.length < 6) return null; // Not Eevee's special case
+        
+        const centerEvo = await renderEvo(name);
+        const angleStep = (2 * Math.PI) / keys.length;
+        const radius = 220;
+        
+        let html = `<div class="eevee-circle">`;
+        html += `<div class="eevee-center">${centerEvo}</div>`;
+        
+        for (let i = 0; i < keys.length; i++) {
+            const evoName = keys[i];
+            const method = evolvesInto[evoName];
+            const angle = i * angleStep - Math.PI / 2; // Start at top
+            const x = 300 + radius * Math.cos(angle) - 60; // Center and offset for block width
+            const y = 300 + radius * Math.sin(angle) - 60; // Center and offset for block height
+            
+            const evoBlock = await renderEvo(evoName);
+            html += `<div class="eevee-evo" style="left:${x}px; top:${y}px;">`;
+            html += `<div class="method-text">${method}</div>`;
+            html += evoBlock;
+            html += `</div>`;
+            
+            // Add arrow from center to evolution
+            const arrowX = 300 + (radius * 0.5) * Math.cos(angle) - 18;
+            const arrowY = 300 + (radius * 0.5) * Math.sin(angle) - 24;
+            const rotation = (angle * 180 / Math.PI) + 90;
+            html += `<div class="eevee-arrow" style="left:${arrowX}px; top:${arrowY}px; transform:rotate(${rotation}deg);">→</div>`;
+        }
+        
+        html += `</div>`;
+        return html;
+    };
+
     const buildChain = async (name) => {
         const evolvesInto = data[name].EvolvesInto || {};
         const keys = Object.keys(evolvesInto);
+        
+        // Check for Eevee special case
+        if (name.toLowerCase() === 'eevee' && keys.length >= 6) {
+            return await renderEeveeCircle(name);
+        }
         
         let html = await renderEvo(name);
         
@@ -496,23 +578,65 @@ function loadEvolutions(currentName, data) {
             html += renderArrow(method);
             html += await buildChain(nextName);
             return html;
+        } else if(keys.length === 2) {
+            // Two-way branch - use diagonal arrows with centered pre-evo
+            const branch1Name = keys[0];
+            const branch2Name = keys[1];
+            const method1 = evolvesInto[branch1Name];
+            const method2 = evolvesInto[branch2Name];
+            
+            const branch1Evo = await renderEvo(branch1Name);
+            const branch2Evo = await renderEvo(branch2Name);
+            const branch1Rest = await buildChain(branch1Name);
+            const branch2Rest = await buildChain(branch2Name);
+            
+            html = `
+              <div class="branch-container">
+                <div class="branch-row">
+                  ${renderArrow(method1, true, "up")}
+                  ${branch1Evo}
+                  ${branch1Rest !== branch1Evo ? branch1Rest.replace(branch1Evo, '') : ''}
+                </div>
+                <div class="pre-evo-centered">
+                  ${html}
+                </div>
+                <div class="branch-row">
+                  ${renderArrow(method2, true, "down")}
+                  ${branch2Evo}
+                  ${branch2Rest !== branch2Evo ? branch2Rest.replace(branch2Evo, '') : ''}
+                </div>
+              </div>
+            `;
+            return html;
         } else {
-            // Branching evolution - create vertical stack of branches
+            // Multi-way branch (3+) - vertical stack
             const branches = await Promise.all(keys.map(async (nextName) => {
                 const method = evolvesInto[nextName];
-                const arrow = renderArrow(method);
+                const evoBlock = await renderEvo(nextName);
                 const restOfChain = await buildChain(nextName);
-                return arrow + restOfChain;
+                return `
+                  <div class="branch-group">
+                    ${renderArrow(method, true)}
+                    ${evoBlock}
+                    ${restOfChain !== evoBlock ? restOfChain.replace(evoBlock, '') : ''}
+                  </div>
+                `;
             }));
             
-            // Wrap branches in a column container
-            html += `<div class="evo-stage">${branches.join('')}</div>`;
+            html = `
+              <div class="multi-branch-container">
+                ${html}
+                <div class="branch-container">
+                  ${branches.join('')}
+                </div>
+              </div>
+            `;
             return html;
         }
     };
 
     buildChain(pointer).then(chainHtml => {
-        evoContainer.innerHTML = chainHtml;
+        evoContainer.innerHTML = chainHtml || "<p>No evolution data available.</p>";
     });
 }
 </script>
