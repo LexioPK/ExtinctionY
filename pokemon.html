@@ -71,7 +71,6 @@
   .diagonal-arrow { position:relative; display:flex; align-items:center; justify-content:center; width:100px; height:60px; }
   .diagonal-arrow .arrow { font-size:48px; font-weight:900; color:#4285F4; transform:rotate(-45deg); }
   .diagonal-arrow.down .arrow { transform:rotate(45deg); }
-  .diagonal-arrow .method-text { position:absolute; top:-20px; left:50%; transform:translateX(-50%); white-space:nowrap; }
   
   /* Eevee circular layout */
   .eevee-circle { position:relative; width:800px; height:800px; margin:20px auto; }
@@ -597,13 +596,23 @@ function loadEvolutions(currentName, data) {
                 </div>
                 <div class="branch-column">
                   <div style="display:flex; align-items:center; gap:15px;">
-                    ${renderArrow(method1, true, "up")}
-                    ${branch1Evo}
+                    <div class="diagonal-arrow up">
+                      <div class="arrow">→</div>
+                    </div>
+                    <div style="position:relative;">
+                      <div style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; text-decoration:underline; white-space:nowrap;">${method1}</div>
+                      ${branch1Evo}
+                    </div>
                     ${branch1Rest !== branch1Evo ? branch1Rest.replace(branch1Evo, '') : ''}
                   </div>
                   <div style="display:flex; align-items:center; gap:15px;">
-                    ${renderArrow(method2, true, "down")}
-                    ${branch2Evo}
+                    <div class="diagonal-arrow down">
+                      <div class="arrow">→</div>
+                    </div>
+                    <div style="position:relative;">
+                      <div style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; text-decoration:underline; white-space:nowrap;">${method2}</div>
+                      ${branch2Evo}
+                    </div>
                     ${branch2Rest !== branch2Evo ? branch2Rest.replace(branch2Evo, '') : ''}
                   </div>
                 </div>
