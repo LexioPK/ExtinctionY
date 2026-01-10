@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -419,7 +418,85 @@
         // Add navigation at the top
         container.appendChild(createNavigationButtons(true));
         
-        // Aggregate all encounters from all LocationIDs for this location name
+        // Check if this is Terminus Cave - handle specially with floor designations
+        if (locationName === "Terminus Cave") {
+            // Group by LocationID ranges
+            // The first 3 Terminus Caves (343, 344, 345) are identical, so only use the first one
+            // The last 2 Terminus Caves (347, 348) are identical, so only use the first one
+            let floor1Index = null; // LocationIDs 343, 344, 345 (only use first)
+            let floor2Index = null; // LocationIDs 347, 348 (only use first)
+            
+            indices.forEach((locationIndex) => {
+                const location = encounterData[locationIndex];
+                if (!location) return;
+                
+                const locId = location.LocationID;
+                if ((locId === 343 || locId === 344 || locId === 345) && floor1Index === null) {
+                    floor1Index = locationIndex;
+                } else if ((locId === 347 || locId === 348) && floor2Index === null) {
+                    floor2Index = locationIndex;
+                }
+            });
+            
+            // Display Floor 1-2, B Floor 1 encounters
+            if (floor1Index !== null) {
+                const floor1Encounters = aggregateEncountersForIndices([floor1Index]);
+                const floorHeader = document.createElement("h3");
+                floorHeader.textContent = "Terminus Cave - Floor 1-2, B Floor 1";
+                floorHeader.style.marginTop = "30px";
+                floorHeader.style.marginBottom = "20px";
+                floorHeader.style.fontSize = "1.5rem";
+                floorHeader.style.fontWeight = "700";
+                floorHeader.style.color = "#333";
+                container.appendChild(floorHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", floor1Encounters.grass);
+                displayEncounterSection(container, "Fishing", floor1Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", floor1Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", floor1Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", floor1Encounters.hordes);
+            }
+            
+            // Display B Floor 2-3 encounters
+            if (floor2Index !== null) {
+                const floor2Encounters = aggregateEncountersForIndices([floor2Index]);
+                const floorHeader = document.createElement("h3");
+                floorHeader.textContent = "Terminus Cave - B Floor 2-3";
+                floorHeader.style.marginTop = "30px";
+                floorHeader.style.marginBottom = "20px";
+                floorHeader.style.fontSize = "1.5rem";
+                floorHeader.style.fontWeight = "700";
+                floorHeader.style.color = "#333";
+                container.appendChild(floorHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", floor2Encounters.grass);
+                displayEncounterSection(container, "Fishing", floor2Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", floor2Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", floor2Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", floor2Encounters.hordes);
+            }
+        } else {
+            // Normal aggregation for other locations
+            const aggregatedEncounters = aggregateEncountersForIndices(indices);
+            
+            // Display each encounter type section
+            displayEncounterSection(container, "Grass / Terrain Encounters", aggregatedEncounters.grass);
+            displayEncounterSection(container, "Fishing", aggregatedEncounters.fishing);
+            displayEncounterSection(container, "Rock Smash", aggregatedEncounters.rockSmash);
+            displayEncounterSection(container, "Surfing", aggregatedEncounters.surfing);
+            displayEncounterSection(container, "Horde Encounters", aggregatedEncounters.hordes);
+        }
+        
+        // Display Items section
+        displayItemsSection(container, locationName);
+        
+        // Add navigation buttons at the bottom (without title)
+        const footerContainer = createNavigationButtons(false);
+        footerContainer.style.marginTop = "30px";
+        container.appendChild(footerContainer);
+    }
+
+    function aggregateEncountersForIndices(indices) {
         const aggregatedEncounters = {
             grass: [],
             fishing: [],
@@ -428,7 +505,7 @@
             hordes: []
         };
         
-        // Collect all encounters across all indices
+        // Collect all encounters across the provided indices
         indices.forEach((locationIndex) => {
             const location = encounterData[locationIndex];
             if (!location || !location.Encounters || !Array.isArray(location.Encounters)) return;
@@ -451,20 +528,7 @@
             });
         });
         
-        // Display each encounter type section
-        displayEncounterSection(container, "Grass / Terrain Encounters", aggregatedEncounters.grass);
-        displayEncounterSection(container, "Fishing", aggregatedEncounters.fishing);
-        displayEncounterSection(container, "Rock Smash", aggregatedEncounters.rockSmash);
-        displayEncounterSection(container, "Surfing", aggregatedEncounters.surfing);
-        displayEncounterSection(container, "Horde Encounters", aggregatedEncounters.hordes);
-        
-        // Display Items section
-        displayItemsSection(container, locationName);
-        
-        // Add navigation buttons at the bottom (without title)
-        const footerContainer = createNavigationButtons(false);
-        footerContainer.style.marginTop = "30px";
-        container.appendChild(footerContainer);
+        return aggregatedEncounters;
     }
 
     function normalizeForCompare(s) {
@@ -488,8 +552,11 @@
     }
 
     function getItemIconPath(itemName) {
+        // Strip any trailing dash and number (e.g., "Oran Berry-2" becomes "Oran Berry")
+        const cleanedName = itemName.replace(/-\d+$/, '');
+        
         // Convert item name to filename format (lowercase, replace spaces with hyphens)
-        const filename = itemName.toLowerCase()
+        const filename = cleanedName.toLowerCase()
             .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
             .replace(/\s+/g, '-') // Replace spaces with hyphens
             .replace(/-+/g, '-'); // Replace multiple hyphens with single
