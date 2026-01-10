@@ -32,7 +32,7 @@
   {
     "Item": "Dive Ball",
     "Area": "Ambrette Town",
-    "Location/Price": "Exchange a Pok\u00e9 Ball with the Punk Guy next to the Fossil Lab (daily)"
+    "Location/Price": "Exchange a Poké Ball with the Punk Guy next to the Fossil Lab (daily)"
   },
   {
     "Item": "TM94: Rock Smash",
@@ -92,27 +92,27 @@
   {
     "Item": "TM32: Double Team",
     "Area": "Anistar City",
-    "Location/Price": "From a Hex Maniac in the Pok\u00e9mon Center (4:00 AM-10:59 AM)"
+    "Location/Price": "From a Hex Maniac in the Pokémon Center (4:00 AM-10:59 AM)"
   },
   {
     "Item": "TM35: Flamethrower",
     "Area": "Anistar City",
-    "Location/Price": "From a Hex Maniac in the Pok\u00e9mon Center (11:00 AM-5:59 PM)"
+    "Location/Price": "From a Hex Maniac in the Pokémon Center (11:00 AM-5:59 PM)"
   },
   {
     "Item": "TM77: Zen Headbutt",
     "Area": "Anistar City",
-    "Location/Price": "From a Hex Maniac in the Pok\u00e9mon Center (6:00 PM-7:59 PM)"
+    "Location/Price": "From a Hex Maniac in the Pokémon Center (6:00 PM-7:59 PM)"
   },
   {
     "Item": "TM90: Substitute",
     "Area": "Anistar City",
-    "Location/Price": "From a Hex Maniac in the Pok\u00e9mon Center (8:00 PM-3:59 AM)"
+    "Location/Price": "From a Hex Maniac in the Pokémon Center (8:00 PM-3:59 AM)"
   },
   {
     "Item": "Comet Shard",
     "Area": "Anistar City",
-    "Location/Price": "In the house south of the Gym, after giving the man a Pok\u00e9mon and then entering the Hall of Fame"
+    "Location/Price": "In the house south of the Gym, after giving the man a Pokémon and then entering the Hall of Fame"
   },
   {
     "Item": "TM14: Blizzard",
@@ -150,7 +150,7 @@
     "Location/Price": "East Shop"
   },
   {
-    "Item": "Pok\u00e9 Ball",
+    "Item": "Poké Ball",
     "Area": "Aquacorde Town",
     "Location/Price": "West Shop"
   },
@@ -247,27 +247,27 @@
   {
     "Item": "Aspear Berry",
     "Area": "Camphrier Town",
-    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pokémon of a specific type (daily)"
   },
   {
     "Item": "Cheri Berry",
     "Area": "Camphrier Town",
-    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pokémon of a specific type (daily)"
   },
   {
     "Item": "Chesto Berry",
     "Area": "Camphrier Town",
-    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pokémon of a specific type (daily)"
   },
   {
     "Item": "Pecha Berry",
     "Area": "Camphrier Town",
-    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pokémon of a specific type (daily)"
   },
   {
     "Item": "Rawst Berry",
     "Area": "Camphrier Town",
-    "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
+    "Location/Price": "From a man in the northwestern-most house that asks to see a Pokémon of a specific type (daily)"
   },
   {
     "Item": "Berry Juice",
@@ -297,7 +297,7 @@
   {
     "Item": "Ultra Ball",
     "Area": "Camphrier Town",
-    "Location/Price": "From the man pacing around outside of the Pok\u00e9mon Center"
+    "Location/Price": "From the man pacing around outside of the Pokémon Center"
   },
   {
     "Item": "TM46: Thief",
@@ -412,7 +412,7 @@
   {
     "Item": "Air Balloon",
     "Area": "Coumarine City (Cliffside Section)",
-    "Location/Price": "Between the house and the sign west of the Pok\u00e9mon Center (hidden)"
+    "Location/Price": "Between the house and the sign west of the Pokémon Center (hidden)"
   },
   {
     "Item": "Black Sludge",
@@ -422,7 +422,7 @@
   {
     "Item": "Grass Gem",
     "Area": "Coumarine City (Cliffside Section)",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Maurice"
+    "Location/Price": "Reward for beating Pokémon Ranger Maurice"
   },
   {
     "Item": "Metronome",
@@ -430,19 +430,19 @@
     "Location/Price": "From a man in the Hillcrest Station"
   },
   {
-    "Item": "Pok\u00e9 Toy",
+    "Item": "Poké Toy",
     "Area": "Coumarine City (Cliffside Section)",
-    "Location/Price": "From the Waitress in the eastern house south of the Pok\u00e9mon Center, after answering her quiz correctly"
+    "Location/Price": "From the Waitress in the eastern house south of the Pokémon Center, after answering her quiz correctly"
   },
   {
     "Item": "Sky Plate",
     "Area": "Coumarine City (Cliffside Section)",
-    "Location/Price": "On the edge of the cliff north of the Pok\u00e9mon Center"
+    "Location/Price": "On the edge of the cliff north of the Pokémon Center"
   },
   {
     "Item": "Heart Scale",
     "Area": "Coumarine City (Cliffside Section)",
-    "Location/Price": "From Tierno on the cliff north of the Pok\u00e9mon Center, after showing him a Pok\u00e9mon with the dance move he requests (post-game) (daily)"
+    "Location/Price": "From Tierno on the cliff north of the Pokémon Center, after showing him a Pokémon with the dance move he requests (post-game) (daily)"
   },
   {
     "Item": "TM86: Grass Knot",
@@ -482,7 +482,7 @@
   {
     "Item": "Lucky Egg",
     "Area": "Coumarine City (Seaside Section)",
-    "Location/Price": "From the Lady on the left side of the hotel lobby upon showing her a Pok\u00e9mon with maximum friendship"
+    "Location/Price": "From the Lady on the left side of the hotel lobby upon showing her a Pokémon with maximum friendship"
   },
   {
     "Item": "Silk Scarf",
@@ -582,12 +582,12 @@
   {
     "Item": "PP Max-4",
     "Area": "Couriway Town",
-    "Location/Price": "In the corner of the first landing of the stairs east of the Pok\u00e9mon Center (hidden)"
+    "Location/Price": "In the corner of the first landing of the stairs east of the Pokémon Center (hidden)"
   },
   {
     "Item": "Revive",
     "Area": "Couriway Town",
-    "Location/Price": "From the Schoolgirl in the house south of the Pok\u00e9mon Center if the player has a Pok\u00e9mon with Nuzzle in their party"
+    "Location/Price": "From the Schoolgirl in the house south of the Pokémon Center if the player has a Pokémon with Nuzzle in their party"
   },
   {
     "Item": "Lure Ball-10",
@@ -597,7 +597,7 @@
   {
     "Item": "Quick Ball-10",
     "Area": "Couriway Town",
-    "Location/Price": "In front of the southern bench on the pier southeast of the Pok\u00e9mon Center (hidden)"
+    "Location/Price": "In front of the southern bench on the pier southeast of the Pokémon Center (hidden)"
   },
   {
     "Item": "TM55: Scald",
@@ -607,12 +607,12 @@
   {
     "Item": "TM89: U-turn",
     "Area": "Couriway Town",
-    "Location/Price": "From the Madame at the train station, east of the Pok\u00e9mon Center"
+    "Location/Price": "From the Madame at the train station, east of the Pokémon Center"
   },
   {
     "Item": "Pearl String",
     "Area": "Couriway Town",
-    "Location/Price": "In the bush just south of the Pok\u00e9mon Center (hidden)"
+    "Location/Price": "In the bush just south of the Pokémon Center (hidden)"
   },
   {
     "Item": "Weakness Policy",
@@ -632,7 +632,7 @@
   {
     "Item": "Persim Berry-3",
     "Area": "Cyllage City",
-    "Location/Price": "A prize for correctly answering the quiz from the Rising Star girl in the house behind the Pok\u00e9mon Center"
+    "Location/Price": "A prize for correctly answering the quiz from the Rising Star girl in the house behind the Pokémon Center"
   },
   {
     "Item": "Salac Berry",
@@ -662,7 +662,7 @@
   {
     "Item": "Bike",
     "Area": "Cyllage City",
-    "Location/Price": "From the owner of the bike shop east of the Pok\u00e9mon Center; choice of green or yellow"
+    "Location/Price": "From the owner of the bike shop east of the Pokémon Center; choice of green or yellow"
   },
   {
     "Item": "PP Max",
@@ -672,7 +672,7 @@
   {
     "Item": "Soda Pop",
     "Area": "Cyllage City",
-    "Location/Price": "Sold by the girl roaming northeast of the Pok\u00e9mon Center for $300"
+    "Location/Price": "Sold by the girl roaming northeast of the Pokémon Center for $300"
   },
   {
     "Item": "HM04: Strength",
@@ -732,7 +732,7 @@
   {
     "Item": "Sitrus Berry",
     "Area": "Dendemille Town",
-    "Location/Price": "From the Artist girl in the Pok\u00e9mon Center"
+    "Location/Price": "From the Artist girl in the Pokémon Center"
   },
   {
     "Item": "Sitrus Berry-50",
@@ -742,12 +742,12 @@
   {
     "Item": "Shell Bell",
     "Area": "Dendemille Town",
-    "Location/Price": "From the man in the house northeast of the windmill, after seeing 70 or more Pok\u00e9mon in the Mountain Kalos Pok\u00e9dex"
+    "Location/Price": "From the man in the house northeast of the windmill, after seeing 70 or more Pokémon in the Mountain Kalos Pokédex"
   },
   {
     "Item": "Heal Ball-10",
     "Area": "Dendemille Town",
-    "Location/Price": "In the bush in the corner just southwest of the Pok\u00e9mon Center's entrance (hidden)"
+    "Location/Price": "In the bush in the corner just southwest of the Pokémon Center's entrance (hidden)"
   },
   {
     "Item": "TM42: Facade",
@@ -862,7 +862,7 @@
   {
     "Item": "TM90: Substitute",
     "Area": "Frost Cavern (Inside)",
-    "Location/Price": "South of the Ace Trainer girl who heals the player's Pok\u00e9mon, in the west area accessed via 2F's main exit"
+    "Location/Price": "South of the Ace Trainer girl who heals the player's Pokémon, in the west area accessed via 2F's main exit"
   },
   {
     "Item": "Comet Shard",
@@ -907,12 +907,12 @@
   {
     "Item": "Everstone",
     "Area": "Geosenge Town",
-    "Location/Price": "From the Scientist in the house northwest of the Pok\u00e9mon Center"
+    "Location/Price": "From the Scientist in the house northwest of the Pokémon Center"
   },
   {
     "Item": "TM66: Payback",
     "Area": "Geosenge Town",
-    "Location/Price": "From the Monsieur inside the Pok\u00e9mon Center, just outside the changing room"
+    "Location/Price": "From the Monsieur inside the Pokémon Center, just outside the changing room"
   },
   {
     "Item": "TM43: Flame Charge",
@@ -987,7 +987,7 @@
   {
     "Item": "Revive",
     "Area": "Kiloude City",
-    "Location/Price": "From the Hex Maniac in the house by the TMV station for showing her a Pok\u00e9mon that knows Petal Blizzard"
+    "Location/Price": "From the Hex Maniac in the house by the TMV station for showing her a Pokémon that knows Petal Blizzard"
   },
   {
     "Item": "Master Ball-10",
@@ -1015,14 +1015,14 @@
     "Location/Price": "Behind the clothing shop, via the narrow path between it and its neighbor"
   },
   {
-    "Item": "Pok\u00e9 Doll",
+    "Item": "Poké Doll",
     "Area": "Laverre City",
-    "Location/Price": "From the man near the Route 15 gate after showing him a Pok\u00e9mon with a height of less than 1' (daily)"
+    "Location/Price": "From the man near the Route 15 gate after showing him a Pokémon with a height of less than 1' (daily)"
   },
   {
-    "Item": "Pok\u00e9 Doll",
+    "Item": "Poké Doll",
     "Area": "Laverre City",
-    "Location/Price": "From the Lass outside the caf\u00e9 after showing her a Pok\u00e9mon with height of at least 9'10\" (daily)"
+    "Location/Price": "From the Lass outside the café after showing her a Pokémon with height of at least 9'10\" (daily)"
   },
   {
     "Item": "Gengarite",
@@ -1032,7 +1032,7 @@
   {
     "Item": "Friend Ball-10",
     "Area": "Laverre City",
-    "Location/Price": "Among the mushrooms growing next to the caf\u00e9 in the northeast (hidden)"
+    "Location/Price": "Among the mushrooms growing next to the café in the northeast (hidden)"
   },
   {
     "Item": "TM41: Ice Punch",
@@ -1082,7 +1082,7 @@
   {
     "Item": "TM08: Bulk Up",
     "Area": "Laverre City (Right Most House) /Snowbelle City",
-    "Location/Price": "Reward for beating Hoenn Leader Brawly/From the Battle Girl in the leftmost of the two houses north of the Pok\u00e9mon Center"
+    "Location/Price": "Reward for beating Hoenn Leader Brawly/From the Battle Girl in the leftmost of the two houses north of the Pokémon Center"
   },
   {
     "Item": "Electric Gem",
@@ -1201,47 +1201,47 @@
   },
   {
     "Item": "Dive Ball",
-    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Area": "Lumiose City (Poké Ball Boutique)",
     "Location/Price": "$1,000.00"
   },
   {
     "Item": "Dusk Ball",
-    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Area": "Lumiose City (Poké Ball Boutique)",
     "Location/Price": "$1,000.00"
   },
   {
     "Item": "Heal Ball",
-    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Area": "Lumiose City (Poké Ball Boutique)",
     "Location/Price": "$1,000.00"
   },
   {
     "Item": "Luxury Ball",
-    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Area": "Lumiose City (Poké Ball Boutique)",
     "Location/Price": "$1,000.00"
   },
   {
     "Item": "Nest Ball",
-    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Area": "Lumiose City (Poké Ball Boutique)",
     "Location/Price": "$1,000.00"
   },
   {
     "Item": "Net Ball",
-    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Area": "Lumiose City (Poké Ball Boutique)",
     "Location/Price": "$1,000.00"
   },
   {
     "Item": "Quick Ball",
-    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Area": "Lumiose City (Poké Ball Boutique)",
     "Location/Price": "$500.00"
   },
   {
     "Item": "Repeat Ball",
-    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Area": "Lumiose City (Poké Ball Boutique)",
     "Location/Price": "$500.00"
   },
   {
     "Item": "Timer Ball",
-    "Area": "Lumiose City (Pok\u00e9 Ball Boutique)",
+    "Area": "Lumiose City (Poké Ball Boutique)",
     "Location/Price": "$1,000.00"
   },
   {
@@ -1257,7 +1257,7 @@
   {
     "Item": "Revive",
     "Area": "Lumiose City (Post Power Plant)",
-    "Location/Price": "From a female Scientist if the player has a Pok\u00e9mon that knows Eerie Impulse (Trevor's House)"
+    "Location/Price": "From a female Scientist if the player has a Pokémon that knows Eerie Impulse (Trevor's House)"
   },
   {
     "Item": "TM24: Thunderbolt",
@@ -1277,7 +1277,7 @@
   {
     "Item": "Star Piece",
     "Area": "Lumiose City (Post Power Plant)",
-    "Location/Price": "1F, from a female Scientist if the player has a Pok\u00e9mon with Aroma Veil, Flower Veil, or Sweet Veil"
+    "Location/Price": "1F, from a female Scientist if the player has a Pokémon with Aroma Veil, Flower Veil, or Sweet Veil"
   },
   {
     "Item": "Lens Case",
@@ -1287,17 +1287,17 @@
   {
     "Item": "Quick Claw",
     "Area": "Lumiose City (Pre-Power Plant)",
-    "Location/Price": "From a female Rising Star on the 1F of the building across the street from Shutterbug Caf\u00e9"
+    "Location/Price": "From a female Rising Star on the 1F of the building across the street from Shutterbug Café"
   },
   {
     "Item": "Quick Ball-3",
     "Area": "Lumiose City (Pre-Power Plant)",
-    "Location/Price": "From a man on 2F of the building across the street from Shutterbug Caf\u00e9"
+    "Location/Price": "From a man on 2F of the building across the street from Shutterbug Café"
   },
   {
     "Item": "Timer Ball-3",
     "Area": "Lumiose City (Pre-Power Plant)",
-    "Location/Price": "From a man on 2F of the building across the street from Shutterbug Caf\u00e9"
+    "Location/Price": "From a man on 2F of the building across the street from Shutterbug Café"
   },
   {
     "Item": "Red Orb",
@@ -1306,17 +1306,17 @@
   },
   {
     "Item": "Scope Lens",
-    "Area": "Lumiose City (Shutterbug Caf\u00e9)",
+    "Area": "Lumiose City (Shutterbug Café)",
     "Location/Price": "From a Backpacker after taking 15 or more photos at any Photo Spot"
   },
   {
     "Item": "Wide Lens",
-    "Area": "Lumiose City (Shutterbug Caf\u00e9)",
+    "Area": "Lumiose City (Shutterbug Café)",
     "Location/Price": "From a Backpacker after taking at least one photo at a Photo Spot"
   },
   {
     "Item": "Zoom Lens",
-    "Area": "Lumiose City (Shutterbug Caf\u00e9)",
+    "Area": "Lumiose City (Shutterbug Café)",
     "Location/Price": "From a Backpacker after taking 30 or more photos at any Photo Spot"
   },
   {
@@ -1362,17 +1362,17 @@
   {
     "Item": "PP Max",
     "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "2F, from the Pok\u00e9 Radar Scientist, for a chain length of 21-30 Pok\u00e9mon with the Pok\u00e9 Radar"
+    "Location/Price": "2F, from the Poké Radar Scientist, for a chain length of 21-30 Pokémon with the Poké Radar"
   },
   {
     "Item": "PP Up",
     "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "2F, from the Pok\u00e9 Radar Scientist, for a chain length of 11-20 Pok\u00e9mon with the Pok\u00e9 Radar"
+    "Location/Price": "2F, from the Poké Radar Scientist, for a chain length of 11-20 Pokémon with the Poké Radar"
   },
   {
     "Item": "Rare Candy",
     "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "2F, from the Pok\u00e9 Radar Scientist, for a chain length of at least 31 Pok\u00e9mon with the Pok\u00e9 Radar"
+    "Location/Price": "2F, from the Poké Radar Scientist, for a chain length of at least 31 Pokémon with the Poké Radar"
   },
   {
     "Item": "Charcoal",
@@ -1392,17 +1392,17 @@
   {
     "Item": "Oval Charm",
     "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "3F, from Professor Sycamore after showing him a Pok\u00e9dex with all* Kalos Pok\u00e9mon seen"
+    "Location/Price": "3F, from Professor Sycamore after showing him a Pokédex with all* Kalos Pokémon seen"
   },
   {
-    "Item": "Pok\u00e9 Radar",
+    "Item": "Poké Radar",
     "Area": "Lumiose City (Sycamore's Lab)",
     "Location/Price": "2F, from a male Scientist on the second floor after entering the Hall of Fame"
   },
   {
     "Item": "Shiny Charm",
     "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "3F, from Professor Sycamore after showing him a complete National Pok\u00e9dex"
+    "Location/Price": "3F, from Professor Sycamore after showing him a complete National Pokédex"
   },
   {
     "Item": "Blastoisinite",
@@ -1427,12 +1427,12 @@
   {
     "Item": "Ultra Ball",
     "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "2F, from the Pok\u00e9 Radar Scientist, for a chain length of 1-10 Pok\u00e9mon with the Pok\u00e9 Radar"
+    "Location/Price": "2F, from the Poké Radar Scientist, for a chain length of 1-10 Pokémon with the Poké Radar"
   },
   {
     "Item": "TM54: False Swipe",
     "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "3F, from a female Scientist after encountering at least 20 Pok\u00e9mon in the Central Kalos Pok\u00e9dex"
+    "Location/Price": "3F, from a female Scientist after encountering at least 20 Pokémon in the Central Kalos Pokédex"
   },
   {
     "Item": "Assault Vest",
@@ -1510,7 +1510,7 @@
     "Location/Price": "Entrance: northwest corner"
   },
   {
-    "Item": "Pok\u00e9 Flute",
+    "Item": "Poké Flute",
     "Area": "Parfum Palace",
     "Location/Price": "Balcony: from the Butler after catching Furfrou"
   },
@@ -1536,102 +1536,102 @@
   },
   {
     "Item": "Babiri Berry-10",
-    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Area": "Poké Ball Factory (Inside)",
     "Location/Price": "On the east side of the middle stairway, at the end of the path between it and the conveyor belt"
   },
   {
     "Item": "Steel Gem-10",
-    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Area": "Poké Ball Factory (Inside)",
     "Location/Price": "In the far northwest corner of the factory"
   },
   {
     "Item": "Master Ball",
-    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Area": "Poké Ball Factory (Inside)",
     "Location/Price": "Gift from the President after defeating Team Flare"
   },
   {
     "Item": "TM51: Iron Head",
-    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Area": "Poké Ball Factory (Inside)",
     "Location/Price": "In the northeast of the factory, by the conveyor belt (In a red Pokeball cause game doesn't like it in a yellow one)"
   },
   {
     "Item": "Big Nugget",
-    "Area": "Pok\u00e9 Ball Factory (Inside)",
+    "Area": "Poké Ball Factory (Inside)",
     "Location/Price": "Gift from the President after defeating Team Flare"
   },
   {
     "Item": "Wacan Berry-10",
-    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Area": "Poké Ball Factory (Outside)",
     "Location/Price": "In the east hedge maze"
   },
   {
     "Item": "Electric Gem-10",
-    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Area": "Poké Ball Factory (Outside)",
     "Location/Price": "In the west hedge maze, through the northmost entrance"
   },
   {
     "Item": "Dusk Ball-10",
-    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Area": "Poké Ball Factory (Outside)",
     "Location/Price": "At the far northwest corner of the factory area, on the back wall (hidden)"
   },
   {
     "Item": "Level Ball-10",
-    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Area": "Poké Ball Factory (Outside)",
     "Location/Price": "In the west hedge maze, through the middle entrance, at the end of the north branch (hidden)"
   },
   {
     "Item": "Luxury Ball-10",
-    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Area": "Poké Ball Factory (Outside)",
     "Location/Price": "In the west hedge maze, through the entrance closest to the factory gates, at the end of the path (hidden)"
   },
   {
     "Item": "Repeat Ball-10",
-    "Area": "Pok\u00e9 Ball Factory (Outside)",
+    "Area": "Poké Ball Factory (Outside)",
     "Location/Price": "In the east hedge maze, at the end of the dead end nestled in the northeastern corner (hidden)"
   },
   {
     "Item": "Chople Berry",
-    "Area": "Pok\u00e9mon Village",
+    "Area": "Pokémon Village",
     "Location/Price": "From a Furfrou, initially by the entrance or else in the southeast"
   },
   {
     "Item": "PP Max-10",
-    "Area": "Pok\u00e9mon Village",
+    "Area": "Pokémon Village",
     "Location/Price": "On the hill south of the entrance to Route 20"
   },
   {
     "Item": "Air Balloon-10",
-    "Area": "Pok\u00e9mon Village",
+    "Area": "Pokémon Village",
     "Location/Price": "At the top of the waterfall (requires Surf and Waterfall)"
   },
   {
     "Item": "Fairy Gem-10",
-    "Area": "Pok\u00e9mon Village",
+    "Area": "Pokémon Village",
     "Location/Price": "On the tire in the middle of the field of yellow flowers (hidden, reappears occasionally)"
   },
   {
     "Item": "Pixie Plate",
-    "Area": "Pok\u00e9mon Village",
+    "Area": "Pokémon Village",
     "Location/Price": "In the patch of yellow flowers on the western bank of the river (requires Surf)"
   },
   {
     "Item": "Psychic Gem-10",
-    "Area": "Pok\u00e9mon Village",
+    "Area": "Pokémon Village",
     "Location/Price": "On the mat under the empty western canopy (hidden)"
   },
   {
     "Item": "Weakness Policy-2",
-    "Area": "Pok\u00e9mon Village",
+    "Area": "Pokémon Village",
     "Location/Price": "Northwest of the empty western canopy"
   },
   {
     "Item": "Honey-10",
-    "Area": "Pok\u00e9mon Village",
+    "Area": "Pokémon Village",
     "Location/Price": "Among the yellow flowers on the western bank of the river (requires Surf) (hidden, reappears occasionally)"
   },
   {
     "Item": "Pretty Wing",
-    "Area": "Pok\u00e9mon Village",
+    "Area": "Pokémon Village",
     "Location/Price": "From a Fletchling, initially by the entrance or else in the southwest, by the river"
   },
   {
@@ -1832,7 +1832,7 @@
   {
     "Item": "Metal Coat",
     "Area": "Route 12",
-    "Location/Price": "Reward for beating Pok\u00e9mon Breeder Amala"
+    "Location/Price": "Reward for beating Pokémon Breeder Amala"
   },
   {
     "Item": "Power Herb-2",
@@ -1867,7 +1867,7 @@
   {
     "Item": "Normal Gem",
     "Area": "Route 12",
-    "Location/Price": "Reward for beating Pok\u00e9mon Breeder Foster"
+    "Location/Price": "Reward for beating Pokémon Breeder Foster"
   },
   {
     "Item": "Razor Claw",
@@ -1982,7 +1982,7 @@
   {
     "Item": "Kasib Berry",
     "Area": "Route 14",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Reed"
+    "Location/Price": "Reward for beating Pokémon Ranger Reed"
   },
   {
     "Item": "Kebia Berry",
@@ -1997,12 +1997,12 @@
   {
     "Item": "Occa Berry",
     "Area": "Route 14",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Nash"
+    "Location/Price": "Reward for beating Pokémon Ranger Nash"
   },
   {
     "Item": "Roseli Berry",
     "Area": "Route 14",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Melina"
+    "Location/Price": "Reward for beating Pokémon Ranger Melina"
   },
   {
     "Item": "Roseli Berry",
@@ -2052,12 +2052,12 @@
   {
     "Item": "TM95: Snarl",
     "Area": "Route 14",
-    "Location/Price": "Near the end of the first eastward branch from the south, east of Pok\u00e9mon Ranger Melina"
+    "Location/Price": "Near the end of the first eastward branch from the south, east of Pokémon Ranger Melina"
   },
   {
     "Item": "Big Mushroom-2",
     "Area": "Route 14",
-    "Location/Price": "At the first branch in the path from the south, under the leaves at the end of the dead log, east of Pok\u00e9mon Ranger Melina (hidden, reappears occasionally)"
+    "Location/Price": "At the first branch in the path from the south, under the leaves at the end of the dead log, east of Pokémon Ranger Melina (hidden, reappears occasionally)"
   },
   {
     "Item": "Big Mushroom-4",
@@ -2067,7 +2067,7 @@
   {
     "Item": "Babiri Berry",
     "Area": "Route 15",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Silas"
+    "Location/Price": "Reward for beating Pokémon Ranger Silas"
   },
   {
     "Item": "Chilan Berry-10",
@@ -2077,7 +2077,7 @@
   {
     "Item": "Coba Berry",
     "Area": "Route 15",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Pedro"
+    "Location/Price": "Reward for beating Pokémon Ranger Pedro"
   },
   {
     "Item": "Figy Berry-5",
@@ -2107,7 +2107,7 @@
   {
     "Item": "Passho Berry",
     "Area": "Route 15",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Dean"
+    "Location/Price": "Reward for beating Pokémon Ranger Dean"
   },
   {
     "Item": "Petaya Berry-2",
@@ -2122,7 +2122,7 @@
   {
     "Item": "Shuca Berry",
     "Area": "Route 15",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Keith"
+    "Location/Price": "Reward for beating Pokémon Ranger Keith"
   },
   {
     "Item": "PP Max",
@@ -2182,7 +2182,7 @@
   {
     "Item": "Colbur Berry",
     "Area": "Route 16",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Lee"
+    "Location/Price": "Reward for beating Pokémon Ranger Lee"
   },
   {
     "Item": "Lum Berry",
@@ -2192,7 +2192,7 @@
   {
     "Item": "Payapa Berry",
     "Area": "Route 16",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Bjorn"
+    "Location/Price": "Reward for beating Pokémon Ranger Bjorn"
   },
   {
     "Item": "Sitrus Berry-5",
@@ -2257,7 +2257,7 @@
   {
     "Item": "Dive Ball-20",
     "Area": "Route 16",
-    "Location/Price": "Given by a man in the Fishing Shack if the player pulls up the same Pok\u00e9mon via fishing more than seven times in a row"
+    "Location/Price": "Given by a man in the Fishing Shack if the player pulls up the same Pokémon via fishing more than seven times in a row"
   },
   {
     "Item": "TM72: Seed Bomb",
@@ -2387,7 +2387,7 @@
   {
     "Item": "Flying Gem-10",
     "Area": "Route 19",
-    "Location/Price": "On the rock next to Pok\u00e9mon Ranger Clementine in the west part of the swamp area (requires Surf) (hidden)"
+    "Location/Price": "On the rock next to Pokémon Ranger Clementine in the west part of the swamp area (requires Surf) (hidden)"
   },
   {
     "Item": "Ice Gem",
@@ -2407,17 +2407,17 @@
   {
     "Item": "Charizardite X",
     "Area": "Route 19",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Shinobu"
+    "Location/Price": "Reward for beating Pokémon Ranger Shinobu"
   },
   {
     "Item": "Kangaskhanite",
     "Area": "Route 19",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Clementine"
+    "Location/Price": "Reward for beating Pokémon Ranger Clementine"
   },
   {
     "Item": "Lucarionite",
     "Area": "Route 19",
-    "Location/Price": "Reward for beating Pok\u00e9mon Ranger Ambre"
+    "Location/Price": "Reward for beating Pokémon Ranger Ambre"
   },
   {
     "Item": "HM05: Waterfall",
@@ -2440,7 +2440,7 @@
     "Location/Price": "In the middle of the pit of stone pillars"
   },
   {
-    "Item": "Pok\u00e9 Ball-10",
+    "Item": "Poké Ball-10",
     "Area": "Route 2",
     "Location/Price": "Gift from Calem/Serena after the catching demonstration"
   },
@@ -2462,7 +2462,7 @@
   {
     "Item": "Sitrus Berry-50",
     "Area": "Route 20",
-    "Location/Price": "East, west, then south from the Pok\u00e9mon Village entrance, west of the grass at the top of the stairs"
+    "Location/Price": "East, west, then south from the Pokémon Village entrance, west of the grass at the top of the stairs"
   },
   {
     "Item": "Air Balloon",
@@ -2482,7 +2482,7 @@
   {
     "Item": "Mental Herb-5",
     "Area": "Route 20",
-    "Location/Price": "East from the Pok\u00e9mon Village entrance, on the south side of the big tree's trunk (hidden)"
+    "Location/Price": "East from the Pokémon Village entrance, on the south side of the big tree's trunk (hidden)"
   },
   {
     "Item": "Mawilite",
@@ -2492,17 +2492,17 @@
   {
     "Item": "TM53: Energy Ball",
     "Area": "Route 20",
-    "Location/Price": "East, west, south, then west from the Pok\u00e9mon Village entrance"
+    "Location/Price": "East, west, south, then west from the Pokémon Village entrance"
   },
   {
     "Item": "Balm Mushroom-5",
     "Area": "Route 20",
-    "Location/Price": "East, west, then south from the Pok\u00e9mon Village entrance, in the 1\u00d71 empty spot in the grass at the top of the stairs (hidden)"
+    "Location/Price": "East, west, then south from the Pokémon Village entrance, in the 1\u00d71 empty spot in the grass at the top of the stairs (hidden)"
   },
   {
     "Item": "Big Mushroom-10",
     "Area": "Route 20",
-    "Location/Price": "East then west from the Pok\u00e9mon Village entrance, in the middle of a patch of bare dirt (hidden)"
+    "Location/Price": "East then west from the Pokémon Village entrance, in the middle of a patch of bare dirt (hidden)"
   },
   {
     "Item": "Big Nugget-4",
@@ -2747,7 +2747,7 @@
   {
     "Item": "Honey-2",
     "Area": "Route 4",
-    "Location/Price": "Inside the northernmost bush in the line of three small bushes directly north of the fountain, west of Pok\u00e9 Fan Agnes (hidden, reappears occasionally)"
+    "Location/Price": "Inside the northernmost bush in the line of three small bushes directly north of the fountain, west of Poké Fan Agnes (hidden, reappears occasionally)"
   },
   {
     "Item": "Honey-2",
@@ -2915,7 +2915,7 @@
     "Location/Price": "Reward for beating Tourist Eriko"
   },
   {
-    "Item": "Pok\u00e9 Doll-2",
+    "Item": "Poké Doll-2",
     "Area": "Route 6",
     "Location/Price": "Central path: down a narrow path immediately on the left after entering from Route 7"
   },
@@ -3082,7 +3082,7 @@
   {
     "Item": "Sitrus Berry-4",
     "Area": "Route 9",
-    "Location/Price": "On the rock northeast of the Pok\u00e9mon Ranger by the entrance to Glittering Cave (hidden)"
+    "Location/Price": "On the rock northeast of the Pokémon Ranger by the entrance to Glittering Cave (hidden)"
   },
   {
     "Item": "Berry Juice-5",
@@ -3122,12 +3122,12 @@
   {
     "Item": "PP UP",
     "Area": "Santalune City",
-    "Location/Price": "In the flower box on the south side of the caf\u00e9 on the hill in the west, in the second space from the left (hidden)"
+    "Location/Price": "In the flower box on the south side of the café on the hill in the west, in the second space from the left (hidden)"
   },
   {
     "Item": "Great Ball",
     "Area": "Santalune City",
-    "Location/Price": "Gift from a boy in the house northeast of the Pok\u00e9mon Center"
+    "Location/Price": "Gift from a boy in the house northeast of the Pokémon Center"
   },
   {
     "Item": "Ultra Ball-2",
@@ -3205,12 +3205,12 @@
     "Location/Price": "Immediately to the east of the Route 2 entrance"
   },
   {
-    "Item": "Pok\u00e9 Ball",
+    "Item": "Poké Ball",
     "Area": "Santalune Forest",
     "Location/Price": "Gift from Calem/Serena if spoken to mid-way through the forest"
   },
   {
-    "Item": "Pok\u00e9 Ball-10",
+    "Item": "Poké Ball-10",
     "Area": "Santalune Forest",
     "Location/Price": "At the end of the narrow path east of Lass Lise"
   },
@@ -3247,17 +3247,17 @@
   {
     "Item": "Sun Stone",
     "Area": "Shalour City",
-    "Location/Price": "From the Hiker east of the Pok\u00e9mon Center in exchange for the Intriguing Stone, after battling Calem/Serena at the Tower of Mastery"
+    "Location/Price": "From the Hiker east of the Pokémon Center in exchange for the Intriguing Stone, after battling Calem/Serena at the Tower of Mastery"
   },
   {
     "Item": "Eviolite",
     "Area": "Shalour City",
-    "Location/Price": "From the Scientist in the house east of the Pok\u00e9mon Center after seeing at least 40 Pok\u00e9mon in the Coastal Kalos Pok\u00e9dex"
+    "Location/Price": "From the Scientist in the house east of the Pokémon Center after seeing at least 40 Pokémon in the Coastal Kalos Pokédex"
   },
   {
     "Item": "Soothe Bell",
     "Area": "Shalour City",
-    "Location/Price": "From the Madame in the house west of the Pok\u00e9mon Center after showing her a Pok\u00e9mon with at least 70 friendship"
+    "Location/Price": "From the Madame in the house west of the Pokémon Center after showing her a Pokémon with at least 70 friendship"
   },
   {
     "Item": "Intriguing Stone",
@@ -3292,7 +3292,7 @@
   {
     "Item": "Stardust-5",
     "Area": "Shalour City",
-    "Location/Price": "From a woman in the second building west of the Pok\u00e9mon Center after bringing her a Flying- or Psychic-type Pok\u00e9mon"
+    "Location/Price": "From a woman in the second building west of the Pokémon Center after bringing her a Flying- or Psychic-type Pokémon"
   },
   {
     "Item": "TM20: Thunder Punch",
@@ -3342,12 +3342,12 @@
   {
     "Item": "Gracidea",
     "Area": "Snowbelle City",
-    "Location/Price": "From the Beauty in the Pok\u00e9mon Center, if the player has a Shaymin in their party"
+    "Location/Price": "From the Beauty in the Pokémon Center, if the player has a Shaymin in their party"
   },
   {
     "Item": "Revive",
     "Area": "Snowbelle City",
-    "Location/Price": "From the man in the house north and just east of the Gym, if the player shows him a Pok\u00e9mon that knows Mat Block"
+    "Location/Price": "From the man in the house north and just east of the Gym, if the player shows him a Pokémon that knows Mat Block"
   },
   {
     "Item": "Jade Orb",
@@ -3432,7 +3432,7 @@
   {
     "Item": "Micle Berry-10",
     "Area": "Terminus Cave",
-    "Location/Price": "On the stalagmite behind Pok\u00e9mon Ranger Lee, southeast of the pit area (hidden)"
+    "Location/Price": "On the stalagmite behind Pokémon Ranger Lee, southeast of the pit area (hidden)"
   },
   {
     "Item": "Shuca Berry-10",
@@ -3567,12 +3567,12 @@
   {
     "Item": "Town Map",
     "Area": "Vaniville Town",
-    "Location/Price": "Gift from mom after getting the Pok\u00e9dex"
+    "Location/Price": "Gift from mom after getting the Pokédex"
   },
   {
     "Item": "Potion",
     "Area": "Vaniville Town",
-    "Location/Price": "Gift from mom after getting the Pok\u00e9dex"
+    "Location/Price": "Gift from mom after getting the Pokédex"
   },
   {
     "Item": "Liechi Berry-5",
@@ -3607,7 +3607,7 @@
   {
     "Item": "Figy Berry-10",
     "Area": "Victory Road (Inside 3)",
-    "Location/Price": "South of the end of the ledge maze, near Pok\u00e9mon Ranger Ralf"
+    "Location/Price": "South of the end of the ledge maze, near Pokémon Ranger Ralf"
   },
   {
     "Item": "Dragon Gem-10",
@@ -3632,7 +3632,7 @@
   {
     "Item": "Comet Shard-5",
     "Area": "Victory Road (Inside 4)",
-    "Location/Price": "In the middle of the four torches in a square formation before the exit to the Pok\u00e9mon League (hidden)"
+    "Location/Price": "In the middle of the four torches in a square formation before the exit to the Pokémon League (hidden)"
   },
   {
     "Item": "Mago Berry-10",
@@ -3701,3 +3701,4 @@
   }
 
 ]
+
