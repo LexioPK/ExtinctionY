@@ -5,8 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pokémon Stats</title>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Standardized header styles & script -->
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+
 <style>
-  body { font-family:"Lexend", sans-serif; background:#f0f0f0; margin:0; padding:20px; }
+  body { font-family:"Lexend", sans-serif; background:#f0f0f0; margin:0; padding:80px 20px 20px 20px; }
   a.back { color:#4285F4; text-decoration:none; display:inline-block; margin-bottom:20px; }
   h1 { text-align:center; margin-bottom:10px; }
   .card { background:white; padding:20px; border-radius:15px; box-shadow:0 3px 8px rgba(0,0,0,0.15); max-width:1200px; margin:auto; position:relative; }
@@ -18,10 +23,11 @@
   .types { text-align:center; margin-bottom:10px; }
   .type { display:inline-block; padding:4px 10px; border-radius:12px; font-size:0.85em; color:white; margin:3px; }
 
-  .nav-btn { position:absolute; top:20px; padding:6px 12px; background:#4285F4; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold; }
+  .nav-btn { position:absolute; top:20px; padding:10px 20px; background:#4285F4; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:600; font-size:14px; transition: background 0.2s; }
   .prev-btn { left:20px; }
   .next-btn { right:20px; }
   .nav-btn:hover { background:#3367d6; }
+  .nav-btn:active { transform: scale(0.98); }
 
   ul { list-style:none; padding-left:0; margin:0 0 10px 0; }
   .label { font-weight:bold; margin-top:10px; margin-bottom:3px; }
@@ -172,9 +178,11 @@ Promise.all([
   fetch('data/pokedex.json').then(r => r.json()),
   fetch('data/movesets.json').then(r => r.json()),
   fetch('data/moves.json').then(r => r.json()),
-  fetch('data/evolutions.json').then(r => r.json())
+  fetch('data/evolutions.json').then(r => r.json()),
+  fetch('data/encounters.json').then(r => r.json()),
+  fetch('data/basegamestats.json').then(r => r.json())
 ])
-.then(async ([pokedexData, movesetsData, movesData, evolutionsData]) => {
+.then(async ([pokedexData, movesetsData, movesData, evolutionsData, encountersData, baseGameStatsData]) => {
 
   const mon = pokedexData[monName];
   if (!mon) { document.getElementById("pokemonCard").textContent = "Pokémon not found."; return; }
@@ -192,6 +200,44 @@ Promise.all([
   const spriteUrl = await getPokemonImage(monName);
 
   const bst = mon.BST ?? (mon.BaseStats.HP+mon.BaseStats.Atk+mon.BaseStats.Def+mon.BaseStats.SpA+mon.BaseStats.SpD+mon.BaseStats.Spe);
+
+  // Extract unique locations where this Pokemon can be found
+  const locationSet = new Set();
+  encountersData.forEach(encounter => {
+    if (encounter.Pokemon === monName) {
+      locationSet.add(encounter.Area);
+    }
+  });
+  const locations = Array.from(locationSet).sort();
+
+  // Calculate stat changes compared to base game
+  const baseGameMon = baseGameStatsData[monName];
+  let statChanges = [];
+  let bstChange = 0;
+  
+  if (baseGameMon && baseGameMon.BaseStats) {
+    const stats = ['HP', 'Atk', 'Def', 'SpA', 'SpD', 'Spe'];
+    const statLabels = {'HP': 'HP', 'Atk': 'Atk', 'Def': 'Def', 'SpA': 'SpA', 'SpD': 'SpD', 'Spe': 'Spe'};
+    
+    stats.forEach(stat => {
+      const currentVal = mon.BaseStats[stat];
+      const baseVal = baseGameMon.BaseStats[stat];
+      const diff = currentVal - baseVal;
+      
+      if (diff !== 0) {
+        const color = diff > 0 ? '#28a745' : '#dc3545';  // green for positive, red for negative
+        const sign = diff > 0 ? '+' : '';
+        statChanges.push(`<span style="color:${color}; font-weight:600;">${statLabels[stat]} (${sign}${diff})</span>`);
+        bstChange += diff;
+      }
+    });
+    
+    if (bstChange !== 0) {
+      const color = bstChange > 0 ? '#28a745' : '#dc3545';
+      const sign = bstChange > 0 ? '+' : '';
+      statChanges.push(`<span style="color:${color}; font-weight:600;">BST (${sign}${bstChange})</span>`);
+    }
+  }
 
   const moveList = movesetsData[monName] || [];
 
@@ -252,7 +298,9 @@ Promise.all([
 
        <div>
          <h3>Location</h3>
-         <p style="margin:0;">Data will come from the location JSON.</p>
+         <ul style="text-align:left; display:inline-block; padding-left:20px; margin:0;">
+           ${locations.length > 0 ? locations.map(loc => `<li>${loc}</li>`).join('') : '<li style="list-style:none; padding-left:0;">Not available in wild</li>'}
+         </ul>
        </div>
 
        <div>
@@ -281,8 +329,8 @@ Promise.all([
 
     <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Stat Changes</h3>
-      <div style="text-align:left; margin-top:10px;">
-        <p style="margin:0;">No stat change data available for this Pokémon.</p>
+      <div style="text-align:left; margin-top:10px; padding-left:20px;">
+        ${statChanges.length > 0 ? statChanges.join('<br>') : '<p style="margin:0; padding-left:0;">No stat changes from base game</p>'}
       </div>
     </div>
   </div>
