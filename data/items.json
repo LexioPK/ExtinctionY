@@ -246,92 +246,92 @@
   },
   {
     "Item": "Aspear Berry",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
   },
   {
     "Item": "Cheri Berry",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
   },
   {
     "Item": "Chesto Berry",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
   },
   {
     "Item": "Pecha Berry",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
   },
   {
     "Item": "Rawst Berry",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From a man in the northwestern-most house that asks to see a Pok\u00e9mon of a specific type (daily)"
   },
   {
     "Item": "Berry Juice",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From a girl west of the fountain"
   },
   {
     "Item": "Iron Ball",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "In the southwestern corner of town, over the ledge"
   },
   {
     "Item": "Full Heal",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From the Rising Star in the lobby of Hotel Camphrier"
   },
   {
     "Item": "PP UP-2",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "Directly past the Star Piece in the wooded area to the south of town, in the bush (hidden)"
   },
   {
     "Item": "Sweet Heart",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From a Maid in the northwestern-most house (daily; 5 given on February 14 and March 14)"
   },
   {
     "Item": "Ultra Ball",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From the man pacing around outside of the Pok\u00e9mon Center"
   },
   {
     "Item": "TM46: Thief",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "From a Punk Girl in Cassius's house"
   },
   {
     "Item": "TM48: Round",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "Reward for beating Hoenn Elite Glacia"
   },
   {
     "Item": "Star Piece",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "At the end of the wooded path at the south of the town"
   },
   {
     "Item": "Stardust-3",
-    "Area": "Camphier Town",
+    "Area": "Camphrier Town",
     "Location/Price": "In the bush northwest of the center fountain (hidden)"
   },
   {
     "Item": "Lucky Egg",
-    "Area": "Camphier Town (Shabboneau Castle)",
+    "Area": "Camphrier Town (Shabboneau Castle)",
     "Location/Price": "In the castle at the bottom of the second floor. "
   },
   {
     "Item": "Lava Cookie",
-    "Area": "Camphier Town (Hotel)",
+    "Area": "Camphrier Town (Hotel)",
     "Location/Price": "On 2F of Hotel Camphrier if the player is talking to the Madame for the fourth time"
   },
   {
     "Item": "Strange Souvenir",
-    "Area": "Camphier Town (Hotel)",
+    "Area": "Camphrier Town (Hotel)",
     "Location/Price": "On 2F of Hotel Camphrier if the player is talking to the Backpacker for the fourth time"
   },
   {
@@ -3699,4 +3699,5 @@
     "Area": "Victory Road (Outside 4)",
     "Location/Price": "South of TM02 on the side of the path, directly east and one pace north of Hiker Corwin (hidden) (requires Surf and Waterfall)"
   }
+
 ]
