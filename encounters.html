@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -681,6 +680,11 @@
             return 'image/item/tm.png';
         }
         
+        // Special handling for HMs - if item starts with "HM", just use "hm" for the icon
+        if (cleanedName.toUpperCase().startsWith('HM')) {
+            return 'image/item/hm.png';
+        }
+        
         // Convert item name to filename format (lowercase, replace spaces with hyphens)
         const filename = cleanedName.toLowerCase()
             .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
@@ -792,7 +796,8 @@
                     icon.style.width = "40px";
                     icon.style.height = "40px";
                     icon.onerror = function() {
-                        this.src = 'image/item/unknown.png';
+                        // Use substitute/unknown pokemon sprite as fallback
+                        this.src = 'pokemon_sprites/unknown.png';
                         this.onerror = function() {
                             this.style.display = 'none';
                         };
