@@ -430,6 +430,17 @@ Promise.all([
            <tbody>
              ${moveList.map(m => {
                const mv = movesData[m.Move];
+               if (!mv) {
+                 console.warn(`Move data not found for: ${m.Move}`);
+                 return `<tr>
+                   <td>${m.Level}</td>
+                   <td>${m.Move}</td>
+                   <td><span class="type type-unknown">Unknown</span></td>
+                   <td class="cat">—</td>
+                   <td>—</td>
+                   <td>—</td>
+                 </tr>`;
+               }
                return `<tr>
                  <td>${m.Level}</td>
                  <td>${m.Move}</td>
