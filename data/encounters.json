@@ -186,126 +186,6 @@
             "Chance": "1%"
           }
         ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
       }
     ]
   },
@@ -399,126 +279,6 @@
             "MinLevel": 14,
             "MaxLevel": 14,
             "Chance": "1%"
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
           }
         ]
       }
@@ -616,126 +376,6 @@
             "Chance": "1%"
           }
         ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
       }
     ]
   },
@@ -829,126 +469,6 @@
             "MinLevel": 59,
             "MaxLevel": 59,
             "Chance": "1%"
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
           }
         ]
       }
@@ -1415,6 +935,101 @@
             "MinLevel": 55,
             "MaxLevel": 55,
             "Chance": "5%"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "LocationName": "Santalune City",
+    "LocationID": 53,
+    "Encounters": [
+      {
+        "EncounterType": "Grass",
+        "Slots": [
+          {
+            "Species": "Meowth",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Abra",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Grimer",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Ledyba",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Snubbull",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Smoochum",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Chimchar",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Cottonee",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Vanillite",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Klink",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "5%"
+          },
+          {
+            "Species": "Klink",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "4%"
+          },
+          {
+            "Species": "Klink",
+            "Form": 0,
+            "MinLevel": 7,
+            "MaxLevel": 7,
+            "Chance": "1%"
           }
         ]
       }
@@ -2461,126 +2076,6 @@
             "Chance": "1%"
           }
         ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
       }
     ]
   },
@@ -2674,126 +2169,6 @@
             "MinLevel": 77,
             "MaxLevel": 77,
             "Chance": "1%"
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
           }
         ]
       }
@@ -3106,126 +2481,6 @@
             "Chance": "1%"
           }
         ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
       }
     ]
   },
@@ -3319,126 +2574,6 @@
             "MinLevel": 3,
             "MaxLevel": 4,
             "Chance": "1%"
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
           }
         ]
       }
@@ -3654,126 +2789,6 @@
             "Chance": "5%"
           }
         ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Cyndaquil",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
       }
     ]
   },
@@ -3956,126 +2971,6 @@
             "MinLevel": 9,
             "MaxLevel": 11,
             "Chance": "1%"
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chikorita",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
           }
         ]
       }
@@ -9880,126 +8775,6 @@
             "MinLevel": 4,
             "MaxLevel": 5,
             "Chance": "1%"
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Fennekin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
           }
         ]
       }
