@@ -2650,7 +2650,7 @@
     "Location/Price": "Across the pond by the Santalune Forest entrance (requires Surf)"
   },
   {
-    "Item": "Berry Juice-5",
+    "Item": "Berry Juice-2",
     "Area": "Route 3",
     "Location/Price": "South of the Santalune City entrance, to the east of Schoolboy Brighton and south of Schoolgirl Bridget"
   },
@@ -3701,4 +3701,5 @@
   }
 
 ]
+
 
