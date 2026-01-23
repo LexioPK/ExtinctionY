@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -166,9 +167,17 @@
         .pokemon-icon {
             width: 60px;
             height: 60px;
+            object-fit: contain;
             image-rendering: pixelated;
             margin: 5px auto;
             display: block;
+            cursor: pointer;
+        }
+        
+        .pokemon-icon:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+            transition: all 0.2s ease;
         }
 
         .pokemon-chance {
@@ -871,7 +880,11 @@
                     name.textContent = pokemonData.Species;
                     box.appendChild(name);
 
-                    // Pokemon icon
+                    // Pokemon icon (clickable link to pokemon page)
+                    const iconLink = document.createElement("a");
+                    iconLink.href = `pokemon.html?name=${encodeURIComponent(pokemonData.Species)}`;
+                    iconLink.style.textDecoration = "none";
+                    
                     const icon = document.createElement("img");
                     icon.className = "pokemon-icon";
                     icon.src = getPokemonIconPath(pokemonData.Species);
@@ -885,7 +898,8 @@
                             this.style.display = 'none';
                         }
                     };
-                    box.appendChild(icon);
+                    iconLink.appendChild(icon);
+                    box.appendChild(iconLink);
 
                     // Show combined percentage
                     const chance = document.createElement("div");
@@ -967,7 +981,11 @@
                         name.textContent = pokemonData.Species;
                         box.appendChild(name);
 
-                        // Pokemon icon
+                        // Pokemon icon (clickable link to pokemon page)
+                        const iconLink = document.createElement("a");
+                        iconLink.href = `pokemon.html?name=${encodeURIComponent(pokemonData.Species)}`;
+                        iconLink.style.textDecoration = "none";
+                        
                         const icon = document.createElement("img");
                         icon.className = "pokemon-icon";
                         icon.src = getPokemonIconPath(pokemonData.Species);
@@ -982,7 +1000,8 @@
                                 this.style.display = 'none';
                             }
                         };
-                        box.appendChild(icon);
+                        iconLink.appendChild(icon);
+                        box.appendChild(iconLink);
 
                         // Encounter chance
                         if (pokemonData.Chance) {
