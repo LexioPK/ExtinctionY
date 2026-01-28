@@ -342,10 +342,12 @@
             return;
         }
 
-        // Build sidebar tabs from encounter locations (unique names only)
+        // Build a complete list of locations that should appear
+        // Include locations from encounters AND locations that only have items
         const uniqueLocationNames = [];
         const locationNameToIndices = new Map();
         
+        // First add all encounter locations
         encounterData.forEach((location, index) => {
             if (!locationNameToIndices.has(location.LocationName)) {
                 uniqueLocationNames.push(location.LocationName);
@@ -354,6 +356,31 @@
             locationNameToIndices.get(location.LocationName).push(index);
         });
         
+        // Then check items.json for any locations not in encounters
+        // These will have empty encounter arrays but should still appear
+        if (itemsData && itemsData.length > 0) {
+            itemsData.forEach(item => {
+                // Extract base location name (without sub-area in parentheses)
+                const baseLocation = item.Area.replace(/\s*\([^)]*\)/, '').trim();
+                
+                // Check if this location is in locationOrder but not in encounter locations
+                if (locationOrder.includes(baseLocation) && !locationNameToIndices.has(baseLocation)) {
+                    uniqueLocationNames.push(baseLocation);
+                    locationNameToIndices.set(baseLocation, []); // Empty array means no encounters
+                }
+            });
+        }
+        
+        // Sort unique location names by locationOrder
+        uniqueLocationNames.sort((a, b) => {
+            const indexA = locationOrder.indexOf(a);
+            const indexB = locationOrder.indexOf(b);
+            if (indexA === -1) return 1; // Put unlisted at end
+            if (indexB === -1) return -1;
+            return indexA - indexB;
+        });
+        
+        // Create sidebar tabs for all locations
         uniqueLocationNames.forEach((locationName) => {
             const tab = document.createElement("div");
             tab.className = "location-tab";
@@ -361,7 +388,7 @@
             tab.onclick = () => {
                 document.querySelectorAll(".location-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
-                // Display all encounters for this location name
+                // Display all encounters for this location name (or just items if no encounters)
                 displayLocationByName(locationName, locationNameToIndices.get(locationName));
             };
             sidebar.appendChild(tab);
