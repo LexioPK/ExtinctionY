@@ -289,10 +289,41 @@ Promise.all([
   let currentFormName = monName;
   let currentFormData = mon;
   
+  // Helper function to check if a Pokemon is an alternate form (has '-' but not Nidoran)
+  function isAlternateForm(name) {
+    if (name.startsWith('Nidoran')) return false;
+    return name.includes('-');
+  }
+  
+  // Helper function to get next base form Pokemon (skip alternate forms)
+  function getNextBasePokemon(currentName, sortedNames) {
+    const currentIndex = sortedNames.indexOf(currentName);
+    for (let i = 1; i < sortedNames.length; i++) {
+      const nextIndex = (currentIndex + i) % sortedNames.length;
+      const nextName = sortedNames[nextIndex];
+      if (!isAlternateForm(nextName)) {
+        return nextName;
+      }
+    }
+    return sortedNames[(currentIndex + 1) % sortedNames.length]; // Fallback
+  }
+  
+  // Helper function to get previous base form Pokemon (skip alternate forms)
+  function getPrevBasePokemon(currentName, sortedNames) {
+    const currentIndex = sortedNames.indexOf(currentName);
+    for (let i = 1; i < sortedNames.length; i++) {
+      const prevIndex = (currentIndex - i + sortedNames.length) % sortedNames.length;
+      const prevName = sortedNames[prevIndex];
+      if (!isAlternateForm(prevName)) {
+        return prevName;
+      }
+    }
+    return sortedNames[(currentIndex - 1 + sortedNames.length) % sortedNames.length]; // Fallback
+  }
+  
   const sortedMonNames = Object.entries(pokedexData).sort((a,b)=>a[1].SpeciesIdx-b[1].SpeciesIdx).map(([name])=>name);
-  const currentIndex = sortedMonNames.indexOf(monName);
-  const prevMon = sortedMonNames[(currentIndex-1+sortedMonNames.length)%sortedMonNames.length];
-  const nextMon = sortedMonNames[(currentIndex+1)%sortedMonNames.length];
+  const prevMon = getPrevBasePokemon(monName, sortedMonNames);
+  const nextMon = getNextBasePokemon(monName, sortedMonNames);
   const prevMonData = pokedexData[prevMon];
   const nextMonData = pokedexData[nextMon];
 
@@ -458,12 +489,8 @@ Promise.all([
     abilitiesUl.innerHTML = `
       <li>${formatAbilityWithTooltip(currentFormData.Ability1)}</li>
       ${currentFormData.Ability2 ? `<li>${formatAbilityWithTooltip(currentFormData.Ability2)}</li>` : ""}
-      <li>${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
+      <li style="list-style:none; margin-left:-20px; padding-left:20px;">(H): ${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
     `;
-    
-    // Update height/weight
-    document.querySelector('[data-height]').textContent = `${currentFormData.Height || 'N/A'} m`;
-    document.querySelector('[data-weight]').textContent = `${currentFormData.Weight || 'N/A'} kg`;
     
     // Update base stats (use same ranges as initial display for consistency)
     const statsContainer = document.querySelector('.base-stats-container');
@@ -534,7 +561,7 @@ Promise.all([
          <ul style="text-align:left; display:inline-block; list-style:disc; padding-left:20px;">
            <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
            ${mon.Ability2 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
-           <li>${formatAbilityWithTooltip(mon.AbilityH)}</li>
+           <li style="list-style:none; margin-left:-20px; padding-left:20px;">(H): ${formatAbilityWithTooltip(mon.AbilityH)}</li>
          </ul>
        </div>
 

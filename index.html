@@ -195,8 +195,7 @@ function loadPokedex() {
             const entries = Object.entries(data)
                 .sort((a, b) => a[1].SpeciesIdx - b[1].SpeciesIdx);
             
-            // Filter out alternate forms (except Nidoran) and create mapping
-            const baseFormEntries = [];
+            // Create mapping for alternate forms to link to base form with form parameter
             const alternateFormMap = {}; // Maps alternate form name to base form name
             
             entries.forEach(([name, mon]) => {
@@ -204,12 +203,9 @@ function loadPokedex() {
                 const hasVariant = name.includes('-') && !isNidoran;
                 
                 if (hasVariant) {
-                    // This is an alternate form - extract base name
+                    // This is an alternate form - extract base name for linking
                     const baseName = name.split('-')[0];
                     alternateFormMap[name] = baseName;
-                } else {
-                    // This is a base form (or Nidoran) - include it
-                    baseFormEntries.push([name, mon]);
                 }
             });
 
@@ -220,7 +216,7 @@ function loadPokedex() {
                 return `${spriteFolders[0]}/${lowerName}.png`;
             };
 
-            baseFormEntries.forEach(([name, mon]) => {
+            entries.forEach(([name, mon]) => {
                 const bst = mon.BST ??
                     (mon.BaseStats.HP +
                      mon.BaseStats.Atk +
