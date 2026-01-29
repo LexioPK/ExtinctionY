@@ -194,6 +194,24 @@ function loadPokedex() {
 
             const entries = Object.entries(data)
                 .sort((a, b) => a[1].SpeciesIdx - b[1].SpeciesIdx);
+            
+            // Filter out alternate forms (except Nidoran) and create mapping
+            const baseFormEntries = [];
+            const alternateFormMap = {}; // Maps alternate form name to base form name
+            
+            entries.forEach(([name, mon]) => {
+                const isNidoran = name.startsWith('Nidoran');
+                const hasVariant = name.includes('-') && !isNidoran;
+                
+                if (hasVariant) {
+                    // This is an alternate form - extract base name
+                    const baseName = name.split('-')[0];
+                    alternateFormMap[name] = baseName;
+                } else {
+                    // This is a base form (or Nidoran) - include it
+                    baseFormEntries.push([name, mon]);
+                }
+            });
 
             /* ⭐ Multi-folder sprite folders */
             const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
@@ -202,7 +220,7 @@ function loadPokedex() {
                 return `${spriteFolders[0]}/${lowerName}.png`;
             };
 
-            entries.forEach(([name, mon]) => {
+            baseFormEntries.forEach(([name, mon]) => {
                 const bst = mon.BST ??
                     (mon.BaseStats.HP +
                      mon.BaseStats.Atk +
@@ -306,12 +324,28 @@ function searchPokemon() {
     resultsBox.style.display = "block";
 
     resultsBox.innerHTML = matches
-        .map(name => `
+        .map(name => {
+            // Check if this is an alternate form
+            const isNidoran = name.startsWith('Nidoran');
+            const hasVariant = name.includes('-') && !isNidoran;
+            let linkUrl;
+            
+            if (hasVariant) {
+                // Link to base form with form parameter
+                const baseName = name.split('-')[0];
+                linkUrl = `pokemon.html?name=${encodeURIComponent(baseName)}&form=${encodeURIComponent(name)}`;
+            } else {
+                // Regular Pokemon - link normally
+                linkUrl = `pokemon.html?name=${encodeURIComponent(name)}`;
+            }
+            
+            return `
             <div style="padding:8px; cursor:pointer;"
-                 onclick="window.location.href='pokemon.html?name=${encodeURIComponent(name)}'">
+                 onclick="window.location.href='${linkUrl}'">
                 ${name}
             </div>
-        `)
+        `;
+        })
         .join("");
 }
 
