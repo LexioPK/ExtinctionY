@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -227,7 +228,9 @@ const typeColors = {
   Steel:"#5a8ea2", Fairy:"#ec8fe6"
 };
 
-const monName = new URL(window.location.href).searchParams.get("name");
+const urlParams = new URLSearchParams(window.location.search);
+const monName = urlParams.get("name");
+const formParam = urlParams.get("form"); // Optional form parameter
 
 // --- Multi-folder sprite support ---
 const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
@@ -454,9 +457,9 @@ Promise.all([
     // Update abilities
     const abilitiesUl = document.querySelector('.info-cols div:nth-child(2) ul');
     abilitiesUl.innerHTML = `
-      <li>1. ${formatAbilityWithTooltip(currentFormData.Ability1)}</li>
-      ${currentFormData.Ability2 ? `<li>2. ${formatAbilityWithTooltip(currentFormData.Ability2)}</li>` : ""}
-      <li><em>(H):</em> ${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
+      <li>${formatAbilityWithTooltip(currentFormData.Ability1)}</li>
+      ${currentFormData.Ability2 ? `<li>${formatAbilityWithTooltip(currentFormData.Ability2)}</li>` : ""}
+      <li>${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
     `;
     
     // Update height/weight
@@ -478,7 +481,7 @@ Promise.all([
     // Update stat changes
     const statChangesDiv = document.querySelector('.stat-changes-content');
     if (formStatChanges.length > 0) {
-      statChangesDiv.innerHTML = formStatChanges.join(', ');
+      statChangesDiv.innerHTML = formStatChanges.map(change => `<div>${change}</div>`).join('');
     } else {
       statChangesDiv.textContent = 'No changes from base game';
     }
@@ -529,10 +532,10 @@ Promise.all([
 
        <div>
          <h3>Abilities</h3>
-         <ul style="text-align:left; display:inline-block;">
-           <li>1. ${formatAbilityWithTooltip(mon.Ability1)}</li>
-           ${mon.Ability2 ? `<li>2. ${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
-           <li><em>(H):</em> ${formatAbilityWithTooltip(mon.AbilityH)}</li>
+         <ul style="text-align:left; display:inline-block; list-style:disc; padding-left:20px;">
+           <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
+           ${mon.Ability2 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
+           <li>${formatAbilityWithTooltip(mon.AbilityH)}</li>
          </ul>
        </div>
 
@@ -544,7 +547,7 @@ Promise.all([
        </div>
 
        <div>
-         <h3>Height / Weight</h3>
+         <h3>Additional Info</h3>
          <p style="margin:2px 0;" data-height>${mon.Height || 'N/A'} m</p>
          <p style="margin:2px 0;" data-weight>${mon.Weight || 'N/A'} kg</p>
        </div>
@@ -571,7 +574,7 @@ Promise.all([
     <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Stat Changes</h3>
       <div class="stat-changes-content" style="text-align:center; margin-top:10px;">
-        ${statChanges.length > 0 ? statChanges.join('<br>') : '<p style="margin:0;">No changes from base game</p>'}
+        ${statChanges.length > 0 ? statChanges.map(change => `<div>${change}</div>`).join('') : '<p style="margin:0;">No changes from base game</p>'}
       </div>
     </div>
   </div>
@@ -656,6 +659,11 @@ Promise.all([
   `;
 
   loadEvolutions(monName, evolutionsData);
+  
+  // If form parameter is provided, automatically switch to that form
+  if (formParam && alternateForms.includes(formParam)) {
+    updateFormData(formParam);
+  }
 });
 
 // evolution renderer with diagonal branching and Eevee circular layout
