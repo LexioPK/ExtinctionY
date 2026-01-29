@@ -489,7 +489,7 @@ Promise.all([
     abilitiesUl.innerHTML = `
       <li>${formatAbilityWithTooltip(currentFormData.Ability1)}</li>
       ${currentFormData.Ability2 ? `<li>${formatAbilityWithTooltip(currentFormData.Ability2)}</li>` : ""}
-      <li style="list-style:none; margin-left:-20px; padding-left:20px;">(H): ${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
+      <li style="list-style:disc; padding-left:0;">(H): ${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
     `;
     
     // Update base stats (use same ranges as initial display for consistency)
@@ -537,7 +537,7 @@ Promise.all([
           const iconName = formName.toLowerCase().replace(/\s+/g, '-');
           return `
           <div class="form-tab ${formName === monName ? 'active' : ''}" data-form-name="${formName}" onclick="updateFormData('${formName}')">
-            <img src="image/icons/${iconName}.png" alt="" class="form-tab-icon" onerror="this.style.display='none'">
+            <img src="image/icons/${iconName}.png" alt="" class="form-tab-icon" onerror="this.src='pokemon_sprites/unknown.png'; this.onerror=null;">
             <span>${formatFormName(formName)}</span>
           </div>
         `;
@@ -561,7 +561,7 @@ Promise.all([
          <ul style="text-align:left; display:inline-block; list-style:disc; padding-left:20px;">
            <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
            ${mon.Ability2 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
-           <li style="list-style:none; margin-left:-20px; padding-left:20px;">(H): ${formatAbilityWithTooltip(mon.AbilityH)}</li>
+           <li style="list-style:disc; padding-left:0;">(H): ${formatAbilityWithTooltip(mon.AbilityH)}</li>
          </ul>
        </div>
 
