@@ -451,8 +451,8 @@ Promise.all([
     `;
     
     // Update height/weight
-    document.querySelector('.info-cols div:nth-child(3) p:nth-of-type(1)').textContent = `${currentFormData.Height || 'N/A'} m`;
-    document.querySelector('.info-cols div:nth-child(3) p:nth-of-type(2)').textContent = `${currentFormData.Weight || 'N/A'} kg`;
+    document.querySelector('[data-height]').textContent = `${currentFormData.Height || 'N/A'} m`;
+    document.querySelector('[data-weight]').textContent = `${currentFormData.Weight || 'N/A'} kg`;
     
     // Update base stats
     const statsContainer = document.querySelector('.base-stats-container');
@@ -532,8 +532,8 @@ Promise.all([
 
        <div>
          <h3>Height / Weight</h3>
-         <p style="margin:2px 0;">${mon.Height || 'N/A'} m</p>
-         <p style="margin:2px 0;">${mon.Weight || 'N/A'} kg</p>
+         <p style="margin:2px 0;" data-height>${mon.Height || 'N/A'} m</p>
+         <p style="margin:2px 0;" data-weight>${mon.Weight || 'N/A'} kg</p>
        </div>
      </div>
    </div>
