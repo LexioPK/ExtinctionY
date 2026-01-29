@@ -187,6 +187,9 @@
     font-size: 14px;
     transition: all 0.2s;
     user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   .form-tab:hover {
     background: #d0d0d0;
@@ -200,6 +203,12 @@
   }
   .form-tab.active:hover {
     transform: none;
+  }
+  .form-tab-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    image-rendering: pixelated;
   }
 
 </style>
@@ -454,16 +463,16 @@ Promise.all([
     document.querySelector('[data-height]').textContent = `${currentFormData.Height || 'N/A'} m`;
     document.querySelector('[data-weight]').textContent = `${currentFormData.Weight || 'N/A'} kg`;
     
-    // Update base stats
+    // Update base stats (use same ranges as initial display for consistency)
     const statsContainer = document.querySelector('.base-stats-container');
     statsContainer.innerHTML = `
-      ${createStatRow('HP', currentFormData.BaseStats.HP, 1, 255, statColors.HP)}
-      ${createStatRow('Atk', currentFormData.BaseStats.Atk, 5, 190, statColors.Atk)}
-      ${createStatRow('Def', currentFormData.BaseStats.Def, 5, 230, statColors.Def)}
-      ${createStatRow('SpA', currentFormData.BaseStats.SpA, 10, 194, statColors.SpA)}
-      ${createStatRow('SpD', currentFormData.BaseStats.SpD, 20, 230, statColors.SpD)}
-      ${createStatRow('Spe', currentFormData.BaseStats.Spe, 5, 180, statColors.Spe)}
-      ${createStatRow('BST', formBst, 180, 780, statColors.BST)}
+      ${createStatRow('HP', currentFormData.BaseStats.HP, 15, 180, statColors.HP)}
+      ${createStatRow('Atk', currentFormData.BaseStats.Atk, 15, 180, statColors.Atk)}
+      ${createStatRow('Def', currentFormData.BaseStats.Def, 15, 180, statColors.Def)}
+      ${createStatRow('SpA', currentFormData.BaseStats.SpA, 15, 180, statColors.SpA)}
+      ${createStatRow('SpD', currentFormData.BaseStats.SpD, 15, 180, statColors.SpD)}
+      ${createStatRow('Spe', currentFormData.BaseStats.Spe, 15, 180, statColors.Spe)}
+      ${createStatRow('BST', formBst, 250, 600, statColors.BST)}
     `;
     
     // Update stat changes
@@ -495,11 +504,15 @@ Promise.all([
     <!-- Alternate Forms Tabs (only show if there are multiple forms) -->
     ${alternateForms.length > 1 ? `
       <div class="form-tabs">
-        ${alternateForms.map(formName => `
+        ${alternateForms.map(formName => {
+          const iconName = formName.toLowerCase().replace(/\s+/g, '-');
+          return `
           <div class="form-tab ${formName === monName ? 'active' : ''}" data-form-name="${formName}" onclick="updateFormData('${formName}')">
-            ${formatFormName(formName)}
+            <img src="image/icons/${iconName}.png" alt="" class="form-tab-icon" onerror="this.style.display='none'">
+            <span>${formatFormName(formName)}</span>
           </div>
-        `).join('')}
+        `;
+        }).join('')}
       </div>
     ` : ''}
 
