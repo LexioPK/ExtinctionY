@@ -169,6 +169,39 @@
     }
   }
 
+  /* Alternate Forms Tabs */
+  .form-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0 15px 0;
+    flex-wrap: wrap;
+  }
+  .form-tab {
+    padding: 8px 16px;
+    background: #e0e0e0;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .form-tab:hover {
+    background: #d0d0d0;
+    transform: translateY(-1px);
+  }
+  .form-tab.active {
+    background: #4285F4;
+    color: white;
+    border-color: #3367d6;
+    cursor: default;
+  }
+  .form-tab.active:hover {
+    transform: none;
+  }
+
 </style>
 </head>
 <body>
@@ -223,6 +256,28 @@ Promise.all([
   const mon = pokedexData[monName];
   if (!mon) { document.getElementById("pokemonCard").textContent = "Pokémon not found."; return; }
 
+  // ===== DETECT ALTERNATE FORMS =====
+  // Find all forms with the same base name (excluding Nidoran)
+  const isNidoran = monName.startsWith('Nidoran');
+  let baseFormName = monName;
+  let alternateForms = [monName]; // Start with current form
+  
+  if (!isNidoran) {
+    // Extract base name (before first dash)
+    baseFormName = monName.includes('-') ? monName.split('-')[0] : monName;
+    
+    // Find all forms with same base (including base form itself)
+    alternateForms = Object.keys(pokedexData).filter(name => {
+      if (name.startsWith('Nidoran')) return false;
+      const base = name.includes('-') ? name.split('-')[0] : name;
+      return base === baseFormName;
+    }).sort(); // Sort to ensure consistent order
+  }
+  
+  // Keep track of currently displayed form
+  let currentFormName = monName;
+  let currentFormData = mon;
+  
   const sortedMonNames = Object.entries(pokedexData).sort((a,b)=>a[1].SpeciesIdx-b[1].SpeciesIdx).map(([name])=>name);
   const currentIndex = sortedMonNames.indexOf(monName);
   const prevMon = sortedMonNames[(currentIndex-1+sortedMonNames.length)%sortedMonNames.length];
@@ -333,6 +388,97 @@ Promise.all([
       : abilityName;
   }
 
+  // Helper to format form name for tab display
+  function formatFormName(fullName) {
+    if (fullName === baseFormName) return "Base";
+    // Remove base name and leading dash
+    const formSuffix = fullName.substring(baseFormName.length + 1);
+    // Convert "Mega-X" to "Mega X", etc.
+    return formSuffix.replace(/-/g, ' ');
+  }
+
+  // Function to update form-specific data (types, abilities, stats, sprite)
+  async function updateFormData(formName) {
+    currentFormName = formName;
+    currentFormData = pokedexData[formName];
+    
+    const formTypes = [currentFormData.Type1, currentFormData.Type2].filter((t,i,a)=>t && a.indexOf(t)===i);
+    const formBst = currentFormData.BST ?? (currentFormData.BaseStats.HP+currentFormData.BaseStats.Atk+currentFormData.BaseStats.Def+currentFormData.BaseStats.SpA+currentFormData.BaseStats.SpD+currentFormData.BaseStats.Spe);
+    const formSpriteUrl = await getPokemonImage(formName);
+    
+    // Calculate stat changes for this form
+    const baseGameFormData = baseGameStatsData[formName];
+    let formStatChanges = [];
+    let formBstChange = 0;
+    
+    if (baseGameFormData && baseGameFormData.BaseStats) {
+      const stats = ['HP', 'Atk', 'Def', 'SpA', 'SpD', 'Spe'];
+      const statLabels = {'HP': 'HP', 'Atk': 'Atk', 'Def': 'Def', 'SpA': 'SpA', 'SpD': 'SpD', 'Spe': 'Spe'};
+      
+      stats.forEach(stat => {
+        const currentVal = currentFormData.BaseStats[stat];
+        const baseVal = baseGameFormData.BaseStats[stat];
+        const diff = currentVal - baseVal;
+        
+        if (diff !== 0) {
+          const color = diff > 0 ? '#28a745' : '#dc3545';
+          const sign = diff > 0 ? '+' : '';
+          formStatChanges.push(`<span style="color:${color}; font-weight:600;">${statLabels[stat]} (${sign}${diff})</span>`);
+          formBstChange += diff;
+        }
+      });
+      
+      if (formBstChange !== 0) {
+        const color = formBstChange > 0 ? '#28a745' : '#dc3545';
+        const sign = formBstChange > 0 ? '+' : '';
+        formStatChanges.push(`<span style="color:${color}; font-weight:600;">BST (${sign}${formBstChange})</span>`);
+      }
+    }
+    
+    // Update sprite
+    document.querySelector('.sprite').src = formSpriteUrl;
+    
+    // Update types
+    document.querySelector('.types').innerHTML = formTypes.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("");
+    
+    // Update abilities
+    const abilitiesUl = document.querySelector('.info-cols div:nth-child(2) ul');
+    abilitiesUl.innerHTML = `
+      <li>1. ${formatAbilityWithTooltip(currentFormData.Ability1)}</li>
+      ${currentFormData.Ability2 ? `<li>2. ${formatAbilityWithTooltip(currentFormData.Ability2)}</li>` : ""}
+      <li><em>(H):</em> ${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
+    `;
+    
+    // Update height/weight
+    document.querySelector('.info-cols div:nth-child(3) p:nth-of-type(1)').textContent = `${currentFormData.Height || 'N/A'} m`;
+    document.querySelector('.info-cols div:nth-child(3) p:nth-of-type(2)').textContent = `${currentFormData.Weight || 'N/A'} kg`;
+    
+    // Update base stats
+    const statsContainer = document.querySelector('.base-stats-container');
+    statsContainer.innerHTML = `
+      ${createStatRow('HP', currentFormData.BaseStats.HP, 1, 255, statColors.HP)}
+      ${createStatRow('Atk', currentFormData.BaseStats.Atk, 5, 190, statColors.Atk)}
+      ${createStatRow('Def', currentFormData.BaseStats.Def, 5, 230, statColors.Def)}
+      ${createStatRow('SpA', currentFormData.BaseStats.SpA, 10, 194, statColors.SpA)}
+      ${createStatRow('SpD', currentFormData.BaseStats.SpD, 20, 230, statColors.SpD)}
+      ${createStatRow('Spe', currentFormData.BaseStats.Spe, 5, 180, statColors.Spe)}
+      ${createStatRow('BST', formBst, 180, 780, statColors.BST)}
+    `;
+    
+    // Update stat changes
+    const statChangesDiv = document.querySelector('.stat-changes-content');
+    if (formStatChanges.length > 0) {
+      statChangesDiv.innerHTML = formStatChanges.join(', ');
+    } else {
+      statChangesDiv.textContent = 'No changes from base game';
+    }
+    
+    // Update active tab
+    document.querySelectorAll('.form-tab').forEach(tab => {
+      tab.classList.toggle('active', tab.dataset.formName === formName);
+    });
+  }
+
   // --- Everything else unchanged, with requested layout changes ---
   cardDiv.innerHTML = `
     <button class="nav-btn prev-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(prevMon)}'">
@@ -344,6 +490,17 @@ Promise.all([
 
     <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${monName}</h1>
     <img class="sprite" src="${spriteUrl}" onerror="this.src='pokemon_sprites_unknown/unknown.png'">
+
+    <!-- Alternate Forms Tabs (only show if there are multiple forms) -->
+    ${alternateForms.length > 1 ? `
+      <div class="form-tabs">
+        ${alternateForms.map(formName => `
+          <div class="form-tab ${formName === monName ? 'active' : ''}" data-form-name="${formName}" onclick="updateFormData('${formName}')">
+            ${formatFormName(formName)}
+          </div>
+        `).join('')}
+      </div>
+    ` : ''}
 
    <!-- Info / Type / Abilities / Location / Additional Info -->
    <div class="section info">
@@ -373,8 +530,9 @@ Promise.all([
        </div>
 
        <div>
-         <h3>Additional Info</h3>
-         <p style="margin:0;">N/A</p>
+         <h3>Height / Weight</h3>
+         <p style="margin:2px 0;">${mon.Height || 'N/A'} m</p>
+         <p style="margin:2px 0;">${mon.Weight || 'N/A'} kg</p>
        </div>
      </div>
    </div>
@@ -385,7 +543,7 @@ Promise.all([
   <div style="display:flex; gap:20px; flex-wrap:wrap;">
     <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Updated stats</h3>
-      <div id="stat-bars" style="text-align:left; margin-top:10px;">
+      <div class="base-stats-container" style="text-align:left; margin-top:10px;">
         ${createStatRow("HP", mon.BaseStats.HP, 15, 180, statColors.HP)}
         ${createStatRow("Atk", mon.BaseStats.Atk, 15, 180, statColors.Atk)}
         ${createStatRow("Def", mon.BaseStats.Def, 15, 180, statColors.Def)}
@@ -398,8 +556,8 @@ Promise.all([
 
     <div style="flex:1; min-width:200px; text-align:center;">
       <h3 style="text-decoration:underline;">Stat Changes</h3>
-      <div style="text-align:center; margin-top:10px;">
-        ${statChanges.length > 0 ? statChanges.join('<br>') : '<p style="margin:0;">No stat changes from base game</p>'}
+      <div class="stat-changes-content" style="text-align:center; margin-top:10px;">
+        ${statChanges.length > 0 ? statChanges.join('<br>') : '<p style="margin:0;">No changes from base game</p>'}
       </div>
     </div>
   </div>
