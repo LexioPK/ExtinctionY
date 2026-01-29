@@ -225,7 +225,7 @@
     "Location/Price": "On the rock on the small isle on the east side of the bay, northeast of the isle with the arrow-shaped grass (hidden)"
   },
   {
-    "Item": "Micle Berry-5",
+    "Item": "Ability Capsule ",
     "Area": "Berry Fields",
     "Location/Price": "In the southwest corner of the fields"
   },
@@ -1817,12 +1817,12 @@
   {
     "Item": "TM69: Rock Polish",
     "Area": "Route 11",
-    "Location/Price": "North of the Berry tree, via a dirt slope west of Brains & Brawn Frank & Sly (requires Cut)"
+    "Location/Price": "North of the Berry tree, via a dirt slope west of Brains & Brawn Frank & Sly "
   },
   {
     "Item": "Aspear Berry",
     "Area": "Route 12",
-    "Location/Price": "In front of the Berry tree to the south of the Shalour City Gate (requires Cut) (regenerates after 7 days)"
+    "Location/Price": "In front of the Berry tree to the south of the Shalour City Gate  (regenerates after 7 days)"
   },
   {
     "Item": "Jaboca Berry-3",
@@ -2262,7 +2262,7 @@
   {
     "Item": "TM72: Seed Bomb",
     "Area": "Route 16",
-    "Location/Price": "At the northeast of the long grass on the west side of the Lost Hotel (requires Cut)"
+    "Location/Price": "At the northeast of the long grass on the west side of the Lost Hotel "
   },
   {
     "Item": "TM75: Swords Dance",
@@ -2282,7 +2282,7 @@
   {
     "Item": "Payapa Berry-10",
     "Area": "Route 18",
-    "Location/Price": "Down the grind rail by the Wacan Berry tree (requires Cut)"
+    "Location/Price": "Down the grind rail by the Wacan Berry tree "
   },
   {
     "Item": "Salac Berry",
@@ -2297,7 +2297,7 @@
   {
     "Item": "Wacan Berry",
     "Area": "Route 18",
-    "Location/Price": "In front of the Berry tree north of the west end of the bridge (requires Cut) (regenerates after 7 days)"
+    "Location/Price": "In front of the Berry tree north of the west end of the bridge  (regenerates after 7 days)"
   },
   {
     "Item": "PP Max-3",
@@ -2522,7 +2522,7 @@
   {
     "Item": "Elixir",
     "Area": "Route 21",
-    "Location/Price": "In the southwestern-most corner of the route, by Veteran Trisha (requires Cut)"
+    "Location/Price": "In the southwestern-most corner of the route, by Veteran Trisha"
   },
   {
     "Item": "PP Max-10",
@@ -2790,11 +2790,6 @@
     "Location/Price": "Reward for beating Rising Star Tyson"
   },
   {
-    "Item": "Cleanse Tag",
-    "Area": "Route 5",
-    "Location/Price": "Reward for beating Youngster Keita"
-  },
-  {
     "Item": "Hard Stone",
     "Area": "Route 5",
     "Location/Price": "Reward for beating Backpacker Heike"
@@ -2817,7 +2812,7 @@
   {
     "Item": "Sharp Beak",
     "Area": "Route 5",
-    "Location/Price": "Near the entrance to Camphrier Town, at the end of the northern of the two paths blocked by thorny trees (requires Cut)"
+    "Location/Price": "Near the entrance to Camphrier Town, at the end of the northern of the two paths blocked by thorny trees"
   },
   {
     "Item": "Soft Sand",
@@ -2911,8 +2906,8 @@
   },
   {
     "Item": "Pixie Plate",
-    "Area": "Route 6",
-    "Location/Price": "Reward for beating Tourist Eriko"
+    "Area": "Route 7",
+    "Location/Price": "Reward for beating Artist Family Mona & Pablo"
   },
   {
     "Item": "Poké Doll-2",
@@ -3701,5 +3696,6 @@
   }
 
 ]
+
 
 
