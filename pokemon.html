@@ -398,7 +398,8 @@ Promise.all([
   }
 
   // Function to update form-specific data (types, abilities, stats, sprite)
-  async function updateFormData(formName) {
+  // Make it globally accessible via window
+  window.updateFormData = async function(formName) {
     currentFormName = formName;
     currentFormData = pokedexData[formName];
     
