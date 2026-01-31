@@ -268,18 +268,20 @@ Promise.all([
   if (!mon) { document.getElementById("pokemonCard").textContent = "Pokémon not found."; return; }
 
   // ===== DETECT ALTERNATE FORMS =====
-  // Find all forms with the same base name (excluding Nidoran)
+  // Find all forms with the same base name (excluding Nidoran and Meowstic-F)
   const isNidoran = monName.startsWith('Nidoran');
+  const isMeowsticF = monName === 'Meowstic-F';
   let baseFormName = monName;
   let alternateForms = [monName]; // Start with current form
   
-  if (!isNidoran) {
+  if (!isNidoran && !isMeowsticF) {
     // Extract base name (before first dash)
     baseFormName = monName.includes('-') ? monName.split('-')[0] : monName;
     
     // Find all forms with same base (including base form itself)
     alternateForms = Object.keys(pokedexData).filter(name => {
       if (name.startsWith('Nidoran')) return false;
+      if (name === 'Meowstic-F') return false;
       const base = name.includes('-') ? name.split('-')[0] : name;
       return base === baseFormName;
     }).sort(); // Sort to ensure consistent order
@@ -289,9 +291,10 @@ Promise.all([
   let currentFormName = monName;
   let currentFormData = mon;
   
-  // Helper function to check if a Pokemon is an alternate form (has '-' but not Nidoran)
+  // Helper function to check if a Pokemon is an alternate form (has '-' but not Nidoran or Meowstic-F)
   function isAlternateForm(name) {
     if (name.startsWith('Nidoran')) return false;
+    if (name === 'Meowstic-F') return false;
     return name.includes('-');
   }
   
