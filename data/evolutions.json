@@ -174,13 +174,13 @@
     }
   },
   "Nidorina": {
-    "EvolvesFrom": "Nidoran-F",
+    "EvolvesFrom": "Nidoran--F",
     "FromMethod": "Level Up: 16",
     "EvolvesInto": {
       "Nidoqueen": "Level Up: 35"
     }
   },
-  "Nidoran-F": {
+  "Nidoran--F": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
@@ -193,13 +193,13 @@
     "EvolvesInto": {}
   },
   "Nidorino": {
-    "EvolvesFrom": "Nidoran-M",
+    "EvolvesFrom": "Nidoran--M",
     "FromMethod": "Level Up: 16",
     "EvolvesInto": {
       "Nidoking": "Level Up: 35"
     }
   },
-  "Nidoran-M": {
+  "Nidoran--M": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
@@ -808,7 +808,7 @@
   },
   "Mr. Mime": {
     "EvolvesFrom": "Mime Jr.",
-    "FromMethod": "Level Up: 20",
+    "FromMethod": "Level Up: 24",
     "EvolvesInto": {}
   },
   "Scizor": {
@@ -1238,7 +1238,7 @@
   },
   "Sudowoodo": {
     "EvolvesFrom": "Bonsly",
-    "FromMethod": "Level Up: 20",
+    "FromMethod": "Level Up: 24",
     "EvolvesInto": {}
   },
   "Skiploom": {
@@ -1858,14 +1858,14 @@
   },
   "Ninjask": {
     "EvolvesFrom": "Nincada",
-    "FromMethod": "Level Up (Ninjask): 20",
+    "FromMethod": "Level Up (Ninjask): 22",
     "EvolvesInto": {}
   },
   "Nincada": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Ninjask": "Level Up (Ninjask): 20"
+      "Ninjask": "Level Up (Ninjask): 22"
     }
   },
   "Shedinja": {
@@ -2747,14 +2747,14 @@
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Sudowoodo": "Level Up: 20"
+      "Sudowoodo": "Level Up: 24"
     }
   },
   "Mime Jr.": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Mr. Mime": "Level Up: 20"
+      "Mr. Mime": "Level Up: 24"
     }
   },
   "Happiny": {
