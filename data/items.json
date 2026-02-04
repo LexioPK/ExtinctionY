@@ -3010,7 +3010,7 @@
     "Location/Price": "Cliffside area: in the rock north of the entrance to Connecting Cave (hidden)"
   },
   {
-    "Item": "Berry Juice-5",
+    "Item": "Ability Capsule-2",
     "Area": "Route 8 (Cliffside Area)",
     "Location/Price": "On one of the paths in the ledge maze"
   },
@@ -3696,6 +3696,7 @@
   }
 
 ]
+
 
 
 
