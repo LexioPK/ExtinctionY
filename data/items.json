@@ -225,7 +225,7 @@
     "Location/Price": "On the rock on the small isle on the east side of the bay, northeast of the isle with the arrow-shaped grass (hidden)"
   },
   {
-    "Item": "Ability Capsule ",
+    "Item": "Ability Capsule",
     "Area": "Berry Fields",
     "Location/Price": "In the southwest corner of the fields"
   },
@@ -3696,6 +3696,7 @@
   }
 
 ]
+
 
 
 
