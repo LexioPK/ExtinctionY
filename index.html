@@ -724,7 +724,7 @@ function applyFilters() {
     // Hide/show region sections based on whether filters are active
     if (hasActiveFilters) {
         // Hide region sections that have no visible Pokemon
-        Object.entries(regions).forEach(([regionName, regionData]) => {
+        Object.entries(regions).forEach(([_regionName, regionData]) => {
             const regionContent = document.getElementById(`region-${regionData.id}`);
             if (!regionContent) return;
             
@@ -743,7 +743,7 @@ function applyFilters() {
         });
     } else {
         // Show all region sections when no filters are active
-        Object.entries(regions).forEach(([regionName, regionData]) => {
+        Object.entries(regions).forEach(([_regionName, regionData]) => {
             const regionContent = document.getElementById(`region-${regionData.id}`);
             if (!regionContent) return;
             
