@@ -230,11 +230,161 @@
         padding-top: 0;
         padding-bottom: 0;
     }
+
+    /* Advanced Search Styles */
+    .advanced-search-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    .advanced-search-toggle {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .advanced-search-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .advanced-filters {
+        display: none;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 2px solid #e0e0e0;
+    }
+
+    .advanced-filters.show {
+        display: block;
+    }
+
+    .filter-group {
+        margin-bottom: 15px;
+    }
+
+    .filter-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    .filter-group select {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1em;
+        background: white;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+    }
+
+    .filter-group select:focus {
+        outline: none;
+        border-color: #4a90e2;
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .filter-actions button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: all 0.3s ease;
+    }
+
+    .apply-filters {
+        background: #28a745;
+        color: white;
+    }
+
+    .apply-filters:hover {
+        background: #218838;
+    }
+
+    .clear-filters {
+        background: #dc3545;
+        color: white;
+    }
+
+    .clear-filters:hover {
+        background: #c82333;
+    }
+
+    .filter-summary {
+        margin-top: 15px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        font-size: 0.9em;
+        color: #666;
+    }
+
+    .filter-summary.active {
+        background: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+    }
 </style>
 </head>
 <body>
 
 <h1>Pokédex</h1>
+
+<!-- Advanced Search Panel -->
+<div class="advanced-search-container">
+    <button class="advanced-search-toggle" onclick="toggleAdvancedSearch()">
+        <span id="toggle-icon">▼</span>
+        <span>Advanced Filters</span>
+    </button>
+    
+    <div class="advanced-filters" id="advanced-filters">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="filter-group">
+                <label for="type-filter">Filter by Type:</label>
+                <select id="type-filter" onchange="applyFilters()">
+                    <option value="">All Types</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="ability-filter">Filter by Ability:</label>
+                <select id="ability-filter" onchange="applyFilters()">
+                    <option value="">All Abilities</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="filter-actions">
+            <button class="apply-filters" onclick="applyFilters()">Apply Filters</button>
+            <button class="clear-filters" onclick="clearFilters()">Clear All Filters</button>
+        </div>
+        
+        <div class="filter-summary" id="filter-summary">
+            No filters applied
+        </div>
+    </div>
+</div>
 
 <div id="pokedex"></div>
 
@@ -349,6 +499,7 @@ function loadPokedex() {
 
                     const card = document.createElement("div");
                     card.className = "pokemon-card";
+                    card.dataset.pokemonName = name; // Add data attribute for filtering
 
                     card.onclick = () =>
                         (window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`);
@@ -423,6 +574,9 @@ ${statBar("BST", bst)}
                 // Add section to container
                 container.appendChild(regionSection);
             });
+            
+            // Populate filter dropdowns after all Pokemon are loaded
+            populateFilterDropdowns();
         })
         .catch(err => console.error("JSON Load Error:", err));
 }
@@ -474,6 +628,136 @@ function searchPokemon() {
         `;
         })
         .join("");
+}
+
+// Advanced Search Functions
+function toggleAdvancedSearch() {
+    const filters = document.getElementById('advanced-filters');
+    const icon = document.getElementById('toggle-icon');
+    
+    if (filters.classList.contains('show')) {
+        filters.classList.remove('show');
+        icon.textContent = '▼';
+    } else {
+        filters.classList.add('show');
+        icon.textContent = '▲';
+    }
+}
+
+function populateFilterDropdowns() {
+    const typeSet = new Set();
+    const abilitySet = new Set();
+    
+    // Collect all unique types and abilities
+    Object.values(allPokemon).forEach(mon => {
+        if (mon.Type1) typeSet.add(mon.Type1);
+        if (mon.Type2) typeSet.add(mon.Type2);
+        if (mon.Ability1) abilitySet.add(mon.Ability1);
+        if (mon.Ability2) abilitySet.add(mon.Ability2);
+        if (mon.AbilityH) abilitySet.add(mon.AbilityH);
+    });
+    
+    // Populate Type dropdown
+    const typeFilter = document.getElementById('type-filter');
+    Array.from(typeSet).sort().forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        typeFilter.appendChild(option);
+    });
+    
+    // Populate Ability dropdown
+    const abilityFilter = document.getElementById('ability-filter');
+    Array.from(abilitySet).sort().forEach(ability => {
+        const option = document.createElement('option');
+        option.value = ability;
+        option.textContent = ability;
+        abilityFilter.appendChild(option);
+    });
+}
+
+function applyFilters() {
+    const selectedType = document.getElementById('type-filter').value;
+    const selectedAbility = document.getElementById('ability-filter').value;
+    
+    // Update filter summary
+    updateFilterSummary(selectedType, selectedAbility);
+    
+    // Get all Pokemon cards
+    const allCards = document.querySelectorAll('.pokemon-card');
+    let visibleCount = 0;
+    
+    allCards.forEach(card => {
+        const pokemonName = card.dataset.pokemonName;
+        const pokemon = allPokemon[pokemonName];
+        
+        if (!pokemon) {
+            card.style.display = 'none';
+            return;
+        }
+        
+        // Check type match
+        const matchesType = !selectedType || 
+            pokemon.Type1 === selectedType || 
+            pokemon.Type2 === selectedType;
+        
+        // Check ability match
+        const matchesAbility = !selectedAbility ||
+            pokemon.Ability1 === selectedAbility ||
+            pokemon.Ability2 === selectedAbility ||
+            pokemon.AbilityH === selectedAbility;
+        
+        // Show or hide card
+        if (matchesType && matchesAbility) {
+            card.style.display = 'block';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    // Update region headers with filtered counts
+    updateRegionCounts();
+}
+
+function clearFilters() {
+    document.getElementById('type-filter').value = '';
+    document.getElementById('ability-filter').value = '';
+    applyFilters();
+}
+
+function updateFilterSummary(type, ability) {
+    const summary = document.getElementById('filter-summary');
+    const filters = [];
+    
+    if (type) filters.push(`Type: ${type}`);
+    if (ability) filters.push(`Ability: ${ability}`);
+    
+    if (filters.length === 0) {
+        summary.textContent = 'No filters applied';
+        summary.classList.remove('active');
+    } else {
+        summary.textContent = `Active filters: ${filters.join(', ')}`;
+        summary.classList.add('active');
+    }
+}
+
+function updateRegionCounts() {
+    Object.entries(regions).forEach(([regionName, regionData]) => {
+        const regionContent = document.getElementById(`region-${regionData.id}`);
+        if (!regionContent) return;
+        
+        const visibleCards = Array.from(regionContent.querySelectorAll('.pokemon-card'))
+            .filter(card => card.style.display !== 'none');
+        
+        const header = regionContent.previousElementSibling;
+        const countSpan = header.querySelector('.pokemon-count');
+        if (countSpan) {
+            const totalCount = regionContent.querySelectorAll('.pokemon-card').length;
+            const visibleCount = visibleCards.length;
+            countSpan.textContent = `${visibleCount}/${totalCount} Pokémon`;
+        }
+    });
 }
 
 loadPokedex();
