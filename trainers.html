@@ -1065,7 +1065,7 @@
                     
                     // Use Form as display name if available, otherwise use Name
                     const displayName = p.Form || p.Name;
-                    const spriteName = displayName.toLowerCase().replace(/[^a-z0-9]/g, "");
+                    const spriteName = displayName.toLowerCase().replace(/\s+/g, '-');
 
                     // ensure 4 moves, convert empty strings or whitespace to '---'
                     const moves = Array.isArray(p.Moves)
