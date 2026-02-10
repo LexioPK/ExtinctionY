@@ -129,12 +129,12 @@ fetch("header.html")
 </script>
 
 <h1>Pokémon Usage in Trainer Battles</h1>
-<p class="subtitle">Count of how many times each Pokémon appears across all trainer battles</p>
+<p class="subtitle">Complete count of all Pokémon including those not used by trainers</p>
 
 <div class="stats-summary">
     <div class="stat-item">
         <div class="stat-value" id="unique-pokemon-count">-</div>
-        <div class="stat-label">Unique Pokémon</div>
+        <div class="stat-label">Total Pokémon</div>
     </div>
     <div class="stat-item">
         <div class="stat-value" id="total-pokemon-count">-</div>
@@ -143,6 +143,10 @@ fetch("header.html")
     <div class="stat-item">
         <div class="stat-value" id="most-used-pokemon">-</div>
         <div class="stat-label">Most Used</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value" id="zero-use-count">-</div>
+        <div class="stat-label">Not Used by Trainers</div>
     </div>
 </div>
 
@@ -182,6 +186,13 @@ async function loadPokemonCount() {
             }
         });
 
+        // Add all Pokemon from Pokedex with 0 count if not in trainer battles
+        Object.keys(pokedexData).forEach(pokemonName => {
+            if (!pokemonCounts.hasOwnProperty(pokemonName)) {
+                pokemonCounts[pokemonName] = 0;
+            }
+        });
+
         // Sort by Pokedex order
         const sortedPokemon = Object.entries(pokemonCounts).sort((a, b) => {
             const dexA = pokedexData[a[0]]?.SpeciesIdx || 9999;
@@ -189,15 +200,25 @@ async function loadPokemonCount() {
             return dexA - dexB;
         });
 
-        // Find most used Pokemon
-        const mostUsed = sortedPokemon.reduce((max, current) => {
-            return current[1] > max[1] ? current : max;
-        }, ['', 0]);
+        // Find most used Pokemon (excluding those with 0 count)
+        const usedPokemon = sortedPokemon.filter(([name, count]) => count > 0);
+        const mostUsed = usedPokemon.length > 0 
+            ? usedPokemon.reduce((max, current) => current[1] > max[1] ? current : max, ['', 0])
+            : ['None', 0];
+
+        // Count Pokemon with 0 uses
+        const zeroUseCount = sortedPokemon.filter(([name, count]) => count === 0).length;
 
         // Update stats summary
         document.getElementById('unique-pokemon-count').textContent = sortedPokemon.length;
         document.getElementById('total-pokemon-count').textContent = totalAppearances;
         document.getElementById('most-used-pokemon').textContent = `${mostUsed[0]} (${mostUsed[1]}×)`;
+        
+        // Add zero use count if element exists
+        const zeroUseElement = document.getElementById('zero-use-count');
+        if (zeroUseElement) {
+            zeroUseElement.textContent = zeroUseCount;
+        }
 
         // Hide loading message
         document.getElementById('loading').style.display = 'none';
