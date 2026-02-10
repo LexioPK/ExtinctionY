@@ -725,8 +725,11 @@ function applyFilters() {
     if (hasActiveFilters) {
         // Hide region sections that have no visible Pokemon
         Object.entries(regions).forEach(([regionName, regionData]) => {
-            const regionSection = document.getElementById(`region-${regionData.id}`).parentElement;
             const regionContent = document.getElementById(`region-${regionData.id}`);
+            if (!regionContent) return;
+            
+            const regionSection = regionContent.parentElement;
+            if (!regionSection) return;
             
             const visibleCards = Array.from(regionContent.querySelectorAll('.pokemon-card'))
                 .filter(card => card.style.display !== 'none');
@@ -741,7 +744,12 @@ function applyFilters() {
     } else {
         // Show all region sections when no filters are active
         Object.entries(regions).forEach(([regionName, regionData]) => {
-            const regionSection = document.getElementById(`region-${regionData.id}`).parentElement;
+            const regionContent = document.getElementById(`region-${regionData.id}`);
+            if (!regionContent) return;
+            
+            const regionSection = regionContent.parentElement;
+            if (!regionSection) return;
+            
             regionSection.style.display = 'block';
         });
     }
