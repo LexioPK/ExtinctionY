@@ -55,9 +55,6 @@
     }
 
     #pokedex {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
         padding: 10px;
         position: relative;
     }
@@ -174,6 +171,65 @@
         height: 100%;
         border-radius: 4px;
     }
+
+    /* Regional sections */
+    .region-section {
+        margin-bottom: 30px;
+    }
+
+    .region-header {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        user-select: none;
+    }
+
+    .region-header:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    }
+
+    .region-header h2 {
+        margin: 0;
+        font-size: 1.4em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .toggle-icon {
+        font-size: 0.8em;
+        transition: transform 0.3s ease;
+    }
+
+    .pokemon-count {
+        font-size: 0.9em;
+        opacity: 0.9;
+    }
+
+    .region-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 20px 10px;
+        max-height: none;
+        overflow: hidden;
+        transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+
+    .region-content.collapsed {
+        max-height: 0 !important;
+        opacity: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 </style>
 </head>
 <body>
@@ -184,6 +240,30 @@
 
 <script>
 let allPokemon = {};
+
+// Region definitions
+const regions = {
+    'Kanto': { min: 1, max: 151, id: 'kanto' },
+    'Johto': { min: 152, max: 251, id: 'johto' },
+    'Hoenn': { min: 252, max: 386, id: 'hoenn' },
+    'Sinnoh': { min: 387, max: 493, id: 'sinnoh' },
+    'Unova': { min: 494, max: 649, id: 'unova' },
+    'Kalos': { min: 650, max: 721, id: 'kalos' }
+};
+
+function toggleRegion(regionId) {
+    const content = document.getElementById(`region-${regionId}`);
+    const header = content.previousElementSibling;
+    const icon = header.querySelector('.toggle-icon');
+    
+    if (content.classList.contains('collapsed')) {
+        content.classList.remove('collapsed');
+        icon.textContent = '▼';
+    } else {
+        content.classList.add('collapsed');
+        icon.textContent = '►';
+    }
+}
 
 function loadPokedex() {
     fetch("data/pokedex.json")
@@ -217,51 +297,92 @@ function loadPokedex() {
                 return `${spriteFolders[0]}/${lowerName}.png`;
             };
 
+            // Group Pokemon by region
+            const regionGroups = {};
+            Object.keys(regions).forEach(regionName => {
+                regionGroups[regionName] = [];
+            });
+
             entries.forEach(([name, mon]) => {
-                const bst = mon.BST ??
-                    (mon.BaseStats.HP +
-                     mon.BaseStats.Atk +
-                     mon.BaseStats.Def +
-                     mon.BaseStats.SpA +
-                     mon.BaseStats.SpD +
-                     mon.BaseStats.Spe);
+                // Find which region this Pokemon belongs to
+                const dexNum = mon.SpeciesIdx;
+                for (const [regionName, regionData] of Object.entries(regions)) {
+                    if (dexNum >= regionData.min && dexNum <= regionData.max) {
+                        regionGroups[regionName].push([name, mon]);
+                        break;
+                    }
+                }
+            });
 
-                const card = document.createElement("div");
-                card.className = "pokemon-card";
+            // Create regional sections
+            Object.keys(regions).forEach(regionName => {
+                const regionData = regions[regionName];
+                const pokemonInRegion = regionGroups[regionName];
 
-                card.onclick = () =>
-                    (window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`);
+                // Create region section
+                const regionSection = document.createElement('div');
+                regionSection.className = 'region-section';
 
-                /* ⭐ Stat bar generator */
-                const statBar = (label, value) => {
-                    const colors = {
-                        HP: "#FF5959",
-                        Atk: "#F5AC78",
-                        Def: "#FAE078",
-                        SpA: "#9DB7F5",
-                        SpD: "#A7DB8D",
-                        Spe: "#FA92B2",
-                        BST: "#B88CFF"
+                // Create region header
+                const regionHeader = document.createElement('div');
+                regionHeader.className = 'region-header';
+                regionHeader.onclick = () => toggleRegion(regionData.id);
+                regionHeader.innerHTML = `
+                    <h2>${regionName} (#${String(regionData.min).padStart(3, '0')}-#${String(regionData.max).padStart(3, '0')}) <span class="toggle-icon">▼</span></h2>
+                    <span class="pokemon-count">${pokemonInRegion.length} Pokémon</span>
+                `;
+
+                // Create region content container
+                const regionContent = document.createElement('div');
+                regionContent.className = 'region-content';
+                regionContent.id = `region-${regionData.id}`;
+
+                // Add Pokemon cards to this region
+                pokemonInRegion.forEach(([name, mon]) => {
+                    const bst = mon.BST ??
+                        (mon.BaseStats.HP +
+                         mon.BaseStats.Atk +
+                         mon.BaseStats.Def +
+                         mon.BaseStats.SpA +
+                         mon.BaseStats.SpD +
+                         mon.BaseStats.Spe);
+
+                    const card = document.createElement("div");
+                    card.className = "pokemon-card";
+
+                    card.onclick = () =>
+                        (window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`);
+
+                    /* ⭐ Stat bar generator */
+                    const statBar = (label, value) => {
+                        const colors = {
+                            HP: "#FF5959",
+                            Atk: "#F5AC78",
+                            Def: "#FAE078",
+                            SpA: "#9DB7F5",
+                            SpD: "#A7DB8D",
+                            Spe: "#FA92B2",
+                            BST: "#B88CFF"
+                        };
+
+                        let min = (label === "BST") ? 250 : 15;
+                        let max = (label === "BST") ? 600 : 180;
+
+                        let pct = ((value - min) / (max - min)) * 100;
+                        pct = Math.max(3, Math.min(100, pct));
+
+                        return `
+                            <div class="stat-row">
+                                <div class="stat-name">${label}</div>
+                                <div class="stat-num">${value}</div>
+                                <div class="stat-bar-bg">
+                                    <div class="stat-bar-fill" style="width:${pct}%; background:${colors[label]};"></div>
+                                </div>
+                            </div>
+                        `;
                     };
 
-                    let min = (label === "BST") ? 250 : 15;
-                    let max = (label === "BST") ? 600 : 180;
-
-                    let pct = ((value - min) / (max - min)) * 100;
-                    pct = Math.max(3, Math.min(100, pct));
-
-                    return `
-                        <div class="stat-row">
-                            <div class="stat-name">${label}</div>
-                            <div class="stat-num">${value}</div>
-                            <div class="stat-bar-bg">
-                                <div class="stat-bar-fill" style="width:${pct}%; background:${colors[label]};"></div>
-                            </div>
-                        </div>
-                    `;
-                };
-
-                card.innerHTML = `
+                    card.innerHTML = `
 <h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${name}</h3>
 
 <img class="sprite"
@@ -292,7 +413,15 @@ ${statBar("Spe", mon.BaseStats.Spe)}
 ${statBar("BST", bst)}
 `;
 
-                container.appendChild(card);
+                    regionContent.appendChild(card);
+                });
+
+                // Add header and content to section
+                regionSection.appendChild(regionHeader);
+                regionSection.appendChild(regionContent);
+
+                // Add section to container
+                container.appendChild(regionSection);
             });
         })
         .catch(err => console.error("JSON Load Error:", err));
