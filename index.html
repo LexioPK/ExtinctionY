@@ -278,6 +278,10 @@
         font-size: 1.4em;
     }
 
+    .hidden {
+        display: none;
+    }
+
     /* Advanced Search Styles */
     .advanced-search-container {
         max-width: 1200px;
@@ -432,7 +436,7 @@
     </div>
 </div>
 
-<div id="filtered-results-container" style="display: none;">
+<div id="filtered-results-container" class="hidden">
     <div class="filtered-results-header">
         <h2>Filtered Results <span id="filtered-count"></span></h2>
     </div>
@@ -745,8 +749,8 @@ function applyFilters() {
     
     if (hasActiveFilters) {
         // Hide the regional pokedex and show filtered results
-        pokedexContainer.style.display = 'none';
-        filteredResultsContainer.style.display = 'block';
+        pokedexContainer.classList.add('hidden');
+        filteredResultsContainer.classList.remove('hidden');
         
         // Clear the filtered results container
         filteredResults.innerHTML = '';
@@ -777,6 +781,7 @@ function applyFilters() {
             
             // If matches, clone the card and add to filtered results
             if (matchesType && matchesAbility) {
+                // Clone the card - note: event listeners from onclick attributes are preserved
                 const clonedCard = card.cloneNode(true);
                 matchingCards.push({
                     card: clonedCard,
@@ -799,8 +804,8 @@ function applyFilters() {
         
     } else {
         // Show the regional pokedex and hide filtered results
-        pokedexContainer.style.display = 'block';
-        filteredResultsContainer.style.display = 'none';
+        pokedexContainer.classList.remove('hidden');
+        filteredResultsContainer.classList.add('hidden');
     }
 }
 
