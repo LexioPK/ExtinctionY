@@ -1062,7 +1062,10 @@
                 tr.Pokemon.forEach(p => {
                     const pDiv = document.createElement("div");
                     pDiv.className = "pokemon-col";
-                    const spriteName = p.Name.toLowerCase().replace(/[^a-z0-9]/g, "");
+                    
+                    // Use Form as display name if available, otherwise use Name
+                    const displayName = p.Form || p.Name;
+                    const spriteName = displayName.toLowerCase().replace(/[^a-z0-9]/g, "");
 
                     // ensure 4 moves, convert empty strings or whitespace to '---'
                     const moves = Array.isArray(p.Moves)
@@ -1089,7 +1092,7 @@
                     }).join("");
 
                     // Try to find types from pokedex.json
-                    const dexEntry = findPokedexEntry(p.Name);
+                    const dexEntry = findPokedexEntry(displayName);
                     let typesHtml = "";
                     if (dexEntry) {
                         const t1 = dexEntry.Type1;
@@ -1121,12 +1124,12 @@
                     pDiv.innerHTML = `
                         <div class="pokemon-inner">
                             <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
-                                <a href="pokemon.html?name=${encodeURIComponent(p.Name)}" style="text-decoration:none; color:#000;">
-                                    ${p.Name} — Lv ${p.Level}
+                                <a href="pokemon.html?name=${encodeURIComponent(displayName)}" style="text-decoration:none; color:#000;">
+                                    ${displayName} — Lv ${p.Level}
                                 </a>
                             </div>
 
-                            <a href="pokemon.html?name=${encodeURIComponent(p.Name)}">
+                            <a href="pokemon.html?name=${encodeURIComponent(displayName)}">
                                 <img class="poke-img"
                                      src="pokemon_sprites/${spriteName}.png"
                                      onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
