@@ -191,6 +191,31 @@
         user-select: none;
     }
 
+    /* Region-specific colors */
+    .region-kanto .region-header {
+        background: linear-gradient(135deg, #FF6B6B 0%, #C92A2A 100%);
+    }
+
+    .region-johto .region-header {
+        background: linear-gradient(135deg, #FFD93D 0%, #F5A623 100%);
+    }
+
+    .region-hoenn .region-header {
+        background: linear-gradient(135deg, #51CF66 0%, #2B8A3E 100%);
+    }
+
+    .region-sinnoh .region-header {
+        background: linear-gradient(135deg, #74C0FC 0%, #1971C2 100%);
+    }
+
+    .region-unova .region-header {
+        background: linear-gradient(135deg, #B197FC 0%, #7048E8 100%);
+    }
+
+    .region-kalos .region-header {
+        background: linear-gradient(135deg, #FF8ED4 0%, #E64980 100%);
+    }
+
     .region-header:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 12px rgba(0,0,0,0.2);
@@ -229,6 +254,28 @@
         opacity: 0;
         padding-top: 0;
         padding-bottom: 0;
+    }
+
+    /* Filtered results container */
+    .filtered-results {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 20px 10px;
+    }
+
+    .filtered-results-header {
+        background: linear-gradient(135deg, #20c997 0%, #12b886 100%);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    .filtered-results-header h2 {
+        margin: 0;
+        font-size: 1.4em;
     }
 
     /* Advanced Search Styles */
@@ -385,6 +432,13 @@
     </div>
 </div>
 
+<div id="filtered-results-container" style="display: none;">
+    <div class="filtered-results-header">
+        <h2>Filtered Results <span id="filtered-count"></span></h2>
+    </div>
+    <div id="filtered-results" class="filtered-results"></div>
+</div>
+
 <div id="pokedex"></div>
 
 <script>
@@ -470,7 +524,7 @@ function loadPokedex() {
 
                 // Create region section
                 const regionSection = document.createElement('div');
-                regionSection.className = 'region-section';
+                regionSection.className = `region-section region-${regionData.id}`;
 
                 // Create region header
                 const regionHeader = document.createElement('div');
@@ -685,73 +739,68 @@ function applyFilters() {
     // Check if any filters are active
     const hasActiveFilters = selectedType || selectedAbility;
     
-    // Get all Pokemon cards
-    const allCards = document.querySelectorAll('.pokemon-card');
-    let visibleCount = 0;
+    const pokedexContainer = document.getElementById('pokedex');
+    const filteredResultsContainer = document.getElementById('filtered-results-container');
+    const filteredResults = document.getElementById('filtered-results');
     
-    allCards.forEach(card => {
-        const pokemonName = card.dataset.pokemonName;
-        const pokemon = allPokemon[pokemonName];
-        
-        if (!pokemon) {
-            card.style.display = 'none';
-            return;
-        }
-        
-        // Check type match
-        const matchesType = !selectedType || 
-            pokemon.Type1 === selectedType || 
-            pokemon.Type2 === selectedType;
-        
-        // Check ability match
-        const matchesAbility = !selectedAbility ||
-            pokemon.Ability1 === selectedAbility ||
-            pokemon.Ability2 === selectedAbility ||
-            pokemon.AbilityH === selectedAbility;
-        
-        // Show or hide card
-        if (matchesType && matchesAbility) {
-            card.style.display = 'block';
-            visibleCount++;
-        } else {
-            card.style.display = 'none';
-        }
-    });
-    
-    // Update region headers with filtered counts
-    updateRegionCounts();
-    
-    // Hide/show region sections based on whether filters are active
     if (hasActiveFilters) {
-        // Hide region sections that have no visible Pokemon
-        Object.entries(regions).forEach(([_regionName, regionData]) => {
-            const regionContent = document.getElementById(`region-${regionData.id}`);
-            if (!regionContent) return;
+        // Hide the regional pokedex and show filtered results
+        pokedexContainer.style.display = 'none';
+        filteredResultsContainer.style.display = 'block';
+        
+        // Clear the filtered results container
+        filteredResults.innerHTML = '';
+        
+        // Get all Pokemon cards and filter them
+        const allCards = document.querySelectorAll('.pokemon-card');
+        let visibleCount = 0;
+        const matchingCards = [];
+        
+        allCards.forEach(card => {
+            const pokemonName = card.dataset.pokemonName;
+            const pokemon = allPokemon[pokemonName];
             
-            const regionSection = regionContent.parentElement;
-            if (!regionSection) return;
+            if (!pokemon) {
+                return;
+            }
             
-            const visibleCards = Array.from(regionContent.querySelectorAll('.pokemon-card'))
-                .filter(card => card.style.display !== 'none');
+            // Check type match
+            const matchesType = !selectedType || 
+                pokemon.Type1 === selectedType || 
+                pokemon.Type2 === selectedType;
             
-            // Hide the entire region section if no Pokemon match the filter
-            if (visibleCards.length === 0) {
-                regionSection.style.display = 'none';
-            } else {
-                regionSection.style.display = 'block';
+            // Check ability match
+            const matchesAbility = !selectedAbility ||
+                pokemon.Ability1 === selectedAbility ||
+                pokemon.Ability2 === selectedAbility ||
+                pokemon.AbilityH === selectedAbility;
+            
+            // If matches, clone the card and add to filtered results
+            if (matchesType && matchesAbility) {
+                const clonedCard = card.cloneNode(true);
+                matchingCards.push({
+                    card: clonedCard,
+                    dexNum: pokemon.SpeciesIdx
+                });
+                visibleCount++;
             }
         });
-    } else {
-        // Show all region sections when no filters are active
-        Object.entries(regions).forEach(([_regionName, regionData]) => {
-            const regionContent = document.getElementById(`region-${regionData.id}`);
-            if (!regionContent) return;
-            
-            const regionSection = regionContent.parentElement;
-            if (!regionSection) return;
-            
-            regionSection.style.display = 'block';
+        
+        // Sort matching cards by dex number
+        matchingCards.sort((a, b) => a.dexNum - b.dexNum);
+        
+        // Add sorted cards to filtered results
+        matchingCards.forEach(({ card }) => {
+            filteredResults.appendChild(card);
         });
+        
+        // Update filtered count
+        document.getElementById('filtered-count').textContent = `(${visibleCount} Pokémon)`;
+        
+    } else {
+        // Show the regional pokedex and hide filtered results
+        pokedexContainer.style.display = 'block';
+        filteredResultsContainer.style.display = 'none';
     }
 }
 
