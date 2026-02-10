@@ -376,7 +376,6 @@
         </div>
         
         <div class="filter-actions">
-            <button class="apply-filters" onclick="applyFilters()">Apply Filters</button>
             <button class="clear-filters" onclick="clearFilters()">Clear All Filters</button>
         </div>
         
@@ -683,6 +682,9 @@ function applyFilters() {
     // Update filter summary
     updateFilterSummary(selectedType, selectedAbility);
     
+    // Check if any filters are active
+    const hasActiveFilters = selectedType || selectedAbility;
+    
     // Get all Pokemon cards
     const allCards = document.querySelectorAll('.pokemon-card');
     let visibleCount = 0;
@@ -718,6 +720,31 @@ function applyFilters() {
     
     // Update region headers with filtered counts
     updateRegionCounts();
+    
+    // Hide/show region sections based on whether filters are active
+    if (hasActiveFilters) {
+        // Hide region sections that have no visible Pokemon
+        Object.entries(regions).forEach(([regionName, regionData]) => {
+            const regionSection = document.getElementById(`region-${regionData.id}`).parentElement;
+            const regionContent = document.getElementById(`region-${regionData.id}`);
+            
+            const visibleCards = Array.from(regionContent.querySelectorAll('.pokemon-card'))
+                .filter(card => card.style.display !== 'none');
+            
+            // Hide the entire region section if no Pokemon match the filter
+            if (visibleCards.length === 0) {
+                regionSection.style.display = 'none';
+            } else {
+                regionSection.style.display = 'block';
+            }
+        });
+    } else {
+        // Show all region sections when no filters are active
+        Object.entries(regions).forEach(([regionName, regionData]) => {
+            const regionSection = document.getElementById(`region-${regionData.id}`).parentElement;
+            regionSection.style.display = 'block';
+        });
+    }
 }
 
 function clearFilters() {
