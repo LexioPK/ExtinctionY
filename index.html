@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -781,8 +782,12 @@ function applyFilters() {
             
             // If matches, clone the card and add to filtered results
             if (matchesType && matchesAbility) {
-                // Clone the card - note: event listeners from onclick attributes are preserved
+                // Clone the card and re-attach click handler
                 const clonedCard = card.cloneNode(true);
+                // Re-attach the onclick handler since cloneNode doesn't copy JS event listeners
+                clonedCard.onclick = () => {
+                    window.location.href = `pokemon.html?name=${encodeURIComponent(pokemonName)}`;
+                };
                 matchingCards.push({
                     card: clonedCard,
                     dexNum: pokemon.SpeciesIdx
