@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pokemon Count - Extinction Y</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Standardized header styles & script -->
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+
+<style>
+    body {
+        font-family: "Lexend", sans-serif;
+        background: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    #pokemon-count-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .pokemon-count-card {
+        background: white;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        transition: transform 0.2s;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .pokemon-count-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .sprite {
+        display: block;
+        margin: 0 auto;
+        width: 96px;
+        height: 96px;
+        image-rendering: pixelated;
+    }
+
+    .pokemon-name {
+        font-weight: 600;
+        font-size: 1.1em;
+        margin: 10px 0 5px 0;
+    }
+
+    .pokemon-count {
+        color: #4285F4;
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+
+    .count-label {
+        color: #666;
+        font-size: 0.9em;
+    }
+
+    .dex-number {
+        color: #999;
+        font-size: 0.85em;
+    }
+
+    #loading {
+        text-align: center;
+        font-size: 1.2em;
+        margin: 50px;
+    }
+
+    .stats-summary {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        text-align: center;
+    }
+
+    .stats-summary .stat-item {
+        display: inline-block;
+        margin: 0 30px;
+    }
+
+    .stats-summary .stat-value {
+        font-size: 2em;
+        font-weight: bold;
+        color: #4285F4;
+    }
+
+    .stats-summary .stat-label {
+        color: #666;
+        margin-top: 5px;
+    }
+</style>
+</head>
+<body>
+
+<!-- Include navigation header -->
+<div id="header-placeholder"></div>
+<script>
+fetch("header.html")
+  .then(response => response.text())
+  .then(html => {
+    document.getElementById("header-placeholder").innerHTML = html;
+    // Set active tab
+    const activeTab = document.getElementById("link-pokemoncount");
+    if (activeTab) activeTab.classList.add("active");
+  });
+</script>
+
+<h1>Pokémon Usage in Trainer Battles</h1>
+<p class="subtitle">Count of how many times each Pokémon appears across all trainer battles</p>
+
+<div class="stats-summary">
+    <div class="stat-item">
+        <div class="stat-value" id="unique-pokemon-count">-</div>
+        <div class="stat-label">Unique Pokémon</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value" id="total-pokemon-count">-</div>
+        <div class="stat-label">Total Appearances</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value" id="most-used-pokemon">-</div>
+        <div class="stat-label">Most Used</div>
+    </div>
+</div>
+
+<div id="loading">Loading Pokémon usage data...</div>
+
+<div id="pokemon-count-grid"></div>
+
+<script>
+async function loadPokemonCount() {
+    try {
+        // Load required data
+        const [trainersResponse, pokedexResponse] = await Promise.all([
+            fetch('data/trainers.json'),
+            fetch('data/pokedex.json')
+        ]);
+
+        const trainersData = await trainersResponse.json();
+        const pokedexData = await pokedexResponse.json();
+
+        // Count Pokemon appearances
+        const pokemonCounts = {};
+        let totalAppearances = 0;
+
+        Object.values(trainersData).forEach(route => {
+            if (route.Trainers) {
+                route.Trainers.forEach(trainer => {
+                    if (trainer.Pokemon) {
+                        trainer.Pokemon.forEach(pokemon => {
+                            const name = pokemon.Name;
+                            if (name) {
+                                pokemonCounts[name] = (pokemonCounts[name] || 0) + 1;
+                                totalAppearances++;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        // Sort by Pokedex order
+        const sortedPokemon = Object.entries(pokemonCounts).sort((a, b) => {
+            const dexA = pokedexData[a[0]]?.SpeciesIdx || 9999;
+            const dexB = pokedexData[b[0]]?.SpeciesIdx || 9999;
+            return dexA - dexB;
+        });
+
+        // Find most used Pokemon
+        const mostUsed = sortedPokemon.reduce((max, current) => {
+            return current[1] > max[1] ? current : max;
+        }, ['', 0]);
+
+        // Update stats summary
+        document.getElementById('unique-pokemon-count').textContent = sortedPokemon.length;
+        document.getElementById('total-pokemon-count').textContent = totalAppearances;
+        document.getElementById('most-used-pokemon').textContent = `${mostUsed[0]} (${mostUsed[1]}×)`;
+
+        // Hide loading message
+        document.getElementById('loading').style.display = 'none';
+
+        // Display Pokemon cards
+        const grid = document.getElementById('pokemon-count-grid');
+        sortedPokemon.forEach(([pokemonName, count]) => {
+            const dexNum = pokedexData[pokemonName]?.SpeciesIdx || '???';
+            const card = createPokemonCard(pokemonName, count, dexNum);
+            grid.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error('Error loading Pokemon count data:', error);
+        document.getElementById('loading').textContent = 'Error loading data. Please try again.';
+    }
+}
+
+function createPokemonCard(name, count, dexNum) {
+    const card = document.createElement('div');
+    card.className = 'pokemon-count-card';
+    card.onclick = () => window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`;
+
+    // Try to load sprite from multiple locations
+    const spriteSlug = name.toLowerCase().replace(/\s+/g, '-');
+    const sprite = document.createElement('img');
+    sprite.className = 'sprite';
+    sprite.alt = name;
+    
+    // Try pokemon_sprites first, then pokemon_sprties2 as fallback
+    sprite.src = `pokemon_sprites/${spriteSlug}.png`;
+    sprite.onerror = () => {
+        sprite.src = `pokemon_sprties2/${spriteSlug}.png`;
+        sprite.onerror = () => {
+            sprite.src = 'pokemon_sprites/unknown.png';
+            sprite.onerror = null;
+        };
+    };
+
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'pokemon-name';
+    nameDiv.textContent = name;
+
+    const dexDiv = document.createElement('div');
+    dexDiv.className = 'dex-number';
+    dexDiv.textContent = `#${String(dexNum).padStart(3, '0')}`;
+
+    const countDiv = document.createElement('div');
+    countDiv.className = 'pokemon-count';
+    countDiv.textContent = `${count}×`;
+
+    const labelDiv = document.createElement('div');
+    labelDiv.className = 'count-label';
+    labelDiv.textContent = count === 1 ? 'appearance' : 'appearances';
+
+    card.appendChild(sprite);
+    card.appendChild(nameDiv);
+    card.appendChild(dexDiv);
+    card.appendChild(countDiv);
+    card.appendChild(labelDiv);
+
+    return card;
+}
+
+// Load data when page loads
+loadPokemonCount();
+</script>
+
+</body>
+</html>
