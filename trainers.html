@@ -1358,7 +1358,7 @@
                         ? `<strong>Item:</strong> ${createItemIcon(pk.Item)} ${pk.Item}`
                         : `<strong>Item:</strong> None`;
 
-                    const moves = pk.Moves ? pk.Moves.split(",").map(m => m.trim()).filter(Boolean) : [];
+                    const moves = pk.Moves ? (Array.isArray(pk.Moves) ? pk.Moves : pk.Moves.split(",").map(m => m.trim()).filter(Boolean)) : [];
                     let movesHtml = '';
                     moves.forEach((moveName, idx) => {
                         const moveEntry = findMoveEntry(moveName);
@@ -1659,7 +1659,10 @@
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
-            document.getElementById(`${tabName}-content`).classList.add('active');
+            const targetContent = document.getElementById(`${tabName}-content`);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
         }
 
         // If no content available at all, show message
