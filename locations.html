@@ -1,0 +1,1287 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Locations</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Standardized header styles & script -->
+    <link rel="stylesheet" href="header.css">
+    <script src="header.js" defer></script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root{
+            --poke-border: 2px;
+            --trainer-border-color: #6f6f6f;
+            --pokemon-border-color: #555555;
+            --inner-padding-x: 10px;
+            --inner-padding-y: 12px;
+            --moves-separator-thick: 4px;
+            --sep-color: #e6e6e6;
+        }
+
+        /* base layout */
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 65px;
+            left: 0;
+            width: 320px;
+            height: calc(100vh - 65px);
+            background: white;
+            overflow-y: auto;
+            box-shadow: 3px 0 8px rgba(0,0,0,0.07);
+            padding: 15px;
+        }
+
+        .route-tab {
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: #f2f2f2;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .route-tab:hover {
+            background: #e3e3e3;
+        }
+
+        .route-tab.active {
+            background: #1976d2;
+            color: white;
+            font-weight: 600;
+        }
+
+        .location-section {
+            padding: 20px;
+            max-width: 1600px;
+            margin-left: 340px;
+            margin-top: 90px;
+            width: calc(100% - 340px);
+        }
+
+        .route-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .area-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-button {
+            padding: 10px 20px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.2s;
+            min-width: 120px;
+        }
+        
+        .nav-button:hover:not(:disabled) {
+            background: #1565c0;
+        }
+        
+        .nav-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .nav-button-prev {
+            margin-right: auto;
+        }
+        
+        .nav-button-next {
+            margin-left: auto;
+        }
+
+        /* Tabs similar to pokemon.html */
+        .location-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .location-tab-btn {
+            padding: 10px 20px;
+            background: #e0e0e0;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        
+        .location-tab-btn:hover {
+            background: #d0d0d0;
+            transform: translateY(-1px);
+        }
+        
+        .location-tab-btn.active {
+            background: #4285F4;
+            color: white;
+            border-color: #4285F4;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .sub-header {
+            margin-top: 25px;
+            font-size: 1.15rem;
+            text-decoration: underline;
+        }
+
+        /* Trainer styles */
+        .trainer-card {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .trainer-header {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .trainer-image {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .trainer-row {
+            display: flex;
+            flex-direction: row;
+            margin-top: 8px;
+            padding: var(--inner-padding-y) var(--inner-padding-x);
+            border: var(--poke-border) solid var(--trainer-border-color);
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .trainer-info-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            flex-shrink: 0;
+            width: 240px;
+            gap: 8px;
+        }
+
+        .trainer-row > .pokemon-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .pokemon-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: var(--poke-border) solid var(--pokemon-border-color);
+            border-radius: 8px;
+            background: #fff;
+            padding: 10px 8px;
+            width: 202px;
+            box-sizing: border-box;
+        }
+
+        .pokemon-info {
+            width: 100%;
+            text-align: center;
+        }
+
+        .pokemon-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+            color: #2c2c2c;
+        }
+
+        .pokemon-sprite {
+            width: 96px;
+            height: 96px;
+            image-rendering: pixelated;
+            margin: 5px 0;
+        }
+
+        .pokemon-types {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin: 5px 0;
+        }
+
+        .type-badge {
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .ability-row {
+            margin: 5px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .ability-name {
+            font-weight: 700;
+            text-decoration: underline;
+            cursor: help;
+        }
+
+        .item-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
+        .move-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            margin-top: 10px;
+        }
+
+        .move-row {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 0;
+            border-top: var(--moves-separator-thick) solid var(--sep-color);
+            font-size: 0.85rem;
+        }
+
+        .move-row:first-child {
+            border-top: none;
+        }
+
+        .move-name {
+            flex: 1;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .move-type-badge {
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: white;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .move-cat-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Battle-info bubble */
+        .battle-info {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 8px 0;
+            flex-wrap: wrap;
+        }
+
+        .info-bubble {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .battle-type-single { background: #4caf50; }
+        .battle-type-double { background: #ff9800; }
+        .battle-type-triple { background: #9c27b0; }
+        .battle-type-rotation { background: #00bcd4; }
+        .mandatory { background: #f44336; }
+        .optional { background: #2196f3; }
+        .reward-bubble { background: #673ab7; }
+
+        /* Encounter styles */
+        .encounter-type-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .encounter-type-header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #1976d2;
+        }
+
+        .pokemon-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pokemon-box {
+            background: #fafafa;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            min-width: 140px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .pokemon-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .pokemon-box .pokemon-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .pokemon-box .pokemon-sprite {
+            width: 80px;
+            height: 80px;
+            margin: 5px auto;
+        }
+
+        .encounter-details {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .encounter-chance {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1976d2;
+            margin-top: 5px;
+        }
+
+        /* Items table */
+        .items-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .items-table th,
+        .items-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .items-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .items-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .item-icon-cell {
+            width: 40px;
+            text-align: center;
+        }
+
+        .item-icon-cell img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Type colors */
+        .type-normal { background: #A8A77A; }
+        .type-fire { background: #EE8130; }
+        .type-water { background: #6390F0; }
+        .type-electric { background: #F7D02C; }
+        .type-grass { background: #7AC74C; }
+        .type-ice { background: #96D9D6; }
+        .type-fighting { background: #C22E28; }
+        .type-poison { background: #A33EA1; }
+        .type-ground { background: #E2BF65; }
+        .type-flying { background: #A98FF3; }
+        .type-psychic { background: #F95587; }
+        .type-bug { background: #A6B91A; }
+        .type-rock { background: #B6A136; }
+        .type-ghost { background: #735797; }
+        .type-dragon { background: #6F35FC; }
+        .type-dark { background: #705746; }
+        .type-steel { background: #B7B7CE; }
+        .type-fairy { background: #D685AD; }
+
+        @media (max-width: 1000px) {
+            .sidebar { width: 280px; }
+            .location-section { margin-left: 300px; width: calc(100% - 300px); }
+        }
+
+        @media (max-width: 860px) {
+            .sidebar { display: none; }
+            .location-section { margin-left: 20px; width: calc(100% - 40px); }
+        }
+
+        @media (max-width: 520px) {
+            .location-section { margin-top: 70px; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="sidebar" id="sidebar"></div>
+<div class="location-section" id="locationSection"></div>
+
+<script>
+    let trainerData = {};
+    let encounterData = [];
+    let itemsData = [];
+    let groupedLocations = {};
+    let pokedexData = {};
+    let movesData = {};
+    let abilitiesData = {};
+
+    let routeOrder = [
+        "Aquacorde Town","Route 2","Santalune Forest","Route 3","Route 22","Route 22 - Part 2",
+        "Santalune City","Santalune Gym","Route 4","Lumiose City","Route 5","Camphrier Town",
+        "Route 6","Route 6 - Pathway","Route 6 - East","Route 6 - West","Route 7",
+        "Connecting Cave","Route 8","Route 8 - Upper","Route 8 - Lower","Route 8 - Sea",
+        "Route 9","Glittering Cave","Ambrette Town Aqaurium","Route 10","Cyllage City",
+        "Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11","Reflection Cave",
+        "Reflection Cave - 1F","Reflection Cave - B1F","Tower of Mastery","Shalour Gym",
+        "Route 12","Azure Bay","Coumarine City","Coumarine City - Seaside",
+        "Coumarine City - Cliffside","Coumarine Gym","Route 13/Kalos Power Plant",
+        "Route 13/Kalos Power Plant - Route 13","Route 13/Power Plant - Kalos Power Plant",
+        "Lumiose Gym/Prism Tower", "Lumiose Gym/Prism Tower - Prism Tower", "Lumiose Gym/Prism Tower - Lumiose Gym", "Route 14","Laverre City","Laverre Gym","Poke Ball Factory","Route 15",
+        "Route 16","Lost Hotel","Dendemille Town","Frost Cavern",
+        "Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F",
+        "Route 17","Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs",
+        "Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Labs - B1",
+        "Lysandre Labs - B3","Team Flare Secret HQ - Entrance",
+        "Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
+        "Terminus Cave - B2F","Couriway Town","Route 19","Route 20","Snowbelle City",
+        "Snowbelle Gym","Route 21","Victory Road","Victory Road - Entrance",
+        "Victory Road - Inside 1","Victory Road - Outside 2","Victory Road - Inside 2",
+        "Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4",
+        "Victory Road - Inside 4","Elite Four/Kalos League Champion",
+        "Elite Four/Kalos League Champion - Elite Four",
+        "Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade"
+    ];
+
+    const statColors = {
+        "Atk": "#FF4500",
+        "Def": "#FFD700",
+        "SpA": "#1E90FF",
+        "SpD": "#32CD32",
+        "Spe": "#9400D3"
+    };
+
+    function colorNature(raw) {
+        if (!raw) return raw;
+        const plus = raw.match(/\+([A-Za-z]+)/);
+        if (!plus) return raw;
+        const stat = plus[1];
+        const color = statColors[stat] || "#000";
+        return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
+    }
+    
+    function normalizeItemName(itemName) {
+        if (!itemName || itemName === "No Item" || itemName === "No Reward") return null;
+        return itemName.toLowerCase().replace(/\s+/g, '-');
+    }
+    
+    function createItemIcon(itemName, className = 'item-icon') {
+        const normalized = normalizeItemName(itemName);
+        if (!normalized) return '';
+        return `<img class="${className}" src="image/item/${normalized}.png" alt="${itemName}" title="${itemName}" onerror="this.style.display='none'">`;
+    }
+    
+    function findAbilityEntry(abilityName) {
+        if (!abilitiesData || !abilityName || abilityName === "---") return null;
+        if (abilitiesData[abilityName]) return abilitiesData[abilityName];
+        const target = normalizeForCompare(abilityName);
+        for (const key in abilitiesData) {
+            if (normalizeForCompare(key) === target) return abilitiesData[key];
+        }
+        return null;
+    }
+
+    function findMoveEntry(moveName) {
+        if (!movesData || !moveName || moveName === "---") return null;
+        if (movesData[moveName]) return movesData[moveName];
+        const target = normalizeForCompare(moveName);
+        for (const key in movesData) {
+            if (normalizeForCompare(key) === target) return movesData[key];
+        }
+        return null;
+    }
+
+    function normalizeForCompare(s) {
+        return (s || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
+    }
+
+    function findPokedexEntry(pokeName) {
+        if (!pokedexData || !pokeName) return null;
+        if (pokedexData[pokeName]) return pokedexData[pokeName];
+        const target = normalizeForCompare(pokeName);
+        for (const key in pokedexData) {
+            if (normalizeForCompare(key) === target) return pokedexData[key];
+        }
+        return null;
+    }
+
+    function findRootForArea(fullAreaName) {
+        const leftOfDash = (fullAreaName || "").split(" - ")[0].trim();
+        const leftNorm = normalizeForCompare(leftOfDash);
+
+        for (const candidate of routeOrder) {
+            const candLeft = (candidate || "").split(" - ")[0].trim();
+            const candNorm = normalizeForCompare(candLeft);
+
+            if (!candNorm) continue;
+            if (leftNorm === candNorm) return candLeft.split(/[\/\\]/)[0].trim();
+
+            const leftParts = leftOfDash.split(/[\/\\]/).map(p=>p.trim()).filter(Boolean);
+            const candParts = candLeft.split(/[\/\\]/).map(p=>p.trim()).filter(Boolean);
+            for (const lp of leftParts) {
+                for (const cp of candParts) {
+                    if (normalizeForCompare(lp) === normalizeForCompare(cp)) {
+                        return candLeft.split(/[\/\\]/)[0].trim();
+                    }
+                }
+            }
+        }
+
+        const root = leftOfDash.split(/[\/\\]/)[0].trim();
+        return root || leftOfDash;
+    }
+
+    function preferredTabLabelForRoot(rootKey) {
+        const rootNorm = normalizeForCompare(rootKey);
+        for (const candidate of routeOrder) {
+            const left = (candidate || "").split(" - ")[0].trim();
+            if (!left) continue;
+            if (normalizeForCompare(left).startsWith(rootNorm) || rootNorm.startsWith(normalizeForCompare(left))) {
+                if (left.includes("/") || left.includes("\\")) return left;
+            }
+        }
+        for (const candidate of routeOrder) {
+            const left = (candidate || "").split(" - ")[0].trim();
+            if (!left) continue;
+            if (normalizeForCompare(left) === rootNorm) return left;
+        }
+        return rootKey;
+    }
+
+    function routeIndexFor(name) {
+        if (!name) return Infinity;
+        let i = routeOrder.indexOf(name);
+        if (i !== -1) return i;
+        const nameLeft = name.split(" - ")[0].split(/[\/\\]/)[0].trim();
+        for (let j = 0; j < routeOrder.length; j++) {
+            const candidate = routeOrder[j];
+            const candLeft = candidate.split(" - ")[0].split(/[\/\\]/)[0].trim();
+            if (candLeft === nameLeft) return j;
+        }
+        return Infinity;
+    }
+
+    async function loadAllData() {
+        const sidebar = document.getElementById("sidebar");
+
+        const [trainersRes, encountersRes, itemsRes, pokedexRes, movesRes, abilitiesRes] = await Promise.all([
+            fetch("data/trainers.json"),
+            fetch("data/encounters.json"),
+            fetch("data/items.json"),
+            fetch("data/pokedex.json"),
+            fetch("data/moves.json"),
+            fetch("data/abilities.json")
+        ]);
+        
+        trainerData = await trainersRes.json();
+        encounterData = await encountersRes.json();
+        itemsData = await itemsRes.json();
+        pokedexData = await pokedexRes.json();
+        movesData = await movesRes.json();
+        abilitiesData = await abilitiesRes.json();
+
+        // Build groupedLocations by combining all location sources
+        groupedLocations = {};
+        
+        // Add trainer locations
+        for (const fullName in trainerData) {
+            const root = findRootForArea(fullName);
+            if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
+            groupedLocations[root].fullNames.add(fullName);
+        }
+        
+        // Add encounter locations
+        encounterData.forEach((loc, idx) => {
+            if (loc && loc.Location) {
+                const root = findRootForArea(loc.Location);
+                if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
+                groupedLocations[root].fullNames.add(loc.Location);
+            }
+        });
+        
+        // Add item locations
+        itemsData.forEach(item => {
+            if (item && item.Area) {
+                const root = findRootForArea(item.Area);
+                if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
+                groupedLocations[root].fullNames.add(item.Area);
+            }
+        });
+
+        // Convert Sets to Arrays and sort
+        Object.keys(groupedLocations).forEach(root => {
+            groupedLocations[root].fullNames = Array.from(groupedLocations[root].fullNames);
+            groupedLocations[root].fullNames.sort((a, b) => {
+                const ia = routeIndexFor(a);
+                const ib = routeIndexFor(b);
+                if (ia === ib) return a.localeCompare(b);
+                return ia - ib;
+            });
+        });
+
+        // Build sidebar tabs
+        const added = new Set();
+        for (const entry of routeOrder) {
+            const rootCandidate = (entry || "").split(" - ")[0].split(/[\/\\]/)[0].trim();
+            if (!rootCandidate) continue;
+            const matchKey = Object.keys(groupedLocations).find(k => normalizeForCompare(k) === normalizeForCompare(rootCandidate));
+            if (!matchKey || added.has(matchKey)) continue;
+            const displayLabel = preferredTabLabelForRoot(matchKey);
+            const tab = document.createElement("div");
+            tab.className = "route-tab";
+            tab.dataset.base = matchKey;
+            tab.textContent = displayLabel;
+            tab.title = matchKey;
+            tab.onclick = () => {
+                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+                displayLocation(matchKey);
+            };
+            sidebar.appendChild(tab);
+            added.add(matchKey);
+        }
+
+        const remaining = Object.keys(groupedLocations).filter(k => !added.has(k)).sort((a,b) => a.localeCompare(b));
+        for (const root of remaining) {
+            const displayLabel = preferredTabLabelForRoot(root);
+            const tab = document.createElement("div");
+            tab.className = "route-tab";
+            tab.dataset.base = root;
+            tab.textContent = displayLabel;
+            tab.title = root;
+            tab.onclick = () => {
+                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+                displayLocation(root);
+            };
+            sidebar.appendChild(tab);
+            added.add(root);
+        }
+
+        if (sidebar.children.length) {
+            sidebar.children[0].classList.add("active");
+            displayLocation(sidebar.children[0].dataset.base);
+        }
+    }
+
+    function getSubHeaderLabel(subAreaKey) {
+        const parts = subAreaKey.split(" - ");
+        if (parts.length > 1 && parts[1].trim()) return parts[1].trim();
+        const left = parts[0].trim();
+        const leftParts = left.split(/[\/\\]/).map(s => s.trim()).filter(Boolean);
+        if (leftParts.length > 1) return leftParts[leftParts.length - 1];
+        return left;
+    }
+
+    function displayLocation(baseName) {
+        const container = document.getElementById("locationSection");
+        container.innerHTML = "";
+        
+        const allTabs = Array.from(document.querySelectorAll(".route-tab"));
+        const currentIndex = allTabs.findIndex(tab => tab.dataset.base === baseName);
+        const hasPrev = currentIndex > 0;
+        const hasNext = currentIndex < allTabs.length - 1;
+        
+        function createNavigationButtons(includeTitle = true) {
+            const navContainer = document.createElement("div");
+            navContainer.className = "route-header-container";
+            
+            const prevButton = document.createElement("button");
+            prevButton.className = "nav-button nav-button-prev";
+            if (hasPrev) {
+                const prevTab = allTabs[currentIndex - 1];
+                prevButton.textContent = `← ${prevTab.textContent}`;
+                prevButton.onclick = () => {
+                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                    prevTab.classList.add("active");
+                    displayLocation(prevTab.dataset.base);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            } else {
+                prevButton.textContent = "← Previous";
+                prevButton.disabled = true;
+            }
+            navContainer.appendChild(prevButton);
+            
+            if (includeTitle) {
+                const title = document.createElement("h1");
+                title.className = "area-title";
+                title.textContent = preferredTabLabelForRoot(baseName);
+                navContainer.appendChild(title);
+            }
+            
+            const nextButton = document.createElement("button");
+            nextButton.className = "nav-button nav-button-next";
+            if (hasNext) {
+                const nextTab = allTabs[currentIndex + 1];
+                nextButton.textContent = `${nextTab.textContent} →`;
+                nextButton.onclick = () => {
+                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                    nextTab.classList.add("active");
+                    displayLocation(nextTab.dataset.base);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            } else {
+                nextButton.textContent = "Next →";
+                nextButton.disabled = true;
+            }
+            navContainer.appendChild(nextButton);
+            
+            return navContainer;
+        }
+        
+        container.appendChild(createNavigationButtons(true));
+        
+        // Create tabs
+        const tabsContainer = document.createElement("div");
+        tabsContainer.className = "location-tabs";
+        
+        const battlesTab = document.createElement("div");
+        battlesTab.className = "location-tab-btn active";
+        battlesTab.textContent = "Battles";
+        battlesTab.dataset.tab = "battles";
+        
+        const encountersTab = document.createElement("div");
+        encountersTab.className = "location-tab-btn";
+        encountersTab.textContent = "Encounters";
+        encountersTab.dataset.tab = "encounters";
+        
+        const itemsTab = document.createElement("div");
+        itemsTab.className = "location-tab-btn";
+        itemsTab.textContent = "Items";
+        itemsTab.dataset.tab = "items";
+        
+        tabsContainer.appendChild(battlesTab);
+        tabsContainer.appendChild(encountersTab);
+        tabsContainer.appendChild(itemsTab);
+        container.appendChild(tabsContainer);
+        
+        // Create tab content containers
+        const battlesContent = document.createElement("div");
+        battlesContent.className = "tab-content active";
+        battlesContent.id = "battles-content";
+        
+        const encountersContent = document.createElement("div");
+        encountersContent.className = "tab-content";
+        encountersContent.id = "encounters-content";
+        
+        const itemsContent = document.createElement("div");
+        itemsContent.className = "tab-content";
+        itemsContent.id = "items-content";
+        
+        container.appendChild(battlesContent);
+        container.appendChild(encountersContent);
+        container.appendChild(itemsContent);
+        
+        // Tab switching logic
+        [battlesTab, encountersTab, itemsTab].forEach(tab => {
+            tab.onclick = () => {
+                document.querySelectorAll(".location-tab-btn").forEach(t => t.classList.remove("active"));
+                document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+                tab.classList.add("active");
+                document.getElementById(`${tab.dataset.tab}-content`).classList.add("active");
+            };
+        });
+        
+        // Populate each tab
+        populateBattlesTab(battlesContent, baseName);
+        populateEncountersTab(encountersContent, baseName);
+        populateItemsTab(itemsContent, baseName);
+        
+        container.appendChild(createNavigationButtons(false));
+    }
+
+    function populateBattlesTab(container, baseName) {
+        const subAreas = groupedLocations[baseName]?.fullNames || [];
+        const trainerSubAreas = subAreas.filter(name => trainerData[name]);
+        
+        if (trainerSubAreas.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#666; font-style:italic; margin:40px 0;">No trainer battles in this location.</p>';
+            return;
+        }
+
+        trainerSubAreas.forEach((subArea, idx) => {
+            const trainers = trainerData[subArea];
+            if (!trainers || trainers.length === 0) return;
+
+            if (trainerSubAreas.length > 1) {
+                const subHeader = document.createElement("h3");
+                subHeader.className = "sub-header";
+                subHeader.textContent = getSubHeaderLabel(subArea);
+                container.appendChild(subHeader);
+            }
+
+            trainers.forEach(trainer => {
+                const card = document.createElement("div");
+                card.className = "trainer-card";
+
+                const header = document.createElement("div");
+                header.className = "trainer-header";
+                header.textContent = trainer.TrainerClass ? `${trainer.TrainerClass} ${trainer.TrainerName || ""}`.trim() : (trainer.TrainerName || "Trainer");
+                card.appendChild(header);
+
+                const row = document.createElement("div");
+                row.className = "trainer-row";
+
+                const infoCol = document.createElement("div");
+                infoCol.className = "trainer-info-column";
+
+                const trainerImg = document.createElement("img");
+                trainerImg.className = "trainer-image";
+                trainerImg.src = findTrainerImage(trainer.TrainerClass, trainer.TrainerName);
+                trainerImg.onerror = () => { trainerImg.src = "image/trainer/default.png"; };
+                infoCol.appendChild(trainerImg);
+
+                const battleInfo = document.createElement("div");
+                battleInfo.className = "battle-info";
+                
+                const battleType = trainer.BattleType || "Single";
+                const typeClass = `battle-type-${battleType.toLowerCase()}`;
+                const typeBubble = document.createElement("span");
+                typeBubble.className = `info-bubble ${typeClass}`;
+                typeBubble.textContent = battleType;
+                battleInfo.appendChild(typeBubble);
+
+                const isMandatory = trainer.Mandatory !== undefined ? trainer.Mandatory : true;
+                const mandBubble = document.createElement("span");
+                mandBubble.className = `info-bubble ${isMandatory ? 'mandatory' : 'optional'}`;
+                mandBubble.textContent = isMandatory ? "Mandatory" : "Optional";
+                battleInfo.appendChild(mandBubble);
+
+                if (trainer.Reward && trainer.Reward !== "No Reward") {
+                    const rewardBubble = document.createElement("span");
+                    rewardBubble.className = "info-bubble reward-bubble";
+                    rewardBubble.innerHTML = `Reward: ${trainer.Reward}${createItemIcon(trainer.Reward)}`;
+                    battleInfo.appendChild(rewardBubble);
+                }
+
+                infoCol.appendChild(battleInfo);
+                row.appendChild(infoCol);
+
+                const pokemonContainer = document.createElement("div");
+                pokemonContainer.className = "pokemon-container";
+
+                (trainer.Party || []).forEach(poke => {
+                    const pokeCol = document.createElement("div");
+                    pokeCol.className = "pokemon-col";
+
+                    const pokeInfo = document.createElement("div");
+                    pokeInfo.className = "pokemon-info";
+
+                    const pokeName = document.createElement("div");
+                    pokeName.className = "pokemon-name";
+                    pokeName.textContent = poke.Pokemon || "Unknown";
+                    pokeInfo.appendChild(pokeName);
+
+                    const levelGender = document.createElement("div");
+                    levelGender.textContent = `Lv. ${poke.Level || "?"}${poke.Gender ? " (" + poke.Gender + ")" : ""}`;
+                    pokeInfo.appendChild(levelGender);
+
+                    const pokeEntry = findPokedexEntry(poke.Pokemon);
+                    if (pokeEntry) {
+                        const sprite = document.createElement("img");
+                        sprite.className = "pokemon-sprite";
+                        const spriteFile = (pokeEntry.DexNum || "000").toString().padStart(3, "0");
+                        sprite.src = `pokemon_sprites/${spriteFile}.png`;
+                        sprite.onerror = () => { sprite.src = "pokemon_sprites/000.png"; };
+                        pokeInfo.appendChild(sprite);
+
+                        const types = document.createElement("div");
+                        types.className = "pokemon-types";
+                        [pokeEntry.Type1, pokeEntry.Type2].filter(Boolean).forEach(type => {
+                            const badge = document.createElement("span");
+                            badge.className = `type-badge type-${type.toLowerCase()}`;
+                            badge.textContent = type;
+                            types.appendChild(badge);
+                        });
+                        pokeInfo.appendChild(types);
+                    }
+
+                    if (poke.Ability && poke.Ability !== "---") {
+                        const abilityRow = document.createElement("div");
+                        abilityRow.className = "ability-row";
+                        const abilityEntry = findAbilityEntry(poke.Ability);
+                        const abilityText = document.createElement("span");
+                        abilityText.className = "ability-name";
+                        abilityText.textContent = poke.Ability;
+                        if (abilityEntry && abilityEntry.Description) {
+                            abilityText.title = abilityEntry.Description;
+                        }
+                        abilityRow.appendChild(abilityText);
+                        pokeInfo.appendChild(abilityRow);
+                    }
+
+                    if (poke.HeldItem && poke.HeldItem !== "No Item") {
+                        const itemRow = document.createElement("div");
+                        itemRow.innerHTML = `<strong>Item:</strong> ${poke.HeldItem}${createItemIcon(poke.HeldItem)}`;
+                        pokeInfo.appendChild(itemRow);
+                    }
+
+                    if (poke.Nature) {
+                        const natureRow = document.createElement("div");
+                        natureRow.innerHTML = `<strong>Nature:</strong> ${colorNature(poke.Nature)}`;
+                        pokeInfo.appendChild(natureRow);
+                    }
+
+                    pokeCol.appendChild(pokeInfo);
+
+                    const moves = [poke.Move1, poke.Move2, poke.Move3, poke.Move4].filter(m => m && m !== "---");
+                    if (moves.length > 0) {
+                        const moveList = document.createElement("div");
+                        moveList.className = "move-list";
+                        moves.forEach(moveName => {
+                            const moveRow = document.createElement("div");
+                            moveRow.className = "move-row";
+                            const moveEntry = findMoveEntry(moveName);
+                            
+                            const moveNameSpan = document.createElement("span");
+                            moveNameSpan.className = "move-name";
+                            moveNameSpan.textContent = moveName;
+                            moveRow.appendChild(moveNameSpan);
+
+                            if (moveEntry) {
+                                if (moveEntry.Type) {
+                                    const typeBadge = document.createElement("span");
+                                    typeBadge.className = `move-type-badge type-${moveEntry.Type.toLowerCase()}`;
+                                    typeBadge.textContent = moveEntry.Type;
+                                    moveRow.appendChild(typeBadge);
+                                }
+                                if (moveEntry.Category) {
+                                    const catIcon = document.createElement("img");
+                                    catIcon.className = "move-cat-icon";
+                                    catIcon.src = `image/category/${moveEntry.Category.toLowerCase()}.png`;
+                                    catIcon.alt = moveEntry.Category;
+                                    catIcon.onerror = () => { catIcon.style.display = 'none'; };
+                                    moveRow.appendChild(catIcon);
+                                }
+                            }
+                            moveList.appendChild(moveRow);
+                        });
+                        pokeCol.appendChild(moveList);
+                    }
+
+                    pokemonContainer.appendChild(pokeCol);
+                });
+
+                row.appendChild(pokemonContainer);
+                card.appendChild(row);
+                container.appendChild(card);
+            });
+        });
+    }
+
+    function populateEncountersTab(container, baseName) {
+        const subAreas = groupedLocations[baseName]?.fullNames || [];
+        const encounterIndices = [];
+        
+        subAreas.forEach(subArea => {
+            encounterData.forEach((loc, idx) => {
+                if (loc && loc.Location === subArea) {
+                    encounterIndices.push(idx);
+                }
+            });
+        });
+
+        if (encounterIndices.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#666; font-style:italic; margin:40px 0;">No wild encounters in this location.</p>';
+            return;
+        }
+
+        const encounters = aggregateEncounters(encounterIndices);
+        
+        displayEncounterSection(container, "Grass / Terrain Encounters", encounters.grass);
+        displayEncounterSection(container, "Fishing", encounters.fishing);
+        displayEncounterSection(container, "Rock Smash", encounters.rockSmash);
+        displayEncounterSection(container, "Surfing", encounters.surfing);
+        displayEncounterSection(container, "Horde Encounters", encounters.hordes);
+    }
+
+    function aggregateEncounters(indices) {
+        const result = {
+            grass: [],
+            fishing: [],
+            rockSmash: [],
+            surfing: [],
+            hordes: []
+        };
+
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location || !location.Encounters) return;
+
+            location.Encounters.forEach(enc => {
+                const type = enc.EncounterType || "";
+                if (type.toLowerCase().includes("horde")) {
+                    result.hordes.push(enc);
+                } else if (type.toLowerCase().includes("rock smash")) {
+                    result.rockSmash.push(enc);
+                } else if (type.toLowerCase().includes("surf")) {
+                    result.surfing.push(enc);
+                } else if (type.toLowerCase().includes("rod")) {
+                    result.fishing.push(enc);
+                } else {
+                    result.grass.push(enc);
+                }
+            });
+        });
+
+        return result;
+    }
+
+    function displayEncounterSection(container, title, encounters) {
+        if (!encounters || encounters.length === 0) return;
+
+        const section = document.createElement("div");
+        section.className = "encounter-type-section";
+
+        const header = document.createElement("h3");
+        header.className = "encounter-type-header";
+        header.textContent = title;
+        section.appendChild(header);
+
+        // Group by species
+        const speciesMap = {};
+        encounters.forEach(enc => {
+            const species = enc.Species || "Unknown";
+            if (!speciesMap[species]) {
+                speciesMap[species] = {
+                    minLevel: enc.MinLevel,
+                    maxLevel: enc.MaxLevel,
+                    chance: 0,
+                    encounterTypes: new Set()
+                };
+            }
+            speciesMap[species].minLevel = Math.min(speciesMap[species].minLevel || 999, enc.MinLevel || 999);
+            speciesMap[species].maxLevel = Math.max(speciesMap[species].maxLevel || 0, enc.MaxLevel || 0);
+            speciesMap[species].chance += parseFloat(enc.EncounterChance || 0);
+            speciesMap[species].encounterTypes.add(enc.EncounterType || "");
+        });
+
+        const grid = document.createElement("div");
+        grid.className = "pokemon-grid";
+
+        Object.keys(speciesMap).forEach(species => {
+            const data = speciesMap[species];
+            const box = document.createElement("div");
+            box.className = "pokemon-box";
+            box.onclick = () => { window.location.href = `pokemon.html?name=${encodeURIComponent(species)}`; };
+
+            const name = document.createElement("div");
+            name.className = "pokemon-name";
+            name.textContent = species;
+            box.appendChild(name);
+
+            const pokeEntry = findPokedexEntry(species);
+            if (pokeEntry) {
+                const sprite = document.createElement("img");
+                sprite.className = "pokemon-sprite";
+                const spriteFile = (pokeEntry.DexNum || "000").toString().padStart(3, "0");
+                sprite.src = `pokemon_sprites/${spriteFile}.png`;
+                sprite.onerror = () => { sprite.src = "pokemon_sprites/000.png"; };
+                box.appendChild(sprite);
+            }
+
+            const details = document.createElement("div");
+            details.className = "encounter-details";
+            details.textContent = `Lv. ${data.minLevel}${data.minLevel !== data.maxLevel ? "-" + data.maxLevel : ""}`;
+            box.appendChild(details);
+
+            const chance = document.createElement("div");
+            chance.className = "encounter-chance";
+            chance.textContent = `${data.chance.toFixed(1)}%`;
+            box.appendChild(chance);
+
+            grid.appendChild(box);
+        });
+
+        section.appendChild(grid);
+        container.appendChild(section);
+    }
+
+    function populateItemsTab(container, baseName) {
+        const subAreas = groupedLocations[baseName]?.fullNames || [];
+        const locationItems = itemsData.filter(item => subAreas.includes(item.Area));
+
+        if (locationItems.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#666; font-style:italic; margin:40px 0;">No items in this location.</p>';
+            return;
+        }
+
+        // Group by sub-area if multiple
+        const itemsBySubArea = {};
+        locationItems.forEach(item => {
+            const area = item.Area;
+            if (!itemsBySubArea[area]) itemsBySubArea[area] = [];
+            itemsBySubArea[area].push(item);
+        });
+
+        Object.keys(itemsBySubArea).forEach(area => {
+            const section = document.createElement("div");
+            section.className = "items-section";
+
+            if (subAreas.length > 1) {
+                const subHeader = document.createElement("h3");
+                subHeader.style.marginTop = "0";
+                subHeader.textContent = getSubHeaderLabel(area);
+                section.appendChild(subHeader);
+            }
+
+            const table = document.createElement("table");
+            table.className = "items-table";
+
+            const thead = document.createElement("thead");
+            thead.innerHTML = `
+                <tr>
+                    <th class="item-icon-cell">Icon</th>
+                    <th>Item</th>
+                    <th>Location / Price</th>
+                </tr>
+            `;
+            table.appendChild(thead);
+
+            const tbody = document.createElement("tbody");
+            itemsBySubArea[area].forEach(item => {
+                const row = document.createElement("tr");
+                
+                const iconCell = document.createElement("td");
+                iconCell.className = "item-icon-cell";
+                const normalized = normalizeItemName(item.Item);
+                if (normalized) {
+                    const icon = document.createElement("img");
+                    icon.src = `image/item/${normalized}.png`;
+                    icon.alt = item.Item;
+                    icon.onerror = () => { icon.style.display = 'none'; };
+                    iconCell.appendChild(icon);
+                }
+                row.appendChild(iconCell);
+
+                const nameCell = document.createElement("td");
+                nameCell.textContent = item.Item || "";
+                row.appendChild(nameCell);
+
+                const locCell = document.createElement("td");
+                locCell.textContent = item["Location/Price"] || "";
+                row.appendChild(locCell);
+
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+
+            section.appendChild(table);
+            container.appendChild(section);
+        });
+    }
+
+    function findTrainerImage(trainerClass, trainerName) {
+        const normalizeForFile = (s) => (s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        
+        const attempts = [
+            `${normalizeForFile(trainerClass)}`,
+            `${normalizeForFile(trainerClass)}${normalizeForFile(trainerName)}`,
+            `${normalizeForFile(trainerName)}`,
+        ];
+
+        for (const filename of attempts) {
+            if (filename) return `image/trainer/${filename}.png`;
+        }
+        return "image/trainer/default.png";
+    }
+
+    loadAllData();
+</script>
+
+</body>
+</html>
