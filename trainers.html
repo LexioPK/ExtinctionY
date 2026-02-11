@@ -1451,18 +1451,17 @@
             card.className = "encounter-card";
             
             const pokemonName = enc.PokemonName || "Unknown";
-            const displayName = pokemonName;
-            const sprites = getPokemonSpritePath(displayName);
+            const sprites = getPokemonSpritePath(pokemonName);
             
             const nameEl = document.createElement("div");
             nameEl.className = "encounter-pokemon-name";
-            nameEl.innerHTML = `<a href="pokemon.html?name=${encodeURIComponent(displayName)}" style="text-decoration:none; color:#000;">${displayName}</a>`;
+            nameEl.innerHTML = `<a href="pokemon.html?name=${encodeURIComponent(pokemonName)}" style="text-decoration:none; color:#000;">${pokemonName}</a>`;
             card.appendChild(nameEl);
             
             const icon = document.createElement("img");
             icon.className = "encounter-icon";
-            icon.src = getPokemonIconPath(displayName);
-            icon.alt = displayName;
+            icon.src = getPokemonIconPath(pokemonName);
+            icon.alt = pokemonName;
             icon.onerror = function() { 
                 this.onerror = null;
                 this.src = sprites.primary;
@@ -1476,7 +1475,7 @@
             };
             card.appendChild(icon);
             
-            const dexEntry = findPokedexEntry(displayName);
+            const dexEntry = findPokedexEntry(pokemonName);
             if (dexEntry) {
                 const typesDiv = document.createElement("div");
                 typesDiv.className = "types";
@@ -1493,7 +1492,7 @@
             
             const details = document.createElement("div");
             details.className = "encounter-details";
-            details.innerHTML = `Level: ${enc.MinLevel}${enc.MinLevel !== enc.MaxLevel ? `-${enc.MaxLevel}` : ''}<br>Rate: ${enc.Rarity}%`;
+            details.innerHTML = `Level: ${enc.MinLevel}${enc.MinLevel !== enc.MaxLevel ? `-${enc.MaxLevel}` : ''}<br>Rate: ${enc.Chance || "Unknown"}`;
             card.appendChild(details);
             
             grid.appendChild(card);
