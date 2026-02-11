@@ -643,8 +643,21 @@
         return null;
     }
 
+    const NATURES_DATA = {
+        'Hardy': ['', ''], 'Lonely': ['Attack', 'Defense'], 'Brave': ['Attack', 'Speed'],
+        'Adamant': ['Attack', 'Sp. Atk'], 'Naughty': ['Attack', 'Sp. Def'],
+        'Bold': ['Defense', 'Attack'], 'Docile': ['', ''], 'Relaxed': ['Defense', 'Speed'],
+        'Impish': ['Defense', 'Sp. Atk'], 'Lax': ['Defense', 'Sp. Def'],
+        'Timid': ['Speed', 'Attack'], 'Hasty': ['Speed', 'Defense'], 'Serious': ['', ''],
+        'Jolly': ['Speed', 'Sp. Atk'], 'Naive': ['Speed', 'Sp. Def'],
+        'Modest': ['Sp. Atk', 'Attack'], 'Mild': ['Sp. Atk', 'Defense'], 'Quiet': ['Sp. Atk', 'Speed'],
+        'Bashful': ['', ''], 'Rash': ['Sp. Atk', 'Sp. Def'],
+        'Calm': ['Sp. Def', 'Attack'], 'Gentle': ['Sp. Def', 'Defense'], 'Sassy': ['Sp. Def', 'Speed'],
+        'Careful': ['Sp. Def', 'Sp. Atk'], 'Quirky': ['', '']
+    };
+
     function normalizeItemName(itemName) {
-        return itemName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+        return itemName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
     }
 
     function createItemIcon(itemName, className = '') {
@@ -655,21 +668,28 @@
 
     function colorNature(nature) {
         if (!nature || nature === "---") return nature;
-        const naturesData = {
-            'Hardy': ['', ''], 'Lonely': ['Attack', 'Defense'], 'Brave': ['Attack', 'Speed'],
-            'Adamant': ['Attack', 'Sp. Atk'], 'Naughty': ['Attack', 'Sp. Def'],
-            'Bold': ['Defense', 'Attack'], 'Docile': ['', ''], 'Relaxed': ['Defense', 'Speed'],
-            'Impish': ['Defense', 'Sp. Atk'], 'Lax': ['Defense', 'Sp. Def'],
-            'Timid': ['Speed', 'Attack'], 'Hasty': ['Speed', 'Defense'], 'Serious': ['', ''],
-            'Jolly': ['Speed', 'Sp. Atk'], 'Naive': ['Speed', 'Sp. Def'],
-            'Modest': ['Sp. Atk', 'Attack'], 'Mild': ['Sp. Atk', 'Defense'], 'Quiet': ['Sp. Atk', 'Speed'],
-            'Bashful': ['', ''], 'Rash': ['Sp. Atk', 'Sp. Def'],
-            'Calm': ['Sp. Def', 'Attack'], 'Gentle': ['Sp. Def', 'Defense'], 'Sassy': ['Sp. Def', 'Speed'],
-            'Careful': ['Sp. Def', 'Sp. Atk'], 'Quirky': ['', '']
-        };
-        const [plus, minus] = naturesData[nature] || ['', ''];
+        const [plus, minus] = NATURES_DATA[nature] || ['', ''];
         if (!plus && !minus) return nature;
         return `${nature} <span style="color: #388e3c;">+${plus}</span> <span style="color: #d32f2f;">-${minus}</span>`;
+    }
+
+    function setupImageFallback(imgElement, paths) {
+        let currentIndex = 0;
+        
+        const tryNextPath = () => {
+            if (currentIndex < paths.length) {
+                imgElement.src = paths[currentIndex];
+                currentIndex++;
+            }
+        };
+        
+        imgElement.onerror = () => {
+            if (currentIndex < paths.length) {
+                tryNextPath();
+            }
+        };
+        
+        tryNextPath();
     }
 
     function getPokemonSpritePath(pokemonName, withFallback = true) {
@@ -1173,6 +1193,7 @@
                         ? `<span title="${abilityTooltip}">${abilityText}</span>`
                         : abilityText;
                     
+                    // Create the pokemon div structure
                     pDiv.innerHTML = `
                         <div class="pokemon-inner">
                             <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
@@ -1182,16 +1203,7 @@
                             </div>
 
                             <a href="pokemon.html?name=${encodeURIComponent(displayName)}">
-                                <img class="poke-img"
-                                     src="${sprites.primary}"
-                                     onerror="
-                                         this.onerror=null;
-                                         this.src='${sprites.fallback1}';
-                                         this.onerror=function(){
-                                             this.onerror=null;
-                                             this.src='${sprites.fallback2}';
-                                         }
-                                     ">
+                                <img class="poke-img" alt="${displayName}">
                             </a>
 
                             <div class="types">
@@ -1216,6 +1228,10 @@
                             </div>
                         </div>
                     `;
+                    
+                    // Set up image fallback after innerHTML is set
+                    const pokeImg = pDiv.querySelector('.poke-img');
+                    setupImageFallback(pokeImg, [sprites.primary, sprites.fallback1, sprites.fallback2]);
                     
                     pokemonContainer.appendChild(pDiv);
                 });
@@ -1460,19 +1476,13 @@
             
             const icon = document.createElement("img");
             icon.className = "encounter-icon";
-            icon.src = getPokemonIconPath(pokemonName);
             icon.alt = pokemonName;
-            icon.onerror = function() { 
-                this.onerror = null;
-                this.src = sprites.primary;
-                this.onerror = function() {
-                    this.onerror = null;
-                    this.src = sprites.fallback1;
-                    this.onerror = function() {
-                        this.src = sprites.fallback2;
-                    };
-                };
-            };
+            setupImageFallback(icon, [
+                getPokemonIconPath(pokemonName),
+                sprites.primary,
+                sprites.fallback1,
+                sprites.fallback2
+            ]);
             card.appendChild(icon);
             
             const dexEntry = findPokedexEntry(pokemonName);
