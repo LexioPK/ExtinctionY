@@ -678,14 +678,13 @@
         
         const tryNextPath = () => {
             if (currentIndex < paths.length) {
+                imgElement.onerror = () => {
+                    currentIndex++;
+                    tryNextPath();
+                };
                 imgElement.src = paths[currentIndex];
-                currentIndex++;
-            }
-        };
-        
-        imgElement.onerror = () => {
-            if (currentIndex < paths.length) {
-                tryNextPath();
+            } else {
+                imgElement.onerror = null;
             }
         };
         
@@ -1083,28 +1082,10 @@
                         const img = document.createElement("img");
                         img.alt = trainerNames[idx] || tr.TrainerClass || '';
                         img.className = "trainer-image";
-                        
-                        let attemptCount = 0;
-                        const MAX_ATTEMPTS = 2;
-                        
-                        const tryImage = () => {
-                            attemptCount++;
-                            if (attemptCount <= MAX_ATTEMPTS) {
-                                img.src = `image/trainer_images/${imageFile}.png`;
-                            } else {
-                                img.style.display = 'none';
-                            }
-                        };
-                        
+                        img.src = `image/trainer_images/${imageFile}.png`;
                         img.onerror = () => {
-                            if (attemptCount < MAX_ATTEMPTS) {
-                                tryImage();
-                            } else {
-                                img.style.display = 'none';
-                            }
+                            img.style.display = 'none';
                         };
-                        
-                        tryImage();
                         imagesContainer.appendChild(img);
                     });
                     
