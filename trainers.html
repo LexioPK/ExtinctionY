@@ -657,6 +657,7 @@
     };
 
     function normalizeItemName(itemName) {
+        if (!itemName || typeof itemName !== 'string') return '';
         return itemName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
     }
 
@@ -674,6 +675,8 @@
     }
 
     function setupImageFallback(imgElement, paths) {
+        if (!imgElement || !paths || !Array.isArray(paths) || paths.length === 0) return;
+        
         let currentIndex = 0;
         
         const tryNextPath = () => {
