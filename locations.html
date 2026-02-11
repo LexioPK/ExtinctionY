@@ -191,74 +191,184 @@
             border-radius: 8px;
         }
 
-        .trainer-row {
-            display: flex;
-            flex-direction: row;
-            margin-top: 8px;
-            padding: var(--inner-padding-y) var(--inner-padding-x);
-            border: var(--poke-border) solid var(--trainer-border-color);
-            border-radius: 8px;
-            background: #fff;
-        }
-
-        .trainer-info-column {
+        .trainer-badges {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            flex-shrink: 0;
-            width: 240px;
             gap: 8px;
+            margin-top: 16px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .trainer-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            border: var(--poke-border) solid var(--trainer-border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .trainer-row > div { box-sizing: border-box; }
+
+        .trainer-row > .trainer-info-column {
+            width: 240px;
+            min-width: 240px;
+            max-width: 240px;
+            padding: 12px;
+            background: #ffffff;
+            border-right: 1px solid #e6e6e6;
+            border-top: 1px solid #e6e6e6;
+            border-bottom: 1px solid #e6e6e6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .trainer-row > .pokemon-container {
             display: flex;
-            flex-direction: row;
             flex-wrap: wrap;
-            gap: 8px;
             flex: 1;
+            align-items: stretch;
         }
 
-        .pokemon-col {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: var(--poke-border) solid var(--pokemon-border-color);
-            border-radius: 8px;
-            background: #fff;
-            padding: 10px 8px;
+        .pokemon-container > .pokemon-col {
             width: 202px;
+            min-width: 202px;
+            max-width: 202px;
+            padding: 0;
+            background: #fafafa;
+            border: var(--poke-border) solid var(--pokemon-border-color);
             box-sizing: border-box;
+            background-clip: padding-box;
+            position: relative;
         }
 
-        .pokemon-info {
-            width: 100%;
-            text-align: center;
+        .pokemon-container > .pokemon-col:nth-child(2n) { background: #fbfbfc; }
+        .pokemon-container > .pokemon-col:nth-child(2n+1) { background: #fafafa; }
+
+        .pokemon-container > .pokemon-col + .pokemon-col {
+            margin-left: -2px;
+            border-left: 1px solid var(--pokemon-border-color);
         }
 
-        .pokemon-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 3px;
-            color: #2c2c2c;
+        .pokemon-inner {
+            padding: var(--inner-padding-y) var(--inner-padding-x);
+            position: relative;
         }
 
-        .pokemon-sprite {
+        .poke-img {
             width: 96px;
             height: 96px;
             image-rendering: pixelated;
-            margin: 5px 0;
+            display: block;
+            margin: 10px auto;
         }
 
-        .pokemon-types {
-            display: flex;
-            justify-content: center;
-            gap: 4px;
-            margin: 5px 0;
+        .pokemon-inner .info-box {
+            background: transparent;
+            padding: 12px 0;
+            margin: 0;
+            font-size: 0.95rem;
+            text-align: left;
+            font-weight: 700;
+            color: #111;
+            position: relative;
         }
+
+        .pokemon-inner .types {
+            text-align: center;
+            margin: 0 0 0 0;
+            position: relative;
+            padding: 12px 0;
+        }
+
+        .pokemon-inner .types + .info-box::before,
+        .pokemon-inner .info-box + .info-box::before,
+        .pokemon-inner .move-list::before {
+            content: "";
+            position: absolute;
+            left: calc(-1 * var(--inner-padding-x) - var(--poke-border));
+            right: calc(-1 * var(--inner-padding-x) - var(--poke-border));
+            height: var(--moves-separator-thick);
+            background: var(--sep-color);
+            top: 0;
+            z-index: 2;
+        }
+
+        .move-list .move-header {
+            font-weight: 700;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            border-bottom: var(--moves-separator-thick) solid var(--sep-color);
+            position: relative;
+            z-index: 2;
+        }
+
+        .move-list {
+            margin: 8px 0 0 0;
+            position: relative;
+            padding-top: 8px;
+        }
+
+        .move-list .move-item {
+            padding: 6px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.85rem;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .move-item .move-name {
+            flex: 1;
+        }
+
+        .move-item .move-info {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .move-item .type-badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+        }
+
+        .move-item .category-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .item-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .reward-item-icon {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .move-list .move-item:last-child { border-bottom: none; }
+
+        .poke-name a { color: #000; text-decoration: none; }
+        .poke-name { padding-bottom: 6px; display:block; }
 
         .type-badge {
-            padding: 3px 10px;
+            display: inline-block;
+            padding: 4px 8px;
             border-radius: 10px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -266,93 +376,29 @@
             text-transform: uppercase;
         }
 
-        .ability-row {
-            margin: 5px 0;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .ability-name {
-            font-weight: 700;
-            text-decoration: underline;
-            cursor: help;
-        }
-
-        .item-icon {
-            width: 24px;
-            height: 24px;
-            vertical-align: middle;
-            margin-left: 6px;
-        }
-
-        .move-list {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0;
-            margin-top: 10px;
-        }
-
-        .move-row {
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 6px;
-            padding: 3px 0;
-            border-top: var(--moves-separator-thick) solid var(--sep-color);
-            font-size: 0.85rem;
-        }
-
-        .move-row:first-child {
-            border-top: none;
-        }
-
-        .move-name {
-            flex: 1;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .move-type-badge {
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            color: white;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .move-cat-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Battle-info bubble */
-        .battle-info {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 8px 0;
-            flex-wrap: wrap;
-        }
-
         .info-bubble {
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
             font-weight: 600;
+            text-align: center;
             color: white;
+            min-width: 120px;
         }
 
-        .battle-type-single { background: #4caf50; }
-        .battle-type-double { background: #ff9800; }
-        .battle-type-triple { background: #9c27b0; }
-        .battle-type-rotation { background: #00bcd4; }
-        .mandatory { background: #f44336; }
-        .optional { background: #2196f3; }
-        .reward-bubble { background: #673ab7; }
+        /* Battle Type colors */
+        .battle-single { background: #6BAED6; }
+        .battle-double { background: #D4A017; }
+        .battle-triple { background: #5CB85C; }
+        .battle-rotation { background: #E75480; }
+
+        /* Mandatory/Optional colors */
+        .battle-mandatory { background: #DC3545; }
+        .battle-optional { background: #9B59B6; }
+
+        /* Reward color */
+        .battle-reward { background: #808080; }
 
         /* Encounter styles */
         .encounter-type-section {
@@ -944,172 +990,376 @@
             return;
         }
 
-        trainerSubAreas.forEach((subArea, idx) => {
-            const areaData = trainerData[subArea];
-            if (!areaData || !areaData.Trainers || areaData.Trainers.length === 0) return;
-            const trainers = areaData.Trainers;
-
+        trainerSubAreas.forEach(subArea => {
+            // Show the sub-header
             if (trainerSubAreas.length > 1) {
-                const subHeader = document.createElement("h3");
+                const subHeaderLabel = getSubHeaderLabel(subArea);
+                const subHeader = document.createElement("div");
                 subHeader.className = "sub-header";
-                subHeader.textContent = getSubHeaderLabel(subArea);
+                subHeader.textContent = subHeaderLabel;
                 container.appendChild(subHeader);
             }
 
-            trainers.forEach(trainer => {
+            const areaData = trainerData[subArea];
+            if (!areaData) return;
+
+            areaData.Trainers.forEach(tr => {
                 const card = document.createElement("div");
                 card.className = "trainer-card";
-
-                const header = document.createElement("div");
-                header.className = "trainer-header";
-                header.textContent = trainer.TrainerClass ? `${trainer.TrainerClass} ${trainer.TrainerName || ""}`.trim() : (trainer.TrainerName || "Trainer");
-                card.appendChild(header);
-
                 const row = document.createElement("div");
                 row.className = "trainer-row";
 
-                const infoCol = document.createElement("div");
-                infoCol.className = "trainer-info-column";
-
-                const trainerImg = document.createElement("img");
-                trainerImg.className = "trainer-image";
-                trainerImg.src = findTrainerImage(trainer.TrainerClass, trainer.TrainerName);
-                trainerImg.onerror = () => { trainerImg.src = "image/trainer/default.png"; };
-                infoCol.appendChild(trainerImg);
-
-                const battleInfo = document.createElement("div");
-                battleInfo.className = "battle-info";
+                const trainerInfo = document.createElement("div");
                 
-                const battleType = trainer.BattleType || "Single";
-                const typeClass = `battle-type-${battleType.toLowerCase()}`;
-                const typeBubble = document.createElement("span");
-                typeBubble.className = `info-bubble ${typeClass}`;
-                typeBubble.textContent = battleType;
-                battleInfo.appendChild(typeBubble);
-
-                const isMandatory = trainer.Mandatory !== undefined ? trainer.Mandatory : true;
-                const mandBubble = document.createElement("span");
-                mandBubble.className = `info-bubble ${isMandatory ? 'mandatory' : 'optional'}`;
-                mandBubble.textContent = isMandatory ? "Mandatory" : "Optional";
-                battleInfo.appendChild(mandBubble);
-
-                if (trainer.Reward && trainer.Reward !== "No Reward") {
-                    const rewardBubble = document.createElement("span");
-                    rewardBubble.className = "info-bubble reward-bubble";
-                    rewardBubble.innerHTML = `Reward: ${trainer.Reward}${createItemIcon(trainer.Reward)}`;
-                    battleInfo.appendChild(rewardBubble);
+                // Helper function to normalize strings (remove accents, etc.) and make lowercase with no spaces
+                const normalizeString = (str) => {
+                    return str.normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]/g, ''); // Remove all non-alphanumeric characters (spaces, &, etc.)
+                };
+                
+                // Build full trainer name for matching (e.g., "Pokemon Trainer Shauna" → "pokemontrainershauna")
+                const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
+                
+                // Check if this specific trainer should show two images
+                // Only certain trainers with "&" show dual images:
+                // - Tierno & Trevor, Delta & Gamma
+                // - Any Team Flare trainer with "&" in name
+                // NOTE: Twins should NOT use dual images - they use a single "twins.png" based on trainer class
+                const shouldShowDualImages = tr.TrainerName && tr.TrainerName.includes('&') && (
+                    tr.TrainerName.includes('Tierno') || 
+                    tr.TrainerName.includes('Trevor') ||
+                    tr.TrainerName.includes('Delta') ||
+                    tr.TrainerName.includes('Gamma') ||
+                    (tr.TrainerClass && tr.TrainerClass.includes('Team Flare') && tr.TrainerClass !== 'Twins')
+                );
+                const trainerNames = shouldShowDualImages ? tr.TrainerName.split('&').map(n => n.trim()) : [tr.TrainerName];
+                
+                // Generate potential trainer image filenames to try
+                // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png", "acetrainer.png")
+                // Strategy: Try all words EXCEPT the last word first, then fall back to the last word
+                // Special case: If trainer class is in skip list (Pokemon Trainer, Elite Four, Champion, etc.), 
+                // skip it and only use the trainer name
+                const imagesToTry = [];
+                
+                // Normalize the trainer class to check if it should skip to using trainer name only
+                const normalizedClass = normalizeString(tr.TrainerClass || '');
+                
+                // List of trainer classes that should skip to using trainer name only
+                const skipClassesToNames = [
+                    'pokemontrainer',
+                    'pokemonprofessor',
+                    'elitefour',
+                    'champion',
+                    'scientist',
+                    'furisodegirl',
+                    'leader',
+                    'hoennleader',
+                    'hoennelite',
+                    'hoennchampion',
+                    'successor'
+                ];
+                
+                const shouldSkipToName = skipClassesToNames.includes(normalizedClass);
+                
+                // Split the full trainer name into words
+                const fullNameWords = `${tr.TrainerClass || ''} ${tr.TrainerName || ''}`.trim().split(/\s+/);
+                
+                // SPECIAL CASE: If trainer class is in the skip list OR if it's a dual-image trainer, only use the trainer name(s)
+                if (shouldSkipToName || shouldShowDualImages) {
+                    // For "Pokemon Trainer Shauna" → only try "shauna"
+                    // For "Elite Four Malva" → only try "malva"
+                    // For "Champion Diantha" → only try "diantha"
+                    // For "Tierno & Trevor" → try "tierno" and "trevor"
+                    // For "Delta & Gamma" → try "delta" and "gamma"
+                    // etc.
+                    if (shouldShowDualImages) {
+                        // Handle multiple trainers case - split by &
+                        trainerNames.forEach(name => {
+                            if (name) {
+                                const normalized = normalizeString(name);
+                                if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
+                                    imagesToTry.push(normalized);
+                                }
+                            }
+                        });
+                    } else if (tr.TrainerName) {
+                        // Single name case
+                        const normalized = normalizeString(tr.TrainerName);
+                        if (normalized.length >= 2 && fullTrainerName.includes(normalized)) {
+                            imagesToTry.push(normalized);
+                        }
+                    }
+                } else {
+                    // NORMAL CASE: Try trainer class first, then fall back to other strategies
+                    // For "Twins Nana & Nina" → try "twins"
+                    // For "Youngster Joey" → try "youngster"
+                    // For "Ace Trainer F" → try "ace", "trainer", "acetrainer"
+                    
+                    // First, try the trainer class if it exists (most reliable)
+                    if (tr.TrainerClass) {
+                        const normalizedClass = normalizeString(tr.TrainerClass);
+                        if (normalizedClass.length >= 2 && !imagesToTry.includes(normalizedClass)) {
+                            imagesToTry.push(normalizedClass);
+                        }
+                    }
+                    
+                    // THEN: Try individual words from trainer class (for multi-word classes like "Ace Trainer")
+                    if (tr.TrainerClass) {
+                        const classWords = tr.TrainerClass.trim().split(/\s+/);
+                        classWords.forEach(word => {
+                            const normalized = normalizeString(word);
+                            if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
+                                imagesToTry.push(normalized);
+                            }
+                        });
+                    }
+                    
+                    // LASTLY: Fall back to the trainer name (e.g., "joey", "chi", "nana")
+                    if (tr.TrainerName) {
+                        // For names with &, just use the first part
+                        const namePart = tr.TrainerName.includes('&') ? tr.TrainerName.split('&')[0].trim() : tr.TrainerName;
+                        const nameWords = namePart.trim().split(/\s+/);
+                        nameWords.forEach(word => {
+                            const normalized = normalizeString(word);
+                            if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
+                                imagesToTry.push(normalized);
+                            }
+                        });
+                    }
                 }
-
-                infoCol.appendChild(battleInfo);
-                row.appendChild(infoCol);
-
+                
+                // Create a container for trainer header and image (top section)
+                const trainerTopSection = document.createElement("div");
+                trainerTopSection.style.flex = "0 0 auto";
+                
+                // Create trainer header element with just the name
+                const trainerHeader = document.createElement("div");
+                trainerHeader.className = "trainer-header";
+                trainerHeader.textContent = `${tr.TrainerClass} ${tr.TrainerName}`;
+                trainerTopSection.appendChild(trainerHeader);
+                
+                // Try to add trainer image(s) below the name if available
+                // For trainers with "&" in name, show multiple images side-by-side
+                // For single trainers, center the image
+                // Limit to 2 attempts max per image to avoid infinite retries
+                if (imagesToTry.length > 0) {
+                    // Create container for images
+                    const imagesContainer = document.createElement("div");
+                    imagesContainer.style.marginTop = "8px";
+                    
+                    // If should show dual images (e.g., "Tierno & Trevor"), prioritize showing both trainer images
+                    let imagesToShow;
+                    if (shouldShowDualImages) {
+                        // For dual trainers, find the images that match the trainer names
+                        imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
+                        // If we didn't find both, fall back to the first available images
+                        if (imagesToShow.length < trainerNames.length) {
+                            imagesToShow = imagesToTry.slice(0, trainerNames.length);
+                        }
+                    } else {
+                        // Single trainer - just use the first image
+                        imagesToShow = imagesToTry.slice(0, 1);
+                    }
+                    
+                    // Center single images, stack multiple images vertically
+                    imagesContainer.style.textAlign = "center";
+                    imagesContainer.style.display = "flex";
+                    imagesContainer.style.justifyContent = "center";
+                    imagesContainer.style.alignItems = "center";
+                    
+                    if (imagesToShow.length > 1) {
+                        // Stack multiple images vertically
+                        imagesContainer.style.flexDirection = "column";
+                        imagesContainer.style.gap = "8px";
+                    }
+                    
+                    imagesToShow.forEach((imageFile, idx) => {
+                        const img = document.createElement("img");
+                        img.alt = trainerNames[idx] || tr.TrainerClass || '';
+                        img.className = "trainer-image";
+                        
+                        let attemptCount = 0;
+                        const MAX_ATTEMPTS = 2;
+                        
+                        const tryImage = () => {
+                            attemptCount++;
+                            if (attemptCount <= MAX_ATTEMPTS) {
+                                img.src = `image/trainer_images/${imageFile}.png`;
+                            } else {
+                                // Failed after max attempts, hide the image
+                                img.style.display = 'none';
+                            }
+                        };
+                        
+                        img.onerror = () => {
+                            if (attemptCount < MAX_ATTEMPTS) {
+                                tryImage();
+                            } else {
+                                img.style.display = 'none';
+                            }
+                        };
+                        
+                        tryImage(); // Start with the first attempt
+                        imagesContainer.appendChild(img);
+                    });
+                    
+                    trainerTopSection.appendChild(imagesContainer);
+                }
+                
+                trainerInfo.appendChild(trainerTopSection);
+                
+                // Add trainer info badges with bubble styling (positioned at bottom)
+                const trainerBadges = document.createElement("div");
+                trainerBadges.className = "trainer-badges";
+                trainerBadges.style.marginTop = "auto"; // Push to bottom
+                
+                // Battle Type bubble
+                const battleTypeText = tr.BattleType || "Single";
+                let battleTypeClass = "battle-single";
+                if (battleTypeText.toLowerCase().includes("double")) battleTypeClass = "battle-double";
+                else if (battleTypeText.toLowerCase().includes("triple")) battleTypeClass = "battle-triple";
+                else if (battleTypeText.toLowerCase().includes("rotation")) battleTypeClass = "battle-rotation";
+                
+                const battleTypeBubble = document.createElement("div");
+                battleTypeBubble.className = `info-bubble ${battleTypeClass}`;
+                battleTypeBubble.textContent = battleTypeText;
+                trainerBadges.appendChild(battleTypeBubble);
+                
+                // Mandatory/Optional bubble
+                const requiredText = tr.Required || "N/A";
+                let requiredClass = "battle-mandatory";
+                if (requiredText.toLowerCase().includes("optional")) requiredClass = "battle-optional";
+                
+                const requiredBubble = document.createElement("div");
+                requiredBubble.className = `info-bubble ${requiredClass}`;
+                requiredBubble.textContent = requiredText;
+                trainerBadges.appendChild(requiredBubble);
+                
+                // Reward bubble
+                const rewardBubble = document.createElement("div");
+                rewardBubble.className = "info-bubble battle-reward";
+                const rewardItemText = (tr.RewardItem && typeof tr.RewardItem === 'string' && tr.RewardItem.trim()) || "No Reward";
+                const rewardIcon = createItemIcon(rewardItemText, 'reward-item-icon');
+                rewardBubble.innerHTML = rewardItemText + rewardIcon;
+                trainerBadges.appendChild(rewardBubble);
+                
+                trainerInfo.appendChild(trainerBadges);
+                
+                // Add class to trainer info for styling
+                trainerInfo.className = "trainer-info-column";
+                row.appendChild(trainerInfo);
+                
+                // Create pokemon container for wrapping
                 const pokemonContainer = document.createElement("div");
                 pokemonContainer.className = "pokemon-container";
 
-                (trainer.Pokemon || []).forEach(poke => {
-                    const pokeCol = document.createElement("div");
-                    pokeCol.className = "pokemon-col";
+                tr.Pokemon.forEach(p => {
+                    const pDiv = document.createElement("div");
+                    pDiv.className = "pokemon-col";
+                    
+                    // Use Form as display name if available, otherwise use Name
+                    const displayName = p.Form || p.Name;
+                    const spriteName = displayName.toLowerCase().replace(/\s+/g, '-');
 
-                    const pokeInfo = document.createElement("div");
-                    pokeInfo.className = "pokemon-info";
-
-                    const pokeName = document.createElement("div");
-                    pokeName.className = "pokemon-name";
-                    const displayName = poke.Form || poke.Name;
-                    pokeName.textContent = displayName || "Unknown";
-                    pokeInfo.appendChild(pokeName);
-
-                    const levelGender = document.createElement("div");
-                    levelGender.textContent = `Lv. ${poke.Level || "?"}${poke.Gender ? " (" + poke.Gender + ")" : ""}`;
-                    pokeInfo.appendChild(levelGender);
-
-                    const pokeEntry = findPokedexEntry(displayName);
-                    if (pokeEntry) {
-                        const sprite = document.createElement("img");
-                        sprite.className = "pokemon-sprite";
-                        const spriteFile = (pokeEntry.DexNum || "000").toString().padStart(3, "0");
-                        sprite.src = `pokemon_sprites/${spriteFile}.png`;
-                        sprite.onerror = () => { sprite.src = "pokemon_sprites/000.png"; };
-                        pokeInfo.appendChild(sprite);
-
-                        const types = document.createElement("div");
-                        types.className = "pokemon-types";
-                        [pokeEntry.Type1, pokeEntry.Type2].filter(Boolean).forEach(type => {
-                            const badge = document.createElement("span");
-                            badge.className = `type-badge type-${type.toLowerCase()}`;
-                            badge.textContent = type;
-                            types.appendChild(badge);
-                        });
-                        pokeInfo.appendChild(types);
-                    }
-
-                    if (poke.Ability && poke.Ability !== "---") {
-                        const abilityRow = document.createElement("div");
-                        abilityRow.className = "ability-row";
-                        const abilityEntry = findAbilityEntry(poke.Ability);
-                        const abilityText = document.createElement("span");
-                        abilityText.className = "ability-name";
-                        abilityText.textContent = poke.Ability;
-                        if (abilityEntry && abilityEntry.Description) {
-                            abilityText.title = abilityEntry.Description;
+                    // ensure 4 moves, convert empty strings or whitespace to '---'
+                    const moves = Array.isArray(p.Moves)
+                        ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
+                        : [];
+                    while (moves.length < 4) moves.push("---");
+                    
+                    // Build move HTML with type badges and category icons
+                    const movesHtml = moves.map(moveName => {
+                        const moveEntry = findMoveEntry(moveName);
+                        if (!moveEntry || moveName === "---") {
+                            return `<div class="move-item"><span class="move-name">${moveName}</span></div>`;
                         }
-                        abilityRow.appendChild(abilityText);
-                        pokeInfo.appendChild(abilityRow);
+                        
+                        const moveType = moveEntry.Type || "";
+                        const moveCategory = moveEntry.Category || "";
+                        const typeBadge = moveType ? `<span class="type-badge type-${moveType.toLowerCase()}">${moveType}</span>` : "";
+                        const categoryIcon = moveCategory ? `<img class="category-icon" src="image/${moveCategory.toLowerCase()}.png" alt="${moveCategory}" title="${moveCategory}">` : "";
+                        
+                        return `<div class="move-item">
+                            <span class="move-name">${moveName}</span>
+                            <span class="move-info">${typeBadge}${categoryIcon}</span>
+                        </div>`;
+                    }).join("");
+
+                    // Try to find types from pokedex.json
+                    const dexEntry = findPokedexEntry(displayName);
+                    let typesHtml = "";
+                    if (dexEntry) {
+                        const t1 = dexEntry.Type1;
+                        const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
+                        if (t1) {
+                            typesHtml += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
+                        }
+                        if (t2) {
+                            typesHtml += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
+                        }
+                    } else {
+                        typesHtml = "";
                     }
+                    
+                    // Build held item HTML with icon
+                    const heldItemText = p.HeldItem || "No Item";
+                    const heldItemIcon = createItemIcon(heldItemText, 'item-icon');
+                    const heldItemHtml = heldItemText + heldItemIcon;
+                    
+                    // Build ability HTML with tooltip
+                    const abilityText = p.Ability || "---";
+                    const abilityEntry = findAbilityEntry(abilityText);
+                    const abilityTooltip = abilityEntry ? abilityEntry.shortDesc : "";
+                    const abilityHtml = abilityTooltip 
+                        ? `<span title="${abilityTooltip}">${abilityText}</span>`
+                        : abilityText;
 
-                    if (poke.HeldItem && poke.HeldItem !== "No Item") {
-                        const itemRow = document.createElement("div");
-                        itemRow.innerHTML = `<strong>Item:</strong> ${poke.HeldItem}${createItemIcon(poke.HeldItem)}`;
-                        pokeInfo.appendChild(itemRow);
-                    }
+                    // Wrap inner content in .pokemon-inner so separators can be drawn edge-to-edge
+                    pDiv.innerHTML = `
+                        <div class="pokemon-inner">
+                            <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
+                                <a href="pokemon.html?name=${encodeURIComponent(displayName)}" style="text-decoration:none; color:#000;">
+                                    ${displayName} — Lv ${p.Level}
+                                </a>
+                            </div>
 
-                    if (poke.Nature) {
-                        const natureRow = document.createElement("div");
-                        natureRow.innerHTML = `<strong>Nature:</strong> ${colorNature(poke.Nature)}`;
-                        pokeInfo.appendChild(natureRow);
-                    }
+                            <a href="pokemon.html?name=${encodeURIComponent(displayName)}">
+                                <img class="poke-img"
+                                     src="pokemon_sprites/${spriteName}.png"
+                                     onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                            </a>
 
-                    pokeCol.appendChild(pokeInfo);
+                            <div class="types">
+                                ${typesHtml}
+                            </div>
 
-                    const moves = (poke.Moves || []).filter(m => m && m !== "---");
-                    if (moves.length > 0) {
-                        const moveList = document.createElement("div");
-                        moveList.className = "move-list";
-                        moves.forEach(moveName => {
-                            const moveRow = document.createElement("div");
-                            moveRow.className = "move-row";
-                            const moveEntry = findMoveEntry(moveName);
-                            
-                            const moveNameSpan = document.createElement("span");
-                            moveNameSpan.className = "move-name";
-                            moveNameSpan.textContent = moveName;
-                            moveRow.appendChild(moveNameSpan);
+                            <!-- Removed headers; values bold & larger -->
+                            <div class="info-box ability-box">
+                                ${abilityHtml}
+                            </div>
 
-                            if (moveEntry) {
-                                if (moveEntry.Type) {
-                                    const typeBadge = document.createElement("span");
-                                    typeBadge.className = `move-type-badge type-${moveEntry.Type.toLowerCase()}`;
-                                    typeBadge.textContent = moveEntry.Type;
-                                    moveRow.appendChild(typeBadge);
-                                }
-                                if (moveEntry.Category) {
-                                    const catIcon = document.createElement("img");
-                                    catIcon.className = "move-cat-icon";
-                                    catIcon.src = `image/category/${moveEntry.Category.toLowerCase()}.png`;
-                                    catIcon.alt = moveEntry.Category;
-                                    catIcon.onerror = () => { catIcon.style.display = 'none'; };
-                                    moveRow.appendChild(catIcon);
-                                }
-                            }
-                            moveList.appendChild(moveRow);
-                        });
-                        pokeCol.appendChild(moveList);
-                    }
+                            <div class="info-box nature-box">
+                                ${colorNature(p.Nature || "---")}
+                            </div>
 
-                    pokemonContainer.appendChild(pokeCol);
+                            <div class="info-box item-box">
+                                ${heldItemHtml}
+                            </div>
+
+                            <div class="info-box move-list">
+                                <div class="move-header"><strong>Moves:</strong></div>
+                                ${movesHtml}
+                            </div>
+                        </div>
+                    `;
+
+                    pokemonContainer.appendChild(pDiv);
                 });
-
+                
                 row.appendChild(pokemonContainer);
+
                 card.appendChild(row);
                 container.appendChild(card);
             });
