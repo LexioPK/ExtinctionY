@@ -1184,7 +1184,14 @@
                             <a href="pokemon.html?name=${encodeURIComponent(displayName)}">
                                 <img class="poke-img"
                                      src="${sprites.primary}"
-                                     onerror="this.onerror=null; this.src='${sprites.fallback1}'; this.onerror=function(){ this.src='${sprites.fallback2}'; }">
+                                     onerror="
+                                         this.onerror=null;
+                                         this.src='${sprites.fallback1}';
+                                         this.onerror=function(){
+                                             this.onerror=null;
+                                             this.src='${sprites.fallback2}';
+                                         }
+                                     ">
                             </a>
 
                             <div class="types">
