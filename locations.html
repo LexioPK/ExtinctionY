@@ -406,6 +406,21 @@
             margin: 5px auto;
         }
 
+        .pokemon-icon {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            margin: 5px auto;
+            display: block;
+        }
+
+        .pokemon-chance {
+            font-weight: 600;
+            color: #1976d2;
+            margin-top: 5px;
+        }
+
         .encounter-details {
             font-size: 0.85rem;
             color: #666;
@@ -510,31 +525,23 @@
     let abilitiesData = {};
 
     let routeOrder = [
-        "Aquacorde Town","Route 2","Santalune Forest","Route 3","Route 22","Route 22 - Part 2",
-        "Santalune City","Santalune Gym","Route 4","Lumiose City","Route 5","Camphrier Town",
-        "Route 6","Route 6 - Pathway","Route 6 - East","Route 6 - West","Route 7",
-        "Connecting Cave","Route 8","Route 8 - Upper","Route 8 - Lower","Route 8 - Sea",
-        "Route 9","Glittering Cave","Ambrette Town Aquarium","Route 10","Cyllage City",
-        "Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11","Reflection Cave",
-        "Reflection Cave - 1F","Reflection Cave - B1F","Tower of Mastery","Shalour Gym",
-        "Route 12","Azure Bay","Coumarine City","Coumarine City - Seaside",
-        "Coumarine City - Cliffside","Coumarine Gym","Route 13/Kalos Power Plant",
-        "Route 13/Kalos Power Plant - Route 13","Route 13/Power Plant - Kalos Power Plant",
-        "Lumiose Gym/Prism Tower","Lumiose Gym/Prism Tower - Prism Tower","Lumiose Gym/Prism Tower - Lumiose Gym",
-        "Route 14","Laverre City","Laverre Gym","Poke Ball Factory","Route 15",
-        "Route 16","Lost Hotel","Dendemille Town","Frost Cavern",
-        "Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F",
-        "Route 17","Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs",
-        "Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Labs - B1",
-        "Lysandre Labs - B3","Team Flare Secret HQ - Entrance",
-        "Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
-        "Terminus Cave - B2F","Couriway Town","Route 19","Route 20","Snowbelle City",
-        "Snowbelle Gym","Route 21","Victory Road","Victory Road - Entrance",
-        "Victory Road - Inside 1","Victory Road - Outside 2","Victory Road - Inside 2",
-        "Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4",
-        "Victory Road - Inside 4","Elite Four/Kalos League Champion",
-        "Elite Four/Kalos League Champion - Elite Four",
-        "Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade"
+        "Vaniville Town","Route 1","Aquacorde Town","Route 2","Santalune Forest","Route 3",
+        "Santalune City","Route 22","Route 22 - Part 2","Santalune Gym","Route 4","Lumiose City",
+        "Route 5","Camphrier Town","Kalos Hotels","Route 6","Route 6 - Pathway","Route 6 - East",
+        "Route 6 - West","Parfum Palace","Route 7","Connecting Cave","Route 8","Route 8 - Upper",
+        "Route 8 - Lower","Route 8 - Sea","Ambrette Town","Route 9","Glittering Cave","Ambrette Town Aquarium",
+        "Cyllage City","Route 10","Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11",
+        "Reflection Cave","Reflection Cave - 1F","Reflection Cave - B1F","Shalour City","Tower of Mastery","Shalour Gym",
+        "Route 12","Azure Bay","Coumarine City","Coumarine City - Seaside","Coumarine City - Cliffside","Route 13",
+        "Kalos Power Plant","Lumiose Gym/Prism Tower","Route 14","Laverre City","Laverre Gym","Poké Ball Factory",
+        "Route 15","Route 16","Lost Hotel","Lost Hotel - Route 15 Side","Lost Hotel  - Route 16 Side","Dendemille Town",
+        "Frost Cavern","Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F","Route 17",
+        "Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs","Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Cafe/Lysandre Labs - Lysandre Labs - B1","Lysandre Cafe/Lysandre Labs - Lysandre Labs - B3",
+        "Team Flare Secret HQ","Team Flare Secret HQ - Entrance","Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
+        "Terminus Cave - B2F","Couriway Town","Route 19","Snowbelle City","Route 20","Pokémon Village",
+        "Snowbelle Gym","Route 21","Chamber of Emptiness","Victory Road","Victory Road - Entrance","Victory Road - Inside 1",
+        "Victory Road - Outside 2","Victory Road - Inside 2","Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4","Victory Road - Inside 4",
+        "Elite Four/Kalos League Champion","Elite Four/Kalos League Champion - Elite Four","Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade","Unknown Dungeon","Kiloude City"
     ];
 
     const statColors = {
@@ -597,6 +604,49 @@
             if (normalizeForCompare(key) === target) return pokedexData[key];
         }
         return null;
+    }
+
+    function getPokemonIconPath(pokemonName) {
+        // Normalize the pokemon name for the icon filename
+        const normalized = pokemonName.toLowerCase().replace(/[^a-z0-9]/g, "");
+        return `image/icons/${normalized}.png`;
+    }
+
+    function getItemIconPath(itemName) {
+        // Strip any trailing dash and number (e.g., "Oran Berry-2" becomes "Oran Berry")
+        let cleanedName = itemName.replace(/-\d+$/, '');
+        
+        // Special handling for TMs - if item starts with "TM", just use "tm" for the icon
+        if (cleanedName.toUpperCase().startsWith('TM')) {
+            return 'image/item/tm.png';
+        }
+        
+        // Special handling for HMs - if item starts with "HM", just use "hm" for the icon
+        if (cleanedName.toUpperCase().startsWith('HM')) {
+            return 'image/item/hm.png';
+        }
+        
+        // Convert item name to filename format (lowercase, replace spaces with hyphens)
+        const filename = cleanedName.toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+            .replace(/\s+/g, '-') // Replace spaces with hyphens
+            .replace(/-+/g, '-'); // Replace multiple hyphens with single
+        return `image/item/${filename}.png`;
+    }
+
+    function parseAreaAndSubArea(area) {
+        // Extract sub-area from parentheses
+        const match = area.match(/^(.+?)\s*\((.+?)\)$/);
+        if (match) {
+            return {
+                mainArea: match[1].trim(),
+                subArea: match[2].trim()
+            };
+        }
+        return {
+            mainArea: area,
+            subArea: ""
+        };
     }
 
     function findRootForArea(fullAreaName) {
@@ -895,8 +945,9 @@
         }
 
         trainerSubAreas.forEach((subArea, idx) => {
-            const trainers = trainerData[subArea];
-            if (!trainers || trainers.length === 0) return;
+            const areaData = trainerData[subArea];
+            if (!areaData || !areaData.Trainers || areaData.Trainers.length === 0) return;
+            const trainers = areaData.Trainers;
 
             if (trainerSubAreas.length > 1) {
                 const subHeader = document.createElement("h3");
@@ -955,7 +1006,7 @@
                 const pokemonContainer = document.createElement("div");
                 pokemonContainer.className = "pokemon-container";
 
-                (trainer.Party || []).forEach(poke => {
+                (trainer.Pokemon || []).forEach(poke => {
                     const pokeCol = document.createElement("div");
                     pokeCol.className = "pokemon-col";
 
@@ -964,14 +1015,15 @@
 
                     const pokeName = document.createElement("div");
                     pokeName.className = "pokemon-name";
-                    pokeName.textContent = poke.Pokemon || "Unknown";
+                    const displayName = poke.Form || poke.Name;
+                    pokeName.textContent = displayName || "Unknown";
                     pokeInfo.appendChild(pokeName);
 
                     const levelGender = document.createElement("div");
                     levelGender.textContent = `Lv. ${poke.Level || "?"}${poke.Gender ? " (" + poke.Gender + ")" : ""}`;
                     pokeInfo.appendChild(levelGender);
 
-                    const pokeEntry = findPokedexEntry(poke.Pokemon);
+                    const pokeEntry = findPokedexEntry(displayName);
                     if (pokeEntry) {
                         const sprite = document.createElement("img");
                         sprite.className = "pokemon-sprite";
@@ -1019,7 +1071,7 @@
 
                     pokeCol.appendChild(pokeInfo);
 
-                    const moves = [poke.Move1, poke.Move2, poke.Move3, poke.Move4].filter(m => m && m !== "---");
+                    const moves = (poke.Moves || []).filter(m => m && m !== "---");
                     if (moves.length > 0) {
                         const moveList = document.createElement("div");
                         moveList.className = "move-list";
@@ -1070,7 +1122,7 @@
         
         subAreas.forEach(subArea => {
             encounterData.forEach((loc, idx) => {
-                if (loc && loc.Location === subArea) {
+                if (loc && loc.LocationName === subArea) {
                     encounterIndices.push(idx);
                 }
             });
@@ -1297,148 +1349,324 @@
         return result;
     }
 
-    function displayEncounterSection(container, title, encounters) {
-        if (!encounters || encounters.length === 0) return;
+    function displayEncounterSection(container, sectionTitle, encounters) {
+        // Skip empty encounter sections entirely
+        if (encounters.length === 0) {
+            return;
+        }
 
         const section = document.createElement("div");
         section.className = "encounter-type-section";
 
-        const header = document.createElement("h3");
+        const header = document.createElement("div");
         header.className = "encounter-type-header";
-        header.textContent = title;
+        header.textContent = sectionTitle;
         section.appendChild(header);
 
-        // Group by species
-        const speciesMap = {};
-        encounters.forEach(enc => {
-            const species = enc.Species || "Unknown";
-            if (!speciesMap[species]) {
-                speciesMap[species] = {
-                    minLevel: enc.MinLevel,
-                    maxLevel: enc.MaxLevel,
-                    chance: 0,
-                    encounterTypes: new Set()
-                };
+        // Check if this is a horde section - handle specially
+        const isHordeSection = sectionTitle.toLowerCase().includes('horde');
+        
+        if (isHordeSection) {
+                // For hordes, combine all Pokemon across all horde types
+                const pokemonBySpecies = new Map();
+                
+                encounters.forEach(encounter => {
+                    const hordeMatch = encounter.EncounterType.match(/Horde \((\d+)%\)/);
+                    const hordePercent = hordeMatch ? parseInt(hordeMatch[1]) : 0;
+                    
+                    encounter.Slots.forEach(slot => {
+                        const species = slot.Species;
+                        if (!pokemonBySpecies.has(species)) {
+                            pokemonBySpecies.set(species, {
+                                Species: species,
+                                hordeTypes: [],
+                                totalPercent: 0
+                            });
+                        }
+                        const pokemonData = pokemonBySpecies.get(species);
+                        if (!pokemonData.hordeTypes.includes(hordePercent)) {
+                            pokemonData.hordeTypes.push(hordePercent);
+                            pokemonData.totalPercent += hordePercent;
+                        }
+                    });
+                });
+                
+                // Display all Pokemon in a single grid under the main header
+                const grid = document.createElement("div");
+                grid.className = "pokemon-grid";
+                
+                Array.from(pokemonBySpecies.values()).forEach(pokemonData => {
+                    const box = document.createElement("div");
+                    box.className = "pokemon-box";
+
+                    // Pokemon name
+                    const name = document.createElement("div");
+                    name.className = "pokemon-name";
+                    name.textContent = pokemonData.Species;
+                    box.appendChild(name);
+
+                    // Pokemon icon (clickable link to pokemon page)
+                    const iconLink = document.createElement("a");
+                    iconLink.href = `pokemon.html?name=${encodeURIComponent(pokemonData.Species)}`;
+                    iconLink.style.textDecoration = "none";
+                    
+                    const icon = document.createElement("img");
+                    icon.className = "pokemon-icon";
+                    icon.src = getPokemonIconPath(pokemonData.Species);
+                    icon.alt = pokemonData.Species;
+                    let iconFailed = false;
+                    icon.onerror = function() {
+                        if (!iconFailed) {
+                            iconFailed = true;
+                            this.src = 'image/icons/unknown.png';
+                        } else {
+                            this.style.display = 'none';
+                        }
+                    };
+                    iconLink.appendChild(icon);
+                    box.appendChild(iconLink);
+
+                    // Show combined percentage
+                    const chance = document.createElement("div");
+                    chance.className = "pokemon-chance";
+                    chance.textContent = `${pokemonData.totalPercent}%`;
+                    box.appendChild(chance);
+
+                    grid.appendChild(box);
+                });
+                
+                section.appendChild(grid);
+            } else {
+                // Display each encounter type with its pokemon
+                encounters.forEach((encounter, idx) => {
+                    // Calculate level range for this encounter
+                    let minLevel = Infinity;
+                    let maxLevel = -Infinity;
+                    encounter.Slots.forEach(slot => {
+                        minLevel = Math.min(minLevel, slot.MinLevel);
+                        maxLevel = Math.max(maxLevel, slot.MaxLevel);
+                    });
+                    
+                    // Format level range
+                    let levelRange = "";
+                    if (minLevel !== Infinity && maxLevel !== -Infinity) {
+                        if (minLevel === maxLevel) {
+                            levelRange = ` (Lv. ${minLevel})`;
+                        } else {
+                            levelRange = ` (Lv. ${minLevel}-${maxLevel})`;
+                        }
+                    }
+                    
+                    // Show sub-header only if it's different from the main section title
+                    // and also different from the previous encounter type
+                    const showSubHeader = encounter.EncounterType !== sectionTitle && 
+                                         (idx === 0 || encounters[idx - 1].EncounterType !== encounter.EncounterType);
+                    
+                    if (showSubHeader) {
+                        const subHeader = document.createElement("div");
+                        subHeader.style.fontSize = "1.1rem";
+                        subHeader.style.fontWeight = "600";
+                        subHeader.style.marginTop = "15px";
+                        subHeader.style.marginBottom = "10px";
+                        subHeader.style.color = "#555";
+                        subHeader.textContent = encounter.EncounterType + levelRange;
+                        section.appendChild(subHeader);
+                    }
+
+                    // Combine duplicate Pokemon and sum their chances
+                    const pokemonMap = new Map();
+                    
+                    encounter.Slots.forEach(slot => {
+                        const species = slot.Species;
+                        if (pokemonMap.has(species)) {
+                            const existing = pokemonMap.get(species);
+                            // Parse and sum percentages
+                            const existingChance = parseFloat(existing.Chance.replace('%', '')) || 0;
+                            const newChance = parseFloat(slot.Chance.replace('%', '')) || 0;
+                            existing.Chance = `${existingChance + newChance}%`;
+                        } else {
+                            pokemonMap.set(species, {
+                                Species: species,
+                                Chance: slot.Chance || ""
+                            });
+                        }
+                    });
+
+                    const grid = document.createElement("div");
+                    grid.className = "pokemon-grid";
+
+                    // Convert map to array and display
+                    Array.from(pokemonMap.values()).forEach(pokemonData => {
+                        const box = document.createElement("div");
+                        box.className = "pokemon-box";
+
+                        // Pokemon name
+                        const name = document.createElement("div");
+                        name.className = "pokemon-name";
+                        name.textContent = pokemonData.Species;
+                        box.appendChild(name);
+
+                        // Pokemon icon (clickable link to pokemon page)
+                        const iconLink = document.createElement("a");
+                        iconLink.href = `pokemon.html?name=${encodeURIComponent(pokemonData.Species)}`;
+                        iconLink.style.textDecoration = "none";
+                        
+                        const icon = document.createElement("img");
+                        icon.className = "pokemon-icon";
+                        icon.src = getPokemonIconPath(pokemonData.Species);
+                        icon.alt = pokemonData.Species;
+                        let iconFailed = false;
+                        icon.onerror = function() {
+                            if (!iconFailed) {
+                                iconFailed = true;
+                                this.src = 'image/icons/unknown.png';
+                            } else {
+                                // If even the fallback fails, hide the image
+                                this.style.display = 'none';
+                            }
+                        };
+                        iconLink.appendChild(icon);
+                        box.appendChild(iconLink);
+
+                        // Encounter chance
+                        if (pokemonData.Chance) {
+                            const chance = document.createElement("div");
+                            chance.className = "pokemon-chance";
+                            chance.textContent = pokemonData.Chance;
+                            box.appendChild(chance);
+                        }
+
+                        grid.appendChild(box);
+                    });
+
+                    section.appendChild(grid);
+                });
             }
-            speciesMap[species].minLevel = Math.min(speciesMap[species].minLevel || 999, enc.MinLevel || 999);
-            speciesMap[species].maxLevel = Math.max(speciesMap[species].maxLevel || 0, enc.MaxLevel || 0);
-            speciesMap[species].chance += parseFloat(enc.EncounterChance || 0);
-            speciesMap[species].encounterTypes.add(enc.EncounterType || "");
-        });
 
-        const grid = document.createElement("div");
-        grid.className = "pokemon-grid";
-
-        Object.keys(speciesMap).forEach(species => {
-            const data = speciesMap[species];
-            const box = document.createElement("div");
-            box.className = "pokemon-box";
-            box.onclick = () => { window.location.href = `pokemon.html?name=${encodeURIComponent(species)}`; };
-
-            const name = document.createElement("div");
-            name.className = "pokemon-name";
-            name.textContent = species;
-            box.appendChild(name);
-
-            const pokeEntry = findPokedexEntry(species);
-            if (pokeEntry) {
-                const sprite = document.createElement("img");
-                sprite.className = "pokemon-sprite";
-                const spriteFile = (pokeEntry.DexNum || "000").toString().padStart(3, "0");
-                sprite.src = `pokemon_sprites/${spriteFile}.png`;
-                sprite.onerror = () => { sprite.src = "pokemon_sprites/000.png"; };
-                box.appendChild(sprite);
-            }
-
-            const details = document.createElement("div");
-            details.className = "encounter-details";
-            details.textContent = `Lv. ${data.minLevel}${data.minLevel !== data.maxLevel ? "-" + data.maxLevel : ""}`;
-            box.appendChild(details);
-
-            const chance = document.createElement("div");
-            chance.className = "encounter-chance";
-            chance.textContent = `${data.chance.toFixed(1)}%`;
-            box.appendChild(chance);
-
-            grid.appendChild(box);
-        });
-
-        section.appendChild(grid);
         container.appendChild(section);
     }
 
     function populateItemsTab(container, baseName) {
+        const itemsSection = document.createElement("div");
+        itemsSection.className = "items-section";
+        itemsSection.style.marginTop = "30px";
+
+        const header = document.createElement("h3");
+        header.textContent = "Items";
+        header.style.borderBottom = "2px solid #2196F3";
+        header.style.paddingBottom = "10px";
+        header.style.marginBottom = "20px";
+        header.style.color = "#333";
+        itemsSection.appendChild(header);
+
+        // Filter items for this location - check all sub-areas
         const subAreas = groupedLocations[baseName]?.fullNames || [];
-        const locationItems = itemsData.filter(item => subAreas.includes(item.Area));
+        const locationItems = itemsData.filter(item => {
+            // Check if item.Area matches any of the sub-areas or baseName
+            return subAreas.includes(item.Area) || item.Area === baseName;
+        });
 
         if (locationItems.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#666; font-style:italic; margin:40px 0;">No items in this location.</p>';
-            return;
+            const noItems = document.createElement("p");
+            noItems.textContent = "No items found in this location.";
+            noItems.style.color = "#666";
+            noItems.style.textAlign = "center";
+            noItems.style.padding = "20px";
+            noItems.style.fontStyle = "italic";
+            itemsSection.appendChild(noItems);
+        } else {
+            // Group items by sub-area
+            const itemsBySubArea = new Map();
+            locationItems.forEach(item => {
+                const parsed = parseAreaAndSubArea(item.Area);
+                const subArea = parsed.subArea || "General";
+                if (!itemsBySubArea.has(subArea)) {
+                    itemsBySubArea.set(subArea, []);
+                }
+                itemsBySubArea.get(subArea).push(item);
+            });
+
+            // Display items grouped by sub-area
+            itemsBySubArea.forEach((items, subArea) => {
+                // Sub-area header (if not "General")
+                if (subArea !== "General") {
+                    const subAreaHeader = document.createElement("div");
+                    subAreaHeader.textContent = subArea;
+                    subAreaHeader.style.fontSize = "1.1rem";
+                    subAreaHeader.style.fontWeight = "600";
+                    subAreaHeader.style.marginTop = "20px";
+                    subAreaHeader.style.marginBottom = "10px";
+                    subAreaHeader.style.color = "#333";
+                    itemsSection.appendChild(subAreaHeader);
+                }
+
+                // Create items table
+                const table = document.createElement("table");
+                table.style.width = "100%";
+                table.style.borderCollapse = "collapse";
+                table.style.marginBottom = "20px";
+
+                // Table header
+                const thead = document.createElement("thead");
+                thead.innerHTML = `
+                    <tr style="background-color: #f5f5f5; border-bottom: 2px solid #ddd;">
+                        <th style="padding: 10px; text-align: center; width: 60px;">Icon</th>
+                        <th style="padding: 10px; text-align: left;">Item</th>
+                        <th style="padding: 10px; text-align: left;">Location/Price</th>
+                    </tr>
+                `;
+                table.appendChild(thead);
+
+                // Table body
+                const tbody = document.createElement("tbody");
+                items.forEach((item, idx) => {
+                    const row = document.createElement("tr");
+                    row.style.borderBottom = "1px solid #eee";
+                    if (idx % 2 === 0) {
+                        row.style.backgroundColor = "#fafafa";
+                    }
+
+                    // Icon cell
+                    const iconCell = document.createElement("td");
+                    iconCell.style.padding = "10px";
+                    iconCell.style.textAlign = "center";
+                    const icon = document.createElement("img");
+                    icon.src = getItemIconPath(item.Item);
+                    icon.alt = item.Item;
+                    icon.style.width = "40px";
+                    icon.style.height = "40px";
+                    icon.onerror = function() {
+                        // Use substitute/unknown pokemon sprite as fallback
+                        this.src = 'pokemon_sprites/unknown.png';
+                        this.onerror = function() {
+                            this.style.display = 'none';
+                        };
+                    };
+                    iconCell.appendChild(icon);
+                    row.appendChild(iconCell);
+
+                    // Item name cell
+                    const nameCell = document.createElement("td");
+                    nameCell.style.padding = "10px";
+                    nameCell.style.fontWeight = "600";
+                    nameCell.textContent = item.Item;
+                    row.appendChild(nameCell);
+
+                    // Location/Price cell
+                    const locationCell = document.createElement("td");
+                    locationCell.style.padding = "10px";
+                    locationCell.textContent = item["Location/Price"];
+                    row.appendChild(locationCell);
+
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+
+                itemsSection.appendChild(table);
+            });
         }
 
-        // Group by sub-area if multiple
-        const itemsBySubArea = {};
-        locationItems.forEach(item => {
-            const area = item.Area;
-            if (!itemsBySubArea[area]) itemsBySubArea[area] = [];
-            itemsBySubArea[area].push(item);
-        });
-
-        Object.keys(itemsBySubArea).forEach(area => {
-            const section = document.createElement("div");
-            section.className = "items-section";
-
-            if (subAreas.length > 1) {
-                const subHeader = document.createElement("h3");
-                subHeader.style.marginTop = "0";
-                subHeader.textContent = getSubHeaderLabel(area);
-                section.appendChild(subHeader);
-            }
-
-            const table = document.createElement("table");
-            table.className = "items-table";
-
-            const thead = document.createElement("thead");
-            thead.innerHTML = `
-                <tr>
-                    <th class="item-icon-cell">Icon</th>
-                    <th>Item</th>
-                    <th>Location / Price</th>
-                </tr>
-            `;
-            table.appendChild(thead);
-
-            const tbody = document.createElement("tbody");
-            itemsBySubArea[area].forEach(item => {
-                const row = document.createElement("tr");
-                
-                const iconCell = document.createElement("td");
-                iconCell.className = "item-icon-cell";
-                const normalized = normalizeItemName(item.Item);
-                if (normalized) {
-                    const icon = document.createElement("img");
-                    icon.src = `image/item/${normalized}.png`;
-                    icon.alt = item.Item;
-                    icon.onerror = () => { icon.style.display = 'none'; };
-                    iconCell.appendChild(icon);
-                }
-                row.appendChild(iconCell);
-
-                const nameCell = document.createElement("td");
-                nameCell.textContent = item.Item || "";
-                row.appendChild(nameCell);
-
-                const locCell = document.createElement("td");
-                locCell.textContent = item["Location/Price"] || "";
-                row.appendChild(locCell);
-
-                tbody.appendChild(row);
-            });
-            table.appendChild(tbody);
-
-            section.appendChild(table);
-            container.appendChild(section);
-        });
+        container.appendChild(itemsSection);
     }
 
     function findTrainerImage(trainerClass, trainerName) {
