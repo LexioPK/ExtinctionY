@@ -948,7 +948,7 @@
                 const pokemonContainer = document.createElement("div");
                 pokemonContainer.className = "pokemon-container";
 
-                (trainer.Party || []).forEach(poke => {
+                (trainer.Pokemon || []).forEach(poke => {
                     const pokeCol = document.createElement("div");
                     pokeCol.className = "pokemon-col";
 
@@ -957,14 +957,15 @@
 
                     const pokeName = document.createElement("div");
                     pokeName.className = "pokemon-name";
-                    pokeName.textContent = poke.Pokemon || "Unknown";
+                    const displayName = poke.Form || poke.Name;
+                    pokeName.textContent = displayName || "Unknown";
                     pokeInfo.appendChild(pokeName);
 
                     const levelGender = document.createElement("div");
                     levelGender.textContent = `Lv. ${poke.Level || "?"}${poke.Gender ? " (" + poke.Gender + ")" : ""}`;
                     pokeInfo.appendChild(levelGender);
 
-                    const pokeEntry = findPokedexEntry(poke.Pokemon);
+                    const pokeEntry = findPokedexEntry(displayName);
                     if (pokeEntry) {
                         const sprite = document.createElement("img");
                         sprite.className = "pokemon-sprite";
@@ -1012,7 +1013,7 @@
 
                     pokeCol.appendChild(pokeInfo);
 
-                    const moves = [poke.Move1, poke.Move2, poke.Move3, poke.Move4].filter(m => m && m !== "---");
+                    const moves = (poke.Moves || []).filter(m => m && m !== "---");
                     if (moves.length > 0) {
                         const moveList = document.createElement("div");
                         moveList.className = "move-list";
