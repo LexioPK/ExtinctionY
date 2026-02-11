@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trainers</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Standardized header styles & script -->
+    <link rel="stylesheet" href="header.css">
+    <script src="header.js" defer></script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root{
+            --poke-border: 2px;
+            --trainer-border-color: #6f6f6f;
+            --pokemon-border-color: #555555;
+            --inner-padding-x: 10px;
+            --inner-padding-y: 12px;
+            --moves-separator-thick: 4px;
+            --sep-color: #e6e6e6;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 65px;
+            left: 0;
+            width: 320px;
+            height: calc(100vh - 65px);
+            background: white;
+            overflow-y: auto;
+            box-shadow: 3px 0 8px rgba(0,0,0,0.07);
+            padding: 15px;
+        }
+
+        .route-tab {
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: #f2f2f2;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .route-tab:hover {
+            background: #e3e3e3;
+        }
+
+        .route-tab.active {
+            background: #1976d2;
+            color: white;
+            font-weight: 600;
+        }
+
+        .trainer-section {
+            padding: 20px;
+            max-width: 1600px;
+            margin-left: 340px;
+            margin-top: 90px;
+            width: calc(100% - 340px);
+        }
+
+        .route-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .area-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-button {
+            padding: 10px 20px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.2s;
+            min-width: 120px;
+        }
+        
+        .nav-button:hover:not(:disabled) {
+            background: #1565c0;
+        }
+        
+        .nav-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .nav-button-prev {
+            margin-right: auto;
+        }
+        
+        .nav-button-next {
+            margin-left: auto;
+        }
+
+        /* Tab System Styles */
+        .content-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .content-tab {
+            padding: 10px 24px;
+            background: #e0e0e0;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .content-tab:hover {
+            background: #d0d0d0;
+            transform: translateY(-1px);
+        }
+
+        .content-tab.active {
+            background: #1976d2;
+            color: white;
+            border-color: #1565c0;
+            cursor: default;
+        }
+
+        .content-tab.active:hover {
+            transform: none;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .sub-header {
+            margin-top: 25px;
+            font-size: 1.15rem;
+            text-decoration: underline;
+        }
+
+        .trainer-card {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .trainer-header {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .trainer-image {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
+            margin: 50px auto;
+        }
+
+        .trainer-row {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            background: #fff;
+            border-radius: 8px;
+            border: var(--poke-border) solid var(--trainer-border-color);
+        }
+
+        .trainer-info-column {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            min-width: 180px;
+        }
+
+        .trainer-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .pokemon-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            flex: 1;
+            align-items: stretch;
+        }
+
+        .pokemon-col {
+            background: #fff;
+            border: var(--poke-border) solid var(--pokemon-border-color);
+            border-radius: 8px;
+            flex: 1 1 22%;
+            min-width: 200px;
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pokemon-inner {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .poke-name {
+            padding: 6px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .poke-img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            display: block;
+            margin: 8px auto;
+            image-rendering: pixelated;
+        }
+
+        .types {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px;
+            padding: 4px 8px;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: white;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .info-box {
+            padding: var(--inner-padding-y) var(--inner-padding-x);
+            margin: 0;
+            background: #fafafa;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.95rem;
+            border-top: var(--moves-separator-thick) solid var(--sep-color);
+        }
+
+        .move-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .move-header {
+            margin-bottom: 8px;
+        }
+
+        .move-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-top: 1px solid var(--sep-color);
+        }
+
+        .move-item:first-child {
+            border-top: none;
+        }
+
+        .move-name {
+            flex: 1;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .move-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .category-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .item-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+
+        /* Type colors */
+        .type-normal { background: #9099a1; }
+        .type-fire { background: #ff9c54; }
+        .type-water { background: #4f90d9; }
+        .type-electric { background: #f3d23b; }
+        .type-grass { background: #63bb5b; }
+        .type-ice { background: #74cec0; }
+        .type-fighting { background: #ce4069; }
+        .type-poison { background: #aa5caf; }
+        .type-ground { background: #d97746; }
+        .type-flying { background: #92aade; }
+        .type-psychic { background: #f97176; }
+        .type-bug { background: #90c12c; }
+        .type-rock { background: #c7b78b; }
+        .type-ghost { background: #5269ac; }
+        .type-dragon { background: #096dc4; }
+        .type-dark { background: #5a5366; }
+        .type-steel { background: #5a8ea2; }
+        .type-fairy { background: #ec8fe6; }
+
+        /* Encounters styles */
+        .encounter-type-section {
+            margin: 25px 0;
+        }
+
+        .encounter-type-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .encounter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .encounter-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .encounter-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .encounter-pokemon-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .encounter-icon {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin: 8px auto;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        .encounter-details {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* Items styles */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin: 20px 0;
+        }
+
+        .items-table th,
+        .items-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .items-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .items-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .items-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .no-data-message {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 1400px) {
+            .pokemon-col {
+                flex: 1 1 45%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 280px;
+            }
+            
+            .trainer-section {
+                margin-left: 300px;
+                width: calc(100% - 300px);
+            }
+            
+            .trainer-row {
+                flex-direction: column;
+            }
+            
+            .pokemon-container {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .pokemon-col {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar" id="sidebar"></div>
+
+<div class="trainer-section" id="trainerSection"></div>
+
+<script>
+    let trainerData = {};
+    let encounterData = [];
+    let itemsData = [];
+    let pokedexData = {};
+    let movesData = {};
+    let abilitiesData = {};
+    let groupedRoutes = {};
+    let currentActiveTab = 'battles'; // Track current active tab for navigation
+
+    const areaOrder = [
+        "Vaniville Town",
+        "Route 1",
+        "Aquacorde Town",
+        "Route 2",
+        "Santalune Forest",
+        "Route 3",
+        "Santalune City",
+        "Route 22",
+        "Route 22 - Part 2",
+        "Santalune Gym",
+        "Route 4",
+        "Lumiose City",
+        "Route 5",
+        "Camphrier Town",
+        "Kalos Hotels",
+        "Route 6",
+        "Route 6 - Pathway",
+        "Route 6 - East",
+        "Route 6 - West",
+        "Parfum Palace",
+        "Route 7",
+        "Connecting Cave",
+        "Route 8",
+        "Route 8 - Upper",
+        "Route 8 - Lower",
+        "Route 8 - Sea",
+        "Ambrette Town",
+        "Route 9",
+        "Glittering Cave",
+        "Ambrette Town Aqaurium",
+        "Cyllage City",
+        "Route 10",
+        "Cyllage Gym",
+        "Geosenge Town",
+        "Geosenge Town - Part 2",
+        "Route 11",
+        "Reflection Cave",
+        "Reflection Cave - 1F",
+        "Reflection Cave - B1F",
+        "Shalour City",
+        "Tower of Mastery",
+        "Shalour Gym",
+        "Route 12",
+        "Azure Bay",
+        "Coumarine City",
+        "Coumarine City - Seaside",
+        "Coumarine City - Cliffside",
+        "Route 13",
+        "Kalos Power Plant",
+        "Lumiose Gym/Prism Tower",
+        "Route 14",
+        "Laverre City",
+        "Laverre Gym",
+        "Poké Ball Factory",
+        "Route 15",
+        "Route 16",
+        "Lost Hotel",
+        "Lost Hotel - Route 15 Side",
+        "Lost Hotel  - Route 16 Side",
+        "Dendemille Town",
+        "Frost Cavern",
+        "Frost Cavern - Outside",
+        "Frost Cavern - 1F",
+        "Frost Cavern - 2F",
+        "Frost Cavern - 3F",
+        "Route 17",
+        "Anistar City",
+        "Anistar Gym",
+        "Lysandre Cafe/Lysandre Labs",
+        "Lysandre Cafe/Lysandre Labs - Lysandre Cafe",
+        "Lysandre Cafe/Lysandre Labs - Lysandre Labs - B1",
+        "Lysandre Cafe/Lysandre Labs - Lysandre Labs - B3",
+        "Team Flare Secret HQ",
+        "Team Flare Secret HQ - Entrance",
+        "Team Flare Secret HQ - Walkway",
+        "Route 18",
+        "Terminus Cave",
+        "Terminus Cave - B1F",
+        "Terminus Cave - B2F",
+        "Couriway Town",
+        "Route 19",
+        "Snowbelle City",
+        "Route 20",
+        "Pokémon Village",
+        "Snowbelle Gym",
+        "Route 21",
+        "Chamber of Emptiness",
+        "Victory Road",
+        "Victory Road - Entrance",
+        "Victory Road - Inside 1",
+        "Victory Road - Outside 2",
+        "Victory Road - Inside 2",
+        "Victory Road - Outside 3",
+        "Victory Road - Inside 3",
+        "Victory Road - Outside 4",
+        "Victory Road - Inside 4",
+        "Elite Four/Kalos League Champion",
+        "Elite Four/Kalos League Champion - Elite Four",
+        "Elite Four/Kalos League Champion - Kalos League Champion",
+        "Lumiose Parade",
+        "Unknown Dungeon",
+        "Kiloude City"
+    ];
+
+    function normalizeForCompare(s) {
+        return (s || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
+    }
+
+    function findPokedexEntry(pokeName) {
+        if (!pokedexData || !pokeName) return null;
+        if (pokedexData[pokeName]) return pokedexData[pokeName];
+        const target = normalizeForCompare(pokeName);
+        for (const key in pokedexData) {
+            if (normalizeForCompare(key) === target) return pokedexData[key];
+        }
+        return null;
+    }
+
+    function findMoveEntry(moveName) {
+        if (!movesData || !moveName || moveName === "---") return null;
+        if (movesData[moveName]) return movesData[moveName];
+        const target = normalizeForCompare(moveName);
+        for (const key in movesData) {
+            if (normalizeForCompare(key) === target) return movesData[key];
+        }
+        return null;
+    }
+
+    function findAbilityEntry(abilityName) {
+        if (!abilitiesData || !abilityName || abilityName === "---") return null;
+        if (abilitiesData[abilityName]) return abilitiesData[abilityName];
+        const target = normalizeForCompare(abilityName);
+        for (const key in abilitiesData) {
+            if (normalizeForCompare(key) === target) return abilitiesData[key];
+        }
+        return null;
+    }
+
+    function createItemIcon(itemName, className = '') {
+        if (!itemName || itemName === "No Item" || itemName === "---") return '';
+        const normalized = itemName.toLowerCase().replace(/[^a-z0-9]/g, '');
+        return `<img src="image/items/${normalized}.png" alt="${itemName}" class="${className}" onerror="this.style.display='none'">`;
+    }
+
+    function colorNature(nature) {
+        if (!nature || nature === "---") return nature;
+        const naturesData = {
+            'Hardy': ['', ''], 'Lonely': ['Attack', 'Defense'], 'Brave': ['Attack', 'Speed'],
+            'Adamant': ['Attack', 'Sp. Atk'], 'Naughty': ['Attack', 'Sp. Def'],
+            'Bold': ['Defense', 'Attack'], 'Docile': ['', ''], 'Relaxed': ['Defense', 'Speed'],
+            'Impish': ['Defense', 'Sp. Atk'], 'Lax': ['Defense', 'Sp. Def'],
+            'Timid': ['Speed', 'Attack'], 'Hasty': ['Speed', 'Defense'], 'Serious': ['', ''],
+            'Jolly': ['Speed', 'Sp. Atk'], 'Naive': ['Speed', 'Sp. Def'],
+            'Modest': ['Sp. Atk', 'Attack'], 'Mild': ['Sp. Atk', 'Defense'], 'Quiet': ['Sp. Atk', 'Speed'],
+            'Bashful': ['', ''], 'Rash': ['Sp. Atk', 'Sp. Def'],
+            'Calm': ['Sp. Def', 'Attack'], 'Gentle': ['Sp. Def', 'Defense'], 'Sassy': ['Sp. Def', 'Speed'],
+            'Careful': ['Sp. Def', 'Sp. Atk'], 'Quirky': ['', '']
+        };
+        const [plus, minus] = naturesData[nature] || ['', ''];
+        if (!plus && !minus) return nature;
+        return `<span style="color: #d32f2f;">-${minus}</span> ${nature} <span style="color: #388e3c;">+${plus}</span>`;
+    }
+
+    function getPokemonIconPath(pokemonName) {
+        const normalized = pokemonName.toLowerCase().replace(/[^a-z0-9]/g, "");
+        return `image/icons/${normalized}.png`;
+    }
+
+    function getAvailableTabs(areaName) {
+        const tabs = [];
+        
+        // Check for battles
+        const hasTrainers = checkHasTrainers(areaName);
+        if (hasTrainers) tabs.push('battles');
+        
+        // Check for encounters
+        const hasEncounters = checkHasEncounters(areaName);
+        if (hasEncounters) tabs.push('encounters');
+        
+        // Check for items
+        const hasItems = checkHasItems(areaName);
+        if (hasItems) tabs.push('items');
+        
+        return tabs;
+    }
+
+    function checkHasTrainers(areaName) {
+        // Check if area matches any trainer data
+        for (const fullName in trainerData) {
+            if (areaMatches(fullName, areaName)) {
+                const areaData = trainerData[fullName];
+                if (areaData && areaData.Trainers && areaData.Trainers.length > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function checkHasEncounters(areaName) {
+        const indices = getEncounterIndices(areaName);
+        if (indices.length === 0) return false;
+        
+        for (const idx of indices) {
+            const location = encounterData[idx];
+            if (location && location.Encounters && location.Encounters.length > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function checkHasItems(areaName) {
+        if (!itemsData || itemsData.length === 0) return false;
+        
+        return itemsData.some(item => {
+            const baseLocation = item.Area.replace(/\s*\([^)]*\)/, '').trim();
+            return normalizeForCompare(baseLocation) === normalizeForCompare(areaName) ||
+                   normalizeForCompare(item.Area) === normalizeForCompare(areaName);
+        });
+    }
+
+    function areaMatches(fullName, areaName) {
+        // Handle dash variations - "Route 22 - Part 2" should match "Route 22"
+        const fullLeft = fullName.split(" - ")[0].trim();
+        const areaLeft = areaName.split(" - ")[0].trim();
+        
+        if (normalizeForCompare(fullName) === normalizeForCompare(areaName)) return true;
+        if (normalizeForCompare(fullLeft) === normalizeForCompare(areaLeft)) return true;
+        
+        return false;
+    }
+
+    function getEncounterIndices(areaName) {
+        const indices = [];
+        encounterData.forEach((location, idx) => {
+            if (normalizeForCompare(location.LocationName) === normalizeForCompare(areaName)) {
+                indices.push(idx);
+            }
+        });
+        return indices;
+    }
+
+    function createNavigationButtons(includeTitle, currentArea) {
+        const container = document.createElement("div");
+        container.className = "route-header-container";
+        
+        const currentIdx = areaOrder.indexOf(currentArea);
+        
+        const prevBtn = document.createElement("button");
+        prevBtn.className = "nav-button nav-button-prev";
+        prevBtn.textContent = "← Previous";
+        
+        if (currentIdx > 0) {
+            const prevArea = areaOrder[currentIdx - 1];
+            prevBtn.onclick = () => navigateToArea(prevArea);
+        } else {
+            prevBtn.disabled = true;
+        }
+        
+        container.appendChild(prevBtn);
+        
+        if (includeTitle) {
+            const title = document.createElement("div");
+            title.className = "area-title";
+            title.textContent = currentArea;
+            container.appendChild(title);
+        }
+        
+        const nextBtn = document.createElement("button");
+        nextBtn.className = "nav-button nav-button-next";
+        nextBtn.textContent = "Next →";
+        
+        if (currentIdx < areaOrder.length - 1) {
+            const nextArea = areaOrder[currentIdx + 1];
+            nextBtn.onclick = () => navigateToArea(nextArea);
+        } else {
+            nextBtn.disabled = true;
+        }
+        
+        container.appendChild(nextBtn);
+        
+        return container;
+    }
+
+    function navigateToArea(areaName) {
+        // Find the corresponding sidebar tab and activate it
+        const tabs = document.querySelectorAll('.route-tab');
+        for (const tab of tabs) {
+            if (tab.textContent.trim() === areaName) {
+                tab.click();
+                // Scroll sidebar to show active tab
+                tab.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                break;
+            }
+        }
+    }
+
+    function displayArea(areaName) {
+        const container = document.getElementById("trainerSection");
+        container.innerHTML = "";
+        
+        // Add header with navigation
+        const headerNav = createNavigationButtons(true, areaName);
+        container.appendChild(headerNav);
+        
+        // Determine available tabs
+        const availableTabs = getAvailableTabs(areaName);
+        
+        if (availableTabs.length === 0) {
+            const noData = document.createElement("div");
+            noData.className = "no-data-message";
+            noData.textContent = "No data available for this location.";
+            container.appendChild(noData);
+            return;
+        }
+        
+        // Create tab buttons
+        const tabsContainer = document.createElement("div");
+        tabsContainer.className = "content-tabs";
+        
+        // Try to maintain current tab, or fall back to first available
+        let activeTab = currentActiveTab;
+        if (!availableTabs.includes(activeTab)) {
+            // Fallback order: battles -> encounters -> items
+            if (availableTabs.includes('battles')) activeTab = 'battles';
+            else if (availableTabs.includes('encounters')) activeTab = 'encounters';
+            else if (availableTabs.includes('items')) activeTab = 'items';
+            else activeTab = availableTabs[0];
+        }
+        currentActiveTab = activeTab;
+        
+        availableTabs.forEach(tabName => {
+            const tab = document.createElement("div");
+            tab.className = `content-tab ${tabName === activeTab ? 'active' : ''}`;
+            tab.textContent = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+            tab.onclick = () => switchTab(tabName, areaName);
+            tabsContainer.appendChild(tab);
+        });
+        
+        container.appendChild(tabsContainer);
+        
+        // Create content containers for each tab
+        const battlesContent = document.createElement("div");
+        battlesContent.className = `tab-content ${activeTab === 'battles' ? 'active' : ''}`;
+        battlesContent.id = "battles-content";
+        
+        const encountersContent = document.createElement("div");
+        encountersContent.className = `tab-content ${activeTab === 'encounters' ? 'active' : ''}`;
+        encountersContent.id = "encounters-content";
+        
+        const itemsContent = document.createElement("div");
+        itemsContent.className = `tab-content ${activeTab === 'items' ? 'active' : ''}`;
+        itemsContent.id = "items-content";
+        
+        container.appendChild(battlesContent);
+        container.appendChild(encountersContent);
+        container.appendChild(itemsContent);
+        
+        // Populate content
+        if (availableTabs.includes('battles')) {
+            displayBattles(battlesContent, areaName);
+        }
+        if (availableTabs.includes('encounters')) {
+            displayEncounters(encountersContent, areaName);
+        }
+        if (availableTabs.includes('items')) {
+            displayItems(itemsContent, areaName);
+        }
+        
+        // Add footer navigation
+        const footerNav = createNavigationButtons(false, areaName);
+        footerNav.style.marginTop = "30px";
+        container.appendChild(footerNav);
+    }
+
+    function switchTab(tabName, areaName) {
+        currentActiveTab = tabName;
+        
+        // Update tab buttons
+        document.querySelectorAll('.content-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent.toLowerCase() === tabName);
+        });
+        
+        // Update content visibility
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(`${tabName}-content`).classList.add('active');
+    }
+
+    function displayBattles(container, areaName) {
+        const matchingAreas = [];
+        for (const fullName in trainerData) {
+            if (areaMatches(fullName, areaName)) {
+                matchingAreas.push(fullName);
+            }
+        }
+        
+        if (matchingAreas.length === 0) {
+            container.innerHTML = '<div class="no-data-message">No battles in this location.</div>';
+            return;
+        }
+        
+        // Sort by area order
+        matchingAreas.sort((a, b) => {
+            const idxA = areaOrder.indexOf(a);
+            const idxB = areaOrder.indexOf(b);
+            if (idxA === -1 && idxB === -1) return a.localeCompare(b);
+            if (idxA === -1) return 1;
+            if (idxB === -1) return -1;
+            return idxA - idxB;
+        });
+        
+        matchingAreas.forEach(subArea => {
+            if (matchingAreas.length > 1) {
+                const subHeader = document.createElement("div");
+                subHeader.className = "sub-header";
+                subHeader.textContent = subArea;
+                container.appendChild(subHeader);
+            }
+            
+            const areaData = trainerData[subArea];
+            if (!areaData || !areaData.Trainers) return;
+            
+            areaData.Trainers.forEach(tr => {
+                const card = document.createElement("div");
+                card.className = "trainer-card";
+                const row = document.createElement("div");
+                row.className = "trainer-row";
+                
+                const trainerInfo = document.createElement("div");
+                trainerInfo.className = "trainer-info-column";
+                
+                const normalizeString = (str) => {
+                    return str.normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]/g, '');
+                };
+                
+                const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
+                
+                const shouldShowDualImages = tr.TrainerName && tr.TrainerName.includes('&') && (
+                    tr.TrainerName.includes('Tierno') || 
+                    tr.TrainerName.includes('Trevor') ||
+                    tr.TrainerName.includes('Delta') ||
+                    tr.TrainerName.includes('Gamma') ||
+                    (tr.TrainerClass && tr.TrainerClass.includes('Team Flare') && tr.TrainerClass !== 'Twins')
+                );
+                const trainerNames = shouldShowDualImages ? tr.TrainerName.split('&').map(n => n.trim()) : [tr.TrainerName];
+                
+                const imagesToTry = [];
+                const normalizedClass = normalizeString(tr.TrainerClass || '');
+                
+                const skipClassesToNames = [
+                    'pokemontrainer', 'pokemonprofessor', 'elitefour', 'champion',
+                    'scientist', 'furisodegirl', 'leader', 'hoennleader', 'hoennelite',
+                    'hoennchampion', 'successor'
+                ];
+                
+                const shouldSkipToName = skipClassesToNames.includes(normalizedClass);
+                
+                if (shouldSkipToName || shouldShowDualImages) {
+                    if (shouldShowDualImages) {
+                        trainerNames.forEach(name => {
+                            if (name) {
+                                const normalized = normalizeString(name);
+                                if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
+                                    imagesToTry.push(normalized);
+                                }
+                            }
+                        });
+                    } else if (tr.TrainerName) {
+                        const normalized = normalizeString(tr.TrainerName);
+                        if (normalized.length >= 2 && fullTrainerName.includes(normalized)) {
+                            imagesToTry.push(normalized);
+                        }
+                    }
+                } else {
+                    if (tr.TrainerClass) {
+                        const normalizedClass = normalizeString(tr.TrainerClass);
+                        if (normalizedClass.length >= 2 && !imagesToTry.includes(normalizedClass)) {
+                            imagesToTry.push(normalizedClass);
+                        }
+                    }
+                    
+                    if (tr.TrainerClass) {
+                        const classWords = tr.TrainerClass.trim().split(/\s+/);
+                        classWords.forEach(word => {
+                            const normalized = normalizeString(word);
+                            if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
+                                imagesToTry.push(normalized);
+                            }
+                        });
+                    }
+                    
+                    if (tr.TrainerName) {
+                        const namePart = tr.TrainerName.includes('&') ? tr.TrainerName.split('&')[0].trim() : tr.TrainerName;
+                        const nameWords = namePart.trim().split(/\s+/);
+                        nameWords.forEach(word => {
+                            const normalized = normalizeString(word);
+                            if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
+                                imagesToTry.push(normalized);
+                            }
+                        });
+                    }
+                }
+                
+                const trainerTopSection = document.createElement("div");
+                trainerTopSection.style.flex = "0 0 auto";
+                
+                const trainerHeader = document.createElement("div");
+                trainerHeader.className = "trainer-header";
+                trainerHeader.textContent = `${tr.TrainerClass} ${tr.TrainerName}`;
+                trainerTopSection.appendChild(trainerHeader);
+                
+                if (imagesToTry.length > 0) {
+                    const imagesContainer = document.createElement("div");
+                    imagesContainer.style.marginTop = "8px";
+                    
+                    let imagesToShow;
+                    if (shouldShowDualImages) {
+                        imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
+                        if (imagesToShow.length < trainerNames.length) {
+                            imagesToShow = imagesToTry.slice(0, trainerNames.length);
+                        }
+                    } else {
+                        imagesToShow = imagesToTry.slice(0, 1);
+                    }
+                    
+                    imagesContainer.style.textAlign = "center";
+                    imagesContainer.style.display = "flex";
+                    imagesContainer.style.justifyContent = "center";
+                    imagesContainer.style.alignItems = "center";
+                    
+                    if (imagesToShow.length > 1) {
+                        imagesContainer.style.flexDirection = "column";
+                        imagesContainer.style.gap = "8px";
+                    }
+                    
+                    imagesToShow.forEach((imageFile, idx) => {
+                        const img = document.createElement("img");
+                        img.alt = trainerNames[idx] || tr.TrainerClass || '';
+                        img.className = "trainer-image";
+                        
+                        let attemptCount = 0;
+                        const MAX_ATTEMPTS = 2;
+                        
+                        const tryImage = () => {
+                            attemptCount++;
+                            if (attemptCount <= MAX_ATTEMPTS) {
+                                img.src = `image/trainer_images/${imageFile}.png`;
+                            } else {
+                                img.style.display = 'none';
+                            }
+                        };
+                        
+                        img.onerror = () => {
+                            if (attemptCount < MAX_ATTEMPTS) {
+                                tryImage();
+                            } else {
+                                img.style.display = 'none';
+                            }
+                        };
+                        
+                        tryImage();
+                        imagesContainer.appendChild(img);
+                    });
+                    
+                    trainerTopSection.appendChild(imagesContainer);
+                }
+                
+                trainerInfo.appendChild(trainerTopSection);
+                
+                const trainerBadges = document.createElement("div");
+                trainerBadges.style.display = "flex";
+                trainerBadges.style.flexDirection = "column";
+                trainerBadges.style.gap = "8px";
+                trainerBadges.style.marginTop = "12px";
+                trainerBadges.style.width = "100%";
+                
+                if (tr.RewardItem && tr.RewardItem !== "None") {
+                    const rewardBadge = document.createElement("div");
+                    rewardBadge.className = "trainer-badge";
+                    rewardBadge.innerHTML = `Reward: ${tr.RewardItem}${createItemIcon(tr.RewardItem, 'item-icon')}`;
+                    trainerBadges.appendChild(rewardBadge);
+                }
+                
+                if (tr.BattleType) {
+                    const battleTypeBadge = document.createElement("div");
+                    battleTypeBadge.className = "trainer-badge";
+                    battleTypeBadge.textContent = `Battle: ${tr.BattleType}`;
+                    trainerBadges.appendChild(battleTypeBadge);
+                }
+                
+                trainerInfo.appendChild(trainerBadges);
+                row.appendChild(trainerInfo);
+                
+                const pokemonContainer = document.createElement("div");
+                pokemonContainer.className = "pokemon-container";
+                
+                tr.Pokemon.forEach(p => {
+                    const pDiv = document.createElement("div");
+                    pDiv.className = "pokemon-col";
+                    
+                    const displayName = p.Form || p.Name;
+                    const spriteName = displayName.toLowerCase().replace(/\s+/g, '-');
+                    
+                    const moves = Array.isArray(p.Moves)
+                        ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
+                        : [];
+                    while (moves.length < 4) moves.push("---");
+                    
+                    const movesHtml = moves.map(moveName => {
+                        const moveEntry = findMoveEntry(moveName);
+                        if (!moveEntry || moveName === "---") {
+                            return `<div class="move-item"><span class="move-name">${moveName}</span></div>`;
+                        }
+                        
+                        const moveType = moveEntry.Type || "";
+                        const moveCategory = moveEntry.Category || "";
+                        const typeBadge = moveType ? `<span class="type-badge type-${moveType.toLowerCase()}">${moveType}</span>` : "";
+                        const categoryIcon = moveCategory ? `<img class="category-icon" src="image/${moveCategory.toLowerCase()}.png" alt="${moveCategory}" title="${moveCategory}">` : "";
+                        
+                        return `<div class="move-item">
+                            <span class="move-name">${moveName}</span>
+                            <span class="move-info">${typeBadge}${categoryIcon}</span>
+                        </div>`;
+                    }).join("");
+                    
+                    const dexEntry = findPokedexEntry(displayName);
+                    let typesHtml = "";
+                    if (dexEntry) {
+                        const t1 = dexEntry.Type1;
+                        const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
+                        if (t1) {
+                            typesHtml += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
+                        }
+                        if (t2) {
+                            typesHtml += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
+                        }
+                    }
+                    
+                    const heldItemText = p.HeldItem || "No Item";
+                    const heldItemIcon = createItemIcon(heldItemText, 'item-icon');
+                    const heldItemHtml = heldItemText + heldItemIcon;
+                    
+                    const abilityText = p.Ability || "---";
+                    const abilityEntry = findAbilityEntry(abilityText);
+                    const abilityTooltip = abilityEntry ? abilityEntry.shortDesc : "";
+                    const abilityHtml = abilityTooltip 
+                        ? `<span title="${abilityTooltip}">${abilityText}</span>`
+                        : abilityText;
+                    
+                    pDiv.innerHTML = `
+                        <div class="pokemon-inner">
+                            <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
+                                <a href="pokemon.html?name=${encodeURIComponent(displayName)}" style="text-decoration:none; color:#000;">
+                                    ${displayName} — Lv ${p.Level}
+                                </a>
+                            </div>
+
+                            <a href="pokemon.html?name=${encodeURIComponent(displayName)}">
+                                <img class="poke-img"
+                                     src="pokemon_sprites/${spriteName}.png"
+                                     onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                            </a>
+
+                            <div class="types">
+                                ${typesHtml}
+                            </div>
+
+                            <div class="info-box ability-box">
+                                ${abilityHtml}
+                            </div>
+
+                            <div class="info-box nature-box">
+                                ${colorNature(p.Nature || "---")}
+                            </div>
+
+                            <div class="info-box item-box">
+                                ${heldItemHtml}
+                            </div>
+
+                            <div class="info-box move-list">
+                                <div class="move-header"><strong>Moves:</strong></div>
+                                ${movesHtml}
+                            </div>
+                        </div>
+                    `;
+                    
+                    pokemonContainer.appendChild(pDiv);
+                });
+                
+                row.appendChild(pokemonContainer);
+                card.appendChild(row);
+                container.appendChild(card);
+            });
+        });
+    }
+
+    function displayEncounters(container, areaName) {
+        const indices = getEncounterIndices(areaName);
+        
+        if (indices.length === 0) {
+            container.innerHTML = '<div class="no-data-message">No encounters in this location.</div>';
+            return;
+        }
+        
+        // Special handling for certain caves
+        if (areaName === "Reflection Cave") {
+            displayReflectionCave(container, indices);
+        } else if (areaName === "Frost Cavern") {
+            displayFrostCavern(container, indices);
+        } else if (areaName === "Victory Road") {
+            displayVictoryRoad(container, indices);
+        } else if (areaName === "Terminus Cave") {
+            displayTerminusCave(container, indices);
+        } else {
+            const aggregated = aggregateEncounters(indices);
+            displayEncounterSections(container, aggregated);
+        }
+    }
+
+    function displayReflectionCave(container, indices) {
+        const floor1Indices = [];
+        const floor2Indices = [];
+        
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location) return;
+            const locId = location.LocationID;
+            if (locId === 305 || locId === 306) {
+                floor1Indices.push(idx);
+            } else if (locId === 307 || locId === 308) {
+                floor2Indices.push(idx);
+            }
+        });
+        
+        if (floor1Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Reflection Cave - 1F";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const floor1 = aggregateEncounters(floor1Indices);
+            displayEncounterSections(container, floor1);
+        }
+        
+        if (floor2Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Reflection Cave - B1F";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const floor2 = aggregateEncounters(floor2Indices);
+            displayEncounterSections(container, floor2);
+        }
+    }
+
+    function displayFrostCavern(container, indices) {
+        const frostIndices = [];
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location) return;
+            const locId = location.LocationID;
+            if (locId === 313 || locId === 314) {
+                frostIndices.push(idx);
+            }
+        });
+        
+        if (frostIndices.length > 0) {
+            const aggregated = aggregateEncounters(frostIndices);
+            displayEncounterSections(container, aggregated);
+        }
+    }
+
+    function displayVictoryRoad(container, indices) {
+        const room1Indices = [];
+        const room3Indices = [];
+        
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location) return;
+            const locId = location.LocationID;
+            if (locId === 322 || locId === 324) {
+                room1Indices.push(idx);
+            } else if (locId === 326 || locId === 327 || locId === 328) {
+                room3Indices.push(idx);
+            }
+        });
+        
+        if (room1Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Victory Road - Room 1 & 2";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const room1 = aggregateEncounters(room1Indices);
+            displayEncounterSections(container, room1);
+        }
+        
+        if (room3Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Victory Road - Room 3 & 4";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const room3 = aggregateEncounters(room3Indices);
+            displayEncounterSections(container, room3);
+        }
+    }
+
+    function displayTerminusCave(container, indices) {
+        const floor1Indices = [];
+        const floor2Indices = [];
+        
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location) return;
+            const locId = location.LocationID;
+            if (locId === 343 || locId === 344 || locId === 345) {
+                floor1Indices.push(idx);
+            } else if (locId === 347 || locId === 348) {
+                floor2Indices.push(idx);
+            }
+        });
+        
+        if (floor1Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Terminus Cave - Floor 1-2, B Floor 1";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const floor1 = aggregateEncounters(floor1Indices);
+            displayEncounterSections(container, floor1);
+        }
+        
+        if (floor2Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Terminus Cave - B Floor 2-3";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const floor2 = aggregateEncounters(floor2Indices);
+            displayEncounterSections(container, floor2);
+        }
+    }
+
+    function aggregateEncounters(indices) {
+        const aggregated = {
+            grass: [],
+            fishing: [],
+            rockSmash: [],
+            surfing: [],
+            hordes: []
+        };
+        
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location || !location.Encounters) return;
+            
+            location.Encounters.forEach(encounter => {
+                const type = encounter.EncounterType.toLowerCase();
+                
+                if (type.includes('horde')) {
+                    aggregated.hordes.push(encounter);
+                } else if (type.includes('rock smash')) {
+                    aggregated.rockSmash.push(encounter);
+                } else if (type.includes('surf')) {
+                    aggregated.surfing.push(encounter);
+                } else if (type.includes('rod')) {
+                    aggregated.fishing.push(encounter);
+                } else {
+                    aggregated.grass.push(encounter);
+                }
+            });
+        });
+        
+        return aggregated;
+    }
+
+    function displayEncounterSections(container, aggregated) {
+        if (aggregated.grass.length > 0) {
+            displayEncounterSection(container, "Grass / Terrain Encounters", aggregated.grass);
+        }
+        if (aggregated.fishing.length > 0) {
+            displayEncounterSection(container, "Fishing", aggregated.fishing);
+        }
+        if (aggregated.rockSmash.length > 0) {
+            displayEncounterSection(container, "Rock Smash", aggregated.rockSmash);
+        }
+        if (aggregated.surfing.length > 0) {
+            displayEncounterSection(container, "Surfing", aggregated.surfing);
+        }
+        if (aggregated.hordes.length > 0) {
+            displayEncounterSection(container, "Horde Encounters", aggregated.hordes);
+        }
+    }
+
+    function displayEncounterSection(container, title, encounters) {
+        if (!encounters || encounters.length === 0) return;
+        
+        const section = document.createElement("div");
+        section.className = "encounter-type-section";
+        
+        const sectionTitle = document.createElement("div");
+        sectionTitle.className = "encounter-type-title";
+        sectionTitle.textContent = title;
+        section.appendChild(sectionTitle);
+        
+        const grid = document.createElement("div");
+        grid.className = "encounter-grid";
+        
+        encounters.forEach(enc => {
+            const card = document.createElement("div");
+            card.className = "encounter-card";
+            
+            const pokemonName = enc.PokemonName || "Unknown";
+            const displayName = pokemonName;
+            
+            const nameEl = document.createElement("div");
+            nameEl.className = "encounter-pokemon-name";
+            nameEl.innerHTML = `<a href="pokemon.html?name=${encodeURIComponent(displayName)}" style="text-decoration:none; color:#000;">${displayName}</a>`;
+            card.appendChild(nameEl);
+            
+            const icon = document.createElement("img");
+            icon.className = "encounter-icon";
+            icon.src = getPokemonIconPath(displayName);
+            icon.alt = displayName;
+            icon.onerror = function() { this.src = 'pokemon_sprites/unknown.png'; };
+            card.appendChild(icon);
+            
+            const dexEntry = findPokedexEntry(displayName);
+            if (dexEntry) {
+                const typesDiv = document.createElement("div");
+                typesDiv.className = "types";
+                const t1 = dexEntry.Type1;
+                const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
+                if (t1) {
+                    typesDiv.innerHTML += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
+                }
+                if (t2) {
+                    typesDiv.innerHTML += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
+                }
+                card.appendChild(typesDiv);
+            }
+            
+            const details = document.createElement("div");
+            details.className = "encounter-details";
+            details.innerHTML = `Level: ${enc.MinLevel}${enc.MinLevel !== enc.MaxLevel ? `-${enc.MaxLevel}` : ''}<br>Rate: ${enc.Rarity}%`;
+            card.appendChild(details);
+            
+            grid.appendChild(card);
+        });
+        
+        section.appendChild(grid);
+        container.appendChild(section);
+    }
+
+    function displayItems(container, areaName) {
+        const areaItems = itemsData.filter(item => {
+            const baseLocation = item.Area.replace(/\s*\([^)]*\)/, '').trim();
+            return normalizeForCompare(baseLocation) === normalizeForCompare(areaName) ||
+                   normalizeForCompare(item.Area) === normalizeForCompare(areaName);
+        });
+        
+        if (areaItems.length === 0) {
+            container.innerHTML = '<div class="no-data-message">No items in this location.</div>';
+            return;
+        }
+        
+        const table = document.createElement("table");
+        table.className = "items-table";
+        
+        const thead = document.createElement("thead");
+        thead.innerHTML = `
+            <tr>
+                <th>Item</th>
+                <th>Location/Price</th>
+            </tr>
+        `;
+        table.appendChild(thead);
+        
+        const tbody = document.createElement("tbody");
+        areaItems.forEach(item => {
+            const row = document.createElement("tr");
+            const itemName = item.Item || "Unknown";
+            const itemIcon = createItemIcon(itemName, 'item-icon');
+            
+            row.innerHTML = `
+                <td><strong>${itemName}</strong>${itemIcon}</td>
+                <td>${item["Location/Price"] || ""}</td>
+            `;
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        
+        container.appendChild(table);
+    }
+
+    async function loadData() {
+        const sidebar = document.getElementById("sidebar");
+        
+        try {
+            const [trainersRes, encountersRes, itemsRes, pokedexRes, movesRes, abilitiesRes] = await Promise.all([
+                fetch("data/trainers.json"),
+                fetch("data/encounters.json"),
+                fetch("data/items.json"),
+                fetch("data/pokedex.json"),
+                fetch("data/moves.json"),
+                fetch("data/abilities.json")
+            ]);
+            
+            trainerData = await trainersRes.json();
+            encounterData = await encountersRes.json();
+            itemsData = await itemsRes.json();
+            pokedexData = await pokedexRes.json();
+            movesData = await movesRes.json();
+            abilitiesData = await abilitiesRes.json();
+            
+            // Build sidebar with all areas from areaOrder
+            areaOrder.forEach(areaName => {
+                // Check if this area has any data
+                const hasBattles = checkHasTrainers(areaName);
+                const hasEncounters = checkHasEncounters(areaName);
+                const hasItems = checkHasItems(areaName);
+                
+                if (hasBattles || hasEncounters || hasItems) {
+                    const tab = document.createElement("div");
+                    tab.className = "route-tab";
+                    tab.textContent = areaName;
+                    tab.onclick = () => {
+                        document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                        tab.classList.add("active");
+                        displayArea(areaName);
+                    };
+                    sidebar.appendChild(tab);
+                }
+            });
+            
+            // Activate first tab
+            const firstTab = sidebar.querySelector('.route-tab');
+            if (firstTab) {
+                firstTab.click();
+            }
+            
+        } catch (error) {
+            console.error("Error loading data:", error);
+            sidebar.innerHTML = '<div style="padding: 20px; color: #d32f2f;">Error loading data. Please refresh the page.</div>';
+        }
+    }
+
+    loadData();
+</script>
+
+</body>
+</html>
