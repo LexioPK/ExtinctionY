@@ -1299,16 +1299,16 @@
                 const trainerImageHtml = `<img class="trainer-image" src="${trainerImagePath}" alt="${tr.TrainerClass} ${tr.TrainerName}" onerror="this.style.display='none'">`;
                 
                 let rewardHtml = "";
-                if (tr.Reward && tr.Reward !== "No Reward") {
-                    const itemIcon = createItemIcon(tr.Reward);
+                if (tr.RewardItem && tr.RewardItem !== "No Reward") {
+                    const itemIcon = createItemIcon(tr.RewardItem);
                     if (itemIcon) {
-                        rewardHtml = `<div class="trainer-reward">${itemIcon} <strong>Reward:</strong> ${tr.Reward}</div>`;
+                        rewardHtml = `<div class="trainer-reward">${itemIcon} <strong>Reward:</strong> ${tr.RewardItem}</div>`;
                     } else {
-                        rewardHtml = `<div class="trainer-reward"><strong>Reward:</strong> ${tr.Reward}</div>`;
+                        rewardHtml = `<div class="trainer-reward"><strong>Reward:</strong> ${tr.RewardItem}</div>`;
                     }
                 }
 
-                const specialBattleType = (tr["Battle Type"] && tr["Battle Type"] !== "Single") ? tr["Battle Type"] : "";
+                const specialBattleType = (tr.BattleType && tr.BattleType !== "Single") ? tr.BattleType : "";
                 const battleTypeHtml = specialBattleType ? `<div class="trainer-battle-type"><strong>Battle Type:</strong> ${specialBattleType}</div>` : "";
 
                 let displayName = `${tr.TrainerClass} ${tr.TrainerName}`;
@@ -1336,7 +1336,9 @@
                     const pDiv = document.createElement("div");
                     pDiv.className = "pokemon-col";
 
-                    const pokeEntry = findPokedexEntry(pk.Species);
+                    // Use Form if available, otherwise use Name
+                    const pokemonName = pk.Form || pk.Name;
+                    const pokeEntry = findPokedexEntry(pokemonName);
                     const types = [];
                     if (pokeEntry) {
                         if (pokeEntry.Type1) types.push(pokeEntry.Type1);
@@ -1352,10 +1354,10 @@
                         ? `<strong>Ability:</strong> <span class="ability-tooltip" title="${abilityEntry.shortDesc || abilityEntry.effect || ''}">${pk.Ability}</span>`
                         : `<strong>Ability:</strong> ${pk.Ability}`;
 
-                    const ivText = (pk.IV && pk.IV !== "---") ? pk.IV : "---";
+                    const ivText = (pk.IVs && pk.IVs !== "---") ? pk.IVs : "---";
 
-                    const heldItemHtml = (pk.Item && pk.Item !== "No Item")
-                        ? `<strong>Item:</strong> ${createItemIcon(pk.Item)} ${pk.Item}`
+                    const heldItemHtml = (pk.HeldItem && pk.HeldItem !== "No Item")
+                        ? `<strong>Item:</strong> ${createItemIcon(pk.HeldItem)} ${pk.HeldItem}`
                         : `<strong>Item:</strong> None`;
 
                     const moves = pk.Moves ? (Array.isArray(pk.Moves) ? pk.Moves : pk.Moves.split(",").map(m => m.trim()).filter(Boolean)) : [];
@@ -1384,7 +1386,7 @@
                     pDiv.innerHTML = `
                         <div class="pokemon-inner">
                             <div class="poke-name-row">
-                                <div class="poke-name">${pk.Species}</div>
+                                <div class="poke-name">${pokemonName}</div>
                                 <div class="poke-level">Lv. ${pk.Level}</div>
                             </div>
 
