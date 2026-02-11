@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trainers, Encounters & Items</title>
+    <title>Trainers, Encounters &amp; Items</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -1394,16 +1394,29 @@
             location.Encounters.forEach(encounter => {
                 const type = encounter.EncounterType.toLowerCase();
                 
-                if (type.includes('horde')) {
-                    aggregated.hordes.push(encounter);
-                } else if (type.includes('rock smash')) {
-                    aggregated.rockSmash.push(encounter);
-                } else if (type.includes('surf')) {
-                    aggregated.surfing.push(encounter);
-                } else if (type.includes('rod')) {
-                    aggregated.fishing.push(encounter);
-                } else {
-                    aggregated.grass.push(encounter);
+                // Flatten slots into individual encounter objects
+                if (encounter.Slots && Array.isArray(encounter.Slots)) {
+                    encounter.Slots.forEach(slot => {
+                        const flatEncounter = {
+                            PokemonName: slot.Species,
+                            MinLevel: slot.MinLevel,
+                            MaxLevel: slot.MaxLevel,
+                            Chance: slot.Chance,
+                            EncounterType: encounter.EncounterType
+                        };
+                        
+                        if (type.includes('horde')) {
+                            aggregated.hordes.push(flatEncounter);
+                        } else if (type.includes('rock smash')) {
+                            aggregated.rockSmash.push(flatEncounter);
+                        } else if (type.includes('surf')) {
+                            aggregated.surfing.push(flatEncounter);
+                        } else if (type.includes('rod')) {
+                            aggregated.fishing.push(flatEncounter);
+                        } else {
+                            aggregated.grass.push(flatEncounter);
+                        }
+                    });
                 }
             });
         });
