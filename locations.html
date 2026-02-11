@@ -1080,13 +1080,188 @@
             return;
         }
 
-        const encounters = aggregateEncounters(encounterIndices);
-        
-        displayEncounterSection(container, "Grass / Terrain Encounters", encounters.grass);
-        displayEncounterSection(container, "Fishing", encounters.fishing);
-        displayEncounterSection(container, "Rock Smash", encounters.rockSmash);
-        displayEncounterSection(container, "Surfing", encounters.surfing);
-        displayEncounterSection(container, "Horde Encounters", encounters.hordes);
+        // Special handling for cave locations
+        if (baseName === "Reflection Cave") {
+            // First 2 (305, 306) → "Floor 1, B Floor 1", Last 2 (307, 308) → "B Floor 2-3"
+            let floor1Index = null;
+            let floor2Index = null;
+            
+            encounterIndices.forEach((locationIndex) => {
+                const location = encounterData[locationIndex];
+                if (!location) return;
+                const locId = location.LocationID;
+                if ((locId === 305 || locId === 306) && floor1Index === null) {
+                    floor1Index = locationIndex;
+                } else if ((locId === 307 || locId === 308) && floor2Index === null) {
+                    floor2Index = locationIndex;
+                }
+            });
+            
+            if (floor1Index !== null) {
+                const floor1Encounters = aggregateEncounters([floor1Index]);
+                const floorHeader = document.createElement("h3");
+                floorHeader.textContent = "Reflection Cave - Floor 1, B Floor 1";
+                floorHeader.style.marginTop = "30px";
+                floorHeader.style.marginBottom = "20px";
+                floorHeader.style.fontSize = "1.5rem";
+                floorHeader.style.fontWeight = "700";
+                floorHeader.style.color = "#333";
+                container.appendChild(floorHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", floor1Encounters.grass);
+                displayEncounterSection(container, "Fishing", floor1Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", floor1Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", floor1Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", floor1Encounters.hordes);
+            }
+            
+            if (floor2Index !== null) {
+                const floor2Encounters = aggregateEncounters([floor2Index]);
+                const floorHeader = document.createElement("h3");
+                floorHeader.textContent = "Reflection Cave - B Floor 2-3";
+                floorHeader.style.marginTop = "30px";
+                floorHeader.style.marginBottom = "20px";
+                floorHeader.style.fontSize = "1.5rem";
+                floorHeader.style.fontWeight = "700";
+                floorHeader.style.color = "#333";
+                container.appendChild(floorHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", floor2Encounters.grass);
+                displayEncounterSection(container, "Fishing", floor2Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", floor2Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", floor2Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", floor2Encounters.hordes);
+            }
+        } else if (baseName === "Frost Cavern") {
+            // Combine first two (313, 314) only, ignore the rest (315, 316, 317)
+            const frostIndices = [];
+            encounterIndices.forEach((locationIndex) => {
+                const location = encounterData[locationIndex];
+                if (!location) return;
+                const locId = location.LocationID;
+                if (locId === 313 || locId === 314) {
+                    frostIndices.push(locationIndex);
+                }
+            });
+            
+            const frostEncounters = aggregateEncounters(frostIndices);
+            displayEncounterSection(container, "Grass / Terrain Encounters", frostEncounters.grass);
+            displayEncounterSection(container, "Fishing", frostEncounters.fishing);
+            displayEncounterSection(container, "Rock Smash", frostEncounters.rockSmash);
+            displayEncounterSection(container, "Surfing", frostEncounters.surfing);
+            displayEncounterSection(container, "Horde Encounters", frostEncounters.hordes);
+        } else if (baseName === "Victory Road") {
+            // First 2 (322, 324) → "Room 1 & 2", Next 3 (326, 327, 328) → "Room 3 & 4"
+            let room1Index = null;
+            let room3Index = null;
+            
+            encounterIndices.forEach((locationIndex) => {
+                const location = encounterData[locationIndex];
+                if (!location) return;
+                const locId = location.LocationID;
+                if ((locId === 322 || locId === 324) && room1Index === null) {
+                    room1Index = locationIndex;
+                } else if ((locId === 326 || locId === 327 || locId === 328) && room3Index === null) {
+                    room3Index = locationIndex;
+                }
+            });
+            
+            if (room1Index !== null) {
+                const room1Encounters = aggregateEncounters([room1Index]);
+                const roomHeader = document.createElement("h3");
+                roomHeader.textContent = "Victory Road - Room 1 & 2";
+                roomHeader.style.marginTop = "30px";
+                roomHeader.style.marginBottom = "20px";
+                roomHeader.style.fontSize = "1.5rem";
+                roomHeader.style.fontWeight = "700";
+                roomHeader.style.color = "#333";
+                container.appendChild(roomHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", room1Encounters.grass);
+                displayEncounterSection(container, "Fishing", room1Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", room1Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", room1Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", room1Encounters.hordes);
+            }
+            
+            if (room3Index !== null) {
+                const room3Encounters = aggregateEncounters([room3Index]);
+                const roomHeader = document.createElement("h3");
+                roomHeader.textContent = "Victory Road - Room 3 & 4";
+                roomHeader.style.marginTop = "30px";
+                roomHeader.style.marginBottom = "20px";
+                roomHeader.style.fontSize = "1.5rem";
+                roomHeader.style.fontWeight = "700";
+                roomHeader.style.color = "#333";
+                container.appendChild(roomHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", room3Encounters.grass);
+                displayEncounterSection(container, "Fishing", room3Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", room3Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", room3Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", room3Encounters.hordes);
+            }
+        } else if (baseName === "Terminus Cave") {
+            // First 3 (343, 344, 345) → "Floor 1-2, B Floor 1", Last 2 (347, 348) → "B Floor 2-3"
+            let floor1Index = null;
+            let floor2Index = null;
+            
+            encounterIndices.forEach((locationIndex) => {
+                const location = encounterData[locationIndex];
+                if (!location) return;
+                const locId = location.LocationID;
+                if ((locId === 343 || locId === 344 || locId === 345) && floor1Index === null) {
+                    floor1Index = locationIndex;
+                } else if ((locId === 347 || locId === 348) && floor2Index === null) {
+                    floor2Index = locationIndex;
+                }
+            });
+            
+            if (floor1Index !== null) {
+                const floor1Encounters = aggregateEncounters([floor1Index]);
+                const floorHeader = document.createElement("h3");
+                floorHeader.textContent = "Terminus Cave - Floor 1-2, B Floor 1";
+                floorHeader.style.marginTop = "30px";
+                floorHeader.style.marginBottom = "20px";
+                floorHeader.style.fontSize = "1.5rem";
+                floorHeader.style.fontWeight = "700";
+                floorHeader.style.color = "#333";
+                container.appendChild(floorHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", floor1Encounters.grass);
+                displayEncounterSection(container, "Fishing", floor1Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", floor1Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", floor1Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", floor1Encounters.hordes);
+            }
+            
+            if (floor2Index !== null) {
+                const floor2Encounters = aggregateEncounters([floor2Index]);
+                const floorHeader = document.createElement("h3");
+                floorHeader.textContent = "Terminus Cave - B Floor 2-3";
+                floorHeader.style.marginTop = "30px";
+                floorHeader.style.marginBottom = "20px";
+                floorHeader.style.fontSize = "1.5rem";
+                floorHeader.style.fontWeight = "700";
+                floorHeader.style.color = "#333";
+                container.appendChild(floorHeader);
+                
+                displayEncounterSection(container, "Grass / Terrain Encounters", floor2Encounters.grass);
+                displayEncounterSection(container, "Fishing", floor2Encounters.fishing);
+                displayEncounterSection(container, "Rock Smash", floor2Encounters.rockSmash);
+                displayEncounterSection(container, "Surfing", floor2Encounters.surfing);
+                displayEncounterSection(container, "Horde Encounters", floor2Encounters.hordes);
+            }
+        } else {
+            // Normal aggregation for other locations
+            const encounters = aggregateEncounters(encounterIndices);
+            
+            displayEncounterSection(container, "Grass / Terrain Encounters", encounters.grass);
+            displayEncounterSection(container, "Fishing", encounters.fishing);
+            displayEncounterSection(container, "Rock Smash", encounters.rockSmash);
+            displayEncounterSection(container, "Surfing", encounters.surfing);
+            displayEncounterSection(container, "Horde Encounters", encounters.hordes);
+        }
     }
 
     function aggregateEncounters(indices) {
