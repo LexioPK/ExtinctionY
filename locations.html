@@ -420,7 +420,7 @@
         .pokemon-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
             margin-top: 15px;
         }
 
@@ -428,9 +428,10 @@
             background: #fafafa;
             border: 2px solid #ddd;
             border-radius: 10px;
-            padding: 12px;
+            padding: 8px;
             text-align: center;
-            min-width: 140px;
+            min-width: 85px;
+            max-width: 95px;
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
         }
@@ -441,30 +442,32 @@
         }
 
         .pokemon-box .pokemon-name {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            line-height: 1.2;
         }
 
         .pokemon-box .pokemon-sprite {
-            width: 80px;
-            height: 80px;
-            margin: 5px auto;
+            width: 60px;
+            height: 60px;
+            margin: 3px auto;
         }
 
         .pokemon-icon {
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             object-fit: contain;
             image-rendering: pixelated;
-            margin: 5px auto;
+            margin: 3px auto;
             display: block;
         }
 
         .pokemon-chance {
             font-weight: 600;
             color: #1976d2;
-            margin-top: 5px;
+            margin-top: 4px;
+            font-size: 0.75rem;
         }
 
         .encounter-details {
@@ -569,6 +572,7 @@
     let pokedexData = {};
     let movesData = {};
     let abilitiesData = {};
+    let currentActiveTab = 'battles'; // Track current active tab for navigation persistence
 
     let routeOrder = [
         "Vaniville Town","Route 1","Aquacorde Town","Route 2","Santalune Forest","Route 3",
@@ -863,7 +867,7 @@
         return left;
     }
 
-    function displayLocation(baseName) {
+    function displayLocation(baseName, targetTab = null) {
         const container = document.getElementById("locationSection");
         container.innerHTML = "";
         
@@ -884,7 +888,7 @@
                 prevButton.onclick = () => {
                     document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                     prevTab.classList.add("active");
-                    displayLocation(prevTab.dataset.base);
+                    displayLocation(prevTab.dataset.base, currentActiveTab); // Preserve current tab
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 };
             } else {
@@ -908,7 +912,7 @@
                 nextButton.onclick = () => {
                     document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                     nextTab.classList.add("active");
-                    displayLocation(nextTab.dataset.base);
+                    displayLocation(nextTab.dataset.base, currentActiveTab); // Preserve current tab
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 };
             } else {
@@ -927,7 +931,7 @@
         tabsContainer.className = "location-tabs";
         
         const battlesTab = document.createElement("div");
-        battlesTab.className = "location-tab-btn active";
+        battlesTab.className = "location-tab-btn";
         battlesTab.textContent = "Battles";
         battlesTab.dataset.tab = "battles";
         
@@ -948,7 +952,7 @@
         
         // Create tab content containers
         const battlesContent = document.createElement("div");
-        battlesContent.className = "tab-content active";
+        battlesContent.className = "tab-content";
         battlesContent.id = "battles-content";
         
         const encountersContent = document.createElement("div");
@@ -970,6 +974,7 @@
                 document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
                 tab.classList.add("active");
                 document.getElementById(`${tab.dataset.tab}-content`).classList.add("active");
+                currentActiveTab = tab.dataset.tab; // Update global tab state
             };
         });
         
@@ -977,6 +982,37 @@
         populateBattlesTab(battlesContent, baseName);
         populateEncountersTab(encountersContent, baseName);
         populateItemsTab(itemsContent, baseName);
+        
+        // Determine which tab to show
+        let tabToShow = targetTab || currentActiveTab;
+        
+        // Check if the target tab has content, if not, default to first available
+        const hasContent = {
+            'battles': battlesContent.innerHTML.trim() !== '' && !battlesContent.innerHTML.includes('No trainer battles'),
+            'encounters': encountersContent.innerHTML.trim() !== '' && !encountersContent.innerHTML.includes('No wild encounters'),
+            'items': itemsContent.innerHTML.trim() !== '' && !itemsContent.innerHTML.includes('No items')
+        };
+        
+        // If target tab has no content, find first available tab
+        if (!hasContent[tabToShow]) {
+            if (hasContent['battles']) tabToShow = 'battles';
+            else if (hasContent['encounters']) tabToShow = 'encounters';
+            else if (hasContent['items']) tabToShow = 'items';
+            else tabToShow = 'battles'; // default fallback
+        }
+        
+        // Activate the selected tab
+        currentActiveTab = tabToShow;
+        document.querySelectorAll(".location-tab-btn").forEach(t => {
+            if (t.dataset.tab === tabToShow) {
+                t.classList.add("active");
+            }
+        });
+        document.querySelectorAll(".tab-content").forEach(c => {
+            if (c.id === `${tabToShow}-content`) {
+                c.classList.add("active");
+            }
+        });
         
         container.appendChild(createNavigationButtons(false));
     }
@@ -1809,16 +1845,16 @@
         header.style.color = "#ffffff";
         itemsSection.appendChild(header);
 
-        // Filter items for this location - check all sub-areas
-        const subAreas = groupedLocations[baseName]?.fullNames || [];
+        // Filter items for this location using parseAreaAndSubArea
         const locationItems = itemsData.filter(item => {
-            // Check if item.Area matches any of the sub-areas or baseName
-            return subAreas.includes(item.Area) || item.Area === baseName;
+            const parsed = parseAreaAndSubArea(item.Area);
+            // Match if mainArea equals baseName (this handles both "Route 6" and "Route 6 (West)")
+            return parsed.mainArea === baseName;
         });
 
         if (locationItems.length === 0) {
             const noItems = document.createElement("p");
-            noItems.textContent = "Items information will be added in a future update.";
+            noItems.textContent = "No items in this location.";
             noItems.style.color = "#cccccc";
             noItems.style.textAlign = "center";
             noItems.style.padding = "20px";
