@@ -375,45 +375,50 @@
             color: #333;
         }
 
-        .encounter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 12px;
+        .pokemon-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
         }
 
-        .encounter-card {
-            background: white;
-            border: 2px solid #ddd;
+        .pokemon-box {
+            background: #fafafa;
+            border: 2px solid var(--pokemon-border-color);
             border-radius: 10px;
-            padding: 12px;
+            padding: 10px;
+            width: 100px;
             text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .encounter-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .encounter-pokemon-name {
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 8px;
-        }
-
-        .encounter-icon {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            margin: 8px auto;
-            display: block;
-            image-rendering: pixelated;
-        }
-
-        .encounter-details {
+        .pokemon-name {
             font-size: 0.85rem;
-            color: #666;
-            margin-top: 8px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .pokemon-icon {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            margin: 5px auto;
+            display: block;
+            cursor: pointer;
+        }
+        
+        .pokemon-icon:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+            transition: all 0.2s ease;
+        }
+
+        .pokemon-chance {
+            font-weight: 600;
+            color: #1976d2;
+            margin-top: 5px;
         }
 
         /* Items styles */
@@ -1457,52 +1462,40 @@
         section.appendChild(sectionTitle);
         
         const grid = document.createElement("div");
-        grid.className = "encounter-grid";
+        grid.className = "pokemon-grid";
         
         encounters.forEach(enc => {
-            const card = document.createElement("div");
-            card.className = "encounter-card";
+            const box = document.createElement("div");
+            box.className = "pokemon-box";
             
             const pokemonName = enc.PokemonName || "Unknown";
-            const sprites = getPokemonSpritePath(pokemonName);
             
-            const nameEl = document.createElement("div");
-            nameEl.className = "encounter-pokemon-name";
-            nameEl.innerHTML = `<a href="pokemon.html?name=${encodeURIComponent(pokemonName)}" style="text-decoration:none; color:#000;">${pokemonName}</a>`;
-            card.appendChild(nameEl);
+            const name = document.createElement("div");
+            name.className = "pokemon-name";
+            name.textContent = pokemonName;
+            box.appendChild(name);
             
+            const iconLink = document.createElement("a");
+            iconLink.href = `pokemon.html?name=${encodeURIComponent(pokemonName)}`;
             const icon = document.createElement("img");
-            icon.className = "encounter-icon";
+            icon.className = "pokemon-icon";
             icon.alt = pokemonName;
+            const sprites = getPokemonSpritePath(pokemonName);
             setupImageFallback(icon, [
                 getPokemonIconPath(pokemonName),
                 sprites.primary,
                 sprites.fallback1,
                 sprites.fallback2
             ]);
-            card.appendChild(icon);
+            iconLink.appendChild(icon);
+            box.appendChild(iconLink);
             
-            const dexEntry = findPokedexEntry(pokemonName);
-            if (dexEntry) {
-                const typesDiv = document.createElement("div");
-                typesDiv.className = "types";
-                const t1 = dexEntry.Type1;
-                const t2 = (dexEntry.Type2 && dexEntry.Type2 !== t1) ? dexEntry.Type2 : "";
-                if (t1) {
-                    typesDiv.innerHTML += `<span class="type-badge type-${t1.toLowerCase()}">${t1}</span>`;
-                }
-                if (t2) {
-                    typesDiv.innerHTML += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
-                }
-                card.appendChild(typesDiv);
-            }
+            const chance = document.createElement("div");
+            chance.className = "pokemon-chance";
+            chance.textContent = `${enc.Chance || "Unknown"}`;
+            box.appendChild(chance);
             
-            const details = document.createElement("div");
-            details.className = "encounter-details";
-            details.innerHTML = `Level: ${enc.MinLevel}${enc.MinLevel !== enc.MaxLevel ? `-${enc.MaxLevel}` : ''}<br>Rate: ${enc.Chance || "Unknown"}`;
-            card.appendChild(details);
-            
-            grid.appendChild(card);
+            grid.appendChild(box);
         });
         
         section.appendChild(grid);
