@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1806,7 +1807,7 @@
         header.style.borderBottom = "2px solid #2196F3";
         header.style.paddingBottom = "10px";
         header.style.marginBottom = "20px";
-        header.style.color = "#333";
+        header.style.color = "#ffffff";
         itemsSection.appendChild(header);
 
         // Filter items for this location - check all sub-areas
@@ -1818,11 +1819,10 @@
 
         if (locationItems.length === 0) {
             const noItems = document.createElement("p");
-            noItems.textContent = "No items found in this location.";
-            noItems.style.color = "#666";
+            noItems.textContent = "Items information will be added in a future update.";
+            noItems.style.color = "#cccccc";
             noItems.style.textAlign = "center";
             noItems.style.padding = "20px";
-            noItems.style.fontStyle = "italic";
             itemsSection.appendChild(noItems);
         } else {
             // Group items by sub-area
@@ -1846,7 +1846,7 @@
                     subAreaHeader.style.fontWeight = "600";
                     subAreaHeader.style.marginTop = "20px";
                     subAreaHeader.style.marginBottom = "10px";
-                    subAreaHeader.style.color = "#333";
+                    subAreaHeader.style.color = "#ffffff";
                     itemsSection.appendChild(subAreaHeader);
                 }
 
@@ -1861,8 +1861,8 @@
                 thead.innerHTML = `
                     <tr style="background-color: #f5f5f5; border-bottom: 2px solid #ddd;">
                         <th style="padding: 10px; text-align: center; width: 60px;">Icon</th>
-                        <th style="padding: 10px; text-align: left;">Item</th>
-                        <th style="padding: 10px; text-align: left;">Location/Price</th>
+                        <th style="padding: 10px; text-align: center;">Item</th>
+                        <th style="padding: 10px; text-align: center;">Location/Price</th>
                     </tr>
                 `;
                 table.appendChild(thead);
