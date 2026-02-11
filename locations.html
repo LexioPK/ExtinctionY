@@ -887,8 +887,9 @@
         }
 
         trainerSubAreas.forEach((subArea, idx) => {
-            const trainers = trainerData[subArea];
-            if (!trainers || trainers.length === 0) return;
+            const areaData = trainerData[subArea];
+            if (!areaData || !areaData.Trainers || areaData.Trainers.length === 0) return;
+            const trainers = areaData.Trainers;
 
             if (trainerSubAreas.length > 1) {
                 const subHeader = document.createElement("h3");
