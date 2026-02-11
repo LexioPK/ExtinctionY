@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trainers</title>
+    <title>Trainers & Encounters</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -645,7 +645,7 @@
 
     function createItemIcon(itemName, className = '') {
         if (!itemName || itemName === "No Item" || itemName === "---") return '';
-        const normalized = itemName.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const normalized = itemName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
         return `<img src="image/item/${normalized}.png" alt="${itemName}" class="${className}" onerror="this.style.display='none'">`;
     }
 
@@ -665,7 +665,7 @@
         };
         const [plus, minus] = naturesData[nature] || ['', ''];
         if (!plus && !minus) return nature;
-        return `<span style="color: #d32f2f;">-${minus}</span> ${nature} <span style="color: #388e3c;">+${plus}</span>`;
+        return `${nature} <span style="color: #388e3c;">+${plus}</span> <span style="color: #d32f2f;">-${minus}</span>`;
     }
 
     function getPokemonIconPath(pokemonName) {
@@ -1442,7 +1442,13 @@
             icon.className = "encounter-icon";
             icon.src = getPokemonIconPath(displayName);
             icon.alt = displayName;
-            icon.onerror = function() { this.src = 'pokemon_sprites/unknown.png'; };
+            icon.onerror = function() { 
+                this.onerror = null;
+                this.src = 'pokemon_sprites/' + displayName.toLowerCase().replace(/\s+/g, '-') + '.png';
+                this.onerror = function() {
+                    this.src = 'pokemon_sprites/unknown.png';
+                };
+            };
             card.appendChild(icon);
             
             const dexEntry = findPokedexEntry(displayName);
