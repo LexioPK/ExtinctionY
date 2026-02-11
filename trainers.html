@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Battles & Encounters</title>
+    <title>Battles and Encounters</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -21,6 +21,7 @@
             --inner-padding-y: 12px;
             --moves-separator-thick: 4px; /* thickness for separators */
             --sep-color: #e6e6e6;
+            --items-section-bg: #6a6a6a; /* background for items section */
         }
 
         /* base layout */
@@ -178,7 +179,7 @@
         }
 
         .items-section {
-            background: #6a6a6a;
+            background: var(--items-section-bg);
             padding: 20px;
             border-radius: 12px;
             margin: 20px 0;
@@ -1336,7 +1337,11 @@
                     pDiv.className = "pokemon-col";
 
                     const pokeEntry = findPokedexEntry(pk.Species);
-                    const types = pokeEntry && pokeEntry.types ? pokeEntry.types : [];
+                    const types = [];
+                    if (pokeEntry) {
+                        if (pokeEntry.Type1) types.push(pokeEntry.Type1);
+                        if (pokeEntry.Type2) types.push(pokeEntry.Type2);
+                    }
                     const typesHtml = types.map(t => {
                         const sanitized = t.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
                         return `<span class="type-badge type-${sanitized}">${t}</span>`;
@@ -1344,7 +1349,7 @@
 
                     const abilityEntry = findAbilityEntry(pk.Ability);
                     const abilityText = abilityEntry
-                        ? `<strong>Ability:</strong> <span class="ability-tooltip" title="${abilityEntry.effect}">${pk.Ability}</span>`
+                        ? `<strong>Ability:</strong> <span class="ability-tooltip" title="${abilityEntry.shortDesc || abilityEntry.effect || ''}">${pk.Ability}</span>`
                         : `<strong>Ability:</strong> ${pk.Ability}`;
 
                     const ivText = (pk.IV && pk.IV !== "---") ? pk.IV : "---";
@@ -1359,8 +1364,8 @@
                         const moveEntry = findMoveEntry(moveName);
                         let moveDisplay = moveName;
                         if (moveEntry) {
-                            const moveType = moveEntry.type || "unknown";
-                            const moveCategory = moveEntry.category || "???";
+                            const moveType = moveEntry.Type || moveEntry.type || "unknown";
+                            const moveCategory = moveEntry.Category || moveEntry.category || "???";
                             const moveDescription = moveEntry.description || "No description.";
                             const sanitizedType = moveType.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
                             moveDisplay = `
@@ -1585,7 +1590,7 @@
             const battlesTab = document.createElement("button");
             battlesTab.className = "tab-button" + (currentTab === 'battles' ? ' active' : '');
             battlesTab.textContent = "Battles";
-            battlesTab.onclick = () => switchTab('battles');
+            battlesTab.onclick = (e) => switchTab('battles', e);
             tabsContainer.appendChild(battlesTab);
         }
 
@@ -1593,7 +1598,7 @@
             const encountersTab = document.createElement("button");
             encountersTab.className = "tab-button" + (currentTab === 'encounters' ? ' active' : '');
             encountersTab.textContent = "Encounters";
-            encountersTab.onclick = () => switchTab('encounters');
+            encountersTab.onclick = (e) => switchTab('encounters', e);
             tabsContainer.appendChild(encountersTab);
         }
 
@@ -1601,7 +1606,7 @@
             const itemsTab = document.createElement("button");
             itemsTab.className = "tab-button" + (currentTab === 'items' ? ' active' : '');
             itemsTab.textContent = "Items";
-            itemsTab.onclick = () => switchTab('items');
+            itemsTab.onclick = (e) => switchTab('items', e);
             tabsContainer.appendChild(itemsTab);
         }
 
@@ -1639,14 +1644,16 @@
         container.appendChild(itemsContent);
 
         // Tab switching function
-        function switchTab(tabName) {
+        function switchTab(tabName, event) {
             currentTab = tabName;
             
             // Update tab buttons
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             // Update tab content
             document.querySelectorAll('.tab-content').forEach(content => {
