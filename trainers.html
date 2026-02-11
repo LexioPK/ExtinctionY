@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trainers & Encounters</title>
+    <title>Trainers, Encounters & Items</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -643,9 +643,13 @@
         return null;
     }
 
+    function normalizeItemName(itemName) {
+        return itemName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    }
+
     function createItemIcon(itemName, className = '') {
         if (!itemName || itemName === "No Item" || itemName === "---") return '';
-        const normalized = itemName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+        const normalized = normalizeItemName(itemName);
         return `<img src="image/item/${normalized}.png" alt="${itemName}" class="${className}" onerror="this.style.display='none'">`;
     }
 
@@ -666,6 +670,15 @@
         const [plus, minus] = naturesData[nature] || ['', ''];
         if (!plus && !minus) return nature;
         return `${nature} <span style="color: #388e3c;">+${plus}</span> <span style="color: #d32f2f;">-${minus}</span>`;
+    }
+
+    function getPokemonSpritePath(pokemonName, withFallback = true) {
+        const normalized = pokemonName.toLowerCase().replace(/\s+/g, '-');
+        return {
+            primary: `pokemon_sprites/${normalized}.png`,
+            fallback1: `pokemon_sprites2/${normalized}.png`,
+            fallback2: 'pokemon_sprites/unknown.png'
+        };
     }
 
     function getPokemonIconPath(pokemonName) {
@@ -1112,7 +1125,7 @@
                     pDiv.className = "pokemon-col";
                     
                     const displayName = p.Form || p.Name;
-                    const spriteName = displayName.toLowerCase().replace(/\s+/g, '-');
+                    const sprites = getPokemonSpritePath(displayName);
                     
                     const moves = Array.isArray(p.Moves)
                         ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
@@ -1170,8 +1183,8 @@
 
                             <a href="pokemon.html?name=${encodeURIComponent(displayName)}">
                                 <img class="poke-img"
-                                     src="pokemon_sprites/${spriteName}.png"
-                                     onerror="this.onerror=null; this.src='pokemon_sprites2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                                     src="${sprites.primary}"
+                                     onerror="this.onerror=null; this.src='${sprites.fallback1}'; this.onerror=function(){ this.src='${sprites.fallback2}'; }">
                             </a>
 
                             <div class="types">
@@ -1432,6 +1445,7 @@
             
             const pokemonName = enc.PokemonName || "Unknown";
             const displayName = pokemonName;
+            const sprites = getPokemonSpritePath(displayName);
             
             const nameEl = document.createElement("div");
             nameEl.className = "encounter-pokemon-name";
@@ -1444,9 +1458,13 @@
             icon.alt = displayName;
             icon.onerror = function() { 
                 this.onerror = null;
-                this.src = 'pokemon_sprites/' + displayName.toLowerCase().replace(/\s+/g, '-') + '.png';
+                this.src = sprites.primary;
                 this.onerror = function() {
-                    this.src = 'pokemon_sprites/unknown.png';
+                    this.onerror = null;
+                    this.src = sprites.fallback1;
+                    this.onerror = function() {
+                        this.src = sprites.fallback2;
+                    };
                 };
             };
             card.appendChild(icon);
