@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trainers</title>
+    <title>Trainers, Encounters &amp; Items</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -16,15 +15,14 @@
     <style>
         :root{
             --poke-border: 2px;
-            --trainer-border-color: #6f6f6f; /* darker trainer-row border */
-            --pokemon-border-color: #555555;  /* darker border for each pokemon entry */
+            --trainer-border-color: #6f6f6f;
+            --pokemon-border-color: #555555;
             --inner-padding-x: 10px;
             --inner-padding-y: 12px;
-            --moves-separator-thick: 4px; /* thickness for separators */
+            --moves-separator-thick: 4px;
             --sep-color: #e6e6e6;
         }
 
-        /* base layout */
         body {
             font-family: 'Lexend', sans-serif;
             background: #f5f5f5;
@@ -122,6 +120,51 @@
             margin-left: auto;
         }
 
+        /* Tab System Styles */
+        .content-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .content-tab {
+            padding: 10px 24px;
+            background: #e0e0e0;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .content-tab:hover {
+            background: #d0d0d0;
+            transform: translateY(-1px);
+        }
+
+        .content-tab.active {
+            background: #1976d2;
+            color: white;
+            border-color: #1565c0;
+            cursor: default;
+        }
+
+        .content-tab.active:hover {
+            transform: none;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         .sub-header {
             margin-top: 25px;
             font-size: 1.15rem;
@@ -151,295 +194,301 @@
             display: block;
             margin: 50px auto;
         }
-        
-        /* Larger tooltip font size */
-        [title] {
-            cursor: help;
-        }
-        
-        /* Override browser default tooltip styling with larger font */
-        @supports (font-size: 16px) {
-            [title]:hover::after {
-                font-size: 16px;
-            }
-        }
 
-        .trainer-sub {
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 12px;
-        }
-        
-        /* Bubble badges for battle info - positioned at bottom of trainer card */
-        .trainer-badges {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 16px;
-            align-items: center;
-            flex-shrink: 0;
-        }
-        
-        .info-bubble {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-align: center;
-            color: white;
-            min-width: 120px;
-        }
-        
-        /* Battle Type colors */
-        .battle-single { background: #6BAED6; } /* Light Blue */
-        .battle-double { background: #D4A017; } /* Dark Yellow */
-        .battle-triple { background: #5CB85C; } /* Green */
-        .battle-rotation { background: #E75480; } /* Pink */
-        
-        /* Mandatory/Optional colors */
-        .battle-mandatory { background: #DC3545; } /* Red */
-        .battle-optional { background: #9B59B6; } /* Purple */
-        
-        /* Reward color */
-        .battle-reward { background: #808080; } /* Grey */
-
-        /* darker border for trainer entry rows */
         .trainer-row {
             display: flex;
-            align-items: stretch;
-            gap: 0;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            background: #fff;
+            border-radius: 8px;
             border: var(--poke-border) solid var(--trainer-border-color);
-            border-radius: 10px;
-            overflow: hidden;
-            background: transparent;
         }
 
-        .trainer-row > div { box-sizing: border-box; }
-
-        .trainer-row > .trainer-info-column {
-            width: 240px;
-            min-width: 240px;
-            max-width: 240px;
-            padding: 12px;
-            background: #ffffff;
-            border-right: 1px solid #e6e6e6;
-            border-top: 1px solid #e6e6e6;
-            border-bottom: 1px solid #e6e6e6;
+        .trainer-info-column {
+            flex: 0 0 auto;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            gap: 5px;
+            min-width: 180px;
         }
-        
-        .trainer-row > .pokemon-container {
+
+        .trainer-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .pokemon-container {
             display: flex;
             flex-wrap: wrap;
+            gap: 5px;
             flex: 1;
             align-items: stretch;
         }
 
-        /*
-          Each pokemon column has a full border. Inner content lives in .pokemon-inner.
-          Separators between sections are implemented as pseudo-elements on the target
-          elements and are sized so they connect to the outer borders of the pokemon column.
-          
-          Each column has a fixed equal width of 208px so all columns are uniformly sized.
-          When there are 6 columns (240px trainer + 6×208px = 1488px total), they fill the 
-          entire available space without requiring horizontal scroll on standard screens.
-        */
-        .pokemon-container > .pokemon-col {
-            width: 202px;
-            min-width: 202px;
-            max-width: 202px;
-            padding: 0; /* inner wrapper controls padding */
-            background: #fafafa;
-            /* full, darker border around each pokemon column */
+        .pokemon-col {
+            background: #fff;
             border: var(--poke-border) solid var(--pokemon-border-color);
-            box-sizing: border-box;
-            background-clip: padding-box;
-            position: relative;
-        }
-
-        /* slightly alternate backgrounds to improve readability */
-        .pokemon-container > .pokemon-col:nth-child(2n) { background: #fbfbfc; }
-        .pokemon-container > .pokemon-col:nth-child(2n+1) { background: #fafafa; }
-
-        /* when adjacent columns appear, keep a thin visual divider by overlapping edges.
-           use a slightly darker thin divider to match darker pokemon borders */
-        .pokemon-container > .pokemon-col + .pokemon-col {
-            margin-left: -2px; /* collapse overlapping edges so the thin line appears consistently */
-            border-left: 1px solid var(--pokemon-border-color);
+            border-radius: 8px;
+            flex: 1 1 22%;
+            min-width: 200px;
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
         }
 
         .pokemon-inner {
-            padding: var(--inner-padding-y) var(--inner-padding-x);
-            position: relative; /* needed for pseudo-element drawing */
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .poke-name {
+            padding: 6px 0;
+            text-align: center;
+            font-weight: bold;
         }
 
         .poke-img {
-            width: 96px;
-            height: 96px;
-            image-rendering: pixelated;
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
             display: block;
-            margin: 10px auto;
+            margin: 8px auto;
+            image-rendering: pixelated;
         }
 
-        /*
-          Info boxes: remove margins so layout is deterministic.
-          We'll draw separators via ::before pseudo-elements so they span from the left outer border
-          to the right outer border of the pokemon-col.
-        */
-        .pokemon-inner .info-box {
-            background: transparent;
-            padding: 12px 0; /* vertical spacing inside each info block so top/bottom equal to separator */
-            margin: 0;
-            font-size: 0.95rem;
-            text-align: left;
-            font-weight: 700;
-            color: #111;
-            position: relative;
-        }
-
-        .pokemon-inner .types {
-            text-align: center;
-            margin: 0 0 0 0;
-            position: relative;
-            padding: 12px 0; /* match spacing of info-box so separators align evenly */
-        }
-
-        /*
-          Draw thick separators using pseudo-elements so they reach the left/right outer borders.
-          The left/right offsets include --inner-padding-x plus the border width so the line meets the border.
-        */
-        .pokemon-inner .types + .info-box::before,
-        .pokemon-inner .info-box + .info-box::before,
-        .pokemon-inner .move-list::before {
-            content: "";
-            position: absolute;
-            left: calc(-1 * var(--inner-padding-x) - var(--poke-border));
-            right: calc(-1 * var(--inner-padding-x) - var(--poke-border));
-            height: var(--moves-separator-thick);
-            background: var(--sep-color);
-            top: 0; /* sits at top edge of the element */
-            z-index: 2;
-        }
-
-        /* make separator between move header and the moves themselves pronounced as well */
-        .move-list .move-header {
-            font-weight: 700;
-            padding-bottom: 8px;
-            margin-bottom: 8px;
-            border-bottom: var(--moves-separator-thick) solid var(--sep-color); /* thick under-header separator */
-            position: relative;
-            z-index: 2;
-        }
-
-        /* ensure move-list spacing and that the pseudo separator doesn't overlap header text */
-        .move-list {
-            margin: 8px 0 0 0;
-            position: relative;
-            padding-top: 8px;
-        }
-
-        .move-list .move-item {
-            padding: 6px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 0.85rem;
-            background: transparent;
+        .types {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-        
-        .move-item .move-name {
-            flex: 1;
-        }
-        
-        .move-item .move-info {
-            display: flex;
-            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 4px;
+            padding: 4px 8px;
         }
-        
-        .move-item .type-badge {
-            font-size: 0.7rem;
-            padding: 2px 6px;
+
+        .type-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: white;
+            font-weight: 600;
+            text-transform: capitalize;
         }
-        
-        .move-item .category-icon {
-            width: 20px;
-            height: 20px;
+
+        .info-box {
+            padding: var(--inner-padding-y) var(--inner-padding-x);
+            margin: 0;
+            background: #fafafa;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.95rem;
+            border-top: var(--moves-separator-thick) solid var(--sep-color);
+        }
+
+        .move-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .move-header {
+            margin-bottom: 8px;
+        }
+
+        .move-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-top: 1px solid var(--sep-color);
+        }
+
+        .move-item:first-child {
+            border-top: none;
+        }
+
+        .move-name {
+            flex: 1;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .move-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .category-icon {
+            width: 24px;
+            height: 24px;
             object-fit: contain;
         }
-        
+
         .item-icon {
             width: 20px;
             height: 20px;
             object-fit: contain;
-            margin-left: 6px;
+            margin-left: 4px;
             vertical-align: middle;
-        }
-        
-        .reward-item-icon {
-            width: 18px;
-            height: 18px;
-            object-fit: contain;
-            margin-left: 6px;
-            vertical-align: middle;
-        }
-
-        .move-list .move-item:last-child { border-bottom: none; }
-
-        .poke-name a { color: #000; text-decoration: none; }
-        .poke-name { padding-bottom: 6px; display:block; }
-
-        .type-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-            margin: 2px 4px;
         }
 
         /* Type colors */
-        .type-normal  { background:#A8A77A; }
-        .type-fire    { background:#EE8130; }
-        .type-water   { background:#6390F0; }
-        .type-electric{ background:#F7D02C; color:#222; }
-        .type-grass   { background:#7AC74C; }
-        .type-ice     { background:#96D9D6; color:#222; }
-        .type-fighting{ background:#C22E28; }
-        .type-poison  { background:#A33EA1; }
-        .type-ground  { background:#E2BF65; color:#222; }
-        .type-flying  { background:#A98FF3; }
-        .type-psychic { background:#F95587; }
-        .type-bug     { background:#A6B91A; }
-        .type-rock    { background:#B6A136; color:#222; }
-        .type-ghost   { background:#735797; }
-        .type-dragon  { background:#6F35FC; }
-        .type-dark    { background:#705746; }
-        .type-steel   { background:#B7B7CE; color:#222; }
-        .type-fairy   { background:#D685AD; color:#222; }
+        .type-normal { background: #9099a1; }
+        .type-fire { background: #ff9c54; }
+        .type-water { background: #4f90d9; }
+        .type-electric { background: #f3d23b; }
+        .type-grass { background: #63bb5b; }
+        .type-ice { background: #74cec0; }
+        .type-fighting { background: #ce4069; }
+        .type-poison { background: #aa5caf; }
+        .type-ground { background: #d97746; }
+        .type-flying { background: #92aade; }
+        .type-psychic { background: #f97176; }
+        .type-bug { background: #90c12c; }
+        .type-rock { background: #c7b78b; }
+        .type-ghost { background: #5269ac; }
+        .type-dragon { background: #096dc4; }
+        .type-dark { background: #5a5366; }
+        .type-steel { background: #5a8ea2; }
+        .type-fairy { background: #ec8fe6; }
 
-        /* responsive tweaks */
-        @media (max-width:1000px) {
-            .trainer-section { width: calc(100% - 340px); }
-            .trainer-row > .pokemon-col { width: 180px; min-width: 180px; max-width: 180px; }
-        }
-        @media (max-width:860px){
-            .poke-name { max-width:140px; }
+        /* Encounters styles */
+        .encounter-type-section {
+            margin: 25px 0;
         }
 
-        @media (max-width:520px){
-            .trainer-section { margin-left: 16px; width: calc(100% - 16px); }
-            .trainer-row { flex-direction: column; gap: 12px; border: none; background: transparent; }
-            .trainer-row > .pokemon-col { width: 100%; min-width: 0; max-width: 100%; border: var(--poke-border) solid var(--pokemon-border-color); margin-left: 0; }
-            .trainer-row > div:first-child { width: 100%; min-width: 0; max-width: 100%; }
-            .pokemon-inner { padding: var(--inner-padding-y) var(--inner-padding-x); }
+        .encounter-type-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .pokemon-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pokemon-box {
+            background: #fafafa;
+            border: 2px solid var(--pokemon-border-color);
+            border-radius: 10px;
+            padding: 10px;
+            width: 100px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .pokemon-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .pokemon-icon {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            margin: 5px auto;
+            display: block;
+            cursor: pointer;
+        }
+        
+        .pokemon-icon:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+            transition: all 0.2s ease;
+        }
+
+        .pokemon-chance {
+            font-weight: 600;
+            color: #1976d2;
+            margin-top: 5px;
+        }
+
+        /* Items styles */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin: 20px 0;
+        }
+
+        .items-table th,
+        .items-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .items-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .items-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .items-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .no-data-message {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 1400px) {
+            .pokemon-col {
+                flex: 1 1 45%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 280px;
+            }
+            
+            .trainer-section {
+                margin-left: 300px;
+                width: calc(100% - 300px);
+            }
+            
+            .trainer-row {
+                flex-direction: column;
+            }
+            
+            .pokemon-container {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .pokemon-col {
+                width: 100%;
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -452,100 +501,123 @@
 
 <script>
     let trainerData = {};
+    let encounterData = [];
+    let itemsData = [];
+    let pokedexData = {};
+    let movesData = {};
+    let abilitiesData = {};
     let groupedRoutes = {};
-    let pokedexData = {}; // will hold pokedex.json entries keyed by original name
-    let movesData = {}; // will hold moves.json entries for type and category info
-    let abilitiesData = {}; // will hold abilities.json entries for tooltips
+    let currentActiveTab = 'battles'; // Track current active tab for navigation
 
-    // When deciding sidebar order we prefer routeOrder; fallback to alphabetical
-    let routeOrder = [
-        "Aquacorde Town","Route 2","Santalune Forest","Route 3","Route 22","Route 22 - Part 2",
-        "Santalune City","Santalune Gym","Route 4","Lumiose City","Route 5","Camphrier Town",
-        "Route 6","Route 6 - Pathway","Route 6 - East","Route 6 - West","Route 7",
-        "Connecting Cave","Route 8","Route 8 - Upper","Route 8 - Lower","Route 8 - Sea",
-        "Route 9","Glittering Cave","Ambrette Town Aqaurium","Route 10","Cyllage City",
-        "Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11","Reflection Cave",
-        "Reflection Cave - 1F","Reflection Cave - B1F","Tower of Mastery","Shalour Gym",
-        "Route 12","Azure Bay","Coumarine City","Coumarine City - Seaside",
-        "Coumarine City - Cliffside","Coumarine Gym","Route 13/Kalos Power Plant",
-        "Route 13/Kalos Power Plant - Route 13","Route 13/Power Plant - Kalos Power Plant",
-        "Lumiose Gym/Prism Tower", "Lumiose Gym/Prism Tower - Prism Tower", "Lumiose Gym/Prism Tower - Lumiose Gym", "Route 14","Laverre City","Laverre Gym","Poke Ball Factory","Route 15",
-        "Route 16","Lost Hotel","Dendemille Town","Frost Cavern",
-        "Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F",
-        "Route 17","Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs",
-        "Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Labs - B1",
-        "Lysandre Labs - B3","Team Flare Secret HQ - Entrance",
-        "Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
-        "Terminus Cave - B2F","Couriway Town","Route 19","Route 20","Snowbelle City",
-        "Snowbelle Gym","Route 21","Victory Road","Victory Road - Entrance",
-        "Victory Road - Inside 1","Victory Road - Outside 2","Victory Road - Inside 2",
-        "Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4",
-        "Victory Road - Inside 4","Elite Four/Kalos League Champion",
+    const areaOrder = [
+        "Vaniville Town",
+        "Route 1",
+        "Aquacorde Town",
+        "Route 2",
+        "Santalune Forest",
+        "Route 3",
+        "Santalune City",
+        "Route 22",
+        "Route 22 - Part 2",
+        "Santalune Gym",
+        "Route 4",
+        "Lumiose City",
+        "Route 5",
+        "Camphrier Town",
+        "Kalos Hotels",
+        "Route 6",
+        "Route 6 - Pathway",
+        "Route 6 - East",
+        "Route 6 - West",
+        "Parfum Palace",
+        "Route 7",
+        "Connecting Cave",
+        "Route 8",
+        "Route 8 - Upper",
+        "Route 8 - Lower",
+        "Route 8 - Sea",
+        "Ambrette Town",
+        "Route 9",
+        "Glittering Cave",
+        "Ambrette Town Aquarium",
+        "Cyllage City",
+        "Route 10",
+        "Cyllage Gym",
+        "Geosenge Town",
+        "Geosenge Town - Part 2",
+        "Route 11",
+        "Reflection Cave",
+        "Reflection Cave - 1F",
+        "Reflection Cave - B1F",
+        "Shalour City",
+        "Tower of Mastery",
+        "Shalour Gym",
+        "Route 12",
+        "Azure Bay",
+        "Coumarine City",
+        "Coumarine City - Seaside",
+        "Coumarine City - Cliffside",
+        "Route 13",
+        "Kalos Power Plant",
+        "Lumiose Gym/Prism Tower",
+        "Route 14",
+        "Laverre City",
+        "Laverre Gym",
+        "Poké Ball Factory",
+        "Route 15",
+        "Route 16",
+        "Lost Hotel",
+        "Lost Hotel - Route 15 Side",
+        "Lost Hotel - Route 16 Side",
+        "Dendemille Town",
+        "Frost Cavern",
+        "Frost Cavern - Outside",
+        "Frost Cavern - 1F",
+        "Frost Cavern - 2F",
+        "Frost Cavern - 3F",
+        "Route 17",
+        "Anistar City",
+        "Anistar Gym",
+        "Lysandre Cafe/Lysandre Labs",
+        "Lysandre Cafe/Lysandre Labs - Lysandre Cafe",
+        "Lysandre Cafe/Lysandre Labs - Lysandre Labs - B1",
+        "Lysandre Cafe/Lysandre Labs - Lysandre Labs - B3",
+        "Team Flare Secret HQ",
+        "Team Flare Secret HQ - Entrance",
+        "Team Flare Secret HQ - Walkway",
+        "Route 18",
+        "Terminus Cave",
+        "Terminus Cave - B1F",
+        "Terminus Cave - B2F",
+        "Couriway Town",
+        "Route 19",
+        "Snowbelle City",
+        "Route 20",
+        "Pokémon Village",
+        "Snowbelle Gym",
+        "Route 21",
+        "Chamber of Emptiness",
+        "Victory Road",
+        "Victory Road - Entrance",
+        "Victory Road - Inside 1",
+        "Victory Road - Outside 2",
+        "Victory Road - Inside 2",
+        "Victory Road - Outside 3",
+        "Victory Road - Inside 3",
+        "Victory Road - Outside 4",
+        "Victory Road - Inside 4",
+        "Elite Four/Kalos League Champion",
         "Elite Four/Kalos League Champion - Elite Four",
-        "Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade"
+        "Elite Four/Kalos League Champion - Kalos League Champion",
+        "Lumiose Parade",
+        "Unknown Dungeon",
+        "Kiloude City"
     ];
 
-    const statColors = {
-        "Atk": "#FF4500",
-        "Def": "#FFD700",
-        "SpA": "#1E90FF",
-        "SpD": "#32CD32",
-        "Spe": "#9400D3"
-    };
-
-    function colorNature(raw) {
-        if (!raw) return raw;
-        const plus = raw.match(/\+([A-Za-z]+)/);
-        if (!plus) return raw;
-        const stat = plus[1];
-        const color = statColors[stat] || "#000";
-        return `<span class="nature-colored" style="color:${color}">${raw}</span>`;
-    }
-    
-    // Normalize item name to match image file naming convention (lowercase with hyphens)
-    function normalizeItemName(itemName) {
-        if (!itemName || itemName === "No Item" || itemName === "No Reward") return null;
-        // Convert to lowercase and replace spaces with hyphens
-        return itemName.toLowerCase().replace(/\s+/g, '-');
-    }
-    
-    // Create an item icon image element
-    function createItemIcon(itemName, className = 'item-icon') {
-        const normalized = normalizeItemName(itemName);
-        if (!normalized) return '';
-        return `<img class="${className}" src="image/item/${normalized}.png" alt="${itemName}" title="${itemName}" onerror="this.style.display='none'">`;
-    }
-    
-    // Find an ability entry by name with best-effort normalization
-    function findAbilityEntry(abilityName) {
-        if (!abilitiesData || !abilityName || abilityName === "---") return null;
-        // Try direct lookup first
-        if (abilitiesData[abilityName]) return abilitiesData[abilityName];
-        // Try normalized lookup
-        const target = normalizeForCompare(abilityName);
-        for (const key in abilitiesData) {
-            if (normalizeForCompare(key) === target) return abilitiesData[key];
-        }
-        return null;
-    }
-
-    // Find a move entry by name with best-effort normalization
-    function findMoveEntry(moveName) {
-        if (!movesData || !moveName || moveName === "---") return null;
-        if (movesData[moveName]) return movesData[moveName];
-        const target = normalizeForCompare(moveName);
-        for (const key in movesData) {
-            if (normalizeForCompare(key) === target) return movesData[key];
-        }
-        return null;
-    }
-
-    // Normalize helper for comparisons
     function normalizeForCompare(s) {
         return (s || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
     }
 
-    // Find a pokedex entry by name with best-effort normalization
     function findPokedexEntry(pokeName) {
         if (!pokedexData || !pokeName) return null;
         if (pokedexData[pokeName]) return pokedexData[pokeName];
@@ -556,282 +628,366 @@
         return null;
     }
 
-    // Determine the best "root" tab name for a given full area name by matching against routeOrder,
-    // falling back to the left-most token before a slash/backslash or the original left-of-dash.
-    function findRootForArea(fullAreaName) {
-        const leftOfDash = (fullAreaName || "").split(" - ")[0].trim();
-        const leftNorm = normalizeForCompare(leftOfDash);
+    function findMoveEntry(moveName) {
+        if (!movesData || !moveName || moveName === "---") return null;
+        if (movesData[moveName]) return movesData[moveName];
+        const target = normalizeForCompare(moveName);
+        for (const key in movesData) {
+            if (normalizeForCompare(key) === target) return movesData[key];
+        }
+        return null;
+    }
 
-        // Try to match against routeOrder entries (prefer exact matches only to avoid grouping Route 2 with Route 20/22)
-        for (const candidate of routeOrder) {
-            const candLeft = (candidate || "").split(" - ")[0].trim();
-            const candNorm = normalizeForCompare(candLeft);
+    function findAbilityEntry(abilityName) {
+        if (!abilitiesData || !abilityName || abilityName === "---") return null;
+        if (abilitiesData[abilityName]) return abilitiesData[abilityName];
+        const target = normalizeForCompare(abilityName);
+        for (const key in abilitiesData) {
+            if (normalizeForCompare(key) === target) return abilitiesData[key];
+        }
+        return null;
+    }
 
-            if (!candNorm) continue;
-            // Only use exact matches to prevent "Route 2" from matching "Route 20", "Route 22", etc.
-            if (leftNorm === candNorm) return candLeft.split(/[\/\\]/)[0].trim();
+    const NATURES_DATA = {
+        'Hardy': ['', ''], 'Lonely': ['Attack', 'Defense'], 'Brave': ['Attack', 'Speed'],
+        'Adamant': ['Attack', 'Sp. Atk'], 'Naughty': ['Attack', 'Sp. Def'],
+        'Bold': ['Defense', 'Attack'], 'Docile': ['', ''], 'Relaxed': ['Defense', 'Speed'],
+        'Impish': ['Defense', 'Sp. Atk'], 'Lax': ['Defense', 'Sp. Def'],
+        'Timid': ['Speed', 'Attack'], 'Hasty': ['Speed', 'Defense'], 'Serious': ['', ''],
+        'Jolly': ['Speed', 'Sp. Atk'], 'Naive': ['Speed', 'Sp. Def'],
+        'Modest': ['Sp. Atk', 'Attack'], 'Mild': ['Sp. Atk', 'Defense'], 'Quiet': ['Sp. Atk', 'Speed'],
+        'Bashful': ['', ''], 'Rash': ['Sp. Atk', 'Sp. Def'],
+        'Calm': ['Sp. Def', 'Attack'], 'Gentle': ['Sp. Def', 'Defense'], 'Sassy': ['Sp. Def', 'Speed'],
+        'Careful': ['Sp. Def', 'Sp. Atk'], 'Quirky': ['', '']
+    };
 
-            // check parts for matches (handle "Route 13" vs "Route 13/Power Plant")
-            const leftParts = leftOfDash.split(/[\/\\]/).map(p=>p.trim()).filter(Boolean);
-            const candParts = candLeft.split(/[\/\\]/).map(p=>p.trim()).filter(Boolean);
-            for (const lp of leftParts) {
-                for (const cp of candParts) {
-                    if (normalizeForCompare(lp) === normalizeForCompare(cp)) {
-                        return candLeft.split(/[\/\\]/)[0].trim();
-                    }
+    function normalizeItemName(itemName) {
+        if (!itemName || typeof itemName !== 'string') return '';
+        return itemName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+    }
+
+    function createItemIcon(itemName, className = '') {
+        if (!itemName || itemName === "No Item" || itemName === "---") return '';
+        const normalized = normalizeItemName(itemName);
+        return `<img src="image/item/${normalized}.png" alt="${itemName}" class="${className}" onerror="this.style.display='none'">`;
+    }
+
+    function colorNature(nature) {
+        if (!nature || nature === "---") return nature;
+        const [plus, minus] = NATURES_DATA[nature] || ['', ''];
+        if (!plus && !minus) return nature;
+        return `${nature} <span style="color: #388e3c;">+${plus}</span> <span style="color: #d32f2f;">-${minus}</span>`;
+    }
+
+    function setupImageFallback(imgElement, paths) {
+        if (!imgElement || !paths || !Array.isArray(paths) || paths.length === 0) return;
+        
+        let currentIndex = 0;
+        
+        const tryNextPath = () => {
+            if (currentIndex < paths.length) {
+                imgElement.onerror = () => {
+                    currentIndex++;
+                    tryNextPath();
+                };
+                imgElement.src = paths[currentIndex];
+            } else {
+                imgElement.onerror = null;
+            }
+        };
+        
+        tryNextPath();
+    }
+
+    function getPokemonSpritePath(pokemonName, withFallback = true) {
+        const normalized = pokemonName.toLowerCase().replace(/\s+/g, '-');
+        return {
+            primary: `pokemon_sprites/${normalized}.png`,
+            fallback1: `pokemon_sprites2/${normalized}.png`,
+            fallback2: 'pokemon_sprites/unknown.png'
+        };
+    }
+
+    function getPokemonIconPath(pokemonName) {
+        const normalized = pokemonName.toLowerCase().replace(/[^a-z0-9]/g, "");
+        return `image/icons/${normalized}.png`;
+    }
+
+    function getAvailableTabs(areaName) {
+        const tabs = [];
+        
+        // Check for battles
+        const hasTrainers = checkHasTrainers(areaName);
+        if (hasTrainers) tabs.push('battles');
+        
+        // Check for encounters
+        const hasEncounters = checkHasEncounters(areaName);
+        if (hasEncounters) tabs.push('encounters');
+        
+        // Check for items
+        const hasItems = checkHasItems(areaName);
+        if (hasItems) tabs.push('items');
+        
+        return tabs;
+    }
+
+    function checkHasTrainers(areaName) {
+        // Check if area matches any trainer data
+        for (const fullName in trainerData) {
+            if (areaMatches(fullName, areaName)) {
+                const areaData = trainerData[fullName];
+                if (areaData && areaData.Trainers && areaData.Trainers.length > 0) {
+                    return true;
                 }
             }
         }
-
-        // fallback: use the first token before slash/backslash or the leftOfDash itself
-        const root = leftOfDash.split(/[\/\\]/)[0].trim();
-        return root || leftOfDash;
+        return false;
     }
 
-    // Choose a preferred tab label for a grouped root key.
-    // Prefer a routeOrder entry that contains a slash/backslash (e.g. "Route 13/Power Plant"),
-    // or that includes the more specific phrasing. If none, return the root itself.
-    function preferredTabLabelForRoot(rootKey) {
-        const rootNorm = normalizeForCompare(rootKey);
-        // Try to find a routeOrder entry whose left-of-dash normalized equals rootNorm and that contains '/' or '\'
-        for (const candidate of routeOrder) {
-            const left = (candidate || "").split(" - ")[0].trim();
-            if (!left) continue;
-            if (normalizeForCompare(left).startsWith(rootNorm) || rootNorm.startsWith(normalizeForCompare(left))) {
-                if (left.includes("/") || left.includes("\\")) return left;
+    function checkHasEncounters(areaName) {
+        const indices = getEncounterIndices(areaName);
+        if (indices.length === 0) return false;
+        
+        for (const idx of indices) {
+            const location = encounterData[idx];
+            if (location && location.Encounters && location.Encounters.length > 0) {
+                return true;
             }
         }
-        // Next prefer any routeOrder entry that contains the root (without requiring slash)
-        for (const candidate of routeOrder) {
-            const left = (candidate || "").split(" - ")[0].trim();
-            if (!left) continue;
-            if (normalizeForCompare(left) === rootNorm) return left;
-        }
-        // else just return the rootKey as-is
-        return rootKey;
+        return false;
     }
 
-    // routeIndexFor used for sorting subareas in a group
-    function routeIndexFor(name) {
-        if (!name) return Infinity;
-        // exact match
-        let i = routeOrder.indexOf(name);
-        if (i !== -1) return i;
-        // compare left-of-' - ' then left-of-'/' or '\' to each routeOrder item
-        const nameLeft = name.split(" - ")[0].split(/[\/\\]/)[0].trim();
-        for (let j = 0; j < routeOrder.length; j++) {
-            const candidate = routeOrder[j];
-            const candLeft = candidate.split(" - ")[0].split(/[\/\\]/)[0].trim();
-            if (candLeft === nameLeft) return j;
-        }
-        return Infinity;
-    }
-
-
-    async function loadTrainers() {
-        const sidebar = document.getElementById("sidebar");
-
-        // Fetch trainers, pokedex, moves, and abilities data
-        const [trainersRes, pokedexRes, movesRes, abilitiesRes] = await Promise.all([
-            fetch("data/trainers.json"),
-            fetch("data/pokedex.json"),
-            fetch("data/moves.json"),
-            fetch("data/abilities.json")
-        ]);
-        trainerData = await trainersRes.json();
-        pokedexData = await pokedexRes.json();
-        movesData = await movesRes.json();
-        abilitiesData = await abilitiesRes.json();
-
-        // Build groupedRoutes keyed by a root determined by findRootForArea
-        groupedRoutes = {};
-        for (const fullName in trainerData) {
-            const root = findRootForArea(fullName);
-            if (!groupedRoutes[root]) groupedRoutes[root] = [];
-            groupedRoutes[root].push(fullName);
-        }
-
-        // Sort each group's subAreas using routeOrder when possible, else alphabetical
-        Object.keys(groupedRoutes).forEach(root => {
-            groupedRoutes[root].sort((a, b) => {
-                const ia = routeIndexFor(a);
-                const ib = routeIndexFor(b);
-                if (ia === ib) return a.localeCompare(b);
-                return ia - ib;
-            });
+    function checkHasItems(areaName) {
+        if (!itemsData || itemsData.length === 0) return false;
+        
+        return itemsData.some(item => {
+            const baseLocation = item.Area.replace(/\s*\([^)]*\)/, '').trim();
+            return normalizeForCompare(baseLocation) === normalizeForCompare(areaName) ||
+                   normalizeForCompare(item.Area) === normalizeForCompare(areaName);
         });
+    }
 
-        // Build sidebar tabs using routeOrder preference but show preferred labels (may include slash)
-        const added = new Set();
-        for (const entry of routeOrder) {
-            const rootCandidate = (entry || "").split(" - ")[0].split(/[\/\\]/)[0].trim();
-            if (!rootCandidate) continue;
-            // find matching groupedRoutes key (case-insensitive/normalized)
-            const matchKey = Object.keys(groupedRoutes).find(k => normalizeForCompare(k) === normalizeForCompare(rootCandidate));
-            if (!matchKey || added.has(matchKey)) continue;
-            const displayLabel = preferredTabLabelForRoot(matchKey);
-            const tab = document.createElement("div");
-            tab.className = "route-tab";
-            tab.dataset.base = matchKey;
-            tab.textContent = displayLabel;
-            tab.title = matchKey; // full root on hover
-            tab.onclick = () => {
-                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
-                tab.classList.add("active");
-                displayRoute(matchKey);
-            };
-            sidebar.appendChild(tab);
-            added.add(matchKey);
+    function areaMatches(fullName, areaName) {
+        // Handle dash variations - "Route 22 - Part 2" should match "Route 22"
+        const fullLeft = fullName.split(" - ")[0].trim();
+        const areaLeft = areaName.split(" - ")[0].trim();
+        
+        if (normalizeForCompare(fullName) === normalizeForCompare(areaName)) return true;
+        if (normalizeForCompare(fullLeft) === normalizeForCompare(areaLeft)) return true;
+        
+        return false;
+    }
+
+    function getEncounterIndices(areaName) {
+        const indices = [];
+        encounterData.forEach((location, idx) => {
+            if (normalizeForCompare(location.LocationName) === normalizeForCompare(areaName)) {
+                indices.push(idx);
+            }
+        });
+        return indices;
+    }
+
+    function createNavigationButtons(includeTitle, currentArea) {
+        const container = document.createElement("div");
+        container.className = "route-header-container";
+        
+        const currentIdx = areaOrder.indexOf(currentArea);
+        
+        const prevBtn = document.createElement("button");
+        prevBtn.className = "nav-button nav-button-prev";
+        prevBtn.textContent = "← Previous";
+        
+        if (currentIdx > 0) {
+            const prevArea = areaOrder[currentIdx - 1];
+            prevBtn.onclick = () => navigateToArea(prevArea);
+        } else {
+            prevBtn.disabled = true;
         }
-
-        // Append any remaining roots not in routeOrder (alphabetical), using preferred labels
-        const remaining = Object.keys(groupedRoutes).filter(k => !added.has(k)).sort((a,b) => a.localeCompare(b));
-        for (const root of remaining) {
-            const displayLabel = preferredTabLabelForRoot(root);
-            const tab = document.createElement("div");
-            tab.className = "route-tab";
-            tab.dataset.base = root;
-            tab.textContent = displayLabel;
-            tab.title = root;
-            tab.onclick = () => {
-                document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
-                tab.classList.add("active");
-                displayRoute(root);
-            };
-            sidebar.appendChild(tab);
-            added.add(root);
+        
+        container.appendChild(prevBtn);
+        
+        if (includeTitle) {
+            const title = document.createElement("div");
+            title.className = "area-title";
+            title.textContent = currentArea;
+            container.appendChild(title);
         }
+        
+        const nextBtn = document.createElement("button");
+        nextBtn.className = "nav-button nav-button-next";
+        nextBtn.textContent = "Next →";
+        
+        if (currentIdx < areaOrder.length - 1) {
+            const nextArea = areaOrder[currentIdx + 1];
+            nextBtn.onclick = () => navigateToArea(nextArea);
+        } else {
+            nextBtn.disabled = true;
+        }
+        
+        container.appendChild(nextBtn);
+        
+        return container;
+    }
 
-        // Activate first tab if present
-        if (sidebar.children.length) {
-            sidebar.children[0].classList.add("active");
-            displayRoute(sidebar.children[0].dataset.base);
+    function navigateToArea(areaName) {
+        // Find the corresponding sidebar tab and activate it
+        const tabs = document.querySelectorAll('.route-tab');
+        for (const tab of tabs) {
+            if (tab.textContent.trim() === areaName) {
+                tab.click();
+                // Scroll sidebar to show active tab
+                tab.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                break;
+            }
         }
     }
 
-    // Helper: derive subHeader label for a subArea key
-    // If subArea has a ' - ' part, return that (right side).
-    // Otherwise, if left-of-dash contains '/' or '\', return the last part (e.g., "Power Plant" from "Route 13/Power Plant").
-    // Else return the left-of-dash itself.
-    function getSubHeaderLabel(subAreaKey) {
-        const parts = subAreaKey.split(" - ");
-        if (parts.length > 1 && parts[1].trim()) return parts[1].trim();
-        const left = parts[0].trim();
-        const leftParts = left.split(/[\/\\]/).map(s => s.trim()).filter(Boolean);
-        if (leftParts.length > 1) return leftParts[leftParts.length - 1]; // last part after slash/backslash
-        return left;
-    }
-
-    function displayRoute(baseName) {
+    function displayArea(areaName) {
         const container = document.getElementById("trainerSection");
         container.innerHTML = "";
         
-        // Get all route tabs to determine navigation
-        const allTabs = Array.from(document.querySelectorAll(".route-tab"));
-        const currentIndex = allTabs.findIndex(tab => tab.dataset.base === baseName);
-        const hasPrev = currentIndex > 0;
-        const hasNext = currentIndex < allTabs.length - 1;
+        // Add header with navigation
+        const headerNav = createNavigationButtons(true, areaName);
+        container.appendChild(headerNav);
         
-        // Helper function to create navigation buttons (used at top and bottom)
-        function createNavigationButtons(includeTitle = true) {
-            const navContainer = document.createElement("div");
-            navContainer.className = "route-header-container";
-            
-            // Previous button
-            const prevButton = document.createElement("button");
-            prevButton.className = "nav-button nav-button-prev";
-            if (hasPrev) {
-                const prevTab = allTabs[currentIndex - 1];
-                prevButton.textContent = `← ${prevTab.textContent}`;
-                prevButton.onclick = () => {
-                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
-                    prevTab.classList.add("active");
-                    displayRoute(prevTab.dataset.base);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
-            } else {
-                prevButton.textContent = "← Previous Route";
-                prevButton.disabled = true;
-            }
-            navContainer.appendChild(prevButton);
-            
-            // Title (only for top navigation)
-            if (includeTitle) {
-                const areaTitle = document.createElement("div");
-                areaTitle.className = "area-title";
-                areaTitle.textContent = baseName;
-                navContainer.appendChild(areaTitle);
-            } else {
-                // Empty spacer for bottom navigation
-                const spacer = document.createElement("div");
-                navContainer.appendChild(spacer);
-            }
-            
-            // Next button
-            const nextButton = document.createElement("button");
-            nextButton.className = "nav-button nav-button-next";
-            if (hasNext) {
-                const nextTab = allTabs[currentIndex + 1];
-                nextButton.textContent = `${nextTab.textContent} →`;
-                nextButton.onclick = () => {
-                    document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
-                    nextTab.classList.add("active");
-                    displayRoute(nextTab.dataset.base);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
-            } else {
-                nextButton.textContent = "Next Route →";
-                nextButton.disabled = true;
-            }
-            navContainer.appendChild(nextButton);
-            
-            return navContainer;
+        // Determine available tabs
+        const availableTabs = getAvailableTabs(areaName);
+        
+        if (availableTabs.length === 0) {
+            const noData = document.createElement("div");
+            noData.className = "no-data-message";
+            noData.textContent = "No data available for this location.";
+            container.appendChild(noData);
+            return;
         }
         
-        // Add navigation buttons at the top (with title)
-        const headerContainer = createNavigationButtons(true);
-        container.appendChild(headerContainer);
+        // Create tab buttons
+        const tabsContainer = document.createElement("div");
+        tabsContainer.className = "content-tabs";
+        
+        // Try to maintain current tab, or fall back to first available
+        let activeTab = currentActiveTab;
+        if (!availableTabs.includes(activeTab)) {
+            // Fallback order: battles -> encounters -> items
+            if (availableTabs.includes('battles')) activeTab = 'battles';
+            else if (availableTabs.includes('encounters')) activeTab = 'encounters';
+            else if (availableTabs.includes('items')) activeTab = 'items';
+            else activeTab = availableTabs[0];
+        }
+        currentActiveTab = activeTab;
+        
+        availableTabs.forEach(tabName => {
+            const tab = document.createElement("div");
+            tab.className = `content-tab ${tabName === activeTab ? 'active' : ''}`;
+            tab.textContent = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+            tab.onclick = () => switchTab(tabName, areaName);
+            tabsContainer.appendChild(tab);
+        });
+        
+        container.appendChild(tabsContainer);
+        
+        // Create content containers for each tab
+        const battlesContent = document.createElement("div");
+        battlesContent.className = `tab-content ${activeTab === 'battles' ? 'active' : ''}`;
+        battlesContent.id = "battles-content";
+        
+        const encountersContent = document.createElement("div");
+        encountersContent.className = `tab-content ${activeTab === 'encounters' ? 'active' : ''}`;
+        encountersContent.id = "encounters-content";
+        
+        const itemsContent = document.createElement("div");
+        itemsContent.className = `tab-content ${activeTab === 'items' ? 'active' : ''}`;
+        itemsContent.id = "items-content";
+        
+        container.appendChild(battlesContent);
+        container.appendChild(encountersContent);
+        container.appendChild(itemsContent);
+        
+        // Populate content
+        if (availableTabs.includes('battles')) {
+            displayBattles(battlesContent, areaName);
+        }
+        if (availableTabs.includes('encounters')) {
+            displayEncounters(encountersContent, areaName);
+        }
+        if (availableTabs.includes('items')) {
+            displayItems(itemsContent, areaName);
+        }
+        
+        // Add footer navigation
+        const footerNav = createNavigationButtons(false, areaName);
+        footerNav.style.marginTop = "30px";
+        container.appendChild(footerNav);
+    }
 
-        // Find the subAreas for this base.
-        const subAreas = groupedRoutes[baseName] || [];
+    function switchTab(tabName, areaName) {
+        currentActiveTab = tabName;
+        
+        // Update tab buttons
+        document.querySelectorAll('.content-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.textContent.toLowerCase() === tabName);
+        });
+        
+        // Update content visibility
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(`${tabName}-content`).classList.add('active');
+    }
 
-        // Render each subArea with its own sub-header (the part after the dash if present,
-        // otherwise the portion after the slash/backslash)
-        subAreas.forEach(subArea => {
-            // Show the sub-header
-            const subHeaderLabel = getSubHeaderLabel(subArea);
-            const subHeader = document.createElement("div");
-            subHeader.className = "sub-header";
-            subHeader.textContent = subHeaderLabel;
-            container.appendChild(subHeader);
-
+    function displayBattles(container, areaName) {
+        const matchingAreas = [];
+        for (const fullName in trainerData) {
+            if (areaMatches(fullName, areaName)) {
+                matchingAreas.push(fullName);
+            }
+        }
+        
+        if (matchingAreas.length === 0) {
+            container.innerHTML = '<div class="no-data-message">No battles in this location.</div>';
+            return;
+        }
+        
+        // Sort by area order
+        matchingAreas.sort((a, b) => {
+            const idxA = areaOrder.indexOf(a);
+            const idxB = areaOrder.indexOf(b);
+            if (idxA === -1 && idxB === -1) return a.localeCompare(b);
+            if (idxA === -1) return 1;
+            if (idxB === -1) return -1;
+            return idxA - idxB;
+        });
+        
+        matchingAreas.forEach(subArea => {
+            if (matchingAreas.length > 1) {
+                const subHeader = document.createElement("div");
+                subHeader.className = "sub-header";
+                subHeader.textContent = subArea;
+                container.appendChild(subHeader);
+            }
+            
             const areaData = trainerData[subArea];
-            if (!areaData) return;
-
+            if (!areaData || !areaData.Trainers) return;
+            
             areaData.Trainers.forEach(tr => {
                 const card = document.createElement("div");
                 card.className = "trainer-card";
                 const row = document.createElement("div");
                 row.className = "trainer-row";
-
-                const trainerInfo = document.createElement("div");
                 
-                // Helper function to normalize strings (remove accents, etc.) and make lowercase with no spaces
+                const trainerInfo = document.createElement("div");
+                trainerInfo.className = "trainer-info-column";
+                
                 const normalizeString = (str) => {
                     return str.normalize('NFD')
-                        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+                        .replace(/[\u0300-\u036f]/g, '')
                         .toLowerCase()
-                        .replace(/[^a-z0-9]/g, ''); // Remove all non-alphanumeric characters (spaces, &, etc.)
+                        .replace(/[^a-z0-9]/g, '');
                 };
                 
-                // Build full trainer name for matching (e.g., "Pokemon Trainer Shauna" → "pokemontrainershauna")
                 const fullTrainerName = normalizeString(`${tr.TrainerClass || ''} ${tr.TrainerName || ''}`);
                 
-                // Check if this specific trainer should show two images
-                // Only certain trainers with "&" show dual images:
-                // - Tierno & Trevor, Delta & Gamma
-                // - Any Team Flare trainer with "&" in name
-                // NOTE: Twins should NOT use dual images - they use a single "twins.png" based on trainer class
                 const shouldShowDualImages = tr.TrainerName && tr.TrainerName.includes('&') && (
                     tr.TrainerName.includes('Tierno') || 
                     tr.TrainerName.includes('Trevor') ||
@@ -841,46 +997,19 @@
                 );
                 const trainerNames = shouldShowDualImages ? tr.TrainerName.split('&').map(n => n.trim()) : [tr.TrainerName];
                 
-                // Generate potential trainer image filenames to try
-                // Images are now lowercase with no spaces (e.g., "youngster.png", "shauna.png", "acetrainer.png")
-                // Strategy: Try all words EXCEPT the last word first, then fall back to the last word
-                // Special case: If trainer class is in skip list (Pokemon Trainer, Elite Four, Champion, etc.), 
-                // skip it and only use the trainer name
                 const imagesToTry = [];
-                
-                // Normalize the trainer class to check if it should skip to using trainer name only
                 const normalizedClass = normalizeString(tr.TrainerClass || '');
                 
-                // List of trainer classes that should skip to using trainer name only
                 const skipClassesToNames = [
-                    'pokemontrainer',
-                    'pokemonprofessor',
-                    'elitefour',
-                    'champion',
-                    'scientist',
-                    'furisodegirl',
-                    'leader',
-                    'hoennleader',
-                    'hoennelite',
-                    'hoennchampion',
-                    'successor'
+                    'pokemontrainer', 'pokemonprofessor', 'elitefour', 'champion',
+                    'scientist', 'furisodegirl', 'leader', 'hoennleader', 'hoennelite',
+                    'hoennchampion', 'successor'
                 ];
                 
                 const shouldSkipToName = skipClassesToNames.includes(normalizedClass);
                 
-                // Split the full trainer name into words
-                const fullNameWords = `${tr.TrainerClass || ''} ${tr.TrainerName || ''}`.trim().split(/\s+/);
-                
-                // SPECIAL CASE: If trainer class is in the skip list OR if it's a dual-image trainer, only use the trainer name(s)
                 if (shouldSkipToName || shouldShowDualImages) {
-                    // For "Pokemon Trainer Shauna" → only try "shauna"
-                    // For "Elite Four Malva" → only try "malva"
-                    // For "Champion Diantha" → only try "diantha"
-                    // For "Tierno & Trevor" → try "tierno" and "trevor"
-                    // For "Delta & Gamma" → try "delta" and "gamma"
-                    // etc.
                     if (shouldShowDualImages) {
-                        // Handle multiple trainers case - split by &
                         trainerNames.forEach(name => {
                             if (name) {
                                 const normalized = normalizeString(name);
@@ -890,19 +1019,12 @@
                             }
                         });
                     } else if (tr.TrainerName) {
-                        // Single name case
                         const normalized = normalizeString(tr.TrainerName);
                         if (normalized.length >= 2 && fullTrainerName.includes(normalized)) {
                             imagesToTry.push(normalized);
                         }
                     }
                 } else {
-                    // NORMAL CASE: Try trainer class first, then fall back to other strategies
-                    // For "Twins Nana & Nina" → try "twins"
-                    // For "Youngster Joey" → try "youngster"
-                    // For "Ace Trainer F" → try "ace", "trainer", "acetrainer"
-                    
-                    // First, try the trainer class if it exists (most reliable)
                     if (tr.TrainerClass) {
                         const normalizedClass = normalizeString(tr.TrainerClass);
                         if (normalizedClass.length >= 2 && !imagesToTry.includes(normalizedClass)) {
@@ -910,7 +1032,6 @@
                         }
                     }
                     
-                    // THEN: Try individual words from trainer class (for multi-word classes like "Ace Trainer")
                     if (tr.TrainerClass) {
                         const classWords = tr.TrainerClass.trim().split(/\s+/);
                         classWords.forEach(word => {
@@ -921,9 +1042,7 @@
                         });
                     }
                     
-                    // LASTLY: Fall back to the trainer name (e.g., "joey", "chi", "nana")
                     if (tr.TrainerName) {
-                        // For names with &, just use the first part
                         const namePart = tr.TrainerName.includes('&') ? tr.TrainerName.split('&')[0].trim() : tr.TrainerName;
                         const nameWords = namePart.trim().split(/\s+/);
                         nameWords.forEach(word => {
@@ -935,47 +1054,34 @@
                     }
                 }
                 
-                // Create a container for trainer header and image (top section)
                 const trainerTopSection = document.createElement("div");
                 trainerTopSection.style.flex = "0 0 auto";
                 
-                // Create trainer header element with just the name
                 const trainerHeader = document.createElement("div");
                 trainerHeader.className = "trainer-header";
                 trainerHeader.textContent = `${tr.TrainerClass} ${tr.TrainerName}`;
                 trainerTopSection.appendChild(trainerHeader);
                 
-                // Try to add trainer image(s) below the name if available
-                // For trainers with "&" in name, show multiple images side-by-side
-                // For single trainers, center the image
-                // Limit to 2 attempts max per image to avoid infinite retries
                 if (imagesToTry.length > 0) {
-                    // Create container for images
                     const imagesContainer = document.createElement("div");
                     imagesContainer.style.marginTop = "8px";
                     
-                    // If should show dual images (e.g., "Tierno & Trevor"), prioritize showing both trainer images
                     let imagesToShow;
                     if (shouldShowDualImages) {
-                        // For dual trainers, find the images that match the trainer names
                         imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
-                        // If we didn't find both, fall back to the first available images
                         if (imagesToShow.length < trainerNames.length) {
                             imagesToShow = imagesToTry.slice(0, trainerNames.length);
                         }
                     } else {
-                        // Single trainer - just use the first image
                         imagesToShow = imagesToTry.slice(0, 1);
                     }
                     
-                    // Center single images, stack multiple images vertically
                     imagesContainer.style.textAlign = "center";
                     imagesContainer.style.display = "flex";
                     imagesContainer.style.justifyContent = "center";
                     imagesContainer.style.alignItems = "center";
                     
                     if (imagesToShow.length > 1) {
-                        // Stack multiple images vertically
                         imagesContainer.style.flexDirection = "column";
                         imagesContainer.style.gap = "8px";
                     }
@@ -984,29 +1090,10 @@
                         const img = document.createElement("img");
                         img.alt = trainerNames[idx] || tr.TrainerClass || '';
                         img.className = "trainer-image";
-                        
-                        let attemptCount = 0;
-                        const MAX_ATTEMPTS = 2;
-                        
-                        const tryImage = () => {
-                            attemptCount++;
-                            if (attemptCount <= MAX_ATTEMPTS) {
-                                img.src = `image/trainer_images/${imageFile}.png`;
-                            } else {
-                                // Failed after max attempts, hide the image
-                                img.style.display = 'none';
-                            }
-                        };
-                        
+                        img.src = `image/trainer_images/${imageFile}.png`;
                         img.onerror = () => {
-                            if (attemptCount < MAX_ATTEMPTS) {
-                                tryImage();
-                            } else {
-                                img.style.display = 'none';
-                            }
+                            img.style.display = 'none';
                         };
-                        
-                        tryImage(); // Start with the first attempt
                         imagesContainer.appendChild(img);
                     });
                     
@@ -1015,66 +1102,45 @@
                 
                 trainerInfo.appendChild(trainerTopSection);
                 
-                // Add trainer info badges with bubble styling (positioned at bottom)
                 const trainerBadges = document.createElement("div");
-                trainerBadges.className = "trainer-badges";
-                trainerBadges.style.marginTop = "auto"; // Push to bottom
+                trainerBadges.style.display = "flex";
+                trainerBadges.style.flexDirection = "column";
+                trainerBadges.style.gap = "8px";
+                trainerBadges.style.marginTop = "12px";
+                trainerBadges.style.width = "100%";
                 
-                // Battle Type bubble
-                const battleTypeText = tr.BattleType || "Single";
-                let battleTypeClass = "battle-single";
-                if (battleTypeText.toLowerCase().includes("double")) battleTypeClass = "battle-double";
-                else if (battleTypeText.toLowerCase().includes("triple")) battleTypeClass = "battle-triple";
-                else if (battleTypeText.toLowerCase().includes("rotation")) battleTypeClass = "battle-rotation";
+                if (tr.RewardItem && tr.RewardItem !== "None") {
+                    const rewardBadge = document.createElement("div");
+                    rewardBadge.className = "trainer-badge";
+                    rewardBadge.innerHTML = `Reward: ${tr.RewardItem}${createItemIcon(tr.RewardItem, 'item-icon')}`;
+                    trainerBadges.appendChild(rewardBadge);
+                }
                 
-                const battleTypeBubble = document.createElement("div");
-                battleTypeBubble.className = `info-bubble ${battleTypeClass}`;
-                battleTypeBubble.textContent = battleTypeText;
-                trainerBadges.appendChild(battleTypeBubble);
-                
-                // Mandatory/Optional bubble
-                const requiredText = tr.Required || "N/A";
-                let requiredClass = "battle-mandatory";
-                if (requiredText.toLowerCase().includes("optional")) requiredClass = "battle-optional";
-                
-                const requiredBubble = document.createElement("div");
-                requiredBubble.className = `info-bubble ${requiredClass}`;
-                requiredBubble.textContent = requiredText;
-                trainerBadges.appendChild(requiredBubble);
-                
-                // Reward bubble
-                const rewardBubble = document.createElement("div");
-                rewardBubble.className = "info-bubble battle-reward";
-                const rewardItemText = (tr.RewardItem && typeof tr.RewardItem === 'string' && tr.RewardItem.trim()) || "No Reward";
-                const rewardIcon = createItemIcon(rewardItemText, 'reward-item-icon');
-                rewardBubble.innerHTML = rewardItemText + rewardIcon;
-                trainerBadges.appendChild(rewardBubble);
+                if (tr.BattleType) {
+                    const battleTypeBadge = document.createElement("div");
+                    battleTypeBadge.className = "trainer-badge";
+                    battleTypeBadge.textContent = `Battle: ${tr.BattleType}`;
+                    trainerBadges.appendChild(battleTypeBadge);
+                }
                 
                 trainerInfo.appendChild(trainerBadges);
-                
-                // Add class to trainer info for styling
-                trainerInfo.className = "trainer-info-column";
                 row.appendChild(trainerInfo);
                 
-                // Create pokemon container for wrapping
                 const pokemonContainer = document.createElement("div");
                 pokemonContainer.className = "pokemon-container";
-
+                
                 tr.Pokemon.forEach(p => {
                     const pDiv = document.createElement("div");
                     pDiv.className = "pokemon-col";
                     
-                    // Use Form as display name if available, otherwise use Name
                     const displayName = p.Form || p.Name;
-                    const spriteName = displayName.toLowerCase().replace(/\s+/g, '-');
-
-                    // ensure 4 moves, convert empty strings or whitespace to '---'
+                    const sprites = getPokemonSpritePath(displayName);
+                    
                     const moves = Array.isArray(p.Moves)
                         ? p.Moves.map(m => (typeof m === "string" && m.trim() ? m : "---"))
                         : [];
                     while (moves.length < 4) moves.push("---");
                     
-                    // Build move HTML with type badges and category icons
                     const movesHtml = moves.map(moveName => {
                         const moveEntry = findMoveEntry(moveName);
                         if (!moveEntry || moveName === "---") {
@@ -1091,8 +1157,7 @@
                             <span class="move-info">${typeBadge}${categoryIcon}</span>
                         </div>`;
                     }).join("");
-
-                    // Try to find types from pokedex.json
+                    
                     const dexEntry = findPokedexEntry(displayName);
                     let typesHtml = "";
                     if (dexEntry) {
@@ -1104,24 +1169,20 @@
                         if (t2) {
                             typesHtml += `<span class="type-badge type-${t2.toLowerCase()}">${t2}</span>`;
                         }
-                    } else {
-                        typesHtml = "";
                     }
                     
-                    // Build held item HTML with icon
                     const heldItemText = p.HeldItem || "No Item";
                     const heldItemIcon = createItemIcon(heldItemText, 'item-icon');
                     const heldItemHtml = heldItemText + heldItemIcon;
                     
-                    // Build ability HTML with tooltip
                     const abilityText = p.Ability || "---";
                     const abilityEntry = findAbilityEntry(abilityText);
                     const abilityTooltip = abilityEntry ? abilityEntry.shortDesc : "";
                     const abilityHtml = abilityTooltip 
                         ? `<span title="${abilityTooltip}">${abilityText}</span>`
                         : abilityText;
-
-                    // Wrap inner content in .pokemon-inner so separators can be drawn edge-to-edge
+                    
+                    // Create the pokemon div structure
                     pDiv.innerHTML = `
                         <div class="pokemon-inner">
                             <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
@@ -1131,16 +1192,13 @@
                             </div>
 
                             <a href="pokemon.html?name=${encodeURIComponent(displayName)}">
-                                <img class="poke-img"
-                                     src="pokemon_sprites/${spriteName}.png"
-                                     onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                                <img class="poke-img" alt="${displayName}">
                             </a>
 
                             <div class="types">
                                 ${typesHtml}
                             </div>
 
-                            <!-- Removed headers; values bold & larger -->
                             <div class="info-box ability-box">
                                 ${abilityHtml}
                             </div>
@@ -1159,33 +1217,385 @@
                             </div>
                         </div>
                     `;
-
+                    
+                    // Set up image fallback after innerHTML is set
+                    const pokeImg = pDiv.querySelector('.poke-img');
+                    setupImageFallback(pokeImg, [sprites.primary, sprites.fallback1, sprites.fallback2]);
+                    
                     pokemonContainer.appendChild(pDiv);
                 });
                 
                 row.appendChild(pokemonContainer);
-
                 card.appendChild(row);
                 container.appendChild(card);
             });
         });
-
-        // If nothing was rendered (edge case), show fallback
-        if (subAreas.length === 0) {
-            const note = document.createElement("div");
-            note.className = "muted";
-            note.style.padding = "8px 6px";
-            note.textContent = 'No trainers found for this area.';
-            container.appendChild(note);
-        }
-        
-        // Add navigation buttons at the bottom (without title)
-        const footerContainer = createNavigationButtons(false);
-        footerContainer.style.marginTop = "30px"; // Add spacing from content above
-        container.appendChild(footerContainer);
     }
 
-    loadTrainers();
+    function displayEncounters(container, areaName) {
+        const indices = getEncounterIndices(areaName);
+        
+        if (indices.length === 0) {
+            container.innerHTML = '<div class="no-data-message">No encounters in this location.</div>';
+            return;
+        }
+        
+        // Special handling for certain caves
+        if (areaName === "Reflection Cave") {
+            displayReflectionCave(container, indices);
+        } else if (areaName === "Frost Cavern") {
+            displayFrostCavern(container, indices);
+        } else if (areaName === "Victory Road") {
+            displayVictoryRoad(container, indices);
+        } else if (areaName === "Terminus Cave") {
+            displayTerminusCave(container, indices);
+        } else {
+            const aggregated = aggregateEncounters(indices);
+            displayEncounterSections(container, aggregated);
+        }
+    }
+
+    function displayReflectionCave(container, indices) {
+        const floor1Indices = [];
+        const floor2Indices = [];
+        
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location) return;
+            const locId = location.LocationID;
+            if (locId === 305 || locId === 306) {
+                floor1Indices.push(idx);
+            } else if (locId === 307 || locId === 308) {
+                floor2Indices.push(idx);
+            }
+        });
+        
+        if (floor1Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Reflection Cave - 1F";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const floor1 = aggregateEncounters(floor1Indices);
+            displayEncounterSections(container, floor1);
+        }
+        
+        if (floor2Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Reflection Cave - B1F";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const floor2 = aggregateEncounters(floor2Indices);
+            displayEncounterSections(container, floor2);
+        }
+    }
+
+    function displayFrostCavern(container, indices) {
+        const frostIndices = [];
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location) return;
+            const locId = location.LocationID;
+            if (locId === 313 || locId === 314) {
+                frostIndices.push(idx);
+            }
+        });
+        
+        if (frostIndices.length > 0) {
+            const aggregated = aggregateEncounters(frostIndices);
+            displayEncounterSections(container, aggregated);
+        }
+    }
+
+    function displayVictoryRoad(container, indices) {
+        const room1Indices = [];
+        const room3Indices = [];
+        
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location) return;
+            const locId = location.LocationID;
+            if (locId === 322 || locId === 324) {
+                room1Indices.push(idx);
+            } else if (locId === 326 || locId === 327 || locId === 328) {
+                room3Indices.push(idx);
+            }
+        });
+        
+        if (room1Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Victory Road - Room 1 & 2";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const room1 = aggregateEncounters(room1Indices);
+            displayEncounterSections(container, room1);
+        }
+        
+        if (room3Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Victory Road - Room 3 & 4";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const room3 = aggregateEncounters(room3Indices);
+            displayEncounterSections(container, room3);
+        }
+    }
+
+    function displayTerminusCave(container, indices) {
+        const floor1Indices = [];
+        const floor2Indices = [];
+        
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location) return;
+            const locId = location.LocationID;
+            if (locId === 343 || locId === 344 || locId === 345) {
+                floor1Indices.push(idx);
+            } else if (locId === 347 || locId === 348) {
+                floor2Indices.push(idx);
+            }
+        });
+        
+        if (floor1Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Terminus Cave - Floor 1-2, B Floor 1";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const floor1 = aggregateEncounters(floor1Indices);
+            displayEncounterSections(container, floor1);
+        }
+        
+        if (floor2Indices.length > 0) {
+            const header = document.createElement("h3");
+            header.textContent = "Terminus Cave - B Floor 2-3";
+            header.style.marginTop = "20px";
+            header.style.fontSize = "1.4rem";
+            container.appendChild(header);
+            
+            const floor2 = aggregateEncounters(floor2Indices);
+            displayEncounterSections(container, floor2);
+        }
+    }
+
+    function aggregateEncounters(indices) {
+        const aggregated = {
+            grass: [],
+            fishing: [],
+            rockSmash: [],
+            surfing: [],
+            hordes: []
+        };
+        
+        indices.forEach(idx => {
+            const location = encounterData[idx];
+            if (!location || !location.Encounters) return;
+            
+            location.Encounters.forEach(encounter => {
+                const type = encounter.EncounterType.toLowerCase();
+                
+                // Flatten slots into individual encounter objects
+                if (encounter.Slots && Array.isArray(encounter.Slots)) {
+                    encounter.Slots.forEach(slot => {
+                        const flatEncounter = {
+                            PokemonName: slot.Species,
+                            MinLevel: slot.MinLevel,
+                            MaxLevel: slot.MaxLevel,
+                            Chance: slot.Chance,
+                            EncounterType: encounter.EncounterType
+                        };
+                        
+                        if (type.includes('horde')) {
+                            aggregated.hordes.push(flatEncounter);
+                        } else if (type.includes('rock smash')) {
+                            aggregated.rockSmash.push(flatEncounter);
+                        } else if (type.includes('surf')) {
+                            aggregated.surfing.push(flatEncounter);
+                        } else if (type.includes('rod')) {
+                            aggregated.fishing.push(flatEncounter);
+                        } else {
+                            aggregated.grass.push(flatEncounter);
+                        }
+                    });
+                }
+            });
+        });
+        
+        return aggregated;
+    }
+
+    function displayEncounterSections(container, aggregated) {
+        if (aggregated.grass.length > 0) {
+            displayEncounterSection(container, "Grass / Terrain Encounters", aggregated.grass);
+        }
+        if (aggregated.fishing.length > 0) {
+            displayEncounterSection(container, "Fishing", aggregated.fishing);
+        }
+        if (aggregated.rockSmash.length > 0) {
+            displayEncounterSection(container, "Rock Smash", aggregated.rockSmash);
+        }
+        if (aggregated.surfing.length > 0) {
+            displayEncounterSection(container, "Surfing", aggregated.surfing);
+        }
+        if (aggregated.hordes.length > 0) {
+            displayEncounterSection(container, "Horde Encounters", aggregated.hordes);
+        }
+    }
+
+    function displayEncounterSection(container, title, encounters) {
+        if (!encounters || encounters.length === 0) return;
+        
+        const section = document.createElement("div");
+        section.className = "encounter-type-section";
+        
+        const sectionTitle = document.createElement("div");
+        sectionTitle.className = "encounter-type-title";
+        sectionTitle.textContent = title;
+        section.appendChild(sectionTitle);
+        
+        const grid = document.createElement("div");
+        grid.className = "pokemon-grid";
+        
+        encounters.forEach(enc => {
+            const box = document.createElement("div");
+            box.className = "pokemon-box";
+            
+            const pokemonName = enc.PokemonName || "Unknown";
+            
+            const name = document.createElement("div");
+            name.className = "pokemon-name";
+            name.textContent = pokemonName;
+            box.appendChild(name);
+            
+            const iconLink = document.createElement("a");
+            iconLink.href = `pokemon.html?name=${encodeURIComponent(pokemonName)}`;
+            const icon = document.createElement("img");
+            icon.className = "pokemon-icon";
+            icon.alt = pokemonName;
+            const sprites = getPokemonSpritePath(pokemonName);
+            setupImageFallback(icon, [
+                getPokemonIconPath(pokemonName),
+                sprites.primary,
+                sprites.fallback1,
+                sprites.fallback2
+            ]);
+            iconLink.appendChild(icon);
+            box.appendChild(iconLink);
+            
+            const chance = document.createElement("div");
+            chance.className = "pokemon-chance";
+            chance.textContent = `${enc.Chance || "Unknown"}`;
+            box.appendChild(chance);
+            
+            grid.appendChild(box);
+        });
+        
+        section.appendChild(grid);
+        container.appendChild(section);
+    }
+
+    function displayItems(container, areaName) {
+        const areaItems = itemsData.filter(item => {
+            const baseLocation = item.Area.replace(/\s*\([^)]*\)/, '').trim();
+            return normalizeForCompare(baseLocation) === normalizeForCompare(areaName) ||
+                   normalizeForCompare(item.Area) === normalizeForCompare(areaName);
+        });
+        
+        if (areaItems.length === 0) {
+            container.innerHTML = '<div class="no-data-message">No items in this location.</div>';
+            return;
+        }
+        
+        const table = document.createElement("table");
+        table.className = "items-table";
+        
+        const thead = document.createElement("thead");
+        thead.innerHTML = `
+            <tr>
+                <th>Item</th>
+                <th>Location/Price</th>
+            </tr>
+        `;
+        table.appendChild(thead);
+        
+        const tbody = document.createElement("tbody");
+        areaItems.forEach(item => {
+            const row = document.createElement("tr");
+            const itemName = item.Item || "Unknown";
+            const itemIcon = createItemIcon(itemName, 'item-icon');
+            
+            row.innerHTML = `
+                <td><strong>${itemName}</strong>${itemIcon}</td>
+                <td>${item["Location/Price"] || ""}</td>
+            `;
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        
+        container.appendChild(table);
+    }
+
+    async function loadData() {
+        const sidebar = document.getElementById("sidebar");
+        
+        try {
+            const [trainersRes, encountersRes, itemsRes, pokedexRes, movesRes, abilitiesRes] = await Promise.all([
+                fetch("data/trainers.json"),
+                fetch("data/encounters.json"),
+                fetch("data/items.json"),
+                fetch("data/pokedex.json"),
+                fetch("data/moves.json"),
+                fetch("data/abilities.json")
+            ]);
+            
+            trainerData = await trainersRes.json();
+            encounterData = await encountersRes.json();
+            itemsData = await itemsRes.json();
+            pokedexData = await pokedexRes.json();
+            movesData = await movesRes.json();
+            abilitiesData = await abilitiesRes.json();
+            
+            // Build sidebar with all areas from areaOrder
+            areaOrder.forEach(areaName => {
+                // Check if this area has any data
+                const hasBattles = checkHasTrainers(areaName);
+                const hasEncounters = checkHasEncounters(areaName);
+                const hasItems = checkHasItems(areaName);
+                
+                if (hasBattles || hasEncounters || hasItems) {
+                    const tab = document.createElement("div");
+                    tab.className = "route-tab";
+                    tab.textContent = areaName;
+                    tab.onclick = () => {
+                        document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
+                        tab.classList.add("active");
+                        displayArea(areaName);
+                    };
+                    sidebar.appendChild(tab);
+                }
+            });
+            
+            // Activate first tab
+            const firstTab = sidebar.querySelector('.route-tab');
+            if (firstTab) {
+                firstTab.click();
+            }
+            
+        } catch (error) {
+            console.error("Error loading data:", error);
+            sidebar.innerHTML = '<div style="padding: 20px; color: #d32f2f;">Error loading data. Please refresh the page.</div>';
+        }
+    }
+
+    loadData();
 </script>
 
 </body>
