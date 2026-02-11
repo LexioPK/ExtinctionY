@@ -534,7 +534,7 @@
         "Ambrette Town",
         "Route 9",
         "Glittering Cave",
-        "Ambrette Town Aqaurium",
+        "Ambrette Town Aquarium",
         "Cyllage City",
         "Route 10",
         "Cyllage Gym",
@@ -563,7 +563,7 @@
         "Route 16",
         "Lost Hotel",
         "Lost Hotel - Route 15 Side",
-        "Lost Hotel  - Route 16 Side",
+        "Lost Hotel - Route 16 Side",
         "Dendemille Town",
         "Frost Cavern",
         "Frost Cavern - Outside",
@@ -646,7 +646,7 @@
     function createItemIcon(itemName, className = '') {
         if (!itemName || itemName === "No Item" || itemName === "---") return '';
         const normalized = itemName.toLowerCase().replace(/[^a-z0-9]/g, '');
-        return `<img src="image/items/${normalized}.png" alt="${itemName}" class="${className}" onerror="this.style.display='none'">`;
+        return `<img src="image/item/${normalized}.png" alt="${itemName}" class="${className}" onerror="this.style.display='none'">`;
     }
 
     function colorNature(nature) {
@@ -1171,7 +1171,7 @@
                             <a href="pokemon.html?name=${encodeURIComponent(displayName)}">
                                 <img class="poke-img"
                                      src="pokemon_sprites/${spriteName}.png"
-                                     onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                                     onerror="this.onerror=null; this.src='pokemon_sprites2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
                             </a>
 
                             <div class="types">
