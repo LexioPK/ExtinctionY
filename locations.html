@@ -820,14 +820,14 @@
         
         // Add encounter locations (skip those with parentheses in the name)
         encounterData.forEach((loc, idx) => {
-            if (loc && loc.Location) {
-                const parsed = parseAreaAndSubArea(loc.Location);
+            if (loc && loc.LocationName) {
+                const parsed = parseAreaAndSubArea(loc.LocationName);
                 // Skip locations with parentheses - only use main area
                 if (parsed.subArea) return; // Has parentheses, skip it
                 
-                const root = findRootForArea(loc.Location);
+                const root = findRootForArea(loc.LocationName);
                 if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
-                groupedLocations[root].fullNames.add(loc.Location);
+                groupedLocations[root].fullNames.add(loc.LocationName);
             }
         });
         
@@ -870,7 +870,7 @@
             // Check if any sub-area has encounters
             if (!hasContent) {
                 for (const subArea of subAreas) {
-                    const hasEncounter = encounterData.some(loc => loc && loc.Location === subArea);
+                    const hasEncounter = encounterData.some(loc => loc && loc.LocationName === subArea);
                     if (hasEncounter) {
                         hasContent = true;
                         break;
@@ -1242,12 +1242,19 @@
                         // For names with &, just use the first part
                         const namePart = tr.TrainerName.includes('&') ? tr.TrainerName.split('&')[0].trim() : tr.TrainerName;
                         const nameWords = namePart.trim().split(/\s+/);
-                        nameWords.forEach(word => {
-                            const normalized = normalizeString(word);
-                            if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
-                                imagesToTry.push(normalized);
-                            }
-                        });
+                        
+                        // Skip using name words if trainer name starts with "Goon" (Team Flare goons)
+                        // This prevents trying "goon.png" when we should use "teamflaregoon.png" from class
+                        const shouldSkipNameWords = tr.TrainerName.trim().startsWith('Goon');
+                        
+                        if (!shouldSkipNameWords) {
+                            nameWords.forEach(word => {
+                                const normalized = normalizeString(word);
+                                if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
+                                    imagesToTry.push(normalized);
+                                }
+                            });
+                        }
                     }
                 }
                 
