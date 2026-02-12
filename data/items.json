@@ -3141,42 +3141,42 @@
   },
   {
     "Item": "Bicycle",
-    "Area": "Santalune City Mart",
+    "Area": "Santalune City (Mart)",
     "Location/Price": "$500.00"
   },
   {
     "Item": "Exp. Share",
-    "Area": "Santalune City Mart",
+    "Area": "Santalune City (Mart)",
     "Location/Price": "$500.00  (Does not stack with given Exp.Share)"
   },
   {
     "Item": "Old Rod",
-    "Area": "Santalune City Mart",
+    "Area": "Santalune City (Mart)",
     "Location/Price": "$100.00"
   },
   {
     "Item": "Shiny Charm",
-    "Area": "Santalune City Mart",
+    "Area": "Santalune City (Mart)",
     "Location/Price": "$5,000.00"
   },
   {
     "Item": "Pheonix's Blessing",
-    "Area": "Santalune City Mart",
+    "Area": "Santalune City (Mart)",
     "Location/Price": "$10.00"
   },
   {
     "Item": "Rare Candy",
-    "Area": "Santalune City Mart",
+    "Area": "Santalune City (Mart)",
     "Location/Price": "$10.00"
   },
   {
     "Item": "Escape Rope",
-    "Area": "Santalune City Mart",
+    "Area": "Santalune City (Mart)",
     "Location/Price": "$150.00"
   },
   {
     "Item": "Max Repel",
-    "Area": "Santalune City Mart",
+    "Area": "Santalune City (Mart)",
     "Location/Price": "$10.00"
   },
   {
@@ -3696,6 +3696,7 @@
   }
 
 ]
+
 
 
 
