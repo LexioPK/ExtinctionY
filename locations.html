@@ -430,10 +430,10 @@
             border-radius: 10px;
             padding: 10px;
             text-align: center;
-            min-width: 110px;
-            max-width: 120px;
+            width: 115px;
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
+            box-sizing: border-box;
         }
 
         .pokemon-box:hover {
@@ -446,6 +446,9 @@
             font-weight: 600;
             margin-bottom: 6px;
             line-height: 1.2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .pokemon-box .pokemon-sprite {
