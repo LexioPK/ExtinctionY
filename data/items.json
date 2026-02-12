@@ -1101,7 +1101,7 @@
   },
   {
     "Item": "Scope Lens",
-    "Area": "Lost Hotel (Route 15)",
+    "Area": "Tower of Mastery",
     "Location/Price": "Reward for beating Hoenn Elite Drake"
   },
   {
@@ -3216,17 +3216,17 @@
   },
   {
     "Item": "Mega Ring",
-    "Area": "Shalour (Tower of Mastery)",
+    "Area": "Tower of Mastery",
     "Location/Price": "Top floor, from Korrina after defeating her at the Gym"
   },
   {
     "Item": "Medichamite",
-    "Area": "Shalour (Tower of Mastery)",
+    "Area": "Tower of Mastery",
     "Location/Price": "Top floor, held by Gift Medicham"
   },
   {
     "Item": "TM47: Brick Break",
-    "Area": "Shalour (Tower of Mastery)",
+    "Area": "Tower of Mastery",
     "Location/Price": "4F, from the Ace Trainer"
   },
   {
@@ -3696,6 +3696,7 @@
   }
 
 ]
+
 
 
 
