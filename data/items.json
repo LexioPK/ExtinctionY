@@ -2275,6 +2275,31 @@
     "Location/Price": "West of the long grass south of the Lum Berry tree, one pace west of the grass and one pace north of the edge of the path (pile of leaves, hidden)"
   },
   {
+    "Item": "Ice Gem-10",
+    "Area": "Route 17",
+    "Location/Price": "North of the Anistar City Gate"
+  },
+  {
+    "Item": "Icicle Plate",
+    "Area": "Route 17",
+    "Location/Price": "North of the northern two sets of breakable rocks, following the path west and then when it branches east"
+  },
+  {
+    "Item": "Coba Berry-10",
+    "Area": "Route 17",
+    "Location/Price": "South of the middle set of breakable rocks, following the west path"
+  },
+  {
+    "Item": "Power Herb-2",
+    "Area": "Route 17",
+    "Location/Price": "In the corner by the tree on the north side of the Anistar City Gate (hidden)"
+  },
+  {
+    "Item": "Park Ball-10",
+    "Area": "Route 17",
+    "Location/Price": "North of the northern two sets of breakable rocks, following the path west and then all the way north (hidden)"
+  },
+  {
     "Item": "Occa Berry-10",
     "Area": "Route 18",
     "Location/Price": "South of a ledge south of where the main road bends coming out of the Anistar City Gate"
@@ -3696,6 +3721,7 @@
   }
 
 ]
+
 
 
 
