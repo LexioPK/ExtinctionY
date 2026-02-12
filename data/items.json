@@ -1731,7 +1731,7 @@
   },
   {
     "Item": "Ganlon berry",
-    "Area": "Route 8 (Costal Area)",
+    "Area": "Route 8 (Coastal Area)",
     "Location/Price": "Reward for beating Fisherman Shad"
   },
   {
@@ -2851,7 +2851,7 @@
   },
   {
     "Item": "Aguav Berry",
-    "Area": "Route 6",
+    "Area": "Route 6 (West)",
     "Location/Price": "West side: in front of the Berry tree just west of the center of the area (regenerates after 7 days)"
   },
   {
@@ -2861,47 +2861,47 @@
   },
   {
     "Item": "Enigma Berry",
-    "Area": "Route 6",
+    "Area": "Route 6 (East)",
     "Location/Price": "Reward for beating Youngster Jacob"
   },
   {
     "Item": "Micle Berry",
-    "Area": "Route 6",
+    "Area": "Route 6 (West)",
     "Location/Price": "Reward for beating Backpacker Roderick"
   },
   {
     "Item": "Pecha Berry-5",
-    "Area": "Route 6",
+    "Area": "Route 6 (East)",
     "Location/Price": "East side: in a clear strip among the grass along the west side of the north half of the area"
   },
   {
     "Item": "Rawst Berry-5",
-    "Area": "Route 6",
+    "Area": "Route 6 (East)",
     "Location/Price": "East side: in the small clearing in the grass to the southeast of the center of the area"
   },
   {
     "Item": "Berry Juice-5",
-    "Area": "Route 6",
+    "Area": "Route 6 (East)",
     "Location/Price": "East side: just southeast of the entrance from Parfum Palace"
   },
   {
     "Item": "Black Glasses",
-    "Area": "Route 6",
+    "Area": "Route 6 (East)",
     "Location/Price": "Reward for beating Tourist Mari"
   },
   {
     "Item": "Dragon Fang",
-    "Area": "Route 6",
+    "Area": "Route 6 (East)",
     "Location/Price": "Reward for beating Tourist Takemi"
   },
   {
     "Item": "Iron Plate",
-    "Area": "Route 6",
+    "Area": "Route 6 (West)",
     "Location/Price": "Reward for beating Beauty Brigitte"
   },
   {
     "Item": "Never Melt Ice",
-    "Area": "Route 6",
+    "Area": "Route 6 (East)",
     "Location/Price": "Reward for beating Backpacker Jerome"
   },
   {
@@ -2916,37 +2916,37 @@
   },
   {
     "Item": "Silver Powder",
-    "Area": "Route 6",
+    "Area": "Route 6 (West)",
     "Location/Price": "Reward for beating Youngster Tyler"
   },
   {
     "Item": "Spell Tag",
-    "Area": "Route 6",
+    "Area": "Route 6 (West)",
     "Location/Price": "Reward for beating PokeFan Family Jan & Erin"
   },
   {
     "Item": "Safari Ball-5",
-    "Area": "Route 6",
+    "Area": "Route 6 (West)",
     "Location/Price": "West side: in the small northeastern clearing in the grass"
   },
   {
     "Item": "Ultra Ball-3",
-    "Area": "Route 6",
+    "Area": "Route 6 (West)",
     "Location/Price": "West side: in the southwest corner of the area"
   },
   {
     "Item": "TM09: Venoshock",
-    "Area": "Route 6",
+    "Area": "Route 6 (East)",
     "Location/Price": "East side: just north from the southwest corner of the area"
   },
   {
     "Item": "Star Piece-2",
-    "Area": "Route 6",
+    "Area": "Route 6 (West)",
     "Location/Price": "West side: in the northwest, up a small path on the west edge"
   },
   {
     "Item": "Tiny Mushroom-3",
-    "Area": "Route 6",
+    "Area": "Route 6 (East)",
     "Location/Price": "East side: at the end of the small dead end pushing north along the east edge of the area, in the center of the hillside (hidden)"
   },
   {
@@ -3031,37 +3031,37 @@
   },
   {
     "Item": "Apicot Berry",
-    "Area": "Route 8 (Costal Area)",
+    "Area": "Route 8 (Coastal Area)",
     "Location/Price": "Reward for beating Fisherman Wharton"
   },
   {
     "Item": "Mago Berry",
-    "Area": "Route 8 (Costal Area)",
+    "Area": "Route 8 (Coastal Area)",
     "Location/Price": "Coastal area: in front of the Berry tree northwest of the Aquarium (regenerates after 7 days)"
   },
   {
     "Item": "Dowsing Machine",
-    "Area": "Route 8 (Costal Area)",
+    "Area": "Route 8 (Coastal Area)",
     "Location/Price": "Coastal area: from the Swimmer \u2640 north of the Aquarium after speaking to the Fossil Scientist in Glittering Cave"
   },
   {
     "Item": "Fast Ball-5",
-    "Area": "Route 8 (Costal Area)",
+    "Area": "Route 8 (Coastal Area)",
     "Location/Price": "Coastal area: directly north of the Aquarium stairs, on the southernmost rock in a pair of small rocks (hidden)"
   },
   {
     "Item": "TM19: Roost",
-    "Area": "Route 8 (Costal Area)",
+    "Area": "Route 8 (Coastal Area)",
     "Location/Price": "Coastal area: on the small, shallow island in the northwest of the route (requires Surf)"
   },
   {
     "Item": "Pearl-2",
-    "Area": "Route 8 (Costal Area)",
+    "Area": "Route 8 (Coastal Area)",
     "Location/Price": "Coastal area: by the Swimmer \u2640 who gives the player the Dowsing Machine, two spaces west and four north of the rock directly east of the Mago Berry tree (hidden, reappears occasionally)"
   },
   {
     "Item": "Stardust-3",
-    "Area": "Route 8",
+    "Area": "Route 8 (Costal Area)",
     "Location/Price": "Coastal area: southwest of the Berry tree, seven spaces west and two north of the nearest rock (hidden, reappears occasionally)"
   },
   {
@@ -3696,6 +3696,7 @@
   }
 
 ]
+
 
 
 
