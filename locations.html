@@ -420,7 +420,7 @@
         .pokemon-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             margin-top: 15px;
         }
 
@@ -428,10 +428,10 @@
             background: #fafafa;
             border: 2px solid #ddd;
             border-radius: 10px;
-            padding: 8px;
+            padding: 10px;
             text-align: center;
-            min-width: 85px;
-            max-width: 95px;
+            min-width: 110px;
+            max-width: 120px;
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
         }
@@ -442,24 +442,24 @@
         }
 
         .pokemon-box .pokemon-name {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 6px;
             line-height: 1.2;
         }
 
         .pokemon-box .pokemon-sprite {
-            width: 60px;
-            height: 60px;
-            margin: 3px auto;
+            width: 70px;
+            height: 70px;
+            margin: 4px auto;
         }
 
         .pokemon-icon {
-            width: 45px;
-            height: 45px;
+            width: 52px;
+            height: 52px;
             object-fit: contain;
             image-rendering: pixelated;
-            margin: 3px auto;
+            margin: 4px auto;
             display: block;
         }
 
@@ -467,7 +467,7 @@
             font-weight: 600;
             color: #1976d2;
             margin-top: 4px;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
         }
 
         .encounter-details {
@@ -777,28 +777,39 @@
         // Build groupedLocations by combining all location sources
         groupedLocations = {};
         
-        // Add trainer locations
+        // Add trainer locations (skip those with parentheses in the name)
         for (const fullName in trainerData) {
+            const parsed = parseAreaAndSubArea(fullName);
+            // Skip locations with parentheses - only use main area
+            if (parsed.subArea) continue; // Has parentheses, skip it
+            
             const root = findRootForArea(fullName);
             if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
             groupedLocations[root].fullNames.add(fullName);
         }
         
-        // Add encounter locations
+        // Add encounter locations (skip those with parentheses in the name)
         encounterData.forEach((loc, idx) => {
             if (loc && loc.Location) {
+                const parsed = parseAreaAndSubArea(loc.Location);
+                // Skip locations with parentheses - only use main area
+                if (parsed.subArea) return; // Has parentheses, skip it
+                
                 const root = findRootForArea(loc.Location);
                 if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
                 groupedLocations[root].fullNames.add(loc.Location);
             }
         });
         
-        // Add item locations
+        // Add item locations (use main area for items with parentheses)
         itemsData.forEach(item => {
             if (item && item.Area) {
-                const root = findRootForArea(item.Area);
+                const parsed = parseAreaAndSubArea(item.Area);
+                // For items, use the main area (so "Route 6 (West)" items go under "Route 6")
+                const areaToUse = parsed.mainArea;
+                const root = findRootForArea(areaToUse);
                 if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
-                groupedLocations[root].fullNames.add(item.Area);
+                groupedLocations[root].fullNames.add(areaToUse);
             }
         });
 
@@ -811,6 +822,50 @@
                 if (ia === ib) return a.localeCompare(b);
                 return ia - ib;
             });
+        });
+        
+        // Filter out locations with no actual content
+        Object.keys(groupedLocations).forEach(root => {
+            const subAreas = groupedLocations[root].fullNames;
+            let hasContent = false;
+            
+            // Check if any sub-area has trainers
+            for (const subArea of subAreas) {
+                if (trainerData[subArea] && trainerData[subArea].Trainers && trainerData[subArea].Trainers.length > 0) {
+                    hasContent = true;
+                    break;
+                }
+            }
+            
+            // Check if any sub-area has encounters
+            if (!hasContent) {
+                for (const subArea of subAreas) {
+                    const hasEncounter = encounterData.some(loc => loc && loc.Location === subArea);
+                    if (hasEncounter) {
+                        hasContent = true;
+                        break;
+                    }
+                }
+            }
+            
+            // Check if any sub-area has items (using mainArea matching)
+            if (!hasContent) {
+                for (const subArea of subAreas) {
+                    const hasItems = itemsData.some(item => {
+                        const parsed = parseAreaAndSubArea(item.Area);
+                        return parsed.mainArea === subArea;
+                    });
+                    if (hasItems) {
+                        hasContent = true;
+                        break;
+                    }
+                }
+            }
+            
+            // Remove location if it has no content
+            if (!hasContent) {
+                delete groupedLocations[root];
+            }
         });
 
         // Build sidebar tabs
