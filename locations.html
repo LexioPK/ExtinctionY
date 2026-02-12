@@ -189,6 +189,8 @@
             height: 150px;
             object-fit: contain;
             border-radius: 8px;
+            display: block;
+            margin: 0 auto;
         }
 
         .trainer-badges {
@@ -420,7 +422,7 @@
         .pokemon-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 14px;
             margin-top: 15px;
         }
 
@@ -428,12 +430,12 @@
             background: #fafafa;
             border: 2px solid #ddd;
             border-radius: 10px;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
-            min-width: 110px;
-            max-width: 120px;
+            width: 105px;
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
+            box-sizing: border-box;
         }
 
         .pokemon-box:hover {
@@ -442,32 +444,35 @@
         }
 
         .pokemon-box .pokemon-name {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             line-height: 1.2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .pokemon-box .pokemon-sprite {
-            width: 70px;
-            height: 70px;
-            margin: 4px auto;
+            width: 64px;
+            height: 64px;
+            margin: 3px auto;
         }
 
         .pokemon-icon {
-            width: 52px;
-            height: 52px;
+            width: 48px;
+            height: 48px;
             object-fit: contain;
             image-rendering: pixelated;
-            margin: 4px auto;
+            margin: 3px auto;
             display: block;
         }
 
         .pokemon-chance {
             font-weight: 600;
             color: #1976d2;
-            margin-top: 4px;
-            font-size: 0.78rem;
+            margin-top: 3px;
+            font-size: 0.75rem;
         }
 
         .encounter-details {
@@ -697,6 +702,31 @@
             mainArea: area,
             subArea: ""
         };
+    }
+
+    function getTypeAbbreviation(typeName) {
+        // Official Pokemon type abbreviations
+        const typeAbbreviations = {
+            'Normal': 'NRM',
+            'Fire': 'FIR',
+            'Water': 'WAT',
+            'Electric': 'ELC',
+            'Grass': 'GRS',
+            'Ice': 'ICE',
+            'Fighting': 'FGT',
+            'Poison': 'PSN',
+            'Ground': 'GRD',
+            'Flying': 'FLY',
+            'Psychic': 'PSY',
+            'Bug': 'BUG',
+            'Rock': 'RCK',
+            'Ghost': 'GHO',
+            'Dragon': 'DRG',
+            'Dark': 'DRK',
+            'Steel': 'STL',
+            'Fairy': 'FAI'
+        };
+        return typeAbbreviations[typeName] || typeName;
     }
 
     function findRootForArea(fullAreaName) {
@@ -1369,7 +1399,8 @@
                         
                         const moveType = moveEntry.Type || "";
                         const moveCategory = moveEntry.Category || "";
-                        const typeBadge = moveType ? `<span class="type-badge type-${moveType.toLowerCase()}">${moveType}</span>` : "";
+                        const typeAbbr = moveType ? getTypeAbbreviation(moveType) : "";
+                        const typeBadge = moveType ? `<span class="type-badge type-${moveType.toLowerCase()}" title="${moveType}">${typeAbbr}</span>` : "";
                         const categoryIcon = moveCategory ? `<img class="category-icon" src="image/${moveCategory.toLowerCase()}.png" alt="${moveCategory}" title="${moveCategory}">` : "";
                         
                         return `<div class="move-item">
