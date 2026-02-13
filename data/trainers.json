@@ -1225,7 +1225,7 @@
       }
     ]
   },
-  "Ambrette Town Aqaurium": {
+  "Ambrette Town Aquarium": {
     "RouteIndex": 18,
     "Required": true,
     "Notes": "",
@@ -1236,7 +1236,7 @@
         "TrainerClass": "Hoenn Leader",
         "TrainerClassIndex": 94,
         "BattleType": "Single",
-        "Route": "Ambrette Town Aqaurium",
+        "Route": "Ambrette Town Aquarium",
         "EncounterIndex": 0,
         "Required": "Optional",
         "Notes": "",
@@ -3558,7 +3558,7 @@
         "BattleType": "Single",
         "Route": "Couriway Town",
         "EncounterIndex": 1,
-        "Required": "Mandatory",
+        "Required": "Optional",
         "Notes": "",
         "IsTagBattle": false,
         "RewardItem": "Weakness Policy",
@@ -9825,19 +9825,19 @@
             ]
           },
           {
-            "Name": "Beautifly",
+            "Name": "Mandibuzz",
             "Form": "",
             "Gender": "",
             "Level": 87,
-            "Ability": "Shield Dust",
+            "Ability": "Battle Armor",
             "HeldItem": "Charti Berry",
-            "Nature": "Timid (\u002BSpe / -Atk)",
+            "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Moonblast",
-              "Bug Buzz",
+              "Foul Play",
+              "Brave Bird",
               "Tailwind",
-              "Giga Drain"
+              "U-turn"
             ]
           },
           {
@@ -9857,35 +9857,35 @@
             ]
           },
           {
-            "Name": "Umbreon",
+            "Name": "Durant",
             "Form": "",
             "Gender": "",
             "Level": 87,
-            "Ability": "Telepathy",
+            "Ability": "Hyper Cutter",
             "HeldItem": "Leftovers",
-            "Nature": "Bold (\u002BDef / -Atk)",
-            "IVs": 30,
+            "Nature": "Jolly (\u002BSpe / -SpA)",
+            "IVs": 31,
             "Moves": [
-              "Helping Hand",
-              "Moonblast",
-              "Foul Play",
-              "Wish"
+              "Iron Head",
+              "X-Scissor",
+              "Superpower",
+              "Crunch"
             ]
           },
           {
-            "Name": "Emolga",
+            "Name": "Diggersby",
             "Form": "",
             "Gender": "",
             "Level": 87,
-            "Ability": "Volt Absorb",
-            "HeldItem": "Mago Berry",
-            "Nature": "Lax (\u002BDef / -SpD)",
+            "Ability": "Huge Power",
+            "HeldItem": "Sitrus Berry",
+            "Nature": "Hardy (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Aeroblast",
-              "Nuzzle",
-              "Zap Cannon",
-              "Double Team"
+              "Earthquake",
+              "Mega Kick",
+              "Wild Charge",
+              "Play Rough"
             ]
           },
           {
@@ -9901,7 +9901,7 @@
               "Mist Ball",
               "Draco Meteor",
               "Psyshock",
-              "Protect"
+              "Helping Hand"
             ]
           }
         ]
@@ -16745,19 +16745,19 @@
             ]
           },
           {
-            "Name": "Exploud",
+            "Name": "Clefable",
             "Form": "",
             "Gender": "",
             "Level": 71,
-            "Ability": "Scrappy",
-            "HeldItem": "Chople Berry",
-            "Nature": "Quirky (Neutral)",
+            "Ability": "Magic Guard",
+            "HeldItem": "Kebia Berry",
+            "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Boomburst",
-              "Belch",
-              "Hammer Arm",
-              "Crunch"
+              "Moonblast",
+              "Stored Power",
+              "Cosmic Power",
+              "Moonlight"
             ]
           }
         ]
@@ -16903,19 +16903,19 @@
             ]
           },
           {
-            "Name": "Pinsir",
+            "Name": "Unfezant",
             "Form": "",
             "Gender": "",
             "Level": 72,
-            "Ability": "Hyper Cutter",
+            "Ability": "Super Luck",
             "HeldItem": "Rawst Berry",
-            "Nature": "Gentle (\u002BSpD / -Def)",
+            "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Leech Life",
-              "Snip Snip",
-              "Close Combat",
-              "Double-Edge"
+              "Wing Attack",
+              "Double-Edge",
+              "Roost",
+              "Heat Wave"
             ]
           },
           {
@@ -17471,19 +17471,19 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Persian",
+            "Name": "Rampardos",
             "Form": "",
             "Gender": "",
             "Level": 73,
-            "Ability": "Super Luck",
+            "Ability": "Rock Head",
             "HeldItem": "Scope Lens",
-            "Nature": "Lonely (\u002BAtk / -Def)",
+            "Nature": "Hardy (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Mega Kick",
-              "Play Rough",
-              "Seed Bomb",
-              "Night Slash"
+              "Stone Edge",
+              "Double-Edge",
+              "Iron Head",
+              "Rock Polish"
             ]
           },
           {
@@ -17633,7 +17633,7 @@
       }
     ]
   },
-  "Poké Ball Factory": {
+  "Pok\u00E9 Ball Factory": {
     "RouteIndex": 41,
     "Required": true,
     "Notes": "",
@@ -17644,7 +17644,7 @@
         "TrainerClass": "Team Flare",
         "TrainerClassIndex": 80,
         "BattleType": "Single",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 0,
         "Required": "Optional",
         "Notes": "First Grunt encountered after using the conveyer belts.",
@@ -17707,7 +17707,7 @@
         "TrainerClass": "Team Flare",
         "TrainerClassIndex": 80,
         "BattleType": "Single",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 1,
         "Required": "Mandatory",
         "Notes": "In front of the staircase,\tguarding the way up.",
@@ -17786,7 +17786,7 @@
         "TrainerClass": "Team Flare",
         "TrainerClassIndex": 79,
         "BattleType": "Single",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 2,
         "Required": "Mandatory",
         "Notes": "Guarding the doorway on the upper floor.",
@@ -17849,7 +17849,7 @@
         "TrainerClass": "Team Flare",
         "TrainerClassIndex": 79,
         "BattleType": "Double",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 3,
         "Required": "Mandatory",
         "Notes": "",
@@ -17928,7 +17928,7 @@
         "TrainerClass": "Team Flare",
         "TrainerClassIndex": 77,
         "BattleType": "Single",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 4,
         "Required": "Mandatory",
         "Notes": "",
@@ -18007,7 +18007,7 @@
         "TrainerClass": "Pok\u00E9mon Trainer",
         "TrainerClassIndex": 104,
         "BattleType": "Double",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 5,
         "Required": "DoublesPartner",
         "Notes": "If Starter is Chespin",
@@ -18102,7 +18102,7 @@
         "TrainerClass": "Pok\u00E9mon Trainer",
         "TrainerClassIndex": 104,
         "BattleType": "Double",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 6,
         "Required": "DoublesPartner",
         "Notes": "If Starter is Fennekin",
@@ -18197,7 +18197,7 @@
         "TrainerClass": "Pok\u00E9mon Trainer",
         "TrainerClassIndex": 104,
         "BattleType": "Double",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 7,
         "Required": "DoublesPartner",
         "Notes": "If Starter is Froakie",
@@ -18292,7 +18292,7 @@
         "TrainerClass": "Pok\u00E9mon Trainer",
         "TrainerClassIndex": 103,
         "BattleType": "Double",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 8,
         "Required": "DoublesPartner",
         "Notes": "If Starter is Chespin",
@@ -18387,7 +18387,7 @@
         "TrainerClass": "Pok\u00E9mon Trainer",
         "TrainerClassIndex": 103,
         "BattleType": "Double",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 9,
         "Required": "DoublesPartner",
         "Notes": "If Starter is Fennekin",
@@ -18482,7 +18482,7 @@
         "TrainerClass": "Pok\u00E9mon Trainer",
         "TrainerClassIndex": 103,
         "BattleType": "Double",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 10,
         "Required": "DoublesPartner",
         "Notes": "If Starter is Froakie",
@@ -18577,7 +18577,7 @@
         "TrainerClass": "Team Flare",
         "TrainerClassIndex": 20,
         "BattleType": "Double",
-        "Route": "Poké Ball Factory",
+        "Route": "Pok\u00E9 Ball Factory",
         "EncounterIndex": 11,
         "Required": "Mandatory",
         "Notes": "",
@@ -19847,19 +19847,19 @@
             ]
           },
           {
-            "Name": "Clefable",
+            "Name": "Togekiss",
             "Form": "",
             "Gender": "",
             "Level": 80,
-            "Ability": "Magic Guard",
+            "Ability": "Serene Grace",
             "HeldItem": "Sitrus Berry",
-            "Nature": "Bold (\u002BDef / -Atk)",
+            "Nature": "Naughty (\u002BAtk / -SpD)",
             "IVs": 31,
             "Moves": [
               "Moonblast",
-              "Stored Power",
-              "Cosmic Power",
-              "Moonlight"
+              "Aeroblast",
+              "Heat Wave",
+              "Thunder Wave"
             ]
           },
           {
@@ -22868,19 +22868,19 @@
             ]
           },
           {
-            "Name": "Pyroar",
+            "Name": "Chatot",
             "Form": "",
             "Gender": "",
             "Level": 86,
-            "Ability": "Flash Fire",
-            "HeldItem": "Normal Gem",
-            "Nature": "Timid (\u002BSpe / -Atk)",
+            "Ability": "Aerilate",
+            "HeldItem": "Sky Plate",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Hyper Beam",
-              "Overheat",
-              "Dark Pulse",
-              "Will-O-Wisp"
+              "Boomburst",
+              "Heat Wave",
+              "Feather Dance",
+              "Confide"
             ]
           }
         ]
@@ -22908,10 +22908,10 @@
             "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Shadow Ball",
-              "Heat Wave",
-              "Dazzling Gleam",
-              "Will-O-Wisp"
+              "Sludge Bomb",
+              "Ice Beam",
+              "Land\u2019s Wrath",
+              "Thunderbolt"
             ]
           },
           {
@@ -22921,13 +22921,13 @@
             "Level": 85,
             "Ability": "Guts",
             "HeldItem": "Flame Orb",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Solar Beam",
-              "Earth Power",
-              "Weather Ball",
-              "Sludge Bomb"
+              "Volt Tackle",
+              "Play Rough",
+              "Crunch",
+              "Facade"
             ]
           },
           {
@@ -22936,14 +22936,14 @@
             "Gender": "",
             "Level": 85,
             "Ability": "Scrappy",
-            "HeldItem": "Shell Bell",
-            "Nature": "Gentle (\u002BSpD / -Def)",
+            "HeldItem": "Expert Belt",
+            "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
             "Moves": [
-              "Crunch",
-              "Aeroblast",
-              "Dragon Pulse",
-              "Fire Blast"
+              "Inferno",
+              "Close Combat",
+              "Poison Jab",
+              "Grass Knot"
             ]
           },
           {
@@ -22953,13 +22953,13 @@
             "Level": 85,
             "Ability": "Serene Grace",
             "HeldItem": "Passho Berry",
-            "Nature": "Serious (Neutral)",
+            "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Searing Shot",
-              "Will-O-Wisp",
-              "Weather Ball",
-              "Hyper Voice"
+              "Doom Desire",
+              "Moonblast",
+              "Icy Wind",
+              "Thunder Wave"
             ]
           },
           {
@@ -22972,10 +22972,10 @@
             "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
             "Moves": [
-              "Quiver Dance",
-              "Helping Hand",
-              "Energy Ball",
-              "Aura Sphere"
+              "Wing Attack",
+              "Extreme Speed",
+              "Dragon Claw",
+              "Dragon Dance"
             ]
           }
         ]
@@ -22994,19 +22994,19 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Bastiodon",
+            "Name": "Carbink",
             "Form": "",
             "Gender": "",
             "Level": 85,
-            "Ability": "Sturdy",
-            "HeldItem": "Sitrus Berry",
-            "Nature": "Brave (\u002BAtk / -Spe)",
+            "Ability": "Clear Body",
+            "HeldItem": "Eviolite",
+            "Nature": "Docile (Neutral)",
             "IVs": 31,
             "Moves": [
-              "King\u2019s Shield",
-              "Metal Burst",
-              "Avalanche",
-              "Head Smash"
+              "Moonblast",
+              "Rock Wrecker",
+              "Earth Power",
+              "Safeguard"
             ]
           },
           {
@@ -23484,10 +23484,26 @@
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Fire Punch",
+              "Thunder Punch",
               "Psycho Cut",
               "Sacred Sword",
               "Meditate"
+            ]
+          },
+          {
+            "Name": "Kricketune",
+            "Form": "",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Technician",
+            "HeldItem": "Coba Berry",
+            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Bug Bite",
+              "Leaf Blade",
+              "Knock Off",
+              "Screech"
             ]
           }
         ]
@@ -23554,19 +23570,19 @@
             ]
           },
           {
-            "Name": "Blissey",
+            "Name": "Zoroark",
             "Form": "",
             "Gender": "",
             "Level": 60,
-            "Ability": "Serene Grace",
-            "HeldItem": "Leftovers",
-            "Nature": "Bold (\u002BDef / -Atk)",
+            "Ability": "Illusion",
+            "HeldItem": "Expert Belt",
+            "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Egg Bomb",
-              "Counter",
-              "Thunderbolt",
-              "Heal Pulse"
+              "Night Daze",
+              "Flamethrower",
+              "Aura Sphere",
+              "Nasty Plot"
             ]
           },
           {
@@ -25461,19 +25477,19 @@
         "RewardItem": "Starf Berry",
         "Pokemon": [
           {
-            "Name": "Cradily",
+            "Name": "Pinsir",
             "Form": "",
             "Gender": "",
             "Level": 79,
-            "Ability": "Sticky Hold",
+            "Ability": "Moxie",
             "HeldItem": "Starf Berry",
-            "Nature": "Rash (\u002BSpA / -SpD)",
+            "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Earth Power",
-              "Horn Leech",
-              "Power Gem",
-              "Amnesia"
+              "Leech Life",
+              "Close Combat",
+              "Double-Edge",
+              "Rock Slide"
             ]
           },
           {
@@ -25823,19 +25839,19 @@
             ]
           },
           {
-            "Name": "Bouffalant",
+            "Name": "Fearow",
             "Form": "",
             "Gender": "",
             "Level": 78,
-            "Ability": "Rock Head",
+            "Ability": "Sniper",
             "HeldItem": "Eject Button",
-            "Nature": "Hardy (Neutral)",
+            "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
               "Retaliate",
-              "Head Smash",
-              "Headlong Rush",
-              "Megahorn"
+              "Brave Bird",
+              "Drill Run",
+              "Feather Dance"
             ]
           }
         ]
@@ -25981,18 +25997,18 @@
             ]
           },
           {
-            "Name": "Carnivine",
+            "Name": "Mothim",
             "Form": "",
             "Gender": "",
             "Level": 78,
-            "Ability": "Levitate",
+            "Ability": "Tinted Lens",
             "HeldItem": "Liechi Berry",
-            "Nature": "Serious (Neutral)",
+            "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Power Whip",
-              "Poison Jab",
+              "Dragon Dance",
               "Leech Life",
+              "Wing Attack",
               "Protect"
             ]
           }
@@ -26028,18 +26044,18 @@
             ]
           },
           {
-            "Name": "Rhyperior",
+            "Name": "Gigalith",
             "Form": "",
             "Gender": "",
             "Level": 78,
-            "Ability": "Solid Rock",
+            "Ability": "Sturdy",
             "HeldItem": "Chople Berry",
-            "Nature": "Careful (\u002BSpD / -SpA)",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Megahorn",
-              "Earthquake",
-              "Crater",
+              "Diamond Storm",
+              "Earth Power",
+              "Discharge",
               "Protect"
             ]
           },
@@ -26072,7 +26088,7 @@
               "Horn Leech",
               "Double-Edge",
               "Headlong Rush",
-              "Protect"
+              "Rock Climb"
             ]
           },
           {
@@ -26293,7 +26309,7 @@
             "Gender": "",
             "Level": 62,
             "Ability": "Sturdy",
-            "HeldItem": "Leftovers",
+            "HeldItem": "Shell Bell",
             "Nature": "Relaxed (\u002BDef / -Spe)",
             "IVs": 31,
             "Moves": [
@@ -26320,6 +26336,22 @@
             ]
           },
           {
+            "Name": "Blissey",
+            "Form": "",
+            "Gender": "",
+            "Level": 61,
+            "Ability": "Serene Grace",
+            "HeldItem": "Leftovers",
+            "Nature": "Bashful (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Thunderbolt",
+              "Egg Bomb",
+              "Draining Kiss",
+              "Soft-Boiled"
+            ]
+          },
+          {
             "Name": "Houndoom",
             "Form": "",
             "Gender": "",
@@ -26332,7 +26364,7 @@
               "Inferno",
               "Sludge Bomb",
               "Dark Pulse",
-              "Nasty Plot"
+              "Feint Attack"
             ]
           }
         ]
@@ -28939,5 +28971,4 @@
       }
     ]
   }
-
 }
