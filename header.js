@@ -152,7 +152,7 @@ function installHeaderFromFile() {
       fallback.innerHTML = `
         <a href="index.html">Pokédex</a>
         <a href="moves.html">Moves</a>
-        <a href="trainers.html">Trainers</a>
+        <a href="locations.html">Locations</a>
         <div style="margin-left:auto; position:relative;">
           <input id="search" type="text" placeholder="Search Pokémon..." autocomplete="off" />
           <div id="search-results" class="search-results" aria-hidden="true"></div>
