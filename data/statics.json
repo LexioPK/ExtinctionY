@@ -1,92 +1,152 @@
 [
   {
+    "Type": "Starter",
     "Pokemon": "Chespin",
     "Location": "Aquacorde Town",
     "Level": "5"
   },
   {
+    "Type": "Starter",
     "Pokemon": "Fennekin",
     "Location": "Aquacorde Town",
     "Level": "5"
   },
   {
+    "Type": "Starter",
     "Pokemon": "Froakie",
     "Location": "Aquacorde Town",
     "Level": "5"
   },
   {
+    "Type": "Static",
     "Pokemon": "Eevee",
     "Location": "Route 2",
     "Level": "5"
   },
   {
+    "Type": "Trade",
     "Pokemon": "Bronzor",
     "Location": "Santalune City",
     "Level": "Any"
   },
   {
+    "Type": "Starter",
     "Pokemon": "Chikorita",
     "Location": "Lumiose City",
     "Level": "16"
   },
   {
+    "Type": "Starter",
     "Pokemon": "Cyndaquil",
     "Location": "Lumiose City",
     "Level": "16"
   },
   {
+    "Type": "Starter",
     "Pokemon": "Totodile",
     "Location": "Lumiose City",
     "Level": "16"
   },
   {
+    "Type": "Trade",
     "Pokemon": "Trapinch",
     "Location": "Kalos Hotels",
     "Level": "5"
   },
   {
+    "Type": "Trade",
     "Pokemon": "Dratini",
     "Location": "Kalos Hotels",
     "Level": "5"
   },
   {
+    "Type": "Static",
     "Pokemon": "Ditto",
     "Location": "Route 7",
     "Level": "20"
   },
   {
+    "Type": "Trade",
     "Pokemon": "Golett",
     "Location": "Cyllage City",
     "Level": "Any"
   },
   {
+    "Type": "Gift",
     "Pokemon": "Medicham",
     "Location": "Tower of Mastery",
     "Level": "38"
   },
   {
+    "Type": "Gift",
     "Pokemon": "Lapras",
     "Location": "Route 12",
     "Level": "38"
   },
   {
+    "Type": "Static",
     "Pokemon": "Yveltal",
     "Location": "Team Flare Secret HQ",
     "Level": "1"
   },
   {
+    "Type": "Trade",
     "Pokemon": "Floette",
     "Location": "Snowbelle City",
     "Level": "Any"
   },
   {
+    "Type": "Static",
     "Pokemon": "Mewtwo",
     "Location": "Unknown Dungeon",
     "Level": "100"
   },
   {
+    "Type": "Static",
     "Pokemon": "Zygarde",
     "Location": "Terminus Cave",
     "Level": "100"
+  },
+  {
+    "Type": "Static",
+    "Pokemon": "Abomasnow",
+    "Location": "Frost Cavern",
+    "Level": "60"
+  },
+  {
+    "Type": "Static",
+    "Pokemon": "Ledyba",
+    "Location": "Berry Fields (Red Berries)",
+    "Level": "15"
+  },
+  {
+    "Type": "Static",
+    "Pokemon": "Volbeat",
+    "Location": "Berry Fields (Blue Berries)",
+    "Level": "15"
+  },
+  {
+    "Type": "Static",
+    "Pokemon": "Combee",
+    "Location": "Berry Fields (Yellow Berries)",
+    "Level": "15"
+  },
+  {
+    "Type": "Static",
+    "Pokemon": "Burmy",
+    "Location": "Berry Fields (Green Berries)",
+    "Level": "15"
+  },
+  {
+    "Type": "Static",
+    "Pokemon": "Illumise",
+    "Location": "Berry Fields (Purple Berries)",
+    "Level": "15"
+  },
+  {
+    "Type": "Static",
+    "Pokemon": "Spewpa",
+    "Location": "Berry Fields (Pink Berries)",
+    "Level": "15"
   }
 ]
