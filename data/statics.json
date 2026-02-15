@@ -1,0 +1,92 @@
+[
+  {
+    "Pokemon": "Chespin",
+    "Location": "Aquacorde Town",
+    "Level": "5"
+  },
+  {
+    "Pokemon": "Fennekin",
+    "Location": "Aquacorde Town",
+    "Level": "5"
+  },
+  {
+    "Pokemon": "Froakie",
+    "Location": "Aquacorde Town",
+    "Level": "5"
+  },
+  {
+    "Pokemon": "Eevee",
+    "Location": "Route 2",
+    "Level": "5"
+  },
+  {
+    "Pokemon": "Bronzor",
+    "Location": "Santalune City",
+    "Level": "Any"
+  },
+  {
+    "Pokemon": "Chikorita",
+    "Location": "Lumiose City",
+    "Level": "16"
+  },
+  {
+    "Pokemon": "Cyndaquil",
+    "Location": "Lumiose City",
+    "Level": "16"
+  },
+  {
+    "Pokemon": "Totodile",
+    "Location": "Lumiose City",
+    "Level": "16"
+  },
+  {
+    "Pokemon": "Trapinch",
+    "Location": "Kalos Hotels",
+    "Level": "5"
+  },
+  {
+    "Pokemon": "Dratini",
+    "Location": "Kalos Hotels",
+    "Level": "5"
+  },
+  {
+    "Pokemon": "Ditto",
+    "Location": "Route 7",
+    "Level": "20"
+  },
+  {
+    "Pokemon": "Golett",
+    "Location": "Cyllage City",
+    "Level": "Any"
+  },
+  {
+    "Pokemon": "Medicham",
+    "Location": "Tower of Mastery",
+    "Level": "38"
+  },
+  {
+    "Pokemon": "Lapras",
+    "Location": "Route 12",
+    "Level": "38"
+  },
+  {
+    "Pokemon": "Yveltal",
+    "Location": "Team Flare Secret HQ",
+    "Level": "1"
+  },
+  {
+    "Pokemon": "Floette",
+    "Location": "Snowbelle City",
+    "Level": "Any"
+  },
+  {
+    "Pokemon": "Mewtwo",
+    "Location": "Unknown Dungeon",
+    "Level": "100"
+  },
+  {
+    "Pokemon": "Zygarde",
+    "Location": "Terminus Cave",
+    "Level": "100"
+  }
+]
