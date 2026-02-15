@@ -566,7 +566,7 @@
     ]
   },
   "Prism Tower": {
-    "RouteIndex": 36,
+    "RouteIndex": 37,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -2282,7 +2282,7 @@
     ]
   },
   "Coumarine City - Seaside": {
-    "RouteIndex": 31,
+    "RouteIndex": 32,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -2479,7 +2479,7 @@
     ]
   },
   "Laverre City": {
-    "RouteIndex": 39,
+    "RouteIndex": 40,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -2545,19 +2545,19 @@
             ]
           },
           {
-            "Name": "Breloom",
+            "Name": "Barbaracle",
             "Form": "",
             "Gender": "",
             "Level": 54,
-            "Ability": "Poison Heal",
-            "HeldItem": "Toxic Orb",
-            "Nature": "Adamant (\u002BAtk / -SpA)",
+            "Ability": "Sniper",
+            "HeldItem": "Shell Bell",
+            "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Seed Bomb",
-              "Close Combat",
-              "Bulk Up",
-              "Spore"
+              "Waterfall",
+              "Cross Chop",
+              "Rock Slide",
+              "Shell Smash"
             ]
           },
           {
@@ -2581,7 +2581,7 @@
     ]
   },
   "Dendemille Town": {
-    "RouteIndex": 46,
+    "RouteIndex": 47,
     "Required": false,
     "Notes": "",
     "Trainers": [
@@ -2631,19 +2631,19 @@
             ]
           },
           {
-            "Name": "Krookodile",
+            "Name": "Zangoose",
             "Form": "",
             "Gender": "",
             "Level": 64,
-            "Ability": "Moxie",
-            "HeldItem": "Shell Bell",
-            "Nature": "Hasty (\u002BSpe / -Def)",
+            "Ability": "Toxic Boost",
+            "HeldItem": "Toxic Orb",
+            "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Earthquake",
-              "Foul Play",
-              "Rock Climb",
-              "Dragon Dance"
+              "Close Combat",
+              "Ice Punch",
+              "Mega Kick",
+              "Swords Dance"
             ]
           },
           {
@@ -2683,7 +2683,7 @@
     ]
   },
   "Anistar City": {
-    "RouteIndex": 51,
+    "RouteIndex": 52,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -3367,19 +3367,19 @@
         "RewardItem": "Blue Orb",
         "Pokemon": [
           {
-            "Name": "Bouffalant",
+            "Name": "Kecleon",
             "Form": "",
             "Gender": "",
-            "Level": 69,
-            "Ability": "Rock Head",
-            "HeldItem": "Shell Bell",
-            "Nature": "Jolly (\u002BSpe / -SpA)",
+            "Level": 68,
+            "Ability": "Adaptability",
+            "HeldItem": "Aguav Berry",
+            "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Head Smash",
-              "Double-Edge",
-              "Headlong Rush",
-              "Skull Bash"
+              "Phantom Force",
+              "Retaliate",
+              "Thunderbolt",
+              "Parting Shot"
             ]
           },
           {
@@ -3415,19 +3415,19 @@
             ]
           },
           {
-            "Name": "Kecleon",
+            "Name": "Bouffalant",
             "Form": "",
             "Gender": "",
-            "Level": 68,
-            "Ability": "Protean",
+            "Level": 69,
+            "Ability": "Rock Head",
             "HeldItem": "Aguav Berry",
-            "Nature": "Sassy (\u002BSpD / -Spe)",
+            "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Phantom Force",
+              "Head Smash",
               "Double-Edge",
-              "Thunderbolt",
-              "Parting Shot"
+              "Headlong Rush",
+              "Skull Bash"
             ]
           },
           {
@@ -3467,7 +3467,7 @@
     ]
   },
   "Couriway Town": {
-    "RouteIndex": 62,
+    "RouteIndex": 63,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -3664,7 +3664,7 @@
     ]
   },
   "Snowbelle City": {
-    "RouteIndex": 65,
+    "RouteIndex": 66,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -4152,7 +4152,7 @@
     ]
   },
   "Coumarine Gym": {
-    "RouteIndex": 33,
+    "RouteIndex": 34,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -4618,7 +4618,7 @@
     ]
   },
   "Lumiose Gym": {
-    "RouteIndex": 37,
+    "RouteIndex": 38,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -5036,7 +5036,7 @@
     ]
   },
   "Laverre Gym": {
-    "RouteIndex": 40,
+    "RouteIndex": 41,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -5438,7 +5438,7 @@
     ]
   },
   "Anistar Gym": {
-    "RouteIndex": 52,
+    "RouteIndex": 53,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -5919,7 +5919,7 @@
     ]
   },
   "Snowbelle Gym": {
-    "RouteIndex": 66,
+    "RouteIndex": 67,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -9696,7 +9696,7 @@
     ]
   },
   "Route 22 - Part 2": {
-    "RouteIndex": 68,
+    "RouteIndex": 69,
     "Required": false,
     "Notes": "",
     "Trainers": [
@@ -12094,13 +12094,13 @@
             ]
           },
           {
-            "Name": "Barbaracle",
+            "Name": "Kabutops",
             "Form": "",
             "Gender": "",
             "Level": 40,
-            "Ability": "Sniper",
+            "Ability": "Battle Armor",
             "HeldItem": "Rindo Berry",
-            "Nature": "Calm (\u002BSpD / -Atk)",
+            "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
               "Razor Shell",
@@ -13679,7 +13679,7 @@
     ]
   },
   "Route 14": {
-    "RouteIndex": 38,
+    "RouteIndex": 39,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -14635,7 +14635,7 @@
     ]
   },
   "Kalos Power Plant": {
-    "RouteIndex": 35,
+    "RouteIndex": 36,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -15336,7 +15336,7 @@
     ]
   },
   "Coumarine City - Cliffside": {
-    "RouteIndex": 32,
+    "RouteIndex": 33,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -15913,7 +15913,7 @@
     ]
   },
   "Elite Four": {
-    "RouteIndex": 77,
+    "RouteIndex": 78,
     "Required": true,
     "Notes": "The Elite Four may be challenged in any order you choose.\n\nHowever, because of the addition of the Mobile PC, you are able to adjust your team between fights.\n\nThe choice to do so is ultimately up to you, but the intended design is that your team will be locked in upon entering the Elite 4, as per the base game.",
     "Trainers": [
@@ -16364,7 +16364,7 @@
     ]
   },
   "Kalos League Champion": {
-    "RouteIndex": 78,
+    "RouteIndex": 79,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -16482,7 +16482,7 @@
     ]
   },
   "Victory Road - Entrance": {
-    "RouteIndex": 69,
+    "RouteIndex": 70,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -16584,7 +16584,7 @@
     ]
   },
   "Lysandre Labs - B1": {
-    "RouteIndex": 54,
+    "RouteIndex": 55,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -17634,7 +17634,7 @@
     ]
   },
   "Pok\u00E9 Ball Factory": {
-    "RouteIndex": 41,
+    "RouteIndex": 42,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -17826,19 +17826,19 @@
             ]
           },
           {
-            "Name": "Zebstrika",
+            "Name": "Pinsir",
             "Form": "",
             "Gender": "",
             "Level": 57,
-            "Ability": "Motor Drive",
-            "HeldItem": "Muscle Band",
-            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "Ability": "Hyper Cutter",
+            "HeldItem": "Yache Berry",
+            "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Volt Switch",
-              "Jump Kick",
-              "Blaze Kick",
-              "Agility"
+              "Leech Life",
+              "Facade",
+              "Superpower",
+              "Focus Energy"
             ]
           }
         ]
@@ -18749,7 +18749,7 @@
     ]
   },
   "Route 13": {
-    "RouteIndex": 34,
+    "RouteIndex": 35,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -18819,7 +18819,7 @@
     ]
   },
   "Geosenge Town - Part 2": {
-    "RouteIndex": 56,
+    "RouteIndex": 57,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -18905,7 +18905,7 @@
     ]
   },
   "Frost Cavern - 3F": {
-    "RouteIndex": 50,
+    "RouteIndex": 51,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -19339,7 +19339,7 @@
     ]
   },
   "Route 19": {
-    "RouteIndex": 63,
+    "RouteIndex": 64,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -19853,7 +19853,7 @@
             "Level": 80,
             "Ability": "Serene Grace",
             "HeldItem": "Sitrus Berry",
-            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "Nature": "Docile (Neutral)",
             "IVs": 31,
             "Moves": [
               "Moonblast",
@@ -20278,7 +20278,7 @@
     ]
   },
   "Lysandre Cafe": {
-    "RouteIndex": 53,
+    "RouteIndex": 54,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -20481,7 +20481,7 @@
     ]
   },
   "Team Flare Secret HQ - Walkway": {
-    "RouteIndex": 58,
+    "RouteIndex": 59,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -21546,7 +21546,7 @@
     ]
   },
   "Victory Road - Outside 3": {
-    "RouteIndex": 73,
+    "RouteIndex": 74,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -22361,7 +22361,7 @@
     ]
   },
   "Lysandre Labs - B3": {
-    "RouteIndex": 55,
+    "RouteIndex": 56,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -22463,7 +22463,7 @@
     ]
   },
   "Frost Cavern - 1F": {
-    "RouteIndex": 48,
+    "RouteIndex": 49,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -22723,7 +22723,7 @@
     ]
   },
   "Route 21": {
-    "RouteIndex": 67,
+    "RouteIndex": 68,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -23157,7 +23157,7 @@
     ]
   },
   "Route 15": {
-    "RouteIndex": 42,
+    "RouteIndex": 43,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -23617,18 +23617,18 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Emolga",
-            "Form": "",
+            "Name": "Vivillon",
+            "Form": "Vivillon",
             "Gender": "",
             "Level": 59,
-            "Ability": "Volt Absorb",
+            "Ability": "Shield Dust",
             "HeldItem": "Light Clay",
-            "Nature": "Serious (Neutral)",
+            "Nature": "Impish (\u002BDef / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Air Slash",
-              "Volt Switch",
-              "Encore",
+              "Aeroblast",
+              "Moonblast",
+              "Bug Buzz",
               "Reflect"
             ]
           },
@@ -23764,7 +23764,7 @@
     ]
   },
   "Route 16": {
-    "RouteIndex": 43,
+    "RouteIndex": 44,
     "Required": false,
     "Notes": "",
     "Trainers": [
@@ -24529,7 +24529,7 @@
     ]
   },
   "Frost Cavern - 2F": {
-    "RouteIndex": 49,
+    "RouteIndex": 50,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -24721,19 +24721,19 @@
             ]
           },
           {
-            "Name": "Vivillon",
-            "Form": "Vivillon",
+            "Name": "Krookodile",
+            "Form": "",
             "Gender": "",
             "Level": 65,
-            "Ability": "Compound Eyes",
+            "Ability": "Moxie",
             "HeldItem": "Yache Berry",
-            "Nature": "Bashful (Neutral)",
+            "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Aeroblast",
-              "Bug Buzz",
-              "Sleep Powder",
-              "Heal Order"
+              "Earthquake",
+              "Superpower",
+              "Crunch",
+              "Taunt"
             ]
           },
           {
@@ -24820,7 +24820,7 @@
     ]
   },
   "Route 18": {
-    "RouteIndex": 59,
+    "RouteIndex": 60,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -25254,7 +25254,7 @@
     ]
   },
   "Terminus Cave - B2F": {
-    "RouteIndex": 61,
+    "RouteIndex": 62,
     "Required": false,
     "Notes": "",
     "Trainers": [
@@ -25477,19 +25477,19 @@
         "RewardItem": "Starf Berry",
         "Pokemon": [
           {
-            "Name": "Pinsir",
+            "Name": "Muk",
             "Form": "",
             "Gender": "",
             "Level": 79,
-            "Ability": "Moxie",
+            "Ability": "Poison Touch",
             "HeldItem": "Starf Berry",
-            "Nature": "Naive (\u002BSpe / -SpD)",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Leech Life",
-              "Close Combat",
-              "Double-Edge",
-              "Rock Slide"
+              "Thunder Punch",
+              "Brick Break",
+              "Gunk Shot",
+              "Minimize"
             ]
           },
           {
@@ -25624,7 +25624,7 @@
     ]
   },
   "Frost Cavern - Outside": {
-    "RouteIndex": 47,
+    "RouteIndex": 48,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -25789,7 +25789,7 @@
     ]
   },
   "Terminus Cave - B1F": {
-    "RouteIndex": 60,
+    "RouteIndex": 61,
     "Required": false,
     "Notes": "",
     "Trainers": [
@@ -26207,7 +26207,7 @@
     ]
   },
   "Lost Hotel - Route 15 Side": {
-    "RouteIndex": 44,
+    "RouteIndex": 45,
     "Required": false,
     "Notes": "",
     "Trainers": [
@@ -26225,19 +26225,19 @@
         "RewardItem": "Electric Gem",
         "Pokemon": [
           {
-            "Name": "Zangoose",
+            "Name": "Zebstrika",
             "Form": "",
             "Gender": "",
             "Level": 60,
-            "Ability": "Toxic Boost",
+            "Ability": "Motor Drive",
             "HeldItem": "Electric Gem",
-            "Nature": "Brave (\u002BAtk / -Spe)",
+            "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
             "Moves": [
-              "Brick Break",
-              "X-Scissor",
-              "Facade",
-              "Thunder Punch"
+              "Wild Charge",
+              "Blaze Kick",
+              "Jump Kick",
+              "Agility"
             ]
           },
           {
@@ -26257,19 +26257,19 @@
             ]
           },
           {
-            "Name": "Muk",
+            "Name": "Emolga",
             "Form": "",
             "Gender": "",
             "Level": 60,
-            "Ability": "Poison Touch",
+            "Ability": "Motor Drive",
             "HeldItem": "Electric Gem",
-            "Nature": "Quiet (\u002BSpA / -Spe)",
+            "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Thunder Punch",
-              "Shadow Sneak",
-              "Poison Jab",
-              "Explosion"
+              "Air Slash",
+              "Thunderbolt",
+              "Nuzzle",
+              "Light Screen"
             ]
           }
         ]
@@ -26451,7 +26451,7 @@
     ]
   },
   "Lost Hotel - Route 16 Side": {
-    "RouteIndex": 45,
+    "RouteIndex": 46,
     "Required": false,
     "Notes": "",
     "Trainers": [
@@ -26695,7 +26695,7 @@
     ]
   },
   "Team Flare Secret HQ - 1F": {
-    "RouteIndex": 57,
+    "RouteIndex": 58,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -26813,7 +26813,7 @@
     ]
   },
   "Victory Road - Inside 1": {
-    "RouteIndex": 70,
+    "RouteIndex": 71,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -27152,7 +27152,7 @@
     ]
   },
   "Victory Road - Inside 2": {
-    "RouteIndex": 72,
+    "RouteIndex": 73,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -27491,7 +27491,7 @@
     ]
   },
   "Victory Road - Outside 2": {
-    "RouteIndex": 71,
+    "RouteIndex": 72,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -27593,7 +27593,7 @@
     ]
   },
   "Victory Road - Inside 3": {
-    "RouteIndex": 74,
+    "RouteIndex": 75,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -27932,7 +27932,7 @@
     ]
   },
   "Victory Road - Inside 4": {
-    "RouteIndex": 76,
+    "RouteIndex": 77,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -28272,7 +28272,7 @@
     ]
   },
   "Victory Road - Outside 4": {
-    "RouteIndex": 75,
+    "RouteIndex": 76,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -28484,7 +28484,7 @@
     ]
   },
   "Route 20": {
-    "RouteIndex": 64,
+    "RouteIndex": 65,
     "Required": true,
     "Notes": "",
     "Trainers": [
@@ -28854,7 +28854,7 @@
     ]
   },
   "Lumiose Parade": {
-    "RouteIndex": 79,
+    "RouteIndex": 80,
     "Required": false,
     "Notes": "I\u0027m not sure whether most players will consider the challenge complete upon defeating Diantha or upon defeating AZ.\n\nAs such, I leave it up to you to choose whether or not you wish to consider AZ optional or mandatory.",
     "Trainers": [
