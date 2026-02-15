@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -894,8 +895,50 @@ function loadEvolutions(currentName, data) {
         }
     };
 
-    buildChain(pointer).then(chainHtml => {
-        evoContainer.innerHTML = chainHtml || "<p>No evolution data available.</p>";
+    // Find alternative pre-evolutions (other Pokemon that can evolve into current Pokemon)
+    const findAlternativePreEvos = () => {
+        const alternatives = [];
+        for (const [pokemonName, pokemonData] of Object.entries(data)) {
+            if (pokemonData.EvolvesInto && pokemonData.EvolvesInto[currentName]) {
+                // This Pokemon can evolve into the current one
+                // Check if it's not the main evolution path
+                if (pokemonName !== data[currentName]?.EvolvesFrom) {
+                    alternatives.push({
+                        name: pokemonName,
+                        method: pokemonData.EvolvesInto[currentName]
+                    });
+                }
+            }
+        }
+        return alternatives;
+    };
+    
+    const alternativePreEvos = findAlternativePreEvos();
+    
+    // Build main chain
+    buildChain(pointer).then(async chainHtml => {
+        let finalHtml = chainHtml || "<p>No evolution data available.</p>";
+        
+        // Add alternative evolution paths if they exist
+        if (alternativePreEvos.length > 0) {
+            for (const alt of alternativePreEvos) {
+                const altEvoBlock = await renderEvo(alt.name);
+                const currentEvoBlock = await renderEvo(currentName);
+                const altChainHtml = `
+                  <div style="margin-top:40px; padding-top:30px; border-top:2px solid #ddd;">
+                    <div style="text-align:center; margin-bottom:15px; font-size:14px; color:#666; font-weight:600;">Alternative Evolution Path</div>
+                    <div style="display:flex; align-items:center; justify-content:center; gap:30px;">
+                      ${altEvoBlock}
+                      ${renderArrow(alt.method)}
+                      ${currentEvoBlock}
+                    </div>
+                  </div>
+                `;
+                finalHtml += altChainHtml;
+            }
+        }
+        
+        evoContainer.innerHTML = finalHtml;
     });
 }
 </script>
