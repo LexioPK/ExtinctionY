@@ -1950,8 +1950,12 @@
     }
 
     function displayStaticsSection(container, baseName) {
-        // Filter statics for this location
-        const locationStatics = staticsData.filter(static => static.Location === baseName);
+        // Filter statics for this location using parseAreaAndSubArea
+        const locationStatics = staticsData.filter(static => {
+            const parsed = parseAreaAndSubArea(static.Location);
+            // Match if mainArea equals baseName (handles both "Berry Fields" and "Berry Fields (Red Berries)")
+            return parsed.mainArea === baseName;
+        });
         
         // Skip if no statics for this location
         if (locationStatics.length === 0) {
@@ -1966,50 +1970,77 @@
         header.textContent = "Statics/Trades/Gifts";
         section.appendChild(header);
 
-        const grid = document.createElement("div");
-        grid.className = "pokemon-grid";
-
+        // Group statics by sub-area
+        const staticsBySubArea = new Map();
         locationStatics.forEach(static => {
-            const box = document.createElement("div");
-            box.className = "pokemon-box";
-
-            // Pokemon name
-            const name = document.createElement("div");
-            name.className = "pokemon-name";
-            name.textContent = static.Pokemon;
-            box.appendChild(name);
-
-            // Pokemon icon (clickable link to pokemon page)
-            const iconLink = document.createElement("a");
-            iconLink.href = `pokemon.html?name=${encodeURIComponent(static.Pokemon)}`;
-            iconLink.style.textDecoration = "none";
-            
-            const icon = document.createElement("img");
-            icon.className = "pokemon-icon";
-            icon.src = getPokemonIconPath(static.Pokemon);
-            icon.alt = static.Pokemon;
-            let iconFailed = false;
-            icon.onerror = function() {
-                if (!iconFailed) {
-                    iconFailed = true;
-                    this.src = 'image/icons/unknown.png';
-                } else {
-                    this.style.display = 'none';
-                }
-            };
-            iconLink.appendChild(icon);
-            box.appendChild(iconLink);
-
-            // Level
-            const level = document.createElement("div");
-            level.className = "pokemon-chance";
-            level.textContent = `Lv. ${static.Level}`;
-            box.appendChild(level);
-
-            grid.appendChild(box);
+            const parsed = parseAreaAndSubArea(static.Location);
+            const subArea = parsed.subArea || "General";
+            if (!staticsBySubArea.has(subArea)) {
+                staticsBySubArea.set(subArea, []);
+            }
+            staticsBySubArea.get(subArea).push(static);
         });
 
-        section.appendChild(grid);
+        // Display statics grouped by sub-area
+        staticsBySubArea.forEach((statics, subArea) => {
+            // Sub-area header (if not "General")
+            if (subArea !== "General") {
+                const subAreaHeader = document.createElement("div");
+                subAreaHeader.textContent = subArea;
+                subAreaHeader.style.fontSize = "1.1rem";
+                subAreaHeader.style.fontWeight = "600";
+                subAreaHeader.style.marginTop = "15px";
+                subAreaHeader.style.marginBottom = "10px";
+                subAreaHeader.style.color = "#ffffff";
+                section.appendChild(subAreaHeader);
+            }
+
+            const grid = document.createElement("div");
+            grid.className = "pokemon-grid";
+
+            statics.forEach(static => {
+                const box = document.createElement("div");
+                box.className = "pokemon-box";
+
+                // Pokemon name
+                const name = document.createElement("div");
+                name.className = "pokemon-name";
+                name.textContent = static.Pokemon;
+                box.appendChild(name);
+
+                // Pokemon icon (clickable link to pokemon page)
+                const iconLink = document.createElement("a");
+                iconLink.href = `pokemon.html?name=${encodeURIComponent(static.Pokemon)}`;
+                iconLink.style.textDecoration = "none";
+                
+                const icon = document.createElement("img");
+                icon.className = "pokemon-icon";
+                icon.src = getPokemonIconPath(static.Pokemon);
+                icon.alt = static.Pokemon;
+                let iconFailed = false;
+                icon.onerror = function() {
+                    if (!iconFailed) {
+                        iconFailed = true;
+                        this.src = 'image/icons/unknown.png';
+                    } else {
+                        this.style.display = 'none';
+                    }
+                };
+                iconLink.appendChild(icon);
+                box.appendChild(iconLink);
+
+                // Level
+                const level = document.createElement("div");
+                level.className = "pokemon-chance";
+                level.textContent = `Lv. ${static.Level}`;
+                box.appendChild(level);
+
+                grid.appendChild(box);
+            });
+
+            section.appendChild(grid);
+        });
+
         container.appendChild(section);
     }
 
