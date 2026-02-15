@@ -919,6 +919,89 @@ function loadEvolutions(currentName, data) {
     
     const alternativePreEvos = findAlternativePreEvos();
     
+    // Special handling for Porygon line - show triangle
+    if (currentName === 'Porygon' || currentName === 'Porygon2' || currentName === 'Porygon-Z') {
+        const porygonHtml = `
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; align-items:center; justify-items:center; max-width:600px; margin:0 auto;">
+                <!-- Row 1: Porygon at top center -->
+                <div></div>
+                <div class="evo-node">
+                    <a href="pokemon.html?name=Porygon"><img src="pokemon_sprites/porygon.png" alt="Porygon" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                    <div style="text-align:center; margin-top:5px; font-weight:600;">Porygon</div>
+                </div>
+                <div></div>
+                
+                <!-- Row 2: Arrows and methods -->
+                <div style="text-align:center; font-size:0.9rem; color:#888;">Use Item:<br>Up-Grade</div>
+                <div></div>
+                <div style="text-align:center; font-size:0.9rem; color:#888;">Use Item:<br>Dubious Disc</div>
+                
+                <!-- Row 3: Porygon2 and Porygon-Z -->
+                <div class="evo-node">
+                    <a href="pokemon.html?name=Porygon2"><img src="pokemon_sprites/porygon2.png" alt="Porygon2" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                    <div style="text-align:center; margin-top:5px; font-weight:600;">Porygon2</div>
+                </div>
+                <div style="text-align:center; font-size:0.9rem; color:#888;">→<br>Use Item:<br>Dubious Disc</div>
+                <div class="evo-node">
+                    <a href="pokemon.html?name=Porygon-Z"><img src="pokemon_sprites/porygon-z.png" alt="Porygon-Z" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                    <div style="text-align:center; margin-top:5px; font-weight:600;">Porygon-Z</div>
+                </div>
+            </div>
+        `;
+        evoContainer.innerHTML = porygonHtml;
+        return;
+    }
+    
+    // Special handling for Beedrill - show Combee path
+    if (currentName === 'Beedrill') {
+        const beedrillHtml = `
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; align-items:center; justify-items:center; max-width:600px; margin:0 auto;">
+                <!-- Row 1: Main evolution line -->
+                <div class="evo-node">
+                    <a href="pokemon.html?name=Weedle"><img src="pokemon_sprites/weedle.png" alt="Weedle" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                    <div style="text-align:center; margin-top:5px; font-weight:600;">Weedle</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:1.5rem; margin:10px 0;">→</div>
+                    <div style="font-size:0.9rem; color:#888;">Level 10</div>
+                </div>
+                <div class="evo-node">
+                    <a href="pokemon.html?name=Kakuna"><img src="pokemon_sprites/kakuna.png" alt="Kakuna" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                    <div style="text-align:center; margin-top:5px; font-weight:600;">Kakuna</div>
+                </div>
+                
+                <!-- Second row part 1 -->
+                <div></div>
+                <div style="text-align:center;">
+                    <div style="font-size:1.5rem; margin:10px 0;">→</div>
+                    <div style="font-size:0.9rem; color:#888;">Level 15</div>
+                </div>
+                <div class="evo-node">
+                    <a href="pokemon.html?name=Beedrill"><img src="pokemon_sprites/beedrill.png" alt="Beedrill" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                    <div style="text-align:center; margin-top:5px; font-weight:600;">Beedrill</div>
+                </div>
+                
+                <!-- Row 2: Combee pointing to Beedrill -->
+                <div></div>
+                <div style="text-align:center;">
+                    <div style="font-size:1.5rem; margin:10px 0;">↑</div>
+                    <div style="font-size:0.9rem; color:#888;">Level Up: 30 (Male)</div>
+                </div>
+                <div></div>
+                
+                <!-- Row 3: Combee -->
+                <div></div>
+                <div class="evo-node">
+                    <a href="pokemon.html?name=Combee"><img src="pokemon_sprites/combee.png" alt="Combee" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                    <div style="text-align:center; margin-top:5px; font-weight:600;">Combee</div>
+                </div>
+                <div></div>
+            </div>
+        `;
+        evoContainer.innerHTML = beedrillHtml;
+        return;
+    }
+    
     // Build main chain
     buildChain(pointer).then(async chainHtml => {
         let finalHtml = chainHtml || "<p>No evolution data available.</p>";
