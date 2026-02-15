@@ -870,10 +870,14 @@
                 }
             }
             
-            // Check if any sub-area has encounters
+            // Check if any sub-area has encounters (regular or statics)
             if (!hasContent) {
                 for (const subArea of subAreas) {
-                    const hasEncounter = encounterData.some(loc => loc && loc.LocationName === subArea);
+                    const hasEncounter = encounterData.some(loc => loc && loc.LocationName === subArea) ||
+                        staticsData.some(static => {
+                            const parsed = parseAreaAndSubArea(static.Location);
+                            return parsed.mainArea === subArea;
+                        });
                     if (hasEncounter) {
                         hasContent = true;
                         break;
