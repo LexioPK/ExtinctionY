@@ -946,7 +946,7 @@
     }
   },
   "Porygon-Z": {
-    "EvolvesFrom": "Porygon",
+    "EvolvesFrom": "Porygon2",
     "FromMethod": "Use Item: Dubious Disc",
     "EvolvesInto": {}
   },
@@ -954,8 +954,7 @@
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Porygon2": "Use Item: Up-Grade",
-      "Porygon-Z": "Use Item: Dubious Disc"
+      "Porygon2": "Use Item: Up-Grade"
     }
   },
   "Omastar": {
