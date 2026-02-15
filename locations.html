@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1529,6 +1527,14 @@
     }
 
     function populateEncountersTab(container, baseName) {
+        // Special handling for locations with only static encounters (no wild encounters)
+        const staticOnlyLocations = ['Lumiose City', 'Kalos Hotels', 'Berry Fields'];
+        if (staticOnlyLocations.includes(baseName)) {
+            displayStaticsSection(container, baseName);
+            container.innerHTML += '<p style="text-align:center; color:#cccccc; font-style:italic; margin:40px 0;">No wild encounters in this location.</p>';
+            return;
+        }
+        
         const subAreas = groupedLocations[baseName]?.fullNames || [];
         const encounterIndices = [];
         
