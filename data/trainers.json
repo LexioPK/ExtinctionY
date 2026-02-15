@@ -12129,6 +12129,155 @@
       }
     ]
   },
+  "Route 8 - Sea": {
+    "RouteIndex": 31,
+    "Required": false,
+    "Notes": "",
+    "Trainers": [
+      {
+        "TrainerName": "Estaban",
+        "TrainerID": 102,
+        "TrainerClass": "Swimmer",
+        "TrainerClassIndex": 17,
+        "BattleType": "Single",
+        "Route": "Route 8 - Sea",
+        "EncounterIndex": 0,
+        "Required": "Optional",
+        "Notes": "",
+        "IsTagBattle": false,
+        "RewardItem": "Kee Berry",
+        "Pokemon": [
+          {
+            "Name": "Starmie",
+            "Form": "",
+            "Gender": "",
+            "Level": 40,
+            "Ability": "Victory Star",
+            "HeldItem": "Kee Berry",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Hydro Pump",
+              "Aurora Beam",
+              "Psybeam",
+              "Charge Beam"
+            ]
+          },
+          {
+            "Name": "Barbaracle",
+            "Form": "",
+            "Gender": "",
+            "Level": 41,
+            "Ability": "Sniper",
+            "HeldItem": "Kee Berry",
+            "Nature": "Naive (\u002BSpe / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Cross Chop",
+              "Night Slash",
+              "Rock Slide",
+              "Razor Shell"
+            ]
+          },
+          {
+            "Name": "Gyarados",
+            "Form": "",
+            "Gender": "",
+            "Level": 41,
+            "Ability": "Intimidate",
+            "HeldItem": "Kee Berry",
+            "Nature": "Bashful (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Ice Fang",
+              "Aqua Tail",
+              "Dragon Rush",
+              "Bite"
+            ]
+          }
+        ]
+      },
+      {
+        "TrainerName": "Ramses",
+        "TrainerID": 101,
+        "TrainerClass": "Swimmer",
+        "TrainerClassIndex": 17,
+        "BattleType": "Double",
+        "Route": "Route 8 - Sea",
+        "EncounterIndex": 1,
+        "Required": "Optional",
+        "Notes": "",
+        "IsTagBattle": false,
+        "RewardItem": "Maranga Berry",
+        "Pokemon": [
+          {
+            "Name": "Alomomola",
+            "Form": "",
+            "Gender": "",
+            "Level": 40,
+            "Ability": "Hydration",
+            "HeldItem": "Maranga Berry",
+            "Nature": "Lonely (\u002BAtk / -Def)",
+            "IVs": 31,
+            "Moves": [
+              "Charm",
+              "Play Rough",
+              "Attract",
+              "Heal Pulse"
+            ]
+          },
+          {
+            "Name": "Tentacruel",
+            "Form": "",
+            "Gender": "",
+            "Level": 39,
+            "Ability": "Liquid Ooze",
+            "HeldItem": "Maranga Berry",
+            "Nature": "Quiet (\u002BSpA / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Sludge",
+              "Surf",
+              "Aurora Beam",
+              "Tickle"
+            ]
+          },
+          {
+            "Name": "Lumineon",
+            "Form": "",
+            "Gender": "",
+            "Level": 41,
+            "Ability": "Storm Drain",
+            "HeldItem": "Maranga Berry",
+            "Nature": "Modest (\u002BSpA / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Dazzling Gleam",
+              "Surf",
+              "Mist Ball",
+              "Captivate"
+            ]
+          },
+          {
+            "Name": "Swampert",
+            "Form": "",
+            "Gender": "",
+            "Level": 40,
+            "Ability": "Dry Skin",
+            "HeldItem": "Maranga Berry",
+            "Nature": "Modest (\u002BSpA / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Aqua Tail",
+              "Hammer Arm",
+              "Avalanche",
+              "Bulldoze"
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "Route 8 - Upper": {
     "RouteIndex": 16,
     "Required": true,
