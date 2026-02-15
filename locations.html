@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -839,6 +840,18 @@
             if (item && item.Area) {
                 const parsed = parseAreaAndSubArea(item.Area);
                 // For items, use the main area (so "Route 6 (West)" items go under "Route 6")
+                const areaToUse = parsed.mainArea;
+                const root = findRootForArea(areaToUse);
+                if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
+                groupedLocations[root].fullNames.add(areaToUse);
+            }
+        });
+
+        // Add static encounter locations (use main area for statics with parentheses)
+        staticsData.forEach(static => {
+            if (static && static.Location) {
+                const parsed = parseAreaAndSubArea(static.Location);
+                // For statics, use the main area (so "Berry Fields (Red Berries)" goes under "Berry Fields")
                 const areaToUse = parsed.mainArea;
                 const root = findRootForArea(areaToUse);
                 if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
@@ -2149,6 +2162,7 @@
                     // Item name cell
                     const nameCell = document.createElement("td");
                     nameCell.style.padding = "10px";
+                    nameCell.style.textAlign = "center";
                     nameCell.style.fontWeight = "600";
                     nameCell.textContent = item.Item;
                     row.appendChild(nameCell);
@@ -2156,6 +2170,7 @@
                     // Location/Price cell
                     const locationCell = document.createElement("td");
                     locationCell.style.padding = "10px";
+                    locationCell.style.textAlign = "center";
                     locationCell.textContent = item["Location/Price"];
                     row.appendChild(locationCell);
 
