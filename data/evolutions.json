@@ -954,7 +954,8 @@
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Porygon2": "Use Item: Up-Grade"
+      "Porygon2": "Use Item: Up-Grade",
+      "Porygon-Z": "Use Item: Dubious Disc"
     }
   },
   "Omastar": {
