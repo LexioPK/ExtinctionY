@@ -573,6 +573,7 @@
     let trainerData = {};
     let encounterData = [];
     let itemsData = [];
+    let staticsData = [];
     let groupedLocations = {};
     let pokedexData = {};
     let movesData = {};
@@ -788,10 +789,11 @@
     async function loadAllData() {
         const sidebar = document.getElementById("sidebar");
 
-        const [trainersRes, encountersRes, itemsRes, pokedexRes, movesRes, abilitiesRes] = await Promise.all([
+        const [trainersRes, encountersRes, itemsRes, staticsRes, pokedexRes, movesRes, abilitiesRes] = await Promise.all([
             fetch("data/trainers.json"),
             fetch("data/encounters.json"),
             fetch("data/items.json"),
+            fetch("data/statics.json"),
             fetch("data/pokedex.json"),
             fetch("data/moves.json"),
             fetch("data/abilities.json")
@@ -800,6 +802,7 @@
         trainerData = await trainersRes.json();
         encounterData = await encountersRes.json();
         itemsData = await itemsRes.json();
+        staticsData = await staticsRes.json();
         pokedexData = await pokedexRes.json();
         movesData = await movesRes.json();
         abilitiesData = await abilitiesRes.json();
@@ -1243,11 +1246,24 @@
                         const namePart = tr.TrainerName.includes('&') ? tr.TrainerName.split('&')[0].trim() : tr.TrainerName;
                         const nameWords = namePart.trim().split(/\s+/);
                         
-                        // Skip using name words if trainer name starts with "Goon" (Team Flare goons)
-                        // This prevents trying "goon.png" when we should use "teamflaregoon.png" from class
-                        const shouldSkipNameWords = tr.TrainerName.trim().startsWith('Goon');
+                        // Skip using name words if trainer name starts with "Goon" or "Grunt" (Team Flare goons/grunts)
+                        // This prevents trying "goon.png" or "grunt.png" when we should use class-based image
+                        // For "Team Flare Goon Mu", we want to try "goon" from the name instead of class "teamflaregoon"
+                        // For "Team Flare Grunt Gamma", we want to try "grunt" from the name instead of class "teamflaregrunt"
+                        const shouldSkipNameWords = false; // Don't skip, but use specific logic below
                         
-                        if (!shouldSkipNameWords) {
+                        // Special handling for Team Flare Goon/Grunt - use just "goon" or "grunt"
+                        if (tr.TrainerClass && tr.TrainerClass.includes('Team Flare') && 
+                            (tr.TrainerName.trim().startsWith('Goon') || tr.TrainerName.trim().startsWith('Grunt'))) {
+                            // Extract "Goon" or "Grunt" from the name
+                            const firstWord = nameWords[0];
+                            const normalized = normalizeString(firstWord);
+                            if ((normalized === 'goon' || normalized === 'grunt') && !imagesToTry.includes(normalized)) {
+                                // Clear any class-based attempts and use just "goon" or "grunt"
+                                imagesToTry.length = 0;
+                                imagesToTry.push(normalized);
+                            }
+                        } else if (!shouldSkipNameWords) {
                             nameWords.forEach(word => {
                                 const normalized = normalizeString(word);
                                 if (normalized.length >= 2 && !imagesToTry.includes(normalized)) {
@@ -1541,6 +1557,7 @@
                 container.appendChild(floorHeader);
                 
                 displayEncounterSection(container, "Grass / Terrain Encounters", floor1Encounters.grass);
+                displayStaticsSection(container, baseName);
                 displayEncounterSection(container, "Fishing", floor1Encounters.fishing);
                 displayEncounterSection(container, "Rock Smash", floor1Encounters.rockSmash);
                 displayEncounterSection(container, "Surfing", floor1Encounters.surfing);
@@ -1559,6 +1576,7 @@
                 container.appendChild(floorHeader);
                 
                 displayEncounterSection(container, "Grass / Terrain Encounters", floor2Encounters.grass);
+                displayStaticsSection(container, baseName);
                 displayEncounterSection(container, "Fishing", floor2Encounters.fishing);
                 displayEncounterSection(container, "Rock Smash", floor2Encounters.rockSmash);
                 displayEncounterSection(container, "Surfing", floor2Encounters.surfing);
@@ -1578,6 +1596,7 @@
             
             const frostEncounters = aggregateEncounters(frostIndices);
             displayEncounterSection(container, "Grass / Terrain Encounters", frostEncounters.grass);
+            displayStaticsSection(container, baseName);
             displayEncounterSection(container, "Fishing", frostEncounters.fishing);
             displayEncounterSection(container, "Rock Smash", frostEncounters.rockSmash);
             displayEncounterSection(container, "Surfing", frostEncounters.surfing);
@@ -1610,6 +1629,7 @@
                 container.appendChild(roomHeader);
                 
                 displayEncounterSection(container, "Grass / Terrain Encounters", room1Encounters.grass);
+                displayStaticsSection(container, baseName);
                 displayEncounterSection(container, "Fishing", room1Encounters.fishing);
                 displayEncounterSection(container, "Rock Smash", room1Encounters.rockSmash);
                 displayEncounterSection(container, "Surfing", room1Encounters.surfing);
@@ -1628,6 +1648,7 @@
                 container.appendChild(roomHeader);
                 
                 displayEncounterSection(container, "Grass / Terrain Encounters", room3Encounters.grass);
+                displayStaticsSection(container, baseName);
                 displayEncounterSection(container, "Fishing", room3Encounters.fishing);
                 displayEncounterSection(container, "Rock Smash", room3Encounters.rockSmash);
                 displayEncounterSection(container, "Surfing", room3Encounters.surfing);
@@ -1661,6 +1682,7 @@
                 container.appendChild(floorHeader);
                 
                 displayEncounterSection(container, "Grass / Terrain Encounters", floor1Encounters.grass);
+                displayStaticsSection(container, baseName);
                 displayEncounterSection(container, "Fishing", floor1Encounters.fishing);
                 displayEncounterSection(container, "Rock Smash", floor1Encounters.rockSmash);
                 displayEncounterSection(container, "Surfing", floor1Encounters.surfing);
@@ -1679,6 +1701,7 @@
                 container.appendChild(floorHeader);
                 
                 displayEncounterSection(container, "Grass / Terrain Encounters", floor2Encounters.grass);
+                displayStaticsSection(container, baseName);
                 displayEncounterSection(container, "Fishing", floor2Encounters.fishing);
                 displayEncounterSection(container, "Rock Smash", floor2Encounters.rockSmash);
                 displayEncounterSection(container, "Surfing", floor2Encounters.surfing);
@@ -1689,6 +1712,7 @@
             const encounters = aggregateEncounters(encounterIndices);
             
             displayEncounterSection(container, "Grass / Terrain Encounters", encounters.grass);
+            displayStaticsSection(container, baseName);
             displayEncounterSection(container, "Fishing", encounters.fishing);
             displayEncounterSection(container, "Rock Smash", encounters.rockSmash);
             displayEncounterSection(container, "Surfing", encounters.surfing);
@@ -1922,6 +1946,70 @@
                 });
             }
 
+        container.appendChild(section);
+    }
+
+    function displayStaticsSection(container, baseName) {
+        // Filter statics for this location
+        const locationStatics = staticsData.filter(static => static.Location === baseName);
+        
+        // Skip if no statics for this location
+        if (locationStatics.length === 0) {
+            return;
+        }
+
+        const section = document.createElement("div");
+        section.className = "encounter-type-section";
+
+        const header = document.createElement("div");
+        header.className = "encounter-type-header";
+        header.textContent = "Statics/Trades/Gifts";
+        section.appendChild(header);
+
+        const grid = document.createElement("div");
+        grid.className = "pokemon-grid";
+
+        locationStatics.forEach(static => {
+            const box = document.createElement("div");
+            box.className = "pokemon-box";
+
+            // Pokemon name
+            const name = document.createElement("div");
+            name.className = "pokemon-name";
+            name.textContent = static.Pokemon;
+            box.appendChild(name);
+
+            // Pokemon icon (clickable link to pokemon page)
+            const iconLink = document.createElement("a");
+            iconLink.href = `pokemon.html?name=${encodeURIComponent(static.Pokemon)}`;
+            iconLink.style.textDecoration = "none";
+            
+            const icon = document.createElement("img");
+            icon.className = "pokemon-icon";
+            icon.src = getPokemonIconPath(static.Pokemon);
+            icon.alt = static.Pokemon;
+            let iconFailed = false;
+            icon.onerror = function() {
+                if (!iconFailed) {
+                    iconFailed = true;
+                    this.src = 'image/icons/unknown.png';
+                } else {
+                    this.style.display = 'none';
+                }
+            };
+            iconLink.appendChild(icon);
+            box.appendChild(iconLink);
+
+            // Level
+            const level = document.createElement("div");
+            level.className = "pokemon-chance";
+            level.textContent = `Lv. ${static.Level}`;
+            box.appendChild(level);
+
+            grid.appendChild(box);
+        });
+
+        section.appendChild(grid);
         container.appendChild(section);
     }
 
