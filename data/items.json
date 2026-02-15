@@ -2881,8 +2881,8 @@
   },
   {
     "Item": "Apicot Berry",
-    "Area": "Route 6",
-    "Location/Price": "Central path: in the second bush south of the tree that is fifth from the north end of the route (hidden)"
+    "Area": "Route 6 (Central Path)",
+    "Location/Price": "In the second bush south of the tree that is fifth from the north end of the route (hidden)"
   },
   {
     "Item": "Enigma Berry",
@@ -2936,8 +2936,8 @@
   },
   {
     "Item": "Poké Doll-2",
-    "Area": "Route 6",
-    "Location/Price": "Central path: down a narrow path immediately on the left after entering from Route 7"
+    "Area": "Route 6 (Central Path)",
+    "Location/Price": "Down a narrow path immediately on the left after entering from Route 7"
   },
   {
     "Item": "Silver Powder",
@@ -3721,6 +3721,7 @@
   }
 
 ]
+
 
 
 
