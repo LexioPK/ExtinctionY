@@ -846,6 +846,18 @@
             }
         });
 
+        // Add static encounter locations (use main area for statics with parentheses)
+        staticsData.forEach(static => {
+            if (static && static.Location) {
+                const parsed = parseAreaAndSubArea(static.Location);
+                // For statics, use the main area (so "Berry Fields (Red Berries)" goes under "Berry Fields")
+                const areaToUse = parsed.mainArea;
+                const root = findRootForArea(areaToUse);
+                if (!groupedLocations[root]) groupedLocations[root] = { fullNames: new Set() };
+                groupedLocations[root].fullNames.add(areaToUse);
+            }
+        });
+
         // Convert Sets to Arrays and sort
         Object.keys(groupedLocations).forEach(root => {
             groupedLocations[root].fullNames = Array.from(groupedLocations[root].fullNames);
@@ -2149,6 +2161,7 @@
                     // Item name cell
                     const nameCell = document.createElement("td");
                     nameCell.style.padding = "10px";
+                    nameCell.style.textAlign = "center";
                     nameCell.style.fontWeight = "600";
                     nameCell.textContent = item.Item;
                     row.appendChild(nameCell);
@@ -2156,6 +2169,7 @@
                     // Location/Price cell
                     const locationCell = document.createElement("td");
                     locationCell.style.padding = "10px";
+                    locationCell.style.textAlign = "center";
                     locationCell.textContent = item["Location/Price"];
                     row.appendChild(locationCell);
 
