@@ -272,10 +272,11 @@ Promise.all([
   // Find all forms with the same base name (excluding Nidoran and Meowstic-F)
   const isNidoran = monName.startsWith('Nidoran');
   const isMeowsticF = monName === 'Meowstic-F';
+  const isPorygonLine = monName === 'Porygon' || monName === 'Porygon2' || monName === 'Porygon-Z';
   let baseFormName = monName;
   let alternateForms = [monName]; // Start with current form
   
-  if (!isNidoran && !isMeowsticF) {
+  if (!isNidoran && !isMeowsticF && !isPorygonLine) {
     // Extract base name (before first dash)
     baseFormName = monName.includes('-') ? monName.split('-')[0] : monName;
     
@@ -283,6 +284,8 @@ Promise.all([
     alternateForms = Object.keys(pokedexData).filter(name => {
       if (name.startsWith('Nidoran')) return false;
       if (name === 'Meowstic-F') return false;
+      // Porygon line are separate Pokemon
+      if (name === 'Porygon2' || name === 'Porygon-Z') return false;
       const base = name.includes('-') ? name.split('-')[0] : name;
       return base === baseFormName;
     }).sort(); // Sort to ensure consistent order
@@ -296,6 +299,8 @@ Promise.all([
   function isAlternateForm(name) {
     if (name.startsWith('Nidoran')) return false;
     if (name === 'Meowstic-F') return false;
+    // Porygon line are separate Pokemon, not alternate forms
+    if (name === 'Porygon2' || name === 'Porygon-Z') return false;
     return name.includes('-');
   }
   
@@ -922,16 +927,11 @@ function loadEvolutions(currentName, data) {
         // Add alternative evolution paths if they exist
         if (alternativePreEvos.length > 0) {
             for (const alt of alternativePreEvos) {
-                const altEvoBlock = await renderEvo(alt.name);
-                const currentEvoBlock = await renderEvo(currentName);
+                // Build the full chain starting from the alternative pre-evolution
+                const altFullChain = await buildChain(alt.name);
                 const altChainHtml = `
-                  <div style="margin-top:40px; padding-top:30px; border-top:2px solid #ddd;">
-                    <div style="text-align:center; margin-bottom:15px; font-size:14px; color:#666; font-weight:600;">Alternative Evolution Path</div>
-                    <div style="display:flex; align-items:center; justify-content:center; gap:30px;">
-                      ${altEvoBlock}
-                      ${renderArrow(alt.method)}
-                      ${currentEvoBlock}
-                    </div>
+                  <div style="margin-top:20px; padding-top:20px; border-top:2px solid #ddd;">
+                    ${altFullChain}
                   </div>
                 `;
                 finalHtml += altChainHtml;
