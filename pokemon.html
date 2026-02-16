@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,7 +61,7 @@
   .evo-name { font-weight:bold; font-size:18px; }
   .evo-arrow-block { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:80px; }
   .method-text { font-size:13px; font-weight:600; text-decoration:underline; margin-bottom:8px; }
-  .arrow { font-size:48px; font-weight:900; color:#4285F4; }
+  .arrow { font-size:48px; font-weight:900; color:#888; }
   
   /* Branching evolution styles */
   .branch-container { display:flex; flex-direction:row; align-items:center; gap:15px; position:relative; }
@@ -69,7 +70,7 @@
   
   /* Diagonal arrow styling for branches */
   .diagonal-arrow { position:relative; display:flex; align-items:center; justify-content:center; width:100px; height:60px; }
-  .diagonal-arrow .arrow { font-size:48px; font-weight:900; color:#4285F4; transform:rotate(-45deg); }
+  .diagonal-arrow .arrow { font-size:48px; font-weight:900; color:#888; transform:rotate(-45deg); }
   .diagonal-arrow.down .arrow { transform:rotate(45deg); }
   
   /* Eevee circular layout */
@@ -932,16 +933,25 @@ function loadEvolutions(currentName, data) {
                 <div></div>
                 
                 <!-- Row 2: Arrows and methods -->
-                <div style="text-align:center; font-size:0.9rem; color:#888;">Use Item:<br>Up-Grade</div>
+                <div style="text-align:center;">
+                    <div style="font-size:2rem; color:#888; font-weight:900;">↙</div>
+                    <div style="font-size:0.9rem; color:#888;">Use Item:<br>Up-Grade</div>
+                </div>
                 <div></div>
-                <div style="text-align:center; font-size:0.9rem; color:#888;">Use Item:<br>Dubious Disc</div>
+                <div style="text-align:center;">
+                    <div style="font-size:2rem; color:#888; font-weight:900;">↘</div>
+                    <div style="font-size:0.9rem; color:#888;">Use Item:<br>Dubious Disc</div>
+                </div>
                 
                 <!-- Row 3: Porygon2 and Porygon-Z -->
                 <div class="evo-node">
                     <a href="pokemon.html?name=Porygon2"><img src="pokemon_sprites/porygon2.png" alt="Porygon2" style="width:96px; height:96px; image-rendering:pixelated;"></a>
                     <div style="text-align:center; margin-top:5px; font-weight:600;">Porygon2</div>
                 </div>
-                <div style="text-align:center; font-size:0.9rem; color:#888;">→<br>Use Item:<br>Dubious Disc</div>
+                <div style="text-align:center;">
+                    <div style="font-size:2rem; color:#888; font-weight:900;">→</div>
+                    <div style="font-size:0.9rem; color:#888;">Use Item:<br>Dubious Disc</div>
+                </div>
                 <div class="evo-node">
                     <a href="pokemon.html?name=Porygon-Z"><img src="pokemon_sprites/porygon-z.png" alt="Porygon-Z" style="width:96px; height:96px; image-rendering:pixelated;"></a>
                     <div style="text-align:center; margin-top:5px; font-weight:600;">Porygon-Z</div>
@@ -955,47 +965,46 @@ function loadEvolutions(currentName, data) {
     // Special handling for Beedrill - show Combee path
     if (currentName === 'Beedrill') {
         const beedrillHtml = `
-            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; align-items:center; justify-items:center; max-width:600px; margin:0 auto;">
-                <!-- Row 1: Main evolution line -->
-                <div class="evo-node">
-                    <a href="pokemon.html?name=Weedle"><img src="pokemon_sprites/weedle.png" alt="Weedle" style="width:96px; height:96px; image-rendering:pixelated;"></a>
-                    <div style="text-align:center; margin-top:5px; font-weight:600;">Weedle</div>
-                </div>
-                <div style="text-align:center;">
-                    <div style="font-size:1.5rem; margin:10px 0;">→</div>
-                    <div style="font-size:0.9rem; color:#888;">Level 10</div>
-                </div>
-                <div class="evo-node">
-                    <a href="pokemon.html?name=Kakuna"><img src="pokemon_sprites/kakuna.png" alt="Kakuna" style="width:96px; height:96px; image-rendering:pixelated;"></a>
-                    <div style="text-align:center; margin-top:5px; font-weight:600;">Kakuna</div>
+            <div style="max-width:800px; margin:0 auto;">
+                <!-- Main evolution line: Weedle -> Kakuna -> Beedrill -->
+                <div style="display:flex; align-items:center; justify-content:center; gap:20px; margin-bottom:30px;">
+                    <div class="evo-node">
+                        <a href="pokemon.html?name=Weedle"><img src="pokemon_sprites/weedle.png" alt="Weedle" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                        <div style="text-align:center; margin-top:5px; font-weight:600;">Weedle</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2rem; color:#888; font-weight:900;">→</div>
+                        <div style="font-size:0.9rem; color:#888;">Level 10</div>
+                    </div>
+                    <div class="evo-node">
+                        <a href="pokemon.html?name=Kakuna"><img src="pokemon_sprites/kakuna.png" alt="Kakuna" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                        <div style="text-align:center; margin-top:5px; font-weight:600;">Kakuna</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2rem; color:#888; font-weight:900;">→</div>
+                        <div style="font-size:0.9rem; color:#888;">Level 15</div>
+                    </div>
+                    <div class="evo-node">
+                        <a href="pokemon.html?name=Beedrill"><img src="pokemon_sprites/beedrill.png" alt="Beedrill" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                        <div style="text-align:center; margin-top:5px; font-weight:600;">Beedrill</div>
+                    </div>
                 </div>
                 
-                <!-- Second row part 1 -->
-                <div></div>
-                <div style="text-align:center;">
-                    <div style="font-size:1.5rem; margin:10px 0;">→</div>
-                    <div style="font-size:0.9rem; color:#888;">Level 15</div>
+                <!-- Combee line underneath -->
+                <div style="display:flex; align-items:center; justify-content:center; gap:20px;">
+                    <div class="evo-node">
+                        <a href="pokemon.html?name=Combee"><img src="pokemon_sprites/combee.png" alt="Combee" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                        <div style="text-align:center; margin-top:5px; font-weight:600;">Combee</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2rem; color:#888; font-weight:900;">→</div>
+                        <div style="font-size:0.9rem; color:#888;">Level Up: 30 (Male)</div>
+                    </div>
+                    <div class="evo-node">
+                        <a href="pokemon.html?name=Beedrill"><img src="pokemon_sprites/beedrill.png" alt="Beedrill" style="width:96px; height:96px; image-rendering:pixelated;"></a>
+                        <div style="text-align:center; margin-top:5px; font-weight:600;">Beedrill</div>
+                    </div>
                 </div>
-                <div class="evo-node">
-                    <a href="pokemon.html?name=Beedrill"><img src="pokemon_sprites/beedrill.png" alt="Beedrill" style="width:96px; height:96px; image-rendering:pixelated;"></a>
-                    <div style="text-align:center; margin-top:5px; font-weight:600;">Beedrill</div>
-                </div>
-                
-                <!-- Row 2: Combee pointing to Beedrill -->
-                <div></div>
-                <div style="text-align:center;">
-                    <div style="font-size:1.5rem; margin:10px 0;">↑</div>
-                    <div style="font-size:0.9rem; color:#888;">Level Up: 30 (Male)</div>
-                </div>
-                <div></div>
-                
-                <!-- Row 3: Combee -->
-                <div></div>
-                <div class="evo-node">
-                    <a href="pokemon.html?name=Combee"><img src="pokemon_sprites/combee.png" alt="Combee" style="width:96px; height:96px; image-rendering:pixelated;"></a>
-                    <div style="text-align:center; margin-top:5px; font-weight:600;">Combee</div>
-                </div>
-                <div></div>
             </div>
         `;
         evoContainer.innerHTML = beedrillHtml;
