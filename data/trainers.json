@@ -3596,19 +3596,19 @@
             ]
           },
           {
-            "Name": "Electrode",
+            "Name": "Klinklang",
             "Form": "",
             "Gender": "",
             "Level": 81,
-            "Ability": "Soundproof",
-            "HeldItem": "White Herb",
-            "Nature": "Mild (\u002BSpA / -Def)",
+            "Ability": "Levitate",
+            "HeldItem": "Weakness Policy",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Overheat",
-              "Zap Cannon",
-              "Boomburst",
-              "Explosion"
+              "Wild Charge",
+              "Iron Defense",
+              "Power Gem",
+              "Shift Gear"
             ]
           },
           {
@@ -3698,35 +3698,35 @@
             ]
           },
           {
-            "Name": "Tyranitar",
-            "Form": "",
-            "Gender": "",
-            "Level": 84,
-            "Ability": "Sand Stream",
-            "HeldItem": "Smooth Rock",
-            "Nature": "Impish (\u002BDef / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Earthquake",
-              "Stone Edge",
-              "Dragon Claw",
-              "Crunch"
-            ]
-          },
-          {
             "Name": "Probopass",
             "Form": "",
             "Gender": "",
-            "Level": 83,
-            "Ability": "Levitate",
-            "HeldItem": "Quick Claw",
-            "Nature": "Modest (\u002BSpA / -Atk)",
+            "Level": 85,
+            "Ability": "Sand Stream",
+            "HeldItem": "Air Balloon",
+            "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
             "Moves": [
               "Diamond Storm",
               "Thunderbolt",
-              "Thunder Wave",
+              "Flash Cannon",
               "Wide Guard"
+            ]
+          },
+          {
+            "Name": "Flygon",
+            "Form": "",
+            "Gender": "",
+            "Level": 83,
+            "Ability": "Sand Force",
+            "HeldItem": "Earth Plate",
+            "Nature": "Careful (\u002BSpD / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "X-Scissor",
+              "Dragon Claw",
+              "Crater",
+              "Dragon Dance"
             ]
           },
           {
@@ -9733,10 +9733,10 @@
             "Name": "Dusclops",
             "Form": "",
             "Gender": "",
-            "Level": 87,
+            "Level": 86,
             "Ability": "Pressure",
             "HeldItem": "Eviolite",
-            "Nature": "Impish (\u002BDef / -SpA)",
+            "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
             "Moves": [
               "Phantom Force",
@@ -9762,19 +9762,19 @@
             ]
           },
           {
-            "Name": "Luxray",
+            "Name": "Togekiss",
             "Form": "",
             "Gender": "",
-            "Level": 87,
-            "Ability": "Intimidate",
-            "HeldItem": "Flame Orb",
-            "Nature": "Hasty (\u002BSpe / -Def)",
+            "Level": 86,
+            "Ability": "Serene Grace",
+            "HeldItem": "Fairy Gem",
+            "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Volt Tackle",
-              "Foul Play",
-              "Ice Fang",
-              "Superpower"
+              "Dazzling Gleam",
+              "Aeroblast",
+              "Heat Wave",
+              "Thunder Wave"
             ]
           },
           {
@@ -25035,19 +25035,19 @@
             ]
           },
           {
-            "Name": "Klinklang",
+            "Name": "Golem",
             "Form": "",
             "Gender": "",
             "Level": 78,
-            "Ability": "Motor Drive",
-            "HeldItem": "Figy Berry",
-            "Nature": "Lonely (\u002BAtk / -Def)",
+            "Ability": "Sturdy",
+            "HeldItem": "Sitrus Berry",
+            "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Wild Charge",
-              "Iron Head",
-              "Hone Claws",
-              "Metal Sound"
+              "Earthquake",
+              "Steamroller",
+              "Stone Edge",
+              "Heavy Slam"
             ]
           }
         ]
@@ -25437,19 +25437,19 @@
             ]
           },
           {
-            "Name": "Blissey",
+            "Name": "Excadrill",
             "Form": "",
             "Gender": "",
             "Level": 78,
-            "Ability": "Serene Grace",
+            "Ability": "Sand Rush",
             "HeldItem": "Red Card",
-            "Nature": "Sassy (\u002BSpD / -Spe)",
+            "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Egg Bomb",
-              "Counter",
-              "Soft-Boiled",
-              "Shadow Ball"
+              "Crater",
+              "Iron Head",
+              "X-Scissor",
+              "Rock Slide"
             ]
           },
           {
@@ -25500,19 +25500,19 @@
             ]
           },
           {
-            "Name": "Golem",
+            "Name": "Escavalier",
             "Form": "",
             "Gender": "",
             "Level": 78,
-            "Ability": "Sturdy",
+            "Ability": "Battle Armor",
             "HeldItem": "Custap Berry",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Explosion",
-              "Heavy Slam",
-              "Stone Edge",
-              "Earthquake"
+              "Hyper Drill",
+              "Iron Head",
+              "Megahorn",
+              "Reversal"
             ]
           },
           {
@@ -25658,19 +25658,19 @@
             ]
           },
           {
-            "Name": "Florges",
+            "Name": "Tyrantrum",
             "Form": "",
             "Gender": "",
             "Level": 79,
-            "Ability": "Symbiosis",
+            "Ability": "Sheer Force",
             "HeldItem": "Starf Berry",
-            "Nature": "Bold (\u002BDef / -Atk)",
+            "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
             "Moves": [
-              "Energy Ball",
-              "Moonblast",
-              "Follow Me",
-              "Wish"
+              "Dragon Claw",
+              "Stone Edge",
+              "Headlong Rush",
+              "Dragon Dance"
             ]
           }
         ]
@@ -28746,19 +28746,19 @@
             ]
           },
           {
-            "Name": "Escavalier",
+            "Name": "Florges",
             "Form": "",
             "Gender": "",
-            "Level": 82,
-            "Ability": "Overcoat",
-            "HeldItem": "Custap Berry",
-            "Nature": "Serious (Neutral)",
+            "Level": 81,
+            "Ability": "Flower Veil",
+            "HeldItem": "White Herb",
+            "Nature": "Modest (\u002BSpA / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Reversal",
-              "Iron Head",
-              "Megahorn",
-              "Hyper Drill"
+              "Leaf Storm",
+              "Light of Ruin",
+              "Psychic",
+              "Wish"
             ]
           },
           {
@@ -28888,19 +28888,19 @@
             ]
           },
           {
-            "Name": "Tyrantrum",
+            "Name": "Blissey",
             "Form": "",
             "Gender": "",
             "Level": 82,
-            "Ability": "Sheer Force",
-            "HeldItem": "Lum Berry",
-            "Nature": "Naive (\u002BSpe / -SpD)",
+            "Ability": "Serene Grace",
+            "HeldItem": "Leftovers",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Crunch",
-              "Stone Edge",
-              "Ice Fang",
-              "Dragon Dance"
+              "Egg Bomb",
+              "Draining Kiss",
+              "Thunderbolt",
+              "Ice Beam"
             ]
           },
           {
@@ -28935,19 +28935,19 @@
         "RewardItem": "Air Balloon",
         "Pokemon": [
           {
-            "Name": "Excadrill",
+            "Name": "Electrode",
             "Form": "",
             "Gender": "",
-            "Level": 82,
-            "Ability": "Mold Breaker",
+            "Level": 81,
+            "Ability": "Aftermath",
             "HeldItem": "Air Balloon",
-            "Nature": "Jolly (\u002BSpe / -SpA)",
+            "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Earthquake",
-              "Iron Head",
-              "Rock Slide",
-              "Hyper Drill"
+              "Zap Cannon",
+              "Overheat",
+              "Boomburst",
+              "Magnet Rise"
             ]
           },
           {
