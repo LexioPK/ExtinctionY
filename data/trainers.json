@@ -814,67 +814,67 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Togekiss",
+            "Name": "Claydol",
             "Form": "",
             "Gender": "",
-            "Level": 0,
-            "Ability": "Any",
-            "HeldItem": "",
-            "Nature": "Impish (\u002BDef / -SpA)",
-            "IVs": 0,
+            "Level": 59,
+            "Ability": "Telepathy",
+            "HeldItem": "Sitrus Berry",
+            "Nature": "Rash (\u002BSpA / -SpD)",
+            "IVs": 31,
             "Moves": [
-              "",
-              "",
-              "",
-              ""
+              "Earth Power",
+              "Psychic",
+              "Imprison",
+              "Protect"
             ]
           },
           {
-            "Name": "Torterra",
+            "Name": "Maractus",
             "Form": "",
             "Gender": "",
-            "Level": 0,
-            "Ability": "Any",
-            "HeldItem": "",
-            "Nature": "Jolly (\u002BSpe / -SpA)",
+            "Level": 59,
+            "Ability": "Storm Drain",
+            "HeldItem": "Big Root",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "",
-              "",
-              "",
-              ""
+              "Surf",
+              "Giga Drain",
+              "Ingrain",
+              "Cotton Guard"
             ]
           },
           {
-            "Name": "Blissey",
+            "Name": "Raichu",
             "Form": "",
             "Gender": "",
-            "Level": 0,
-            "Ability": "Any",
-            "HeldItem": "",
-            "Nature": "Calm (\u002BSpD / -Atk)",
+            "Level": 58,
+            "Ability": "Static",
+            "HeldItem": "Wise Glasses",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "",
-              "",
-              "",
-              ""
+              "Discharge",
+              "Play Rough",
+              "Fake Out",
+              "Surf"
             ]
           },
           {
-            "Name": "Swellow",
+            "Name": "Toxicroak",
             "Form": "",
             "Gender": "",
-            "Level": 0,
-            "Ability": "Any",
-            "HeldItem": "",
-            "Nature": "Adamant (\u002BAtk / -SpA)",
+            "Level": 58,
+            "Ability": "Dry Skin",
+            "HeldItem": "Muscle Band",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "",
-              "",
-              "",
-              ""
+              "Drain Punch",
+              "Poison Jab",
+              "Bullet Punch",
+              "Ice Punch"
             ]
           }
         ]
@@ -7488,22 +7488,6 @@
               "Shadow Claw",
               "Strength"
             ]
-          },
-          {
-            "Name": "Lairon",
-            "Form": "",
-            "Gender": "",
-            "Level": 33,
-            "Ability": "Rock Head",
-            "HeldItem": "Rocky Helmet",
-            "Nature": "Quiet (\u002BSpA / -Spe)",
-            "IVs": 31,
-            "Moves": [
-              "Iron Head",
-              "Take Down",
-              "Rock Slide",
-              "Iron Defense"
-            ]
           }
         ]
       },
@@ -13149,19 +13133,19 @@
             ]
           },
           {
-            "Name": "Tentacruel",
-            "Form": "",
+            "Name": "Gastrodon",
+            "Form": "Gastrodon",
             "Gender": "",
             "Level": 39,
-            "Ability": "Liquid Ooze",
+            "Ability": "Gooey",
             "HeldItem": "Maranga Berry",
-            "Nature": "Quiet (\u002BSpA / -Spe)",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
               "Sludge",
               "Surf",
-              "Aurora Beam",
-              "Tickle"
+              "Mudslide",
+              "Recover"
             ]
           },
           {
@@ -24846,19 +24830,19 @@
         "RewardItem": "Ground Gem",
         "Pokemon": [
           {
-            "Name": "Maractus",
-            "Form": "",
+            "Name": "Furfrou",
+            "Form": "Furfrou-Water",
             "Gender": "",
             "Level": 62,
-            "Ability": "Storm Drain",
+            "Ability": "Fur Coat",
             "HeldItem": "Ground Gem",
-            "Nature": "Timid (\u002BSpe / -Atk)",
+            "Nature": "Gentle (\u002BSpD / -Def)",
             "IVs": 31,
             "Moves": [
               "Seed Bomb",
-              "Scald",
-              "Acid Armor",
-              "Earth Power"
+              "Waterfall",
+              "Crater",
+              "Zen Headbutt"
             ]
           },
           {
@@ -24873,7 +24857,7 @@
             "Moves": [
               "Mudslide",
               "Poison Jab",
-              "Protect",
+              "Surf",
               "Drain Punch"
             ]
           },
