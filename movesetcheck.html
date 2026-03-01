@@ -346,11 +346,14 @@ async function displayMovesetCheck() {
         pokemonResults.push({ name: pokemonName, issues });
     }
     
-    // Sort: Pokemon with issues first, then alphabetically
+    // Sort: Pokemon with issues first, then by Pokedex order
     pokemonResults.sort((a, b) => {
         if (a.issues.length > 0 && b.issues.length === 0) return -1;
         if (a.issues.length === 0 && b.issues.length > 0) return 1;
-        return a.name.localeCompare(b.name);
+        // Sort by dex number (SpeciesIdx)
+        const dexA = pokedex[a.name]?.SpeciesIdx || 9999;
+        const dexB = pokedex[b.name]?.SpeciesIdx || 9999;
+        return dexA - dexB;
     });
     
     // Display cards
