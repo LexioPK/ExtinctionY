@@ -156,7 +156,7 @@
 <script>
     // Helper function to get item icon path
     function getItemIconPath(itemName) {
-        if (!itemName) return 'image/items/unknown.png';
+        if (!itemName) return 'image/item/unknown.png';
         
         // Convert item name to filename format
         let fileName = itemName.toLowerCase().replace(/\s+/g, '-');
@@ -169,7 +169,7 @@
             }
         }
         
-        return `image/items/${fileName}.png`;
+        return `image/item/${fileName}.png`;
     }
 
     // Load and process trainer data
@@ -271,7 +271,7 @@
             card.innerHTML = `
                 <div class="rank-badge ${rankClass}">#${rank}</div>
                 <img src="${iconPath}" alt="${itemData.item}" class="item-icon" 
-                     onerror="this.src='image/items/unknown.png'">
+                     onerror="this.src='image/item/unknown.png'">
                 <div class="item-name">${itemData.item}</div>
                 <div class="usage-count">${itemData.count}</div>
                 <div class="count-label">times used</div>
