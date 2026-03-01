@@ -86,6 +86,8 @@ function setActiveHeaderLink() {
     const el = document.getElementById("link-pokemoncount"); if (el) el.classList.add("active");
   } else if (path.startsWith("itemusage")) {
     const el = document.getElementById("link-itemusage"); if (el) el.classList.add("active");
+  } else if (path.startsWith("movesetcheck")) {
+    const el = document.getElementById("link-movesetcheck"); if (el) el.classList.add("active");
   } else {
     // if on other pages, highlight pokedex tab by default
     const el = document.getElementById("link-pokedex"); if (el) el.classList.add("active");
