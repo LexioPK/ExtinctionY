@@ -147,7 +147,7 @@
 <div id="header-placeholder"></div>
 
 <h1>Moveset Validation</h1>
-<div class="subtitle">Checking for duplicate moves and TM conflicts in level-up movesets</div>
+<div class="subtitle">Checking for level-up moves that have TMs the Pokemon doesn't learn, and Pokemon with too few moves</div>
 
 <div class="stats-container">
     <div class="stat-box">
@@ -159,12 +159,12 @@
         <div class="stat-label">Pokemon with Issues</div>
     </div>
     <div class="stat-box">
-        <div class="stat-number" id="duplicate-count">0</div>
-        <div class="stat-label">Duplicate Moves</div>
+        <div class="stat-number" id="tm-missing-count">0</div>
+        <div class="stat-label">Missing TMs</div>
     </div>
     <div class="stat-box">
-        <div class="stat-number" id="tm-conflict-count">0</div>
-        <div class="stat-label">TM Conflicts</div>
+        <div class="stat-number" id="low-move-count">0</div>
+        <div class="stat-label">Low Move Count</div>
     </div>
 </div>
 
@@ -194,55 +194,48 @@ function getPokemonIconPath(pokemonName) {
     return `image/icons/${iconName}.png`;
 }
 
-function checkMovesetIssues(pokemonName, levelUpMoves, tmMoves) {
+function checkMovesetIssues(pokemonName, levelUpMoves, tmMoves, allTMsMap) {
     const issues = [];
     
-    // Check for duplicate moves in level-up list
-    const moveNames = levelUpMoves.map(m => m.Move);
-    const seenMoves = new Set();
-    const duplicates = [];
-    
-    for (const move of moveNames) {
-        if (seenMoves.has(move)) {
-            if (!duplicates.includes(move)) {
-                duplicates.push(move);
-            }
-        }
-        seenMoves.add(move);
-    }
-    
-    if (duplicates.length > 0) {
+    // Check if Pokemon has 26 or fewer moves
+    if (levelUpMoves.length <= 26) {
         issues.push({
-            type: 'Duplicate Moves',
-            details: duplicates.join(', ')
+            type: 'Low Move Count',
+            details: `Only ${levelUpMoves.length} moves (should have more than 26)`
         });
     }
     
-    // Check if level-up moves are also in TM list
-    // Only check moves with numbered TM labels (TM01-TM99)
-    const tmMoveSet = new Set();
+    // Get the set of TMs this Pokemon can learn (only numbered TMs)
+    const pokemonTMSet = new Set();
     if (tmMoves) {
         tmMoves.forEach(tm => {
             // Only include if it has a numbered TM label (TM followed by digits)
             if (tm.Label && /^TM\d+$/.test(tm.Label)) {
-                tmMoveSet.add(tm.Move);
+                pokemonTMSet.add(tm.Move);
             }
         });
     }
     
-    const tmConflicts = [];
+    // Check if level-up moves have TMs that this Pokemon doesn't learn
+    const moveNames = levelUpMoves.map(m => m.Move);
+    const missingTMs = [];
+    
     for (const move of moveNames) {
-        if (tmMoveSet.has(move)) {
-            if (!tmConflicts.includes(move)) {
-                tmConflicts.push(move);
+        // Check if a TM exists for this move
+        if (allTMsMap.has(move)) {
+            // Check if this Pokemon has that TM
+            if (!pokemonTMSet.has(move)) {
+                if (!missingTMs.includes(move)) {
+                    missingTMs.push(move);
+                }
             }
         }
     }
     
-    if (tmConflicts.length > 0) {
+    if (missingTMs.length > 0) {
         issues.push({
-            type: 'TM Conflicts',
-            details: tmConflicts.join(', ')
+            type: 'Missing TMs',
+            details: missingTMs.join(', ')
         });
     }
     
@@ -302,10 +295,25 @@ async function displayMovesetCheck() {
     const { movesets, pokedex } = data;
     const grid = document.getElementById('moveset-check-grid');
     
+    // Build a map of all TMs that exist in the game
+    // Map structure: Move name -> true (if a TM exists for it)
+    const allTMsMap = new Map();
+    
+    for (const pokemonData of Object.values(pokedex)) {
+        if (pokemonData.TMs) {
+            pokemonData.TMs.forEach(tm => {
+                // Only include numbered TMs (TM01-TM99)
+                if (tm.Label && /^TM\d+$/.test(tm.Label)) {
+                    allTMsMap.set(tm.Move, true);
+                }
+            });
+        }
+    }
+    
     let totalPokemon = 0;
     let pokemonWithIssues = 0;
-    let totalDuplicates = 0;
-    let totalTMConflicts = 0;
+    let totalMissingTMs = 0;
+    let totalLowMoveCount = 0;
     
     const pokemonResults = [];
     
@@ -314,17 +322,17 @@ async function displayMovesetCheck() {
         totalPokemon++;
         
         const tmMoves = pokedex[pokemonName]?.TMs || [];
-        const issues = checkMovesetIssues(pokemonName, levelUpMoves, tmMoves);
+        const issues = checkMovesetIssues(pokemonName, levelUpMoves, tmMoves, allTMsMap);
         
         if (issues.length > 0) {
             pokemonWithIssues++;
             
             issues.forEach(issue => {
-                if (issue.type === 'Duplicate Moves') {
-                    totalDuplicates++;
+                if (issue.type === 'Missing TMs') {
+                    totalMissingTMs++;
                 }
-                if (issue.type === 'TM Conflicts') {
-                    totalTMConflicts++;
+                if (issue.type === 'Low Move Count') {
+                    totalLowMoveCount++;
                 }
             });
         }
@@ -348,8 +356,8 @@ async function displayMovesetCheck() {
     // Update statistics
     document.getElementById('total-pokemon').textContent = totalPokemon;
     document.getElementById('pokemon-with-issues').textContent = pokemonWithIssues;
-    document.getElementById('duplicate-count').textContent = totalDuplicates;
-    document.getElementById('tm-conflict-count').textContent = totalTMConflicts;
+    document.getElementById('tm-missing-count').textContent = totalMissingTMs;
+    document.getElementById('low-move-count').textContent = totalLowMoveCount;
 }
 
 // Load data when page loads
