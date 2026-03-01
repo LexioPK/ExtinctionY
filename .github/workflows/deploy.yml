@@ -3,7 +3,11 @@ name: Deploy to GitHub Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main", "master"]
+    branches: 
+      - "main"
+      - "master"
+      # Temporary: Allow testing on feature branch before merge
+      - "copilot/combine-trainers-encounters-items"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
