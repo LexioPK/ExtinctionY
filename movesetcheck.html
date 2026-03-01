@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moveset Check - Extinction Y</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Standardized header styles & script -->
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+
+<style>
+    body {
+        font-family: "Lexend", sans-serif;
+        background: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    .stats-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .stat-box {
+        background: white;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2em;
+        font-weight: 600;
+        color: #4285F4;
+    }
+
+    .stat-label {
+        color: #666;
+        margin-top: 5px;
+    }
+
+    #moveset-check-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .moveset-card {
+        background: white;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        transition: transform 0.2s;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .moveset-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .moveset-card.has-issues {
+        border: 3px solid #dc3545;
+    }
+
+    .issue-indicator {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #dc3545;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .pokemon-icon {
+        width: 60px;
+        height: 60px;
+        image-rendering: pixelated;
+        margin: 10px auto;
+        display: block;
+    }
+
+    .pokemon-name {
+        font-weight: 600;
+        font-size: 1.1em;
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .issue-list {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+        font-size: 0.9em;
+    }
+
+    .issue-item {
+        color: #dc3545;
+        margin: 5px 0;
+        padding: 3px 0;
+    }
+
+    .issue-type {
+        font-weight: 600;
+    }
+
+    .issue-detail {
+        color: #666;
+        font-size: 0.85em;
+        margin-left: 10px;
+    }
+
+    .no-issues {
+        color: #28a745;
+        text-align: center;
+        font-weight: 600;
+    }
+</style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<h1>Moveset Validation</h1>
+<div class="subtitle">Checking for duplicate moves and TM conflicts in level-up movesets</div>
+
+<div class="stats-container">
+    <div class="stat-box">
+        <div class="stat-number" id="total-pokemon">0</div>
+        <div class="stat-label">Total Pokemon</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number" id="pokemon-with-issues">0</div>
+        <div class="stat-label">Pokemon with Issues</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number" id="duplicate-count">0</div>
+        <div class="stat-label">Duplicate Moves</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number" id="tm-conflict-count">0</div>
+        <div class="stat-label">TM Conflicts</div>
+    </div>
+</div>
+
+<div id="moveset-check-grid"></div>
+
+<script>
+async function loadMovesetData() {
+    try {
+        const [movesetsRes, pokedexRes] = await Promise.all([
+            fetch('data/movesets.json'),
+            fetch('data/pokedex.json')
+        ]);
+
+        const movesets = await movesetsRes.json();
+        const pokedex = await pokedexRes.json();
+
+        return { movesets, pokedex };
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return null;
+    }
+}
+
+function getPokemonIconPath(pokemonName) {
+    // Convert Pokemon name to icon filename format
+    const iconName = pokemonName.toLowerCase().replace(/\s+/g, '-');
+    return `image/icons/${iconName}.png`;
+}
+
+function checkMovesetIssues(pokemonName, levelUpMoves, tmMoves) {
+    const issues = [];
+    
+    // Check for duplicate moves in level-up list
+    const moveNames = levelUpMoves.map(m => m.Move);
+    const seenMoves = new Set();
+    const duplicates = [];
+    
+    for (const move of moveNames) {
+        if (seenMoves.has(move)) {
+            if (!duplicates.includes(move)) {
+                duplicates.push(move);
+            }
+        }
+        seenMoves.add(move);
+    }
+    
+    if (duplicates.length > 0) {
+        issues.push({
+            type: 'Duplicate Moves',
+            details: duplicates.join(', ')
+        });
+    }
+    
+    // Check if level-up moves are also in TM list
+    // Only check moves with numbered TM labels (TM01-TM99)
+    const tmMoveSet = new Set();
+    if (tmMoves) {
+        tmMoves.forEach(tm => {
+            // Only include if it has a numbered TM label (TM followed by digits)
+            if (tm.Label && /^TM\d+$/.test(tm.Label)) {
+                tmMoveSet.add(tm.Move);
+            }
+        });
+    }
+    
+    const tmConflicts = [];
+    for (const move of moveNames) {
+        if (tmMoveSet.has(move)) {
+            if (!tmConflicts.includes(move)) {
+                tmConflicts.push(move);
+            }
+        }
+    }
+    
+    if (tmConflicts.length > 0) {
+        issues.push({
+            type: 'TM Conflicts',
+            details: tmConflicts.join(', ')
+        });
+    }
+    
+    return issues;
+}
+
+function createMovesetCard(pokemonName, issues) {
+    const card = document.createElement('div');
+    card.className = 'moveset-card';
+    
+    if (issues.length > 0) {
+        card.classList.add('has-issues');
+    }
+    
+    let html = '';
+    
+    // Add issue indicator (red X) if there are issues
+    if (issues.length > 0) {
+        html += '<div class="issue-indicator">✗</div>';
+    }
+    
+    // Pokemon icon
+    html += `<img src="${getPokemonIconPath(pokemonName)}" 
+                  alt="${pokemonName}" 
+                  class="pokemon-icon"
+                  onerror="this.src='image/icons/unknown.png'">`;
+    
+    // Pokemon name
+    html += `<div class="pokemon-name">${pokemonName}</div>`;
+    
+    // Issues list or no issues message
+    if (issues.length > 0) {
+        html += '<div class="issue-list">';
+        issues.forEach(issue => {
+            html += `<div class="issue-item">
+                <span class="issue-type">${issue.type}:</span>
+                <div class="issue-detail">${issue.details}</div>
+            </div>`;
+        });
+        html += '</div>';
+    } else {
+        html += '<div class="no-issues">✓ No Issues</div>';
+    }
+    
+    card.innerHTML = html;
+    return card;
+}
+
+async function displayMovesetCheck() {
+    const data = await loadMovesetData();
+    if (!data) {
+        document.getElementById('moveset-check-grid').innerHTML = 
+            '<p style="color:red;text-align:center;">Error loading data</p>';
+        return;
+    }
+
+    const { movesets, pokedex } = data;
+    const grid = document.getElementById('moveset-check-grid');
+    
+    let totalPokemon = 0;
+    let pokemonWithIssues = 0;
+    let totalDuplicates = 0;
+    let totalTMConflicts = 0;
+    
+    const pokemonResults = [];
+    
+    // Process each Pokemon
+    for (const [pokemonName, levelUpMoves] of Object.entries(movesets)) {
+        totalPokemon++;
+        
+        const tmMoves = pokedex[pokemonName]?.TMs || [];
+        const issues = checkMovesetIssues(pokemonName, levelUpMoves, tmMoves);
+        
+        if (issues.length > 0) {
+            pokemonWithIssues++;
+            
+            issues.forEach(issue => {
+                if (issue.type === 'Duplicate Moves') {
+                    totalDuplicates++;
+                }
+                if (issue.type === 'TM Conflicts') {
+                    totalTMConflicts++;
+                }
+            });
+        }
+        
+        pokemonResults.push({ name: pokemonName, issues });
+    }
+    
+    // Sort: Pokemon with issues first, then alphabetically
+    pokemonResults.sort((a, b) => {
+        if (a.issues.length > 0 && b.issues.length === 0) return -1;
+        if (a.issues.length === 0 && b.issues.length > 0) return 1;
+        return a.name.localeCompare(b.name);
+    });
+    
+    // Display cards
+    pokemonResults.forEach(result => {
+        const card = createMovesetCard(result.name, result.issues);
+        grid.appendChild(card);
+    });
+    
+    // Update statistics
+    document.getElementById('total-pokemon').textContent = totalPokemon;
+    document.getElementById('pokemon-with-issues').textContent = pokemonWithIssues;
+    document.getElementById('duplicate-count').textContent = totalDuplicates;
+    document.getElementById('tm-conflict-count').textContent = totalTMConflicts;
+}
+
+// Load data when page loads
+displayMovesetCheck();
+</script>
+</body>
+</html>
