@@ -1,3 +1,4 @@
+
 // header.js
 // Inserts header.html DOM into the page and provides search functionality that queries data/pokedex.json.
 // Usage: include <link rel="stylesheet" href="header.css"> and <script src="header.js" defer></script> in each page.
@@ -68,7 +69,7 @@ function searchPokemon() {
 function setActiveHeaderLink() {
   const path = window.location.pathname.split("/").pop() || "index.html";
   // Clear all active classes first
-  ["link-info","link-pokedex","link-moves","link-locations","link-abilities"].forEach(id => {
+  ["link-info","link-pokedex","link-moves","link-locations","link-abilities","link-pokemoncount","link-itemusage"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove("active");
   });
@@ -82,6 +83,12 @@ function setActiveHeaderLink() {
     const el = document.getElementById("link-locations"); if (el) el.classList.add("active");
   } else if (path.startsWith("abilities")) {
     const el = document.getElementById("link-abilities"); if (el) el.classList.add("active");
+  } else if (path.startsWith("pokemoncount")) {
+    const el = document.getElementById("link-pokemoncount"); if (el) el.classList.add("active");
+  } else if (path.startsWith("itemusage")) {
+    const el = document.getElementById("link-itemusage"); if (el) el.classList.add("active");
+  } else if (path.startsWith("movesetcheck")) {
+    const el = document.getElementById("link-movesetcheck"); if (el) el.classList.add("active");
   } else {
     // if on other pages, highlight pokedex tab by default
     const el = document.getElementById("link-pokedex"); if (el) el.classList.add("active");
