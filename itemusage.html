@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Item Usage - Extinction Y</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Standardized header styles & script -->
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+
+<style>
+    body {
+        font-family: "Lexend", sans-serif;
+        background: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    #item-usage-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .item-usage-card {
+        background: white;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        transition: transform 0.2s;
+        text-align: center;
+        position: relative;
+    }
+
+    .item-usage-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .rank-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #4285F4;
+        color: white;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9em;
+    }
+
+    .rank-badge.top-1 {
+        background: #FFD700;
+        color: #333;
+    }
+
+    .rank-badge.top-2 {
+        background: #C0C0C0;
+        color: #333;
+    }
+
+    .rank-badge.top-3 {
+        background: #CD7F32;
+        color: white;
+    }
+
+    .item-icon {
+        display: block;
+        margin: 20px auto 10px auto;
+        width: 48px;
+        height: 48px;
+        image-rendering: pixelated;
+    }
+
+    .item-name {
+        font-weight: 600;
+        font-size: 1.1em;
+        margin: 10px 0 5px 0;
+    }
+
+    .usage-count {
+        color: #4285F4;
+        font-size: 1.3em;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+
+    .count-label {
+        color: #666;
+        font-size: 0.9em;
+    }
+
+    #loading {
+        text-align: center;
+        font-size: 1.2em;
+        margin: 50px;
+    }
+
+    .stats-summary {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        text-align: center;
+    }
+
+    .stats-summary .stat-item {
+        display: inline-block;
+        margin: 0 30px;
+    }
+
+    .stats-summary .stat-value {
+        font-size: 2em;
+        font-weight: bold;
+        color: #4285F4;
+    }
+
+    .stats-summary .stat-label {
+        color: #666;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+</style>
+</head>
+<body>
+
+<!-- Header placeholder -->
+<div id="site-header"></div>
+
+<h1>Held Item Usage Rankings</h1>
+<p class="subtitle">Items used by trainer Pokémon, ranked by frequency</p>
+
+<div class="stats-summary" id="stats-summary"></div>
+
+<div id="loading">Loading item usage data...</div>
+<div id="item-usage-grid"></div>
+
+<script>
+    // Helper function to get item icon path
+    function getItemIconPath(itemName) {
+        if (!itemName) return 'image/items/unknown.png';
+        
+        // Convert item name to filename format
+        let fileName = itemName.toLowerCase().replace(/\s+/g, '-');
+        
+        // Special handling for TMs/HMs
+        if (itemName.startsWith('TM') || itemName.startsWith('HM')) {
+            const match = itemName.match(/(TM|HM)(\d+)/);
+            if (match) {
+                fileName = `${match[1].toLowerCase()}${match[2].padStart(2, '0')}`;
+            }
+        }
+        
+        return `image/items/${fileName}.png`;
+    }
+
+    // Load and process trainer data
+    async function loadItemUsage() {
+        try {
+            const response = await fetch('data/trainers.json');
+            const trainersData = await response.json();
+            
+            // Count item usage
+            const itemCounts = {};
+            let totalItems = 0;
+            let totalPokemon = 0;
+            
+            // Iterate through all locations
+            for (const location in trainersData) {
+                const locationData = trainersData[location];
+                if (!locationData.Trainers) continue;
+                
+                // Iterate through all trainers
+                for (const trainer of locationData.Trainers) {
+                    if (!trainer.Pokemon) continue;
+                    
+                    // Iterate through all Pokemon
+                    for (const pokemon of trainer.Pokemon) {
+                        totalPokemon++;
+                        
+                        if (pokemon.HeldItem && pokemon.HeldItem.trim() !== '') {
+                            const itemName = pokemon.HeldItem;
+                            itemCounts[itemName] = (itemCounts[itemName] || 0) + 1;
+                            totalItems++;
+                        }
+                    }
+                }
+            }
+            
+            // Convert to array and sort by count
+            const itemUsageArray = Object.entries(itemCounts)
+                .map(([item, count]) => ({ item, count }))
+                .sort((a, b) => b.count - a.count);
+            
+            // Display stats summary
+            displayStatsSummary(itemUsageArray.length, totalItems, totalPokemon);
+            
+            // Display items
+            displayItems(itemUsageArray);
+            
+        } catch (error) {
+            console.error('Error loading item usage:', error);
+            document.getElementById('loading').textContent = 'Error loading data. Please try again later.';
+        }
+    }
+
+    function displayStatsSummary(uniqueItems, totalUsages, totalPokemon) {
+        const percentage = ((totalUsages / totalPokemon) * 100).toFixed(1);
+        const summaryHtml = `
+            <div class="stat-item">
+                <div class="stat-value">${uniqueItems}</div>
+                <div class="stat-label">Unique Items</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${totalUsages}</div>
+                <div class="stat-label">Total Item Usages</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${totalPokemon}</div>
+                <div class="stat-label">Total Pokémon</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">${percentage}%</div>
+                <div class="stat-label">Hold Item Rate</div>
+            </div>
+        `;
+        document.getElementById('stats-summary').innerHTML = summaryHtml;
+    }
+
+    function displayItems(itemUsageArray) {
+        const grid = document.getElementById('item-usage-grid');
+        const loading = document.getElementById('loading');
+        
+        if (itemUsageArray.length === 0) {
+            loading.textContent = 'No item usage data found.';
+            return;
+        }
+        
+        loading.style.display = 'none';
+        
+        itemUsageArray.forEach((itemData, index) => {
+            const rank = index + 1;
+            const card = document.createElement('div');
+            card.className = 'item-usage-card';
+            
+            let rankClass = '';
+            if (rank === 1) rankClass = 'top-1';
+            else if (rank === 2) rankClass = 'top-2';
+            else if (rank === 3) rankClass = 'top-3';
+            
+            const iconPath = getItemIconPath(itemData.item);
+            
+            card.innerHTML = `
+                <div class="rank-badge ${rankClass}">#${rank}</div>
+                <img src="${iconPath}" alt="${itemData.item}" class="item-icon" 
+                     onerror="this.src='image/items/unknown.png'">
+                <div class="item-name">${itemData.item}</div>
+                <div class="usage-count">${itemData.count}</div>
+                <div class="count-label">times used</div>
+            `;
+            
+            grid.appendChild(card);
+        });
+    }
+
+    // Load data when page loads
+    loadItemUsage();
+</script>
+
+</body>
+</html>
