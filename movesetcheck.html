@@ -147,7 +147,7 @@
 <div id="header-placeholder"></div>
 
 <h1>Moveset Validation</h1>
-<div class="subtitle">Checking for level-up moves that have TMs the Pokemon doesn't learn</div>
+<div class="subtitle">Checking for level-up moves that have TMs the Pokemon doesn't learn, and Pokemon with too few moves</div>
 
 <div class="stats-container">
     <div class="stat-box">
@@ -161,6 +161,10 @@
     <div class="stat-box">
         <div class="stat-number" id="tm-missing-count">0</div>
         <div class="stat-label">Missing TMs</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number" id="low-move-count">0</div>
+        <div class="stat-label">Low Move Count</div>
     </div>
 </div>
 
@@ -192,6 +196,14 @@ function getPokemonIconPath(pokemonName) {
 
 function checkMovesetIssues(pokemonName, levelUpMoves, tmMoves, allTMsMap) {
     const issues = [];
+    
+    // Check if Pokemon has 26 or fewer moves
+    if (levelUpMoves.length <= 26) {
+        issues.push({
+            type: 'Low Move Count',
+            details: `Only ${levelUpMoves.length} moves (should have more than 26)`
+        });
+    }
     
     // Get the set of TMs this Pokemon can learn (only numbered TMs)
     const pokemonTMSet = new Set();
@@ -301,6 +313,7 @@ async function displayMovesetCheck() {
     let totalPokemon = 0;
     let pokemonWithIssues = 0;
     let totalMissingTMs = 0;
+    let totalLowMoveCount = 0;
     
     const pokemonResults = [];
     
@@ -317,6 +330,9 @@ async function displayMovesetCheck() {
             issues.forEach(issue => {
                 if (issue.type === 'Missing TMs') {
                     totalMissingTMs++;
+                }
+                if (issue.type === 'Low Move Count') {
+                    totalLowMoveCount++;
                 }
             });
         }
@@ -341,6 +357,7 @@ async function displayMovesetCheck() {
     document.getElementById('total-pokemon').textContent = totalPokemon;
     document.getElementById('pokemon-with-issues').textContent = pokemonWithIssues;
     document.getElementById('tm-missing-count').textContent = totalMissingTMs;
+    document.getElementById('low-move-count').textContent = totalLowMoveCount;
 }
 
 // Load data when page loads
