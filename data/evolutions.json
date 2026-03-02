@@ -60,7 +60,7 @@
     "EvolvesFrom": "Caterpie",
     "FromMethod": "Level Up: 10",
     "EvolvesInto": {
-      "Butterfree": "Level Up: 15"
+      "Butterfree": "Level Up: 20"
     }
   },
   "Caterpie": {
@@ -72,14 +72,14 @@
   },
   "Butterfree": {
     "EvolvesFrom": "Metapod",
-    "FromMethod": "Level Up: 15",
+    "FromMethod": "Level Up: 20",
     "EvolvesInto": {}
   },
   "Kakuna": {
     "EvolvesFrom": "Weedle",
     "FromMethod": "Level Up: 10",
     "EvolvesInto": {
-      "Beedrill": "Level Up: 15"
+      "Beedrill": "Level Up: 20"
     }
   },
   "Weedle": {
@@ -91,7 +91,7 @@
   },
   "Beedrill": {
     "EvolvesFrom": "Kakuna",
-    "FromMethod": "Level Up: 15",
+    "FromMethod": "Level Up: 20",
     "EvolvesInto": {}
   },
   "Pidgeotto": {
@@ -139,14 +139,14 @@
   },
   "Arbok": {
     "EvolvesFrom": "Ekans",
-    "FromMethod": "Level Up: 22",
+    "FromMethod": "Level Up: 24",
     "EvolvesInto": {}
   },
   "Ekans": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Arbok": "Level Up: 22"
+      "Arbok": "Level Up: 24"
     }
   },
   "Raichu": {
@@ -163,24 +163,24 @@
   },
   "Sandslash": {
     "EvolvesFrom": "Sandshrew",
-    "FromMethod": "Level Up: 22",
+    "FromMethod": "Level Up: 25",
     "EvolvesInto": {}
   },
   "Sandshrew": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Sandslash": "Level Up: 22"
+      "Sandslash": "Level Up: 25"
     }
   },
   "Nidorina": {
-    "EvolvesFrom": "Nidoran--F",
+    "EvolvesFrom": "Nidoran-F",
     "FromMethod": "Level Up: 16",
     "EvolvesInto": {
       "Nidoqueen": "Level Up: 35"
     }
   },
-  "Nidoran--F": {
+  "Nidoran-F": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
@@ -193,13 +193,13 @@
     "EvolvesInto": {}
   },
   "Nidorino": {
-    "EvolvesFrom": "Nidoran--M",
+    "EvolvesFrom": "Nidoran-M",
     "FromMethod": "Level Up: 16",
     "EvolvesInto": {
       "Nidoking": "Level Up: 35"
     }
   },
-  "Nidoran--M": {
+  "Nidoran-M": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
@@ -1698,14 +1698,14 @@
     "EvolvesFrom": "Wurmple",
     "FromMethod": "Level Up Female: 10",
     "EvolvesInto": {
-      "Beautifly": "Level Up: 15"
+      "Beautifly": "Level Up: 20"
     }
   },
   "Cascoon": {
     "EvolvesFrom": "Wurmple",
     "FromMethod": "Level Up: 10 (Male)",
     "EvolvesInto": {
-      "Dustox": "Level Up: 15"
+      "Dustox": "Level Up: 20"
     }
   },
   "Wurmple": {
@@ -1718,12 +1718,12 @@
   },
   "Beautifly": {
     "EvolvesFrom": "Silcoon",
-    "FromMethod": "Level Up: 15",
+    "FromMethod": "Level Up: 20",
     "EvolvesInto": {}
   },
   "Dustox": {
     "EvolvesFrom": "Cascoon",
-    "FromMethod": "Level Up: 15",
+    "FromMethod": "Level Up: 20",
     "EvolvesInto": {}
   },
   "Lombre": {
@@ -3540,14 +3540,14 @@
   },
   "Amoonguss": {
     "EvolvesFrom": "Foongus",
-    "FromMethod": "Level Up: 35",
+    "FromMethod": "Level Up: 30",
     "EvolvesInto": {}
   },
   "Foongus": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Amoonguss": "Level Up: 35"
+      "Amoonguss": "Level Up: 30"
     }
   },
   "Jellicent": {
@@ -3607,7 +3607,7 @@
   },
   "Eelektrik": {
     "EvolvesFrom": "Tynamo",
-    "FromMethod": "Level Up: 27",
+    "FromMethod": "Level Up: 24",
     "EvolvesInto": {
       "Eelektross": "Level Up: 41"
     }
@@ -3616,7 +3616,7 @@
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Eelektrik": "Level Up: 27"
+      "Eelektrik": "Level Up: 24"
     }
   },
   "Eelektross": {
@@ -3638,7 +3638,7 @@
   },
   "Lampent": {
     "EvolvesFrom": "Litwick",
-    "FromMethod": "Level Up: 29",
+    "FromMethod": "Level Up: 25",
     "EvolvesInto": {
       "Chandelure": "Level Up: 45"
     }
@@ -3647,7 +3647,7 @@
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Lampent": "Level Up: 29"
+      "Lampent": "Level Up: 25"
     }
   },
   "Chandelure": {
@@ -3971,7 +3971,7 @@
     "EvolvesFrom": "Scatterbug",
     "FromMethod": "Level Up: 10",
     "EvolvesInto": {
-      "Vivillon": "Level Up: 15"
+      "Vivillon": "Level Up: 20"
     }
   },
   "Scatterbug": {
@@ -3983,7 +3983,7 @@
   },
   "Vivillon": {
     "EvolvesFrom": "Spewpa",
-    "FromMethod": "Level Up: 15",
+    "FromMethod": "Level Up: 20",
     "EvolvesInto": {}
   },
   "Pyroar": {
@@ -4169,26 +4169,26 @@
   },
   "Tyrantrum": {
     "EvolvesFrom": "Tyrunt",
-    "FromMethod": "Level Up: 37",
+    "FromMethod": "Level Up: 35",
     "EvolvesInto": {}
   },
   "Tyrunt": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Tyrantrum": "Level Up: 37"
+      "Tyrantrum": "Level Up: 35"
     }
   },
   "Aurorus": {
     "EvolvesFrom": "Amaura",
-    "FromMethod": "Level Up: 37",
+    "FromMethod": "Level Up: 35",
     "EvolvesInto": {}
   },
   "Amaura": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Aurorus": "Level Up: 37"
+      "Aurorus": "Level Up: 35"
     }
   },
   "Hawlucha": {

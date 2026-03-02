@@ -51,6 +51,10 @@
         "Move": "Weather Ball"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -1085,6 +1089,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
+      },
+      {
         "Label": "TM94",
         "Move": "Rock Smash"
       },
@@ -1236,6 +1244,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
       },
       {
         "Label": "TM94",
@@ -1494,6 +1506,10 @@
       {
         "Label": "TM17",
         "Move": "Protect"
+      },
+      {
+        "Label": "TM76",
+        "Move": "Struggle Bug"
       }
     ]
   },
@@ -2261,6 +2277,10 @@
         "Move": "Thunder Wave"
       },
       {
+        "Label": "TM75",
+        "Move": "Swords Dance"
+      },
+      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -2705,6 +2725,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM02",
+        "Move": "Dragon Claw"
+      },
+      {
         "Label": "TM06",
         "Move": "Toxic"
       },
@@ -2783,6 +2807,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Dragon Tail"
       },
       {
         "Label": "TM83",
@@ -3643,6 +3671,10 @@
         "Move": "Dig"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -3677,6 +3709,10 @@
       {
         "Label": "TM84",
         "Move": "Poison Jab"
+      },
+      {
+        "Label": "TM85",
+        "Move": "Mudslide"
       },
       {
         "Label": "TM87",
@@ -3772,6 +3808,10 @@
         "Move": "Dig"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -3806,6 +3846,10 @@
       {
         "Label": "TM84",
         "Move": "Poison Jab"
+      },
+      {
+        "Label": "TM85",
+        "Move": "Mudslide"
       },
       {
         "Label": "TM87",
@@ -4146,8 +4190,16 @@
         "Move": "Thunder"
       },
       {
+        "Label": "TM26",
+        "Move": "Earthquake"
+      },
+      {
         "Label": "TM28",
         "Move": "Dig"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM36",
@@ -4174,8 +4226,16 @@
         "Move": "Round"
       },
       {
+        "Label": "TM58",
+        "Move": "Rock Climb"
+      },
+      {
         "Label": "TM65",
         "Move": "Shadow Claw"
+      },
+      {
+        "Label": "TM78",
+        "Move": "Bulldoze"
       },
       {
         "Label": "TM84",
@@ -4271,8 +4331,16 @@
         "Move": "Thunder"
       },
       {
+        "Label": "TM26",
+        "Move": "Earthquake"
+      },
+      {
         "Label": "TM28",
         "Move": "Dig"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM36",
@@ -4299,8 +4367,16 @@
         "Move": "Round"
       },
       {
+        "Label": "TM58",
+        "Move": "Rock Climb"
+      },
+      {
         "Label": "TM65",
         "Move": "Shadow Claw"
+      },
+      {
+        "Label": "TM78",
+        "Move": "Bulldoze"
       },
       {
         "Label": "TM84",
@@ -5121,6 +5197,10 @@
       {
         "Label": "TM97",
         "Move": "Dark Pulse"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       }
     ]
   },
@@ -5755,6 +5835,10 @@
         "Move": "Double Team"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -5892,6 +5976,10 @@
         "Move": "Double Team"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -6013,6 +6101,10 @@
         "Move": "Weather Ball"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -6124,6 +6216,10 @@
       {
         "Label": "TM27",
         "Move": "Weather Ball"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM36",
@@ -6241,6 +6337,10 @@
       {
         "Label": "TM27",
         "Move": "Weather Ball"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM36",
@@ -6662,6 +6762,10 @@
         "Move": "Psychic"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -6684,6 +6788,10 @@
       {
         "Label": "TM48",
         "Move": "Round"
+      },
+      {
+        "Label": "TM76",
+        "Move": "Struggle Bug"
       },
       {
         "Label": "TM77",
@@ -6761,6 +6869,10 @@
       {
         "Label": "TM29",
         "Move": "Psychic"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM36",
@@ -6938,6 +7050,10 @@
       {
         "Label": "TM65",
         "Move": "Shadow Claw"
+      },
+      {
+        "Label": "TM71",
+        "Move": "Stone Edge"
       },
       {
         "Label": "TM78",
@@ -8579,6 +8695,10 @@
         "Move": "Hail"
       },
       {
+        "Label": "TM08",
+        "Move": "Bulk Up"
+      },
+      {
         "Label": "TM10",
         "Move": "Hidden Power"
       },
@@ -9967,6 +10087,10 @@
         "Move": "Infestation"
       },
       {
+        "Label": "TM84",
+        "Move": "Poison Jab"
+      },
+      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -10086,6 +10210,10 @@
       {
         "Label": "TM83",
         "Move": "Infestation"
+      },
+      {
+        "Label": "TM84",
+        "Move": "Poison Jab"
       },
       {
         "Label": "TM86",
@@ -10219,6 +10347,10 @@
       {
         "Label": "TM83",
         "Move": "Infestation"
+      },
+      {
+        "Label": "TM84",
+        "Move": "Poison Jab"
       },
       {
         "Label": "TM86",
@@ -13006,6 +13138,10 @@
         "Move": "Shadow Ball"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -13141,6 +13277,10 @@
       {
         "Label": "TM30",
         "Move": "Shadow Ball"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM36",
@@ -13302,6 +13442,10 @@
       {
         "Label": "TM30",
         "Move": "Shadow Ball"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM36",
@@ -13634,6 +13778,10 @@
         "Move": "Reflect"
       },
       {
+        "Label": "TM36",
+        "Move": "Sludge Bomb"
+      },
+      {
         "Label": "TM41",
         "Move": "Ice Punch"
       },
@@ -13680,6 +13828,10 @@
       {
         "Label": "TM77",
         "Move": "Zen Headbutt"
+      },
+      {
+        "Label": "TM84",
+        "Move": "Poison Jab"
       },
       {
         "Label": "TM86",
@@ -13787,6 +13939,10 @@
         "Move": "Reflect"
       },
       {
+        "Label": "TM36",
+        "Move": "Sludge Bomb"
+      },
+      {
         "Label": "TM41",
         "Move": "Ice Punch"
       },
@@ -13845,6 +14001,10 @@
       {
         "Label": "TM77",
         "Move": "Zen Headbutt"
+      },
+      {
+        "Label": "TM84",
+        "Move": "Poison Jab"
       },
       {
         "Label": "TM86",
@@ -14834,6 +14994,10 @@
         "Move": "Fire Punch"
       },
       {
+        "Label": "TM65",
+        "Move": "Shadow Claw"
+      },
+      {
         "Label": "TM67",
         "Move": "Retaliate"
       },
@@ -15001,6 +15165,10 @@
       {
         "Label": "TM63",
         "Move": "Fire Punch"
+      },
+      {
+        "Label": "TM65",
+        "Move": "Shadow Claw"
       },
       {
         "Label": "TM67",
@@ -15482,6 +15650,10 @@
         "Move": "Icy Wind"
       },
       {
+        "Label": "TM74",
+        "Move": "Gyro Ball"
+      },
+      {
         "Label": "TM75",
         "Move": "Swords Dance"
       },
@@ -15593,6 +15765,10 @@
       {
         "Label": "TM30",
         "Move": "Shadow Ball"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM35",
@@ -15726,6 +15902,10 @@
       {
         "Label": "TM30",
         "Move": "Shadow Ball"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM35",
@@ -16540,6 +16720,10 @@
         "Move": "Rock Smash"
       },
       {
+        "Label": "TM96",
+        "Move": "Nature Power"
+      },
+      {
         "Label": "HM01",
         "Move": "Cut"
       }
@@ -17064,6 +17248,10 @@
         "Move": "Icy Wind"
       },
       {
+        "Label": "TM75",
+        "Move": "Swords Dance"
+      },
+      {
         "Label": "TM84",
         "Move": "Poison Jab"
       },
@@ -17167,6 +17355,10 @@
       {
         "Label": "TM70",
         "Move": "Icy Wind"
+      },
+      {
+        "Label": "TM75",
+        "Move": "Swords Dance"
       },
       {
         "Label": "TM84",
@@ -18260,6 +18452,14 @@
         "Move": "Focus Blast"
       },
       {
+        "Label": "TM55",
+        "Move": "Scald"
+      },
+      {
+        "Label": "TM56",
+        "Move": "Nasty Plot"
+      },
+      {
         "Label": "TM59",
         "Move": "Incinerate"
       },
@@ -18270,6 +18470,10 @@
       {
         "Label": "TM63",
         "Move": "Fire Punch"
+      },
+      {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
       },
       {
         "Label": "TM68",
@@ -19051,6 +19255,10 @@
         "Move": "Sunny Day"
       },
       {
+        "Label": "TM15",
+        "Move": "Hyper Beam"
+      },
+      {
         "Label": "TM17",
         "Move": "Protect"
       },
@@ -19093,6 +19301,10 @@
       {
         "Label": "TM67",
         "Move": "Retaliate"
+      },
+      {
+        "Label": "TM68",
+        "Move": "Giga Impact"
       },
       {
         "Label": "TM87",
@@ -19182,6 +19394,10 @@
       {
         "Label": "TM32",
         "Move": "Double Team"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM42",
@@ -19764,6 +19980,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM85",
+        "Move": "Mudslide"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -19909,6 +20129,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM85",
+        "Move": "Mudslide"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -20034,8 +20258,20 @@
         "Move": "Rock Polish"
       },
       {
+        "Label": "TM71",
+        "Move": "Stone Edge"
+      },
+      {
+        "Label": "TM75",
+        "Move": "Swords Dance"
+      },
+      {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM81",
+        "Move": "X-Scissor"
       },
       {
         "Label": "TM87",
@@ -23723,6 +23959,10 @@
         "Move": "Thunderbolt"
       },
       {
+        "Label": "TM26",
+        "Move": "Earthquake"
+      },
+      {
         "Label": "TM28",
         "Move": "Dig"
       },
@@ -23789,6 +24029,10 @@
       {
         "Label": "TM72",
         "Move": "Seed Bomb"
+      },
+      {
+        "Label": "TM78",
+        "Move": "Bulldoze"
       },
       {
         "Label": "TM86",
@@ -23986,6 +24230,10 @@
       {
         "Label": "TM77",
         "Move": "Zen Headbutt"
+      },
+      {
+        "Label": "TM78",
+        "Move": "Bulldoze"
       },
       {
         "Label": "TM86",
@@ -24883,6 +25131,10 @@
         "Move": "Double Team"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -25294,6 +25546,10 @@
         "Move": "Charge Beam"
       },
       {
+        "Label": "TM60",
+        "Move": "Slam"
+      },
+      {
         "Label": "TM73",
         "Move": "Thunder Wave"
       },
@@ -25445,6 +25701,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       }
     ]
   },
@@ -25679,6 +25939,10 @@
       {
         "Label": "TM59",
         "Move": "Incinerate"
+      },
+      {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
       },
       {
         "Label": "TM77",
@@ -26279,6 +26543,10 @@
       {
         "Label": "TM93",
         "Move": "Wild Charge"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       }
     ]
   },
@@ -26400,6 +26668,10 @@
       {
         "Label": "TM98",
         "Move": "Power-Up Punch"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       },
       {
         "Label": "HM04",
@@ -26553,6 +26825,10 @@
       {
         "Label": "TM98",
         "Move": "Power-Up Punch"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       },
       {
         "Label": "HM03",
@@ -26809,6 +27085,10 @@
         "Move": "Power-Up Punch"
       },
       {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
+      },
+      {
         "Label": "HM03",
         "Move": "Surf"
       },
@@ -26952,6 +27232,10 @@
       {
         "Label": "TM98",
         "Move": "Power-Up Punch"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       },
       {
         "Label": "HM03",
@@ -27278,6 +27562,10 @@
       {
         "Label": "TM98",
         "Move": "Power-Up Punch"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       },
       {
         "Label": "HM03",
@@ -27943,6 +28231,10 @@
       {
         "Label": "TM96",
         "Move": "Nature Power"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       },
       {
         "Label": "HM01",
@@ -29293,6 +29585,10 @@
       {
         "Label": "TM49",
         "Move": "Power Gem"
+      },
+      {
+        "Label": "TM96",
+        "Move": "Nature Power"
       }
     ]
   },
@@ -29314,7 +29610,12 @@
     "CatchRate": 255,
     "BaseXP": 74,
     "GrowthRate": "Medium-Slow",
-    "TMs": []
+    "TMs": [
+      {
+        "Label": "TM66",
+        "Move": "Payback"
+      }
+    ]
   },
   "Girafarig": {
     "SpeciesIdx": 203,
@@ -29891,6 +30192,10 @@
         "Move": "Incinerate"
       },
       {
+        "Label": "TM60",
+        "Move": "Slam"
+      },
+      {
         "Label": "TM67",
         "Move": "Retaliate"
       },
@@ -30422,6 +30727,10 @@
         "Move": "Thief"
       },
       {
+        "Label": "TM47",
+        "Move": "Brick Break"
+      },
+      {
         "Label": "TM48",
         "Move": "Round"
       },
@@ -30621,6 +30930,10 @@
       {
         "Label": "TM46",
         "Move": "Thief"
+      },
+      {
+        "Label": "TM47",
+        "Move": "Brick Break"
       },
       {
         "Label": "TM48",
@@ -31947,6 +32260,10 @@
         "Move": "Flamethrower"
       },
       {
+        "Label": "TM36",
+        "Move": "Sludge Bomb"
+      },
+      {
         "Label": "TM38",
         "Move": "Fire Blast"
       },
@@ -31981,6 +32298,10 @@
       {
         "Label": "TM50",
         "Move": "Overheat"
+      },
+      {
+        "Label": "TM55",
+        "Move": "Scald"
       },
       {
         "Label": "TM59",
@@ -32092,6 +32413,10 @@
         "Move": "Flamethrower"
       },
       {
+        "Label": "TM36",
+        "Move": "Sludge Bomb"
+      },
+      {
         "Label": "TM37",
         "Move": "Sandstorm"
       },
@@ -32130,6 +32455,10 @@
       {
         "Label": "TM50",
         "Move": "Overheat"
+      },
+      {
+        "Label": "TM55",
+        "Move": "Scald"
       },
       {
         "Label": "TM59",
@@ -32740,6 +33069,10 @@
         "Move": "Incinerate"
       },
       {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
+      },
+      {
         "Label": "TM70",
         "Move": "Icy Wind"
       },
@@ -32762,6 +33095,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
       },
       {
         "Label": "HM03",
@@ -32877,6 +33214,10 @@
         "Move": "Round"
       },
       {
+        "Label": "TM50",
+        "Move": "Overheat"
+      },
+      {
         "Label": "TM52",
         "Move": "Focus Blast"
       },
@@ -32899,6 +33240,10 @@
       {
         "Label": "TM60",
         "Move": "Slam"
+      },
+      {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
       },
       {
         "Label": "TM66",
@@ -33121,6 +33466,10 @@
       {
         "Label": "TM18",
         "Move": "Rain Dance"
+      },
+      {
+        "Label": "TM19",
+        "Move": "Roost"
       },
       {
         "Label": "TM26",
@@ -35405,6 +35754,14 @@
         "Move": "Overheat"
       },
       {
+        "Label": "TM55",
+        "Move": "Scald"
+      },
+      {
+        "Label": "TM56",
+        "Move": "Nasty Plot"
+      },
+      {
         "Label": "TM59",
         "Move": "Incinerate"
       },
@@ -35415,6 +35772,10 @@
       {
         "Label": "TM63",
         "Move": "Fire Punch"
+      },
+      {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
       },
       {
         "Label": "TM87",
@@ -35860,6 +36221,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
+      {
         "Label": "TM04",
         "Move": "Calm Mind"
       },
@@ -36304,6 +36669,10 @@
       {
         "Label": "TM78",
         "Move": "Bulldoze"
+      },
+      {
+        "Label": "TM79",
+        "Move": "Frost Breath"
       },
       {
         "Label": "TM85",
@@ -37634,6 +38003,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM02",
+        "Move": "Dragon Claw"
+      },
+      {
         "Label": "TM06",
         "Move": "Toxic"
       },
@@ -38563,6 +38936,10 @@
         "Move": "Rain Dance"
       },
       {
+        "Label": "TM26",
+        "Move": "Earthquake"
+      },
+      {
         "Label": "TM27",
         "Move": "Weather Ball"
       },
@@ -38601,6 +38978,10 @@
       {
         "Label": "TM70",
         "Move": "Icy Wind"
+      },
+      {
+        "Label": "TM78",
+        "Move": "Bulldoze"
       },
       {
         "Label": "TM80",
@@ -39580,6 +39961,10 @@
       {
         "Label": "TM17",
         "Move": "Protect"
+      },
+      {
+        "Label": "TM76",
+        "Move": "Struggle Bug"
       }
     ]
   },
@@ -39587,16 +39972,16 @@
     "SpeciesIdx": 266,
     "Type1": "Bug",
     "Type2": "Bug",
-    "Ability1": "Shed Skin",
+    "Ability1": "Shield Dust",
     "Ability2": "Shed Skin",
     "AbilityH": "Filter",
     "BaseStats": {
       "HP": 50,
-      "Atk": 25,
+      "Atk": 35,
       "Def": 55,
       "SpA": 50,
       "SpD": 55,
-      "Spe": 15
+      "Spe": 55
     },
     "CatchRate": 255,
     "BaseXP": 38,
@@ -39605,6 +39990,10 @@
       {
         "Label": "TM17",
         "Move": "Protect"
+      },
+      {
+        "Label": "TM76",
+        "Move": "Struggle Bug"
       }
     ]
   },
@@ -39741,16 +40130,16 @@
     "SpeciesIdx": 268,
     "Type1": "Bug",
     "Type2": "Bug",
-    "Ability1": "Shed Skin",
+    "Ability1": "Shield Dust",
     "Ability2": "Shed Skin",
     "AbilityH": "Filter",
     "BaseStats": {
-      "HP": 50,
+      "HP": 60,
       "Atk": 50,
       "Def": 55,
-      "SpA": 25,
-      "SpD": 55,
-      "Spe": 15
+      "SpA": 35,
+      "SpD": 65,
+      "Spe": 35
     },
     "CatchRate": 255,
     "BaseXP": 22,
@@ -41409,6 +41798,10 @@
         "Move": "Fire Punch"
       },
       {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
+      },
+      {
         "Label": "TM70",
         "Move": "Icy Wind"
       },
@@ -41560,6 +41953,10 @@
       {
         "Label": "TM63",
         "Move": "Fire Punch"
+      },
+      {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
       },
       {
         "Label": "TM70",
@@ -42617,6 +43014,10 @@
         "Move": "Retaliate"
       },
       {
+        "Label": "TM68",
+        "Move": "Giga Impact"
+      },
+      {
         "Label": "TM72",
         "Move": "Seed Bomb"
       },
@@ -43229,6 +43630,10 @@
         "Move": "Giga Impact"
       },
       {
+        "Label": "TM70",
+        "Move": "Icy Wind"
+      },
+      {
         "Label": "TM76",
         "Move": "Struggle Bug"
       },
@@ -43247,6 +43652,10 @@
       {
         "Label": "TM88",
         "Move": "Sleep Talk"
+      },
+      {
+        "Label": "TM89",
+        "Move": "U-turn"
       },
       {
         "Label": "TM90",
@@ -44179,6 +44588,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
+      },
+      {
         "Label": "HM03",
         "Move": "Surf"
       },
@@ -44322,6 +44735,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
       },
       {
         "Label": "TM93",
@@ -45129,12 +45546,20 @@
         "Move": "Iron Head"
       },
       {
+        "Label": "TM58",
+        "Move": "Rock Climb"
+      },
+      {
         "Label": "TM65",
         "Move": "Shadow Claw"
       },
       {
         "Label": "TM69",
         "Move": "Rock Polish"
+      },
+      {
+        "Label": "TM71",
+        "Move": "Stone Edge"
       },
       {
         "Label": "TM78",
@@ -45192,6 +45617,10 @@
       {
         "Label": "TM01",
         "Move": "Hone Claws"
+      },
+      {
+        "Label": "TM02",
+        "Move": "Dragon Claw"
       },
       {
         "Label": "TM05",
@@ -45264,6 +45693,10 @@
       {
         "Label": "TM51",
         "Move": "Iron Head"
+      },
+      {
+        "Label": "TM58",
+        "Move": "Rock Climb"
       },
       {
         "Label": "TM65",
@@ -46510,6 +46943,10 @@
         "Move": "Zen Headbutt"
       },
       {
+        "Label": "TM83",
+        "Move": "Infestation"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -46524,6 +46961,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM93",
+        "Move": "Wild Charge"
       },
       {
         "Label": "TM98",
@@ -46603,6 +47044,10 @@
         "Move": "Thunder"
       },
       {
+        "Label": "TM29",
+        "Move": "Psychic"
+      },
+      {
         "Label": "TM30",
         "Move": "Shadow Ball"
       },
@@ -46635,6 +47080,10 @@
         "Move": "Round"
       },
       {
+        "Label": "TM53",
+        "Move": "Energy Ball"
+      },
+      {
         "Label": "TM57",
         "Move": "Charge Beam"
       },
@@ -46653,6 +47102,10 @@
       {
         "Label": "TM77",
         "Move": "Zen Headbutt"
+      },
+      {
+        "Label": "TM83",
+        "Move": "Infestation"
       },
       {
         "Label": "TM87",
@@ -48228,6 +48681,10 @@
       {
         "Label": "TM95",
         "Move": "Snarl"
+      },
+      {
+        "Label": "TM97",
+        "Move": "Dark Pulse"
       }
     ]
   },
@@ -48609,6 +49066,10 @@
         "Move": "Solar Beam"
       },
       {
+        "Label": "TM23",
+        "Move": "Smack Down"
+      },
+      {
         "Label": "TM26",
         "Move": "Earthquake"
       },
@@ -48698,6 +49159,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM02",
+        "Move": "Dragon Claw"
+      },
+      {
         "Label": "TM06",
         "Move": "Toxic"
       },
@@ -48784,6 +49249,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM81",
+        "Move": "X-Scissor"
       },
       {
         "Label": "TM85",
@@ -50231,6 +50700,10 @@
         "Move": "Facade"
       },
       {
+        "Label": "TM43",
+        "Move": "Flame Charge"
+      },
+      {
         "Label": "TM44",
         "Move": "Rest"
       },
@@ -50313,6 +50786,10 @@
       {
         "Label": "TM92",
         "Move": "Trick Room"
+      },
+      {
+        "Label": "TM93",
+        "Move": "Wild Charge"
       },
       {
         "Label": "HM04",
@@ -51374,6 +51851,10 @@
         "Move": "Rock Polish"
       },
       {
+        "Label": "TM71",
+        "Move": "Stone Edge"
+      },
+      {
         "Label": "TM72",
         "Move": "Seed Bomb"
       },
@@ -51408,6 +51889,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM96",
+        "Move": "Nature Power"
       }
     ]
   },
@@ -51666,6 +52151,10 @@
       {
         "Label": "TM69",
         "Move": "Rock Polish"
+      },
+      {
+        "Label": "TM71",
+        "Move": "Stone Edge"
       },
       {
         "Label": "TM75",
@@ -53524,6 +54013,10 @@
         "Move": "Incinerate"
       },
       {
+        "Label": "TM60",
+        "Move": "Slam"
+      },
+      {
         "Label": "TM61",
         "Move": "Will-O-Wisp"
       },
@@ -53631,6 +54124,10 @@
       {
         "Label": "TM17",
         "Move": "Protect"
+      },
+      {
+        "Label": "TM66",
+        "Move": "Payback"
       }
     ]
   },
@@ -53686,6 +54183,10 @@
         "Move": "Rain Dance"
       },
       {
+        "Label": "TM23",
+        "Move": "Smack Down"
+      },
+      {
         "Label": "TM27",
         "Move": "Weather Ball"
       },
@@ -53696,6 +54197,10 @@
       {
         "Label": "TM32",
         "Move": "Double Team"
+      },
+      {
+        "Label": "TM39",
+        "Move": "Rock Tomb"
       },
       {
         "Label": "TM42",
@@ -53714,8 +54219,16 @@
         "Move": "Round"
       },
       {
+        "Label": "TM51",
+        "Move": "Iron Head"
+      },
+      {
         "Label": "TM70",
         "Move": "Icy Wind"
+      },
+      {
+        "Label": "TM71",
+        "Move": "Stone Edge"
       },
       {
         "Label": "TM77",
@@ -53724,6 +54237,10 @@
       {
         "Label": "TM79",
         "Move": "Frost Breath"
+      },
+      {
+        "Label": "TM80",
+        "Move": "Rock Slide"
       },
       {
         "Label": "TM87",
@@ -53879,6 +54396,10 @@
         "Move": "Frost Breath"
       },
       {
+        "Label": "TM80",
+        "Move": "Rock Slide"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -53970,6 +54491,10 @@
       {
         "Label": "TM48",
         "Move": "Round"
+      },
+      {
+        "Label": "TM51",
+        "Move": "Iron Head"
       },
       {
         "Label": "TM70",
@@ -54099,6 +54624,10 @@
       {
         "Label": "TM48",
         "Move": "Round"
+      },
+      {
+        "Label": "TM51",
+        "Move": "Iron Head"
       },
       {
         "Label": "TM70",
@@ -54462,6 +54991,10 @@
       {
         "Label": "TM70",
         "Move": "Icy Wind"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Dragon Tail"
       },
       {
         "Label": "TM83",
@@ -57844,6 +58377,10 @@
         "Move": "Zen Headbutt"
       },
       {
+        "Label": "TM78",
+        "Move": "Bulldoze"
+      },
+      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -57925,6 +58462,10 @@
         "Move": "Solar Beam"
       },
       {
+        "Label": "TM26",
+        "Move": "Earthquake"
+      },
+      {
         "Label": "TM33",
         "Move": "Reflect"
       },
@@ -57967,6 +58508,10 @@
       {
         "Label": "TM77",
         "Move": "Zen Headbutt"
+      },
+      {
+        "Label": "TM78",
+        "Move": "Bulldoze"
       },
       {
         "Label": "TM86",
@@ -59881,6 +60426,10 @@
         "Move": "Thunder Wave"
       },
       {
+        "Label": "TM75",
+        "Move": "Swords Dance"
+      },
+      {
         "Label": "TM78",
         "Move": "Bulldoze"
       },
@@ -59946,8 +60495,16 @@
         "Move": "Hidden Power"
       },
       {
+        "Label": "TM12",
+        "Move": "Taunt"
+      },
+      {
         "Label": "TM17",
         "Move": "Protect"
+      },
+      {
+        "Label": "TM48",
+        "Move": "Round"
       },
       {
         "Label": "TM76",
@@ -60491,6 +61048,10 @@
         "Move": "Shadow Ball"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -60855,6 +61416,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Dragon Tail"
       },
       {
         "Label": "TM87",
@@ -61479,6 +62044,34 @@
       {
         "Label": "TM17",
         "Move": "Protect"
+      },
+      {
+        "Label": "TM29",
+        "Move": "Psychic"
+      },
+      {
+        "Label": "TM45",
+        "Move": "Attract"
+      },
+      {
+        "Label": "TM48",
+        "Move": "Round"
+      },
+      {
+        "Label": "TM53",
+        "Move": "Energy Ball"
+      },
+      {
+        "Label": "TM76",
+        "Move": "Struggle Bug"
+      },
+      {
+        "Label": "TM83",
+        "Move": "Infestation"
+      },
+      {
+        "Label": "TM96",
+        "Move": "Nature Power"
       }
     ]
   },
@@ -61596,6 +62189,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM96",
+        "Move": "Nature Power"
       }
     ]
   },
@@ -61727,8 +62324,16 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM96",
+        "Move": "Nature Power"
+      },
+      {
         "Label": "TM100",
         "Move": "Air Slash"
+      },
+      {
+        "Label": "HM02",
+        "Move": "Fly"
       }
     ]
   },
@@ -61756,12 +62361,32 @@
         "Move": "Protect"
       },
       {
+        "Label": "TM21",
+        "Move": "Slice"
+      },
+      {
         "Label": "TM40",
         "Move": "Aerial Ace"
       },
       {
+        "Label": "TM49",
+        "Move": "Power Gem"
+      },
+      {
         "Label": "TM76",
         "Move": "Struggle Bug"
+      },
+      {
+        "Label": "TM83",
+        "Move": "Infestation"
+      },
+      {
+        "Label": "TM89",
+        "Move": "U-turn"
+      },
+      {
+        "Label": "TM100",
+        "Move": "Air Slash"
       },
       {
         "Label": "HM02",
@@ -62569,6 +63194,14 @@
       {
         "Label": "TM27",
         "Move": "Weather Ball"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
+        "Label": "TM36",
+        "Move": "Sludge Bomb"
       },
       {
         "Label": "TM42",
@@ -64323,6 +64956,10 @@
         "Move": "Shadow Ball"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM35",
         "Move": "Flamethrower"
       },
@@ -64369,6 +65006,10 @@
       {
         "Label": "TM66",
         "Move": "Payback"
+      },
+      {
+        "Label": "TM84",
+        "Move": "Poison Jab"
       },
       {
         "Label": "TM87",
@@ -64470,6 +65111,10 @@
       {
         "Label": "TM30",
         "Move": "Shadow Ball"
+      },
+      {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
       },
       {
         "Label": "TM35",
@@ -64991,6 +65636,10 @@
         "Move": "Rock Polish"
       },
       {
+        "Label": "TM71",
+        "Move": "Stone Edge"
+      },
+      {
         "Label": "TM72",
         "Move": "Seed Bomb"
       },
@@ -65158,6 +65807,10 @@
       {
         "Label": "TM92",
         "Move": "Trick Room"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       }
     ]
   },
@@ -65652,6 +66305,10 @@
         "Move": "Stone Edge"
       },
       {
+        "Label": "TM75",
+        "Move": "Swords Dance"
+      },
+      {
         "Label": "TM78",
         "Move": "Bulldoze"
       },
@@ -65819,6 +66476,10 @@
       {
         "Label": "TM71",
         "Move": "Stone Edge"
+      },
+      {
+        "Label": "TM75",
+        "Move": "Swords Dance"
       },
       {
         "Label": "TM78",
@@ -66292,6 +66953,10 @@
         "Move": "Dig"
       },
       {
+        "Label": "TM31",
+        "Move": "Dragon Pulse"
+      },
+      {
         "Label": "TM39",
         "Move": "Rock Tomb"
       },
@@ -66374,6 +67039,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
       },
       {
         "Label": "TM94",
@@ -67809,6 +68478,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
+      },
+      {
         "Label": "TM96",
         "Move": "Nature Power"
       },
@@ -67932,6 +68605,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
       },
       {
         "Label": "TM96",
@@ -69560,6 +70237,10 @@
         "Move": "Flamethrower"
       },
       {
+        "Label": "TM36",
+        "Move": "Sludge Bomb"
+      },
+      {
         "Label": "TM38",
         "Move": "Fire Blast"
       },
@@ -69602,6 +70283,14 @@
       {
         "Label": "TM52",
         "Move": "Focus Blast"
+      },
+      {
+        "Label": "TM55",
+        "Move": "Scald"
+      },
+      {
+        "Label": "TM56",
+        "Move": "Nasty Plot"
       },
       {
         "Label": "TM59",
@@ -70228,6 +70917,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
+      },
+      {
         "Label": "TM94",
         "Move": "Rock Smash"
       },
@@ -70764,6 +71457,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM01",
+        "Move": "Hone Claws"
+      },
+      {
         "Label": "TM03",
         "Move": "Psyshock"
       },
@@ -70832,6 +71529,10 @@
         "Move": "Shadow Ball"
       },
       {
+        "Label": "TM32",
+        "Move": "Double Team"
+      },
+      {
         "Label": "TM33",
         "Move": "Reflect"
       },
@@ -70898,6 +71599,10 @@
       {
         "Label": "TM64",
         "Move": "Aura Sphere"
+      },
+      {
+        "Label": "TM65",
+        "Move": "Shadow Claw"
       },
       {
         "Label": "TM67",
@@ -72131,6 +72836,10 @@
         "Move": "Thunder Wave"
       },
       {
+        "Label": "TM75",
+        "Move": "Swords Dance"
+      },
+      {
         "Label": "TM77",
         "Move": "Zen Headbutt"
       },
@@ -72194,6 +72903,10 @@
       {
         "Label": "TM02",
         "Move": "Dragon Claw"
+      },
+      {
+        "Label": "TM04",
+        "Move": "Calm Mind"
       },
       {
         "Label": "TM05",
@@ -72405,6 +73118,10 @@
         "Move": "Dragon Claw"
       },
       {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
+      {
         "Label": "TM05",
         "Move": "Roar"
       },
@@ -72463,6 +73180,10 @@
       {
         "Label": "TM26",
         "Move": "Earthquake"
+      },
+      {
+        "Label": "TM29",
+        "Move": "Psychic"
       },
       {
         "Label": "TM31",
@@ -72805,6 +73526,10 @@
       {
         "Label": "TM15",
         "Move": "Hyper Beam"
+      },
+      {
+        "Label": "TM17",
+        "Move": "Protect"
       },
       {
         "Label": "TM18",
@@ -73283,6 +74008,10 @@
       {
         "Label": "TM92",
         "Move": "Trick Room"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       }
     ]
   },
@@ -73356,6 +74085,10 @@
       {
         "Label": "TM55",
         "Move": "Scald"
+      },
+      {
+        "Label": "TM60",
+        "Move": "Slam"
       },
       {
         "Label": "TM70",
@@ -73503,6 +74236,10 @@
         "Move": "Scald"
       },
       {
+        "Label": "TM60",
+        "Move": "Slam"
+      },
+      {
         "Label": "TM68",
         "Move": "Giga Impact"
       },
@@ -73571,6 +74308,10 @@
     "BaseXP": 141,
     "GrowthRate": "Medium-Slow",
     "TMs": [
+      {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
       {
         "Label": "TM04",
         "Move": "Calm Mind"
@@ -74479,6 +75220,10 @@
         "Move": "Incinerate"
       },
       {
+        "Label": "TM60",
+        "Move": "Slam"
+      },
+      {
         "Label": "TM61",
         "Move": "Will-O-Wisp"
       },
@@ -74640,6 +75385,10 @@
         "Move": "Swords Dance"
       },
       {
+        "Label": "TM82",
+        "Move": "Dragon Tail"
+      },
+      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -74767,6 +75516,10 @@
       {
         "Label": "TM75",
         "Move": "Swords Dance"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Dragon Tail"
       },
       {
         "Label": "TM86",
@@ -75059,6 +75812,10 @@
         "Move": "Zen Headbutt"
       },
       {
+        "Label": "TM78",
+        "Move": "Bulldoze"
+      },
+      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -75120,6 +75877,10 @@
         "Move": "Toxic"
       },
       {
+        "Label": "TM08",
+        "Move": "Bulk Up"
+      },
+      {
         "Label": "TM10",
         "Move": "Hidden Power"
       },
@@ -75138,6 +75899,10 @@
       {
         "Label": "TM22",
         "Move": "Solar Beam"
+      },
+      {
+        "Label": "TM26",
+        "Move": "Earthquake"
       },
       {
         "Label": "TM35",
@@ -75574,6 +76339,10 @@
         "Move": "Scald"
       },
       {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
+      },
+      {
         "Label": "TM67",
         "Move": "Retaliate"
       },
@@ -75721,6 +76490,10 @@
       {
         "Label": "TM55",
         "Move": "Scald"
+      },
+      {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
       },
       {
         "Label": "TM67",
@@ -76329,6 +77102,10 @@
       {
         "Label": "TM73",
         "Move": "Thunder Wave"
+      },
+      {
+        "Label": "TM78",
+        "Move": "Bulldoze"
       },
       {
         "Label": "TM87",
@@ -78058,6 +78835,10 @@
         "Move": "Trick Room"
       },
       {
+        "Label": "TM97",
+        "Move": "Dark Pulse"
+      },
+      {
         "Label": "TM99",
         "Move": "Dazzling Gleam"
       }
@@ -78201,6 +78982,10 @@
       {
         "Label": "TM92",
         "Move": "Trick Room"
+      },
+      {
+        "Label": "TM97",
+        "Move": "Dark Pulse"
       },
       {
         "Label": "TM99",
@@ -79494,6 +80279,10 @@
         "Move": "Power Gem"
       },
       {
+        "Label": "TM51",
+        "Move": "Iron Head"
+      },
+      {
         "Label": "TM58",
         "Move": "Rock Climb"
       },
@@ -79997,6 +80786,10 @@
         "Move": "Focus Blast"
       },
       {
+        "Label": "TM58",
+        "Move": "Rock Climb"
+      },
+      {
         "Label": "TM60",
         "Move": "Slam"
       },
@@ -80148,6 +80941,10 @@
       {
         "Label": "TM52",
         "Move": "Focus Blast"
+      },
+      {
+        "Label": "TM58",
+        "Move": "Rock Climb"
       },
       {
         "Label": "TM60",
@@ -80311,6 +81108,10 @@
         "Move": "Focus Blast"
       },
       {
+        "Label": "TM58",
+        "Move": "Rock Climb"
+      },
+      {
         "Label": "TM60",
         "Move": "Slam"
       },
@@ -80450,6 +81251,10 @@
       {
         "Label": "TM70",
         "Move": "Icy Wind"
+      },
+      {
+        "Label": "TM78",
+        "Move": "Bulldoze"
       },
       {
         "Label": "TM83",
@@ -81169,8 +81974,16 @@
         "Move": "Payback"
       },
       {
+        "Label": "TM75",
+        "Move": "Swords Dance"
+      },
+      {
         "Label": "TM76",
         "Move": "Struggle Bug"
+      },
+      {
+        "Label": "TM81",
+        "Move": "X-Scissor"
       },
       {
         "Label": "TM86",
@@ -81274,8 +82087,16 @@
         "Move": "Payback"
       },
       {
+        "Label": "TM75",
+        "Move": "Swords Dance"
+      },
+      {
         "Label": "TM76",
         "Move": "Struggle Bug"
+      },
+      {
+        "Label": "TM81",
+        "Move": "X-Scissor"
       },
       {
         "Label": "TM86",
@@ -83052,6 +83873,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
+      {
         "Label": "TM05",
         "Move": "Roar"
       },
@@ -84492,6 +85317,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
+      },
+      {
         "Label": "TM92",
         "Move": "Trick Room"
       },
@@ -84943,6 +85772,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Dragon Tail"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -85376,6 +86209,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
       },
       {
         "Label": "TM97",
@@ -85983,7 +86820,7 @@
     "SpeciesIdx": 574,
     "Type1": "Psychic",
     "Type2": "Dark",
-    "Ability1": "Shadow Tag",
+    "Ability1": "Synchronize",
     "Ability2": "Competitive",
     "AbilityH": "Frisk",
     "BaseStats": {
@@ -86119,6 +86956,10 @@
         "Move": "Trick Room"
       },
       {
+        "Label": "TM95",
+        "Move": "Snarl"
+      },
+      {
         "Label": "TM97",
         "Move": "Dark Pulse"
       }
@@ -86128,7 +86969,7 @@
     "SpeciesIdx": 575,
     "Type1": "Psychic",
     "Type2": "Dark",
-    "Ability1": "Shadow Tag",
+    "Ability1": "Synchronize",
     "Ability2": "Competitive",
     "AbilityH": "Frisk",
     "BaseStats": {
@@ -86272,6 +87113,10 @@
         "Move": "Trick Room"
       },
       {
+        "Label": "TM95",
+        "Move": "Snarl"
+      },
+      {
         "Label": "TM97",
         "Move": "Dark Pulse"
       }
@@ -86281,9 +87126,9 @@
     "SpeciesIdx": 576,
     "Type1": "Psychic",
     "Type2": "Dark",
-    "Ability1": "Shadow Tag",
+    "Ability1": "Synchronize",
     "Ability2": "Competitive",
-    "AbilityH": "Frisk",
+    "AbilityH": "Shadow Tag",
     "BaseStats": {
       "HP": 75,
       "Atk": 55,
@@ -86431,6 +87276,10 @@
       {
         "Label": "TM92",
         "Move": "Trick Room"
+      },
+      {
+        "Label": "TM95",
+        "Move": "Snarl"
       },
       {
         "Label": "TM97",
@@ -87028,6 +87877,10 @@
       {
         "Label": "TM10",
         "Move": "Hidden Power"
+      },
+      {
+        "Label": "TM12",
+        "Move": "Taunt"
       },
       {
         "Label": "TM13",
@@ -87776,6 +88629,10 @@
         "Move": "Thunder"
       },
       {
+        "Label": "TM32",
+        "Move": "Double Team"
+      },
+      {
         "Label": "TM33",
         "Move": "Reflect"
       },
@@ -88240,6 +89097,10 @@
         "Move": "Solar Beam"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -88274,6 +89135,10 @@
       {
         "Label": "TM72",
         "Move": "Seed Bomb"
+      },
+      {
+        "Label": "TM84",
+        "Move": "Poison Jab"
       },
       {
         "Label": "TM86",
@@ -88994,6 +89859,10 @@
         "Move": "Round"
       },
       {
+        "Label": "TM51",
+        "Move": "Iron Head"
+      },
+      {
         "Label": "TM53",
         "Move": "Energy Ball"
       },
@@ -89127,6 +89996,10 @@
         "Move": "Round"
       },
       {
+        "Label": "TM51",
+        "Move": "Iron Head"
+      },
+      {
         "Label": "TM53",
         "Move": "Energy Ball"
       },
@@ -89231,6 +90104,10 @@
     "BaseXP": 32,
     "GrowthRate": "Medium-Slow",
     "TMs": [
+      {
+        "Label": "TM01",
+        "Move": "Hone Claws"
+      },
       {
         "Label": "TM06",
         "Move": "Toxic"
@@ -89345,6 +90222,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM01",
+        "Move": "Hone Claws"
+      },
+      {
         "Label": "TM06",
         "Move": "Toxic"
       },
@@ -89457,6 +90338,10 @@
     "BaseXP": 123,
     "GrowthRate": "Medium-Slow",
     "TMs": [
+      {
+        "Label": "TM01",
+        "Move": "Hone Claws"
+      },
       {
         "Label": "TM06",
         "Move": "Toxic"
@@ -89587,8 +90472,24 @@
         "Move": "Protect"
       },
       {
+        "Label": "TM24",
+        "Move": "Thunderbolt"
+      },
+      {
+        "Label": "TM25",
+        "Move": "Thunder"
+      },
+      {
+        "Label": "TM57",
+        "Move": "Charge Beam"
+      },
+      {
         "Label": "TM73",
         "Move": "Thunder Wave"
+      },
+      {
+        "Label": "TM93",
+        "Move": "Wild Charge"
       }
     ]
   },
@@ -89690,6 +90591,10 @@
       {
         "Label": "TM93",
         "Move": "Wild Charge"
+      },
+      {
+        "Label": "HM03",
+        "Move": "Surf"
       }
     ]
   },
@@ -89881,8 +90786,16 @@
         "Move": "Cut"
       },
       {
+        "Label": "HM03",
+        "Move": "Surf"
+      },
+      {
         "Label": "HM04",
         "Move": "Strength"
+      },
+      {
+        "Label": "HM05",
+        "Move": "Waterfall"
       }
     ]
   },
@@ -90198,10 +91111,10 @@
     "BaseStats": {
       "HP": 50,
       "Atk": 30,
-      "Def": 55,
-      "SpA": 65,
-      "SpD": 55,
-      "Spe": 20
+      "Def": 60,
+      "SpA": 75,
+      "SpD": 60,
+      "Spe": 30
     },
     "CatchRate": 255,
     "BaseXP": 29,
@@ -90699,6 +91612,10 @@
         "Move": "X-Scissor"
       },
       {
+        "Label": "TM82",
+        "Move": "Dragon Tail"
+      },
+      {
         "Label": "TM84",
         "Move": "Poison Jab"
       },
@@ -91190,6 +92107,14 @@
         "Move": "Attract"
       },
       {
+        "Label": "TM46",
+        "Move": "Thief"
+      },
+      {
+        "Label": "TM47",
+        "Move": "Brick Break"
+      },
+      {
         "Label": "TM48",
         "Move": "Round"
       },
@@ -91256,11 +92181,11 @@
     "AbilityH": "Sheer Force",
     "BaseStats": {
       "HP": 100,
-      "Atk": 130,
+      "Atk": 115,
       "Def": 85,
-      "SpA": 70,
-      "SpD": 80,
-      "Spe": 50
+      "SpA": 80,
+      "SpD": 85,
+      "Spe": 60
     },
     "CatchRate": 255,
     "BaseXP": 90,
@@ -91349,6 +92274,10 @@
       {
         "Label": "TM45",
         "Move": "Attract"
+      },
+      {
+        "Label": "TM46",
+        "Move": "Thief"
       },
       {
         "Label": "TM47",
@@ -91647,6 +92576,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM95",
+        "Move": "Snarl"
       }
     ]
   },
@@ -91766,6 +92699,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM95",
+        "Move": "Snarl"
+      },
+      {
         "Label": "TM97",
         "Move": "Dark Pulse"
       }
@@ -91859,6 +92796,10 @@
         "Move": "Scald"
       },
       {
+        "Label": "TM57",
+        "Move": "Charge Beam"
+      },
+      {
         "Label": "TM66",
         "Move": "Payback"
       },
@@ -91935,6 +92876,10 @@
     "BaseXP": 36,
     "GrowthRate": "Medium-Slow",
     "TMs": [
+      {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
       {
         "Label": "TM04",
         "Move": "Calm Mind"
@@ -92100,6 +93045,10 @@
     "BaseXP": 94,
     "GrowthRate": "Medium-Slow",
     "TMs": [
+      {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
       {
         "Label": "TM04",
         "Move": "Calm Mind"
@@ -92515,6 +93464,10 @@
         "Move": "Toxic"
       },
       {
+        "Label": "TM08",
+        "Move": "Bulk Up"
+      },
+      {
         "Label": "TM10",
         "Move": "Hidden Power"
       },
@@ -92666,6 +93619,10 @@
       {
         "Label": "TM06",
         "Move": "Toxic"
+      },
+      {
+        "Label": "TM08",
+        "Move": "Bulk Up"
       },
       {
         "Label": "TM10",
@@ -94238,6 +95195,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM02",
+        "Move": "Dragon Claw"
+      },
+      {
         "Label": "TM05",
         "Move": "Roar"
       },
@@ -94326,6 +95287,10 @@
         "Move": "Rock Smash"
       },
       {
+        "Label": "TM95",
+        "Move": "Snarl"
+      },
+      {
         "Label": "TM97",
         "Move": "Dark Pulse"
       },
@@ -94385,6 +95350,10 @@
       {
         "Label": "TM18",
         "Move": "Rain Dance"
+      },
+      {
+        "Label": "TM31",
+        "Move": "Dragon Pulse"
       },
       {
         "Label": "TM32",
@@ -94469,6 +95438,10 @@
       {
         "Label": "TM94",
         "Move": "Rock Smash"
+      },
+      {
+        "Label": "TM95",
+        "Move": "Snarl"
       },
       {
         "Label": "TM97",
@@ -94672,6 +95645,10 @@
         "Move": "Rock Smash"
       },
       {
+        "Label": "TM95",
+        "Move": "Snarl"
+      },
+      {
         "Label": "TM97",
         "Move": "Dark Pulse"
       },
@@ -94797,6 +95774,10 @@
         "Move": "Zen Headbutt"
       },
       {
+        "Label": "TM83",
+        "Move": "Infestation"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -94815,6 +95796,10 @@
       {
         "Label": "TM93",
         "Move": "Wild Charge"
+      },
+      {
+        "Label": "TM100",
+        "Move": "Air Slash"
       }
     ]
   },
@@ -96700,6 +97685,10 @@
         "Move": "Giga Impact"
       },
       {
+        "Label": "TM70",
+        "Move": "Icy Wind"
+      },
+      {
         "Label": "TM71",
         "Move": "Stone Edge"
       },
@@ -96718,6 +97707,10 @@
       {
         "Label": "TM84",
         "Move": "Poison Jab"
+      },
+      {
+        "Label": "TM85",
+        "Move": "Mudslide"
       },
       {
         "Label": "TM87",
@@ -97919,6 +98912,10 @@
         "Move": "Psyshock"
       },
       {
+        "Label": "TM04",
+        "Move": "Calm Mind"
+      },
+      {
         "Label": "TM06",
         "Move": "Toxic"
       },
@@ -98353,6 +99350,10 @@
         "Move": "Rock Smash"
       },
       {
+        "Label": "TM95",
+        "Move": "Snarl"
+      },
+      {
         "Label": "TM98",
         "Move": "Power-Up Punch"
       },
@@ -98524,6 +99525,10 @@
       {
         "Label": "TM94",
         "Move": "Rock Smash"
+      },
+      {
+        "Label": "TM95",
+        "Move": "Snarl"
       },
       {
         "Label": "TM97",
@@ -98721,6 +99726,10 @@
       {
         "Label": "TM94",
         "Move": "Rock Smash"
+      },
+      {
+        "Label": "TM95",
+        "Move": "Snarl"
       },
       {
         "Label": "TM97",
@@ -99529,8 +100538,24 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM10",
+        "Move": "Hidden Power"
+      },
+      {
         "Label": "TM17",
         "Move": "Protect"
+      },
+      {
+        "Label": "TM76",
+        "Move": "Struggle Bug"
+      },
+      {
+        "Label": "TM83",
+        "Move": "Infestation"
+      },
+      {
+        "Label": "TM96",
+        "Move": "Nature Power"
       }
     ]
   },
@@ -99552,7 +100577,28 @@
     "CatchRate": 255,
     "BaseXP": 39,
     "GrowthRate": "Medium-Slow",
-    "TMs": []
+    "TMs": [
+      {
+        "Label": "TM10",
+        "Move": "Hidden Power"
+      },
+      {
+        "Label": "TM17",
+        "Move": "Protect"
+      },
+      {
+        "Label": "TM76",
+        "Move": "Struggle Bug"
+      },
+      {
+        "Label": "TM83",
+        "Move": "Infestation"
+      },
+      {
+        "Label": "TM96",
+        "Move": "Nature Power"
+      }
+    ]
   },
   "Vivillon": {
     "SpeciesIdx": 666,
@@ -100146,6 +101192,10 @@
         "Move": "Psychic"
       },
       {
+        "Label": "TM30",
+        "Move": "Shadow Ball"
+      },
+      {
         "Label": "TM42",
         "Move": "Facade"
       },
@@ -100164,6 +101214,10 @@
       {
         "Label": "TM53",
         "Move": "Energy Ball"
+      },
+      {
+        "Label": "TM61",
+        "Move": "Will-O-Wisp"
       },
       {
         "Label": "TM72",
@@ -100255,6 +101309,10 @@
         "Move": "Psychic"
       },
       {
+        "Label": "TM30",
+        "Move": "Shadow Ball"
+      },
+      {
         "Label": "TM42",
         "Move": "Facade"
       },
@@ -100273,6 +101331,10 @@
       {
         "Label": "TM53",
         "Move": "Energy Ball"
+      },
+      {
+        "Label": "TM61",
+        "Move": "Will-O-Wisp"
       },
       {
         "Label": "TM68",
@@ -101116,6 +102178,10 @@
         "Move": "Thunder Wave"
       },
       {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
+      },
+      {
         "Label": "TM84",
         "Move": "Poison Jab"
       },
@@ -101858,6 +102924,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
+      {
         "Label": "TM04",
         "Move": "Calm Mind"
       },
@@ -102190,6 +103260,10 @@
       {
         "Label": "TM53",
         "Move": "Energy Ball"
+      },
+      {
+        "Label": "TM60",
+        "Move": "Slam"
       },
       {
         "Label": "TM87",
@@ -105074,6 +106148,10 @@
         "Move": "Wild Charge"
       },
       {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
+      },
+      {
         "Label": "HM01",
         "Move": "Cut"
       }
@@ -106492,6 +107570,10 @@
         "Move": "Power Gem"
       },
       {
+        "Label": "TM51",
+        "Move": "Iron Head"
+      },
+      {
         "Label": "TM58",
         "Move": "Rock Climb"
       },
@@ -107124,6 +108206,10 @@
         "Move": "Focus Blast"
       },
       {
+        "Label": "TM60",
+        "Move": "Slam"
+      },
+      {
         "Label": "TM68",
         "Move": "Giga Impact"
       },
@@ -107353,6 +108439,10 @@
     "BaseXP": 141,
     "GrowthRate": "Medium-Slow",
     "TMs": [
+      {
+        "Label": "TM02",
+        "Move": "Dragon Claw"
+      },
       {
         "Label": "TM06",
         "Move": "Toxic"
@@ -108705,6 +109795,10 @@
         "Move": "Rain Dance"
       },
       {
+        "Label": "TM23",
+        "Move": "Smack Down"
+      },
+      {
         "Label": "TM26",
         "Move": "Earthquake"
       },
@@ -108753,16 +109847,32 @@
         "Move": "Power Gem"
       },
       {
+        "Label": "TM58",
+        "Move": "Rock Climb"
+      },
+      {
         "Label": "TM68",
         "Move": "Giga Impact"
+      },
+      {
+        "Label": "TM71",
+        "Move": "Stone Edge"
       },
       {
         "Label": "TM76",
         "Move": "Struggle Bug"
       },
       {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
+      },
+      {
         "Label": "TM78",
         "Move": "Bulldoze"
+      },
+      {
+        "Label": "TM80",
+        "Move": "Rock Slide"
       },
       {
         "Label": "TM83",
@@ -108779,6 +109889,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM96",
+        "Move": "Nature Power"
       }
     ]
   },
@@ -108874,6 +109988,10 @@
         "Move": "Struggle Bug"
       },
       {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
+      },
+      {
         "Label": "TM83",
         "Move": "Infestation"
       },
@@ -108892,6 +110010,10 @@
       {
         "Label": "TM91",
         "Move": "Flash Cannon"
+      },
+      {
+        "Label": "TM96",
+        "Move": "Nature Power"
       }
     ]
   },
@@ -110499,6 +111621,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
+      {
         "Label": "TM05",
         "Move": "Roar"
       },
@@ -111359,6 +112485,10 @@
         "Move": "Scald"
       },
       {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
+      },
+      {
         "Label": "TM67",
         "Move": "Retaliate"
       },
@@ -112027,6 +113157,10 @@
         "Move": "Shadow Ball"
       },
       {
+        "Label": "TM34",
+        "Move": "Sludge Wave"
+      },
+      {
         "Label": "TM36",
         "Move": "Sludge Bomb"
       },
@@ -112385,6 +113519,10 @@
         "Move": "Thunder Wave"
       },
       {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
+      },
+      {
         "Label": "TM84",
         "Move": "Poison Jab"
       },
@@ -112516,6 +113654,10 @@
       {
         "Label": "TM73",
         "Move": "Thunder Wave"
+      },
+      {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
       },
       {
         "Label": "TM84",
@@ -112655,6 +113797,10 @@
         "Move": "Thunder Wave"
       },
       {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
+      },
+      {
         "Label": "TM84",
         "Move": "Poison Jab"
       },
@@ -112790,6 +113936,10 @@
       {
         "Label": "TM73",
         "Move": "Thunder Wave"
+      },
+      {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
       },
       {
         "Label": "TM84",
@@ -112929,6 +114079,10 @@
         "Move": "Thunder Wave"
       },
       {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
+      },
+      {
         "Label": "TM84",
         "Move": "Poison Jab"
       },
@@ -113064,6 +114218,10 @@
       {
         "Label": "TM73",
         "Move": "Thunder Wave"
+      },
+      {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
       },
       {
         "Label": "TM84",
@@ -113203,6 +114361,10 @@
         "Move": "Thunder Wave"
       },
       {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
+      },
+      {
         "Label": "TM84",
         "Move": "Poison Jab"
       },
@@ -113340,6 +114502,10 @@
         "Move": "Thunder Wave"
       },
       {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
+      },
+      {
         "Label": "TM84",
         "Move": "Poison Jab"
       },
@@ -113475,6 +114641,10 @@
       {
         "Label": "TM73",
         "Move": "Thunder Wave"
+      },
+      {
+        "Label": "TM77",
+        "Move": "Zen Headbutt"
       },
       {
         "Label": "TM84",
@@ -113841,6 +115011,10 @@
       {
         "Label": "TM98",
         "Move": "Power-Up Punch"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       },
       {
         "Label": "HM03",
@@ -115433,6 +116607,10 @@
       {
         "Label": "TM50",
         "Move": "Overheat"
+      },
+      {
+        "Label": "TM56",
+        "Move": "Nasty Plot"
       },
       {
         "Label": "TM59",
@@ -117924,6 +119102,10 @@
         "Move": "Incinerate"
       },
       {
+        "Label": "TM60",
+        "Move": "Slam"
+      },
+      {
         "Label": "TM61",
         "Move": "Will-O-Wisp"
       },
@@ -120310,6 +121492,10 @@
         "Move": "Psychic"
       },
       {
+        "Label": "TM30",
+        "Move": "Shadow Ball"
+      },
+      {
         "Label": "TM42",
         "Move": "Facade"
       },
@@ -120328,6 +121514,10 @@
       {
         "Label": "TM53",
         "Move": "Energy Ball"
+      },
+      {
+        "Label": "TM61",
+        "Move": "Will-O-Wisp"
       },
       {
         "Label": "TM72",
@@ -122197,6 +123387,10 @@
         "Move": "Frost Breath"
       },
       {
+        "Label": "TM80",
+        "Move": "Rock Slide"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -122773,6 +123967,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM01",
+        "Move": "Hone Claws"
+      },
+      {
         "Label": "TM03",
         "Move": "Psyshock"
       },
@@ -122841,6 +124039,10 @@
         "Move": "Shadow Ball"
       },
       {
+        "Label": "TM32",
+        "Move": "Double Team"
+      },
+      {
         "Label": "TM33",
         "Move": "Reflect"
       },
@@ -122907,6 +124109,10 @@
       {
         "Label": "TM64",
         "Move": "Aura Sphere"
+      },
+      {
+        "Label": "TM65",
+        "Move": "Shadow Claw"
       },
       {
         "Label": "TM67",
