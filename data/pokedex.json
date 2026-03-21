@@ -1279,7 +1279,7 @@
     "SpeciesIdx": 9,
     "Type1": "Water",
     "Type2": "Water",
-    "Ability1": "Drizzle",
+    "Ability1": "Regenerator",
     "Ability2": "Battle Armor",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -38369,8 +38369,8 @@
     "SpeciesIdx": 255,
     "Type1": "Fire",
     "Type2": "Fire",
-    "Ability1": "Tough Claws",
-    "Ability2": "Speed Boost",
+    "Ability1": "Hustle",
+    "Ability2": "Quick Feet",
     "AbilityH": "Blaze",
     "BaseStats": {
       "HP": 45,
@@ -38510,8 +38510,8 @@
     "SpeciesIdx": 256,
     "Type1": "Fire",
     "Type2": "Fighting",
-    "Ability1": "Tough Claws",
-    "Ability2": "Speed Boost",
+    "Ability1": "Hustle",
+    "Ability2": "Quick Feet",
     "AbilityH": "Blaze",
     "BaseStats": {
       "HP": 60,
@@ -38680,15 +38680,15 @@
     "Type1": "Fire",
     "Type2": "Fighting",
     "Ability1": "Tough Claws",
-    "Ability2": "Speed Boost",
+    "Ability2": "Quick Feet",
     "AbilityH": "Blaze",
     "BaseStats": {
       "HP": 80,
       "Atk": 120,
-      "Def": 75,
+      "Def": 70,
       "SpA": 110,
-      "SpD": 75,
-      "Spe": 80
+      "SpD": 70,
+      "Spe": 90
     },
     "CatchRate": 255,
     "BaseXP": 125,
@@ -38892,7 +38892,7 @@
     "SpeciesIdx": 258,
     "Type1": "Water",
     "Type2": "Water",
-    "Ability1": "Sand Force",
+    "Ability1": "Damp",
     "Ability2": "Dry Skin",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -39029,7 +39029,7 @@
     "SpeciesIdx": 259,
     "Type1": "Water",
     "Type2": "Ground",
-    "Ability1": "Sand Force",
+    "Ability1": "Damp",
     "Ability2": "Dry Skin",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -68507,7 +68507,7 @@
     "SpeciesIdx": 457,
     "Type1": "Water",
     "Type2": "Fairy",
-    "Ability1": "Swift Swim",
+    "Ability1": "Drizzle",
     "Ability2": "Storm Drain",
     "AbilityH": "Water Veil",
     "BaseStats": {
