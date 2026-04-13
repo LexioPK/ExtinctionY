@@ -17,7 +17,7 @@
             --poke-border: 2px;
             --trainer-border-color: #6f6f6f;
             --pokemon-border-color: #555555;
-            --inner-padding-x: 10px;
+            --inner-padding-x: 8px;
             --inner-padding-y: 12px;
             --moves-separator-thick: 4px;
             --sep-color: #e6e6e6;
@@ -76,17 +76,17 @@
         }
 
         .route-header-container {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
             margin-top: 30px;
             margin-bottom: 20px;
+            gap: 10px;
         }
         
         .area-title {
             font-size: 1.8rem;
             font-weight: 700;
-            flex: 1;
             text-align: center;
         }
         
@@ -114,11 +114,11 @@
         }
         
         .nav-button-prev {
-            margin-right: auto;
+            justify-self: start;
         }
         
         .nav-button-next {
-            margin-left: auto;
+            justify-self: end;
         }
 
         /* Tabs similar to pokemon.html */
@@ -236,9 +236,9 @@
         }
 
         .pokemon-container > .pokemon-col {
-            width: 202px;
-            min-width: 202px;
-            max-width: 202px;
+            width: 165px;
+            min-width: 165px;
+            max-width: 165px;
             padding: 0;
             background: #fafafa;
             border: var(--poke-border) solid var(--pokemon-border-color);
@@ -261,8 +261,8 @@
         }
 
         .poke-img {
-            width: 96px;
-            height: 96px;
+            width: 80px;
+            height: 80px;
             image-rendering: pixelated;
             display: block;
             margin: 10px auto;
@@ -365,7 +365,11 @@
         .move-list .move-item:last-child { border-bottom: none; }
 
         .poke-name a { color: #000; text-decoration: none; }
-        .poke-name { padding-bottom: 6px; display:block; }
+        .poke-name {
+            padding-bottom: 6px;
+            display: block;
+            min-height: 3em;
+        }
 
         .type-badge {
             display: inline-block;
