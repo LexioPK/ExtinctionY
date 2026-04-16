@@ -171,13 +171,20 @@ function loadMoves() {
             const tbody = document.querySelector("#moves-table tbody");
             const sorted = Object.entries(moves).sort((a, b) => a[0].localeCompare(b[0]));
             const searchInput = document.getElementById("move-search");
+            
+            function getCategoryCellHtml(rawCategory) {
+                const hasCategoryIcon = typeof rawCategory === "string" && rawCategory.trim() !== "";
+                const category = hasCategoryIcon ? rawCategory : "—";
+                const categorySlug = String(category).toLowerCase();
+                return hasCategoryIcon
+                    ? `<img class="category-icon" src="image/${categorySlug}.png" alt="${category}" title="${category}"><span class="cat-fallback">${category}</span>`
+                    : `<span class="cat-fallback cat-fallback-visible">${category}</span>`;
+            }
 
             sorted.forEach(([name, mv]) => {
                 const tr = document.createElement("tr");
                 tr.dataset.moveName = name;
-                const category = mv.Category || "—";
-                const categorySlug = String(category).toLowerCase();
-                const hasCategoryIcon = category !== "—";
+                const categoryCellHtml = getCategoryCellHtml(mv.Category);
 
                 tr.onclick = () =>
                     window.location.href = `movedescriptions.html?name=${encodeURIComponent(name)}`;
@@ -185,7 +192,7 @@ function loadMoves() {
                 tr.innerHTML = `
                     <td>${name}</td>
                     <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                    <td class="cat-cell">${hasCategoryIcon ? `<img class="category-icon" src="image/${categorySlug}.png" alt="${category}" title="${category}"><span class="cat-fallback">${category}</span>` : `<span class="cat-fallback cat-fallback-visible">${category}</span>`}</td>
+                    <td class="cat-cell">${categoryCellHtml}</td>
                     <td>${mv.Power ?? "—"}</td>
                     <td>${mv.Acc ?? "—"}%</td>
                     <td>${mv.PP}</td>
