@@ -1523,10 +1523,10 @@
     "BaseStats": {
       "HP": 50,
       "Atk": 40,
-      "Def": 55,
-      "SpA": 25,
-      "SpD": 50,
-      "Spe": 30
+      "Def": 50,
+      "SpA": 55,
+      "SpD": 70,
+      "Spe": 35
     },
     "CatchRate": 255,
     "BaseXP": 38,
@@ -1704,12 +1704,12 @@
     "Ability2": "Filter",
     "AbilityH": "Bulletproof",
     "BaseStats": {
-      "HP": 45,
+      "HP": 55,
       "Atk": 50,
-      "Def": 50,
+      "Def": 70,
       "SpA": 25,
-      "SpD": 45,
-      "Spe": 35
+      "SpD": 55,
+      "Spe": 45
     },
     "CatchRate": 255,
     "BaseXP": 38,
@@ -2713,8 +2713,8 @@
     "Ability2": "Shed Skin",
     "AbilityH": "Unnerve",
     "BaseStats": {
-      "HP": 55,
-      "Atk": 60,
+      "HP": 60,
+      "Atk": 70,
       "Def": 44,
       "SpA": 40,
       "SpD": 54,
@@ -2850,11 +2850,11 @@
     "Ability2": "Shed Skin",
     "AbilityH": "Unnerve",
     "BaseStats": {
-      "HP": 85,
+      "HP": 90,
       "Atk": 107,
       "Def": 79,
       "SpA": 55,
-      "SpD": 89,
+      "SpD": 99,
       "Spe": 85
     },
     "CatchRate": 255,
@@ -6295,12 +6295,12 @@
     "Ability2": "Effect Spore",
     "AbilityH": "Leaf Guard",
     "BaseStats": {
-      "HP": 80,
-      "Atk": 65,
+      "HP": 85,
+      "Atk": 70,
       "Def": 85,
       "SpA": 115,
       "SpD": 95,
-      "Spe": 50
+      "Spe": 55
     },
     "CatchRate": 255,
     "BaseXP": 116,
@@ -11571,10 +11571,10 @@
     "AbilityH": "Own Tempo",
     "BaseStats": {
       "HP": 100,
-      "Atk": 80,
+      "Atk": 75,
       "Def": 115,
       "SpA": 100,
-      "SpD": 80,
+      "SpD": 85,
       "Spe": 30
     },
     "CatchRate": 255,
@@ -26853,7 +26853,7 @@
       "Def": 95,
       "SpA": 100,
       "SpD": 100,
-      "Spe": 50
+      "Spe": 65
     },
     "CatchRate": 255,
     "BaseXP": 116,
@@ -29206,8 +29206,8 @@
     "AbilityH": "Own Tempo",
     "BaseStats": {
       "HP": 100,
-      "Atk": 80,
-      "Def": 80,
+      "Atk": 75,
+      "Def": 85,
       "SpA": 100,
       "SpD": 115,
       "Spe": 30
@@ -46827,10 +46827,10 @@
     "Ability2": "Prankster",
     "AbilityH": "Illuminate",
     "BaseStats": {
-      "HP": 85,
-      "Atk": 105,
+      "HP": 80,
+      "Atk": 103,
       "Def": 75,
-      "SpA": 45,
+      "SpA": 47,
       "SpD": 85,
       "Spe": 95
     },
@@ -46988,10 +46988,10 @@
     "Ability2": "Prankster",
     "AbilityH": "Illuminate",
     "BaseStats": {
-      "HP": 85,
-      "Atk": 45,
+      "HP": 80,
+      "Atk": 47,
       "Def": 75,
-      "SpA": 105,
+      "SpA": 103,
       "SpD": 85,
       "Spe": 95
     },
@@ -59120,10 +59120,10 @@
     "BaseStats": {
       "HP": 76,
       "Atk": 108,
-      "Def": 69,
+      "Def": 68,
       "SpA": 108,
-      "SpD": 69,
-      "Spe": 110
+      "SpD": 68,
+      "Spe": 112
     },
     "CatchRate": 255,
     "BaseXP": 126,
@@ -60475,14 +60475,14 @@
     "SpeciesIdx": 401,
     "Type1": "Bug",
     "Type2": "Normal",
-    "Ability1": "Run Away",
-    "Ability2": "Run Away",
+    "Ability1": "Rattled",
+    "Ability2": "Rattled",
     "AbilityH": "Early Bird",
     "BaseStats": {
       "HP": 43,
-      "Atk": 40,
+      "Atk": 50,
       "Def": 41,
-      "SpA": 40,
+      "SpA": 60,
       "SpD": 41,
       "Spe": 45
     },
@@ -60525,7 +60525,7 @@
       "Def": 61,
       "SpA": 85,
       "SpD": 61,
-      "Spe": 70
+      "Spe": 85
     },
     "CatchRate": 255,
     "BaseXP": 70,
@@ -62345,12 +62345,12 @@
     "Ability2": "Honey Gather",
     "AbilityH": "Swarm",
     "BaseStats": {
-      "HP": 36,
+      "HP": 56,
       "Atk": 45,
       "Def": 42,
       "SpA": 45,
       "SpD": 42,
-      "Spe": 70
+      "Spe": 76
     },
     "CatchRate": 255,
     "BaseXP": 26,
@@ -62402,7 +62402,7 @@
     "Ability2": "Intimidate",
     "AbilityH": "Unnerve",
     "BaseStats": {
-      "HP": 90,
+      "HP": 86,
       "Atk": 90,
       "Def": 102,
       "SpA": 90,
@@ -81007,7 +81007,7 @@
   "Conkeldurr": {
     "SpeciesIdx": 534,
     "Type1": "Fighting",
-    "Type2": "Rock",
+    "Type2": "Fighting",
     "Ability1": "Guts",
     "Ability2": "Sheer Force",
     "AbilityH": "Iron Fist",
@@ -99222,8 +99222,8 @@
     "SpeciesIdx": 656,
     "Type1": "Water",
     "Type2": "Water",
-    "Ability1": "Dry Skin",
-    "Ability2": "Gooey",
+    "Ability1": "Tinted Lens",
+    "Ability2": "Dry Skin",
     "AbilityH": "Torrent",
     "BaseStats": {
       "HP": 41,
@@ -99387,8 +99387,8 @@
     "SpeciesIdx": 657,
     "Type1": "Water",
     "Type2": "Water",
-    "Ability1": "Dry Skin",
-    "Ability2": "Gooey",
+    "Ability1": "Tinted Lens",
+    "Ability2": "Dry Skin",
     "AbilityH": "Torrent",
     "BaseStats": {
       "HP": 54,
@@ -99568,7 +99568,7 @@
     "SpeciesIdx": 658,
     "Type1": "Water",
     "Type2": "Dark",
-    "Ability1": "Adaptability",
+    "Ability1": "Tinted Lens",
     "Ability2": "Protean",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -100568,11 +100568,11 @@
     "AbilityH": "Friend Guard",
     "BaseStats": {
       "HP": 55,
-      "Atk": 36,
+      "Atk": 40,
       "Def": 60,
-      "SpA": 36,
-      "SpD": 44,
-      "Spe": 29
+      "SpA": 45,
+      "SpD": 60,
+      "Spe": 34
     },
     "CatchRate": 255,
     "BaseXP": 39,

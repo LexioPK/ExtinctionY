@@ -2544,14 +2544,14 @@
   },
   "Kricketune": {
     "EvolvesFrom": "Kricketot",
-    "FromMethod": "Level Up: 15",
+    "FromMethod": "Level Up: 19",
     "EvolvesInto": {}
   },
   "Kricketot": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Kricketune": "Level Up: 15"
+      "Kricketune": "Level Up: 19"
     }
   },
   "Luxio": {
