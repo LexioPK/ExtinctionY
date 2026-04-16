@@ -172,25 +172,38 @@ function loadMoves() {
             const sorted = Object.entries(moves).sort((a, b) => a[0].localeCompare(b[0]));
             const searchInput = document.getElementById("move-search");
             
+            function escapeHtml(value) {
+                return String(value)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#39;");
+            }
+
             function getCategoryCellHtml(rawCategory) {
                 const hasCategoryIcon = typeof rawCategory === "string" && rawCategory.trim() !== "";
-                const category = hasCategoryIcon ? rawCategory : "—";
+                const category = hasCategoryIcon ? rawCategory.trim() : "—";
                 const categorySlug = String(category).toLowerCase();
+                const categoryPath = encodeURIComponent(categorySlug);
+                const escapedCategory = escapeHtml(category);
                 return hasCategoryIcon
-                    ? `<img class="category-icon" src="image/${categorySlug}.png" alt="${category}" title="${category}"><span class="cat-fallback">${category}</span>`
-                    : `<span class="cat-fallback cat-fallback-visible">${category}</span>`;
+                    ? `<img class="category-icon" src="image/${categoryPath}.png" alt="${escapedCategory}" title="${escapedCategory}"><span class="cat-fallback">${escapedCategory}</span>`
+                    : `<span class="cat-fallback cat-fallback-visible">${escapedCategory}</span>`;
             }
 
             sorted.forEach(([name, mv]) => {
+                if (typeof name !== "string" || name.trim() === "") return;
                 const tr = document.createElement("tr");
                 tr.dataset.moveName = name;
                 const categoryCellHtml = getCategoryCellHtml(mv.Category);
+                const safeName = escapeHtml(name);
 
                 tr.onclick = () =>
                     window.location.href = `movedescriptions.html?name=${encodeURIComponent(name)}`;
 
                 tr.innerHTML = `
-                    <td>${name}</td>
+                    <td>${safeName}</td>
                     <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
                     <td class="cat-cell">${categoryCellHtml}</td>
                     <td>${mv.Power ?? "—"}</td>
