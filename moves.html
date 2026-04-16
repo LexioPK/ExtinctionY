@@ -204,7 +204,7 @@ function loadMoves() {
                     categoryIcon.onerror = () => {
                         categoryIcon.style.display = "none";
                         const fallback = tr.querySelector(".cat-fallback");
-                        if (fallback) fallback.style.display = "inline";
+                        if (fallback) fallback.classList.add("cat-fallback-visible");
                     };
                 }
 
