@@ -110,6 +110,10 @@
         vertical-align: middle;
     }
 
+    .cat-fallback {
+        font-size: 0.9em;
+    }
+
     /* Type Colors */
     .type-fairy { background:#ec8fe6; }
     .type-normal { background:#9099a1; }
@@ -167,6 +171,8 @@ function loadMoves() {
             sorted.forEach(([name, mv]) => {
                 const tr = document.createElement("tr");
                 tr.dataset.moveName = name.toLowerCase();
+                const category = mv.Category || "—";
+                const categorySlug = String(mv.Category || "").toLowerCase();
 
                 tr.onclick = () =>
                     window.location.href = `movedescriptions.html?name=${encodeURIComponent(name)}`;
@@ -174,7 +180,7 @@ function loadMoves() {
                 tr.innerHTML = `
                     <td>${name}</td>
                     <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                    <td class="cat-cell"><img class="category-icon" src="image/${String(mv.Category || '').toLowerCase()}.png" alt="${mv.Category}" title="${mv.Category}"></td>
+                    <td class="cat-cell"><img class="category-icon" src="image/${categorySlug}.png" alt="${category}" title="${category}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"><span class="cat-fallback" style="display:none;">${category}</span></td>
                     <td>${mv.Power ?? "—"}</td>
                     <td>${mv.Acc ?? "—"}%</td>
                     <td>${mv.PP}</td>
