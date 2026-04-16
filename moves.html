@@ -50,7 +50,22 @@
     h1 {
         text-align: center;
         margin-top: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 12px;
+    }
+
+    .moves-search {
+        display: flex;
+        justify-content: center;
+        margin: 0 0 14px 0;
+    }
+
+    #move-search {
+        width: min(560px, 100%);
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-family: "Lexend", sans-serif;
+        font-size: 0.95em;
     }
 
     table {
@@ -108,6 +123,9 @@
 <body>
 
 <h1>Move List</h1>
+<div class="moves-search">
+    <input id="move-search" type="text" placeholder="Search moves..." aria-label="Search moves">
+</div>
 
 <table id="moves-table">
     <thead>
@@ -133,9 +151,11 @@ function loadMoves() {
         .then(moves => {
             const tbody = document.querySelector("#moves-table tbody");
             const sorted = Object.entries(moves).sort((a, b) => a[0].localeCompare(b[0]));
+            const searchInput = document.getElementById("move-search");
 
             sorted.forEach(([name, mv]) => {
                 const tr = document.createElement("tr");
+                tr.dataset.moveName = name.toLowerCase();
 
                 tr.onclick = () =>
                     window.location.href = `movedescriptions.html?name=${encodeURIComponent(name)}`;
@@ -152,6 +172,16 @@ function loadMoves() {
 
                 tbody.appendChild(tr);
             });
+
+            if (searchInput) {
+                searchInput.addEventListener("input", (e) => {
+                    const query = (e.target.value || "").toLowerCase().trim();
+                    tbody.querySelectorAll("tr").forEach(row => {
+                        const moveName = row.dataset.moveName || "";
+                        row.style.display = moveName.includes(query) ? "" : "none";
+                    });
+                });
+            }
         })
         .catch(err => console.error("Move JSON Load Error:", err));
 }

@@ -265,7 +265,7 @@
             height: 96px;
             image-rendering: auto;
             display: block;
-            margin: 10px auto;
+            margin: 2px auto 8px;
         }
 
         .pokemon-inner .info-box {
@@ -366,7 +366,7 @@
 
         .poke-name a { color: #000; text-decoration: none; }
         .poke-name {
-            padding-bottom: 6px;
+            padding-bottom: 2px;
             display: block;
             min-height: 3em;
         }
@@ -466,7 +466,7 @@
             width: 56px;
             height: 56px;
             object-fit: contain;
-            image-rendering: pixelated;
+            image-rendering: auto;
             margin: 5px auto;
             display: block;
         }
@@ -1009,6 +1009,13 @@
                 title.className = "area-title";
                 title.textContent = preferredTabLabelForRoot(baseName);
                 navContainer.appendChild(title);
+            } else {
+                const titleSpacer = document.createElement("h1");
+                titleSpacer.className = "area-title";
+                titleSpacer.textContent = preferredTabLabelForRoot(baseName);
+                titleSpacer.style.visibility = "hidden";
+                titleSpacer.setAttribute("aria-hidden", "true");
+                navContainer.appendChild(titleSpacer);
             }
             
             const nextButton = document.createElement("button");
