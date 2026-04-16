@@ -171,7 +171,7 @@ function loadMoves() {
 
             sorted.forEach(([name, mv]) => {
                 const tr = document.createElement("tr");
-                tr.dataset.moveName = name.toLowerCase();
+                tr.dataset.moveName = name;
                 const category = mv.Category || "—";
                 const categorySlug = String(category).toLowerCase();
 
@@ -181,7 +181,7 @@ function loadMoves() {
                 tr.innerHTML = `
                     <td>${name}</td>
                     <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                    <td class="cat-cell"><img class="category-icon" src="image/${categorySlug}.png" alt="${category}" title="${category}"><span class="cat-fallback">${category}</span></td>
+                    <td class="cat-cell" aria-label="Category: ${category}"><img class="category-icon" src="image/${categorySlug}.png" alt="${category}" title="${category}"><span class="cat-fallback">${category}</span></td>
                     <td>${mv.Power ?? "—"}</td>
                     <td>${mv.Acc ?? "—"}%</td>
                     <td>${mv.PP}</td>
@@ -204,7 +204,7 @@ function loadMoves() {
                 searchInput.addEventListener("input", (e) => {
                     const query = (e.target.value || "").toLowerCase().trim();
                     tbody.querySelectorAll("tr").forEach(row => {
-                        const moveName = row.dataset.moveName || "";
+                        const moveName = (row.dataset.moveName || "").toLowerCase();
                         row.style.display = moveName.includes(query) ? "" : "none";
                     });
                 });
