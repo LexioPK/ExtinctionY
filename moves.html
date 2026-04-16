@@ -99,6 +99,17 @@
         font-size: 0.85em;
     }
 
+    .cat-cell {
+        text-align: center;
+    }
+
+    .category-icon {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+        vertical-align: middle;
+    }
+
     /* Type Colors */
     .type-fairy { background:#ec8fe6; }
     .type-normal { background:#9099a1; }
@@ -163,7 +174,7 @@ function loadMoves() {
                 tr.innerHTML = `
                     <td>${name}</td>
                     <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                    <td>${mv.Category}</td>
+                    <td class="cat-cell"><img class="category-icon" src="image/${String(mv.Category || '').toLowerCase()}.png" alt="${mv.Category}" title="${mv.Category}"></td>
                     <td>${mv.Power ?? "—"}</td>
                     <td>${mv.Acc ?? "—"}%</td>
                     <td>${mv.PP}</td>
