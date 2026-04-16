@@ -32,6 +32,7 @@
 
   ul { list-style:none; padding-left:0; margin:0 0 10px 0; }
   .label { font-weight:bold; margin-top:10px; margin-bottom:3px; }
+  .hidden-ability-marker { list-style:none; margin-left:0; padding-left:0; }
 
   /* Type Colors */
   .type-grass { background: #63bb5b; }
@@ -498,7 +499,7 @@ Promise.all([
     abilitiesUl.innerHTML = `
       <li>${formatAbilityWithTooltip(currentFormData.Ability1)}</li>
       ${currentFormData.Ability2 ? `<li>${formatAbilityWithTooltip(currentFormData.Ability2)}</li>` : ""}
-      <li style="list-style:none; margin-left:0; padding-left:0;">(H): ${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
+      <li class="hidden-ability-marker">(H): ${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
     `;
     
     // Update base stats (use same ranges as initial display for consistency)
@@ -570,7 +571,7 @@ Promise.all([
          <ul style="text-align:left; display:inline-block; list-style:disc; padding-left:20px;">
            <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
            ${mon.Ability2 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
-           <li style="list-style:none; margin-left:0; padding-left:0;">(H): ${formatAbilityWithTooltip(mon.AbilityH)}</li>
+           <li class="hidden-ability-marker">(H): ${formatAbilityWithTooltip(mon.AbilityH)}</li>
          </ul>
        </div>
 

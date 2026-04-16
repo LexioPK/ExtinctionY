@@ -112,6 +112,7 @@
 
     .cat-fallback {
         font-size: 0.9em;
+        display: none;
     }
 
     /* Type Colors */
@@ -172,7 +173,7 @@ function loadMoves() {
                 const tr = document.createElement("tr");
                 tr.dataset.moveName = name.toLowerCase();
                 const category = mv.Category || "—";
-                const categorySlug = String(mv.Category || "").toLowerCase();
+                const categorySlug = String(category).toLowerCase();
 
                 tr.onclick = () =>
                     window.location.href = `movedescriptions.html?name=${encodeURIComponent(name)}`;
@@ -180,12 +181,21 @@ function loadMoves() {
                 tr.innerHTML = `
                     <td>${name}</td>
                     <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                    <td class="cat-cell"><img class="category-icon" src="image/${categorySlug}.png" alt="${category}" title="${category}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"><span class="cat-fallback" style="display:none;">${category}</span></td>
+                    <td class="cat-cell"><img class="category-icon" src="image/${categorySlug}.png" alt="${category}" title="${category}"><span class="cat-fallback">${category}</span></td>
                     <td>${mv.Power ?? "—"}</td>
                     <td>${mv.Acc ?? "—"}%</td>
                     <td>${mv.PP}</td>
                     <td>${mv.Description}</td>
                 `;
+
+                const categoryIcon = tr.querySelector(".category-icon");
+                if (categoryIcon) {
+                    categoryIcon.onerror = () => {
+                        categoryIcon.style.display = "none";
+                        const fallback = tr.querySelector(".cat-fallback");
+                        if (fallback) fallback.style.display = "inline";
+                    };
+                }
 
                 tbody.appendChild(tr);
             });
