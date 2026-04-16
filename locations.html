@@ -986,6 +986,10 @@
         function createNavigationButtons(includeTitle = true) {
             const navContainer = document.createElement("div");
             navContainer.className = "route-header-container";
+            if (!includeTitle) {
+                navContainer.style.display = "flex";
+                navContainer.style.justifyContent = "space-between";
+            }
             
             const prevButton = document.createElement("button");
             prevButton.className = "nav-button nav-button-prev";
@@ -1009,13 +1013,6 @@
                 title.className = "area-title";
                 title.textContent = preferredTabLabelForRoot(baseName);
                 navContainer.appendChild(title);
-            } else {
-                const titleSpacer = document.createElement("div");
-                titleSpacer.className = "area-title";
-                titleSpacer.textContent = "";
-                titleSpacer.style.visibility = "hidden";
-                titleSpacer.setAttribute("aria-hidden", "true");
-                navContainer.appendChild(titleSpacer);
             }
             
             const nextButton = document.createElement("button");
