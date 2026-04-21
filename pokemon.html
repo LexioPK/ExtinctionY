@@ -238,11 +238,13 @@ function normalizeDisplayApostrophes(text) {
   return String(text)
     .replace(/\\u2019/gi, "'")
     .replace(/\u2019/g, "'")
+    .replace(/(^|[^A-Za-z0-9])u2019(?=[A-Za-z0-9])/gi, "$1'")
+    .replace(/([A-Za-z0-9])u2019(?=[^A-Za-z0-9]|$)/gi, "$1'")
     .replace(/([A-Za-z])u2019([A-Za-z])/g, "$1'$2");
 }
 
 function normalizeNameForLookup(text) {
-  return normalizeDisplayApostrophes(text).toLowerCase().replace(/[^a-z0-9]/g, "");
+  return normalizeDisplayApostrophes(text).toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
 }
 
 // --- Multi-folder sprite support ---
