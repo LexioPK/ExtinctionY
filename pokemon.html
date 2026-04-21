@@ -238,8 +238,7 @@ function normalizeDisplayApostrophes(text) {
   return String(text)
     .replace(/\\u2019/gi, "'")
     .replace(/\u2019/g, "'")
-    .replace(/u2019/gi, "'")
-    .replace(/’/g, "'");
+    .replace(/([A-Za-z])u2019([A-Za-z])/g, "$1'$2");
 }
 
 function normalizeNameForLookup(text) {
