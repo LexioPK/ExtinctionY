@@ -1,6 +1,101 @@
 [
   {
     "LocationName": "Vaniville Town",
+    "LocationID": 0,
+    "Encounters": [
+      {
+        "EncounterType": "Grass",
+        "Slots": [
+          {
+            "Species": "Sentret",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Hoppip",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Pichu",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Skitty",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Happiny",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Sewaddle",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Zorua",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Fletchling",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Espurr",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Flab\u00E9b\u00E9",
+            "Form": 0,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "5%"
+          },
+          {
+            "Species": "Flab\u00E9b\u00E9",
+            "Form": 1,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "4%"
+          },
+          {
+            "Species": "Flab\u00E9b\u00E9",
+            "Form": 2,
+            "MinLevel": 3,
+            "MaxLevel": 3,
+            "Chance": "1%"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "LocationName": "Vaniville Town",
     "LocationID": 2,
     "Encounters": [
       {
@@ -186,6 +281,126 @@
             "Chance": "1%"
           }
         ]
+      },
+      {
+        "EncounterType": "Horde (60%)",
+        "Slots": [
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (35%)",
+        "Slots": [
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (5%)",
+        "Slots": [
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          }
+        ]
       }
     ]
   },
@@ -279,6 +494,126 @@
             "MinLevel": 14,
             "MaxLevel": 14,
             "Chance": "1%"
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (60%)",
+        "Slots": [
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (35%)",
+        "Slots": [
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (5%)",
+        "Slots": [
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
+          },
+          {
+            "Species": "Chespin",
+            "Form": 0,
+            "MinLevel": 2,
+            "MaxLevel": 4,
+            "Chance": ""
           }
         ]
       }
@@ -935,101 +1270,6 @@
             "MinLevel": 55,
             "MaxLevel": 55,
             "Chance": "5%"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "LocationName": "Santalune City",
-    "LocationID": 53,
-    "Encounters": [
-      {
-        "EncounterType": "Grass",
-        "Slots": [
-          {
-            "Species": "Meowth",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "10%"
-          },
-          {
-            "Species": "Abra",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "10%"
-          },
-          {
-            "Species": "Grimer",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "10%"
-          },
-          {
-            "Species": "Ledyba",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "10%"
-          },
-          {
-            "Species": "Snubbull",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "10%"
-          },
-          {
-            "Species": "Smoochum",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "10%"
-          },
-          {
-            "Species": "Chimchar",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "10%"
-          },
-          {
-            "Species": "Cottonee",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "10%"
-          },
-          {
-            "Species": "Vanillite",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "10%"
-          },
-          {
-            "Species": "Klink",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "5%"
-          },
-          {
-            "Species": "Klink",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "4%"
-          },
-          {
-            "Species": "Klink",
-            "Form": 0,
-            "MinLevel": 7,
-            "MaxLevel": 7,
-            "Chance": "1%"
           }
         ]
       }
@@ -2266,126 +2506,6 @@
             "Chance": "1%"
           }
         ]
-      },
-      {
-        "EncounterType": "Horde (60%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (35%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
-      },
-      {
-        "EncounterType": "Horde (5%)",
-        "Slots": [
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          },
-          {
-            "Species": "Chespin",
-            "Form": 0,
-            "MinLevel": 2,
-            "MaxLevel": 4,
-            "Chance": ""
-          }
-        ]
       }
     ]
   },
@@ -2587,7 +2707,7 @@
         "EncounterType": "Grass",
         "Slots": [
           {
-            "Species": "Nidoran\uE08F",
+            "Species": "Nidoran-F",
             "Form": 0,
             "MinLevel": 5,
             "MaxLevel": 6,
@@ -2984,14 +3104,14 @@
         "EncounterType": "Grass",
         "Slots": [
           {
-            "Species": "Mankey",
+            "Species": "Ekans",
             "Form": 0,
             "MinLevel": 12,
             "MaxLevel": 13,
             "Chance": "10%"
           },
           {
-            "Species": "Ekans",
+            "Species": "Mankey",
             "Form": 0,
             "MinLevel": 12,
             "MaxLevel": 13,
@@ -8391,7 +8511,7 @@
         "EncounterType": "Grass",
         "Slots": [
           {
-            "Species": "Nidoran\uE08E",
+            "Species": "Nidoran-M",
             "Form": 0,
             "MinLevel": 7,
             "MaxLevel": 8,
@@ -9962,13 +10082,6 @@
         "EncounterType": "Grass",
         "Slots": [
           {
-            "Species": "Magneton",
-            "Form": 0,
-            "MinLevel": 50,
-            "MaxLevel": 50,
-            "Chance": "10%"
-          },
-          {
             "Species": "Muk",
             "Form": 0,
             "MinLevel": 50,
@@ -10004,14 +10117,21 @@
             "Chance": "10%"
           },
           {
-            "Species": "Metang",
+            "Species": "Solrock",
             "Form": 0,
             "MinLevel": 50,
             "MaxLevel": 50,
             "Chance": "10%"
           },
           {
-            "Species": "Rotom",
+            "Species": "Probopass",
+            "Form": 0,
+            "MinLevel": 50,
+            "MaxLevel": 50,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Galvantula",
             "Form": 0,
             "MinLevel": 50,
             "MaxLevel": 50,
@@ -13304,6 +13424,101 @@
     ]
   },
   {
+    "LocationName": "Kalos Power Plant",
+    "LocationID": 335,
+    "Encounters": [
+      {
+        "EncounterType": "Grass",
+        "Slots": [
+          {
+            "Species": "Raichu",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Magneton",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Solrock",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Metang",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Sableye",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Pachirisu",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Rotom",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Eelektrik",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Heliolisk",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Dedenne",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "5%"
+          },
+          {
+            "Species": "Dedenne",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "4%"
+          },
+          {
+            "Species": "Dedenne",
+            "Form": 0,
+            "MinLevel": 40,
+            "MaxLevel": 42,
+            "Chance": "1%"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "LocationName": "Terminus Cave",
     "LocationID": 343,
     "Encounters": [
@@ -14588,6 +14803,436 @@
             "MinLevel": 52,
             "MaxLevel": 56,
             "Chance": "1%"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "LocationName": "Chamber of Emptiness",
+    "LocationID": 350,
+    "Encounters": [
+      {
+        "EncounterType": "Grass",
+        "Slots": [
+          {
+            "Species": "Gengar",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Hypno",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Houndoom",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Banette",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Relicanth",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Dusknoir",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Krookodile",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Gothitelle",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Hydreigon",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Noivern",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "5%"
+          },
+          {
+            "Species": "Noivern",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "4%"
+          },
+          {
+            "Species": "Noivern",
+            "Form": 0,
+            "MinLevel": 83,
+            "MaxLevel": 83,
+            "Chance": "1%"
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (60%)",
+        "Slots": [
+          {
+            "Species": "Duskull",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Duskull",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Duskull",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Duskull",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Duskull",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (35%)",
+        "Slots": [
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (5%)",
+        "Slots": [
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          },
+          {
+            "Species": "Sandile",
+            "Form": 0,
+            "MinLevel": 23,
+            "MaxLevel": 23,
+            "Chance": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "LocationName": "Snow Spirit\u2019s Den",
+    "LocationID": 351,
+    "Encounters": [
+      {
+        "EncounterType": "Grass",
+        "Slots": [
+          {
+            "Species": "Misdreavus",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Sneasel",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Mawile",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Lunatone",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Prinplup",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Frillish",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Vanillish",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Cryogonal",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "10%"
+          },
+          {
+            "Species": "Lapras",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "5%"
+          },
+          {
+            "Species": "Delibird",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "4%"
+          },
+          {
+            "Species": "Delibird",
+            "Form": 0,
+            "MinLevel": 36,
+            "MaxLevel": 36,
+            "Chance": "1%"
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (60%)",
+        "Slots": [
+          {
+            "Species": "Sneasel",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Sneasel",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Sneasel",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Sneasel",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Sneasel",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (35%)",
+        "Slots": [
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          }
+        ]
+      },
+      {
+        "EncounterType": "Horde (5%)",
+        "Slots": [
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
+          },
+          {
+            "Species": "Snorunt",
+            "Form": 0,
+            "MinLevel": 13,
+            "MaxLevel": 13,
+            "Chance": ""
           }
         ]
       }

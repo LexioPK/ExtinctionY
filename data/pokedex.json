@@ -6835,6 +6835,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
+      {
         "Label": "TM06",
         "Move": "Toxic"
       },
@@ -28330,6 +28334,10 @@
         "Move": "Energy Ball"
       },
       {
+        "Label": "TM59",
+        "Move": "Incinerate"
+      },
+      {
         "Label": "TM63",
         "Move": "Fire Punch"
       },
@@ -33420,9 +33428,9 @@
     "SpeciesIdx": 226,
     "Type1": "Water",
     "Type2": "Flying",
-    "Ability1": "Swift Swim",
+    "Ability1": "Rain Dish",
     "Ability2": "Water Absorb",
-    "AbilityH": "Water Veil",
+    "AbilityH": "Swift Swim",
     "BaseStats": {
       "HP": 90,
       "Atk": 40,
@@ -40598,9 +40606,9 @@
     "SpeciesIdx": 272,
     "Type1": "Water",
     "Type2": "Grass",
-    "Ability1": "Drizzle",
+    "Ability1": "Rain Dish",
     "Ability2": "Swift Swim",
-    "AbilityH": "Rain Dish",
+    "AbilityH": "Drizzle",
     "BaseStats": {
       "HP": 90,
       "Atk": 70,
@@ -55045,6 +55053,10 @@
     "BaseXP": 90,
     "GrowthRate": "Medium-Slow",
     "TMs": [
+      {
+        "Label": "TM03",
+        "Move": "Psyshock"
+      },
       {
         "Label": "TM06",
         "Move": "Toxic"
@@ -70337,6 +70349,10 @@
         "Move": "Rock Smash"
       },
       {
+        "Label": "TM97",
+        "Move": "Dark Pulse"
+      },
+      {
         "Label": "TM98",
         "Move": "Power-Up Punch"
       },
@@ -74141,7 +74157,7 @@
     "Type1": "Water",
     "Type2": "Fairy",
     "Ability1": "Hydration",
-    "Ability2": "Drizzle",
+    "Ability2": "Rain Dish",
     "AbilityH": "Water Absorb",
     "BaseStats": {
       "HP": 100,
@@ -91833,7 +91849,7 @@
       "HP": 81,
       "Atk": 147,
       "Def": 90,
-      "SpA": 106,
+      "SpA": 66,
       "SpD": 79,
       "Spe": 97
     },
@@ -92374,14 +92390,14 @@
     "Type1": "Ice",
     "Type2": "Ice",
     "Ability1": "Levitate",
-    "Ability2": "Levitate",
-    "AbilityH": "Levitate",
+    "Ability2": "Snow Warning",
+    "AbilityH": "Fur Coat",
     "BaseStats": {
       "HP": 80,
       "Atk": 40,
       "Def": 50,
       "SpA": 100,
-      "SpD": 145,
+      "SpD": 135,
       "Spe": 115
     },
     "CatchRate": 255,
@@ -95921,6 +95937,10 @@
       {
         "Label": "TM77",
         "Move": "Zen Headbutt"
+      },
+      {
+        "Label": "TM83",
+        "Move": "Infestation"
       },
       {
         "Label": "TM84",
@@ -101252,7 +101272,7 @@
   "Florges": {
     "SpeciesIdx": 671,
     "Type1": "Fairy",
-    "Type2": "Grass",
+    "Type2": "Fairy",
     "Ability1": "Flower Veil",
     "Ability2": "Symbiosis",
     "AbilityH": "Friend Guard",
@@ -111406,7 +111426,7 @@
       "HP": 80,
       "Atk": 89,
       "Def": 90,
-      "SpA": 67,
+      "SpA": 97,
       "SpD": 90,
       "Spe": 114
     },
