@@ -18,7 +18,7 @@
             --trainer-border-color: #6f6f6f;
             --pokemon-border-color: #555555;
             --inner-padding-x: 8px;
-            --inner-padding-y: 12px;
+            --inner-padding-y: 6px;
             --moves-separator-thick: 4px;
             --sep-color: #e6e6e6;
         }
@@ -224,7 +224,7 @@
             border-bottom: 1px solid #e6e6e6;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
         }
 
@@ -265,12 +265,12 @@
             height: 96px;
             image-rendering: auto;
             display: block;
-            margin: 2px auto 8px;
+            margin: 2px auto 4px;
         }
 
         .pokemon-inner .info-box {
             background: transparent;
-            padding: 12px 0;
+            padding: 6px 0;
             margin: 0;
             font-size: 0.95rem;
             text-align: left;
@@ -283,7 +283,7 @@
             text-align: center;
             margin: 0 0 0 0;
             position: relative;
-            padding: 12px 0;
+            padding: 6px 0;
         }
 
         .pokemon-inner .types + .info-box::before,
@@ -368,21 +368,38 @@
         .poke-name {
             padding-bottom: 2px;
             display: block;
-            min-height: 3em;
+            min-height: 2em;
         }
 
         .type-badge {
             display: inline-block;
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
             font-weight: 600;
             color: white;
-            text-transform: uppercase;
+            margin: 2px;
         }
 
-        .info-bubble {
+        /* Notes bubble */
+        .notes-bubble {
             display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: #e8e8e8;
+            color: #000;
+            font-size: 0.88rem;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 8px;
+            min-height: 2em;
+            min-width: 80px;
+            box-sizing: border-box;
+        }
+
+        .notes-bubble:empty {
+            visibility: hidden;
+        }
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.9rem;
@@ -532,25 +549,25 @@
             height: 32px;
         }
 
-        /* Type colors */
-        .type-normal { background: #A8A77A; }
-        .type-fire { background: #EE8130; }
-        .type-water { background: #6390F0; }
-        .type-electric { background: #F7D02C; }
-        .type-grass { background: #7AC74C; }
-        .type-ice { background: #96D9D6; }
-        .type-fighting { background: #C22E28; }
-        .type-poison { background: #A33EA1; }
-        .type-ground { background: #E2BF65; }
-        .type-flying { background: #A98FF3; }
-        .type-psychic { background: #F95587; }
-        .type-bug { background: #A6B91A; }
-        .type-rock { background: #B6A136; }
-        .type-ghost { background: #735797; }
-        .type-dragon { background: #6F35FC; }
-        .type-dark { background: #705746; }
-        .type-steel { background: #B7B7CE; }
-        .type-fairy { background: #D685AD; }
+        /* Type colors — matches pokemon.html / index.html */
+        .type-normal { background: #9099a1; }
+        .type-fire { background: #ff9c54; }
+        .type-water { background: #4f90d9; }
+        .type-electric { background: #f3d23b; }
+        .type-grass { background: #63bb5b; }
+        .type-ice { background: #74cec0; }
+        .type-fighting { background: #ce4069; }
+        .type-poison { background: #aa5caf; }
+        .type-ground { background: #d97746; }
+        .type-flying { background: #92aade; }
+        .type-psychic { background: #f97176; }
+        .type-bug { background: #90c12c; }
+        .type-rock { background: #c7b78b; }
+        .type-ghost { background: #5269ac; }
+        .type-dragon { background: #096dc4; }
+        .type-dark { background: #5a5366; }
+        .type-steel { background: #5a8ea2; }
+        .type-fairy { background: #ec8fe6; }
 
         @media (max-width: 1000px) {
             .sidebar { width: 280px; }
@@ -1379,12 +1396,7 @@
                 // Always add a notes element (empty if no notes) so layout is uniform
                 {
                     const notesEl = document.createElement("div");
-                    notesEl.style.marginTop = "8px";
-                    notesEl.style.fontSize = "1rem";
-                    notesEl.style.textAlign = "center";
-                    notesEl.style.color = "#555";
-                    notesEl.style.fontStyle = "italic";
-                    notesEl.style.minHeight = "1.4em";
+                    notesEl.className = "notes-bubble";
                     notesEl.textContent = (tr.Notes && tr.Notes.trim()) ? tr.Notes : "";
                     trainerTopSection.appendChild(notesEl);
                 }

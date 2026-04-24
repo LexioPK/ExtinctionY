@@ -167,9 +167,16 @@ function installHeaderFromFile() {
         <a href="index.html">Pokédex</a>
         <a href="moves.html">Moves</a>
         <a href="locations.html">Locations</a>
-        <div style="margin-left:auto; position:relative;">
-          <input id="search" type="text" placeholder="Search Pokémon..." autocomplete="off" />
-          <div id="search-results" class="search-results" aria-hidden="true"></div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:12px; position:relative;">
+          <div style="position:relative;">
+            <input id="search" type="text" placeholder="Search Pokémon..." autocomplete="off" />
+            <div id="search-results" class="search-results" aria-hidden="true"></div>
+          </div>
+          <label class="dark-mode-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">
+            <input type="checkbox" id="dark-mode-checkbox" autocomplete="off" />
+            <span class="dark-mode-slider"></span>
+            <span class="dark-mode-icon">🌙</span>
+          </label>
         </div>
       `;
       document.body.insertBefore(fallback, document.body.firstChild);
