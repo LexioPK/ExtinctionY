@@ -960,6 +960,7 @@
             tab.onclick = () => {
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
+                sessionStorage.setItem("lastLocationTab", matchKey);
                 displayLocation(matchKey);
             };
             sidebar.appendChild(tab);
@@ -977,6 +978,7 @@
             tab.onclick = () => {
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
+                sessionStorage.setItem("lastLocationTab", root);
                 displayLocation(root);
             };
             sidebar.appendChild(tab);
@@ -984,8 +986,12 @@
         }
 
         if (sidebar.children.length) {
-            sidebar.children[0].classList.add("active");
-            displayLocation(sidebar.children[0].dataset.base);
+            const savedTab = sessionStorage.getItem("lastLocationTab");
+            const allSidebarTabs = Array.from(sidebar.querySelectorAll(".route-tab"));
+            const restoredTab = savedTab && allSidebarTabs.find(t => t.dataset.base === savedTab);
+            const startTab = restoredTab || sidebar.children[0];
+            startTab.classList.add("active");
+            displayLocation(startTab.dataset.base);
         }
     }
 
