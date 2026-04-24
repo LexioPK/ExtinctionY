@@ -250,6 +250,206 @@ html.dark-mode .active.tab {
     background: #1a3a2e !important;
 }
 
+/* ── locations.html ── */
+html.dark-mode .sidebar {
+    background: #1e1e1e !important;
+    box-shadow: 3px 0 8px rgba(0,0,0,0.4);
+}
+
+html.dark-mode .route-tab {
+    background: #2a2a3a !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .route-tab:hover {
+    background: #333348 !important;
+}
+
+html.dark-mode .route-tab.active {
+    background: #1976d2 !important;
+    color: white !important;
+}
+
+html.dark-mode .location-tab-btn {
+    background: #2a2a3a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+html.dark-mode .location-tab-btn:hover {
+    background: #333348 !important;
+}
+
+html.dark-mode .location-tab-btn.active {
+    background: #4285F4 !important;
+    color: white !important;
+    border-color: #4285F4 !important;
+}
+
+html.dark-mode .encounter-type-section {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .items-section {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .items-table th {
+    background: #2a2a3a !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .items-table td {
+    border-bottom-color: #333 !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .items-table tr:hover {
+    background: #252535 !important;
+}
+
+html.dark-mode .pokemon-box {
+    background: #252535 !important;
+    border-color: #3a3a4a !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .notes-bubble {
+    background: #2a2a3a !important;
+    color: #e0e0e0 !important;
+}
+
+/* ── pokemon.html ── */
+html.dark-mode .card {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .section {
+    background: #252535 !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .section h2 {
+    border-bottom-color: #444 !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .moves-table {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .moves-table th {
+    background: #2a2a3a !important;
+    color: #e0e0e0 !important;
+    border-bottom-color: #444 !important;
+}
+
+html.dark-mode .moves-table td {
+    border-bottom-color: #333 !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .moves-table tr:hover {
+    background: #2a2a45 !important;
+}
+
+html.dark-mode .form-tab {
+    background: #2a2a3a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+html.dark-mode .form-tab:hover {
+    background: #333348 !important;
+}
+
+html.dark-mode .form-tab.active {
+    background: #4285F4 !important;
+    color: white !important;
+    border-color: #3367d6 !important;
+}
+
+/* ── moves.html ── */
+html.dark-mode table {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode table th {
+    background: #2a2a3a !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode table td {
+    border-bottom-color: #333 !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode table tr:hover {
+    background: #252535 !important;
+}
+
+html.dark-mode #move-search {
+    background: #2a2a2a !important;
+    border-color: #555 !important;
+    color: #e0e0e0 !important;
+}
+
+/* ── movedescriptions.html ── */
+html.dark-mode .move-card {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .stat-pill {
+    background: #2a2a3a !important;
+    border-color: #444 !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .description {
+    color: #d0d0d0 !important;
+}
+
+html.dark-mode .learn-item {
+    background: #252535 !important;
+    border-bottom-color: #333 !important;
+    color: #e0e0e0 !important;
+}
+
+/* ── abilities.html ── */
+html.dark-mode .container {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .container h1,
+html.dark-mode .container h2,
+html.dark-mode .container p {
+    color: #e0e0e0 !important;
+}
+
+/* ── shared card components ── */
+html.dark-mode .stats-summary,
+html.dark-mode .stat-box,
+html.dark-mode .pokemon-count-card,
+html.dark-mode .item-usage-card,
+html.dark-mode .moveset-card {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .subtitle,
+html.dark-mode .count-label,
+html.dark-mode .stat-label,
+html.dark-mode .dex-number {
+    color: #aaa !important;
+}
+
 /* Small helper to avoid header overlapping page content:
    The script will add top padding to body if needed, but you can also
    add top padding to a page container like .page-content { padding-top: 68px; }
