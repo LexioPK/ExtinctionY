@@ -241,7 +241,7 @@
 
     .region-content {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 20px;
         padding: 20px 10px;
         max-height: none;
@@ -259,7 +259,7 @@
     /* Filtered results container */
     .filtered-results {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 20px;
         padding: 20px 10px;
     }
@@ -607,8 +607,8 @@ function loadPokedex() {
 <p class="label">Abilities</p>
 <ul>
     <li>${mon.Ability1}</li>
-    <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
-    <li><em>(H):</em> ${mon.AbilityH}</li>
+    ${mon.Ability2 && mon.Ability2 !== mon.Ability1 ? `<li>${mon.Ability2}</li>` : ""}
+    ${mon.AbilityH && mon.AbilityH !== mon.Ability1 && mon.AbilityH !== mon.Ability2 ? `<li>${mon.AbilityH} <em>(H)</em></li>` : ""}
 </ul>
 
 <p class="label">Base Stats</p>

@@ -1379,7 +1379,7 @@
                 if (tr.Notes && tr.Notes.trim()) {
                     const notesEl = document.createElement("div");
                     notesEl.style.marginTop = "8px";
-                    notesEl.style.fontSize = "0.85rem";
+                    notesEl.style.fontSize = "1rem";
                     notesEl.style.textAlign = "center";
                     notesEl.style.color = "#555";
                     notesEl.style.fontStyle = "italic";
@@ -1392,7 +1392,7 @@
                 // Add trainer info badges with bubble styling (positioned at bottom)
                 const trainerBadges = document.createElement("div");
                 trainerBadges.className = "trainer-badges";
-                trainerBadges.style.marginTop = "auto"; // Push to bottom
+                trainerBadges.style.marginTop = "8px";
                 
                 // Battle Type bubble
                 const battleTypeText = tr.BattleType || "Single";
@@ -1515,21 +1515,16 @@
                                 ${typesHtml}
                             </div>
 
-                            <!-- Removed headers; values bold & larger -->
-                            <div class="info-box ability-box">
-                                ${abilityHtml}
+                            <!-- Ability | Item on one line, Nature below, smaller font -->
+                            <div class="info-box ability-item-box" style="font-size:0.78rem;">
+                                ${abilityHtml} <span style="margin:0 4px; color:#bbb;">|</span> ${heldItemHtml}
                             </div>
 
-                            <div class="info-box nature-box">
+                            <div class="info-box nature-box" style="font-size:0.78rem;">
                                 ${colorNature(p.Nature || "---")}
                             </div>
 
-                            <div class="info-box item-box">
-                                ${heldItemHtml}
-                            </div>
-
                             <div class="info-box move-list">
-                                <div class="move-header"><strong>Moves:</strong></div>
                                 ${movesHtml}
                             </div>
                         </div>
