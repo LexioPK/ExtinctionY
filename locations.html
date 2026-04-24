@@ -1375,6 +1375,18 @@
                     trainerTopSection.appendChild(imagesContainer);
                 }
                 
+                // Add trainer notes below the image (if any)
+                if (tr.Notes && tr.Notes.trim()) {
+                    const notesEl = document.createElement("div");
+                    notesEl.style.marginTop = "8px";
+                    notesEl.style.fontSize = "0.85rem";
+                    notesEl.style.textAlign = "center";
+                    notesEl.style.color = "#555";
+                    notesEl.style.fontStyle = "italic";
+                    notesEl.textContent = tr.Notes;
+                    trainerTopSection.appendChild(notesEl);
+                }
+                
                 trainerInfo.appendChild(trainerTopSection);
                 
                 // Add trainer info badges with bubble styling (positioned at bottom)
