@@ -224,7 +224,7 @@
             border-bottom: 1px solid #e6e6e6;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
 
@@ -1311,79 +1311,81 @@
                 // For trainers with "&" in name, show multiple images side-by-side
                 // For single trainers, center the image
                 // Limit to 2 attempts max per image to avoid infinite retries
-                if (imagesToTry.length > 0) {
-                    // Create container for images
+                {
+                    // Always create the image container so the space is uniform across all trainers
                     const imagesContainer = document.createElement("div");
                     imagesContainer.style.marginTop = "8px";
-                    
-                    // If should show dual images (e.g., "Tierno & Trevor"), prioritize showing both trainer images
-                    let imagesToShow;
-                    if (shouldShowDualImages) {
-                        // For dual trainers, find the images that match the trainer names
-                        imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
-                        // If we didn't find both, fall back to the first available images
-                        if (imagesToShow.length < trainerNames.length) {
-                            imagesToShow = imagesToTry.slice(0, trainerNames.length);
-                        }
-                    } else {
-                        // Single trainer - just use the first image
-                        imagesToShow = imagesToTry.slice(0, 1);
-                    }
-                    
-                    // Center single images, stack multiple images vertically
+                    imagesContainer.style.minHeight = "150px";
                     imagesContainer.style.textAlign = "center";
                     imagesContainer.style.display = "flex";
                     imagesContainer.style.justifyContent = "center";
                     imagesContainer.style.alignItems = "center";
-                    
-                    if (imagesToShow.length > 1) {
-                        // Stack multiple images vertically
-                        imagesContainer.style.flexDirection = "column";
-                        imagesContainer.style.gap = "8px";
+
+                    if (imagesToTry.length > 0) {
+                        // If should show dual images (e.g., "Tierno & Trevor"), prioritize showing both trainer images
+                        let imagesToShow;
+                        if (shouldShowDualImages) {
+                            // For dual trainers, find the images that match the trainer names
+                            imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
+                            // If we didn't find both, fall back to the first available images
+                            if (imagesToShow.length < trainerNames.length) {
+                                imagesToShow = imagesToTry.slice(0, trainerNames.length);
+                            }
+                        } else {
+                            // Single trainer - just use the first image
+                            imagesToShow = imagesToTry.slice(0, 1);
+                        }
+
+                        if (imagesToShow.length > 1) {
+                            // Stack multiple images vertically
+                            imagesContainer.style.flexDirection = "column";
+                            imagesContainer.style.gap = "8px";
+                        }
+
+                        imagesToShow.forEach((imageFile, idx) => {
+                            const img = document.createElement("img");
+                            img.alt = trainerNames[idx] || tr.TrainerClass || '';
+                            img.className = "trainer-image";
+
+                            let attemptCount = 0;
+                            const MAX_ATTEMPTS = 2;
+
+                            const tryImage = () => {
+                                attemptCount++;
+                                if (attemptCount <= MAX_ATTEMPTS) {
+                                    img.src = `image/trainer_images/${imageFile}.png`;
+                                } else {
+                                    // Failed after max attempts, hide the image
+                                    img.style.display = 'none';
+                                }
+                            };
+
+                            img.onerror = () => {
+                                if (attemptCount < MAX_ATTEMPTS) {
+                                    tryImage();
+                                } else {
+                                    img.style.display = 'none';
+                                }
+                            };
+
+                            tryImage(); // Start with the first attempt
+                            imagesContainer.appendChild(img);
+                        });
                     }
-                    
-                    imagesToShow.forEach((imageFile, idx) => {
-                        const img = document.createElement("img");
-                        img.alt = trainerNames[idx] || tr.TrainerClass || '';
-                        img.className = "trainer-image";
-                        
-                        let attemptCount = 0;
-                        const MAX_ATTEMPTS = 2;
-                        
-                        const tryImage = () => {
-                            attemptCount++;
-                            if (attemptCount <= MAX_ATTEMPTS) {
-                                img.src = `image/trainer_images/${imageFile}.png`;
-                            } else {
-                                // Failed after max attempts, hide the image
-                                img.style.display = 'none';
-                            }
-                        };
-                        
-                        img.onerror = () => {
-                            if (attemptCount < MAX_ATTEMPTS) {
-                                tryImage();
-                            } else {
-                                img.style.display = 'none';
-                            }
-                        };
-                        
-                        tryImage(); // Start with the first attempt
-                        imagesContainer.appendChild(img);
-                    });
-                    
+
                     trainerTopSection.appendChild(imagesContainer);
                 }
                 
-                // Add trainer notes below the image (if any)
-                if (tr.Notes && tr.Notes.trim()) {
+                // Always add a notes element (empty if no notes) so layout is uniform
+                {
                     const notesEl = document.createElement("div");
                     notesEl.style.marginTop = "8px";
                     notesEl.style.fontSize = "1rem";
                     notesEl.style.textAlign = "center";
                     notesEl.style.color = "#555";
                     notesEl.style.fontStyle = "italic";
-                    notesEl.textContent = tr.Notes;
+                    notesEl.style.minHeight = "1.4em";
+                    notesEl.textContent = (tr.Notes && tr.Notes.trim()) ? tr.Notes : "";
                     trainerTopSection.appendChild(notesEl);
                 }
                 
@@ -1392,7 +1394,7 @@
                 // Add trainer info badges with bubble styling (positioned at bottom)
                 const trainerBadges = document.createElement("div");
                 trainerBadges.className = "trainer-badges";
-                trainerBadges.style.marginTop = "8px";
+                trainerBadges.style.marginTop = "0";
                 
                 // Battle Type bubble
                 const battleTypeText = tr.BattleType || "Single";
@@ -1515,12 +1517,15 @@
                                 ${typesHtml}
                             </div>
 
-                            <!-- Ability | Item on one line, Nature below, smaller font -->
-                            <div class="info-box ability-item-box" style="font-size:0.78rem;">
-                                ${abilityHtml} <span style="margin:0 4px; color:#bbb;">|</span> ${heldItemHtml}
+                            <div class="info-box ability-box" style="font-size:0.88rem;">
+                                ${abilityHtml}
                             </div>
 
-                            <div class="info-box nature-box" style="font-size:0.78rem;">
+                            <div class="info-box item-box" style="font-size:0.88rem;">
+                                ${heldItemHtml}
+                            </div>
+
+                            <div class="info-box nature-box" style="font-size:0.88rem;">
                                 ${colorNature(p.Nature || "---")}
                             </div>
 

@@ -64,6 +64,192 @@
     background: #f2f6ff;
 }
 
+/* ── Dark mode toggle switch ── */
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.dark-mode-toggle input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.dark-mode-slider {
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    background: #ccc;
+    border-radius: 11px;
+    position: relative;
+    transition: background 0.25s;
+    flex-shrink: 0;
+}
+
+.dark-mode-slider::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.25s;
+}
+
+.dark-mode-toggle input:checked + .dark-mode-slider {
+    background: #1976d2;
+}
+
+.dark-mode-toggle input:checked + .dark-mode-slider::after {
+    transform: translateX(18px);
+}
+
+.dark-mode-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+/* ── Dark mode global overrides ── */
+html.dark-mode {
+    color-scheme: dark;
+}
+
+html.dark-mode body {
+    background: #121212 !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .header {
+    background: #1e1e1e;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+html.dark-mode .header a {
+    color: #ccc;
+}
+
+html.dark-mode .header a.active {
+    color: #90caf9;
+    background: rgba(144,202,249,0.12);
+}
+
+html.dark-mode #search {
+    background: #2a2a2a;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+html.dark-mode .search-results {
+    background: #1e1e1e;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+html.dark-mode .search-results .result:hover {
+    background: #2a3a55;
+}
+
+/* Pokemon cards (index.html) */
+html.dark-mode .pokemon-card {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5) !important;
+}
+
+html.dark-mode .pokemon-card h3 {
+    color: #e0e0e0;
+}
+
+html.dark-mode .pokemon-card .label {
+    border-bottom-color: #444;
+    color: #ccc;
+}
+
+html.dark-mode .pokemon-card .stat-bar-bg {
+    background: #333;
+}
+
+/* Advanced search panel */
+html.dark-mode .advanced-search-container {
+    background: #1e1e2e !important;
+    color: #e0e0e0;
+}
+
+html.dark-mode .filter-group select {
+    background: #2a2a3a !important;
+    border-color: #555 !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .filter-summary {
+    background: #2a2a3a !important;
+    color: #aaa !important;
+}
+
+html.dark-mode .filter-summary.active {
+    background: #1a3040 !important;
+    color: #7ecfef !important;
+    border-color: #3a7a9a !important;
+}
+
+/* Region headers */
+html.dark-mode .region-content {
+    background: transparent;
+}
+
+/* Trainer cards (locations.html) */
+html.dark-mode .trainer-card {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .trainer-row > .trainer-info-column {
+    background: #252535 !important;
+    border-color: #3a3a4a !important;
+}
+
+html.dark-mode .trainer-header {
+    color: #e0e0e0;
+}
+
+html.dark-mode .pokemon-container > .pokemon-col {
+    background: #1e1e2e !important;
+    border-color: #3a3a4a !important;
+}
+
+html.dark-mode .pokemon-container > .pokemon-col:nth-child(2n) {
+    background: #222233 !important;
+}
+
+html.dark-mode .pokemon-inner .info-box {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .poke-name a {
+    color: #e0e0e0 !important;
+}
+
+/* Misc shared elements */
+html.dark-mode .tab {
+    background: #1e1e2e !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .tab:hover {
+    background: #2a2a3e !important;
+}
+
+html.dark-mode .active.tab {
+    background: #1a3a2e !important;
+}
+
 /* Small helper to avoid header overlapping page content:
    The script will add top padding to body if needed, but you can also
    add top padding to a page container like .page-content { padding-top: 68px; }

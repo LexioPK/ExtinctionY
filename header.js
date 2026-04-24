@@ -3,6 +3,13 @@
 // Inserts header.html DOM into the page and provides search functionality that queries data/pokedex.json.
 // Usage: include <link rel="stylesheet" href="header.css"> and <script src="header.js" defer></script> in each page.
 
+// Apply dark mode immediately to prevent flash of light mode
+(function() {
+  if (localStorage.getItem("darkMode") === "1") {
+    document.documentElement.classList.add("dark-mode");
+  }
+})();
+
 /* Global store for pokedex entries used by the search box */
 window._searchPokedex = null;
 
@@ -179,4 +186,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadSearchPokedex();
   // Expose search function globally (used by inline oninput if any)
   window.searchPokemon = searchPokemon;
+  // Wire up dark mode toggle
+  initDarkMode();
 });
+
+/* ── Dark Mode ── */
+function applyDarkMode(on) {
+  if (on) {
+    document.documentElement.classList.add("dark-mode");
+  } else {
+    document.documentElement.classList.remove("dark-mode");
+  }
+  const cb = document.getElementById("dark-mode-checkbox");
+  if (cb) cb.checked = on;
+}
+
+function initDarkMode() {
+  // Apply saved preference immediately
+  const saved = localStorage.getItem("darkMode") === "1";
+  applyDarkMode(saved);
+
+  const cb = document.getElementById("dark-mode-checkbox");
+  if (cb) {
+    cb.addEventListener("change", () => {
+      const on = cb.checked;
+      localStorage.setItem("darkMode", on ? "1" : "0");
+      applyDarkMode(on);
+    });
+  }
+}
