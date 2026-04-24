@@ -421,6 +421,16 @@ html.dark-mode .learn-item {
     color: #e0e0e0 !important;
 }
 
+html.dark-mode .poke-link-name {
+    color: #e0e0e0 !important;
+}
+
+html.dark-mode .learn-type {
+    background: #2a2a3a !important;
+    border-color: #444 !important;
+    color: #ccc !important;
+}
+
 /* ── abilities.html ── */
 html.dark-mode .container {
     background: #1e1e2e !important;
