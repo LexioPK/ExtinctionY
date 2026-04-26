@@ -47,9 +47,10 @@
         font-weight: 600;
     }
     
-    /* Bold ability names */
+    /* Bold ability names, never wrap */
     td:first-child {
         font-weight: 600;
+        white-space: nowrap;
     }
 
     tr:hover { background: #f0f0f0; }
@@ -71,6 +72,21 @@
         width: 40px;
         height: 40px;
         object-fit: contain;
+    }
+
+    /* Wrapper so the H superscript sits top-right of the sprite */
+    .sprite-wrapper {
+        position: relative;
+        display: inline-flex;
+        align-items: flex-start;
+    }
+
+    .hidden-badge {
+        font-size: 0.6em;
+        font-weight: 700;
+        color: #c00;
+        line-height: 1;
+        margin-left: 1px;
     }
 </style>
 </head>
@@ -104,6 +120,8 @@ function loadAbilities() {
     .then(([abilities, pokedex]) => {
         // Track which Pokémon have each ability
         const abilityPokemon = {};
+        // Track which Pokémon have each ability as their *hidden* ability
+        const abilityHiddenPokemon = {};
         
         // Iterate through all Pokémon in the pokedex
         Object.entries(pokedex).forEach(([pokemonName, pokemon]) => {
@@ -117,6 +135,12 @@ function loadAbilities() {
                 if (!abilityPokemon[ability]) abilityPokemon[ability] = [];
                 abilityPokemon[ability].push(pokemonName);
             });
+
+            // Track hidden ability separately
+            if (pokemon.AbilityH) {
+                if (!abilityHiddenPokemon[pokemon.AbilityH]) abilityHiddenPokemon[pokemon.AbilityH] = new Set();
+                abilityHiddenPokemon[pokemon.AbilityH].add(pokemonName);
+            }
         });
 
         // Get the table body element
@@ -171,6 +195,9 @@ function loadAbilities() {
                 
                 // Add images for each Pokémon
                 pokemonList.forEach(pokemonName => {
+                    const wrapper = document.createElement("span");
+                    wrapper.className = "sprite-wrapper";
+
                     const img = document.createElement("img");
                     // Convert Pokémon name to lowercase for sprite filename
                     const spriteName = pokemonName.toLowerCase().replace(/[^a-z0-9-]/g, '');
@@ -179,9 +206,20 @@ function loadAbilities() {
                     img.title = pokemonName;
                     // Handle missing images gracefully
                     img.onerror = function() {
-                        this.style.display = 'none';
+                        this.parentElement.style.display = 'none';
                     };
-                    spritesContainer.appendChild(img);
+                    wrapper.appendChild(img);
+
+                    // Add superscript H for hidden-ability Pokémon
+                    const hiddenSet = abilityHiddenPokemon[ability.name];
+                    if (hiddenSet && hiddenSet.has(pokemonName)) {
+                        const badge = document.createElement("sup");
+                        badge.className = "hidden-badge";
+                        badge.textContent = "H";
+                        wrapper.appendChild(badge);
+                    }
+
+                    spritesContainer.appendChild(wrapper);
                 });
                 
                 spriteCell.appendChild(spritesContainer);
