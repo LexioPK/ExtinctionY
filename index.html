@@ -134,6 +134,8 @@
     .type-fairy { background: #ec8fe6; }
 
     ul { list-style: none; padding-left: 0; margin: 0; }
+    /* Abilities list: always 3 lines so cards align uniformly */
+    .abilities-list { min-height: 4.5em; }
 
     .label {
         font-weight: bold;
@@ -241,7 +243,7 @@
 
     .region-content {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
         gap: 20px;
         padding: 20px 10px;
         max-height: none;
@@ -259,7 +261,7 @@
     /* Filtered results container */
     .filtered-results {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
         gap: 20px;
         padding: 20px 10px;
     }
@@ -605,10 +607,10 @@ function loadPokedex() {
 </div>
 
 <p class="label">Abilities</p>
-<ul>
+<ul class="abilities-list">
     <li>${mon.Ability1}</li>
-    <li>${mon.Ability2 ? mon.Ability2 : ""}</li>
-    <li><em>(H):</em> ${mon.AbilityH}</li>
+    <li style="visibility:${mon.Ability2 && mon.Ability2 !== mon.Ability1 ? 'visible' : 'hidden'}">${mon.Ability2 && mon.Ability2 !== mon.Ability1 ? mon.Ability2 : '&nbsp;'}</li>
+    <li style="visibility:${mon.AbilityH && mon.AbilityH !== mon.Ability1 && mon.AbilityH !== mon.Ability2 ? 'visible' : 'hidden'}">${mon.AbilityH && mon.AbilityH !== mon.Ability1 && mon.AbilityH !== mon.Ability2 ? mon.AbilityH + ' <em>(H)</em>' : '&nbsp;'}</li>
 </ul>
 
 <p class="label">Base Stats</p>

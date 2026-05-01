@@ -520,8 +520,8 @@ Promise.all([
     const abilitiesUl = document.querySelector('.info-cols div:nth-child(2) ul');
     abilitiesUl.innerHTML = `
       <li>${formatAbilityWithTooltip(currentFormData.Ability1)}</li>
-      ${currentFormData.Ability2 ? `<li>${formatAbilityWithTooltip(currentFormData.Ability2)}</li>` : ""}
-      <li class="hidden-ability-marker">(H): ${formatAbilityWithTooltip(currentFormData.AbilityH)}</li>
+      ${currentFormData.Ability2 && currentFormData.Ability2 !== currentFormData.Ability1 ? `<li>${formatAbilityWithTooltip(currentFormData.Ability2)}</li>` : ""}
+      ${currentFormData.AbilityH && currentFormData.AbilityH !== currentFormData.Ability1 && currentFormData.AbilityH !== currentFormData.Ability2 ? `<li class="hidden-ability-marker">${formatAbilityWithTooltip(currentFormData.AbilityH)} (H)</li>` : ""}
     `;
     
     // Update base stats (use same ranges as initial display for consistency)
@@ -590,10 +590,10 @@ Promise.all([
 
        <div>
          <h3>Abilities</h3>
-          <ul style="text-align:left; display:inline-block; list-style:none; padding-left:0;">
+          <ul style="text-align:center; display:inline-block; list-style:none; padding-left:0;">
             <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
-            ${mon.Ability2 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
-            <li class="hidden-ability-marker">(H): ${formatAbilityWithTooltip(mon.AbilityH)}</li>
+            ${mon.Ability2 && mon.Ability2 !== mon.Ability1 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
+            ${mon.AbilityH && mon.AbilityH !== mon.Ability1 && mon.AbilityH !== mon.Ability2 ? `<li class="hidden-ability-marker">${formatAbilityWithTooltip(mon.AbilityH)} (H)</li>` : ""}
           </ul>
        </div>
 

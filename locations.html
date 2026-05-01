@@ -16,10 +16,10 @@
         :root{
             --poke-border: 2px;
             --trainer-border-color: #6f6f6f;
-            --pokemon-border-color: #555555;
+            --pokemon-border-color: #e6e6e6;
             --inner-padding-x: 8px;
-            --inner-padding-y: 12px;
-            --moves-separator-thick: 4px;
+            --inner-padding-y: 6px;
+            --moves-separator-thick: 1px;
             --sep-color: #e6e6e6;
         }
 
@@ -224,7 +224,7 @@
             border-bottom: 1px solid #e6e6e6;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
 
@@ -265,12 +265,12 @@
             height: 96px;
             image-rendering: auto;
             display: block;
-            margin: 2px auto 8px;
+            margin: 2px auto 4px;
         }
 
         .pokemon-inner .info-box {
             background: transparent;
-            padding: 12px 0;
+            padding: 6px 0;
             margin: 0;
             font-size: 0.95rem;
             text-align: left;
@@ -283,7 +283,7 @@
             text-align: center;
             margin: 0 0 0 0;
             position: relative;
-            padding: 12px 0;
+            padding: 6px 0;
         }
 
         .pokemon-inner .types + .info-box::before,
@@ -368,17 +368,37 @@
         .poke-name {
             padding-bottom: 2px;
             display: block;
-            min-height: 3em;
+            min-height: 2em;
         }
 
         .type-badge {
             display: inline-block;
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
             font-weight: 600;
             color: white;
-            text-transform: uppercase;
+            margin: 2px;
+        }
+
+        /* Notes bubble */
+        .notes-bubble {
+            display: block;
+            width: 100%;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: #e8e8e8;
+            color: #000;
+            font-size: 0.88rem;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 8px;
+            min-height: 2em;
+            box-sizing: border-box;
+        }
+
+        .notes-bubble:empty {
+            visibility: hidden;
         }
 
         .info-bubble {
@@ -390,6 +410,10 @@
             text-align: center;
             color: white;
             min-width: 120px;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         /* Battle Type colors */
@@ -532,25 +556,25 @@
             height: 32px;
         }
 
-        /* Type colors */
-        .type-normal { background: #A8A77A; }
-        .type-fire { background: #EE8130; }
-        .type-water { background: #6390F0; }
-        .type-electric { background: #F7D02C; }
-        .type-grass { background: #7AC74C; }
-        .type-ice { background: #96D9D6; }
-        .type-fighting { background: #C22E28; }
-        .type-poison { background: #A33EA1; }
-        .type-ground { background: #E2BF65; }
-        .type-flying { background: #A98FF3; }
-        .type-psychic { background: #F95587; }
-        .type-bug { background: #A6B91A; }
-        .type-rock { background: #B6A136; }
-        .type-ghost { background: #735797; }
-        .type-dragon { background: #6F35FC; }
-        .type-dark { background: #705746; }
-        .type-steel { background: #B7B7CE; }
-        .type-fairy { background: #D685AD; }
+        /* Type colors — matches pokemon.html / index.html */
+        .type-normal { background: #9099a1; }
+        .type-fire { background: #ff9c54; }
+        .type-water { background: #4f90d9; }
+        .type-electric { background: #f3d23b; }
+        .type-grass { background: #63bb5b; }
+        .type-ice { background: #74cec0; }
+        .type-fighting { background: #ce4069; }
+        .type-poison { background: #aa5caf; }
+        .type-ground { background: #d97746; }
+        .type-flying { background: #92aade; }
+        .type-psychic { background: #f97176; }
+        .type-bug { background: #90c12c; }
+        .type-rock { background: #c7b78b; }
+        .type-ghost { background: #5269ac; }
+        .type-dragon { background: #096dc4; }
+        .type-dark { background: #5a5366; }
+        .type-steel { background: #5a8ea2; }
+        .type-fairy { background: #ec8fe6; }
 
         @media (max-width: 1000px) {
             .sidebar { width: 280px; }
@@ -936,6 +960,7 @@
             tab.onclick = () => {
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
+                sessionStorage.setItem("lastLocationTab", matchKey);
                 displayLocation(matchKey);
             };
             sidebar.appendChild(tab);
@@ -953,6 +978,7 @@
             tab.onclick = () => {
                 document.querySelectorAll(".route-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
+                sessionStorage.setItem("lastLocationTab", root);
                 displayLocation(root);
             };
             sidebar.appendChild(tab);
@@ -960,8 +986,12 @@
         }
 
         if (sidebar.children.length) {
-            sidebar.children[0].classList.add("active");
-            displayLocation(sidebar.children[0].dataset.base);
+            const savedTab = sessionStorage.getItem("lastLocationTab");
+            const allSidebarTabs = Array.from(sidebar.querySelectorAll(".route-tab"));
+            const restoredTab = savedTab && allSidebarTabs.find(t => t.dataset.base === savedTab);
+            const startTab = restoredTab || sidebar.children[0];
+            startTab.classList.add("active");
+            displayLocation(startTab.dataset.base);
         }
     }
 
@@ -1300,6 +1330,8 @@
                 // Create a container for trainer header and image (top section)
                 const trainerTopSection = document.createElement("div");
                 trainerTopSection.style.flex = "0 0 auto";
+                trainerTopSection.style.width = "100%";
+                trainerTopSection.style.textAlign = "center";
                 
                 // Create trainer header element with just the name
                 const trainerHeader = document.createElement("div");
@@ -1311,68 +1343,77 @@
                 // For trainers with "&" in name, show multiple images side-by-side
                 // For single trainers, center the image
                 // Limit to 2 attempts max per image to avoid infinite retries
-                if (imagesToTry.length > 0) {
-                    // Create container for images
+                {
+                    // Always create the image container so the space is uniform across all trainers
                     const imagesContainer = document.createElement("div");
                     imagesContainer.style.marginTop = "8px";
-                    
-                    // If should show dual images (e.g., "Tierno & Trevor"), prioritize showing both trainer images
-                    let imagesToShow;
-                    if (shouldShowDualImages) {
-                        // For dual trainers, find the images that match the trainer names
-                        imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
-                        // If we didn't find both, fall back to the first available images
-                        if (imagesToShow.length < trainerNames.length) {
-                            imagesToShow = imagesToTry.slice(0, trainerNames.length);
-                        }
-                    } else {
-                        // Single trainer - just use the first image
-                        imagesToShow = imagesToTry.slice(0, 1);
-                    }
-                    
-                    // Center single images, stack multiple images vertically
+                    imagesContainer.style.minHeight = "150px";
                     imagesContainer.style.textAlign = "center";
                     imagesContainer.style.display = "flex";
                     imagesContainer.style.justifyContent = "center";
                     imagesContainer.style.alignItems = "center";
-                    
-                    if (imagesToShow.length > 1) {
-                        // Stack multiple images vertically
-                        imagesContainer.style.flexDirection = "column";
-                        imagesContainer.style.gap = "8px";
+
+                    if (imagesToTry.length > 0) {
+                        // If should show dual images (e.g., "Tierno & Trevor"), prioritize showing both trainer images
+                        let imagesToShow;
+                        if (shouldShowDualImages) {
+                            // For dual trainers, find the images that match the trainer names
+                            imagesToShow = trainerNames.map(name => normalizeString(name)).filter(n => imagesToTry.includes(n));
+                            // If we didn't find both, fall back to the first available images
+                            if (imagesToShow.length < trainerNames.length) {
+                                imagesToShow = imagesToTry.slice(0, trainerNames.length);
+                            }
+                        } else {
+                            // Single trainer - just use the first image
+                            imagesToShow = imagesToTry.slice(0, 1);
+                        }
+
+                        if (imagesToShow.length > 1) {
+                            // Stack multiple images vertically
+                            imagesContainer.style.flexDirection = "column";
+                            imagesContainer.style.gap = "8px";
+                        }
+
+                        imagesToShow.forEach((imageFile, idx) => {
+                            const img = document.createElement("img");
+                            img.alt = trainerNames[idx] || tr.TrainerClass || '';
+                            img.className = "trainer-image";
+
+                            let attemptCount = 0;
+                            const MAX_ATTEMPTS = 2;
+
+                            const tryImage = () => {
+                                attemptCount++;
+                                if (attemptCount <= MAX_ATTEMPTS) {
+                                    img.src = `image/trainer_images/${imageFile}.png`;
+                                } else {
+                                    // Failed after max attempts, hide the image
+                                    img.style.display = 'none';
+                                }
+                            };
+
+                            img.onerror = () => {
+                                if (attemptCount < MAX_ATTEMPTS) {
+                                    tryImage();
+                                } else {
+                                    img.style.display = 'none';
+                                }
+                            };
+
+                            tryImage(); // Start with the first attempt
+                            imagesContainer.appendChild(img);
+                        });
                     }
-                    
-                    imagesToShow.forEach((imageFile, idx) => {
-                        const img = document.createElement("img");
-                        img.alt = trainerNames[idx] || tr.TrainerClass || '';
-                        img.className = "trainer-image";
-                        
-                        let attemptCount = 0;
-                        const MAX_ATTEMPTS = 2;
-                        
-                        const tryImage = () => {
-                            attemptCount++;
-                            if (attemptCount <= MAX_ATTEMPTS) {
-                                img.src = `image/trainer_images/${imageFile}.png`;
-                            } else {
-                                // Failed after max attempts, hide the image
-                                img.style.display = 'none';
-                            }
-                        };
-                        
-                        img.onerror = () => {
-                            if (attemptCount < MAX_ATTEMPTS) {
-                                tryImage();
-                            } else {
-                                img.style.display = 'none';
-                            }
-                        };
-                        
-                        tryImage(); // Start with the first attempt
-                        imagesContainer.appendChild(img);
-                    });
-                    
+
                     trainerTopSection.appendChild(imagesContainer);
+                }
+                
+                // Always add a notes element (empty if no notes) so layout is uniform
+                {
+                    const notesEl = document.createElement("div");
+                    notesEl.className = "notes-bubble";
+                    notesEl.textContent = (tr.Notes && tr.Notes.trim()) ? tr.Notes : "";
+                    trainerTopSection.appendChild(notesEl);
                 }
                 
                 trainerInfo.appendChild(trainerTopSection);
@@ -1380,7 +1421,6 @@
                 // Add trainer info badges with bubble styling (positioned at bottom)
                 const trainerBadges = document.createElement("div");
                 trainerBadges.className = "trainer-badges";
-                trainerBadges.style.marginTop = "auto"; // Push to bottom
                 
                 // Battle Type bubble
                 const battleTypeText = tr.BattleType || "Single";
@@ -1503,21 +1543,19 @@
                                 ${typesHtml}
                             </div>
 
-                            <!-- Removed headers; values bold & larger -->
-                            <div class="info-box ability-box">
+                            <div class="info-box ability-box" style="font-size:0.88rem;">
                                 ${abilityHtml}
                             </div>
 
-                            <div class="info-box nature-box">
-                                ${colorNature(p.Nature || "---")}
-                            </div>
-
-                            <div class="info-box item-box">
+                            <div class="info-box item-box" style="font-size:0.88rem;">
                                 ${heldItemHtml}
                             </div>
 
+                            <div class="info-box nature-box" style="font-size:0.88rem;">
+                                ${colorNature(p.Nature || "---")}
+                            </div>
+
                             <div class="info-box move-list">
-                                <div class="move-header"><strong>Moves:</strong></div>
                                 ${movesHtml}
                             </div>
                         </div>

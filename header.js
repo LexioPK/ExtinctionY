@@ -3,6 +3,13 @@
 // Inserts header.html DOM into the page and provides search functionality that queries data/pokedex.json.
 // Usage: include <link rel="stylesheet" href="header.css"> and <script src="header.js" defer></script> in each page.
 
+// Apply dark mode immediately to prevent flash of light mode
+(function() {
+  if (localStorage.getItem("darkMode") === "1") {
+    document.documentElement.classList.add("dark-mode");
+  }
+})();
+
 /* Global store for pokedex entries used by the search box */
 window._searchPokedex = null;
 
@@ -160,9 +167,16 @@ function installHeaderFromFile() {
         <a href="index.html">Pokédex</a>
         <a href="moves.html">Moves</a>
         <a href="locations.html">Locations</a>
-        <div style="margin-left:auto; position:relative;">
-          <input id="search" type="text" placeholder="Search Pokémon..." autocomplete="off" />
-          <div id="search-results" class="search-results" aria-hidden="true"></div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:12px; position:relative;">
+          <div style="position:relative;">
+            <input id="search" type="text" placeholder="Search Pokémon..." autocomplete="off" />
+            <div id="search-results" class="search-results" aria-hidden="true"></div>
+          </div>
+          <label class="dark-mode-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">
+            <input type="checkbox" id="dark-mode-checkbox" autocomplete="off" />
+            <span class="dark-mode-slider"></span>
+            <span class="dark-mode-icon">🌙</span>
+          </label>
         </div>
       `;
       document.body.insertBefore(fallback, document.body.firstChild);
@@ -179,4 +193,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadSearchPokedex();
   // Expose search function globally (used by inline oninput if any)
   window.searchPokemon = searchPokemon;
+  // Wire up dark mode toggle
+  initDarkMode();
 });
+
+/* ── Dark Mode ── */
+function applyDarkMode(on) {
+  if (on) {
+    document.documentElement.classList.add("dark-mode");
+  } else {
+    document.documentElement.classList.remove("dark-mode");
+  }
+  const cb = document.getElementById("dark-mode-checkbox");
+  if (cb) cb.checked = on;
+}
+
+function initDarkMode() {
+  // Apply saved preference immediately
+  const saved = localStorage.getItem("darkMode") === "1";
+  applyDarkMode(saved);
+
+  const cb = document.getElementById("dark-mode-checkbox");
+  if (cb) {
+    cb.addEventListener("change", () => {
+      const on = cb.checked;
+      localStorage.setItem("darkMode", on ? "1" : "0");
+      applyDarkMode(on);
+    });
+  }
+}
