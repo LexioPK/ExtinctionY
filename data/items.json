@@ -150,7 +150,7 @@
     "Location/Price": "Reward for beating Hoenn Leader Norman (Repeatable)"
   },
   {
-    "Item": "Cleanse Tag",
+    "Item": "Old Rod",
     "Area": "Aquacorde Town",
     "Location/Price": "From a shopkeeper southeast of the fountain"
   },
@@ -3110,7 +3110,7 @@
     "Location/Price": "In the flower box on the south side of the caf\u00e9 on the hill in the west, in the second space from the left (hidden)"
   },
   {
-    "Item": "Great Ball",
+    "Item": "Cleanse Tag",
     "Area": "Santalune City",
     "Location/Price": "Gift from a boy in the house northeast of the Pok\u00e9mon Center"
   },
