@@ -134,8 +134,8 @@
   "blaze": {
     "name": "Blaze",
     "num": 66,
-    "desc": "When this Pokemon has 1/3 or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Fire-type attack.",
-    "shortDesc": "At 1/3 or less of its max HP, this Pokemon's offensive stat is 1.5x with Fire attacks."
+    "desc": "When this Pokemon has 1/2 or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Fire-type attack.",
+    "shortDesc": "At 1/2 or less of its max HP, this Pokemon's offensive stat is 1.5x with Fire attacks."
   },
   "bulletproof": {
     "name": "Bulletproof",
@@ -455,11 +455,11 @@
     "desc": "If this Pokemon is a Castform, its type changes to the current weather condition's type, except Sandstorm. This effect is prevented if this Pokemon is holding a Utility Umbrella and the weather is Rain Dance or Sunny Day.",
     "shortDesc": "Castform's type changes to the current weather condition's type, except Sandstorm."
   },
-  "forewarn": {
-    "name": "Forewarn",
+  "demoralize": {
+    "name": "Demoralize",
     "num": 108,
-    "desc": "On switch-in, this Pokemon is alerted to the move with the highest power, at random, known by an opposing Pokemon. This effect considers OHKO moves to have 150 power, Counter, Mirror Coat, and Metal Burst to have 120 power, every other attacking move with an unspecified power to have 80 power, and non-damaging moves to have 1 power.",
-    "shortDesc": "On switch-in, this Pokemon is alerted to the foes' move with the highest power."
+    "desc": "On switch-in, this Pokemon lowers the Special Attack of opposing Pokemon by 1 stage. Pokemon behind a substitute are immune.",
+    "shortDesc": "On switch-in, this Pokemon lowers the Special Attack of opponents by 1 stage."
   },
   "friendguard": {
     "name": "Friend Guard",
@@ -521,11 +521,11 @@
     "desc": "This Pokemon's Attack is multiplied by 1.5, but it can only select the first move it executes. These effects are prevented while this Pokemon is Dynamaxed.",
     "shortDesc": "This Pokemon's Attack is 1.5x, but it can only select the first move it executes."
   },
-  "grasspelt": {
-    "name": "Grass Pelt",
+  "biodiverse": {
+    "name": "Biodiverse",
     "num": 179,
-    "desc": "If Grassy Terrain is active, this Pokemon's Defense is multiplied by 1.5.",
-    "shortDesc": "If Grassy Terrain is active, this Pokemon's Defense is multiplied by 1.5."
+    "desc": "If a Terrain is active, this Pokemon's Defense is multiplied by 1.5.",
+    "shortDesc": "If a Terrain is active, this Pokemon's Defense is multiplied by 1.5."
   },
   "grassysurge": {
     "name": "Grassy Surge",
@@ -572,8 +572,8 @@
   "healer": {
     "name": "Healer",
     "num": 131,
-    "desc": "30% chance this Pokemon's ally has its non-volatile status condition cured at the end of each turn.",
-    "shortDesc": "30% chance this Pokemon's ally has its status cured at the end of each turn."
+    "desc": "50% chance this Pokemon's ally has its non-volatile status condition cured at the end of each turn.",
+    "shortDesc": "50% chance this Pokemon's ally has its status cured at the end of each turn."
   },
   "heatproof": {
     "name": "Heatproof",
@@ -836,8 +836,8 @@
   "megalauncher": {
     "name": "Mega Launcher",
     "num": 178,
-    "desc": "This Pokemon's aura, pulse, and cannon moves have their power multiplied by 1.5. Heal Pulse restores 3/4 of a target's maximum HP, rounded half down.",
-    "shortDesc": "This Pokemon's aura, pulse, and cannon moves have 1.5x power. Heal Pulse heals 3/4 target's max HP."
+    "desc": "This Pokemon's aura, pulse, beam and cannon moves have their power multiplied by 1.5. Heal Pulse restores 3/4 of a target's maximum HP, rounded half down.",
+    "shortDesc": "This Pokemon's aura, pulse, beam and cannon moves have 1.5x power. Heal Pulse heals 3/4 target's max HP."
   },
   "merciless": {
     "name": "Merciless",
@@ -980,8 +980,8 @@
   "overgrow": {
     "name": "Overgrow",
     "num": 65,
-    "desc": "When this Pokemon has 1/3 or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Grass-type attack.",
-    "shortDesc": "At 1/3 or less of its max HP, this Pokemon's offensive stat is 1.5x with Grass attacks."
+    "desc": "When this Pokemon has 1/w or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Grass-type attack.",
+    "shortDesc": "At 1/w or less of its max HP, this Pokemon's offensive stat is 1.5x with Grass attacks."
   },
   "owntempo": {
     "name": "Own Tempo",
@@ -1238,8 +1238,8 @@
   "sandforce": {
     "name": "Sand Force",
     "num": 159,
-    "desc": "If Sandstorm is active, this Pokemon's Ground-, Rock-, and Steel-type attacks have their power multiplied by 1.3. This Pokemon takes no damage from Sandstorm.",
-    "shortDesc": "This Pokemon's Ground/Rock/Steel attacks do 1.3x in Sandstorm; immunity to it."
+    "desc": "If Sandstorm is active, this Pokemon's Ground-, Rock-, and Steel-type attacks have their power multiplied by 1.5. This Pokemon takes no damage from Sandstorm.",
+    "shortDesc": "This Pokemon's Ground/Rock/Steel attacks do 1.5x in Sandstorm; immunity to it."
   },
   "sandrush": {
     "name": "Sand Rush",
@@ -1316,8 +1316,8 @@
   "sharpness": {
     "name": "Sharpness",
     "num": 292,
-    "desc": "This Pokemon's slicing moves have their power multiplied by 1.5.",
-    "shortDesc": "This Pokemon's slicing moves have their power multiplied by 1.5."
+    "desc": "This Pokemon's slicing moves have their power multiplied by 1.3.",
+    "shortDesc": "This Pokemon's slicing moves have their power multiplied by 1.3."
   },
   "shedskin": {
     "name": "Shed Skin",
@@ -1370,8 +1370,8 @@
   "slushrush": {
     "name": "Slush Rush",
     "num": 202,
-    "desc": "If Snow is active, this Pokemon's Speed is doubled.",
-    "shortDesc": "If Snow is active, this Pokemon's Speed is doubled."
+    "desc": "If Hail is active, this Pokemon's Speed is doubled.",
+    "shortDesc": "If Hail is active, this Pokemon's Speed is doubled."
   },
   "sniper": {
     "name": "Sniper",
@@ -1544,8 +1544,8 @@
   "swarm": {
     "name": "Swarm",
     "num": 68,
-    "desc": "When this Pokemon has 1/3 or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Bug-type attack.",
-    "shortDesc": "At 1/3 or less of its max HP, this Pokemon's offensive stat is 1.5x with Bug attacks."
+    "desc": "When this Pokemon has 1/2 or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Bug-type attack.",
+    "shortDesc": "At 1/2 or less of its max HP, this Pokemon's offensive stat is 1.5x with Bug attacks."
   },
   "sweetveil": {
     "name": "Sweet Veil",
@@ -1634,8 +1634,8 @@
   "torrent": {
     "name": "Torrent",
     "num": 67,
-    "desc": "When this Pokemon has 1/3 or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Water-type attack.",
-    "shortDesc": "At 1/3 or less of its max HP, this Pokemon's offensive stat is 1.5x with Water attacks."
+    "desc": "When this Pokemon has 1/2 or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Water-type attack.",
+    "shortDesc": "At 1/2 or less of its max HP, this Pokemon's offensive stat is 1.5x with Water attacks."
   },
   "toughclaws": {
     "name": "Tough Claws",
