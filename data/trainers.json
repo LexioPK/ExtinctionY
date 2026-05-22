@@ -164,7 +164,7 @@
             "Form": "",
             "Gender": "",
             "Level": 38,
-            "Ability": "No Guard",
+            "Ability": "Sharpness",
             "HeldItem": "Metal Coat",
             "Nature": "Bashful (Neutral)",
             "IVs": 31,
@@ -290,7 +290,7 @@
             "Form": "",
             "Gender": "",
             "Level": 39,
-            "Ability": "Technician",
+            "Ability": "Sharpness",
             "HeldItem": "Sitrus Berry",
             "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
@@ -676,7 +676,7 @@
             "Form": "",
             "Gender": "",
             "Level": 59,
-            "Ability": "Justified",
+            "Ability": "Sharpness",
             "HeldItem": "Coba Berry",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
@@ -1078,7 +1078,7 @@
             "Form": "",
             "Gender": "",
             "Level": 5,
-            "Ability": "Limber",
+            "Ability": "Pickup",
             "HeldItem": "",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 20,
@@ -1778,7 +1778,7 @@
             "Form": "",
             "Gender": "",
             "Level": 10,
-            "Ability": "Intimidate",
+            "Ability": "Unnerve",
             "HeldItem": "Oran Berry",
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 20,
@@ -2128,18 +2128,18 @@
         "RewardItem": "TM40",
         "Pokemon": [
           {
-            "Name": "Taillow",
+            "Name": "Beartic",
             "Form": "",
             "Gender": "",
-            "Level": 12,
-            "Ability": "Guts",
-            "HeldItem": "Aspear Berry",
-            "Nature": "Bashful (Neutral)",
+            "Level": 50,
+            "Ability": "Slush Rush",
+            "HeldItem": "Red Apricorn",
+            "Nature": "Impish (\u002BDef / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Facade",
-              "Sleep Talk",
-              "Quick Attack",
+              "Scratch",
+              "",
+              "",
               ""
             ]
           },
@@ -3535,7 +3535,7 @@
             "Form": "",
             "Gender": "\u2642 / Male",
             "Level": 42,
-            "Ability": "Justified",
+            "Ability": "Sharpness",
             "HeldItem": "Psychic Gem",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
@@ -5065,7 +5065,7 @@
             "Form": "",
             "Gender": "",
             "Level": 35,
-            "Ability": "Reckless",
+            "Ability": "Inner Focus",
             "HeldItem": "Hard Stone",
             "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
@@ -5278,7 +5278,7 @@
             "Form": "",
             "Gender": "",
             "Level": 41,
-            "Ability": "Sap Sipper",
+            "Ability": "Biodiverse",
             "HeldItem": "Sitrus Berry",
             "Nature": "Impish (\u002BDef / -SpA)",
             "IVs": 31,
@@ -7108,7 +7108,7 @@
             "Form": "",
             "Gender": "",
             "Level": 83,
-            "Ability": "Swift Swim",
+            "Ability": "Slush Rush",
             "HeldItem": "Lum Berry",
             "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
@@ -7124,7 +7124,7 @@
             "Form": "",
             "Gender": "",
             "Level": 83,
-            "Ability": "Swift Swim",
+            "Ability": "Slush Rush",
             "HeldItem": "Life Orb",
             "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
@@ -7187,7 +7187,7 @@
             "Form": "",
             "Gender": "",
             "Level": 83,
-            "Ability": "Refrigerate",
+            "Ability": "Slush Rush",
             "HeldItem": "Choice Specs",
             "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
@@ -7361,7 +7361,7 @@
             "Form": "",
             "Gender": "",
             "Level": 84,
-            "Ability": "Thick Fat",
+            "Ability": "Heatproof",
             "HeldItem": "Assault Vest",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -7557,7 +7557,7 @@
             "Form": "",
             "Gender": "",
             "Level": 32,
-            "Ability": "Levitate",
+            "Ability": "Healer",
             "HeldItem": "Light Clay",
             "Nature": "Impish (\u002BDef / -SpA)",
             "IVs": 31,
@@ -7747,7 +7747,7 @@
             "Form": "",
             "Gender": "\u2640 / Female",
             "Level": 33,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Berry Juice",
             "Nature": "Docile (Neutral)",
             "IVs": 31,
@@ -8841,7 +8841,7 @@
             "Form": "",
             "Gender": "",
             "Level": 17,
-            "Ability": "Levitate",
+            "Ability": "Demoralize",
             "HeldItem": "Oran Berry",
             "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
@@ -9242,7 +9242,7 @@
             "Form": "",
             "Gender": "",
             "Level": 16,
-            "Ability": "Sap Sipper",
+            "Ability": "Vital Spirit",
             "HeldItem": "Snowball",
             "Nature": "Serious (Neutral)",
             "IVs": 31,
@@ -9447,7 +9447,7 @@
             "Form": "",
             "Gender": "",
             "Level": 17,
-            "Ability": "Damp",
+            "Ability": "Hustle",
             "HeldItem": "Oran Berry",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
@@ -10736,7 +10736,7 @@
             "Form": "",
             "Gender": "",
             "Level": 8,
-            "Ability": "Early Bird",
+            "Ability": "Pickpocket",
             "HeldItem": "",
             "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 20,
@@ -11079,7 +11079,7 @@
             "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Crabhammer",
+              "Charge Beam",
               "Flash Cannon",
               "Aura Sphere",
               "Water Pulse"
@@ -11563,7 +11563,7 @@
         "Required": "Mandatory*",
         "Notes": "Choice Pair w/ Agnes",
         "IsTagBattle": false,
-        "RewardItem": "Mystic Water",
+        "RewardItem": "",
         "Pokemon": [
           {
             "Name": "Exeggcute",
@@ -12272,7 +12272,7 @@
             "Form": "",
             "Gender": "",
             "Level": 28,
-            "Ability": "Sturdy",
+            "Ability": "Biodiverse",
             "HeldItem": "Leftovers",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
@@ -12288,7 +12288,7 @@
             "Form": "",
             "Gender": "",
             "Level": 28,
-            "Ability": "Rock Head",
+            "Ability": "No Guard",
             "HeldItem": "Assault Vest",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -12351,7 +12351,7 @@
         "Required": "Megastone",
         "Notes": "",
         "IsTagBattle": false,
-        "RewardItem": "Latiosite",
+        "RewardItem": "",
         "Pokemon": [
           {
             "Name": "Rotom",
@@ -12390,7 +12390,7 @@
             "Form": "",
             "Gender": "",
             "Level": 87,
-            "Ability": "Rock Head",
+            "Ability": "No Guard",
             "HeldItem": "Shell Bell",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
@@ -12418,12 +12418,28 @@
             ]
           },
           {
+            "Name": "Honchkrow",
+            "Form": "",
+            "Gender": "",
+            "Level": 88,
+            "Ability": "Super Luck",
+            "HeldItem": "Scope Lens",
+            "Nature": "Bashful (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Dark Pulse",
+              "Brave Bird",
+              "Heat Wave",
+              "Mirror Move"
+            ]
+          },
+          {
             "Name": "Latios",
             "Form": "",
             "Gender": "",
             "Level": 88,
             "Ability": "Levitate",
-            "HeldItem": "Latiosite",
+            "HeldItem": "Blue Orb",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
             "Moves": [
@@ -12440,108 +12456,108 @@
         "TrainerID": 65,
         "TrainerClass": "Elite Trainer",
         "TrainerClassIndex": 10,
-        "BattleType": "Double",
+        "BattleType": "Single",
         "Route": "Route 22 - Part 2",
         "EncounterIndex": 1,
         "Required": "Megastone",
         "Notes": "",
         "IsTagBattle": false,
-        "RewardItem": "Latiasite",
+        "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Carracosta",
+            "Name": "Slowbro",
+            "Form": "",
+            "Gender": "",
+            "Level": 88,
+            "Ability": "Shell Armor",
+            "HeldItem": "Red Orb",
+            "Nature": "Modest (\u002BSpA / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Scald",
+              "Psyshock",
+              "Ice Beam",
+              "Flamethrower"
+            ]
+          },
+          {
+            "Name": "Aromatisse",
+            "Form": "",
+            "Gender": "",
+            "Level": 87,
+            "Ability": "Aroma Veil",
+            "HeldItem": "Mental Herb",
+            "Nature": "Sassy (\u002BSpD / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Dazzling Gleam",
+              "Sludge Bomb",
+              "Trick Room",
+              "Ally Switch"
+            ]
+          },
+          {
+            "Name": "Gogoat",
+            "Form": "",
+            "Gender": "",
+            "Level": 87,
+            "Ability": "Biodiverse",
+            "HeldItem": "Big Root",
+            "Nature": "Brave (\u002BAtk / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Headlong Rush",
+              "Horn Leech",
+              "Rock Climb",
+              "Bulk Up"
+            ]
+          },
+          {
+            "Name": "Carbink",
             "Form": "",
             "Gender": "",
             "Level": 87,
             "Ability": "Solid Rock",
-            "HeldItem": "Rindo Berry",
-            "Nature": "Docile (Neutral)",
+            "HeldItem": "Eviolite",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Waterfall",
-              "Head Smash",
+              "Diamond Storm",
+              "Moonblast",
+              "Trick Room",
+              "Barrier"
+            ]
+          },
+          {
+            "Name": "Marowak",
+            "Form": "",
+            "Gender": "",
+            "Level": 86,
+            "Ability": "Lightning Rod",
+            "HeldItem": "Thick Club",
+            "Nature": "Careful (\u002BSpD / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Headlong Rush",
+              "Shadow Punch",
               "Iron Head",
-              "Earthquake"
-            ]
-          },
-          {
-            "Name": "Mandibuzz",
-            "Form": "",
-            "Gender": "",
-            "Level": 87,
-            "Ability": "Battle Armor",
-            "HeldItem": "Charti Berry",
-            "Nature": "Adamant (\u002BAtk / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Foul Play",
-              "Brave Bird",
-              "Tailwind",
-              "U-turn"
-            ]
-          },
-          {
-            "Name": "Weezing",
-            "Form": "",
-            "Gender": "",
-            "Level": 87,
-            "Ability": "Flare Boost",
-            "HeldItem": "Flame Orb",
-            "Nature": "Naive (\u002BSpe / -SpD)",
-            "IVs": 31,
-            "Moves": [
-              "Fire Blast",
-              "Sludge Wave",
-              "Thunderbolt",
               "Protect"
             ]
           },
           {
-            "Name": "Durant",
+            "Name": "Thundurus",
             "Form": "",
             "Gender": "",
-            "Level": 87,
-            "Ability": "Hyper Cutter",
-            "HeldItem": "Leftovers",
-            "Nature": "Jolly (\u002BSpe / -SpA)",
+            "Level": 86,
+            "Ability": "Prankster",
+            "HeldItem": "Iron Ball",
+            "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Iron Head",
-              "X-Scissor",
-              "Superpower",
-              "Crunch"
-            ]
-          },
-          {
-            "Name": "Diggersby",
-            "Form": "",
-            "Gender": "",
-            "Level": 87,
-            "Ability": "Huge Power",
-            "HeldItem": "Sitrus Berry",
-            "Nature": "Hardy (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Earthquake",
-              "Mega Kick",
-              "Wild Charge",
-              "Play Rough"
-            ]
-          },
-          {
-            "Name": "Latias",
-            "Form": "",
-            "Gender": "",
-            "Level": 88,
-            "Ability": "Levitate",
-            "HeldItem": "Latiasite",
-            "Nature": "Rash (\u002BSpA / -SpD)",
-            "IVs": 31,
-            "Moves": [
-              "Mist Ball",
-              "Draco Meteor",
-              "Psyshock",
-              "Helping Hand"
+              "Discharge",
+              "Dark Pulse",
+              "Aeroblast",
+              "Fling"
             ]
           }
         ]
@@ -13197,19 +13213,19 @@
             ]
           },
           {
-            "Name": "Barbaracle",
+            "Name": "Carracosta",
             "Form": "",
             "Gender": "",
             "Level": 41,
-            "Ability": "Sniper",
+            "Ability": "Sturdy",
             "HeldItem": "Kee Berry",
-            "Nature": "Naive (\u002BSpe / -SpD)",
+            "Nature": "Naughty (\u002BAtk / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Cross Chop",
-              "Night Slash",
-              "Rock Slide",
-              "Razor Shell"
+              "Waterfall",
+              "Stone Edge",
+              "Aqua Jet",
+              "Withdraw"
             ]
           },
           {
@@ -13260,18 +13276,18 @@
             ]
           },
           {
-            "Name": "Gastrodon",
-            "Form": "Gastrodon",
+            "Name": "Quagsire",
+            "Form": "",
             "Gender": "",
             "Level": 39,
-            "Ability": "Gooey",
+            "Ability": "Unaware",
             "HeldItem": "Maranga Berry",
             "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Sludge",
-              "Surf",
-              "Mudslide",
+              "Ice Punch",
+              "Aqua Tail",
+              "Recover",
               "Recover"
             ]
           },
@@ -13280,7 +13296,7 @@
             "Form": "",
             "Gender": "",
             "Level": 41,
-            "Ability": "Storm Drain",
+            "Ability": "Biodiverse",
             "HeldItem": "Maranga Berry",
             "Nature": "Modest (\u002BSpA / -Atk)",
             "IVs": 31,
@@ -13524,7 +13540,7 @@
             "Form": "",
             "Gender": "",
             "Level": 22,
-            "Ability": "Tough Claws",
+            "Ability": "Sharpness",
             "HeldItem": "Oran Berry",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
@@ -13641,7 +13657,7 @@
             "Form": "",
             "Gender": "",
             "Level": 23,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Oran Berry",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
@@ -15532,7 +15548,7 @@
             "Form": "",
             "Gender": "",
             "Level": 52,
-            "Ability": "Contrary",
+            "Ability": "Sharpness",
             "HeldItem": "Roseli Berry",
             "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
@@ -15934,7 +15950,7 @@
             "Form": "",
             "Gender": "",
             "Level": 80,
-            "Ability": "Refrigerate",
+            "Ability": "Slush Rush",
             "HeldItem": "Assault Vest",
             "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
@@ -16352,7 +16368,7 @@
             "Form": "",
             "Gender": "",
             "Level": 44,
-            "Ability": "Thick Fat",
+            "Ability": "Heatproof",
             "HeldItem": "Lum Berry",
             "Nature": "Relaxed (\u002BDef / -Spe)",
             "IVs": 31,
@@ -16651,7 +16667,7 @@
             "Form": "",
             "Gender": "",
             "Level": 46,
-            "Ability": "Intimidate",
+            "Ability": "Unnerve",
             "HeldItem": "Occa Berry",
             "Nature": "Hardy (Neutral)",
             "IVs": 31,
@@ -18839,7 +18855,7 @@
             "Form": "",
             "Gender": "",
             "Level": 72,
-            "Ability": "Refrigerate",
+            "Ability": "Slush Rush",
             "HeldItem": "Babiri Berry",
             "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
@@ -19179,6 +19195,22 @@
               "Body Slam",
               "Fire Punch",
               "Wring Out"
+            ]
+          },
+          {
+            "Name": "Durant",
+            "Form": "",
+            "Gender": "",
+            "Level": 72,
+            "Ability": "Hyper Cutter",
+            "HeldItem": "Bright Powder",
+            "Nature": "Quirky (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Iron Head",
+              "Bug Bite",
+              "Superpower",
+              "Rock Climb"
             ]
           }
         ]
@@ -20427,7 +20459,7 @@
             "Form": "",
             "Gender": "",
             "Level": 59,
-            "Ability": "Tough Claws",
+            "Ability": "Sharpness",
             "HeldItem": "Muscle Band",
             "Nature": "Serious (Neutral)",
             "IVs": 31,
@@ -21087,7 +21119,7 @@
             "Form": "",
             "Gender": "",
             "Level": 80,
-            "Ability": "Volt Absorb",
+            "Ability": "Unnerve",
             "HeldItem": "Wise Glasses",
             "Nature": "Bashful (Neutral)",
             "IVs": 31,
@@ -21261,7 +21293,7 @@
             "Form": "",
             "Gender": "",
             "Level": 80,
-            "Ability": "Tough Claws",
+            "Ability": "Sharpness",
             "HeldItem": "Scope Lens",
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
@@ -22255,6 +22287,22 @@
               "Dazzling Gleam",
               "Protect"
             ]
+          },
+          {
+            "Name": "Kangaskhan",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Scrappy",
+            "HeldItem": "Kangaskhanite",
+            "Nature": "Hardy (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Double-Edge",
+              "Rock Slide",
+              "Crunch",
+              "Thunder Punch"
+            ]
           }
         ]
       },
@@ -22317,6 +22365,22 @@
               "Waterfall",
               "Weather Ball",
               "Night Slash"
+            ]
+          },
+          {
+            "Name": "Kangaskhan",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Scrappy",
+            "HeldItem": "Kangaskhanite",
+            "Nature": "Hardy (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Double-Edge",
+              "Crunch",
+              "Rock Slide",
+              "Fire Punch"
             ]
           }
         ]
@@ -22381,6 +22445,22 @@
               "Spiky Shield",
               "Crater"
             ]
+          },
+          {
+            "Name": "Kangaskhan",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Scrappy",
+            "HeldItem": "Kangaskhanite",
+            "Nature": "Hardy (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Double-Edge",
+              "Crunch",
+              "Rock Slide",
+              "Ice Punch"
+            ]
           }
         ]
       },
@@ -22443,6 +22523,22 @@
               "Psychic",
               "Dazzling Gleam",
               "Protect"
+            ]
+          },
+          {
+            "Name": "Kangaskhan",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Scrappy",
+            "HeldItem": "Kangaskhanite",
+            "Nature": "Serious (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Double-Edge",
+              "Crunch",
+              "Rock Slide",
+              "Thunder Punch"
             ]
           }
         ]
@@ -22507,6 +22603,22 @@
               "Night Slash",
               "Weather Ball"
             ]
+          },
+          {
+            "Name": "Kangaskhan",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Scrappy",
+            "HeldItem": "Kangaskhanite",
+            "Nature": "Serious (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Double-Edge",
+              "Crunch",
+              "Rock Slide",
+              "Fire Punch"
+            ]
           }
         ]
       },
@@ -22569,6 +22681,22 @@
               "Close Combat",
               "Spiky Shield",
               "Crater"
+            ]
+          },
+          {
+            "Name": "Kangaskhan",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Scrappy",
+            "HeldItem": "Kangaskhanite",
+            "Nature": "Serious (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Double-Edge",
+              "Crunch",
+              "Rock Slide",
+              "Ice Punch"
             ]
           }
         ]
@@ -23035,7 +23163,7 @@
             "Form": "",
             "Gender": "",
             "Level": 76,
-            "Ability": "Shadow Tag",
+            "Ability": "Demoralize",
             "HeldItem": "Sitrus Berry",
             "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
@@ -23231,9 +23359,9 @@
             "IVs": 31,
             "Moves": [
               "Shell Smash",
-              "Water Pulse",
-              "Aura Sphere",
-              "Dark Pulse"
+              "Hydro Pump",
+              "Zap Cannon",
+              "Ice Beam"
             ]
           }
         ]
@@ -23437,7 +23565,7 @@
             "Form": "",
             "Gender": "",
             "Level": 90,
-            "Ability": "Cursed Body",
+            "Ability": "Insomnia",
             "HeldItem": "Choice Specs",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
@@ -24791,7 +24919,7 @@
         "TrainerID": 408,
         "TrainerClass": "Veteran",
         "TrainerClassIndex": 82,
-        "BattleType": "Rotation",
+        "BattleType": "Double",
         "Route": "Route 21",
         "EncounterIndex": 3,
         "Required": "Optional",
@@ -24800,67 +24928,99 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Carbink",
+            "Name": "Mandibuzz",
             "Form": "",
             "Gender": "",
             "Level": 85,
-            "Ability": "Clear Body",
-            "HeldItem": "Eviolite",
-            "Nature": "Docile (Neutral)",
+            "Ability": "Battle Armor",
+            "HeldItem": "Mental Herb",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Moonblast",
-              "Rock Wrecker",
-              "Earth Power",
-              "Safeguard"
+              "Foul Play",
+              "Snarl",
+              "Brave Bird",
+              "Tail Whip"
             ]
           },
           {
             "Name": "Lilligant",
             "Form": "",
             "Gender": "",
-            "Level": 85,
+            "Level": 87,
             "Ability": "Own Tempo",
             "HeldItem": "Petaya Berry",
-            "Nature": "Calm (\u002BSpD / -Atk)",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Energy Ball",
+              "Petal Dance",
               "Aura Sphere",
               "Moonblast",
               "Quiver Dance"
             ]
           },
           {
-            "Name": "Ursaring",
+            "Name": "Weezing",
             "Form": "",
             "Gender": "",
             "Level": 86,
-            "Ability": "Quick Feet",
-            "HeldItem": "White Herb",
-            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "Ability": "Flare Boost",
+            "HeldItem": "Flame Orb",
+            "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Headlong Rush",
-              "Mega Kick",
-              "Play Rough",
-              "Ice Punch"
+              "Thunderbolt",
+              "Sludge Bomb",
+              "Fire Blast",
+              "Protect"
             ]
           },
           {
-            "Name": "Honchkrow",
+            "Name": "Arcanine",
             "Form": "",
             "Gender": "",
             "Level": 86,
-            "Ability": "Defiant",
+            "Ability": "Intimidate",
             "HeldItem": "Expert Belt",
-            "Nature": "Lonely (\u002BAtk / -Def)",
+            "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Foul Play",
-              "Brave Bird",
-              "Heat Wave",
-              "Psychic"
+              "Flare Blitz",
+              "Wild Charge",
+              "Helping Hand",
+              "Crunch"
+            ]
+          },
+          {
+            "Name": "Jellicent",
+            "Form": "",
+            "Gender": "",
+            "Level": 87,
+            "Ability": "Cursed Body",
+            "HeldItem": "Big Root",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Giga Drain",
+              "Maelstrom",
+              "Shadow Ball",
+              "Mist"
+            ]
+          },
+          {
+            "Name": "Latias",
+            "Form": "",
+            "Gender": "",
+            "Level": 88,
+            "Ability": "Levitate",
+            "HeldItem": "Latiasite",
+            "Nature": "Bashful (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Draco Meteor",
+              "Psyshock",
+              "Mist Ball",
+              "Helping Hand"
             ]
           }
         ]
@@ -26523,7 +26683,7 @@
             "Form": "Wormadam-Trash",
             "Gender": "",
             "Level": 64,
-            "Ability": "Bulletproof",
+            "Ability": "Biodiverse",
             "HeldItem": "Sitrus Berry",
             "Nature": "Relaxed (\u002BDef / -Spe)",
             "IVs": 31,
@@ -28257,7 +28417,7 @@
             "Form": "",
             "Gender": "",
             "Level": 90,
-            "Ability": "Justified",
+            "Ability": "Sharpness",
             "HeldItem": "Blue Orb",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -29648,19 +29808,19 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Slowbro",
+            "Name": "Ursaring",
             "Form": "",
             "Gender": "",
             "Level": 82,
-            "Ability": "Shell Armor",
+            "Ability": "Intimidate",
             "HeldItem": "Sitrus Berry",
-            "Nature": "Bold (\u002BDef / -Atk)",
+            "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Scald",
-              "Psychic",
-              "Slack Off",
-              "Grass Knot"
+              "Earthquake",
+              "Play Rough",
+              "Double-Edge",
+              "Crunch"
             ]
           },
           {
@@ -29849,7 +30009,7 @@
             "Form": "",
             "Gender": "",
             "Level": 95,
-            "Ability": "Thick Fat",
+            "Ability": "Heatproof",
             "HeldItem": "Chople Berry",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,

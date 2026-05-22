@@ -6418,7 +6418,7 @@
     "Type2": "Grass",
     "Ability1": "Effect Spore",
     "Ability2": "Dry Skin",
-    "AbilityH": "Damp",
+    "AbilityH": "Mummy",
     "BaseStats": {
       "HP": 55,
       "Atk": 70,
@@ -8567,7 +8567,7 @@
     "Type1": "Water",
     "Type2": "Water",
     "Ability1": "Water Absorb",
-    "Ability2": "Damp",
+    "Ability2": "Torrent",
     "AbilityH": "Swift Swim",
     "BaseStats": {
       "HP": 40,
@@ -8676,7 +8676,7 @@
     "Type1": "Water",
     "Type2": "Water",
     "Ability1": "Water Absorb",
-    "Ability2": "Damp",
+    "Ability2": "Torrent",
     "AbilityH": "Swift Swim",
     "BaseStats": {
       "HP": 65,
@@ -13087,7 +13087,7 @@
     "Type1": "Ghost",
     "Type2": "Poison",
     "Ability1": "Levitate",
-    "Ability2": "Levitate",
+    "Ability2": "Demoralize",
     "AbilityH": "Levitate",
     "BaseStats": {
       "HP": 30,
@@ -13224,7 +13224,7 @@
     "Type1": "Ghost",
     "Type2": "Poison",
     "Ability1": "Levitate",
-    "Ability2": "Levitate",
+    "Ability2": "Demoralize",
     "AbilityH": "Levitate",
     "BaseStats": {
       "HP": 45,
@@ -13381,7 +13381,7 @@
     "Type1": "Ghost",
     "Type2": "Poison",
     "Ability1": "Cursed Body",
-    "Ability2": "Cursed Body",
+    "Ability2": "Insomnia",
     "AbilityH": "Cursed Body",
     "BaseStats": {
       "HP": 60,
@@ -15228,8 +15228,8 @@
     "SpeciesIdx": 106,
     "Type1": "Fighting",
     "Type2": "Rock",
-    "Ability1": "Rock Head",
-    "Ability2": "Reckless",
+    "Ability1": "No Guard",
+    "Ability2": "Inner Focus",
     "AbilityH": "Unburden",
     "BaseStats": {
       "HP": 75,
@@ -16960,7 +16960,7 @@
     "Type2": "Water",
     "Ability1": "Torrent",
     "Ability2": "Sniper",
-    "AbilityH": "Damp",
+    "AbilityH": "Mega Launcher",
     "BaseStats": {
       "HP": 30,
       "Atk": 40,
@@ -17069,7 +17069,7 @@
     "Type2": "Dragon",
     "Ability1": "Swift Swim",
     "Ability2": "Sniper",
-    "AbilityH": "Damp",
+    "AbilityH": "Mega Launcher",
     "BaseStats": {
       "HP": 55,
       "Atk": 65,
@@ -17910,7 +17910,7 @@
     "Type1": "Bug",
     "Type2": "Flying",
     "Ability1": "Swarm",
-    "Ability2": "Technician",
+    "Ability2": "Sharpness",
     "AbilityH": "Steadfast",
     "BaseStats": {
       "HP": 70,
@@ -19233,7 +19233,7 @@
     "Type2": "Normal",
     "Ability1": "Protean",
     "Ability2": "Adaptability",
-    "AbilityH": "Anticipation",
+    "AbilityH": "Biodiverse",
     "BaseStats": {
       "HP": 60,
       "Atk": 60,
@@ -23904,8 +23904,8 @@
     "Type1": "Normal",
     "Type2": "Normal",
     "Ability1": "Technician",
-    "Ability2": "Limber",
-    "AbilityH": "Frisk",
+    "Ability2": "Pickup",
+    "AbilityH": "Limber",
     "BaseStats": {
       "HP": 45,
       "Atk": 46,
@@ -24078,7 +24078,7 @@
     "Type2": "Ground",
     "Ability1": "Technician",
     "Ability2": "Fur Coat",
-    "AbilityH": "Frisk",
+    "AbilityH": "Quick Feet",
     "BaseStats": {
       "HP": 87,
       "Atk": 85,
@@ -24829,9 +24829,9 @@
     "SpeciesIdx": 167,
     "Type1": "Bug",
     "Type2": "Poison",
-    "Ability1": "Intimidate",
+    "Ability1": "Unnerve",
     "Ability2": "Sniper",
-    "AbilityH": "Unnerve",
+    "AbilityH": "Intimidate",
     "BaseStats": {
       "HP": 40,
       "Atk": 65,
@@ -24946,9 +24946,9 @@
     "SpeciesIdx": 168,
     "Type1": "Bug",
     "Type2": "Poison",
-    "Ability1": "Intimidate",
+    "Ability1": "Unnerve",
     "Ability2": "Sniper",
-    "AbilityH": "Unnerve",
+    "AbilityH": "Intimidate",
     "BaseStats": {
       "HP": 80,
       "Atk": 120,
@@ -27206,6 +27206,10 @@
         "Move": "Giga Impact"
       },
       {
+        "Label": "TM70",
+        "Move": "Icy Wind"
+      },
+      {
         "Label": "TM78",
         "Move": "Bulldoze"
       },
@@ -28389,7 +28393,7 @@
     "Type2": "Flying",
     "Ability1": "Speed Boost",
     "Ability2": "Compound Eyes",
-    "AbilityH": "Frisk",
+    "AbilityH": "Swarm",
     "BaseStats": {
       "HP": 65,
       "Atk": 65,
@@ -28494,7 +28498,7 @@
     "Type2": "Ground",
     "Ability1": "Unaware",
     "Ability2": "Water Absorb",
-    "AbilityH": "Damp",
+    "AbilityH": "Simple",
     "BaseStats": {
       "HP": 65,
       "Atk": 55,
@@ -28627,7 +28631,7 @@
     "Type2": "Ground",
     "Ability1": "Unaware",
     "Ability2": "Water Absorb",
-    "AbilityH": "Damp",
+    "AbilityH": "Simple",
     "BaseStats": {
       "HP": 105,
       "Atk": 95,
@@ -29009,10 +29013,6 @@
       {
         "Label": "TM32",
         "Move": "Double Team"
-      },
-      {
-        "Label": "TM41",
-        "Move": "Ice Punch"
       },
       {
         "Label": "TM42",
@@ -32539,7 +32539,7 @@
     "Type1": "Ice",
     "Type2": "Ground",
     "Ability1": "Oblivious",
-    "Ability2": "Thick Fat",
+    "Ability2": "Heatproof",
     "AbilityH": "Ice Body",
     "BaseStats": {
       "HP": 80,
@@ -32664,7 +32664,7 @@
     "Type1": "Ice",
     "Type2": "Ground",
     "Ability1": "Oblivious",
-    "Ability2": "Thick Fat",
+    "Ability2": "Heatproof",
     "AbilityH": "Ice Body",
     "BaseStats": {
       "HP": 100,
@@ -32818,7 +32818,7 @@
     "Type2": "Rock",
     "Ability1": "Regenerator",
     "Ability2": "Natural Cure",
-    "AbilityH": "Sturdy",
+    "AbilityH": "Biodiverse",
     "BaseStats": {
       "HP": 85,
       "Atk": 55,
@@ -34014,7 +34014,7 @@
     "Type2": "Dragon",
     "Ability1": "Swift Swim",
     "Ability2": "Sniper",
-    "AbilityH": "Damp",
+    "AbilityH": "Mega Launcher",
     "BaseStats": {
       "HP": 75,
       "Atk": 100,
@@ -34550,7 +34550,7 @@
     "Type2": "Psychic",
     "Ability1": "Intimidate",
     "Ability2": "Sap Sipper",
-    "AbilityH": "Sand Rush",
+    "AbilityH": "Slush Rush",
     "BaseStats": {
       "HP": 94,
       "Atk": 102,
@@ -35421,7 +35421,7 @@
     "Type1": "Ice",
     "Type2": "Psychic",
     "Ability1": "Dry Skin",
-    "Ability2": "Forewarn",
+    "Ability2": "Cute Charm",
     "AbilityH": "Unaware",
     "BaseStats": {
       "HP": 60,
@@ -38165,7 +38165,7 @@
     "Type1": "Grass",
     "Type2": "Dragon",
     "Ability1": "Lightning Rod",
-    "Ability2": "Technician",
+    "Ability2": "Sharpness",
     "AbilityH": "Overgrow",
     "BaseStats": {
       "HP": 70,
@@ -38900,7 +38900,7 @@
     "SpeciesIdx": 258,
     "Type1": "Water",
     "Type2": "Water",
-    "Ability1": "Damp",
+    "Ability1": "Hustle",
     "Ability2": "Dry Skin",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -39037,7 +39037,7 @@
     "SpeciesIdx": 259,
     "Type1": "Water",
     "Type2": "Ground",
-    "Ability1": "Damp",
+    "Ability1": "Hustle",
     "Ability2": "Dry Skin",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -40611,7 +40611,7 @@
     "AbilityH": "Drizzle",
     "BaseStats": {
       "HP": 90,
-      "Atk": 70,
+      "Atk": 80,
       "Def": 80,
       "SpA": 95,
       "SpD": 100,
@@ -40788,8 +40788,8 @@
     "Type1": "Grass",
     "Type2": "Grass",
     "Ability1": "Overgrow",
-    "Ability2": "Early Bird",
-    "AbilityH": "Pickpocket",
+    "Ability2": "Pickpocket",
+    "AbilityH": "Early Bird",
     "BaseStats": {
       "HP": 40,
       "Atk": 50,
@@ -40901,8 +40901,8 @@
     "Type1": "Grass",
     "Type2": "Dark",
     "Ability1": "Overgrow",
-    "Ability2": "Early Bird",
-    "AbilityH": "Pickpocket",
+    "Ability2": "Pickpocket",
+    "AbilityH": "Early Bird",
     "BaseStats": {
       "HP": 70,
       "Atk": 80,
@@ -41065,16 +41065,16 @@
     "SpeciesIdx": 275,
     "Type1": "Grass",
     "Type2": "Dark",
-    "Ability1": "Chlorophyll",
-    "Ability2": "Contrary",
+    "Ability1": "Leaf Guard",
+    "Ability2": "Sharpness",
     "AbilityH": "Pickpocket",
     "BaseStats": {
-      "HP": 90,
+      "HP": 80,
       "Atk": 110,
-      "Def": 75,
+      "Def": 70,
       "SpA": 90,
       "SpD": 60,
-      "Spe": 80
+      "Spe": 105
     },
     "CatchRate": 255,
     "BaseXP": 113,
@@ -52060,6 +52060,10 @@
         "Move": "Rock Smash"
       },
       {
+        "Label": "TM96",
+        "Move": "Nature Power"
+      },
+      {
         "Label": "HM04",
         "Move": "Strength"
       }
@@ -52992,7 +52996,7 @@
     "Type1": "Ghost",
     "Type2": "Normal",
     "Ability1": "Cursed Body",
-    "Ability2": "Frisk",
+    "Ability2": "Sharpness",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 44,
@@ -53295,7 +53299,7 @@
     "Type2": "Ghost",
     "Ability1": "Levitate",
     "Ability2": "Pressure",
-    "AbilityH": "Frisk",
+    "AbilityH": "Demoralize",
     "BaseStats": {
       "HP": 35,
       "Atk": 40,
@@ -53424,7 +53428,7 @@
     "Type2": "Ghost",
     "Ability1": "Cursed Body",
     "Ability2": "Pressure",
-    "AbilityH": "Frisk",
+    "AbilityH": "Demoralize",
     "BaseStats": {
       "HP": 45,
       "Atk": 70,
@@ -53757,8 +53761,8 @@
     "Type1": "Psychic",
     "Type2": "Normal",
     "Ability1": "Levitate",
-    "Ability2": "Levitate",
-    "AbilityH": "Healer",
+    "Ability2": "Healer",
+    "AbilityH": "Soundproof",
     "BaseStats": {
       "HP": 80,
       "Atk": 50,
@@ -53891,7 +53895,7 @@
     "Type2": "Fairy",
     "Ability1": "Justified",
     "Ability2": "Super Luck",
-    "AbilityH": "Forewarn",
+    "AbilityH": "Sharpness",
     "BaseStats": {
       "HP": 65,
       "Atk": 130,
@@ -59368,7 +59372,7 @@
     "Type1": "Water",
     "Type2": "Ice",
     "Ability1": "Competitive",
-    "Ability2": "Swift Swim",
+    "Ability2": "Tangled Feet",
     "AbilityH": "Torrent",
     "BaseStats": {
       "HP": 53,
@@ -59493,7 +59497,7 @@
     "Type1": "Water",
     "Type2": "Ice",
     "Ability1": "Competitive",
-    "Ability2": "Swift Swim",
+    "Ability2": "Tangled Feet",
     "AbilityH": "Torrent",
     "BaseStats": {
       "HP": 64,
@@ -59638,7 +59642,7 @@
     "Type1": "Water",
     "Type2": "Steel",
     "Ability1": "Competitive",
-    "Ability2": "Swift Swim",
+    "Ability2": "Slush Rush",
     "AbilityH": "Torrent",
     "BaseStats": {
       "HP": 80,
@@ -62091,9 +62095,9 @@
     "SpeciesIdx": 413,
     "Type1": "Bug",
     "Type2": "Grass",
-    "Ability1": "Flower Gift",
+    "Ability1": "Biodiverse",
     "Ability2": "Overcoat",
-    "AbilityH": "Grass Pelt",
+    "AbilityH": "Flower Veil",
     "BaseStats": {
       "HP": 80,
       "Atk": 59,
@@ -62411,7 +62415,7 @@
     "Type1": "Bug",
     "Type2": "Flying",
     "Ability1": "Intimidate",
-    "Ability2": "Intimidate",
+    "Ability2": "Demoralize",
     "AbilityH": "Unnerve",
     "BaseStats": {
       "HP": 86,
@@ -64780,8 +64784,8 @@
     "Type1": "Psychic",
     "Type2": "Normal",
     "Ability1": "Levitate",
-    "Ability2": "Levitate",
-    "AbilityH": "Healer",
+    "Ability2": "Healer",
+    "AbilityH": "Soundproof",
     "BaseStats": {
       "HP": 55,
       "Atk": 30,
@@ -68519,7 +68523,7 @@
     "SpeciesIdx": 457,
     "Type1": "Water",
     "Type2": "Fairy",
-    "Ability1": "Drizzle",
+    "Ability1": "Biodiverse",
     "Ability2": "Storm Drain",
     "AbilityH": "Water Veil",
     "BaseStats": {
@@ -68648,7 +68652,7 @@
     "SpeciesIdx": 458,
     "Type1": "Water",
     "Type2": "Flying",
-    "Ability1": "Damp",
+    "Ability1": "Cute Charm",
     "Ability2": "Water Absorb",
     "AbilityH": "Water Veil",
     "BaseStats": {
@@ -69835,7 +69839,7 @@
     "SpeciesIdx": 465,
     "Type1": "Grass",
     "Type2": "Grass",
-    "Ability1": "Grass Pelt",
+    "Ability1": "Biodiverse",
     "Ability2": "Regenerator",
     "AbilityH": "Leaf Guard",
     "BaseStats": {
@@ -70345,6 +70349,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM91",
+        "Move": "Flash Cannon"
+      },
+      {
         "Label": "TM94",
         "Move": "Rock Smash"
       },
@@ -70541,7 +70549,7 @@
     "Type2": "Dragon",
     "Ability1": "Speed Boost",
     "Ability2": "Tinted Lens",
-    "AbilityH": "Frisk",
+    "AbilityH": "Swarm",
     "BaseStats": {
       "HP": 86,
       "Atk": 90,
@@ -70666,7 +70674,7 @@
     "Type2": "Grass",
     "Ability1": "Sap Sipper",
     "Ability2": "Chlorophyll",
-    "AbilityH": "Grass Pelt",
+    "AbilityH": "Biodiverse",
     "BaseStats": {
       "HP": 65,
       "Atk": 130,
@@ -70814,15 +70822,15 @@
     "Type1": "Ice",
     "Type2": "Ice",
     "Ability1": "Ice Body",
-    "Ability2": "Refrigerate",
+    "Ability2": "Slush Rush",
     "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 65,
-      "Atk": 50,
+      "Atk": 60,
       "Def": 110,
       "SpA": 130,
       "SpD": 95,
-      "Spe": 75
+      "Spe": 65
     },
     "CatchRate": 255,
     "BaseXP": 97,
@@ -71156,7 +71164,7 @@
     "Type1": "Ice",
     "Type2": "Ground",
     "Ability1": "Oblivious",
-    "Ability2": "Thick Fat",
+    "Ability2": "Heatproof",
     "AbilityH": "Ice Body",
     "BaseStats": {
       "HP": 110,
@@ -71457,7 +71465,7 @@
     "SpeciesIdx": 475,
     "Type1": "Psychic",
     "Type2": "Fighting",
-    "Ability1": "Justified",
+    "Ability1": "Sharpness",
     "Ability2": "Super Luck",
     "AbilityH": "Hyper Cutter",
     "BaseStats": {
@@ -71881,7 +71889,7 @@
     "Type2": "Ghost",
     "Ability1": "Levitate",
     "Ability2": "Pressure",
-    "AbilityH": "Frisk",
+    "AbilityH": "Demoralize",
     "BaseStats": {
       "HP": 55,
       "Atk": 100,
@@ -74540,7 +74548,7 @@
     "Type2": "Fairy",
     "Ability1": "Natural Cure",
     "Ability2": "Flower Gift",
-    "AbilityH": "Grass Pelt",
+    "AbilityH": "Biodiverse",
     "BaseStats": {
       "HP": 100,
       "Atk": 100,
@@ -76271,7 +76279,7 @@
     "SpeciesIdx": 501,
     "Type1": "Water",
     "Type2": "Water",
-    "Ability1": "Technician",
+    "Ability1": "Sharpness",
     "Ability2": "Shell Armor",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -76420,7 +76428,7 @@
     "SpeciesIdx": 502,
     "Type1": "Water",
     "Type2": "Fighting",
-    "Ability1": "Technician",
+    "Ability1": "Sharpness",
     "Ability2": "Shell Armor",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -76573,7 +76581,7 @@
     "SpeciesIdx": 503,
     "Type1": "Water",
     "Type2": "Fighting",
-    "Ability1": "Technician",
+    "Ability1": "Sharpness",
     "Ability2": "Shell Armor",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -83217,7 +83225,7 @@
     "SpeciesIdx": 551,
     "Type1": "Ground",
     "Type2": "Dark",
-    "Ability1": "Intimidate",
+    "Ability1": "Demoralize",
     "Ability2": "Moxie",
     "AbilityH": "Anger Point",
     "BaseStats": {
@@ -83354,7 +83362,7 @@
     "SpeciesIdx": 552,
     "Type1": "Ground",
     "Type2": "Dark",
-    "Ability1": "Intimidate",
+    "Ability1": "Demoralize",
     "Ability2": "Moxie",
     "AbilityH": "Anger Point",
     "BaseStats": {
@@ -83519,7 +83527,7 @@
     "SpeciesIdx": 553,
     "Type1": "Ground",
     "Type2": "Dark",
-    "Ability1": "Intimidate",
+    "Ability1": "Demoralize",
     "Ability2": "Moxie",
     "AbilityH": "Anger Point",
     "BaseStats": {
@@ -86838,7 +86846,7 @@
     "Type2": "Dark",
     "Ability1": "Synchronize",
     "Ability2": "Competitive",
-    "AbilityH": "Frisk",
+    "AbilityH": "Demoralize",
     "BaseStats": {
       "HP": 45,
       "Atk": 30,
@@ -86987,7 +86995,7 @@
     "Type2": "Dark",
     "Ability1": "Synchronize",
     "Ability2": "Competitive",
-    "AbilityH": "Frisk",
+    "AbilityH": "Demoralize",
     "BaseStats": {
       "HP": 60,
       "Atk": 45,
@@ -87144,7 +87152,7 @@
     "Type2": "Dark",
     "Ability1": "Synchronize",
     "Ability2": "Competitive",
-    "AbilityH": "Shadow Tag",
+    "AbilityH": "Demoralize",
     "BaseStats": {
       "HP": 75,
       "Atk": 55,
@@ -89184,7 +89192,7 @@
     "Type2": "Ghost",
     "Ability1": "Water Absorb",
     "Ability2": "Cursed Body",
-    "AbilityH": "Damp",
+    "AbilityH": "Torrent",
     "BaseStats": {
       "HP": 55,
       "Atk": 40,
@@ -89317,7 +89325,7 @@
     "Type2": "Ghost",
     "Ability1": "Water Absorb",
     "Ability2": "Cursed Body",
-    "AbilityH": "Damp",
+    "AbilityH": "Torrent",
     "BaseStats": {
       "HP": 100,
       "Atk": 50,
@@ -89574,8 +89582,8 @@
     "Type1": "Bug",
     "Type2": "Electric",
     "Ability1": "Compound Eyes",
-    "Ability2": "Volt Absorb",
-    "AbilityH": "Unnerve",
+    "Ability2": "Unnerve",
+    "AbilityH": "Volt Absorb",
     "BaseStats": {
       "HP": 50,
       "Atk": 57,
@@ -89691,8 +89699,8 @@
     "Type1": "Bug",
     "Type2": "Electric",
     "Ability1": "Compound Eyes",
-    "Ability2": "Volt Absorb",
-    "AbilityH": "Unnerve",
+    "Ability2": "Unnerve",
+    "AbilityH": "Volt Absorb",
     "BaseStats": {
       "HP": 70,
       "Atk": 70,
@@ -92047,7 +92055,7 @@
     "SpeciesIdx": 613,
     "Type1": "Ice",
     "Type2": "Normal",
-    "Ability1": "Snow Cloak",
+    "Ability1": "Hustle",
     "Ability2": "Cute Charm",
     "AbilityH": "Rattled",
     "BaseStats": {
@@ -92193,7 +92201,7 @@
     "Type1": "Ice",
     "Type2": "Fighting",
     "Ability1": "Tough Claws",
-    "Ability2": "Swift Swim",
+    "Ability2": "Slush Rush",
     "AbilityH": "Sheer Force",
     "BaseStats": {
       "HP": 100,
@@ -92395,7 +92403,7 @@
     "BaseStats": {
       "HP": 80,
       "Atk": 40,
-      "Def": 50,
+      "Def": 60,
       "SpA": 100,
       "SpD": 135,
       "Spe": 115
@@ -92734,7 +92742,7 @@
     "BaseStats": {
       "HP": 109,
       "Atk": 66,
-      "Def": 89,
+      "Def": 99,
       "SpA": 86,
       "SpD": 104,
       "Spe": 32
@@ -93803,7 +93811,7 @@
     "Type1": "Dark",
     "Type2": "Steel",
     "Ability1": "Defiant",
-    "Ability2": "Tough Claws",
+    "Ability2": "Sharpness",
     "AbilityH": "Hyper Cutter",
     "BaseStats": {
       "HP": 45,
@@ -93972,7 +93980,7 @@
     "Type1": "Dark",
     "Type2": "Steel",
     "Ability1": "Defiant",
-    "Ability2": "Tough Claws",
+    "Ability2": "Sharpness",
     "AbilityH": "Hyper Cutter",
     "BaseStats": {
       "HP": 65,
@@ -101394,9 +101402,9 @@
     "SpeciesIdx": 672,
     "Type1": "Grass",
     "Type2": "Normal",
-    "Ability1": "Sap Sipper",
+    "Ability1": "Vital Spirit",
     "Ability2": "Rock Head",
-    "AbilityH": "Grass Pelt",
+    "AbilityH": "Sap Sipper",
     "BaseStats": {
       "HP": 66,
       "Atk": 65,
@@ -101535,9 +101543,9 @@
     "SpeciesIdx": 673,
     "Type1": "Grass",
     "Type2": "Ground",
-    "Ability1": "Sap Sipper",
+    "Ability1": "Biodiverse",
     "Ability2": "Rock Head",
-    "AbilityH": "Grass Pelt",
+    "AbilityH": "Sap Sipper",
     "BaseStats": {
       "HP": 123,
       "Atk": 107,
@@ -102545,7 +102553,7 @@
     "SpeciesIdx": 679,
     "Type1": "Steel",
     "Type2": "Ghost",
-    "Ability1": "No Guard",
+    "Ability1": "Sharpness",
     "Ability2": "Hyper Cutter",
     "AbilityH": "No Guard",
     "BaseStats": {
@@ -102666,7 +102674,7 @@
     "SpeciesIdx": 680,
     "Type1": "Steel",
     "Type2": "Ghost",
-    "Ability1": "No Guard",
+    "Ability1": "Sharpness",
     "Ability2": "Hyper Cutter",
     "AbilityH": "No Guard",
     "BaseStats": {
@@ -104498,6 +104506,10 @@
         "Move": "Scald"
       },
       {
+        "Label": "TM57",
+        "Move": "Charge Beam"
+      },
+      {
         "Label": "TM64",
         "Move": "Aura Sphere"
       },
@@ -104641,6 +104653,10 @@
       {
         "Label": "TM55",
         "Move": "Scald"
+      },
+      {
+        "Label": "TM57",
+        "Move": "Charge Beam"
       },
       {
         "Label": "TM64",
@@ -106864,7 +106880,7 @@
     "Type2": "Grass",
     "Ability1": "Natural Cure",
     "Ability2": "Harvest",
-    "AbilityH": "Frisk",
+    "AbilityH": "Cursed Body",
     "BaseStats": {
       "HP": 63,
       "Atk": 75,
@@ -107009,7 +107025,7 @@
     "Type2": "Grass",
     "Ability1": "Natural Cure",
     "Ability2": "Harvest",
-    "AbilityH": "Frisk",
+    "AbilityH": "Cursed Body",
     "BaseStats": {
       "HP": 90,
       "Atk": 110,
@@ -107201,7 +107217,7 @@
     "Type1": "Ghost",
     "Type2": "Grass",
     "Ability1": "Pickup",
-    "Ability2": "Frisk",
+    "Ability2": "Overgrow",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 49,
@@ -107818,7 +107834,7 @@
     "Type2": "Dragon",
     "Ability1": "Telepathy",
     "Ability2": "Infiltrator",
-    "AbilityH": "Frisk",
+    "AbilityH": "Soundproof",
     "BaseStats": {
       "HP": 55,
       "Atk": 50,
@@ -107959,7 +107975,7 @@
     "Type2": "Dragon",
     "Ability1": "Telepathy",
     "Ability2": "Infiltrator",
-    "AbilityH": "Frisk",
+    "AbilityH": "Soundproof",
     "BaseStats": {
       "HP": 85,
       "Atk": 70,
@@ -109771,9 +109787,9 @@
     "SpeciesIdx": 413,
     "Type1": "Bug",
     "Type2": "Ground",
-    "Ability1": "Sand Veil",
+    "Ability1": "Biodiverse",
     "Ability2": "Overcoat",
-    "AbilityH": "Wonder Skin",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 80,
       "Atk": 102,
@@ -109920,9 +109936,9 @@
     "SpeciesIdx": 413,
     "Type1": "Bug",
     "Type2": "Steel",
-    "Ability1": "Bulletproof",
+    "Ability1": "Biodiverse",
     "Ability2": "Overcoat",
-    "AbilityH": "Light Metal",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 80,
       "Atk": 69,
@@ -118383,10 +118399,10 @@
     "Ability2": "Mega Launcher",
     "AbilityH": "Mega Launcher",
     "BaseStats": {
-      "HP": 105,
+      "HP": 100,
       "Atk": 100,
       "Def": 120,
-      "SpA": 130,
+      "SpA": 135,
       "SpD": 115,
       "Spe": 70
     },
@@ -119558,10 +119574,10 @@
     "AbilityH": "Huge Power",
     "BaseStats": {
       "HP": 65,
-      "Atk": 100,
+      "Atk": 105,
       "Def": 125,
-      "SpA": 95,
-      "SpD": 100,
+      "SpA": 80,
+      "SpD": 110,
       "Spe": 65
     },
     "CatchRate": 255,
@@ -120511,7 +120527,7 @@
     "Type1": "Ghost",
     "Type2": "Grass",
     "Ability1": "Pickup",
-    "Ability2": "Frisk",
+    "Ability2": "Overgrow",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 44,
@@ -120660,7 +120676,7 @@
     "Type1": "Ghost",
     "Type2": "Grass",
     "Ability1": "Pickup",
-    "Ability2": "Frisk",
+    "Ability2": "Overgrow",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 54,
@@ -120809,7 +120825,7 @@
     "Type1": "Ghost",
     "Type2": "Grass",
     "Ability1": "Pickup",
-    "Ability2": "Frisk",
+    "Ability2": "Overgrow",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 59,
