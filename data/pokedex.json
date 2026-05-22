@@ -31050,7 +31050,7 @@
     "Type1": "Water",
     "Type2": "Poison",
     "Ability1": "Rough Skin",
-    "Ability2": "Intimidate",
+    "Ability2": "Demoralize",
     "AbilityH": "Poison Point",
     "BaseStats": {
       "HP": 75,
@@ -33863,7 +33863,7 @@
     "SpeciesIdx": 229,
     "Type1": "Dark",
     "Type2": "Fire",
-    "Ability1": "Intimidate",
+    "Ability1": "Demoralize",
     "Ability2": "Flash Fire",
     "AbilityH": "Unnerve",
     "BaseStats": {
@@ -34548,7 +34548,7 @@
     "SpeciesIdx": 234,
     "Type1": "Normal",
     "Type2": "Psychic",
-    "Ability1": "Intimidate",
+    "Ability1": "Demoralize",
     "Ability2": "Sap Sipper",
     "AbilityH": "Slush Rush",
     "BaseStats": {
@@ -45269,7 +45269,7 @@
     "SpeciesIdx": 303,
     "Type1": "Steel",
     "Type2": "Fairy",
-    "Ability1": "Intimidate",
+    "Ability1": "Demoralize",
     "Ability2": "Strong Jaw",
     "AbilityH": "Inner Focus",
     "BaseStats": {
@@ -56111,8 +56111,8 @@
     "Type1": "Steel",
     "Type2": "Psychic",
     "Ability1": "Clear Body",
-    "Ability2": "Iron Fist",
-    "AbilityH": "Heavy Metal",
+    "Ability2": "Demoralize",
+    "AbilityH": "Iron Fist",
     "BaseStats": {
       "HP": 80,
       "Atk": 135,
@@ -100919,7 +100919,7 @@
     "Type1": "Fire",
     "Type2": "Normal",
     "Ability1": "Flash Fire",
-    "Ability2": "Intimidate",
+    "Ability2": "Demoralize",
     "AbilityH": "Scrappy",
     "BaseStats": {
       "HP": 86,
