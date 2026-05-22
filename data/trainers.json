@@ -38,7 +38,7 @@
             "Form": "",
             "Gender": "",
             "Level": 37,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Razor Fang",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
@@ -2128,17 +2128,17 @@
         "RewardItem": "TM40",
         "Pokemon": [
           {
-            "Name": "Beartic",
+            "Name": "Taillow",
             "Form": "",
             "Gender": "",
-            "Level": 50,
-            "Ability": "Slush Rush",
-            "HeldItem": "Red Apricorn",
-            "Nature": "Impish (\u002BDef / -SpA)",
+            "Level": 12,
+            "Ability": "Scrappy",
+            "HeldItem": "Aspear Berry",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Scratch",
-              "",
+              "Facade",
+              "Sleep Talk",
               "",
               ""
             ]
@@ -3535,7 +3535,7 @@
             "Form": "",
             "Gender": "\u2642 / Male",
             "Level": 42,
-            "Ability": "Sharpness",
+            "Ability": "Super Luck",
             "HeldItem": "Psychic Gem",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
@@ -4876,12 +4876,12 @@
             "Form": "",
             "Gender": "",
             "Level": 34,
-            "Ability": "Shell Armor",
+            "Ability": "Sharpness",
             "HeldItem": "Muscle Band",
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Aqua Jet",
+              "Slice",
               "Sharpen",
               "Razor Shell",
               "Vacuum Wave"
@@ -5654,19 +5654,19 @@
             ]
           },
           {
-            "Name": "Barbaracle",
+            "Name": "Samurott",
             "Form": "",
             "Gender": "",
             "Level": 42,
-            "Ability": "Tough Claws",
-            "HeldItem": "White Herb",
-            "Nature": "Naive (\u002BSpe / -SpD)",
-            "IVs": 30,
+            "Ability": "Sharpness",
+            "HeldItem": "Assault Vest",
+            "Nature": "Jolly (\u002BSpe / -SpA)",
+            "IVs": 31,
             "Moves": [
-              "Waterfall",
-              "Rock Slide",
-              "X-Scissor",
-              "Shell Smash"
+              "Razor Shell",
+              "Secret Sword",
+              "Air Slash",
+              "Leaf Blade"
             ]
           },
           {
@@ -6927,15 +6927,15 @@
             "Form": "",
             "Gender": "",
             "Level": 70,
-            "Ability": "Super Luck",
-            "HeldItem": "Scope Lens",
+            "Ability": "Sharpness",
+            "HeldItem": "Lum Berry",
             "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
               "Leaf Blade",
               "Night Slash",
               "Psycho Cut",
-              "Close Combat"
+              "Sacred Sword"
             ]
           },
           {
@@ -7092,8 +7092,8 @@
             "Form": "",
             "Gender": "",
             "Level": 83,
-            "Ability": "Drizzle",
-            "HeldItem": "Damp Rock",
+            "Ability": "Snow Warning",
+            "HeldItem": "Icy Rock",
             "Nature": "Docile (Neutral)",
             "IVs": 31,
             "Moves": [
@@ -7141,11 +7141,11 @@
             "Gender": "",
             "Level": 83,
             "Ability": "Shell Armor",
-            "HeldItem": "Water Gem",
+            "HeldItem": "Ice Gem",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Rain Dance",
+              "Hail",
               "Withdraw",
               "Waterfall",
               "Icicle Crash"
@@ -7171,8 +7171,8 @@
             "Form": "",
             "Gender": "",
             "Level": 83,
-            "Ability": "Levitate",
-            "HeldItem": "Ice Gem",
+            "Ability": "Snow Warning",
+            "HeldItem": "Icy Rock",
             "Nature": "Docile (Neutral)",
             "IVs": 31,
             "Moves": [
@@ -7188,14 +7188,14 @@
             "Gender": "",
             "Level": 83,
             "Ability": "Slush Rush",
-            "HeldItem": "Choice Specs",
+            "HeldItem": "Wise Glasses",
             "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Hyper Beam",
+              "Absolute Zero",
               "Flash Cannon",
-              "",
-              ""
+              "Shadow Ball",
+              "Earth Power"
             ]
           },
           {
@@ -15010,12 +15010,12 @@
             "Form": "",
             "Gender": "\u2640 / Female",
             "Level": 51,
-            "Ability": "Lightning Rod",
+            "Ability": "Sharpness",
             "HeldItem": "Yache Berry",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Giga Drain",
+              "Leaf Blade",
               "Dragon Claw",
               "Thunder Punch",
               "Sacred Sword"
@@ -15295,12 +15295,12 @@
             "Form": "",
             "Gender": "\u2642 / Male",
             "Level": 51,
-            "Ability": "Lightning Rod",
+            "Ability": "Sharpness",
             "HeldItem": "Yache Berry",
             "Nature": "Naughty (\u002BAtk / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Giga Drain",
+              "Leaf Blade",
               "Dragon Claw",
               "Thunder Punch",
               "Sacred Sword"
@@ -15553,10 +15553,10 @@
             "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
             "Moves": [
-              "Brick Break",
-              "Foul Play",
-              "Petal Blizzard",
-              "Aeroblast"
+              "Slice",
+              "Night Slash",
+              "Leaf Blade",
+              "Air Slash"
             ]
           }
         ]
@@ -16352,7 +16352,7 @@
             "Form": "",
             "Gender": "",
             "Level": 44,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Sitrus Berry",
             "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
@@ -19462,7 +19462,7 @@
             "Form": "",
             "Gender": "",
             "Level": 57,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Razor Claw",
             "Nature": "Hardy (Neutral)",
             "IVs": 31,
@@ -20467,7 +20467,7 @@
               "Night Slash",
               "Psycho Cut",
               "Sacred Sword",
-              "Iron Head"
+              "Slice"
             ]
           },
           {
@@ -21135,7 +21135,7 @@
             "Form": "",
             "Gender": "",
             "Level": 80,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Dread Plate",
             "Nature": "Quirky (Neutral)",
             "IVs": 31,
@@ -22004,7 +22004,7 @@
             "Form": "",
             "Gender": "",
             "Level": 82,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Mawilite",
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
@@ -25604,7 +25604,7 @@
             "Form": "",
             "Gender": "",
             "Level": 60,
-            "Ability": "Storm Drain",
+            "Ability": "Biodiverse",
             "HeldItem": "Kee Berry",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
@@ -25612,7 +25612,7 @@
               "Moonblast",
               "Flash Cannon",
               "Scald",
-              "Silver Wind"
+              "Misty Terrain"
             ]
           }
         ]
@@ -26224,7 +26224,7 @@
             "Moves": [
               "Petal Blizzard",
               "Night Slash",
-              "Heat Crash",
+              "Heat Wave",
               "Feint Attack"
             ]
           },
@@ -26683,7 +26683,7 @@
             "Form": "Wormadam-Trash",
             "Gender": "",
             "Level": 64,
-            "Ability": "Biodiverse",
+            "Ability": "Bulletproof",
             "HeldItem": "Sitrus Berry",
             "Nature": "Relaxed (\u002BDef / -Spe)",
             "IVs": 31,
@@ -27377,7 +27377,7 @@
             "Form": "",
             "Gender": "",
             "Level": 63,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Houndoominite",
             "Nature": "Rash (\u002BSpA / -SpD)",
             "IVs": 31,
@@ -28141,12 +28141,12 @@
             "Form": "",
             "Gender": "",
             "Level": 88,
-            "Ability": "Shell Armor",
+            "Ability": "Sharpness",
             "HeldItem": "Expert Belt",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
             "Moves": [
-              "Scald",
+              "Hydro Pump",
               "Vacuum Wave",
               "Secret Sword",
               "Air Slash"
@@ -28422,7 +28422,7 @@
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Zen Headbutt",
+              "Psycho Cut",
               "Sacred Sword",
               "Leaf Blade",
               "Shadow Sneak"
@@ -28858,7 +28858,7 @@
             "Form": "",
             "Gender": "",
             "Level": 91,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Houndoominite",
             "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
@@ -28921,7 +28921,7 @@
             "Form": "",
             "Gender": "",
             "Level": 91,
-            "Ability": "Regenerator",
+            "Ability": "Biodiverse",
             "HeldItem": "Wiki Berry",
             "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 30,
@@ -28929,7 +28929,7 @@
               "Earthquake",
               "Power Whip",
               "Poison Jab",
-              "Rage Powder"
+              "Grassy Terrain"
             ]
           },
           {
@@ -28975,7 +28975,7 @@
             "Form": "",
             "Gender": "",
             "Level": 92,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Figy Berry",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -29781,7 +29781,7 @@
             "Form": "",
             "Gender": "",
             "Level": 84,
-            "Ability": "Intimidate",
+            "Ability": "Demoralize",
             "HeldItem": "Mawilite",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
