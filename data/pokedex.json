@@ -26159,7 +26159,7 @@
     "SpeciesIdx": 177,
     "Type1": "Psychic",
     "Type2": "Flying",
-    "Ability1": "Magic Guard",
+    "Ability1": "Dune Guard",
     "Ability2": "Magic Bounce",
     "AbilityH": "Telepathy",
     "BaseStats": {
@@ -26300,7 +26300,7 @@
     "SpeciesIdx": 178,
     "Type1": "Psychic",
     "Type2": "Flying",
-    "Ability1": "Magic Guard",
+    "Ability1": "Dune Guard",
     "Ability2": "Magic Bounce",
     "AbilityH": "Telepathy",
     "BaseStats": {
@@ -30265,9 +30265,9 @@
     "SpeciesIdx": 207,
     "Type1": "Ground",
     "Type2": "Flying",
-    "Ability1": "Hyper Cutter",
+    "Ability1": "Dune Guard",
     "Ability2": "Immunity",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Hyper Cutter",
     "BaseStats": {
       "HP": 65,
       "Atk": 75,
@@ -70962,9 +70962,9 @@
     "SpeciesIdx": 472,
     "Type1": "Ground",
     "Type2": "Flying",
-    "Ability1": "Hyper Cutter",
+    "Ability1": "Dune Guard",
     "Ability2": "Poison Heal",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Hyper Cutter",
     "BaseStats": {
       "HP": 80,
       "Atk": 100,
@@ -84096,7 +84096,7 @@
     "Type2": "Water",
     "Ability1": "Rough Skin",
     "Ability2": "Storm Drain",
-    "AbilityH": "Chlorophyll",
+    "AbilityH": "Dune Guard",
     "BaseStats": {
       "HP": 85,
       "Atk": 60,
