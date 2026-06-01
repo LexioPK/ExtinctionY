@@ -1925,14 +1925,14 @@
   },
   "Delcatty": {
     "EvolvesFrom": "Skitty",
-    "FromMethod": "Level Up: 27",
+    "FromMethod": "Level Up: 30",
     "EvolvesInto": {}
   },
   "Skitty": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Delcatty": "Level Up: 27"
+      "Delcatty": "Level Up: 30"
     }
   },
   "Sableye": {
@@ -2333,7 +2333,7 @@
   },
   "Huntail": {
     "EvolvesFrom": "Clamperl",
-    "FromMethod": "Level Up Female: 30",
+    "FromMethod": "Level Up: 30 (Male)",
     "EvolvesInto": {}
   },
   "Gorebyss": {
@@ -2345,7 +2345,7 @@
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Huntail": "Level Up Female: 30 OR Used Item (Female): Deep Sea Tooth",
+      "Huntail": "Level Up: 30 (Male) OR Used Item (Female): Deep Sea Tooth",
       "Gorebyss": "Level Up Female: 30 OR Used Item (Male): Deep Sea Scale"
     }
   },
