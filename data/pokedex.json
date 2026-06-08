@@ -1279,7 +1279,7 @@
     "SpeciesIdx": 9,
     "Type1": "Water",
     "Type2": "Water",
-    "Ability1": "Regenerator",
+    "Ability1": "Bulletproof",
     "Ability2": "Battle Armor",
     "AbilityH": "Torrent",
     "BaseStats": {
@@ -1504,12 +1504,20 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM10",
+        "Move": "Hidden Power"
+      },
+      {
         "Label": "TM17",
         "Move": "Protect"
       },
       {
         "Label": "TM76",
         "Move": "Struggle Bug"
+      },
+      {
+        "Label": "TM83",
+        "Move": "Infestation"
       }
     ]
   },
@@ -1533,8 +1541,20 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM10",
+        "Move": "Hidden Power"
+      },
+      {
         "Label": "TM17",
         "Move": "Protect"
+      },
+      {
+        "Label": "TM76",
+        "Move": "Struggle Bug"
+      },
+      {
+        "Label": "TM83",
+        "Move": "Infestation"
       }
     ]
   },
@@ -1691,6 +1711,10 @@
     "GrowthRate": "Medium-Slow",
     "TMs": [
       {
+        "Label": "TM10",
+        "Move": "Hidden Power"
+      },
+      {
         "Label": "TM17",
         "Move": "Protect"
       }
@@ -1715,6 +1739,10 @@
     "BaseXP": 38,
     "GrowthRate": "Medium-Slow",
     "TMs": [
+      {
+        "Label": "TM10",
+        "Move": "Hidden Power"
+      },
       {
         "Label": "TM17",
         "Move": "Protect"
@@ -7550,7 +7578,7 @@
     "Type2": "Water",
     "Ability1": "Unaware",
     "Ability2": "Cloud Nine",
-    "AbilityH": "Swift Swim",
+    "AbilityH": "Mending",
     "BaseStats": {
       "HP": 50,
       "Atk": 52,
@@ -7715,7 +7743,7 @@
     "Type2": "Psychic",
     "Ability1": "Unaware",
     "Ability2": "Cloud Nine",
-    "AbilityH": "Swift Swim",
+    "AbilityH": "Mending",
     "BaseStats": {
       "HP": 80,
       "Atk": 82,
@@ -14358,7 +14386,7 @@
     "SpeciesIdx": 100,
     "Type1": "Electric",
     "Type2": "Fire",
-    "Ability1": "Soundproof",
+    "Ability1": "Blaze",
     "Ability2": "Static",
     "AbilityH": "Aftermath",
     "BaseStats": {
@@ -14479,7 +14507,7 @@
     "SpeciesIdx": 101,
     "Type1": "Electric",
     "Type2": "Fire",
-    "Ability1": "Soundproof",
+    "Ability1": "Blaze",
     "Ability2": "Static",
     "AbilityH": "Aftermath",
     "BaseStats": {
@@ -14741,7 +14769,7 @@
     "SpeciesIdx": 103,
     "Type1": "Grass",
     "Type2": "Psychic",
-    "Ability1": "Chlorophyll",
+    "Ability1": "Overgrow",
     "Ability2": "Harvest",
     "AbilityH": "Skill Link",
     "BaseStats": {
@@ -19613,9 +19641,9 @@
       "HP": 65,
       "Atk": 130,
       "Def": 60,
-      "SpA": 60,
+      "SpA": 65,
       "SpD": 110,
-      "Spe": 100
+      "Spe": 95
     },
     "CatchRate": 255,
     "BaseXP": 97,
@@ -24076,7 +24104,7 @@
     "SpeciesIdx": 162,
     "Type1": "Normal",
     "Type2": "Ground",
-    "Ability1": "Technician",
+    "Ability1": "Adaptability",
     "Ability2": "Fur Coat",
     "AbilityH": "Quick Feet",
     "BaseStats": {
@@ -25988,7 +26016,7 @@
     "Type2": "Flying",
     "Ability1": "Super Luck",
     "Ability2": "Serene Grace",
-    "AbilityH": "Hustle",
+    "AbilityH": "Tinted Lens",
     "BaseStats": {
       "HP": 70,
       "Atk": 40,
@@ -49906,7 +49934,7 @@
     "Type2": "Dragon",
     "Ability1": "Cloud Nine",
     "Ability2": "Fairy Aura",
-    "AbilityH": "Pixilate",
+    "AbilityH": "Mending",
     "BaseStats": {
       "HP": 95,
       "Atk": 80,
@@ -50275,9 +50303,9 @@
     "AbilityH": "Poison Touch",
     "BaseStats": {
       "HP": 83,
-      "Atk": 45,
+      "Atk": 118,
       "Def": 95,
-      "SpA": 118,
+      "SpA": 45,
       "SpD": 95,
       "Spe": 50
     },
@@ -59945,7 +59973,7 @@
     "Type2": "Flying",
     "Ability1": "Intimidate",
     "Ability2": "Reckless",
-    "AbilityH": "Guts",
+    "AbilityH": "Rivalry",
     "BaseStats": {
       "HP": 55,
       "Atk": 95,
@@ -60058,7 +60086,7 @@
     "Type2": "Flying",
     "Ability1": "Intimidate",
     "Ability2": "Reckless",
-    "AbilityH": "Guts",
+    "AbilityH": "Rivalry",
     "BaseStats": {
       "HP": 85,
       "Atk": 125,
@@ -60669,9 +60697,9 @@
     "SpeciesIdx": 403,
     "Type1": "Electric",
     "Type2": "Electric",
-    "Ability1": "Guts",
+    "Ability1": "Rivalry",
     "Ability2": "Intimidate",
-    "AbilityH": "Rivalry",
+    "AbilityH": "Guts",
     "BaseStats": {
       "HP": 45,
       "Atk": 65,
@@ -60774,9 +60802,9 @@
     "SpeciesIdx": 404,
     "Type1": "Electric",
     "Type2": "Dark",
-    "Ability1": "Guts",
+    "Ability1": "Rivalry",
     "Ability2": "Intimidate",
-    "AbilityH": "Rivalry",
+    "AbilityH": "Guts",
     "BaseStats": {
       "HP": 60,
       "Atk": 95,
@@ -60887,9 +60915,9 @@
     "SpeciesIdx": 405,
     "Type1": "Electric",
     "Type2": "Dark",
-    "Ability1": "Guts",
+    "Ability1": "Rivalry",
     "Ability2": "Intimidate",
-    "AbilityH": "Rivalry",
+    "AbilityH": "Guts",
     "BaseStats": {
       "HP": 90,
       "Atk": 120,
@@ -64046,7 +64074,7 @@
     "SpeciesIdx": 428,
     "Type1": "Normal",
     "Type2": "Fairy",
-    "Ability1": "Scrappy",
+    "Ability1": "Cute Charm",
     "Ability2": "No Guard",
     "AbilityH": "Limber",
     "BaseStats": {
@@ -66537,7 +66565,7 @@
     "Type2": "Ground",
     "Ability1": "Sand Force",
     "Ability2": "Rough Skin",
-    "AbilityH": "Sharpness",
+    "AbilityH": "Dune Guard",
     "BaseStats": {
       "HP": 108,
       "Atk": 130,
@@ -70008,7 +70036,7 @@
     "SpeciesIdx": 466,
     "Type1": "Electric",
     "Type2": "Fighting",
-    "Ability1": "Static",
+    "Ability1": "Iron Fist",
     "Ability2": "Motor Drive",
     "AbilityH": "Vital Spirit",
     "BaseStats": {
@@ -70380,7 +70408,7 @@
     "Type2": "Flying",
     "Ability1": "Super Luck",
     "Ability2": "Serene Grace",
-    "AbilityH": "Hustle",
+    "AbilityH": "Tinted Lens",
     "BaseStats": {
       "HP": 85,
       "Atk": 50,
@@ -81928,7 +81956,7 @@
     "Type2": "Grass",
     "Ability1": "Overcoat",
     "Ability2": "Overgrow",
-    "AbilityH": "Leaf Guard",
+    "AbilityH": "Sharpness",
     "BaseStats": {
       "HP": 45,
       "Atk": 53,
@@ -82041,7 +82069,7 @@
     "Type2": "Grass",
     "Ability1": "Overcoat",
     "Ability2": "Filter",
-    "AbilityH": "Leaf Guard",
+    "AbilityH": "Sharpness",
     "BaseStats": {
       "HP": 60,
       "Atk": 83,
@@ -82154,7 +82182,7 @@
     "Type2": "Grass",
     "Ability1": "Overcoat",
     "Ability2": "Chlorophyll",
-    "AbilityH": "Leaf Guard",
+    "AbilityH": "Sharpness",
     "BaseStats": {
       "HP": 78,
       "Atk": 110,
@@ -86116,7 +86144,7 @@
     "Type1": "Poison",
     "Type2": "Steel",
     "Ability1": "Stench",
-    "Ability2": "Poison Touch",
+    "Ability2": "Poison Point",
     "AbilityH": "Aftermath",
     "BaseStats": {
       "HP": 90,
@@ -87876,7 +87904,7 @@
     "Type1": "Water",
     "Type2": "Flying",
     "Ability1": "Cloud Nine",
-    "Ability2": "Rain Dish",
+    "Ability2": "Torrent",
     "AbilityH": "Big Pecks",
     "BaseStats": {
       "HP": 75,
@@ -88341,7 +88369,7 @@
     "Type2": "Grass",
     "Ability1": "Serene Grace",
     "Ability2": "Sap Sipper",
-    "AbilityH": "Overgrow",
+    "AbilityH": "Biodiverse",
     "BaseStats": {
       "HP": 60,
       "Atk": 83,
@@ -88462,7 +88490,7 @@
     "Type2": "Grass",
     "Ability1": "Serene Grace",
     "Ability2": "Sap Sipper",
-    "AbilityH": "Overgrow",
+    "AbilityH": "Biodiverse",
     "BaseStats": {
       "HP": 80,
       "Atk": 112,
@@ -119889,7 +119917,7 @@
     "Type2": "Ground",
     "Ability1": "Dune Guard",
     "Ability2": "Dune Guard",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sharpness",
     "BaseStats": {
       "HP": 118,
       "Atk": 160,
@@ -123826,9 +123854,9 @@
     "SpeciesIdx": 428,
     "Type1": "Fighting",
     "Type2": "Fairy",
-    "Ability1": "Pixilate",
-    "Ability2": "Pixilate",
-    "AbilityH": "Pixilate",
+    "Ability1": "Scrappy",
+    "Ability2": "Scrappy",
+    "AbilityH": "Scrappy",
     "BaseStats": {
       "HP": 65,
       "Atk": 136,
