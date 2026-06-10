@@ -64542,7 +64542,7 @@
     "Type1": "Normal",
     "Type2": "Normal",
     "Ability1": "Limber",
-    "Ability2": "Own Tempo",
+    "Ability2": "Pickup",
     "AbilityH": "Keen Eye",
     "BaseStats": {
       "HP": 49,
@@ -88372,11 +88372,11 @@
     "AbilityH": "Biodiverse",
     "BaseStats": {
       "HP": 60,
-      "Atk": 83,
-      "Def": 52,
+      "Atk": 72,
+      "Def": 55,
       "SpA": 40,
       "SpD": 50,
-      "Spe": 75
+      "Spe": 83
     },
     "CatchRate": 255,
     "BaseXP": 35,
@@ -107244,8 +107244,8 @@
     "SpeciesIdx": 710,
     "Type1": "Ghost",
     "Type2": "Grass",
-    "Ability1": "Pickup",
-    "Ability2": "Overgrow",
+    "Ability1": "Overgrow",
+    "Ability2": "Pickup",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 49,
@@ -107394,7 +107394,7 @@
     "Type1": "Ghost",
     "Type2": "Grass",
     "Ability1": "Flare Boost",
-    "Ability2": "Harvest",
+    "Ability2": "Pickup",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 65,
@@ -120554,8 +120554,8 @@
     "SpeciesIdx": 710,
     "Type1": "Ghost",
     "Type2": "Grass",
-    "Ability1": "Pickup",
-    "Ability2": "Overgrow",
+    "Ability1": "Overgrow",
+    "Ability2": "Pickup",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 44,
@@ -120703,8 +120703,8 @@
     "SpeciesIdx": 710,
     "Type1": "Ghost",
     "Type2": "Grass",
-    "Ability1": "Pickup",
-    "Ability2": "Overgrow",
+    "Ability1": "Overgrow",
+    "Ability2": "Pickup",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 54,
@@ -120852,8 +120852,8 @@
     "SpeciesIdx": 710,
     "Type1": "Ghost",
     "Type2": "Grass",
-    "Ability1": "Pickup",
-    "Ability2": "Overgrow",
+    "Ability1": "Overgrow",
+    "Ability2": "Pickup",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 59,
@@ -121002,7 +121002,7 @@
     "Type1": "Ghost",
     "Type2": "Grass",
     "Ability1": "Flare Boost",
-    "Ability2": "Harvest",
+    "Ability2": "Pickup",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 55,
@@ -121171,7 +121171,7 @@
     "Type1": "Ghost",
     "Type2": "Grass",
     "Ability1": "Flare Boost",
-    "Ability2": "Harvest",
+    "Ability2": "Pickup",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 75,
@@ -121340,7 +121340,7 @@
     "Type1": "Ghost",
     "Type2": "Grass",
     "Ability1": "Flare Boost",
-    "Ability2": "Harvest",
+    "Ability2": "Pickup",
     "AbilityH": "Insomnia",
     "BaseStats": {
       "HP": 85,
