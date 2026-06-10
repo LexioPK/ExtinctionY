@@ -644,8 +644,8 @@
   "icebody": {
     "name": "Ice Body",
     "num": 115,
-    "desc": "If Snow is active, this Pokemon restores 1/16 of its maximum HP, rounded down, at the end of each turn.",
-    "shortDesc": "If Snow is active, this Pokemon heals 1/16 of its max HP each turn."
+    "desc": "If Snow is active, this Pokemon restores 1/10 of its maximum HP, rounded down, at the end of each turn.",
+    "shortDesc": "If Snow is active, this Pokemon heals 1/10 of its max HP each turn."
   },
   "iceface": {
     "name": "Ice Face",
@@ -1184,8 +1184,8 @@
   "raindish": {
     "name": "Rain Dish",
     "num": 44,
-    "desc": "If Rain Dance is active, this Pokemon restores 1/16 of its maximum HP, rounded down, at the end of each turn. This effect is prevented if this Pokemon is holding a Utility Umbrella.",
-    "shortDesc": "If Rain Dance is active, this Pokemon heals 1/16 of its max HP each turn."
+    "desc": "If Rain Dance is active, this Pokemon restores 1/10 of its maximum HP, rounded down, at the end of each turn. This effect is prevented if this Pokemon is holding a Utility Umbrella.",
+    "shortDesc": "If Rain Dance is active, this Pokemon heals 1/10 of its max HP each turn."
   },
   "rattled": {
     "name": "Rattled",
