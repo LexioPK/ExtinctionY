@@ -203,6 +203,12 @@
     "desc": "This Pokemon's moves have their accuracy multiplied by 1.3.",
     "shortDesc": "This Pokemon's moves have their accuracy multiplied by 1.3."
   },
+  "confiscate": {
+    "name": "Confiscate",
+    "num": 124,
+    "desc": "If this Pokemon has no item and is hit by a damaging move, it steals the attacker's item. This effect applies after all hits from a multi-hit move. This effect is prevented if the move had a secondary effect removed by the Sheer Force Ability.",
+    "shortDesc": "If this Pokemon has no item and is hit by a damaging move, it steals the attacker's item."
+  },
   "contrary": {
     "name": "Contrary",
     "num": 126,
@@ -250,6 +256,12 @@
     "num": 56,
     "desc": "There is a 30% chance a Pokemon making contact with this Pokemon will become infatuated if it is of the opposite gender.",
     "shortDesc": "30% chance of infatuating Pokemon of the opposite gender if they make contact."
+  },
+  "cyclone": {
+    "name": "Cyclone",
+    "num": 89,
+    "desc": "This Pokemon's spin-based attacks have their power multiplied by 1.3.",
+    "shortDesc": "This Pokemon's spin-based attacks have 1.3x power."
   },
   "damp": {
     "name": "Damp",
@@ -407,6 +419,12 @@
     "desc": "When this Pokemon has more than 1/2 its maximum HP and takes damage bringing it to 1/2 or less of its maximum HP, it immediately switches out to a chosen ally. This effect applies after all hits from a multi-hit move. This effect is prevented if the move had a secondary effect removed by the Sheer Force Ability. This effect applies to both direct and indirect damage, except Curse and Substitute on use, Belly Drum, Pain Split, and confusion damage.",
     "shortDesc": "This Pokemon switches out when it reaches 1/2 or less of its maximum HP."
   },
+  "envenom": {
+    "name": "Envenom",
+    "num": 143,
+    "desc": "This Pokemon's damaging moves have a 30% chance of poisoning. This effect comes after a move's inherent secondary effect chance.",
+    "shortDesc": "This Pokemon's damaging moves have a 30% chance of poisoning."
+  },
   "fairyaura": {
     "name": "Fairy Aura",
     "num": 187,
@@ -422,8 +440,8 @@
   "flamebody": {
     "name": "Flame Body",
     "num": 49,
-    "desc": "30% chance a Pokemon making contact with this Pokemon will be burned.",
-    "shortDesc": "30% chance a Pokemon making contact with this Pokemon will be burned."
+    "desc": "50% chance a Pokemon making contact with this Pokemon will be burned.",
+    "shortDesc": "50% chance a Pokemon making contact with this Pokemon will be burned."
   },
   "flareboost": {
     "name": "Flare Boost",
@@ -729,7 +747,7 @@
     "name": "Iron Fist",
     "num": 89,
     "desc": "This Pokemon's punch-based attacks have their power multiplied by 1.3.",
-    "shortDesc": "This Pokemon's punch-based attacks have 1.3x power. Sucker Punch is not boosted."
+    "shortDesc": "This Pokemon's punch-based attacks have 1.3x power."
   },
   "justified": {
     "name": "Justified",
@@ -998,8 +1016,14 @@
   "overgrow": {
     "name": "Overgrow",
     "num": 65,
-    "desc": "When this Pokemon has 1/w or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Grass-type attack.",
-    "shortDesc": "At 1/w or less of its max HP, this Pokemon's offensive stat is 1.5x with Grass attacks."
+    "desc": "When this Pokemon has 1/2 or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Grass-type attack.",
+    "shortDesc": "At 1/2 or less of its max HP, this Pokemon's offensive stat is 1.5x with Grass attacks."
+  },
+  "overload": {
+    "name": "Overload",
+    "num": 66,
+    "desc": "When this Pokemon has 1/2 or less of its maximum HP, rounded down, its offensive stat is multiplied by 1.5 while using a Electric-type attack.",
+    "shortDesc": "At 1/2 or less of its max HP, this Pokemon's offensive stat is 1.5x with Electric attacks."
   },
   "owntempo": {
     "name": "Own Tempo",
@@ -1064,8 +1088,8 @@
   "poisonpoint": {
     "name": "Poison Point",
     "num": 38,
-    "desc": "30% chance a Pokemon making contact with this Pokemon will be poisoned.",
-    "shortDesc": "30% chance a Pokemon making contact with this Pokemon will be poisoned."
+    "desc": "50% chance a Pokemon making contact with this Pokemon will be poisoned.",
+    "shortDesc": "50% chance a Pokemon making contact with this Pokemon will be poisoned."
   },
   "poisontouch": {
     "name": "Poison Touch",
@@ -1478,8 +1502,8 @@
   "static": {
     "name": "Static",
     "num": 9,
-    "desc": "30% chance a Pokemon making contact with this Pokemon will be paralyzed.",
-    "shortDesc": "30% chance a Pokemon making contact with this Pokemon will be paralyzed."
+    "desc": "50% chance a Pokemon making contact with this Pokemon will be paralyzed.",
+    "shortDesc": "50% chance a Pokemon making contact with this Pokemon will be paralyzed."
   },
   "steadfast": {
     "name": "Steadfast",
@@ -1738,6 +1762,12 @@
     "num": 260,
     "desc": "This Pokemon's contact moves ignore the target's protection, except Max Guard.",
     "shortDesc": "This Pokemon's contact moves ignore the target's protection, except Max Guard."
+  },
+  "versatile": {
+    "name": "Versatile",
+    "num": 91,
+    "desc": "This Pokemon's moves that do not match any of its types (STAB) are boosted by 1.25x damage.",
+    "shortDesc": "Boosts this Pokemon's non-STAB moves by 1.25x"
   },
   "vesselofruin": {
     "name": "Vessel of Ruin",
