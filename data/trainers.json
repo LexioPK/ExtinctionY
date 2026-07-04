@@ -90,20 +90,20 @@
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Thunder Punch",
+              "Shadow Ball",
               "Icy Wind",
               "Sludge",
-              "Shadow Ball"
+              "Mega Drain"
             ]
           },
           {
             "Name": "Krokorok",
             "Form": "",
             "Gender": "",
-            "Level": 37,
+            "Level": 39,
             "Ability": "Moxie",
             "HeldItem": "Ghost Gem",
-            "Nature": "Brave (\u002BAtk / -Spe)",
+            "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
             "Moves": [
               "Assurance",
@@ -170,9 +170,9 @@
             "IVs": 31,
             "Moves": [
               "Slice",
-              "Sharpen",
               "Shadow Claw",
-              "Psycho Cut"
+              "Psycho Cut",
+              "Sharpen"
             ]
           },
           {
@@ -202,7 +202,7 @@
             "IVs": 31,
             "Moves": [
               "Psybeam",
-              "Calm Mind",
+              "Signal Beam",
               "Air Slash",
               "Amnesia"
             ]
@@ -223,35 +223,35 @@
         "RewardItem": "Wide Lens",
         "Pokemon": [
           {
-            "Name": "Seviper",
+            "Name": "Venomoth",
             "Form": "",
             "Gender": "",
             "Level": 38,
-            "Ability": "Shed Skin",
+            "Ability": "Wonder Skin",
             "HeldItem": "Wide Lens",
-            "Nature": "Hardy (Neutral)",
+            "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Snarl",
-              "Gastro Acid",
-              "Venoshock",
-              "Dragon Tail"
+              "Sludge Bomb",
+              "Psybeam",
+              "Signal Beam",
+              "Sleep Powder"
             ]
           },
           {
-            "Name": "Vibrava",
+            "Name": "Talonflame",
             "Form": "",
             "Gender": "",
             "Level": 38,
-            "Ability": "Levitate",
+            "Ability": "Hustle",
             "HeldItem": "Wide Lens",
-            "Nature": "Gentle (\u002BSpD / -Def)",
+            "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Earth Power",
-              "Rock Slide",
-              "Dragon Breath",
-              "Signal Beam"
+              "Flame Wheel",
+              "Aerial Ace",
+              "Steel Wing",
+              "Will-O-Wisp"
             ]
           },
           {
@@ -296,9 +296,9 @@
             "IVs": 31,
             "Moves": [
               "Bug Bite",
-              "Detect",
+              "Aerial Ace",
               "Night Slash",
-              "Aerial Ace"
+              "Detect"
             ]
           },
           {
@@ -311,8 +311,8 @@
             "Nature": "Gentle (\u002BSpD / -Def)",
             "IVs": 31,
             "Moves": [
-              "Bulldoze",
               "Take Down",
+              "Bulldoze",
               "Rock Climb",
               "Work Up"
             ]
@@ -1188,7 +1188,7 @@
             "Form": "",
             "Gender": "",
             "Level": 6,
-            "Ability": "Shield Dust",
+            "Ability": "Poison Point",
             "HeldItem": "",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 20,
@@ -1306,8 +1306,8 @@
             "Form": "",
             "Gender": "",
             "Level": 23,
-            "Ability": "Glacial Guard",
-            "HeldItem": "",
+            "Ability": "Oblivious",
+            "HeldItem": "Metronome",
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
             "Moves": [
@@ -1448,7 +1448,7 @@
             "Form": "",
             "Gender": "",
             "Level": 23,
-            "Ability": "Regenerator",
+            "Ability": "Analytic",
             "HeldItem": "Ganlon Berry",
             "Nature": "Serious (Neutral)",
             "IVs": 31,
@@ -1544,7 +1544,7 @@
             "Gender": "",
             "Level": 23,
             "Ability": "Hyper Cutter",
-            "HeldItem": "",
+            "HeldItem": "Rawst Berry",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
             "Moves": [
@@ -1575,7 +1575,7 @@
             "Gender": "",
             "Level": 24,
             "Ability": "Torrent",
-            "HeldItem": "",
+            "HeldItem": "Rowap Berry",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
@@ -1618,19 +1618,19 @@
             ]
           },
           {
-            "Name": "Croconaw",
+            "Name": "Frillish",
             "Form": "",
             "Gender": "",
             "Level": 24,
-            "Ability": "Torrent",
-            "HeldItem": "Rawst Berry",
-            "Nature": "Timid (\u002BSpe / -Atk)",
+            "Ability": "Cursed Body",
+            "HeldItem": "Cheri Berry",
+            "Nature": "Docile (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Metal Claw",
-              "Ice Fang",
-              "Clamp",
-              "Dragon Rush"
+              "Icy Wind",
+              "Bubble Beam",
+              "Ominous Wind",
+              "Recover"
             ]
           }
         ]
@@ -1748,7 +1748,7 @@
               "Iron Head",
               "Earthquake",
               "Ice Fang",
-              "Screech"
+              "Roar"
             ]
           }
         ]
@@ -1841,7 +1841,7 @@
             "Form": "",
             "Gender": "",
             "Level": 11,
-            "Ability": "Shed Skin",
+            "Ability": "Swarm",
             "HeldItem": "Cheri Berry",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 20,
@@ -1952,7 +1952,7 @@
             "Form": "",
             "Gender": "",
             "Level": 11,
-            "Ability": "Swarm",
+            "Ability": "Shield Dust",
             "HeldItem": "Oran Berry",
             "Nature": "Modest (\u002BSpA / -Atk)",
             "IVs": 20,
@@ -2235,7 +2235,7 @@
             "Gender": "",
             "Level": 18,
             "Ability": "Ice Body",
-            "HeldItem": "Never-Melt Ice",
+            "HeldItem": "Icy Rock",
             "Nature": "Modest (\u002BSpA / -Atk)",
             "IVs": 31,
             "Moves": [
@@ -2462,7 +2462,7 @@
               "Crush Claw",
               "Shadow Claw",
               "Shadow Sneak",
-              "Slice"
+              "Rock Smash"
             ]
           },
           {
@@ -2556,14 +2556,14 @@
             "Form": "",
             "Gender": "",
             "Level": 29,
-            "Ability": "Skill Link",
+            "Ability": "Mega Launcher",
             "HeldItem": "Muscle Band",
             "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
               "Octazooka",
               "Wring Out",
-              "Flame Charge",
+              "Flame Burst",
               "Bullet Seed"
             ]
           },
@@ -2577,7 +2577,7 @@
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Take Down",
+              "Rock Slide",
               "Mud Bomb",
               "Lava Plume",
               "Flame Charge"
@@ -2603,14 +2603,14 @@
             "Form": "",
             "Gender": "",
             "Level": 29,
-            "Ability": "Blaze",
+            "Ability": "Iron Fist",
             "HeldItem": "Eviolite",
             "Nature": "Naughty (\u002BAtk / -SpD)",
             "IVs": 31,
             "Moves": [
               "Fake Out",
               "Taunt",
-              "Flame Wheel",
+              "Fire Punch",
               "Power-Up Punch"
             ]
           },
@@ -2640,7 +2640,7 @@
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 30,
             "Moves": [
-              "Rock Tomb",
+              "Rock Slide",
               "Revenge",
               "Knock Off",
               "Mega Punch"
@@ -3424,7 +3424,7 @@
             "Form": "",
             "Gender": "\u2640 / Female",
             "Level": 42,
-            "Ability": "Swarm",
+            "Ability": "Competitive",
             "HeldItem": "Leftovers",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -3519,7 +3519,7 @@
             "Form": "",
             "Gender": "\u2642 / Male",
             "Level": 42,
-            "Ability": "Swarm",
+            "Ability": "Multiscale",
             "HeldItem": "Black Sludge",
             "Nature": "Naughty (\u002BAtk / -SpD)",
             "IVs": 31,
@@ -4892,7 +4892,7 @@
             "Form": "",
             "Gender": "",
             "Level": 34,
-            "Ability": "Torrent",
+            "Ability": "Sharpness",
             "HeldItem": "Muscle Band",
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
@@ -4909,7 +4909,7 @@
             "Gender": "",
             "Level": 34,
             "Ability": "Technician",
-            "HeldItem": "Pecha Berry",
+            "HeldItem": "Rawst Berry",
             "Nature": "Hardy (Neutral)",
             "IVs": 31,
             "Moves": [
@@ -4917,6 +4917,22 @@
               "Needle Arm",
               "Mach Punch",
               "Thunder Punch"
+            ]
+          },
+          {
+            "Name": "Mienshao",
+            "Form": "",
+            "Gender": "",
+            "Level": 35,
+            "Ability": "Regenerator",
+            "HeldItem": "Fist Plate",
+            "Nature": "Careful (\u002BSpD / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Drain Punch",
+              "U-turn",
+              "Meditate",
+              "Fake Out"
             ]
           },
           {
@@ -4930,9 +4946,9 @@
             "IVs": 31,
             "Moves": [
               "Mega Punch",
-              "Curse",
+              "Brick Break",
               "Slice",
-              "Power-Up Punch"
+              "Curse"
             ]
           }
         ]
@@ -4962,40 +4978,56 @@
             "Moves": [
               "Submission",
               "Bullet Punch",
-              "Foul Play",
-              "Work Up"
+              "Punishment",
+              "Swagger"
             ]
           },
           {
-            "Name": "Mienshao",
-            "Form": "",
-            "Gender": "",
-            "Level": 35,
-            "Ability": "Inner Focus",
-            "HeldItem": "Psychic Gem",
-            "Nature": "Hasty (\u002BSpe / -Def)",
-            "IVs": 31,
-            "Moves": [
-              "Extrasensory",
-              "Drain Punch",
-              "U-turn",
-              "Meditate"
-            ]
-          },
-          {
-            "Name": "Poliwhirl",
+            "Name": "Scrafty",
             "Form": "",
             "Gender": "",
             "Level": 34,
-            "Ability": "Water Absorb",
-            "HeldItem": "Eviolite",
-            "Nature": "Hasty (\u002BSpe / -Def)",
+            "Ability": "Intimidate",
+            "HeldItem": "Sitrus Berry",
+            "Nature": "Naughty (\u002BAtk / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Dive",
-              "Metronome",
-              "Mud Bomb",
-              "Body Slam"
+              "Drain Punch",
+              "Breaking Swipe",
+              "Fake Out",
+              "Parting Shot"
+            ]
+          },
+          {
+            "Name": "Staraptor",
+            "Form": "",
+            "Gender": "",
+            "Level": 35,
+            "Ability": "Rivalry",
+            "HeldItem": "Sharp Beak",
+            "Nature": "Gentle (\u002BSpD / -Def)",
+            "IVs": 31,
+            "Moves": [
+              "Brave Bird",
+              "Take Down",
+              "Pursuit",
+              "Close Combat"
+            ]
+          },
+          {
+            "Name": "Dusclops",
+            "Form": "",
+            "Gender": "",
+            "Level": 34,
+            "Ability": "Demoralize",
+            "HeldItem": "Quick Claw",
+            "Nature": "Hardy (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Shadow Punch",
+              "Brick Break",
+              "Will-O-Wisp",
+              "Disable"
             ]
           }
         ]
@@ -5019,7 +5051,7 @@
             "Gender": "",
             "Level": 34,
             "Ability": "Guts",
-            "HeldItem": "Persim Berry",
+            "HeldItem": "Shell Bell",
             "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
@@ -5035,7 +5067,7 @@
             "Gender": "",
             "Level": 34,
             "Ability": "Strong Jaw",
-            "HeldItem": "Rawst Berry",
+            "HeldItem": "Charcoal",
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
             "Moves": [
@@ -5051,7 +5083,7 @@
             "Gender": "",
             "Level": 35,
             "Ability": "Tough Claws",
-            "HeldItem": "Cheri Berry",
+            "HeldItem": "Expert Belt",
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
             "Moves": [
@@ -5059,6 +5091,22 @@
               "False Swipe",
               "Crush Claw",
               "Brick Break"
+            ]
+          },
+          {
+            "Name": "Poliwhirl",
+            "Form": "",
+            "Gender": "",
+            "Level": 34,
+            "Ability": "Any",
+            "HeldItem": "Eviolite",
+            "Nature": "Rash (\u002BSpA / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Dive",
+              "Brick Break",
+              "Metronome",
+              "Aqua Jet"
             ]
           }
         ]
@@ -5087,7 +5135,7 @@
             "IVs": 31,
             "Moves": [
               "Fake Out",
-              "Rolling Kick",
+              "Low Sweep",
               "Chip Away",
               "Detect"
             ]
@@ -5097,7 +5145,7 @@
             "Form": "",
             "Gender": "",
             "Level": 35,
-            "Ability": "Steadfast",
+            "Ability": "Iron Fist",
             "HeldItem": "Silk Scarf",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -5119,8 +5167,8 @@
             "IVs": 31,
             "Moves": [
               "Flame Wheel",
-              "Bulldoze",
-              "Low Sweep",
+              "Drill Run",
+              "Rolling Kick",
               "Rapid Spin"
             ]
           }
@@ -5262,8 +5310,8 @@
             "Form": "",
             "Gender": "",
             "Level": 41,
-            "Ability": "Chlorophyll",
-            "HeldItem": "Miracle Seed",
+            "Ability": "Regenerator",
+            "HeldItem": "Leftovers",
             "Nature": "Modest (\u002BSpA / -Atk)",
             "IVs": 31,
             "Moves": [
@@ -5285,8 +5333,8 @@
             "Moves": [
               "Natural Gift",
               "Horn Leech",
-              "Charm",
-              "Jump Kick"
+              "Take Down",
+              "Charm"
             ]
           },
           {
@@ -5300,8 +5348,8 @@
             "IVs": 31,
             "Moves": [
               "Body Slam",
-              "Counter",
               "Sludge Bomb",
+              "Counter",
               "Encore"
             ]
           },
@@ -5316,9 +5364,9 @@
             "IVs": 31,
             "Moves": [
               "Needle Arm",
-              "Copycat",
+              "Thunder Punch",
               "Strength",
-              "Thunder Punch"
+              "Copycat"
             ]
           }
         ]
@@ -5357,15 +5405,15 @@
             "Form": "",
             "Gender": "",
             "Level": 40,
-            "Ability": "Overgrow",
+            "Ability": "Contrary",
             "HeldItem": "Grass Gem",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Dragon Rush",
+              "Breaking Swipe",
               "Leaf Blade",
-              "Dragon Tail",
-              "Dragon Pulse"
+              "Glare",
+              "Protect"
             ]
           },
           {
@@ -5374,7 +5422,7 @@
             "Gender": "",
             "Level": 40,
             "Ability": "Shell Armor",
-            "HeldItem": "Grass Gem",
+            "HeldItem": "Eviolite",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
             "Moves": [
@@ -5405,8 +5453,8 @@
             "Form": "",
             "Gender": "",
             "Level": 40,
-            "Ability": "Overgrow",
-            "HeldItem": "Grass Gem",
+            "Ability": "Flower Veil",
+            "HeldItem": "Big Root",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
@@ -5547,7 +5595,7 @@
             "Form": "",
             "Gender": "",
             "Level": 41,
-            "Ability": "Poison Heal",
+            "Ability": "Arena Trap",
             "HeldItem": "Muscle Band",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -5610,7 +5658,7 @@
             "Form": "",
             "Gender": "",
             "Level": 43,
-            "Ability": "Flower Veil",
+            "Ability": "Drought",
             "HeldItem": "Focus Sash",
             "Nature": "Relaxed (\u002BDef / -Spe)",
             "IVs": 31,
@@ -5642,7 +5690,7 @@
             "Form": "",
             "Gender": "",
             "Level": 43,
-            "Ability": "Overgrow",
+            "Ability": "Chlorophyll",
             "HeldItem": "Life Orb",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
@@ -5658,7 +5706,7 @@
             "Form": "",
             "Gender": "",
             "Level": 42,
-            "Ability": "Sap Sipper",
+            "Ability": "Biodiverse",
             "HeldItem": "Leftovers",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -5674,7 +5722,7 @@
             "Form": "",
             "Gender": "",
             "Level": 42,
-            "Ability": "Torrent",
+            "Ability": "Sharpness",
             "HeldItem": "Assault Vest",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -5728,7 +5776,7 @@
             "Form": "",
             "Gender": "",
             "Level": 47,
-            "Ability": "Static",
+            "Ability": "Motor Drive",
             "HeldItem": "Light Clay",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
@@ -5760,14 +5808,14 @@
             "Form": "",
             "Gender": "",
             "Level": 47,
-            "Ability": "Cheek Pouch",
+            "Ability": "Static",
             "HeldItem": "Lum Berry",
             "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
             "Moves": [
               "Discharge",
-              "Hyper Fang",
-              "Play Rough",
+              "Super Fang",
+              "Draining Kiss",
               "Sweet Kiss"
             ]
           },
@@ -5776,7 +5824,7 @@
             "Form": "",
             "Gender": "",
             "Level": 47,
-            "Ability": "Static",
+            "Ability": "Overload",
             "HeldItem": "Sitrus Berry",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -5950,12 +5998,12 @@
             "Gender": "",
             "Level": 48,
             "Ability": "Motor Drive",
-            "HeldItem": "Wise Glasses",
+            "HeldItem": "Wide Lens",
             "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
             "Moves": [
               "Volt Switch",
-              "Air Slash",
+              "Hurricane",
               "Will-O-Wisp",
               "Substitute"
             ]
@@ -5971,8 +6019,8 @@
             "IVs": 31,
             "Moves": [
               "Signal Beam",
-              "Extrasensory",
-              "Shock Wave",
+              "Psychic",
+              "Thunderbolt",
               "Calm Mind"
             ]
           },
@@ -5981,7 +6029,7 @@
             "Form": "",
             "Gender": "",
             "Level": 48,
-            "Ability": "Motor Drive",
+            "Ability": "Iron Fist",
             "HeldItem": "Muscle Band",
             "Nature": "Naughty (\u002BAtk / -SpD)",
             "IVs": 31,
@@ -6092,7 +6140,7 @@
             "Form": "",
             "Gender": "",
             "Level": 50,
-            "Ability": "Analytic",
+            "Ability": "Sturdy",
             "HeldItem": "Air Balloon",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
@@ -7140,7 +7188,7 @@
             "Form": "",
             "Gender": "",
             "Level": 83,
-            "Ability": "Competitive",
+            "Ability": "Slush Rush",
             "HeldItem": "Life Orb",
             "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
@@ -7434,7 +7482,7 @@
         "TrainerID": 142,
         "TrainerClass": "Sightseer",
         "TrainerClassIndex": 68,
-        "BattleType": "Double",
+        "BattleType": "Single",
         "Route": "Reflection Cave - B1F",
         "EncounterIndex": 0,
         "Required": "Optional",
@@ -7589,7 +7637,7 @@
             "Form": "",
             "Gender": "",
             "Level": 32,
-            "Ability": "Sap Sipper",
+            "Ability": "Demoralize",
             "HeldItem": "Sitrus Berry",
             "Nature": "Hardy (Neutral)",
             "IVs": 31,
@@ -7621,7 +7669,7 @@
             "Form": "",
             "Gender": "",
             "Level": 32,
-            "Ability": "Synchronize",
+            "Ability": "Competitive",
             "HeldItem": "Berry Juice",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
@@ -7731,7 +7779,7 @@
             "Form": "",
             "Gender": "\u2640 / Female",
             "Level": 32,
-            "Ability": "Sniper",
+            "Ability": "Swarm",
             "HeldItem": "Bug Gem",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -7811,7 +7859,7 @@
             "Gender": "",
             "Level": 33,
             "Ability": "Gluttony",
-            "HeldItem": "Berry Juice",
+            "HeldItem": "Sitrus Berry",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
             "Moves": [
@@ -7975,7 +8023,7 @@
             "Form": "",
             "Gender": "",
             "Level": 20,
-            "Ability": "Prankster",
+            "Ability": "Steadfast",
             "HeldItem": "Focus Band",
             "Nature": "Rash (\u002BSpA / -SpD)",
             "IVs": 31,
@@ -8687,10 +8735,10 @@
             "Level": 21,
             "Ability": "Cyclone",
             "HeldItem": "Sitrus Berry",
-            "Nature": "Timid (\u002BSpe / -Atk)",
+            "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Dizzy Punch",
+              "Rolling Kick",
               "Rapid Spin",
               "Hypnosis",
               "Teeter Dance"
@@ -8841,7 +8889,7 @@
             "Form": "",
             "Gender": "",
             "Level": 17,
-            "Ability": "Download",
+            "Ability": "Aftermath",
             "HeldItem": "",
             "Nature": "Bashful (Neutral)",
             "IVs": 31,
@@ -8920,7 +8968,7 @@
             "Form": "",
             "Gender": "",
             "Level": 18,
-            "Ability": "Magma Armor",
+            "Ability": "Flame Body",
             "HeldItem": "Cheri Berry",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -9054,7 +9102,7 @@
             "Gender": "",
             "Level": 15,
             "Ability": "Pickup",
-            "HeldItem": "Jaboca Berry",
+            "HeldItem": "Oran Berry",
             "Nature": "Rash (\u002BSpA / -SpD)",
             "IVs": 31,
             "Moves": [
@@ -9070,7 +9118,7 @@
             "Gender": "",
             "Level": 15,
             "Ability": "Torrent",
-            "HeldItem": "Oran Berry",
+            "HeldItem": "Jaboca Berry",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
             "Moves": [
@@ -9102,7 +9150,7 @@
             "Gender": "",
             "Level": 16,
             "Ability": "Friend Guard",
-            "HeldItem": "",
+            "HeldItem": "Oran Berry",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
             "Moves": [
@@ -9432,7 +9480,7 @@
             "Form": "",
             "Gender": "",
             "Level": 17,
-            "Ability": "Regenerator",
+            "Ability": "Overcoat",
             "HeldItem": "Oran Berry",
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
@@ -9495,7 +9543,7 @@
             "Form": "",
             "Gender": "",
             "Level": 17,
-            "Ability": "Torrent",
+            "Ability": "Hustle",
             "HeldItem": "Oran Berry",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
@@ -9558,7 +9606,7 @@
             "Form": "",
             "Gender": "",
             "Level": 17,
-            "Ability": "Overgrow",
+            "Ability": "Contrary",
             "HeldItem": "Lansat Berry",
             "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
@@ -9574,7 +9622,7 @@
             "Form": "",
             "Gender": "",
             "Level": 17,
-            "Ability": "Blaze",
+            "Ability": "Hustle",
             "HeldItem": "Lansat Berry",
             "Nature": "Gentle (\u002BSpD / -Def)",
             "IVs": 31,
@@ -9637,7 +9685,7 @@
             "Form": "",
             "Gender": "",
             "Level": 17,
-            "Ability": "Overgrow",
+            "Ability": "Poison Point",
             "HeldItem": "Oran Berry",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
@@ -10320,7 +10368,7 @@
             "Form": "",
             "Gender": "",
             "Level": 8,
-            "Ability": "Tinted Lens",
+            "Ability": "Analytic",
             "HeldItem": "Cell Battery",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 20,
@@ -11012,7 +11060,7 @@
             "Form": "",
             "Gender": "",
             "Level": 38,
-            "Ability": "Cloud Nine",
+            "Ability": "Torrent",
             "HeldItem": "Wacan Berry",
             "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
@@ -11028,7 +11076,7 @@
             "Form": "",
             "Gender": "",
             "Level": 39,
-            "Ability": "Water Absorb",
+            "Ability": "Cursed Body",
             "HeldItem": "Wacan Berry",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
@@ -11056,19 +11104,19 @@
             ]
           },
           {
-            "Name": "Mantine",
+            "Name": "Chatot",
             "Form": "",
             "Gender": "",
             "Level": 40,
-            "Ability": "Water Absorb",
-            "HeldItem": "Wacan Berry",
-            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "Ability": "Soundproof",
+            "HeldItem": "Metronome",
+            "Nature": "Relaxed (\u002BDef / -Spe)",
             "IVs": 31,
             "Moves": [
               "Air Slash",
-              "Signal Beam",
-              "Water Pulse",
-              "Psybeam"
+              "Hyper Voice",
+              "Mimic",
+              "Roost"
             ]
           }
         ]
@@ -11087,19 +11135,19 @@
         "RewardItem": "TM18",
         "Pokemon": [
           {
-            "Name": "Sealeo",
+            "Name": "Armaldo",
             "Form": "",
             "Gender": "",
             "Level": 39,
-            "Ability": "Ice Body",
-            "HeldItem": "Chesto Berry",
-            "Nature": "Quirky (Neutral)",
+            "Ability": "Swift Swim",
+            "HeldItem": "Lum Berry",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Snore",
-              "Aqua Tail",
-              "Ice Fang",
-              "Rest"
+              "Razor Shell",
+              "Rock Slide",
+              "Bug Bite",
+              "Cross Poison"
             ]
           },
           {
@@ -11108,7 +11156,7 @@
             "Gender": "",
             "Level": 40,
             "Ability": "Multiscale",
-            "HeldItem": "Lum Berry",
+            "HeldItem": "Dragon Fang",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
             "Moves": [
@@ -11123,8 +11171,8 @@
             "Form": "",
             "Gender": "",
             "Level": 40,
-            "Ability": "Analytic",
-            "HeldItem": "Lum Berry",
+            "Ability": "Drizzle",
+            "HeldItem": "Sitrus Berry",
             "Nature": "Hardy (Neutral)",
             "IVs": 31,
             "Moves": [
@@ -11135,19 +11183,19 @@
             ]
           },
           {
-            "Name": "Slowbro",
+            "Name": "Stunfisk",
             "Form": "",
             "Gender": "",
             "Level": 40,
-            "Ability": "Shell Armor",
-            "HeldItem": "Sitrus Berry",
-            "Nature": "Quiet (\u002BSpA / -Spe)",
+            "Ability": "Dry Skin",
+            "HeldItem": "Magnet",
+            "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Withdraw",
-              "Zen Headbutt",
-              "Slack Off",
-              "Surf"
+              "Surf",
+              "Mudslide",
+              "Shock Wave",
+              "Nuzzle"
             ]
           }
         ]
@@ -11324,19 +11372,19 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Chatot",
+            "Name": "Vibrava",
             "Form": "",
             "Gender": "",
             "Level": 41,
-            "Ability": "Soundproof",
-            "HeldItem": "Sharp Beak",
-            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "Ability": "Levitate",
+            "HeldItem": "Soft Sand",
+            "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Air Slash",
+              "Signal Beam",
               "Hyper Voice",
-              "Roost",
-              "Mimic"
+              "Dragon Breath",
+              "Earth Power"
             ]
           },
           {
@@ -11430,7 +11478,7 @@
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Sand Force",
+            "Ability": "Arena Trap",
             "HeldItem": "Oran Berry",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -11493,7 +11541,7 @@
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Dune Guard",
+            "Ability": "Magic Bounce",
             "HeldItem": "Oran Berry",
             "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
@@ -11505,19 +11553,19 @@
             ]
           },
           {
-            "Name": "Piplup",
+            "Name": "Totodile",
             "Form": "",
             "Gender": "",
             "Level": 14,
             "Ability": "Torrent",
             "HeldItem": "Mystic Water",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "Nature": "Quirky (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Bubble",
-              "Metal Claw",
-              "Icy Wind",
-              "Water Sport"
+              "Bite",
+              "Rage",
+              "Clamp",
+              "Growl"
             ]
           }
         ]
@@ -11568,19 +11616,19 @@
             ]
           },
           {
-            "Name": "Chimchar",
+            "Name": "Cyndaquil",
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Iron Fist",
+            "Ability": "Blaze",
             "HeldItem": "Charcoal",
-            "Nature": "Timid (\u002BSpe / -Atk)",
+            "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Mach Punch",
-              "Taunt",
-              "Rock Smash",
-              "Flame Charge"
+              "Flame Wheel",
+              "Mud-Slap",
+              "Tackle",
+              "Double Kick"
             ]
           }
         ]
@@ -11619,7 +11667,7 @@
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Overcoat",
+            "Ability": "Shed Skin",
             "HeldItem": "Oran Berry",
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
@@ -11635,7 +11683,7 @@
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Overcoat",
+            "Ability": "Wonder Skin",
             "HeldItem": "Oran Berry",
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
@@ -11666,7 +11714,7 @@
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Overgrow",
+            "Ability": "Perseverance",
             "HeldItem": "",
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
@@ -11698,7 +11746,7 @@
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Scrappy",
+            "Ability": "Rattled",
             "HeldItem": "Oran Berry",
             "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
@@ -11761,7 +11809,7 @@
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Levitate",
+            "Ability": "Sweet Veil",
             "HeldItem": "Float Stone",
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
@@ -11899,19 +11947,19 @@
             ]
           },
           {
-            "Name": "Turtwig",
+            "Name": "Chikorita",
             "Form": "",
             "Gender": "",
             "Level": 15,
-            "Ability": "Shell Armor",
+            "Ability": "Overgrow",
             "HeldItem": "Pecha Berry",
-            "Nature": "Brave (\u002BAtk / -Spe)",
+            "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Sand Tomb",
-              "Razor Leaf",
-              "Curse",
-              "Bite"
+              "Magical Leaf",
+              "Synthesis",
+              "Fairy Wind",
+              ""
             ]
           },
           {
@@ -12041,10 +12089,10 @@
             "Nature": "Hardy (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Rollout",
+              "Aurora Beam",
               "Mud Shot",
-              "Aqua Jet",
-              "Water Gun"
+              "Smelling Salts",
+              "Bubble Beam"
             ]
           },
           {
@@ -12074,9 +12122,9 @@
             "IVs": 31,
             "Moves": [
               "Rock Throw",
-              "Scary Face",
+              "Headbutt",
               "Stomp",
-              "Assurance"
+              "Scary Face"
             ]
           }
         ]
@@ -12104,10 +12152,10 @@
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Mud Sport",
+              "Rock Slide",
               "Bug Bite",
               "Metal Claw",
-              "Rock Slide"
+              "Mud Sport"
             ]
           },
           {
@@ -12138,8 +12186,8 @@
             "Moves": [
               "Bulldoze",
               "Rock Tomb",
-              "Endure",
-              "Slam"
+              "Slam",
+              "Endure"
             ]
           },
           {
@@ -12155,7 +12203,7 @@
               "Rock Blast",
               "Mud Shot",
               "Iron Defense",
-              "Rock Slide"
+              "Headbutt"
             ]
           }
         ]
@@ -12258,14 +12306,14 @@
             "Gender": "",
             "Level": 26,
             "Ability": "Defeatist",
-            "HeldItem": "",
+            "HeldItem": "Berry Juice",
             "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Agility",
-              "Quick Guard",
+              "Pluck",
               "Chip Away",
-              "Pluck"
+              "Quick Guard",
+              "Agility"
             ]
           },
           {
@@ -12278,10 +12326,10 @@
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
             "Moves": [
-              "Wide Guard",
+              "Chip Away",
               "Aqua Jet",
               "Aqua Tail",
-              "Chip Away"
+              "Wide Guard"
             ]
           },
           {
@@ -12289,8 +12337,8 @@
             "Form": "",
             "Gender": "",
             "Level": 26,
-            "Ability": "Sheer Force",
-            "HeldItem": "Berry Juice",
+            "Ability": "Guts",
+            "HeldItem": "Apicot Berry",
             "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
             "Moves": [
@@ -12368,7 +12416,7 @@
             "Form": "",
             "Gender": "",
             "Level": 28,
-            "Ability": "Biodiverse",
+            "Ability": "Natural Cure",
             "HeldItem": "Leftovers",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
@@ -12400,7 +12448,7 @@
             "Form": "",
             "Gender": "",
             "Level": 29,
-            "Ability": "Solar Power",
+            "Ability": "Levitate",
             "HeldItem": "Passho Berry",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
@@ -12416,7 +12464,7 @@
             "Form": "",
             "Gender": "",
             "Level": 29,
-            "Ability": "Glacial Guard",
+            "Ability": "Levitate",
             "HeldItem": "Sitrus Berry",
             "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
@@ -12762,8 +12810,8 @@
             "Form": "",
             "Gender": "",
             "Level": 24,
-            "Ability": "Overgrow",
-            "HeldItem": "Rose Incense",
+            "Ability": "Confiscate",
+            "HeldItem": "",
             "Nature": "Docile (Neutral)",
             "IVs": 31,
             "Moves": [
@@ -12783,10 +12831,10 @@
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Magnitude",
-              "Amnesia",
+              "Mud Bomb",
               "Flame Burst",
-              "Mud Bomb"
+              "Amnesia",
+              "Focus Energy"
             ]
           },
           {
@@ -12802,7 +12850,7 @@
               "Magnitude",
               "Water Pulse",
               "Amnesia",
-              "Mud Shot"
+              "Icy Wind"
             ]
           }
         ]
@@ -12888,7 +12936,7 @@
             "Form": "",
             "Gender": "",
             "Level": 25,
-            "Ability": "Immunity",
+            "Ability": "Thick Fat",
             "HeldItem": "Safety Goggles",
             "Nature": "Impish (\u002BDef / -SpA)",
             "IVs": 31,
@@ -13062,7 +13110,7 @@
             "Form": "",
             "Gender": "",
             "Level": 28,
-            "Ability": "Super Luck",
+            "Ability": "Rivalry",
             "HeldItem": "Sharp Beak",
             "Nature": "Rash (\u002BSpA / -SpD)",
             "IVs": 31,
@@ -13200,9 +13248,9 @@
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Sweet Kiss",
-              "Copycat",
               "Disarming Voice",
+              "Copycat",
+              "Metronome",
               "Follow Me"
             ]
           },
@@ -13211,7 +13259,7 @@
             "Form": "",
             "Gender": "",
             "Level": 20,
-            "Ability": "Guts",
+            "Ability": "Vital Spirit",
             "HeldItem": "",
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
@@ -13250,8 +13298,8 @@
             "Moves": [
               "Smack Down",
               "Headbutt",
-              "Rock Blast",
-              "Mud Shot"
+              "Mud Shot",
+              "Protect"
             ]
           },
           {
@@ -13446,7 +13494,7 @@
             "Form": "",
             "Gender": "",
             "Level": 21,
-            "Ability": "Harvest",
+            "Ability": "Cute Charm",
             "HeldItem": "Cheri Berry",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -13553,19 +13601,19 @@
             ]
           },
           {
-            "Name": "Cacnea",
+            "Name": "Shroomish",
             "Form": "",
             "Gender": "",
             "Level": 22,
-            "Ability": "Rough Skin",
+            "Ability": "Quick Feet",
             "HeldItem": "Aspear Berry",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
             "Moves": [
+              "Mega Drain",
               "Round",
-              "Needle Arm",
-              "Twineedle",
-              "Ingrain"
+              "Headbutt",
+              "Spore"
             ]
           },
           {
@@ -13702,35 +13750,35 @@
             ]
           },
           {
-            "Name": "Shroomish",
-            "Form": "",
-            "Gender": "",
-            "Level": 23,
-            "Ability": "Immunity",
-            "HeldItem": "Miracle Seed",
-            "Nature": "Quirky (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Headbutt",
-              "Bullet Seed",
-              "Spore",
-              "Poison Powder"
-            ]
-          },
-          {
-            "Name": "Frillish",
+            "Name": "Cacnea",
             "Form": "",
             "Gender": "",
             "Level": 23,
             "Ability": "Water Absorb",
-            "HeldItem": "Mystic Water",
-            "Nature": "Hasty (\u002BSpe / -Def)",
+            "HeldItem": "Miracle Seed",
+            "Nature": "Quirky (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Bubble Beam",
-              "Recover",
-              "Ominous Wind",
-              "Icy Wind"
+              "Needle Arm",
+              "Twineedle",
+              "Leech Seed",
+              "Ingrain"
+            ]
+          },
+          {
+            "Name": "Croconaw",
+            "Form": "",
+            "Gender": "",
+            "Level": 23,
+            "Ability": "Hustle",
+            "HeldItem": "Mystic Water",
+            "Nature": "Gentle (\u002BSpD / -Def)",
+            "IVs": 31,
+            "Moves": [
+              "Ice Fang",
+              "Breaking Swipe",
+              "Bite",
+              "Clamp"
             ]
           }
         ]
@@ -13754,14 +13802,14 @@
             "Gender": "",
             "Level": 23,
             "Ability": "Demoralize",
-            "HeldItem": "Oran Berry",
+            "HeldItem": "Bright Powder",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
             "Moves": [
               "Sand Tomb",
-              "Assurance",
+              "Bite",
               "Bulldoze",
-              "Bite"
+              "Torment"
             ]
           },
           {
@@ -13770,7 +13818,7 @@
             "Gender": "",
             "Level": 23,
             "Ability": "Technician",
-            "HeldItem": "Oran Berry",
+            "HeldItem": "Rawst Berry",
             "Nature": "Docile (Neutral)",
             "IVs": 31,
             "Moves": [
@@ -13786,14 +13834,14 @@
             "Gender": "",
             "Level": 23,
             "Ability": "Envenom",
-            "HeldItem": "Oran Berry",
+            "HeldItem": "Quick Claw",
             "Nature": "Gentle (\u002BSpD / -Def)",
             "IVs": 31,
             "Moves": [
-              "Acid Armor",
-              "Acid Spray",
+              "Shadow Claw",
               "Poison Fang",
-              "Shadow Claw"
+              "Disable",
+              "Acid Armor"
             ]
           }
         ]
@@ -14210,7 +14258,7 @@
             "Form": "",
             "Gender": "",
             "Level": 23,
-            "Ability": "Regenerator",
+            "Ability": "Inner Focus",
             "HeldItem": "Black Belt",
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
@@ -14259,8 +14307,8 @@
             "Gender": "",
             "Level": 23,
             "Ability": "Technician",
-            "HeldItem": "Rawst Berry",
-            "Nature": "Rash (\u002BSpA / -SpD)",
+            "HeldItem": "Silk Scarf",
+            "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
             "Moves": [
               "Pursuit",
@@ -14438,15 +14486,15 @@
             "Form": "",
             "Gender": "\u2640 / Female",
             "Level": 30,
-            "Ability": "Magic Guard",
-            "HeldItem": "Apicot Berry",
+            "Ability": "Overcoat",
+            "HeldItem": "Red Card",
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Recover",
+              "Psyshock",
               "Charm",
-              "Protect",
-              "Psyshock"
+              "Water Pulse",
+              "Recover"
             ]
           },
           {
@@ -14461,7 +14509,7 @@
             "Moves": [
               "Heavy Slam",
               "Wake-Up Slap",
-              "Chip Away",
+              "Rock Slide",
               "Bulk Up"
             ]
           },
@@ -14475,9 +14523,9 @@
             "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Ally Switch",
-              "Secret Power",
               "Psybeam",
+              "Secret Power",
+              "Skill Swap",
               "Work Up"
             ]
           },
@@ -14493,7 +14541,7 @@
             "Moves": [
               "Revenge",
               "Assurance",
-              "Dig",
+              "Stomp",
               "Bulk Up"
             ]
           }
@@ -14689,7 +14737,7 @@
             "Gender": "",
             "Level": 30,
             "Ability": "Intimidate",
-            "HeldItem": "Rawst Berry",
+            "HeldItem": "",
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
             "Moves": [
@@ -14705,7 +14753,7 @@
             "Gender": "",
             "Level": 31,
             "Ability": "Rock Head",
-            "HeldItem": "",
+            "HeldItem": "Rawst Berry",
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
             "Moves": [
@@ -14751,7 +14799,7 @@
             "Form": "",
             "Gender": "",
             "Level": 31,
-            "Ability": "Intimidate",
+            "Ability": "Shed Skin",
             "HeldItem": "Rock Gem",
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
@@ -14783,7 +14831,7 @@
             "Form": "",
             "Gender": "",
             "Level": 31,
-            "Ability": "Blaze",
+            "Ability": "Hustle",
             "HeldItem": "Rock Gem",
             "Nature": "Docile (Neutral)",
             "IVs": 31,
@@ -14862,7 +14910,7 @@
             "Form": "",
             "Gender": "",
             "Level": 31,
-            "Ability": "Dry Skin",
+            "Ability": "Tinted Lens",
             "HeldItem": "Lum Berry",
             "Nature": "Gentle (\u002BSpD / -Def)",
             "IVs": 31,
@@ -14909,7 +14957,7 @@
             "Form": "",
             "Gender": "",
             "Level": 34,
-            "Ability": "Effect Spore",
+            "Ability": "Stench",
             "HeldItem": "King\u2019s Rock",
             "Nature": "Rash (\u002BSpA / -SpD)",
             "IVs": 31,
@@ -14925,7 +14973,7 @@
             "Form": "",
             "Gender": "",
             "Level": 33,
-            "Ability": "Volt Absorb",
+            "Ability": "Static",
             "HeldItem": "King\u2019s Rock",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
@@ -16471,7 +16519,7 @@
             "Moves": [
               "Avalanche",
               "Crater",
-              "Mist",
+              "Curse",
               "Slam"
             ]
           }
@@ -16502,7 +16550,7 @@
             "Moves": [
               "Slice",
               "Dragon Claw",
-              "Taunt",
+              "Night Slash",
               "Swords Dance"
             ]
           },
@@ -16591,14 +16639,14 @@
             "Gender": "",
             "Level": 45,
             "Ability": "Flame Body",
-            "HeldItem": "Charcoal",
+            "HeldItem": "Scope Lens",
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Heat Wave",
+              "Lava Plume",
               "Sludge Bomb",
               "Extrasensory",
-              "Extrasensory"
+              "Focus Energy"
             ]
           }
         ]
@@ -16684,14 +16732,14 @@
             "Form": "",
             "Gender": "",
             "Level": 46,
-            "Ability": "Sap Sipper",
+            "Ability": "Envenom",
             "HeldItem": "Quick Claw",
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
             "Moves": [
               "Mud Bomb",
-              "Sludge Bomb",
-              "Dragon Breath",
+              "Venoshock",
+              "Dragon Pulse",
               "Acid Armor"
             ]
           },
@@ -16700,7 +16748,7 @@
             "Form": "",
             "Gender": "",
             "Level": 44,
-            "Ability": "Compound Eyes",
+            "Ability": "Tinted Lens",
             "HeldItem": "Focus Band",
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
@@ -16763,7 +16811,7 @@
             "Form": "",
             "Gender": "",
             "Level": 46,
-            "Ability": "Unnerve",
+            "Ability": "Intimidate",
             "HeldItem": "Occa Berry",
             "Nature": "Hardy (Neutral)",
             "IVs": 31,
@@ -16779,7 +16827,7 @@
             "Form": "",
             "Gender": "",
             "Level": 46,
-            "Ability": "Analytic",
+            "Ability": "Sturdy",
             "HeldItem": "Chople Berry",
             "Nature": "Quirky (Neutral)",
             "IVs": 31,
@@ -16842,7 +16890,7 @@
             "Form": "",
             "Gender": "",
             "Level": 46,
-            "Ability": "Unburden",
+            "Ability": "Prankster",
             "HeldItem": "White Herb",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
@@ -16850,7 +16898,7 @@
               "Night Slash",
               "Covet",
               "Charm",
-              "Fake Out"
+              "Quash"
             ]
           },
           {
@@ -16864,7 +16912,7 @@
             "IVs": 31,
             "Moves": [
               "Play Rough",
-              "Bulldoze",
+              "Crater",
               "Crunch",
               "Retaliate"
             ]
@@ -16952,7 +17000,7 @@
             "Form": "",
             "Gender": "",
             "Level": 47,
-            "Ability": "Flash Fire",
+            "Ability": "Unnerve",
             "HeldItem": "Focus Sash",
             "Nature": "Modest (\u002BSpA / -Atk)",
             "IVs": 30,
@@ -17063,7 +17111,7 @@
             "Form": "",
             "Gender": "",
             "Level": 48,
-            "Ability": "Sand Force",
+            "Ability": "Rough Skin",
             "HeldItem": "Eviolite",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -17672,7 +17720,7 @@
             "Form": "",
             "Gender": "\u2642 / Male",
             "Level": 42,
-            "Ability": "Speed Boost",
+            "Ability": "Scrappy",
             "HeldItem": "Red Orb",
             "Nature": "Timid (\u002BSpe / -Atk)",
             "IVs": 31,
@@ -19447,7 +19495,7 @@
             "Form": "",
             "Gender": "",
             "Level": 56,
-            "Ability": "Dry Skin",
+            "Ability": "Mending",
             "HeldItem": "Float Stone",
             "Nature": "Impish (\u002BDef / -SpA)",
             "IVs": 31,
@@ -20633,7 +20681,7 @@
               "Flamethrower",
               "Crunch",
               "Morning Sun",
-              "Roar"
+              "Thunder Fang"
             ]
           },
           {
@@ -21177,7 +21225,7 @@
             "Form": "",
             "Gender": "",
             "Level": 68,
-            "Ability": "Technician",
+            "Ability": "Swarm",
             "HeldItem": "Blue Orb",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -22267,51 +22315,51 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Chikorita",
+            "Name": "Turtwig",
             "Form": "",
             "Gender": "",
             "Level": 16,
-            "Ability": "Overgrow",
+            "Ability": "Perseverance",
             "HeldItem": "Miracle Seed",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "Nature": "Quirky (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Synthesis",
-              "Magical Leaf",
-              "Reflect",
-              "Disarming Voice"
-            ]
-          },
-          {
-            "Name": "Cyndaquil",
-            "Form": "",
-            "Gender": "",
-            "Level": 16,
-            "Ability": "Blaze",
-            "HeldItem": "Charcoal",
-            "Nature": "Modest (\u002BSpA / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Swift",
-              "Flame Charge",
-              "Flame Burst",
-              "Smokescreen"
-            ]
-          },
-          {
-            "Name": "Totodile",
-            "Form": "",
-            "Gender": "",
-            "Level": 16,
-            "Ability": "Hustle",
-            "HeldItem": "Mystic Water",
-            "Nature": "Jolly (\u002BSpe / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Clamp",
+              "Razor Leaf",
               "Bite",
-              "Rage",
-              "Ice Fang"
+              "Stomp",
+              "Curse"
+            ]
+          },
+          {
+            "Name": "Chimchar",
+            "Form": "",
+            "Gender": "",
+            "Level": 16,
+            "Ability": "Versatile",
+            "HeldItem": "Charcoal",
+            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Incinerate",
+              "Mach Punch",
+              "Fury Swipes",
+              "Aerial Ace"
+            ]
+          },
+          {
+            "Name": "Piplup",
+            "Form": "",
+            "Gender": "",
+            "Level": 16,
+            "Ability": "Competitive",
+            "HeldItem": "Mystic Water",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Bubble Beam",
+              "Icy Wind",
+              "Aerial Assault",
+              "Feather Dance"
             ]
           }
         ]
@@ -25257,7 +25305,7 @@
             "Form": "",
             "Gender": "",
             "Level": 60,
-            "Ability": "Overcoat",
+            "Ability": "Shield Dust",
             "HeldItem": "Charti Berry",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -25431,7 +25479,7 @@
             "Form": "",
             "Gender": "",
             "Level": 62,
-            "Ability": "Technician",
+            "Ability": "Swarm",
             "HeldItem": "Charti Berry",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
@@ -25763,7 +25811,7 @@
             "Form": "",
             "Gender": "",
             "Level": 62,
-            "Ability": "Unburden",
+            "Ability": "Prankster",
             "HeldItem": "Fairy Gem",
             "Nature": "Rash (\u002BSpA / -SpD)",
             "IVs": 31,
