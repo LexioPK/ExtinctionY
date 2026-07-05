@@ -40,7 +40,7 @@
     "Location/Price": "From a male Scientist in the Fossil Lab after returning from Glittering Cave"
   },
   {
-    "Item": "TM94: Rock Smash",
+    "Item": "TM54: Shock Wave",
     "Area": "Ambrette Town",
     "Location/Price": "From a girl outside of the Aquarium"
   },
@@ -395,7 +395,7 @@
     "Location/Price": "Reward for beating Pok\u00e9mon Ranger Maurice (Repeatable)"
   },
   {
-    "Item": "TM92: Trick Room",
+    "Item": "TM92: Hyper Voice",
     "Area": "Coumarine City (Cliffside Section)",
     "Location/Price": "From a man in the Hillcrest Station"
   },
@@ -1305,7 +1305,7 @@
     "Location/Price": "5F, given by a Lady inside a bathroom (Hotel Richissime)"
   },
   {
-    "Item": "TM82: Dragon Tail",
+    "Item": "TM82: Breaking Swipe",
     "Area": "Lumiose City (Post Power Plant)",
     "Location/Price": "1F, from an Ace Trainer in the west wing (Lumiose Museum)"
   },
@@ -1465,7 +1465,7 @@
     "Location/Price": "2F, from a female Scientist"
   },
   {
-    "Item": "TM54: False Swipe",
+    "Item": "TM94: Rock Smash",
     "Area": "Lumiose City (Sycamore's Lab)",
     "Location/Price": "3F, from a female Scientist after encountering at least 20 Pok\u00e9mon in the Central Kalos Pok\u00e9dex"
   },
@@ -1805,7 +1805,7 @@
     "Location/Price": "Reward for beating Battle Girl Gerardine (Repeatable)"
   },
   {
-    "Item": "TM69: Rock Polish",
+    "Item": "TM69: Signal Beam",
     "Area": "Route 11",
     "Location/Price": "North of the Berry tree, via a dirt slope west of Brains & Brawn Frank & Sly"
   },
@@ -2150,7 +2150,7 @@
     "Location/Price": "Reward for beating Mysterious Sisters Rune & Rime (Repeatable)"
   },
   {
-    "Item": "TM32: Double Team",
+    "Item": "TM32: Drain Punch",
     "Area": "Route 15",
     "Location/Price": "Behind a cracked wall northeast from the eastern bridge (requires Rock Smash)"
   },
@@ -3350,7 +3350,7 @@
     "Location/Price": "$20,000.00"
   },
   {
-    "Item": "TM68: Giga Impact",
+    "Item": "TM68: Double-Edge",
     "Area": "Snowbelle City (Mart)",
     "Location/Price": "$20,000.00"
   },
