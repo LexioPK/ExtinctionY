@@ -1440,19 +1440,9 @@
     "Location/Price": "3F, from Professor Sycamore after showing him a complete National Pok\u00e9dex"
   },
   {
-    "Item": "Blastoisinite",
+    "Item": "Ability Capsules-2",
     "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "Given by Professor Sycamore if Totodile is chosen"
-  },
-  {
-    "Item": "Charizardite Y",
-    "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "Given by Professor Sycamore if Cyndaquil is chosen"
-  },
-  {
-    "Item": "Venusaurite",
-    "Area": "Lumiose City (Sycamore's Lab)",
-    "Location/Price": "Given by Professor Sycamore if Chikorita is chosen"
+    "Location/Price": "Given by Professor Sycamore after starter selection"
   },
   {
     "Item": "Ultra Ball",
