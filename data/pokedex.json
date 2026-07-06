@@ -546,6 +546,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -709,6 +713,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -913,7 +921,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -1431,10 +1439,6 @@
         "Move": "Rock Slide"
       },
       {
-        "Label": "TM82",
-        "Move": "Dragon Tail"
-      },
-      {
         "Label": "TM85",
         "Move": "Mudslide"
       },
@@ -1903,11 +1907,11 @@
     "AbilityH": "Cyclone",
     "BaseStats": {
       "HP": 40,
-      "Atk": 45,
+      "Atk": 35,
       "Def": 40,
-      "SpA": 45,
-      "SpD": 35,
-      "Spe": 56
+      "SpA": 61,
+      "SpD": 40,
+      "Spe": 55
     },
     "CatchRate": 255,
     "BaseXP": 27,
@@ -2000,11 +2004,11 @@
     "AbilityH": "Cyclone",
     "BaseStats": {
       "HP": 63,
-      "Atk": 55,
-      "Def": 55,
-      "SpA": 65,
+      "Atk": 45,
+      "Def": 60,
+      "SpA": 81,
       "SpD": 60,
-      "Spe": 76
+      "Spe": 75
     },
     "CatchRate": 255,
     "BaseXP": 64,
@@ -2099,9 +2103,9 @@
       "HP": 83,
       "Atk": 65,
       "Def": 80,
-      "SpA": 100,
+      "SpA": 111,
       "SpD": 80,
-      "Spe": 101
+      "Spe": 91
     },
     "CatchRate": 255,
     "BaseXP": 113,
@@ -2826,7 +2830,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM83",
@@ -2975,7 +2979,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM83",
@@ -4130,7 +4134,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -4472,7 +4476,7 @@
     "SpeciesIdx": 34,
     "Type1": "Poison",
     "Type2": "Ground",
-    "Ability1": "Versatile",
+    "Ability1": "Versatility",
     "Ability2": "Defiant",
     "AbilityH": "Sheer Force",
     "BaseStats": {
@@ -4677,7 +4681,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -7489,7 +7493,7 @@
     "Type2": "Normal",
     "Ability1": "Super Luck",
     "Ability2": "Technician",
-    "AbilityH": "Versatile",
+    "AbilityH": "Versatility",
     "BaseStats": {
       "HP": 65,
       "Atk": 105,
@@ -7657,10 +7661,10 @@
     "AbilityH": "Mending",
     "BaseStats": {
       "HP": 50,
-      "Atk": 52,
-      "Def": 48,
-      "SpA": 65,
-      "SpD": 50,
+      "Atk": 42,
+      "Def": 68,
+      "SpA": 70,
+      "SpD": 60,
       "Spe": 55
     },
     "CatchRate": 255,
@@ -7826,9 +7830,9 @@
     "AbilityH": "Mending",
     "BaseStats": {
       "HP": 80,
-      "Atk": 82,
-      "Def": 78,
-      "SpA": 100,
+      "Atk": 62,
+      "Def": 95,
+      "SpA": 103,
       "SpD": 80,
       "Spe": 90
     },
@@ -13866,7 +13870,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -15875,7 +15879,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -15888,6 +15892,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM92",
+        "Move": "Hyper Voice"
       },
       {
         "Label": "TM94",
@@ -16551,7 +16559,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -16943,7 +16951,7 @@
     "Type2": "Normal",
     "Ability1": "Inner Focus",
     "Ability2": "Scrappy",
-    "AbilityH": "Versatile",
+    "AbilityH": "Versatility",
     "BaseStats": {
       "HP": 105,
       "Atk": 105,
@@ -19225,7 +19233,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -19383,6 +19391,10 @@
       {
         "Label": "TM79",
         "Move": "Frost Breath"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -21598,7 +21610,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -21747,7 +21759,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -21964,7 +21976,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -22626,7 +22638,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM83",
@@ -23116,10 +23128,6 @@
         "Move": "Bulldoze"
       },
       {
-        "Label": "TM82",
-        "Move": "Dragon Tail"
-      },
-      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -23197,6 +23205,10 @@
         "Move": "Sunny Day"
       },
       {
+        "Label": "TM15",
+        "Move": "Hyper Beam"
+      },
+      {
         "Label": "TM17",
         "Move": "Protect"
       },
@@ -23269,6 +23281,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM92",
+        "Move": "Hyper Voice"
+      },
+      {
         "Label": "TM93",
         "Move": "Wild Charge"
       },
@@ -23320,6 +23336,10 @@
       {
         "Label": "TM11",
         "Move": "Sunny Day"
+      },
+      {
+        "Label": "TM15",
+        "Move": "Hyper Beam"
       },
       {
         "Label": "TM17",
@@ -23396,6 +23416,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM92",
+        "Move": "Hyper Voice"
       },
       {
         "Label": "TM93",
@@ -23591,6 +23615,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM92",
+        "Move": "Hyper Voice"
+      },
+      {
         "Label": "TM93",
         "Move": "Wild Charge"
       },
@@ -23738,6 +23766,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -23891,6 +23923,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -24083,7 +24119,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -24929,8 +24965,8 @@
     "Type1": "Bug",
     "Type2": "Flying",
     "Ability1": "Iron Fist",
-    "Ability2": "Aerilate",
-    "AbilityH": "Victory Star",
+    "Ability2": "Victory Star",
+    "AbilityH": "Aerilate",
     "BaseStats": {
       "HP": 55,
       "Atk": 115,
@@ -27152,7 +27188,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -29737,10 +29773,6 @@
         "Move": "Bulldoze"
       },
       {
-        "Label": "TM82",
-        "Move": "Dragon Tail"
-      },
-      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -30608,6 +30640,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM84",
         "Move": "Poison Jab"
       },
@@ -30649,7 +30685,7 @@
     "SpeciesIdx": 207,
     "Type1": "Ground",
     "Type2": "Flying",
-    "Ability1": "Versatile",
+    "Ability1": "Versatility",
     "Ability2": "Immunity",
     "AbilityH": "Dune Guard",
     "BaseStats": {
@@ -30791,6 +30827,10 @@
       {
         "Label": "TM81",
         "Move": "X-Scissor"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -30951,7 +30991,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -32038,7 +32078,7 @@
     "Type1": "Dark",
     "Type2": "Ice",
     "Ability1": "Infiltrator",
-    "Ability2": "Versatile",
+    "Ability2": "Versatility",
     "AbilityH": "Confiscate",
     "BaseStats": {
       "HP": 55,
@@ -34480,6 +34520,10 @@
         "Move": "Icy Wind"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -35442,7 +35486,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM83",
@@ -35818,7 +35862,7 @@
     "BaseStats": {
       "HP": 60,
       "Atk": 30,
-      "Def": 35,
+      "Def": 40,
       "SpA": 85,
       "SpD": 65,
       "Spe": 80
@@ -37659,7 +37703,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -37872,7 +37916,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -38402,6 +38446,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -38561,6 +38609,10 @@
       {
         "Label": "TM81",
         "Move": "X-Scissor"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -38757,7 +38809,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -42911,11 +42963,11 @@
     "Ability2": "Immunity",
     "AbilityH": "Effect Spore",
     "BaseStats": {
-      "HP": 60,
-      "Atk": 70,
-      "Def": 70,
-      "SpA": 60,
-      "SpD": 60,
+      "HP": 75,
+      "Atk": 65,
+      "Def": 80,
+      "SpA": 55,
+      "SpD": 75,
       "Spe": 35
     },
     "CatchRate": 255,
@@ -43008,11 +43060,11 @@
     "Ability2": "Poison Heal",
     "AbilityH": "Effect Spore",
     "BaseStats": {
-      "HP": 65,
+      "HP": 75,
       "Atk": 130,
       "Def": 80,
-      "SpA": 90,
-      "SpD": 60,
+      "SpA": 80,
+      "SpD": 75,
       "Spe": 75
     },
     "CatchRate": 255,
@@ -43301,6 +43353,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -43512,6 +43568,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -43733,6 +43793,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -46255,6 +46319,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -46485,7 +46553,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -49625,6 +49693,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -50093,7 +50165,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM85",
@@ -50515,6 +50587,10 @@
         "Move": "Round"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -50666,6 +50742,10 @@
       {
         "Label": "TM78",
         "Move": "Bulldoze"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -51039,7 +51119,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM83",
@@ -53197,7 +53277,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM85",
@@ -53574,6 +53654,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -53588,6 +53672,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM92",
+        "Move": "Hyper Voice"
       },
       {
         "Label": "TM94",
@@ -55626,7 +55714,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM83",
@@ -56282,6 +56370,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -56456,7 +56548,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -58274,7 +58366,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM85",
@@ -58511,7 +58603,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -59398,7 +59490,7 @@
     "Type2": "Fire",
     "Ability1": "Blaze",
     "Ability2": "Iron Fist",
-    "AbilityH": "Versatile",
+    "AbilityH": "Versatility",
     "BaseStats": {
       "HP": 44,
       "Atk": 59,
@@ -59575,7 +59667,7 @@
     "Type2": "Fighting",
     "Ability1": "Blaze",
     "Ability2": "Iron Fist",
-    "AbilityH": "Versatile",
+    "AbilityH": "Versatility",
     "BaseStats": {
       "HP": 64,
       "Atk": 84,
@@ -59784,7 +59876,7 @@
     "Type2": "Fighting",
     "Ability1": "Blaze",
     "Ability2": "Iron Fist",
-    "AbilityH": "Versatile",
+    "AbilityH": "Versatility",
     "BaseStats": {
       "HP": 76,
       "Atk": 108,
@@ -61978,7 +62070,7 @@
       "Atk": 125,
       "Def": 40,
       "SpA": 30,
-      "SpD": 30,
+      "SpD": 40,
       "Spe": 58
     },
     "CatchRate": 255,
@@ -62131,7 +62223,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -62171,8 +62263,8 @@
       "Atk": 165,
       "Def": 60,
       "SpA": 65,
-      "SpD": 50,
-      "Spe": 78
+      "SpD": 60,
+      "Spe": 68
     },
     "CatchRate": 255,
     "BaseXP": 91,
@@ -62336,7 +62428,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -62380,10 +62472,10 @@
     "Ability2": "Solid Rock",
     "AbilityH": "Soundproof",
     "BaseStats": {
-      "HP": 30,
-      "Atk": 42,
+      "HP": 40,
+      "Atk": 52,
       "Def": 118,
-      "SpA": 42,
+      "SpA": 32,
       "SpD": 88,
       "Spe": 30
     },
@@ -63377,6 +63469,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM92",
+        "Move": "Hyper Voice"
       },
       {
         "Label": "TM93",
@@ -67065,6 +67161,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -67240,6 +67340,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -67424,7 +67528,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -69832,7 +69936,7 @@
     "Type1": "Dark",
     "Type2": "Ice",
     "Ability1": "Infiltrator",
-    "Ability2": "Versatile",
+    "Ability2": "Versatility",
     "AbilityH": "Confiscate",
     "BaseStats": {
       "HP": 70,
@@ -70321,10 +70425,6 @@
         "Move": "Rock Slide"
       },
       {
-        "Label": "TM82",
-        "Move": "Dragon Tail"
-      },
-      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -70335,6 +70435,10 @@
       {
         "Label": "TM90",
         "Move": "Substitute"
+      },
+      {
+        "Label": "TM92",
+        "Move": "Hyper Voice"
       },
       {
         "Label": "TM94",
@@ -70548,10 +70652,6 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
-      },
-      {
-        "Label": "TM82",
-        "Move": "Dragon Tail"
       },
       {
         "Label": "TM84",
@@ -71427,6 +71527,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM92",
+        "Move": "Hyper Voice"
+      },
+      {
         "Label": "TM100",
         "Move": "Air Slash"
       },
@@ -71730,7 +71834,7 @@
     "SpeciesIdx": 472,
     "Type1": "Ground",
     "Type2": "Flying",
-    "Ability1": "Versatile",
+    "Ability1": "Versatility",
     "Ability2": "Poison Heal",
     "AbilityH": "Dune Guard",
     "BaseStats": {
@@ -71880,6 +71984,10 @@
       {
         "Label": "TM81",
         "Move": "X-Scissor"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -73482,7 +73590,7 @@
     "Type2": "Fairy",
     "Ability1": "Levitate",
     "Ability2": "Telepathy",
-    "AbilityH": "Versatile",
+    "AbilityH": "Versatility",
     "BaseStats": {
       "HP": 75,
       "Atk": 125,
@@ -73866,7 +73974,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -74099,7 +74207,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -74646,7 +74754,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -75450,6 +75558,10 @@
         "Move": "Substitute"
       },
       {
+        "Label": "TM92",
+        "Move": "Hyper Voice"
+      },
+      {
         "Label": "TM96",
         "Move": "Nature Power"
       },
@@ -75812,7 +75924,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM83",
@@ -76234,7 +76346,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -76367,7 +76479,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -76504,7 +76616,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -77511,10 +77623,6 @@
       {
         "Label": "TM81",
         "Move": "X-Scissor"
-      },
-      {
-        "Label": "TM82",
-        "Move": "Dragon Tail"
       },
       {
         "Label": "TM86",
@@ -84366,6 +84474,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -84564,7 +84676,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -85578,7 +85690,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -85787,7 +85899,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -86677,7 +86789,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -86842,7 +86954,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -91397,7 +91509,7 @@
     "Type1": "Electric",
     "Type2": "Water",
     "Ability1": "Levitate",
-    "Ability2": "Versatile",
+    "Ability2": "Versatility",
     "AbilityH": "Swift Swim",
     "BaseStats": {
       "HP": 35,
@@ -91454,7 +91566,7 @@
     "Type1": "Electric",
     "Type2": "Water",
     "Ability1": "Levitate",
-    "Ability2": "Versatile",
+    "Ability2": "Versatility",
     "AbilityH": "Swift Swim",
     "BaseStats": {
       "HP": 65,
@@ -91571,7 +91683,7 @@
     "Type1": "Electric",
     "Type2": "Water",
     "Ability1": "Levitate",
-    "Ability2": "Versatile",
+    "Ability2": "Versatility",
     "AbilityH": "Swift Swim",
     "BaseStats": {
       "HP": 90,
@@ -91723,7 +91835,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -92589,7 +92701,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -92758,7 +92870,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -92951,7 +93063,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -94384,7 +94496,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -95954,7 +96066,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -96220,7 +96332,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -96377,7 +96489,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -96574,7 +96686,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -97942,7 +98054,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -98139,7 +98251,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -98513,7 +98625,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -103897,9 +104009,9 @@
     "AbilityH": "Cute Charm",
     "BaseStats": {
       "HP": 78,
-      "Atk": 52,
-      "Def": 60,
-      "SpA": 63,
+      "Atk": 42,
+      "Def": 65,
+      "SpA": 73,
       "SpD": 65,
       "Spe": 23
     },
@@ -104018,10 +104130,10 @@
     "AbilityH": "Envenom",
     "BaseStats": {
       "HP": 111,
-      "Atk": 72,
-      "Def": 72,
-      "SpA": 99,
-      "SpD": 89,
+      "Atk": 62,
+      "Def": 82,
+      "SpA": 109,
+      "SpD": 99,
       "Spe": 29
     },
     "CatchRate": 255,
@@ -104164,14 +104276,14 @@
     "Type2": "Fairy",
     "Ability1": "Unburden",
     "Ability2": "Sweet Veil",
-    "AbilityH": "Soundproof",
+    "AbilityH": "Gooey",
     "BaseStats": {
-      "HP": 62,
-      "Atk": 48,
+      "HP": 72,
+      "Atk": 68,
       "Def": 66,
       "SpA": 59,
       "SpD": 57,
-      "Spe": 49
+      "Spe": 39
     },
     "CatchRate": 255,
     "BaseXP": 36,
@@ -104273,14 +104385,14 @@
     "Type2": "Fairy",
     "Ability1": "Unburden",
     "Ability2": "Sweet Veil",
-    "AbilityH": "Soundproof",
+    "AbilityH": "Gooey",
     "BaseStats": {
-      "HP": 92,
-      "Atk": 80,
-      "Def": 86,
-      "SpA": 85,
+      "HP": 102,
+      "Atk": 95,
+      "Def": 91,
+      "SpA": 80,
       "SpD": 75,
-      "Spe": 72
+      "Spe": 52
     },
     "CatchRate": 255,
     "BaseXP": 88,
@@ -105330,7 +105442,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -105777,7 +105889,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -105962,7 +106074,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -106131,7 +106243,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -106288,7 +106400,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -106465,7 +106577,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -106662,7 +106774,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -107669,7 +107781,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM83",
@@ -108856,6 +108968,10 @@
         "Move": "X-Scissor"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -109019,6 +109135,10 @@
       {
         "Label": "TM81",
         "Move": "X-Scissor"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -109347,6 +109467,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -109513,7 +109637,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM85",
@@ -111255,7 +111379,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -113196,7 +113320,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -113397,7 +113521,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -116042,7 +116166,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -116408,7 +116532,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -116625,7 +116749,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -117548,6 +117672,10 @@
         "Move": "Retaliate"
       },
       {
+        "Label": "TM69",
+        "Move": "Signal Beam"
+      },
+      {
         "Label": "TM77",
         "Move": "Zen Headbutt"
       },
@@ -117943,7 +118071,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -118365,7 +118493,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -118896,9 +119024,9 @@
     "SpeciesIdx": 448,
     "Type1": "Fighting",
     "Type2": "Steel",
-    "Ability1": "Versatile",
-    "Ability2": "Versatile",
-    "AbilityH": "Versatile",
+    "Ability1": "Versatility",
+    "Ability2": "Versatility",
+    "AbilityH": "Versatility",
     "BaseStats": {
       "HP": 70,
       "Atk": 150,
@@ -119559,10 +119687,6 @@
         "Move": "Rock Slide"
       },
       {
-        "Label": "TM82",
-        "Move": "Dragon Tail"
-      },
-      {
         "Label": "TM85",
         "Move": "Mudslide"
       },
@@ -119978,7 +120102,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -121052,7 +121176,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM84",
@@ -121274,6 +121398,10 @@
       {
         "Label": "TM78",
         "Move": "Bulldoze"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -121499,6 +121627,10 @@
       {
         "Label": "TM78",
         "Move": "Bulldoze"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -122714,7 +122846,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -122922,7 +123054,7 @@
       "HP": 83,
       "Atk": 85,
       "Def": 90,
-      "SpA": 140,
+      "SpA": 141,
       "SpD": 90,
       "Spe": 121
     },
@@ -123338,7 +123470,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -124210,6 +124342,10 @@
         "Move": "Bulldoze"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -124545,7 +124681,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -125743,7 +125879,7 @@
       },
       {
         "Label": "TM82",
-        "Move": "Dragon Tail"
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",

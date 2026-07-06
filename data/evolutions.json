@@ -1526,7 +1526,7 @@
   },
   "Hitmontop": {
     "EvolvesFrom": "Tyrogue",
-    "FromMethod": "Level Up with Move: Drill Run",
+    "FromMethod": "Level Up with Move: Submission",
     "EvolvesInto": {}
   },
   "Tyrogue": {
@@ -1535,7 +1535,7 @@
     "EvolvesInto": {
       "Hitmonchan": "Level Up with Move: Mega Punch",
       "Hitmonlee": "Level Up with Move: Jump Kick",
-      "Hitmontop": "Level Up with Move: Drill Run"
+      "Hitmontop": "Level Up with Move: Submission"
     }
   },
   "Smoochum": {
@@ -1827,14 +1827,14 @@
   },
   "Breloom": {
     "EvolvesFrom": "Shroomish",
-    "FromMethod": "Level Up: 29",
+    "FromMethod": "Level Up: 30",
     "EvolvesInto": {}
   },
   "Shroomish": {
     "EvolvesFrom": null,
     "FromMethod": null,
     "EvolvesInto": {
-      "Breloom": "Level Up: 29"
+      "Breloom": "Level Up: 30"
     }
   },
   "Vigoroth": {

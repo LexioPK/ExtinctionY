@@ -180,7 +180,7 @@
             "Form": "",
             "Gender": "",
             "Level": 38,
-            "Ability": "Versatile",
+            "Ability": "Versatility",
             "HeldItem": "Metal Coat",
             "Nature": "Serious (Neutral)",
             "IVs": 31,
@@ -5168,7 +5168,7 @@
             "Moves": [
               "Flame Wheel",
               "Drill Run",
-              "Rolling Kick",
+              "Triple Kick",
               "Rapid Spin"
             ]
           }
@@ -7283,7 +7283,7 @@
             "Form": "",
             "Gender": "",
             "Level": 83,
-            "Ability": "Versatile",
+            "Ability": "Versatility",
             "HeldItem": "Muscle Band",
             "Nature": "Bashful (Neutral)",
             "IVs": 31,
@@ -8738,7 +8738,7 @@
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Rolling Kick",
+              "Triple Kick",
               "Rapid Spin",
               "Hypnosis",
               "Teeter Dance"
@@ -9544,7 +9544,7 @@
             "Gender": "",
             "Level": 17,
             "Ability": "Hustle",
-            "HeldItem": "Oran Berry",
+            "HeldItem": "Rawst Berry",
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
             "Moves": [
@@ -11029,7 +11029,7 @@
             "Form": "",
             "Gender": "",
             "Level": 40,
-            "Ability": "Versatile",
+            "Ability": "Versatility",
             "HeldItem": "Razor Claw",
             "Nature": "Serious (Neutral)",
             "IVs": 31,
@@ -11478,7 +11478,7 @@
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Arena Trap",
+            "Ability": "Sand Force",
             "HeldItem": "Oran Berry",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -11531,7 +11531,7 @@
             "IVs": 31,
             "Moves": [
               "Supersonic",
-              "Round",
+              "Infestation",
               "Confusion",
               "Poison Powder"
             ]
@@ -19441,7 +19441,7 @@
             "Form": "",
             "Gender": "",
             "Level": 74,
-            "Ability": "Versatile",
+            "Ability": "Versatility",
             "HeldItem": "Dark Gem",
             "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
@@ -21627,7 +21627,7 @@
             "Form": "",
             "Gender": "",
             "Level": 80,
-            "Ability": "Aerilate",
+            "Ability": "Victory Star",
             "HeldItem": "Life Orb",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -22335,7 +22335,7 @@
             "Form": "",
             "Gender": "",
             "Level": 16,
-            "Ability": "Versatile",
+            "Ability": "Versatility",
             "HeldItem": "Charcoal",
             "Nature": "Naughty (\u002BAtk / -SpD)",
             "IVs": 31,
@@ -27733,7 +27733,7 @@
             "Form": "",
             "Gender": "",
             "Level": 63,
-            "Ability": "Aerilate",
+            "Ability": "Victory Star",
             "HeldItem": "Sky Plate",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -29538,7 +29538,7 @@
             "Form": "",
             "Gender": "",
             "Level": 91,
-            "Ability": "Versatile",
+            "Ability": "Versatility",
             "HeldItem": "Life Orb",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
