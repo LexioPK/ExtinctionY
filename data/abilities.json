@@ -1763,8 +1763,8 @@
     "desc": "This Pokemon's contact moves ignore the target's protection, except Max Guard.",
     "shortDesc": "This Pokemon's contact moves ignore the target's protection, except Max Guard."
   },
-  "versatile": {
-    "name": "Versatile",
+  "versatility": {
+    "name": "Versatility",
     "num": 91,
     "desc": "This Pokemon's moves that do not match any of its types (STAB) are boosted by 1.25x damage.",
     "shortDesc": "Boosts this Pokemon's non-STAB moves by 1.25x"
