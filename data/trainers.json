@@ -1448,7 +1448,7 @@
             "Form": "",
             "Gender": "",
             "Level": 23,
-            "Ability": "Analytic",
+            "Ability": "Regenerator",
             "HeldItem": "Ganlon Berry",
             "Nature": "Serious (Neutral)",
             "IVs": 31,
@@ -8306,13 +8306,124 @@
         ]
       },
       {
+        "TrainerName": "Trevor \u0026 Tierno",
+        "TrainerID": 438,
+        "TrainerClass": "Pok\u00E9mon Trainer",
+        "TrainerClassIndex": 56,
+        "BattleType": "Double",
+        "Route": "Route 7",
+        "EncounterIndex": 5,
+        "Required": "Mandatory",
+        "Notes": "",
+        "IsTagBattle": true,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Larvesta",
+            "Form": "",
+            "Gender": "",
+            "Level": 21,
+            "Ability": "Flash Fire",
+            "HeldItem": "Wise Glasses",
+            "Nature": "Quiet (\u002BSpA / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Flame Burst",
+              "Struggle Bug",
+              "Smokescreen",
+              "Rage Powder"
+            ]
+          },
+          {
+            "Name": "Lombre",
+            "Form": "",
+            "Gender": "",
+            "Level": 22,
+            "Ability": "Torrent",
+            "HeldItem": "Mystic Water",
+            "Nature": "Impish (\u002BDef / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Bubble Beam",
+              "Magical Leaf",
+              "Secret Power",
+              "Protect"
+            ]
+          },
+          {
+            "Name": "Spinda",
+            "Form": "",
+            "Gender": "",
+            "Level": 21,
+            "Ability": "Cyclone",
+            "HeldItem": "Sitrus Berry",
+            "Nature": "Brave (\u002BAtk / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Low Sweep",
+              "Rapid Spin",
+              "Thief",
+              "Teeter Dance"
+            ]
+          },
+          {
+            "Name": "Elgyem",
+            "Form": "",
+            "Gender": "",
+            "Level": 21,
+            "Ability": "Analytic",
+            "HeldItem": "Mind Plate",
+            "Nature": "Modest (\u002BSpA / -Atk)",
+            "IVs": 30,
+            "Moves": [
+              "Shock Wave",
+              "Psybeam",
+              "Hidden Power",
+              "Recover"
+            ]
+          },
+          {
+            "Name": "Luxio",
+            "Form": "",
+            "Gender": "",
+            "Level": 21,
+            "Ability": "Intimidate",
+            "HeldItem": "Lum Berry",
+            "Nature": "Adamant (\u002BAtk / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Bite",
+              "Fire Fang",
+              "Thunder Fang",
+              "Protect"
+            ]
+          },
+          {
+            "Name": "Eevee",
+            "Form": "",
+            "Gender": "",
+            "Level": 22,
+            "Ability": "Protean",
+            "HeldItem": "Expert Belt",
+            "Nature": "Hardy (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Bite",
+              "Aurora Beam",
+              "Magical Leaf",
+              "Covet"
+            ]
+          }
+        ]
+      },
+      {
         "TrainerName": "Serena",
         "TrainerID": 596,
         "TrainerClass": "Pok\u00E9mon Trainer",
         "TrainerClassIndex": 104,
         "BattleType": "Double",
         "Route": "Route 7",
-        "EncounterIndex": 5,
+        "EncounterIndex": 7,
         "Required": "DoublesPartner",
         "Notes": "If Chespin Chosen",
         "IsTagBattle": false,
@@ -8375,7 +8486,7 @@
         "TrainerClassIndex": 104,
         "BattleType": "Double",
         "Route": "Route 7",
-        "EncounterIndex": 6,
+        "EncounterIndex": 8,
         "Required": "DoublesPartner",
         "Notes": "If Fennekin Chosen",
         "IsTagBattle": false,
@@ -8438,7 +8549,7 @@
         "TrainerClassIndex": 104,
         "BattleType": "Double",
         "Route": "Route 7",
-        "EncounterIndex": 7,
+        "EncounterIndex": 9,
         "Required": "DoublesPartner",
         "Notes": "If Froakie Chosen",
         "IsTagBattle": false,
@@ -8501,7 +8612,7 @@
         "TrainerClassIndex": 103,
         "BattleType": "Double",
         "Route": "Route 7",
-        "EncounterIndex": 8,
+        "EncounterIndex": 10,
         "Required": "DoublesPartner",
         "Notes": "If Chespin Chosen",
         "IsTagBattle": false,
@@ -8564,7 +8675,7 @@
         "TrainerClassIndex": 103,
         "BattleType": "Double",
         "Route": "Route 7",
-        "EncounterIndex": 9,
+        "EncounterIndex": 11,
         "Required": "DoublesPartner",
         "Notes": "If Fennekin Chosen",
         "IsTagBattle": false,
@@ -8627,7 +8738,7 @@
         "TrainerClassIndex": 103,
         "BattleType": "Double",
         "Route": "Route 7",
-        "EncounterIndex": 10,
+        "EncounterIndex": 12,
         "Required": "DoublesPartner",
         "Notes": "If Froakie Chosen",
         "IsTagBattle": false,
@@ -8679,117 +8790,6 @@
               "Razor Leaf",
               "Karate Chop",
               "Pin Missile"
-            ]
-          }
-        ]
-      },
-      {
-        "TrainerName": "Trevor \u0026 Tierno",
-        "TrainerID": 438,
-        "TrainerClass": "Pok\u00E9mon Trainer",
-        "TrainerClassIndex": 56,
-        "BattleType": "Double",
-        "Route": "Route 7",
-        "EncounterIndex": 11,
-        "Required": "Mandatory",
-        "Notes": "",
-        "IsTagBattle": true,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Larvesta",
-            "Form": "",
-            "Gender": "",
-            "Level": 21,
-            "Ability": "Flash Fire",
-            "HeldItem": "Wise Glasses",
-            "Nature": "Quiet (\u002BSpA / -Spe)",
-            "IVs": 31,
-            "Moves": [
-              "Flame Burst",
-              "Struggle Bug",
-              "Smokescreen",
-              "Rage Powder"
-            ]
-          },
-          {
-            "Name": "Lombre",
-            "Form": "",
-            "Gender": "",
-            "Level": 22,
-            "Ability": "Torrent",
-            "HeldItem": "Mystic Water",
-            "Nature": "Impish (\u002BDef / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Bubble Beam",
-              "Magical Leaf",
-              "Secret Power",
-              "Protect"
-            ]
-          },
-          {
-            "Name": "Spinda",
-            "Form": "",
-            "Gender": "",
-            "Level": 21,
-            "Ability": "Cyclone",
-            "HeldItem": "Sitrus Berry",
-            "Nature": "Brave (\u002BAtk / -Spe)",
-            "IVs": 31,
-            "Moves": [
-              "Triple Kick",
-              "Rapid Spin",
-              "Hypnosis",
-              "Teeter Dance"
-            ]
-          },
-          {
-            "Name": "Elgyem",
-            "Form": "",
-            "Gender": "",
-            "Level": 21,
-            "Ability": "Analytic",
-            "HeldItem": "Mind Plate",
-            "Nature": "Modest (\u002BSpA / -Atk)",
-            "IVs": 30,
-            "Moves": [
-              "Shock Wave",
-              "Psybeam",
-              "Hidden Power",
-              "Recover"
-            ]
-          },
-          {
-            "Name": "Luxio",
-            "Form": "",
-            "Gender": "",
-            "Level": 21,
-            "Ability": "Intimidate",
-            "HeldItem": "Lum Berry",
-            "Nature": "Adamant (\u002BAtk / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Bite",
-              "Fire Fang",
-              "Thunder Fang",
-              "Protect"
-            ]
-          },
-          {
-            "Name": "Eevee",
-            "Form": "",
-            "Gender": "",
-            "Level": 22,
-            "Ability": "Protean",
-            "HeldItem": "Expert Belt",
-            "Nature": "Hardy (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Bite",
-              "Aurora Beam",
-              "Magical Leaf",
-              "Covet"
             ]
           }
         ]
@@ -11478,7 +11478,7 @@
             "Form": "",
             "Gender": "",
             "Level": 14,
-            "Ability": "Sand Force",
+            "Ability": "Wonder Skin",
             "HeldItem": "Oran Berry",
             "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
@@ -12101,7 +12101,7 @@
             "Gender": "",
             "Level": 26,
             "Ability": "Solid Rock",
-            "HeldItem": "Berry Juice",
+            "HeldItem": "Rindo Berry",
             "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
             "Moves": [
@@ -12148,7 +12148,7 @@
             "Gender": "",
             "Level": 25,
             "Ability": "Battle Armor",
-            "HeldItem": "Berry Juice",
+            "HeldItem": "Muscle Band",
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
             "Moves": [
@@ -12164,7 +12164,7 @@
             "Gender": "",
             "Level": 26,
             "Ability": "Storm Drain",
-            "HeldItem": "Berry Juice",
+            "HeldItem": "Shell Bell",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
             "Moves": [
@@ -12227,7 +12227,7 @@
             "Gender": "",
             "Level": 26,
             "Ability": "Strong Jaw",
-            "HeldItem": "Berry Juice",
+            "HeldItem": "Jaboca Berry",
             "Nature": "Impish (\u002BDef / -SpA)",
             "IVs": 31,
             "Moves": [
@@ -12243,7 +12243,7 @@
             "Gender": "",
             "Level": 26,
             "Ability": "Refrigerate",
-            "HeldItem": "Berry Juice",
+            "HeldItem": "Rowap Berry",
             "Nature": "Hardy (Neutral)",
             "IVs": 31,
             "Moves": [
@@ -12275,7 +12275,7 @@
             "Gender": "",
             "Level": 26,
             "Ability": "Solid Rock",
-            "HeldItem": "Rawst Berry",
+            "HeldItem": "Lum Berry",
             "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
             "Moves": [
@@ -12354,7 +12354,7 @@
             "Gender": "",
             "Level": 26,
             "Ability": "Levitate",
-            "HeldItem": "Berry Juice",
+            "HeldItem": "Wise Glasses",
             "Nature": "Quirky (Neutral)",
             "IVs": 31,
             "Moves": [
@@ -12677,7 +12677,7 @@
             "Form": "",
             "Gender": "",
             "Level": 86,
-            "Ability": "Lightning Rod",
+            "Ability": "Aegis",
             "HeldItem": "Thick Club",
             "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
@@ -14242,7 +14242,7 @@
             "Form": "",
             "Gender": "",
             "Level": 23,
-            "Ability": "Lightning Rod",
+            "Ability": "Aegis",
             "HeldItem": "Lum Berry",
             "Nature": "Bashful (Neutral)",
             "IVs": 31,
@@ -14377,13 +14377,13 @@
             "Gender": "",
             "Level": 29,
             "Ability": "Poison Point",
-            "HeldItem": "Berry Juice",
+            "HeldItem": "Poison Barb",
             "Nature": "Rash (\u002BSpA / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Sludge",
+              "Venoshock",
               "Mega Drain",
-              "Sleep Powder",
+              "Poison Powder",
               "Leech Seed"
             ]
           },
@@ -14393,7 +14393,7 @@
             "Gender": "",
             "Level": 30,
             "Ability": "Tinted Lens",
-            "HeldItem": "Berry Juice",
+            "HeldItem": "Wide Lens",
             "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
@@ -14720,7 +14720,7 @@
             "Form": "",
             "Gender": "",
             "Level": 30,
-            "Ability": "Sturdy",
+            "Ability": "Aegis",
             "HeldItem": "Rocky Helmet",
             "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
@@ -18091,7 +18091,7 @@
             "Form": "",
             "Gender": "",
             "Level": 94,
-            "Ability": "Sturdy",
+            "Ability": "Aegis",
             "HeldItem": "Liechi Berry",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -19046,7 +19046,7 @@
             "Form": "",
             "Gender": "",
             "Level": 72,
-            "Ability": "Sturdy",
+            "Ability": "Aegis",
             "HeldItem": "Quick Claw",
             "Nature": "Relaxed (\u002BDef / -Spe)",
             "IVs": 31,
@@ -22319,7 +22319,7 @@
             "Form": "",
             "Gender": "",
             "Level": 16,
-            "Ability": "Perseverance",
+            "Ability": "Aegis",
             "HeldItem": "Miracle Seed",
             "Nature": "Quirky (Neutral)",
             "IVs": 31,
@@ -23133,7 +23133,7 @@
             "Form": "",
             "Gender": "",
             "Level": 75,
-            "Ability": "Sand Force",
+            "Ability": "Hyper Aggresion",
             "HeldItem": "Focus Sash",
             "Nature": "Impish (\u002BDef / -SpA)",
             "IVs": 31,

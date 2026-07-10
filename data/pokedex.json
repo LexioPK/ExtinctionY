@@ -3792,11 +3792,11 @@
     "Ability2": "Rivalry",
     "AbilityH": "Hustle",
     "BaseStats": {
-      "HP": 70,
-      "Atk": 55,
+      "HP": 75,
+      "Atk": 50,
       "Def": 67,
-      "SpA": 72,
-      "SpD": 55,
+      "SpA": 77,
+      "SpD": 60,
       "Spe": 56
     },
     "CatchRate": 255,
@@ -4336,10 +4336,10 @@
     "AbilityH": "Hustle",
     "BaseStats": {
       "HP": 61,
-      "Atk": 72,
-      "Def": 67,
+      "Atk": 82,
+      "Def": 57,
       "SpA": 55,
-      "SpD": 55,
+      "SpD": 65,
       "Spe": 65
     },
     "CatchRate": 255,
@@ -7060,9 +7060,9 @@
     "SpeciesIdx": 50,
     "Type1": "Ground",
     "Type2": "Ground",
-    "Ability1": "Sand Force",
+    "Ability1": "Wonder Skin",
     "Ability2": "Arena Trap",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Force",
     "BaseStats": {
       "HP": 20,
       "Atk": 65,
@@ -7193,9 +7193,9 @@
     "SpeciesIdx": 51,
     "Type1": "Ground",
     "Type2": "Ground",
-    "Ability1": "Sand Force",
+    "Ability1": "Hyper Aggresion",
     "Ability2": "Arena Trap",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Force",
     "BaseStats": {
       "HP": 40,
       "Atk": 105,
@@ -12300,7 +12300,7 @@
     "Type2": "Ground",
     "Ability1": "Big Pecks",
     "Ability2": "Quick Feet",
-    "AbilityH": "Parental Bond",
+    "AbilityH": "Hyper Aggresion",
     "BaseStats": {
       "HP": 35,
       "Atk": 85,
@@ -12389,7 +12389,7 @@
     "Type2": "Ground",
     "Ability1": "Cyclone",
     "Ability2": "Speed Boost",
-    "AbilityH": "Parental Bond",
+    "AbilityH": "Hyper Aggresion",
     "BaseStats": {
       "HP": 60,
       "Atk": 110,
@@ -13759,7 +13759,7 @@
     "Type2": "Ground",
     "Ability1": "Solid Rock",
     "Ability2": "Sturdy",
-    "AbilityH": "Shield Dust",
+    "AbilityH": "Sand Force",
     "BaseStats": {
       "HP": 65,
       "Atk": 75,
@@ -15083,7 +15083,7 @@
     "Type1": "Ground",
     "Type2": "Normal",
     "Ability1": "Rock Head",
-    "Ability2": "Lightning Rod",
+    "Ability2": "Aegis",
     "AbilityH": "Battle Armor",
     "BaseStats": {
       "HP": 50,
@@ -15244,7 +15244,7 @@
     "Type1": "Ground",
     "Type2": "Ghost",
     "Ability1": "Rock Head",
-    "Ability2": "Lightning Rod",
+    "Ability2": "Aegis",
     "AbilityH": "Battle Armor",
     "BaseStats": {
       "HP": 75,
@@ -17614,9 +17614,9 @@
     "SpeciesIdx": 120,
     "Type1": "Water",
     "Type2": "Water",
-    "Ability1": "Regenerator",
+    "Ability1": "Aegis",
     "Ability2": "Natural Cure",
-    "AbilityH": "Analytic",
+    "AbilityH": "Regenerator",
     "BaseStats": {
       "HP": 30,
       "Atk": 45,
@@ -17763,9 +17763,9 @@
     "SpeciesIdx": 121,
     "Type1": "Water",
     "Type2": "Psychic",
-    "Ability1": "Regenerator",
+    "Ability1": "Aegis",
     "Ability2": "Victory Star",
-    "AbilityH": "Analytic",
+    "AbilityH": "Regenerator",
     "BaseStats": {
       "HP": 60,
       "Atk": 75,
@@ -30876,7 +30876,7 @@
     "Type2": "Ground",
     "Ability1": "Filter",
     "Ability2": "Sheer Force",
-    "AbilityH": "Shield Dust",
+    "AbilityH": "Sand Force",
     "BaseStats": {
       "HP": 75,
       "Atk": 85,
@@ -46062,7 +46062,7 @@
     "SpeciesIdx": 304,
     "Type1": "Steel",
     "Type2": "Rock",
-    "Ability1": "Sturdy",
+    "Ability1": "Aegis",
     "Ability2": "Rock Head",
     "AbilityH": "Iron Barbs",
     "BaseStats": {
@@ -46199,7 +46199,7 @@
     "SpeciesIdx": 305,
     "Type1": "Steel",
     "Type2": "Rock",
-    "Ability1": "Sturdy",
+    "Ability1": "Aegis",
     "Ability2": "Rock Head",
     "AbilityH": "Iron Barbs",
     "BaseStats": {
@@ -46352,7 +46352,7 @@
     "SpeciesIdx": 306,
     "Type1": "Steel",
     "Type2": "Dragon",
-    "Ability1": "Sturdy",
+    "Ability1": "Aegis",
     "Ability2": "Rock Head",
     "AbilityH": "Iron Barbs",
     "BaseStats": {
@@ -54974,7 +54974,7 @@
     "Type2": "Rock",
     "Ability1": "Levitate",
     "Ability2": "Rock Head",
-    "AbilityH": "Glacial Guard",
+    "AbilityH": "Aegis",
     "BaseStats": {
       "HP": 90,
       "Atk": 110,
@@ -57367,7 +57367,7 @@
     "Type2": "Steel",
     "Ability1": "Filter",
     "Ability2": "Clear Body",
-    "AbilityH": "Soundproof",
+    "AbilityH": "Aegis",
     "BaseStats": {
       "HP": 80,
       "Atk": 75,
@@ -59059,7 +59059,7 @@
     "Type2": "Grass",
     "Ability1": "Overgrow",
     "Ability2": "Shell Armor",
-    "AbilityH": "Perseverance",
+    "AbilityH": "Aegis",
     "BaseStats": {
       "HP": 55,
       "Atk": 68,
@@ -59184,7 +59184,7 @@
     "Type2": "Ground",
     "Ability1": "Overgrow",
     "Ability2": "Shell Armor",
-    "AbilityH": "Perseverance",
+    "AbilityH": "Aegis",
     "BaseStats": {
       "HP": 75,
       "Atk": 94,
@@ -59317,7 +59317,7 @@
     "Type2": "Ground",
     "Ability1": "Overgrow",
     "Ability2": "Shell Armor",
-    "AbilityH": "Perseverance",
+    "AbilityH": "Aegis",
     "BaseStats": {
       "HP": 100,
       "Atk": 114,
@@ -62832,9 +62832,9 @@
     "BaseStats": {
       "HP": 50,
       "Atk": 35,
-      "Def": 50,
-      "SpA": 35,
-      "SpD": 50,
+      "Def": 60,
+      "SpA": 55,
+      "SpD": 60,
       "Spe": 36
     },
     "CatchRate": 255,
@@ -63154,11 +63154,11 @@
     "AbilityH": "Swarm",
     "BaseStats": {
       "HP": 56,
-      "Atk": 45,
-      "Def": 42,
-      "SpA": 45,
-      "SpD": 42,
-      "Spe": 76
+      "Atk": 55,
+      "Def": 62,
+      "SpA": 55,
+      "SpD": 62,
+      "Spe": 96
     },
     "CatchRate": 255,
     "BaseXP": 26,
@@ -63774,12 +63774,12 @@
     "Ability2": "Harvest",
     "AbilityH": "Natural Cure",
     "BaseStats": {
-      "HP": 45,
+      "HP": 60,
       "Atk": 35,
-      "Def": 45,
+      "Def": 55,
       "SpA": 69,
       "SpD": 69,
-      "Spe": 35
+      "Spe": 65
     },
     "CatchRate": 255,
     "BaseXP": 29,
@@ -67757,11 +67757,11 @@
     "Ability2": "Prankster",
     "AbilityH": "Aura Break",
     "BaseStats": {
-      "HP": 40,
-      "Atk": 70,
-      "Def": 40,
-      "SpA": 70,
-      "SpD": 40,
+      "HP": 50,
+      "Atk": 80,
+      "Def": 50,
+      "SpA": 80,
+      "SpD": 50,
       "Spe": 60
     },
     "CatchRate": 255,
@@ -68135,11 +68135,11 @@
     "Ability2": "Sand Stream",
     "AbilityH": "Sand Force",
     "BaseStats": {
-      "HP": 68,
+      "HP": 88,
       "Atk": 72,
       "Def": 78,
       "SpA": 38,
-      "SpD": 42,
+      "SpD": 52,
       "Spe": 32
     },
     "CatchRate": 255,
@@ -68747,12 +68747,12 @@
     "Ability2": "Dry Skin",
     "AbilityH": "Mending",
     "BaseStats": {
-      "HP": 48,
-      "Atk": 61,
-      "Def": 40,
-      "SpA": 61,
-      "SpD": 40,
-      "Spe": 60
+      "HP": 68,
+      "Atk": 71,
+      "Def": 50,
+      "SpA": 71,
+      "SpD": 50,
+      "Spe": 70
     },
     "CatchRate": 255,
     "BaseXP": 32,
@@ -69258,10 +69258,10 @@
     "Ability2": "Storm Drain",
     "AbilityH": "Cyclone",
     "BaseStats": {
-      "HP": 49,
-      "Atk": 40,
+      "HP": 59,
+      "Atk": 25,
       "Def": 56,
-      "SpA": 58,
+      "SpA": 72,
       "SpD": 61,
       "Spe": 66
     },
@@ -71427,7 +71427,7 @@
       "Atk": 90,
       "Def": 86,
       "SpA": 122,
-      "SpD": 61,
+      "SpD": 66,
       "Spe": 95
     },
     "CatchRate": 255,
@@ -73224,7 +73224,7 @@
     "Type2": "Fairy",
     "Ability1": "Levitate",
     "Ability2": "Telepathy",
-    "AbilityH": "Filter",
+    "AbilityH": "Aegis",
     "BaseStats": {
       "HP": 75,
       "Atk": 75,
@@ -73802,7 +73802,7 @@
     "Type1": "Steel",
     "Type2": "Dragon",
     "Ability1": "Pressure",
-    "Ability2": "Pressure",
+    "Ability2": "Aegis",
     "AbilityH": "Telepathy",
     "BaseStats": {
       "HP": 100,
@@ -74019,7 +74019,7 @@
     "Type1": "Psychic",
     "Type2": "Dragon",
     "Ability1": "Pressure",
-    "Ability2": "Pressure",
+    "Ability2": "Versatility",
     "AbilityH": "Telepathy",
     "BaseStats": {
       "HP": 90,
@@ -87003,11 +87003,11 @@
     "AbilityH": "Aftermath",
     "BaseStats": {
       "HP": 60,
-      "Atk": 55,
+      "Atk": 65,
       "Def": 62,
       "SpA": 50,
       "SpD": 62,
-      "Spe": 65
+      "Spe": 75
     },
     "CatchRate": 255,
     "BaseXP": 35,
@@ -87099,12 +87099,12 @@
     "Ability2": "Poison Point",
     "AbilityH": "Aftermath",
     "BaseStats": {
-      "HP": 90,
+      "HP": 104,
       "Atk": 95,
       "Def": 82,
       "SpA": 76,
       "SpD": 82,
-      "Spe": 75
+      "Spe": 65
     },
     "CatchRate": 255,
     "BaseXP": 87,
@@ -90865,7 +90865,7 @@
     "Type2": "Steel",
     "Ability1": "Iron Barbs",
     "Ability2": "Iron Barbs",
-    "AbilityH": "Iron Barbs",
+    "AbilityH": "Aegis",
     "BaseStats": {
       "HP": 49,
       "Atk": 50,
@@ -90982,7 +90982,7 @@
     "Type2": "Steel",
     "Ability1": "Iron Barbs",
     "Ability2": "Iron Barbs",
-    "AbilityH": "Iron Barbs",
+    "AbilityH": "Aegis",
     "BaseStats": {
       "HP": 74,
       "Atk": 94,
@@ -95379,10 +95379,10 @@
     "BaseStats": {
       "HP": 70,
       "Atk": 83,
-      "Def": 50,
-      "SpA": 37,
-      "SpD": 50,
-      "Spe": 60
+      "Def": 55,
+      "SpA": 42,
+      "SpD": 55,
+      "Spe": 70
     },
     "CatchRate": 255,
     "BaseXP": 36,
@@ -95655,12 +95655,12 @@
     "Ability2": "Overcoat",
     "AbilityH": "Weak Armor",
     "BaseStats": {
-      "HP": 70,
+      "HP": 75,
       "Atk": 55,
       "Def": 75,
-      "SpA": 45,
+      "SpA": 55,
       "SpD": 65,
-      "Spe": 60
+      "Spe": 50
     },
     "CatchRate": 255,
     "BaseXP": 39,
@@ -96241,7 +96241,7 @@
     "Type2": "Dragon",
     "Ability1": "Hustle",
     "Ability2": "Hustle",
-    "AbilityH": "Hustle",
+    "AbilityH": "Hyper Aggresion",
     "BaseStats": {
       "HP": 52,
       "Atk": 65,
@@ -96374,7 +96374,7 @@
     "Type2": "Dragon",
     "Ability1": "Sheer Force",
     "Ability2": "Sheer Force",
-    "AbilityH": "Sheer Force",
+    "AbilityH": "Hyper Aggresion",
     "BaseStats": {
       "HP": 72,
       "Atk": 85,
@@ -96531,7 +96531,7 @@
     "Type2": "Dragon",
     "Ability1": "Levitate",
     "Ability2": "Levitate",
-    "AbilityH": "Levitate",
+    "AbilityH": "Hyper Aggresion",
     "BaseStats": {
       "HP": 92,
       "Atk": 105,
@@ -123353,9 +123353,9 @@
     "SpeciesIdx": 208,
     "Type1": "Steel",
     "Type2": "Ground",
-    "Ability1": "Sand Force",
-    "Ability2": "Sand Force",
-    "AbilityH": "Sand Force",
+    "Ability1": "Aegis",
+    "Ability2": "Aegis",
+    "AbilityH": "Aegis",
     "BaseStats": {
       "HP": 85,
       "Atk": 130,
