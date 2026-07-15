@@ -132,15 +132,18 @@ const typeChart = {
 
 let pokedex = {};
 let moves = {};
+const FIXED_IV = 31;
+const FIXED_EV_CONTRIBUTION = 63; // 252 EVs / 4
+const MIN_RANDOM_FACTOR = 0.85;
+const MAX_LEVEL = 100;
+const MIN_LEVEL = 1;
 
 function calcHpStat(base, level) {
-  // Uses fixed assumptions shown in the UI subtitle: 31 IV and EV contribution of 63 (252 EVs / 4).
-  return Math.floor(((2 * base + 31 + 63) * level) / 100) + level + 10;
+  return Math.floor(((2 * base + FIXED_IV + FIXED_EV_CONTRIBUTION) * level) / 100) + level + 10;
 }
 
 function calcOtherStat(base, level) {
-  // Uses fixed assumptions shown in the UI subtitle: 31 IV and EV contribution of 63 (252 EVs / 4).
-  return Math.floor(((2 * base + 31 + 63) * level) / 100) + 5;
+  return Math.floor(((2 * base + FIXED_IV + FIXED_EV_CONTRIBUTION) * level) / 100) + 5;
 }
 
 function getTypeMultiplier(moveType, defType1, defType2) {
@@ -179,8 +182,13 @@ function setResultLines(lines) {
   });
 }
 
+function getClampedLevel() {
+  const raw = Number(document.getElementById("level").value) || 50;
+  return Math.min(MAX_LEVEL, Math.max(MIN_LEVEL, raw));
+}
+
 function renderDamage() {
-  const level = Math.min(100, Math.max(1, Number(document.getElementById("level").value) || 50));
+  const level = getClampedLevel();
   const attackerName = document.getElementById("attacker").value;
   const defenderName = document.getElementById("defender").value;
   const moveName = document.getElementById("move").value;
@@ -211,13 +219,12 @@ function renderDamage() {
   const typeMultiplier = getTypeMultiplier(move.Type, defType1, defType2);
   const stab = (attacker.Type1 === move.Type || attacker.Type2 === move.Type) ? 1.5 : 1;
 
-  // Core Gen 6 single-hit base damage skeleton before random/type/STAB modifiers.
+  // Gen 6 base formula: floor(floor(floor((floor(2L/5)+2)*P*A/D)/50)+2)
   const levelFactor = Math.floor((2 * level) / 5) + 2;
   const scaledPower = levelFactor * movePower * atkStat;
   const attackDefenseTerm = Math.floor(scaledPower / defStat);
   const baseDamage = Math.floor(attackDefenseTerm / 50) + 2;
-  // Gen 6 random factor ranges from 0.85 to 1.00 per hit.
-  const minDamage = typeMultiplier === 0 ? 0 : Math.max(1, Math.floor(baseDamage * stab * typeMultiplier * 0.85));
+  const minDamage = typeMultiplier === 0 ? 0 : Math.max(1, Math.floor(baseDamage * stab * typeMultiplier * MIN_RANDOM_FACTOR));
   const maxDamage = typeMultiplier === 0 ? 0 : Math.max(1, Math.floor(baseDamage * stab * typeMultiplier));
   const minPct = defenderHp > 0 ? (minDamage / defenderHp) * 100 : 0;
   const maxPct = defenderHp > 0 ? (maxDamage / defenderHp) * 100 : 0;
