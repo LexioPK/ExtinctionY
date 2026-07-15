@@ -134,10 +134,12 @@ let pokedex = {};
 let moves = {};
 
 function calcHpStat(base, level) {
+  // Uses fixed assumptions shown in the UI subtitle: 31 IV and 252 EVs (252/4 = 63).
   return Math.floor(((2 * base + 31 + 63) * level) / 100) + level + 10;
 }
 
 function calcOtherStat(base, level) {
+  // Uses fixed assumptions shown in the UI subtitle: 31 IV and 252 EVs (252/4 = 63).
   return Math.floor(((2 * base + 31 + 63) * level) / 100) + 5;
 }
 
@@ -167,24 +169,33 @@ function populateSelect(selectEl, values) {
   selectEl.innerHTML = values.map(v => `<option value="${v}">${v}</option>`).join("");
 }
 
+function setResultLines(lines) {
+  const result = document.getElementById("result");
+  result.textContent = "";
+  lines.forEach(line => {
+    const row = document.createElement("div");
+    row.textContent = line;
+    result.appendChild(row);
+  });
+}
+
 function renderDamage() {
   const level = Math.min(100, Math.max(1, Number(document.getElementById("level").value) || 50));
   const attackerName = document.getElementById("attacker").value;
   const defenderName = document.getElementById("defender").value;
   const moveName = document.getElementById("move").value;
-  const result = document.getElementById("result");
 
   const attacker = pokedex[attackerName];
   const defender = pokedex[defenderName];
   const move = moves[moveName];
   if (!attacker || !defender || !move) {
-    result.textContent = "Unable to calculate with the selected inputs.";
+    setResultLines(["Unable to calculate with the selected inputs."]);
     return;
   }
 
   const movePower = Number(move.Power) || 0;
   if (move.Category === "Status" || movePower <= 0) {
-    result.innerHTML = `<strong>${moveName}</strong> is a non-damaging/status move and does not deal direct damage.`;
+    setResultLines([`${moveName} is a non-damaging/status move and does not deal direct damage.`]);
     return;
   }
 
@@ -202,18 +213,19 @@ function renderDamage() {
 
   // Core Gen 6 damage skeleton for a single hit: (((((2L/5+2)*P*A/D)/50)+2) * modifiers)
   const baseDamage = Math.floor(Math.floor(Math.floor(((2 * level / 5 + 2) * movePower * atkStat) / defStat) / 50) + 2);
+  // Gen 6 random factor ranges from 0.85 to 1.00 per hit.
   const minDamage = typeMultiplier === 0 ? 0 : Math.max(1, Math.floor(baseDamage * stab * typeMultiplier * 0.85));
   const maxDamage = typeMultiplier === 0 ? 0 : Math.max(1, Math.floor(baseDamage * stab * typeMultiplier));
   const minPct = defenderHp > 0 ? (minDamage / defenderHp) * 100 : 0;
   const maxPct = defenderHp > 0 ? (maxDamage / defenderHp) * 100 : 0;
 
-  result.innerHTML = `
-    <div><strong>${attackerName}</strong> uses <strong>${moveName}</strong> on <strong>${defenderName}</strong> (Lv ${level})</div>
-    <div>Category: ${move.Category} | Type: ${move.Type} | Power: ${movePower}</div>
-    <div>STAB: ${stab === 1.5 ? "Yes (1.5×)" : "No (1×)"} | Type effectiveness: ${formatTypeEffect(typeMultiplier)}</div>
-    <div><strong>Damage:</strong> ${minDamage} - ${maxDamage} HP (${minPct.toFixed(1)}% - ${maxPct.toFixed(1)}%)</div>
-    <div>Random roll range applied: 85% - 100%</div>
-  `;
+  setResultLines([
+    `${attackerName} uses ${moveName} on ${defenderName} (Lv ${level})`,
+    `Category: ${move.Category} | Type: ${move.Type} | Power: ${movePower}`,
+    `STAB: ${stab === 1.5 ? "Yes (1.5×)" : "No (1×)"} | Type effectiveness: ${formatTypeEffect(typeMultiplier)}`,
+    `Damage: ${minDamage} - ${maxDamage} HP (${minPct.toFixed(1)}% - ${maxPct.toFixed(1)}%)`,
+    "Random roll range applied: 85% - 100%"
+  ]);
 }
 
 async function initDamageCalc() {
@@ -236,7 +248,6 @@ async function initDamageCalc() {
   } catch (error) {
     console.error("Failed to initialize damage calculator:", error);
     document.getElementById("result").textContent = "Error loading calculator data.";
-    return;
   }
 
   ["level", "attacker", "defender", "move"].forEach(id => {
