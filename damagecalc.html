@@ -128,6 +128,9 @@
       <div class="field"><label for="leftovers-recovery">Include Leftovers in KO chance</label><select id="leftovers-recovery"><option value="0">No</option><option value="1">Yes</option></select></div>
       <div class="field"><label for="multi-hit">Move hits</label><select id="multi-hit"><option value="auto">Auto</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
     </div>
+    <div class="row4" style="margin-top:10px;">
+      <div class="field"><label for="atk-low-hp">Attacker at ≤ 1/3 HP</label><select id="atk-low-hp"><option value="0">No</option><option value="1">Yes</option></select></div>
+    </div>
   </div>
 
   <div class="row2">
@@ -292,9 +295,13 @@ function toAbilityList(p) {
   return [...new Set(vals)];
 }
 
-function buildStatsGrid(containerId, prefix, defaults, isBoost = false) {
+function buildStatsGrid(containerId, prefix, defaults, mode = "ev") {
   const node = el(containerId);
   node.innerHTML = "";
+  const isBoost = mode === "boost";
+  const isIv = mode === "iv";
+  const defaultValue = isBoost ? 0 : (isIv ? 31 : 0);
+  const maxValue = isBoost ? 6 : (isIv ? 31 : 252);
   STATS.forEach(stat => {
     const wrap = document.createElement("div");
     wrap.className = "field stat-mini";
@@ -306,18 +313,28 @@ function buildStatsGrid(containerId, prefix, defaults, isBoost = false) {
     input.type = "number";
     if (isBoost) {
       input.min = "-6";
-      input.max = "6";
+      input.max = String(maxValue);
       input.step = "1";
-      input.value = defaults?.[stat] ?? 0;
+      input.value = defaults?.[stat] ?? defaultValue;
     } else {
-      input.min = stat === "HP" ? "0" : "0";
-      input.max = prefix.includes("iv") ? "31" : "252";
+      input.min = "0";
+      input.max = String(maxValue);
       input.step = "1";
-      input.value = defaults?.[stat] ?? (prefix.includes("iv") ? 31 : (stat === "HP" ? 0 : 0));
+      input.value = defaults?.[stat] ?? defaultValue;
     }
     wrap.appendChild(label);
     wrap.appendChild(input);
     node.appendChild(wrap);
+  });
+}
+
+function setResultLines(lines) {
+  const result = el("result");
+  result.textContent = "";
+  lines.forEach(line => {
+    const row = document.createElement("div");
+    row.textContent = line;
+    result.appendChild(row);
   });
 }
 
@@ -358,7 +375,7 @@ function autoHitCount(moveName, move) {
 
 function isSpreadMove(move) {
   const d = String(move?.Description || "");
-  return /opposing Pokémon|opposing Pok\u00E9mon|everything around it|strikes every Pok/i.test(d);
+  return /opposing Pokémon|everything around it|strikes every Pok/i.test(d);
 }
 
 function getModifierContext() {
@@ -537,8 +554,7 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (attacker.ability === "Reckless" && /Recoil/i.test(moveDesc)) mod *= 1.2;
 
   if ((attacker.ability === "Blaze" && moveType === "Fire") || (attacker.ability === "Torrent" && moveType === "Water") || (attacker.ability === "Overgrow" && moveType === "Grass") || (attacker.ability === "Swarm" && moveType === "Bug")) {
-    // simple approximation: enable by status to simulate low HP toggle without extra UI
-    if (attacker.status !== "none") mod *= 1.5;
+    if (el("atk-low-hp").value === "1") mod *= 1.5;
   }
 
   if (defender.ability === "Thick Fat" && (moveType === "Fire" || moveType === "Ice")) mod *= 0.5;
@@ -568,7 +584,7 @@ function calcDamage() {
   const ctx = getModifierContext();
 
   if (moveCategory === "Status") {
-    result.innerHTML = `<b>${moveName}</b> is a status move and does not deal direct damage.`;
+    setResultLines([`${moveName} is a status move and does not deal direct damage.`]);
     rollsEl.textContent = "";
     return;
   }
@@ -577,7 +593,7 @@ function calcDamage() {
     const testType = el("move-override-type").value !== "None" ? el("move-override-type").value : move.Type;
     const wm = effectiveness(testType, defender.type1, defender.type2);
     if (wm <= 1) {
-      result.innerHTML = `<b>${defender.name}</b> is immune via Wonder Guard unless the move is super effective.`;
+      setResultLines([`${defender.name} is immune via Wonder Guard unless the move is super effective.`]);
       rollsEl.textContent = "";
       return;
     }
@@ -587,7 +603,7 @@ function calcDamage() {
   if (!fixedFn && rawPower <= 1) {
     if (/always inflicts 40 HP damage/i.test(move.Description || "")) fixedFn = () => 40;
     if (/always inflicts 20 HP damage/i.test(move.Description || "")) fixedFn = () => 20;
-    if (/damage equal to the user\u0027s level|damage equal to the user's level/i.test(move.Description || "")) fixedFn = (c) => c.attacker.level;
+    if (/damage equal to the user['\u2019]s level/i.test(move.Description || "")) fixedFn = (c) => c.attacker.level;
   }
 
   let typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, ctx);
@@ -595,14 +611,14 @@ function calcDamage() {
   const power = typePower.power;
 
   if (moveType === "Ground" && (defender.type1 === "Flying" || defender.type2 === "Flying" || defender.ability === "Levitate" || defender.item === "Air Balloon")) {
-    result.innerHTML = `<b>${defender.name}</b> is immune to Ground-type damage in this state.`;
+    setResultLines([`${defender.name} is immune to Ground-type damage in this state.`]);
     rollsEl.textContent = "";
     return;
   }
 
   const typeMod = effectiveness(moveType, defender.type1, defender.type2);
   if (typeMod === 0) {
-    result.innerHTML = `${attacker.name} uses <b>${moveName}</b>: no effect (0×).`;
+    setResultLines([`${attacker.name} uses ${moveName}: no effect (0×).`]);
     rollsEl.textContent = "";
     return;
   }
@@ -613,7 +629,7 @@ function calcDamage() {
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
 
   if (defender.ability === "Flash Fire" && moveType === "Fire") {
-    result.innerHTML = `${attacker.name} uses <b>${moveName}</b>: absorbed by Flash Fire.`;
+    setResultLines([`${attacker.name} uses ${moveName}: absorbed by Flash Fire.`]);
     rollsEl.textContent = "";
     return;
   }
@@ -659,13 +675,13 @@ function calcDamage() {
 
   const effText = typeMod === 4 ? "4×" : typeMod === 2 ? "2×" : typeMod === 1 ? "1×" : typeMod === 0.5 ? "0.5×" : typeMod === 0.25 ? "0.25×" : `${typeMod}×`;
 
-  result.innerHTML = [
-    `<b>${attacker.name}</b> (${attacker.level}) <b>${moveName}</b> (${moveType}, ${moveCategory}, BP ${power}) vs <b>${defender.name}</b> (${defender.level})`,
-    `Damage: <b>${minD} - ${maxD}</b> HP (${minPct.toFixed(1)}% - ${maxPct.toFixed(1)}%)`,
+  setResultLines([
+    `${attacker.name} (${attacker.level}) ${moveName} (${moveType}, ${moveCategory}, BP ${power}) vs ${defender.name} (${defender.level})`,
+    `Damage: ${minD} - ${maxD} HP (${minPct.toFixed(1)}% - ${maxPct.toFixed(1)}%)`,
     `Type: ${effText} | STAB: ${stab.toFixed(1)}× | Hits: ${hitCount} | Critical: ${ctx.critical ? "Yes" : "No"}`,
     `Defender HP: ${hp} | Entry/Prior chip: ${hazardChip} | Starting HP for KO checks: ${startHP}`,
     `KO chance: ${pct(ohko)} OHKO | ${pct(twohko)} 2HKO | ${pct(threehko)} 3HKO`
-  ].join("<br>");
+  ]);
 
   rollsEl.textContent = `16 rolls: ${rolls.join(", ")}`;
 }
@@ -745,13 +761,13 @@ async function init() {
     setTypeOptions("def");
     setSelectOptions("move-override-type", ["None", ...TYPES], "None");
 
-    buildStatsGrid("atk-ev-grid", "atk-ev", { HP: 0, Atk: 252, Def: 0, SpA: 252, SpD: 0, Spe: 4 });
-    buildStatsGrid("atk-iv-grid", "atk-iv", { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 });
-    buildStatsGrid("atk-boost-grid", "atk-boost", { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }, true);
+    buildStatsGrid("atk-ev-grid", "atk-ev", { HP: 0, Atk: 252, Def: 0, SpA: 252, SpD: 0, Spe: 4 }, "ev");
+    buildStatsGrid("atk-iv-grid", "atk-iv", { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 }, "iv");
+    buildStatsGrid("atk-boost-grid", "atk-boost", { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }, "boost");
 
-    buildStatsGrid("def-ev-grid", "def-ev", { HP: 252, Atk: 0, Def: 252, SpA: 0, SpD: 4, Spe: 0 });
-    buildStatsGrid("def-iv-grid", "def-iv", { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 });
-    buildStatsGrid("def-boost-grid", "def-boost", { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }, true);
+    buildStatsGrid("def-ev-grid", "def-ev", { HP: 252, Atk: 0, Def: 252, SpA: 0, SpD: 4, Spe: 0 }, "ev");
+    buildStatsGrid("def-iv-grid", "def-iv", { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 }, "iv");
+    buildStatsGrid("def-boost-grid", "def-boost", { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }, "boost");
 
     syncTypeDefaults("atk");
     syncTypeDefaults("def");
