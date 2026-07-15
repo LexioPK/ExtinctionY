@@ -64,8 +64,58 @@
     color: inherit;
   }
   .set-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .iv-ev-grid, .boost-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
-  .stat-mini label { font-size: 0.72rem; }
+  .stat-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin-top: 8px;
+  }
+  .stat-table th, .stat-table td {
+    padding: 4px 6px;
+    border: 1px solid var(--border);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .stat-table th {
+    background: var(--result-bg);
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+  .stat-table td:first-child {
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .stat-table .st-total {
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 36px;
+  }
+  .stat-table input {
+    width: 50px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 4px;
+    font: inherit;
+    font-size: 0.82rem;
+    text-align: center;
+    background: #fff;
+    color: inherit;
+    box-sizing: border-box;
+  }
+  .stat-table select {
+    width: 58px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px;
+    font: inherit;
+    font-size: 0.82rem;
+    background: #fff;
+    color: inherit;
+  }
+  html.dark-mode .stat-table input,
+  html.dark-mode .stat-table select { background: #22293a; color: var(--text); }
   .result {
     background: var(--result-bg);
     border: 1px solid var(--border);
@@ -149,9 +199,7 @@
         <div class="field"><label for="atk-type2">Type 2</label><select id="atk-type2"></select></div>
         <div class="field"><label for="atk-grounded">Grounded (terrain boosts)</label><select id="atk-grounded"><option value="1">Yes</option><option value="0">No</option></select></div>
       </div>
-      <div class="field" style="margin-top:10px;"><label>EVs</label><div class="iv-ev-grid" id="atk-ev-grid"></div></div>
-      <div class="field" style="margin-top:10px;"><label>IVs</label><div class="iv-ev-grid" id="atk-iv-grid"></div></div>
-      <div class="field" style="margin-top:10px;"><label>Boost stages</label><div class="boost-grid" id="atk-boost-grid"></div></div>
+      <div style="margin-top:10px;" id="atk-stat-wrap"></div>
     </div>
 
     <div class="card">
@@ -169,9 +217,7 @@
         <div class="field"><label for="def-type2">Type 2</label><select id="def-type2"></select></div>
         <div class="field"><label for="def-grounded">Grounded (terrain effects)</label><select id="def-grounded"><option value="1">Yes</option><option value="0">No</option></select></div>
       </div>
-      <div class="field" style="margin-top:10px;"><label>EVs</label><div class="iv-ev-grid" id="def-ev-grid"></div></div>
-      <div class="field" style="margin-top:10px;"><label>IVs</label><div class="iv-ev-grid" id="def-iv-grid"></div></div>
-      <div class="field" style="margin-top:10px;"><label>Boost stages</label><div class="boost-grid" id="def-boost-grid"></div></div>
+      <div style="margin-top:10px;" id="def-stat-wrap"></div>
     </div>
   </div>
 
@@ -295,36 +341,113 @@ function toAbilityList(p) {
   return [...new Set(vals)];
 }
 
-function buildStatsGrid(containerId, prefix, defaults, mode = "ev") {
-  const node = el(containerId);
-  node.innerHTML = "";
-  const isBoost = mode === "boost";
-  const isIv = mode === "iv";
-  const defaultValue = isBoost ? 0 : (isIv ? 31 : 0);
-  const maxValue = isBoost ? 6 : (isIv ? 31 : 252);
+function buildStatTable(containerId, prefix, defaultEvs, defaultIvs, defaultBoosts) {
+  const container = el(containerId);
+  const table = document.createElement("table");
+  table.className = "stat-table";
+
+  const thead = document.createElement("thead");
+  const hrow = document.createElement("tr");
+  ["Stat", "Base", "IVs", "EVs", "Total", "Boost"].forEach(h => {
+    const th = document.createElement("th");
+    th.textContent = h;
+    hrow.appendChild(th);
+  });
+  thead.appendChild(hrow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
   STATS.forEach(stat => {
-    const wrap = document.createElement("div");
-    wrap.className = "field stat-mini";
-    const label = document.createElement("label");
-    label.setAttribute("for", `${prefix}-${stat}`);
-    label.textContent = stat;
-    const input = document.createElement("input");
-    input.id = `${prefix}-${stat}`;
-    input.type = "number";
-    if (isBoost) {
-      input.min = "-6";
-      input.max = String(maxValue);
-      input.step = "1";
-      input.value = defaults?.[stat] ?? defaultValue;
+    const tr = document.createElement("tr");
+
+    const tdName = document.createElement("td");
+    tdName.textContent = stat;
+    tr.appendChild(tdName);
+
+    const tdBase = document.createElement("td");
+    tdBase.id = `${prefix}-base-${stat}`;
+    tdBase.textContent = "–";
+    tr.appendChild(tdBase);
+
+    const tdIv = document.createElement("td");
+    const ivInput = document.createElement("input");
+    ivInput.id = `${prefix}-iv-${stat}`;
+    ivInput.type = "number";
+    ivInput.min = "0";
+    ivInput.max = "31";
+    ivInput.step = "1";
+    ivInput.value = String(defaultIvs?.[stat] ?? 31);
+    tdIv.appendChild(ivInput);
+    tr.appendChild(tdIv);
+
+    const tdEv = document.createElement("td");
+    const evInput = document.createElement("input");
+    evInput.id = `${prefix}-ev-${stat}`;
+    evInput.type = "number";
+    evInput.min = "0";
+    evInput.max = "252";
+    evInput.step = "4";
+    evInput.value = String(defaultEvs?.[stat] ?? 0);
+    tdEv.appendChild(evInput);
+    tr.appendChild(tdEv);
+
+    const tdTotal = document.createElement("td");
+    tdTotal.id = `${prefix}-total-${stat}`;
+    tdTotal.className = "st-total";
+    tdTotal.textContent = "–";
+    tr.appendChild(tdTotal);
+
+    const tdBoost = document.createElement("td");
+    if (stat === "HP") {
+      const hiddenHP = document.createElement("input");
+      hiddenHP.id = `${prefix}-boost-${stat}`;
+      hiddenHP.type = "hidden";
+      hiddenHP.value = "0";
+      tdBoost.textContent = "–";
+      tdBoost.appendChild(hiddenHP);
     } else {
-      input.min = "0";
-      input.max = String(maxValue);
-      input.step = "1";
-      input.value = defaults?.[stat] ?? defaultValue;
+      const boostSel = document.createElement("select");
+      boostSel.id = `${prefix}-boost-${stat}`;
+      for (let b = 6; b >= -6; b--) {
+        const opt = document.createElement("option");
+        opt.value = String(b);
+        opt.textContent = b > 0 ? `+${b}` : b === 0 ? "--" : String(b);
+        if ((defaultBoosts?.[stat] ?? 0) === b) opt.selected = true;
+        boostSel.appendChild(opt);
+      }
+      tdBoost.appendChild(boostSel);
     }
-    wrap.appendChild(label);
-    wrap.appendChild(input);
-    node.appendChild(wrap);
+    tr.appendChild(tdBoost);
+
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  container.innerHTML = "";
+  container.appendChild(table);
+}
+
+function updateStatTotals(prefix) {
+  const speciesName = el(`${prefix}-species`).value;
+  const p = pokedex[speciesName];
+  if (!p) return;
+  const level = clamp(num(el(`${prefix}-level`).value, 50), 1, 100);
+  const nature = el(`${prefix}-nature`).value || "Hardy";
+
+  STATS.forEach(stat => {
+    const base = p.BaseStats?.[stat] ?? 1;
+    const baseCell = el(`${prefix}-base-${stat}`);
+    if (baseCell) baseCell.textContent = base;
+
+    const iv = clamp(num(el(`${prefix}-iv-${stat}`)?.value, 31), 0, 31);
+    const ev = clamp(num(el(`${prefix}-ev-${stat}`)?.value, 0), 0, 252);
+    let total;
+    if (stat === "HP") {
+      total = calcHp(base, iv, ev, level);
+    } else {
+      total = calcOther(base, iv, ev, level, getNatureMultiplier(nature, stat));
+    }
+    const totalCell = el(`${prefix}-total-${stat}`);
+    if (totalCell) totalCell.textContent = total;
   });
 }
 
@@ -566,6 +689,9 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
 function calcDamage() {
   if (!Object.keys(pokedex).length || !Object.keys(moves).length) return;
 
+  updateStatTotals("atk");
+  updateStatTotals("def");
+
   const attacker = readSet("atk");
   const defender = readSet("def");
   const moveName = el("move").value;
@@ -726,6 +852,7 @@ function syncTypeDefaults(prefix) {
 
   const abilityList = toAbilityList(p);
   setSelectOptions(`${prefix}-ability`, abilityList.length ? abilityList : ["No Ability"], abilityList[0] || "No Ability");
+  updateStatTotals(prefix);
 }
 
 function bindInputs() {
@@ -761,13 +888,16 @@ async function init() {
     setTypeOptions("def");
     setSelectOptions("move-override-type", ["None", ...TYPES], "None");
 
-    buildStatsGrid("atk-ev-grid", "atk-ev", { HP: 0, Atk: 252, Def: 0, SpA: 252, SpD: 0, Spe: 4 }, "ev");
-    buildStatsGrid("atk-iv-grid", "atk-iv", { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 }, "iv");
-    buildStatsGrid("atk-boost-grid", "atk-boost", { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }, "boost");
-
-    buildStatsGrid("def-ev-grid", "def-ev", { HP: 252, Atk: 0, Def: 252, SpA: 0, SpD: 4, Spe: 0 }, "ev");
-    buildStatsGrid("def-iv-grid", "def-iv", { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 }, "iv");
-    buildStatsGrid("def-boost-grid", "def-boost", { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }, "boost");
+    buildStatTable("atk-stat-wrap", "atk",
+      { HP: 0, Atk: 252, Def: 0, SpA: 252, SpD: 0, Spe: 4 },
+      { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 },
+      { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }
+    );
+    buildStatTable("def-stat-wrap", "def",
+      { HP: 252, Atk: 0, Def: 252, SpA: 0, SpD: 4, Spe: 0 },
+      { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 },
+      { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }
+    );
 
     syncTypeDefaults("atk");
     syncTypeDefaults("def");
