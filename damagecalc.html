@@ -8,108 +8,193 @@
 <link rel="stylesheet" href="header.css">
 <script src="header.js" defer></script>
 <style>
+  :root {
+    --bg: #f1f3f7;
+    --card: #ffffff;
+    --text: #1f1f1f;
+    --muted: #666;
+    --border: #d9deea;
+    --accent: #245cac;
+    --result-bg: #f8faff;
+  }
   body {
     font-family: "Lexend", sans-serif;
-    background: #f0f0f0;
+    background: var(--bg);
+    color: var(--text);
     margin: 0;
-    padding: 20px;
+    padding: 18px;
   }
-  h1 {
-    text-align: center;
-    margin-bottom: 12px;
-  }
-  .subtitle {
-    text-align: center;
-    color: #666;
-    margin-bottom: 24px;
-  }
-  .calc-container {
-    max-width: 960px;
+  h1 { text-align: center; margin: 8px 0 6px; }
+  .subtitle { text-align: center; color: var(--muted); margin: 0 0 16px; }
+  .calc-wrap {
+    max-width: 1280px;
     margin: 0 auto;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-    padding: 24px;
-  }
-  .grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-    gap: 16px;
+    gap: 14px;
   }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    padding: 14px;
+  }
+  .card h2 {
+    margin: 0 0 10px;
+    font-size: 1.05rem;
+    color: var(--accent);
+  }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .row4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .field label {
     display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 4px;
   }
   .field input, .field select {
     width: 100%;
-    padding: 9px 10px;
-    border: 1px solid #d0d0d0;
-    border-radius: 8px;
-    font: inherit;
     box-sizing: border-box;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    font: inherit;
     background: #fff;
+    color: inherit;
   }
+  .set-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .iv-ev-grid, .boost-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .stat-mini label { font-size: 0.72rem; }
   .result {
-    margin-top: 20px;
-    background: #f7f9fc;
-    border: 1px solid #e0e7f0;
+    background: var(--result-bg);
+    border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 16px;
-    line-height: 1.55;
+    padding: 12px;
+    line-height: 1.45;
+    font-size: 0.95rem;
   }
-  .result strong {
-    color: #1f4f91;
+  .result b { color: var(--accent); }
+  .rolls {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    word-break: break-word;
   }
-  @media (max-width: 760px) {
-    .grid { grid-template-columns: 1fr; }
+  @media (max-width: 1120px) {
+    .row2, .set-grid { grid-template-columns: 1fr; }
+    .row4 { grid-template-columns: repeat(2, 1fr); }
+    .iv-ev-grid, .boost-grid { grid-template-columns: repeat(3, 1fr); }
   }
-  html.dark-mode .calc-container {
-    background: #1e1e2e !important;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.45);
+  @media (max-width: 700px) {
+    .row3 { grid-template-columns: 1fr; }
+    .row4 { grid-template-columns: 1fr; }
+  }
+  html.dark-mode {
+    --bg: #10121a;
+    --card: #1a1f2c;
+    --text: #e6e9f2;
+    --muted: #a9b0c7;
+    --border: #3a435b;
+    --accent: #8ab4ff;
+    --result-bg: #151b28;
   }
   html.dark-mode .field input,
-  html.dark-mode .field select {
-    background: #2a2a3a !important;
-    border-color: #4b4b66 !important;
-    color: #e0e0e0 !important;
-  }
-  html.dark-mode .subtitle { color: #aaa; }
-  html.dark-mode .result {
-    background: #26263a !important;
-    border-color: #3a3a55 !important;
-  }
-  html.dark-mode .result strong { color: #90caf9; }
+  html.dark-mode .field select { background: #22293a; color: var(--text); }
 </style>
 </head>
 <body>
 <h1>Damage Calc</h1>
-<div class="subtitle">Generation 6 singles damage estimate (base stats, neutral nature, 31 IV / 252 EV)</div>
+<p class="subtitle">Showdown-style calculator with set builder, field controls, roll range, and KO chance</p>
 
-<div class="calc-container">
-  <div class="grid">
-    <div class="field">
-      <label for="level">Level</label>
-      <input id="level" type="number" min="1" max="100" value="50">
+<div class="calc-wrap">
+  <div class="card">
+    <h2>Battle Context</h2>
+    <div class="row4">
+      <div class="field"><label for="battle-format">Battle</label><select id="battle-format"><option value="singles">Singles</option><option value="doubles">Doubles</option></select></div>
+      <div class="field"><label for="weather">Weather</label><select id="weather"><option value="none">None</option><option value="sun">Sun</option><option value="rain">Rain</option><option value="sand">Sand</option><option value="hail">Hail</option></select></div>
+      <div class="field"><label for="terrain">Terrain</label><select id="terrain"><option value="none">None</option><option value="electric">Electric</option><option value="grassy">Grassy</option><option value="misty">Misty</option><option value="psychic">Psychic</option></select></div>
+      <div class="field"><label for="prior-damage">Prior chip on defender (%)</label><input id="prior-damage" type="number" min="0" max="99" value="0"></div>
     </div>
-    <div class="field">
-      <label for="move">Move</label>
-      <select id="move"></select>
+    <div class="row4" style="margin-top:10px;">
+      <div class="field"><label for="atk-helping-hand">Attacker Helping Hand</label><select id="atk-helping-hand"><option value="0">No</option><option value="1">Yes</option></select></div>
+      <div class="field"><label for="def-reflect">Reflect (defender side)</label><select id="def-reflect"><option value="0">No</option><option value="1">Yes</option></select></div>
+      <div class="field"><label for="def-light-screen">Light Screen (defender side)</label><select id="def-light-screen"><option value="0">No</option><option value="1">Yes</option></select></div>
+      <div class="field"><label for="critical-hit">Critical hit</label><select id="critical-hit"><option value="0">No</option><option value="1">Yes</option></select></div>
     </div>
-    <div class="field">
-      <label for="attacker">Attacker</label>
-      <select id="attacker"></select>
-    </div>
-    <div class="field">
-      <label for="defender">Defender</label>
-      <select id="defender"></select>
+    <div class="row4" style="margin-top:10px;">
+      <div class="field"><label for="def-stealth-rock">Stealth Rock on defender side</label><select id="def-stealth-rock"><option value="0">No</option><option value="1">Yes</option></select></div>
+      <div class="field"><label for="def-spikes">Spikes layers</label><select id="def-spikes"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
+      <div class="field"><label for="leftovers-recovery">Include Leftovers in KO chance</label><select id="leftovers-recovery"><option value="0">No</option><option value="1">Yes</option></select></div>
+      <div class="field"><label for="multi-hit">Move hits</label><select id="multi-hit"><option value="auto">Auto</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
     </div>
   </div>
-  <div id="result" class="result">Loading data...</div>
+
+  <div class="row2">
+    <div class="card">
+      <h2>Attacker</h2>
+      <div class="set-grid">
+        <div class="field"><label for="atk-species">Species</label><select id="atk-species"></select></div>
+        <div class="field"><label for="atk-level">Level</label><input id="atk-level" type="number" min="1" max="100" value="50"></div>
+        <div class="field"><label for="atk-ability">Ability</label><select id="atk-ability"></select></div>
+        <div class="field"><label for="atk-item">Item</label><select id="atk-item"></select></div>
+        <div class="field"><label for="atk-status">Status</label><select id="atk-status"><option value="none">None</option><option value="brn">Burn</option><option value="par">Paralysis</option><option value="psn">Poison</option><option value="tox">Toxic</option><option value="slp">Sleep</option><option value="frz">Freeze</option></select></div>
+        <div class="field"><label for="atk-nature">Nature</label><select id="atk-nature"></select></div>
+      </div>
+      <div class="row3" style="margin-top:10px;">
+        <div class="field"><label for="atk-type1">Type 1</label><select id="atk-type1"></select></div>
+        <div class="field"><label for="atk-type2">Type 2</label><select id="atk-type2"></select></div>
+        <div class="field"><label for="atk-grounded">Grounded (terrain boosts)</label><select id="atk-grounded"><option value="1">Yes</option><option value="0">No</option></select></div>
+      </div>
+      <div class="field" style="margin-top:10px;"><label>EVs</label><div class="iv-ev-grid" id="atk-ev-grid"></div></div>
+      <div class="field" style="margin-top:10px;"><label>IVs</label><div class="iv-ev-grid" id="atk-iv-grid"></div></div>
+      <div class="field" style="margin-top:10px;"><label>Boost stages</label><div class="boost-grid" id="atk-boost-grid"></div></div>
+    </div>
+
+    <div class="card">
+      <h2>Defender</h2>
+      <div class="set-grid">
+        <div class="field"><label for="def-species">Species</label><select id="def-species"></select></div>
+        <div class="field"><label for="def-level">Level</label><input id="def-level" type="number" min="1" max="100" value="50"></div>
+        <div class="field"><label for="def-ability">Ability</label><select id="def-ability"></select></div>
+        <div class="field"><label for="def-item">Item</label><select id="def-item"></select></div>
+        <div class="field"><label for="def-status">Status</label><select id="def-status"><option value="none">None</option><option value="brn">Burn</option><option value="par">Paralysis</option><option value="psn">Poison</option><option value="tox">Toxic</option><option value="slp">Sleep</option><option value="frz">Freeze</option></select></div>
+        <div class="field"><label for="def-nature">Nature</label><select id="def-nature"></select></div>
+      </div>
+      <div class="row3" style="margin-top:10px;">
+        <div class="field"><label for="def-type1">Type 1</label><select id="def-type1"></select></div>
+        <div class="field"><label for="def-type2">Type 2</label><select id="def-type2"></select></div>
+        <div class="field"><label for="def-grounded">Grounded (terrain effects)</label><select id="def-grounded"><option value="1">Yes</option><option value="0">No</option></select></div>
+      </div>
+      <div class="field" style="margin-top:10px;"><label>EVs</label><div class="iv-ev-grid" id="def-ev-grid"></div></div>
+      <div class="field" style="margin-top:10px;"><label>IVs</label><div class="iv-ev-grid" id="def-iv-grid"></div></div>
+      <div class="field" style="margin-top:10px;"><label>Boost stages</label><div class="boost-grid" id="def-boost-grid"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Move</h2>
+    <div class="row4">
+      <div class="field"><label for="move">Move</label><select id="move"></select></div>
+      <div class="field"><label for="move-override-type">Move type override</label><select id="move-override-type"></select></div>
+      <div class="field"><label for="move-power-mod">Base power modifier (%)</label><input id="move-power-mod" type="number" min="1" max="400" value="100"></div>
+      <div class="field"><label for="is-zmove">Treat as Z-like fixed high power (1.5x)</label><select id="is-zmove"><option value="0">No</option><option value="1">Yes</option></select></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Result</h2>
+    <div id="result" class="result">Loading data...</div>
+    <div id="rolls" class="rolls"></div>
+  </div>
 </div>
 
 <script>
-const typeChart = {
+const TYPES = ["Normal","Fire","Water","Electric","Grass","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"];
+const STATS = ["HP", "Atk", "Def", "SpA", "SpD", "Spe"];
+const NON_HP_STATS = ["Atk", "Def", "SpA", "SpD", "Spe"];
+
+const TYPE_CHART = {
   Normal: { Rock: 0.5, Ghost: 0, Steel: 0.5 },
   Fire: { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 2, Bug: 2, Rock: 0.5, Dragon: 0.5, Steel: 2 },
   Water: { Fire: 2, Water: 0.5, Grass: 0.5, Ground: 2, Rock: 2, Dragon: 0.5 },
@@ -130,147 +215,557 @@ const typeChart = {
   Fairy: { Fire: 0.5, Fighting: 2, Poison: 0.5, Dragon: 2, Dark: 2, Steel: 0.5 }
 };
 
+const NATURES = {
+  Hardy: { up: null, down: null }, Lonely: { up: "Atk", down: "Def" }, Brave: { up: "Atk", down: "Spe" }, Adamant: { up: "Atk", down: "SpA" }, Naughty: { up: "Atk", down: "SpD" },
+  Bold: { up: "Def", down: "Atk" }, Docile: { up: null, down: null }, Relaxed: { up: "Def", down: "Spe" }, Impish: { up: "Def", down: "SpA" }, Lax: { up: "Def", down: "SpD" },
+  Timid: { up: "Spe", down: "Atk" }, Hasty: { up: "Spe", down: "Def" }, Serious: { up: null, down: null }, Jolly: { up: "Spe", down: "SpA" }, Naive: { up: "Spe", down: "SpD" },
+  Modest: { up: "SpA", down: "Atk" }, Mild: { up: "SpA", down: "Def" }, Quiet: { up: "SpA", down: "Spe" }, Bashful: { up: null, down: null }, Rash: { up: "SpA", down: "SpD" },
+  Calm: { up: "SpD", down: "Atk" }, Gentle: { up: "SpD", down: "Def" }, Sassy: { up: "SpD", down: "Spe" }, Careful: { up: "SpD", down: "SpA" }, Quirky: { up: null, down: null }
+};
+
+const ITEM_OPTIONS = [
+  "None",
+  "Life Orb",
+  "Choice Band",
+  "Choice Specs",
+  "Assault Vest",
+  "Eviolite",
+  "Expert Belt",
+  "Muscle Band",
+  "Wise Glasses",
+  "Leftovers",
+  "Air Balloon",
+  "Heavy-Duty Boots"
+];
+
+const FIXED_DAMAGE_MOVES = {
+  "Seismic Toss": (ctx) => ctx.attacker.level,
+  "Night Shade": (ctx) => ctx.attacker.level,
+  "Dragon Rage": () => 40,
+  "Sonic Boom": () => 20
+};
+
 let pokedex = {};
 let moves = {};
-const FIXED_IV = 31;
-const FIXED_EV_CONTRIBUTION = 63; // 252 EVs / 4
-const MIN_RANDOM_FACTOR = 0.85;
-const MAX_LEVEL = 100;
-const MIN_LEVEL = 1;
-const DEFAULT_SPECIES_IDX = 9999;
 
-function calcHpStat(base, level) {
-  return Math.floor(((2 * base + FIXED_IV + FIXED_EV_CONTRIBUTION) * level) / 100) + level + 10;
+function el(id) { return document.getElementById(id); }
+function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+function num(v, d = 0) { const n = Number(v); return Number.isFinite(n) ? n : d; }
+function lower(str) { return String(str || "").toLowerCase(); }
+
+function getNatureMultiplier(natureName, stat) {
+  const n = NATURES[natureName] || NATURES.Hardy;
+  if (n.up === stat) return 1.1;
+  if (n.down === stat) return 0.9;
+  return 1;
 }
 
-function calcOtherStat(base, level) {
-  return Math.floor(((2 * base + FIXED_IV + FIXED_EV_CONTRIBUTION) * level) / 100) + 5;
+function calcHp(base, iv, ev, level) {
+  return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + level + 10;
 }
 
-function getTypeMultiplier(moveType, defType1, defType2) {
-  const chart = typeChart[moveType] || {};
-  const first = chart[defType1] ?? 1;
-  const second = defType2 && defType2 !== defType1 ? (chart[defType2] ?? 1) : 1;
-  return first * second;
+function calcOther(base, iv, ev, level, natureMult) {
+  return Math.floor((Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + 5) * natureMult);
 }
 
-function formatTypeEffect(multiplier) {
-  if (multiplier === 0) return "No effect (0×)";
-  if (multiplier === 0.25) return "Not very effective (0.25×)";
-  if (multiplier === 0.5) return "Not very effective (0.5×)";
-  if (multiplier === 2) return "Super effective (2×)";
-  if (multiplier === 4) return "Super effective (4×)";
-  return "Neutral (1×)";
+function stageMultiplier(stage) {
+  return stage >= 0 ? (2 + stage) / 2 : 2 / (2 - stage);
 }
 
-function buildPokemonList() {
+function effectiveness(moveType, type1, type2) {
+  const chart = TYPE_CHART[moveType] || {};
+  const m1 = chart[type1] ?? 1;
+  const m2 = type2 && type2 !== "None" && type2 !== type1 ? (chart[type2] ?? 1) : 1;
+  return m1 * m2;
+}
+
+function isGrounded(type1, type2, ability, item, manualGrounded) {
+  if (!manualGrounded) return false;
+  if (item === "Air Balloon") return false;
+  if (ability === "Levitate") return false;
+  if (type1 === "Flying" || type2 === "Flying") return false;
+  return true;
+}
+
+function toAbilityList(p) {
+  const vals = [p.Ability1, p.Ability2, p.AbilityH].filter(Boolean);
+  return [...new Set(vals)];
+}
+
+function buildStatsGrid(containerId, prefix, defaults, isBoost = false) {
+  const node = el(containerId);
+  node.innerHTML = "";
+  STATS.forEach(stat => {
+    const wrap = document.createElement("div");
+    wrap.className = "field stat-mini";
+    const label = document.createElement("label");
+    label.setAttribute("for", `${prefix}-${stat}`);
+    label.textContent = stat;
+    const input = document.createElement("input");
+    input.id = `${prefix}-${stat}`;
+    input.type = "number";
+    if (isBoost) {
+      input.min = "-6";
+      input.max = "6";
+      input.step = "1";
+      input.value = defaults?.[stat] ?? 0;
+    } else {
+      input.min = stat === "HP" ? "0" : "0";
+      input.max = prefix.includes("iv") ? "31" : "252";
+      input.step = "1";
+      input.value = defaults?.[stat] ?? (prefix.includes("iv") ? 31 : (stat === "HP" ? 0 : 0));
+    }
+    wrap.appendChild(label);
+    wrap.appendChild(input);
+    node.appendChild(wrap);
+  });
+}
+
+function setSelectOptions(selectId, options, selected) {
+  const select = el(selectId);
+  select.innerHTML = "";
+  options.forEach(o => {
+    const opt = document.createElement("option");
+    opt.value = o;
+    opt.textContent = o;
+    select.appendChild(opt);
+  });
+  if (selected && options.includes(selected)) select.value = selected;
+}
+
+function setTypeOptions(prefix) {
+  setSelectOptions(`${prefix}-type1`, TYPES, "Normal");
+  setSelectOptions(`${prefix}-type2`, ["None", ...TYPES], "None");
+}
+
+function listSpecies() {
   return Object.entries(pokedex)
-    .sort((a, b) => (a[1].SpeciesIdx || DEFAULT_SPECIES_IDX) - (b[1].SpeciesIdx || DEFAULT_SPECIES_IDX) || a[0].localeCompare(b[0]))
+    .sort((a, b) => (a[1].SpeciesIdx || 9999) - (b[1].SpeciesIdx || 9999) || a[0].localeCompare(b[0]))
     .map(([name]) => name);
 }
 
-function populateSelect(selectEl, values) {
-  selectEl.innerHTML = values.map(v => `<option value="${v}">${v}</option>`).join("");
+function autoHitCount(moveName, move) {
+  const desc = String(move?.Description || "");
+  if (/two to five times/i.test(desc)) return 2;
+  if (/three times/i.test(desc)) return 3;
+  if (/twice|two times|two strikes|hit twice/i.test(desc)) return 2;
+  if (/2 to 3 turns|2 to 3 times|2-3 times/i.test(desc)) return 2;
+  if (/five times/i.test(desc)) return 5;
+  if (/Triple Kick/i.test(moveName)) return 3;
+  if (/Double Kick|Twineedle/i.test(moveName)) return 2;
+  return 1;
 }
 
-function setResultLines(lines) {
-  const result = document.getElementById("result");
-  result.textContent = "";
-  lines.forEach(line => {
-    const row = document.createElement("div");
-    row.textContent = line;
-    result.appendChild(row);
+function isSpreadMove(move) {
+  const d = String(move?.Description || "");
+  return /opposing Pokémon|opposing Pok\u00E9mon|everything around it|strikes every Pok/i.test(d);
+}
+
+function getModifierContext() {
+  const battleFormat = el("battle-format").value;
+  const weather = el("weather").value;
+  const terrain = el("terrain").value;
+  const critical = el("critical-hit").value === "1";
+  const helpingHand = el("atk-helping-hand").value === "1";
+  const reflect = el("def-reflect").value === "1";
+  const lightScreen = el("def-light-screen").value === "1";
+  const hitSel = el("multi-hit").value;
+  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, hitSel };
+}
+
+function readSet(prefix) {
+  const speciesName = el(`${prefix}-species`).value;
+  const p = pokedex[speciesName];
+  const level = clamp(num(el(`${prefix}-level`).value, 50), 1, 100);
+  const ability = el(`${prefix}-ability`).value || "No Ability";
+  const item = el(`${prefix}-item`).value || "None";
+  const nature = el(`${prefix}-nature`).value || "Hardy";
+  const status = el(`${prefix}-status`).value || "none";
+  const type1 = el(`${prefix}-type1`).value;
+  const type2 = el(`${prefix}-type2`).value;
+  const grounded = el(`${prefix}-grounded`).value === "1";
+
+  const ev = {};
+  const iv = {};
+  const boost = {};
+  STATS.forEach(s => {
+    ev[s] = clamp(num(el(`${prefix}-ev-${s}`).value, 0), 0, 252);
+    iv[s] = clamp(num(el(`${prefix}-iv-${s}`).value, 31), 0, 31);
+    boost[s] = clamp(num(el(`${prefix}-boost-${s}`).value, 0), -6, 6);
+    el(`${prefix}-ev-${s}`).value = ev[s];
+    el(`${prefix}-iv-${s}`).value = iv[s];
+    el(`${prefix}-boost-${s}`).value = boost[s];
   });
+
+  const stats = {};
+  STATS.forEach(stat => {
+    const base = p.BaseStats?.[stat] ?? 1;
+    if (stat === "HP") {
+      stats.HP = calcHp(base, iv.HP, ev.HP, level);
+    } else {
+      stats[stat] = calcOther(base, iv[stat], ev[stat], level, getNatureMultiplier(nature, stat));
+    }
+  });
+
+  return { name: speciesName, level, ability, item, nature, status, type1, type2, grounded, ev, iv, boost, stats, data: p };
 }
 
-function getClampedLevel() {
-  const raw = Number(document.getElementById("level").value) || 50;
-  return Math.min(MAX_LEVEL, Math.max(MIN_LEVEL, raw));
+function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, ctx) {
+  let type = moveType;
+  let power = basePower;
+  const aAbility = attacker.ability;
+
+  if (aAbility === "Aerilate" && type === "Normal") { type = "Flying"; power *= 1.3; }
+  if (aAbility === "Pixilate" && type === "Normal") { type = "Fairy"; power *= 1.3; }
+  if (aAbility === "Refrigerate" && type === "Normal") { type = "Ice"; power *= 1.3; }
+  if (aAbility === "Galvanize" && type === "Normal") { type = "Electric"; power *= 1.3; }
+
+  if (moveName === "Facade" && attacker.status !== "none") power *= 2;
+  if (moveName === "Acrobatics" && attacker.item === "None") power *= 2;
+  if (moveName === "Weather Ball") {
+    if (ctx.weather !== "none") power = 100;
+    if (ctx.weather === "sun") type = "Fire";
+    if (ctx.weather === "rain") type = "Water";
+    if (ctx.weather === "sand") type = "Rock";
+    if (ctx.weather === "hail") type = "Ice";
+  }
+
+  if (attacker.ability === "Technician" && power <= 60) power *= 1.5;
+  if (el("is-zmove").value === "1") power *= 1.5;
+
+  const powerMod = clamp(num(el("move-power-mod").value, 100), 1, 400) / 100;
+  power *= powerMod;
+
+  const overrideType = el("move-override-type").value;
+  if (overrideType !== "None") type = overrideType;
+
+  return { type, power: Math.max(1, Math.floor(power)) };
 }
 
-function renderDamage() {
-  const level = getClampedLevel();
-  const attackerName = document.getElementById("attacker").value;
-  const defenderName = document.getElementById("defender").value;
-  const moveName = document.getElementById("move").value;
+function getAttackDefense(moveCategory, attacker, defender, critical, moveName) {
+  const isPhysical = moveCategory === "Physical";
+  const atkStat = isPhysical ? "Atk" : "SpA";
+  const defStat = isPhysical ? "Def" : "SpD";
 
-  const attacker = pokedex[attackerName];
-  const defender = pokedex[defenderName];
+  let atkStage = attacker.boost[atkStat] || 0;
+  let defStage = defender.boost[defStat] || 0;
+  if (critical) {
+    if (atkStage < 0) atkStage = 0;
+    if (defStage > 0) defStage = 0;
+  }
+
+  let atk = attacker.stats[atkStat] * stageMultiplier(atkStage);
+  let def = defender.stats[defStat] * stageMultiplier(defStage);
+
+  if (isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) atk *= 2;
+  if (isPhysical && attacker.ability === "Hustle") atk *= 1.5;
+  if (isPhysical && attacker.ability === "Guts" && attacker.status !== "none") atk *= 1.5;
+
+  if (isPhysical && attacker.item === "Choice Band") atk *= 1.5;
+  if (!isPhysical && attacker.item === "Choice Specs") atk *= 1.5;
+
+  if (!isPhysical && defender.item === "Assault Vest") def *= 1.5;
+  if ((defender.item === "Eviolite") && defender.data?.Evolutions && defender.data.Evolutions.length > 0) def *= 1.5;
+
+  if (!isPhysical && (defender.type1 === "Rock" || defender.type2 === "Rock") && el("weather").value === "sand") def *= 1.5;
+
+  if (defender.ability === "Marvel Scale" && defender.status !== "none" && isPhysical) def *= 1.5;
+
+  if (isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") atk *= 0.5;
+
+  return { atk: Math.max(1, Math.floor(atk)), def: Math.max(1, Math.floor(def)), isPhysical };
+}
+
+function computeHazardChip(defender) {
+  if (defender.item === "Heavy-Duty Boots") return 0;
+  let frac = 0;
+
+  if (el("def-stealth-rock").value === "1") {
+    const rockEffect = effectiveness("Rock", defender.type1, defender.type2);
+    frac += (1 / 8) * rockEffect;
+  }
+
+  const spikes = num(el("def-spikes").value, 0);
+  const grounded = isGrounded(defender.type1, defender.type2, defender.ability, defender.item, defender.grounded);
+  if (grounded && spikes > 0) {
+    if (spikes === 1) frac += 1 / 8;
+    if (spikes === 2) frac += 1 / 6;
+    if (spikes >= 3) frac += 1 / 4;
+  }
+
+  const priorPct = clamp(num(el("prior-damage").value, 0), 0, 99) / 100;
+  frac += priorPct;
+
+  return Math.floor(defender.stats.HP * Math.min(frac, 0.99));
+}
+
+function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod) {
+  let mod = 1;
+
+  if (ctx.helpingHand) mod *= 1.5;
+
+  if (ctx.weather === "sun") {
+    if (moveType === "Fire") mod *= 1.5;
+    if (moveType === "Water") mod *= 0.5;
+  } else if (ctx.weather === "rain") {
+    if (moveType === "Water") mod *= 1.5;
+    if (moveType === "Fire") mod *= 0.5;
+  }
+
+  if (ctx.terrain === "electric" && moveType === "Electric" && isGrounded(attacker.type1, attacker.type2, attacker.ability, attacker.item, attacker.grounded)) mod *= 1.5;
+  if (ctx.terrain === "grassy" && moveType === "Grass" && isGrounded(attacker.type1, attacker.type2, attacker.ability, attacker.item, attacker.grounded)) mod *= 1.5;
+  if (ctx.terrain === "psychic" && moveType === "Psychic" && isGrounded(attacker.type1, attacker.type2, attacker.ability, attacker.item, attacker.grounded)) mod *= 1.5;
+  if (ctx.terrain === "misty" && moveType === "Dragon" && isGrounded(defender.type1, defender.type2, defender.ability, defender.item, defender.grounded)) mod *= 0.5;
+  if (ctx.terrain === "grassy" && ["Earthquake", "Bulldoze", "Magnitude"].includes(moveName) && isGrounded(defender.type1, defender.type2, defender.ability, defender.item, defender.grounded)) mod *= 0.5;
+
+  if (ctx.battleFormat === "doubles" && isSpreadMove(moves[moveName])) mod *= 0.75;
+
+  if (!ctx.critical && moveCategory === "Physical" && ctx.reflect) mod *= (ctx.battleFormat === "doubles" ? 2 / 3 : 0.5);
+  if (!ctx.critical && moveCategory === "Special" && ctx.lightScreen) mod *= (ctx.battleFormat === "doubles" ? 2 / 3 : 0.5);
+
+  if (ctx.critical) mod *= 1.5;
+  if (ctx.critical && attacker.ability === "Sniper") mod *= 1.5;
+
+  if (attacker.ability === "Tinted Lens" && typeMod < 1 && typeMod > 0) mod *= 2;
+  if (attacker.item === "Life Orb") mod *= 1.3;
+  if (attacker.item === "Expert Belt" && typeMod > 1) mod *= 1.2;
+  if (attacker.item === "Muscle Band" && moveCategory === "Physical") mod *= 1.1;
+  if (attacker.item === "Wise Glasses" && moveCategory === "Special") mod *= 1.1;
+
+  const moveDesc = String(moves[moveName]?.Description || "");
+  if (attacker.ability === "Iron Fist" && /\(.*Punch.*\)/i.test(moveDesc)) mod *= 1.2;
+  if (attacker.ability === "Reckless" && /Recoil/i.test(moveDesc)) mod *= 1.2;
+
+  if ((attacker.ability === "Blaze" && moveType === "Fire") || (attacker.ability === "Torrent" && moveType === "Water") || (attacker.ability === "Overgrow" && moveType === "Grass") || (attacker.ability === "Swarm" && moveType === "Bug")) {
+    // simple approximation: enable by status to simulate low HP toggle without extra UI
+    if (attacker.status !== "none") mod *= 1.5;
+  }
+
+  if (defender.ability === "Thick Fat" && (moveType === "Fire" || moveType === "Ice")) mod *= 0.5;
+  if (["Filter", "Solid Rock", "Prism Armor"].includes(defender.ability) && typeMod > 1) mod *= 0.75;
+
+  return mod;
+}
+
+function calcDamage() {
+  if (!Object.keys(pokedex).length || !Object.keys(moves).length) return;
+
+  const attacker = readSet("atk");
+  const defender = readSet("def");
+  const moveName = el("move").value;
   const move = moves[moveName];
-  if (!attacker || !defender || !move) {
-    setResultLines(["Unable to calculate with the selected inputs."]);
+  const result = el("result");
+  const rollsEl = el("rolls");
+
+  if (!attacker?.data || !defender?.data || !move) {
+    result.textContent = "Invalid selection.";
+    rollsEl.textContent = "";
     return;
   }
 
-  const movePower = Number(move.Power) || 0;
-  if (move.Category === "Status" || movePower <= 0) {
-    setResultLines([`${moveName} is a non-damaging/status move and does not deal direct damage.`]);
+  const moveCategory = move.Category;
+  const rawPower = num(move.Power, 0);
+  const ctx = getModifierContext();
+
+  if (moveCategory === "Status") {
+    result.innerHTML = `<b>${moveName}</b> is a status move and does not deal direct damage.`;
+    rollsEl.textContent = "";
     return;
   }
 
-  const isPhysical = move.Category === "Physical";
-  const atkBase = isPhysical ? attacker.BaseStats.Atk : attacker.BaseStats.SpA;
-  const defBase = isPhysical ? defender.BaseStats.Def : defender.BaseStats.SpD;
-  const atkStat = calcOtherStat(atkBase, level);
-  const defStat = calcOtherStat(defBase, level);
-  const defenderHp = calcHpStat(defender.BaseStats.HP, level);
+  if (defender.ability === "Wonder Guard") {
+    const testType = el("move-override-type").value !== "None" ? el("move-override-type").value : move.Type;
+    const wm = effectiveness(testType, defender.type1, defender.type2);
+    if (wm <= 1) {
+      result.innerHTML = `<b>${defender.name}</b> is immune via Wonder Guard unless the move is super effective.`;
+      rollsEl.textContent = "";
+      return;
+    }
+  }
 
-  const defType1 = defender.Type1;
-  const defType2 = defender.Type2 && defender.Type2 !== defender.Type1 ? defender.Type2 : null;
-  const typeMultiplier = getTypeMultiplier(move.Type, defType1, defType2);
-  const stab = (attacker.Type1 === move.Type || attacker.Type2 === move.Type) ? 1.5 : 1;
+  let fixedFn = FIXED_DAMAGE_MOVES[moveName];
+  if (!fixedFn && rawPower <= 1) {
+    if (/always inflicts 40 HP damage/i.test(move.Description || "")) fixedFn = () => 40;
+    if (/always inflicts 20 HP damage/i.test(move.Description || "")) fixedFn = () => 20;
+    if (/damage equal to the user\u0027s level|damage equal to the user's level/i.test(move.Description || "")) fixedFn = (c) => c.attacker.level;
+  }
 
-  // Gen 6 base formula: floor(floor(floor((floor(2L/5)+2)*P*A/D)/50)+2)
-  const levelFactor = Math.floor((2 * level) / 5) + 2;
-  const scaledPower = levelFactor * movePower * atkStat;
-  const attackDefenseTerm = Math.floor(scaledPower / defStat);
-  const baseDamage = Math.floor(attackDefenseTerm / 50) + 2;
-  const minDamage = typeMultiplier === 0 ? 0 : Math.max(1, Math.floor(baseDamage * stab * typeMultiplier * MIN_RANDOM_FACTOR));
-  const maxDamage = typeMultiplier === 0 ? 0 : Math.max(1, Math.floor(baseDamage * stab * typeMultiplier));
-  const minPct = defenderHp > 0 ? (minDamage / defenderHp) * 100 : 0;
-  const maxPct = defenderHp > 0 ? (maxDamage / defenderHp) * 100 : 0;
+  let typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, ctx);
+  const moveType = typePower.type;
+  const power = typePower.power;
 
-  setResultLines([
-    `${attackerName} uses ${moveName} on ${defenderName} (Lv ${level})`,
-    `Category: ${move.Category} | Type: ${move.Type} | Power: ${movePower}`,
-    `STAB: ${stab === 1.5 ? "Yes (1.5×)" : "No (1×)"} | Type effectiveness: ${formatTypeEffect(typeMultiplier)}`,
-    `Damage: ${minDamage} - ${maxDamage} HP (${minPct.toFixed(1)}% - ${maxPct.toFixed(1)}%)`,
-    "Random roll range applied: 85% - 100%"
-  ]);
+  if (moveType === "Ground" && (defender.type1 === "Flying" || defender.type2 === "Flying" || defender.ability === "Levitate" || defender.item === "Air Balloon")) {
+    result.innerHTML = `<b>${defender.name}</b> is immune to Ground-type damage in this state.`;
+    rollsEl.textContent = "";
+    return;
+  }
+
+  const typeMod = effectiveness(moveType, defender.type1, defender.type2);
+  if (typeMod === 0) {
+    result.innerHTML = `${attacker.name} uses <b>${moveName}</b>: no effect (0×).`;
+    rollsEl.textContent = "";
+    return;
+  }
+
+  const hitCount = ctx.hitSel === "auto" ? autoHitCount(moveName, move) : clamp(num(ctx.hitSel, 1), 1, 5);
+
+  const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
+  const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
+
+  if (defender.ability === "Flash Fire" && moveType === "Fire") {
+    result.innerHTML = `${attacker.name} uses <b>${moveName}</b>: absorbed by Flash Fire.`;
+    rollsEl.textContent = "";
+    return;
+  }
+
+  let baseOneHit;
+  if (fixedFn) {
+    baseOneHit = fixedFn({ attacker, defender, move, moveType, power });
+  } else {
+    const ad = getAttackDefense(moveCategory, attacker, defender, ctx.critical, moveName);
+    const levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
+    baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
+  }
+
+  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod);
+
+  const rolls = [];
+  for (let r = 85; r <= 100; r++) {
+    let dmg = baseOneHit;
+    if (!fixedFn) {
+      dmg = Math.floor(dmg * (r / 100));
+      dmg = Math.floor(dmg * stab);
+      dmg = Math.floor(dmg * typeMod);
+      dmg = Math.floor(dmg * otherMod);
+    }
+    dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
+    dmg *= hitCount;
+    rolls.push(dmg);
+  }
+
+  const minD = Math.min(...rolls);
+  const maxD = Math.max(...rolls);
+  const hp = defender.stats.HP;
+
+  const hazardChip = computeHazardChip(defender);
+  const startHP = Math.max(1, hp - hazardChip);
+
+  const minPct = (minD / hp) * 100;
+  const maxPct = (maxD / hp) * 100;
+
+  const ohko = koChance(rolls, startHP, 1, defender);
+  const twohko = koChance(rolls, startHP, 2, defender);
+  const threehko = koChance(rolls, startHP, 3, defender);
+
+  const effText = typeMod === 4 ? "4×" : typeMod === 2 ? "2×" : typeMod === 1 ? "1×" : typeMod === 0.5 ? "0.5×" : typeMod === 0.25 ? "0.25×" : `${typeMod}×`;
+
+  result.innerHTML = [
+    `<b>${attacker.name}</b> (${attacker.level}) <b>${moveName}</b> (${moveType}, ${moveCategory}, BP ${power}) vs <b>${defender.name}</b> (${defender.level})`,
+    `Damage: <b>${minD} - ${maxD}</b> HP (${minPct.toFixed(1)}% - ${maxPct.toFixed(1)}%)`,
+    `Type: ${effText} | STAB: ${stab.toFixed(1)}× | Hits: ${hitCount} | Critical: ${ctx.critical ? "Yes" : "No"}`,
+    `Defender HP: ${hp} | Entry/Prior chip: ${hazardChip} | Starting HP for KO checks: ${startHP}`,
+    `KO chance: ${pct(ohko)} OHKO | ${pct(twohko)} 2HKO | ${pct(threehko)} 3HKO`
+  ].join("<br>");
+
+  rollsEl.textContent = `16 rolls: ${rolls.join(", ")}`;
 }
 
-async function initDamageCalc() {
+function pct(n) {
+  return `${(n * 100).toFixed(n === 0 || n === 1 ? 0 : 1)}%`;
+}
+
+function koChance(rolls, hp, hits, defender) {
+  const includeRecovery = el("leftovers-recovery").value === "1" && defender.item === "Leftovers";
+  const rec = includeRecovery ? Math.floor(defender.stats.HP / 16) : 0;
+
+  if (hits === 1) {
+    let wins = 0;
+    rolls.forEach(r => { if (r >= hp) wins++; });
+    return wins / rolls.length;
+  }
+
+  if (hits === 2) {
+    let wins = 0;
+    const need = hp + rec;
+    for (const a of rolls) for (const b of rolls) if (a + b >= need) wins++;
+    return wins / (rolls.length ** 2);
+  }
+
+  if (hits === 3) {
+    let wins = 0;
+    const need = hp + rec * 2;
+    for (const a of rolls) for (const b of rolls) for (const c of rolls) if (a + b + c >= need) wins++;
+    return wins / (rolls.length ** 3);
+  }
+
+  return 0;
+}
+
+function syncTypeDefaults(prefix) {
+  const speciesName = el(`${prefix}-species`).value;
+  const p = pokedex[speciesName];
+  if (!p) return;
+  el(`${prefix}-type1`).value = p.Type1;
+  el(`${prefix}-type2`).value = p.Type2 && p.Type2 !== p.Type1 ? p.Type2 : "None";
+
+  const abilityList = toAbilityList(p);
+  setSelectOptions(`${prefix}-ability`, abilityList.length ? abilityList : ["No Ability"], abilityList[0] || "No Ability");
+}
+
+function bindInputs() {
+  document.querySelectorAll("input,select").forEach(node => {
+    node.addEventListener("input", calcDamage);
+    node.addEventListener("change", calcDamage);
+  });
+
+  el("atk-species").addEventListener("change", () => { syncTypeDefaults("atk"); calcDamage(); });
+  el("def-species").addEventListener("change", () => { syncTypeDefaults("def"); calcDamage(); });
+}
+
+async function init() {
   try {
-    const [pokedexRes, movesRes] = await Promise.all([
-      fetch("data/pokedex.json"),
-      fetch("data/moves.json")
-    ]);
-    pokedex = await pokedexRes.json();
-    moves = await movesRes.json();
+    const [pRes, mRes] = await Promise.all([fetch("data/pokedex.json"), fetch("data/moves.json")]);
+    pokedex = await pRes.json();
+    moves = await mRes.json();
 
-    const pokemonNames = buildPokemonList();
+    const species = listSpecies();
     const moveNames = Object.keys(moves).sort((a, b) => a.localeCompare(b));
-    populateSelect(document.getElementById("attacker"), pokemonNames);
-    populateSelect(document.getElementById("defender"), pokemonNames);
-    populateSelect(document.getElementById("move"), moveNames);
 
-    if (pokemonNames.length > 1) document.getElementById("defender").selectedIndex = 1;
-    renderDamage();
-  } catch (error) {
-    console.error("Failed to initialize damage calculator:", error);
-    document.getElementById("result").textContent = "Error loading calculator data.";
+    setSelectOptions("atk-species", species, species[0]);
+    setSelectOptions("def-species", species, species[1] || species[0]);
+    setSelectOptions("move", moveNames, moveNames[0]);
+    setSelectOptions("atk-item", ITEM_OPTIONS, "None");
+    setSelectOptions("def-item", ITEM_OPTIONS, "None");
+
+    const natureNames = Object.keys(NATURES);
+    setSelectOptions("atk-nature", natureNames, "Hardy");
+    setSelectOptions("def-nature", natureNames, "Hardy");
+
+    setTypeOptions("atk");
+    setTypeOptions("def");
+    setSelectOptions("move-override-type", ["None", ...TYPES], "None");
+
+    buildStatsGrid("atk-ev-grid", "atk-ev", { HP: 0, Atk: 252, Def: 0, SpA: 252, SpD: 0, Spe: 4 });
+    buildStatsGrid("atk-iv-grid", "atk-iv", { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 });
+    buildStatsGrid("atk-boost-grid", "atk-boost", { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }, true);
+
+    buildStatsGrid("def-ev-grid", "def-ev", { HP: 252, Atk: 0, Def: 252, SpA: 0, SpD: 4, Spe: 0 });
+    buildStatsGrid("def-iv-grid", "def-iv", { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 });
+    buildStatsGrid("def-boost-grid", "def-boost", { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }, true);
+
+    syncTypeDefaults("atk");
+    syncTypeDefaults("def");
+
+    bindInputs();
+    calcDamage();
+  } catch (e) {
+    console.error("Damage calc init failed:", e);
+    el("result").textContent = "Failed to load calculator data.";
+    el("rolls").textContent = "";
   }
-
-  ["level", "attacker", "defender", "move"].forEach(id => {
-    document.getElementById(id).addEventListener("input", renderDamage);
-    document.getElementById(id).addEventListener("change", renderDamage);
-  });
-  document.getElementById("level").addEventListener("blur", () => {
-    document.getElementById("level").value = String(getClampedLevel());
-  });
 }
 
-initDamageCalc();
+init();
 </script>
 </body>
 </html>
