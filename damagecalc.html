@@ -137,6 +137,7 @@ const FIXED_EV_CONTRIBUTION = 63; // 252 EVs / 4
 const MIN_RANDOM_FACTOR = 0.85;
 const MAX_LEVEL = 100;
 const MIN_LEVEL = 1;
+const DEFAULT_SPECIES_IDX = 9999;
 
 function calcHpStat(base, level) {
   return Math.floor(((2 * base + FIXED_IV + FIXED_EV_CONTRIBUTION) * level) / 100) + level + 10;
@@ -164,7 +165,7 @@ function formatTypeEffect(multiplier) {
 
 function buildPokemonList() {
   return Object.entries(pokedex)
-    .sort((a, b) => (a[1].SpeciesIdx || 9999) - (b[1].SpeciesIdx || 9999) || a[0].localeCompare(b[0]))
+    .sort((a, b) => (a[1].SpeciesIdx || DEFAULT_SPECIES_IDX) - (b[1].SpeciesIdx || DEFAULT_SPECIES_IDX) || a[0].localeCompare(b[0]))
     .map(([name]) => name);
 }
 
@@ -263,6 +264,9 @@ async function initDamageCalc() {
   ["level", "attacker", "defender", "move"].forEach(id => {
     document.getElementById(id).addEventListener("input", renderDamage);
     document.getElementById(id).addEventListener("change", renderDamage);
+  });
+  document.getElementById("level").addEventListener("blur", () => {
+    document.getElementById("level").value = String(getClampedLevel());
   });
 }
 
