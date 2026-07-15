@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Damage Calc - Extinction Y</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+<style>
+  body {
+    font-family: "Lexend", sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 24px;
+  }
+  .calc-container {
+    max-width: 960px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 24px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    font: inherit;
+    box-sizing: border-box;
+    background: #fff;
+  }
+  .result {
+    margin-top: 20px;
+    background: #f7f9fc;
+    border: 1px solid #e0e7f0;
+    border-radius: 10px;
+    padding: 16px;
+    line-height: 1.55;
+  }
+  .result strong {
+    color: #1f4f91;
+  }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  html.dark-mode .calc-container {
+    background: #1e1e2e !important;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.45);
+  }
+  html.dark-mode .field input,
+  html.dark-mode .field select {
+    background: #2a2a3a !important;
+    border-color: #4b4b66 !important;
+    color: #e0e0e0 !important;
+  }
+  html.dark-mode .subtitle { color: #aaa; }
+  html.dark-mode .result {
+    background: #26263a !important;
+    border-color: #3a3a55 !important;
+  }
+  html.dark-mode .result strong { color: #90caf9; }
+</style>
+</head>
+<body>
+<h1>Damage Calc</h1>
+<div class="subtitle">Generation 6 singles damage estimate (base stats, neutral nature, 31 IV / 252 EV)</div>
+
+<div class="calc-container">
+  <div class="grid">
+    <div class="field">
+      <label for="level">Level</label>
+      <input id="level" type="number" min="1" max="100" value="50">
+    </div>
+    <div class="field">
+      <label for="move">Move</label>
+      <select id="move"></select>
+    </div>
+    <div class="field">
+      <label for="attacker">Attacker</label>
+      <select id="attacker"></select>
+    </div>
+    <div class="field">
+      <label for="defender">Defender</label>
+      <select id="defender"></select>
+    </div>
+  </div>
+  <div id="result" class="result">Loading data...</div>
+</div>
+
+<script>
+const typeChart = {
+  Normal: { Rock: 0.5, Ghost: 0, Steel: 0.5 },
+  Fire: { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 2, Bug: 2, Rock: 0.5, Dragon: 0.5, Steel: 2 },
+  Water: { Fire: 2, Water: 0.5, Grass: 0.5, Ground: 2, Rock: 2, Dragon: 0.5 },
+  Electric: { Water: 2, Electric: 0.5, Grass: 0.5, Ground: 0, Flying: 2, Dragon: 0.5 },
+  Grass: { Fire: 0.5, Water: 2, Grass: 0.5, Poison: 0.5, Ground: 2, Flying: 0.5, Bug: 0.5, Rock: 2, Dragon: 0.5, Steel: 0.5 },
+  Ice: { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 0.5, Ground: 2, Flying: 2, Dragon: 2, Steel: 0.5 },
+  Fighting: { Normal: 2, Ice: 2, Poison: 0.5, Flying: 0.5, Psychic: 0.5, Bug: 0.5, Rock: 2, Ghost: 0, Dark: 2, Steel: 2, Fairy: 0.5 },
+  Poison: { Grass: 2, Poison: 0.5, Ground: 0.5, Rock: 0.5, Ghost: 0.5, Steel: 0, Fairy: 2 },
+  Ground: { Fire: 2, Electric: 2, Grass: 0.5, Poison: 2, Flying: 0, Bug: 0.5, Rock: 2, Steel: 2 },
+  Flying: { Electric: 0.5, Grass: 2, Fighting: 2, Bug: 2, Rock: 0.5, Steel: 0.5 },
+  Psychic: { Fighting: 2, Poison: 2, Psychic: 0.5, Dark: 0, Steel: 0.5 },
+  Bug: { Fire: 0.5, Grass: 2, Fighting: 0.5, Poison: 0.5, Flying: 0.5, Psychic: 2, Ghost: 0.5, Dark: 2, Steel: 0.5, Fairy: 0.5 },
+  Rock: { Fire: 2, Ice: 2, Fighting: 0.5, Ground: 0.5, Flying: 2, Bug: 2, Steel: 0.5 },
+  Ghost: { Normal: 0, Psychic: 2, Ghost: 2, Dark: 0.5 },
+  Dragon: { Dragon: 2, Steel: 0.5, Fairy: 0 },
+  Dark: { Fighting: 0.5, Psychic: 2, Ghost: 2, Dark: 0.5, Fairy: 0.5 },
+  Steel: { Fire: 0.5, Water: 0.5, Electric: 0.5, Ice: 2, Rock: 2, Steel: 0.5, Fairy: 2 },
+  Fairy: { Fire: 0.5, Fighting: 2, Poison: 0.5, Dragon: 2, Dark: 2, Steel: 0.5 }
+};
+
+let pokedex = {};
+let moves = {};
+
+function calcHpStat(base, level) {
+  return Math.floor(((2 * base + 31 + 63) * level) / 100) + level + 10;
+}
+
+function calcOtherStat(base, level) {
+  return Math.floor(((2 * base + 31 + 63) * level) / 100) + 5;
+}
+
+function getTypeMultiplier(moveType, defType1, defType2) {
+  const chart = typeChart[moveType] || {};
+  const first = chart[defType1] ?? 1;
+  const second = defType2 && defType2 !== defType1 ? (chart[defType2] ?? 1) : 1;
+  return first * second;
+}
+
+function formatTypeEffect(multiplier) {
+  if (multiplier === 0) return "No effect (0×)";
+  if (multiplier === 0.25) return "Not very effective (0.25×)";
+  if (multiplier === 0.5) return "Not very effective (0.5×)";
+  if (multiplier === 2) return "Super effective (2×)";
+  if (multiplier === 4) return "Super effective (4×)";
+  return "Neutral (1×)";
+}
+
+function buildPokemonList() {
+  return Object.entries(pokedex)
+    .sort((a, b) => (a[1].SpeciesIdx || 9999) - (b[1].SpeciesIdx || 9999) || a[0].localeCompare(b[0]))
+    .map(([name]) => name);
+}
+
+function populateSelect(selectEl, values) {
+  selectEl.innerHTML = values.map(v => `<option value="${v}">${v}</option>`).join("");
+}
+
+function renderDamage() {
+  const level = Math.min(100, Math.max(1, Number(document.getElementById("level").value) || 50));
+  const attackerName = document.getElementById("attacker").value;
+  const defenderName = document.getElementById("defender").value;
+  const moveName = document.getElementById("move").value;
+  const result = document.getElementById("result");
+
+  const attacker = pokedex[attackerName];
+  const defender = pokedex[defenderName];
+  const move = moves[moveName];
+  if (!attacker || !defender || !move) {
+    result.textContent = "Unable to calculate with the selected inputs.";
+    return;
+  }
+
+  const movePower = Number(move.Power) || 0;
+  if (move.Category === "Status" || movePower <= 0) {
+    result.innerHTML = `<strong>${moveName}</strong> is a non-damaging/status move and does not deal direct damage.`;
+    return;
+  }
+
+  const isPhysical = move.Category === "Physical";
+  const atkBase = isPhysical ? attacker.BaseStats.Atk : attacker.BaseStats.SpA;
+  const defBase = isPhysical ? defender.BaseStats.Def : defender.BaseStats.SpD;
+  const atkStat = calcOtherStat(atkBase, level);
+  const defStat = calcOtherStat(defBase, level);
+  const defenderHp = calcHpStat(defender.BaseStats.HP, level);
+
+  const defType1 = defender.Type1;
+  const defType2 = defender.Type2 && defender.Type2 !== defender.Type1 ? defender.Type2 : null;
+  const typeMultiplier = getTypeMultiplier(move.Type, defType1, defType2);
+  const stab = (attacker.Type1 === move.Type || attacker.Type2 === move.Type) ? 1.5 : 1;
+
+  // Core Gen 6 damage skeleton for a single hit: (((((2L/5+2)*P*A/D)/50)+2) * modifiers)
+  const baseDamage = Math.floor(Math.floor(Math.floor(((2 * level / 5 + 2) * movePower * atkStat) / defStat) / 50) + 2);
+  const minDamage = typeMultiplier === 0 ? 0 : Math.max(1, Math.floor(baseDamage * stab * typeMultiplier * 0.85));
+  const maxDamage = typeMultiplier === 0 ? 0 : Math.max(1, Math.floor(baseDamage * stab * typeMultiplier));
+  const minPct = defenderHp > 0 ? (minDamage / defenderHp) * 100 : 0;
+  const maxPct = defenderHp > 0 ? (maxDamage / defenderHp) * 100 : 0;
+
+  result.innerHTML = `
+    <div><strong>${attackerName}</strong> uses <strong>${moveName}</strong> on <strong>${defenderName}</strong> (Lv ${level})</div>
+    <div>Category: ${move.Category} | Type: ${move.Type} | Power: ${movePower}</div>
+    <div>STAB: ${stab === 1.5 ? "Yes (1.5×)" : "No (1×)"} | Type effectiveness: ${formatTypeEffect(typeMultiplier)}</div>
+    <div><strong>Damage:</strong> ${minDamage} - ${maxDamage} HP (${minPct.toFixed(1)}% - ${maxPct.toFixed(1)}%)</div>
+    <div>Random roll range applied: 85% - 100%</div>
+  `;
+}
+
+async function initDamageCalc() {
+  try {
+    const [pokedexRes, movesRes] = await Promise.all([
+      fetch("data/pokedex.json"),
+      fetch("data/moves.json")
+    ]);
+    pokedex = await pokedexRes.json();
+    moves = await movesRes.json();
+
+    const pokemonNames = buildPokemonList();
+    const moveNames = Object.keys(moves).sort((a, b) => a.localeCompare(b));
+    populateSelect(document.getElementById("attacker"), pokemonNames);
+    populateSelect(document.getElementById("defender"), pokemonNames);
+    populateSelect(document.getElementById("move"), moveNames);
+
+    if (pokemonNames.length > 1) document.getElementById("defender").selectedIndex = 1;
+    renderDamage();
+  } catch (error) {
+    console.error("Failed to initialize damage calculator:", error);
+    document.getElementById("result").textContent = "Error loading calculator data.";
+    return;
+  }
+
+  ["level", "attacker", "defender", "move"].forEach(id => {
+    document.getElementById(id).addEventListener("input", renderDamage);
+    document.getElementById(id).addEventListener("change", renderDamage);
+  });
+}
+
+initDamageCalc();
+</script>
+</body>
+</html>
