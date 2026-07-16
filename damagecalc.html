@@ -440,7 +440,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
 </head>
 <body>
 <h1>Damage Calc</h1>
-<p class="subtitle">Select a move ▶ to calculate damage</p>
+<p class="subtitle">Select a move button to calculate damage</p>
 
 <div class="calc-wrap">
 
@@ -1163,6 +1163,7 @@ function updateQuickMoveBtn(prefix, idx) {
   if (!btn) return;
   const moveName = el(`${prefix}-move-${idx}`)?.value || '—';
   btn.textContent = `▶ ${moveName}`;
+  btn.setAttribute("aria-label", `Calculate damage with ${moveName}`);
 }
 
 function onMoveSelectChange(prefix, idx) {
@@ -1188,6 +1189,7 @@ function buildQuickMoves() {
       btn.className = 'qm-move-btn';
       const moveName = el(`${prefix}-move-${i}`)?.value || '—';
       btn.textContent = `▶ ${moveName}`;
+      btn.setAttribute("aria-label", `Calculate damage with ${moveName}`);
       const capturedIdx = i;
       btn.addEventListener('click', () => calcFromMove(prefix, defPrefix, capturedIdx));
       container.appendChild(btn);
@@ -1278,7 +1280,6 @@ function selectTrainerFromInput(prefix) {
 }
 
 function clearTrainerSelection(prefix, label = "") {
-  trainerState[prefix] = -1;
   const trainerSearch = el(`${prefix}-trainer-search`);
   if (trainerSearch) trainerSearch.value = label;
   populateTrainerOptions(prefix);
@@ -1974,7 +1975,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
 
   // Move details on same or next line
   resultEl.appendChild(resultRow([
-    {bold: false, text: `${moveType} · ${moveCategory} · BP ${power}${hitCount > 1 ? ` · ×${hitCount} hits` : ''}`}
+    {bold: false, text: `${moveType} | ${moveCategory} | BP ${power}${hitCount > 1 ? ` | ${hitCount} hits` : ''}`}
   ]));
 
   // Line 2: Damage
