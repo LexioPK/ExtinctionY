@@ -1318,8 +1318,8 @@ function setTrainer(prefix, idx) {
   if (prefix === "atk") setImportedSelection(-1);
 
   if (prefix === "def") {
-    const bt = (trainer.battleType || 'Single').toLowerCase();
-    const battleVal = bt === 'double' ? 'doubles' : 'singles';
+    const battleType = (trainer.battleType || 'Single').toLowerCase();
+    const battleVal = battleType === 'double' ? 'doubles' : 'singles';
     const group = el('battle-type-group');
     if (group) {
       group.querySelectorAll('.toggle-btn').forEach(b => b.classList.toggle('active', b.dataset.value === battleVal));
@@ -1353,8 +1353,7 @@ function buildTrainerIcons(prefix, trainer) {
   const container = el(`${prefix}-poke-icons`);
   if (!container) return;
   container.innerHTML = '';
-  const count = trainer.pokemon.length;
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < trainer.pokemon.length; i++) {
     const slot = document.createElement('div');
     slot.id = `${prefix}-icon-slot-${i}`;
     slot.className = 'poke-icon-slot';
