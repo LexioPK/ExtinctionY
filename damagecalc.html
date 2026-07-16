@@ -34,12 +34,17 @@ h1 { text-align: center; margin: 8px 0 6px; }
 /* ── Top row: [You→Opp] [Result] [Opp→You] ── */
 .top-row {
   display: grid;
-  grid-template-columns: 220px 1fr 220px;
+  grid-template-columns: minmax(250px, 1.2fr) minmax(260px, 0.8fr) minmax(250px, 1.2fr);
   gap: 14px;
   margin-bottom: 14px;
   align-items: flex-start;
 }
-.result-pane { min-width: 0; }
+.result-pane {
+  min-width: 0;
+  max-width: 420px;
+  justify-self: center;
+  width: 100%;
+}
 .qm-pane { min-width: 0; }
 .qm-label {
   font-size: 0.7rem; font-weight: 600; color: var(--muted);
@@ -59,7 +64,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 /* ── Main 3-column grid ── */
 .main-grid {
   display: grid;
-  grid-template-columns: 1fr 240px 1fr;
+  grid-template-columns: minmax(0, 1.15fr) 220px minmax(0, 1.15fr);
   gap: 14px;
   align-items: start;
 }
@@ -144,9 +149,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
   grid-template-areas:
     "species  species  sprite"
     "types    types    item  "
-    "ability  level    .     "
-    "nature   status   .     ";
-  grid-template-columns: 1fr 1fr 1fr;
+    "ability  ability  level "
+    "nature   nature   status";
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 108px;
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -155,7 +160,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;
 }
 .poke-sprite {
-  width: 64px; height: 64px; object-fit: contain;
+  width: 96px; height: 96px; object-fit: contain;
   image-rendering: pixelated;
   border-radius: 6px;
 }
@@ -166,7 +171,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
 .ia-level   { grid-area: level; }
-.ia-level input[type="number"] { max-width: 52px; }
+.ia-level input[type="number"] { max-width: 100%; }
 .ia-status  { grid-area: status; }
 
 /* ── Stat table ── */
@@ -214,7 +219,12 @@ h1 { text-align: center; margin: 8px 0 6px; }
 
 /* ── Trainer nav ── */
 .trainer-nav {
-  display: flex; align-items: center; gap: 5px; margin-bottom: 6px;
+  display: flex; align-items: stretch; gap: 5px; margin-bottom: 6px;
+}
+.trainer-nav-arrows {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
 }
 .trainer-nav-btn {
   padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border);
@@ -222,10 +232,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
   font: inherit; font-size: 0.8rem; flex-shrink: 0;
 }
 .trainer-nav-btn:hover { background: var(--border); }
-.trainer-name {
-  flex: 1; text-align: center; font-size: 0.76rem; color: var(--muted);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
 .trainer-search {
   flex: 1; min-width: 0;
   border: 1px solid var(--border); border-radius: 6px;
@@ -264,13 +270,28 @@ h1 { text-align: center; margin: 8px 0 6px; }
   font-size: 0.73rem; font-weight: 600; color: var(--muted);
   text-transform: uppercase; letter-spacing: .05em; margin: 8px 0 4px;
 }
+.moves-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px auto;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+.moves-head-label {
+  grid-column: 2;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  white-space: nowrap;
+}
 .move-row {
-  display: flex; align-items: center; gap: 5px; margin-bottom: 2px;
+  display: grid; align-items: center; gap: 5px; margin-bottom: 2px;
+  grid-template-columns: minmax(0, 1fr) 42px auto;
 }
 .move-row select {
   border: 1px solid var(--border); border-radius: 6px;
   padding: 4px 7px; font: inherit; font-size: 0.82rem;
-  background: #fff; color: inherit; flex: 1; min-width: 0;
+  background: #fff; color: inherit; min-width: 0; width: 100%;
 }
 .move-row.best-move select {
   border-color: var(--accent); background: rgba(36,92,172,.06);
@@ -280,9 +301,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border: 1px solid var(--border); border-radius: 6px;
   padding: 4px 4px; font: inherit; font-size: 0.78rem;
   text-align: center; background: #fff; color: inherit;
-}
-.move-hits-label {
-  font-size: 0.72rem; color: var(--muted); flex-shrink: 0; white-space: nowrap;
 }
 .move-damage {
   font-size: 0.68rem; color: var(--muted); flex-shrink: 0;
@@ -307,7 +325,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 /* ── Result ── */
 .result {
   background: var(--result-bg); border: 1px solid var(--border);
-  border-radius: 10px; padding: 12px; line-height: 1.6; font-size: 0.88rem;
+  border-radius: 10px; padding: 10px; line-height: 1.45; font-size: 0.8rem;
 }
 .result b { color: var(--accent); }
 .result-placeholder { color: var(--muted); font-size: 0.88rem; text-align: center; padding: 16px 0; }
@@ -315,11 +333,76 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .result-mod-notes { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
 .result-rolls { font-size: 0.75rem; color: var(--muted); word-break: break-word; }
 
+/* ── Pokémon importer ── */
+.importer-textarea {
+  width: 100%;
+  min-height: 150px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  resize: vertical;
+  background: #fff;
+  color: inherit;
+}
+.importer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.import-status {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.imported-section {
+  margin-top: 10px;
+}
+.imported-poke-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.imported-poke-btn {
+  width: 84px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: inherit;
+  cursor: pointer;
+  padding: 6px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font: inherit;
+}
+.imported-poke-btn img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.imported-poke-btn span {
+  font-size: 0.68rem;
+  line-height: 1.2;
+  text-align: center;
+  word-break: break-word;
+}
+.imported-poke-btn:hover,
+.imported-poke-btn.selected {
+  border-color: var(--accent);
+  background: rgba(36,92,172,.1);
+}
+
 /* ── Responsive ── */
 @media (max-width: 1100px) {
   .main-grid { grid-template-columns: 1fr 220px 1fr; }
   .top-row { grid-template-columns: 1fr 1fr; }
-  .top-row .result-pane { grid-column: 1 / -1; order: -1; }
+  .top-row .result-pane { grid-column: 1 / -1; order: -1; max-width: none; }
 }
 @media (max-width: 720px) {
   .main-grid { grid-template-columns: 1fr 1fr; }
@@ -340,7 +423,8 @@ html.dark-mode .move-row select,
 html.dark-mode .hp-section input, html.dark-mode .stat-table input,
 html.dark-mode .stat-table select,
 html.dark-mode .move-hits-input,
-html.dark-mode .trainer-search { background: #22293a; color: var(--text); }
+html.dark-mode .trainer-search,
+html.dark-mode .importer-textarea { background: #22293a; color: var(--text); }
 html.dark-mode .toggle-btn { background: #22293a; color: var(--text); }
 html.dark-mode .toggle-btn.active { background: var(--accent); color: #10121a; }
 html.dark-mode .side-btn { background: #22293a; color: var(--muted); }
@@ -351,6 +435,7 @@ html.dark-mode .poke-icon-slot { background: #22293a; }
 html.dark-mode .qm-move-btn { background: var(--accent); color: #10121a; }
 html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #6090e0; }
 html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
+html.dark-mode .imported-poke-btn { background: #22293a; }
 </style>
 </head>
 <body>
@@ -387,10 +472,12 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 
       <!-- Trainer navigation -->
       <div class="trainer-nav">
-        <button class="trainer-nav-btn" onclick="prevTrainer('atk')">◀</button>
-        <input class="trainer-search" id="atk-trainer-search" type="text" placeholder="Search trainer…" oninput="filterTrainers('atk')">
-        <span class="trainer-name" id="atk-trainer-name">— Select Trainer —</span>
-        <button class="trainer-nav-btn" onclick="nextTrainer('atk')">▶</button>
+        <input class="trainer-search" id="atk-trainer-search" type="text" list="atk-trainer-list" placeholder="Select trainer…" oninput="filterTrainers('atk')" onchange="selectTrainerFromInput('atk')">
+        <datalist id="atk-trainer-list"></datalist>
+        <div class="trainer-nav-arrows">
+          <button class="trainer-nav-btn" type="button" onclick="prevTrainer('atk')">◀</button>
+          <button class="trainer-nav-btn" type="button" onclick="nextTrainer('atk')">▶</button>
+        </div>
       </div>
 
       <!-- Info grid -->
@@ -459,10 +546,10 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 
       <!-- Moves (hits input, no Atk button) -->
       <div class="moves-label">Moves</div>
+      <div class="moves-head"><span class="moves-head-label">Hit ×</span></div>
       <div id="atk-moves-section">
         <div class="move-row" id="atk-move-row-0">
           <select id="atk-move-0" onchange="onMoveSelectChange('atk',0)"></select>
-          <span class="move-hits-label">×</span>
           <input type="number" id="atk-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
           <span class="move-damage" id="atk-move-dmg-0"></span>
         </div>
@@ -473,7 +560,6 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="move-row" id="atk-move-row-1">
           <select id="atk-move-1" onchange="onMoveSelectChange('atk',1)"></select>
-          <span class="move-hits-label">×</span>
           <input type="number" id="atk-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
           <span class="move-damage" id="atk-move-dmg-1"></span>
         </div>
@@ -484,7 +570,6 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="move-row" id="atk-move-row-2">
           <select id="atk-move-2" onchange="onMoveSelectChange('atk',2)"></select>
-          <span class="move-hits-label">×</span>
           <input type="number" id="atk-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
           <span class="move-damage" id="atk-move-dmg-2"></span>
         </div>
@@ -495,7 +580,6 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="move-row" id="atk-move-row-3">
           <select id="atk-move-3" onchange="onMoveSelectChange('atk',3)"></select>
-          <span class="move-hits-label">×</span>
           <input type="number" id="atk-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
           <span class="move-damage" id="atk-move-dmg-3"></span>
         </div>
@@ -504,6 +588,10 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <span class="mi-detail" id="atk-move-bp-3">BP: —</span>
           <span class="mi-detail" id="atk-move-acc-3">Acc: —</span>
         </div>
+      </div>
+      <div class="imported-section" id="atk-imported-section" hidden>
+        <div class="moves-label">Imported Pokémon</div>
+        <div class="imported-poke-list" id="atk-imported-pokemon"></div>
       </div>
     </div>
 
@@ -604,6 +692,15 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
             <button class="side-btn" data-field-group="leftovers" data-side="opp">Opp.</button>
           </div>
         </div>
+
+        <div class="field-hr"></div>
+
+        <div class="field-section-label">Pokémon Importer</div>
+        <textarea id="pokemon-importer" class="importer-textarea" placeholder="Paste Showdown-format Pokémon here..."></textarea>
+        <div class="importer-actions">
+          <button class="trainer-nav-btn" type="button" onclick="importPokemonSets()">Import Pokémon</button>
+          <span class="import-status" id="pokemon-import-status">Paste one or more Pokémon sets to add them below.</span>
+        </div>
       </div>
     </div>
 
@@ -613,10 +710,12 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 
       <!-- Trainer navigation -->
       <div class="trainer-nav">
-        <button class="trainer-nav-btn" onclick="prevTrainer('def')">◀</button>
-        <input class="trainer-search" id="def-trainer-search" type="text" placeholder="Search trainer…" oninput="filterTrainers('def')">
-        <span class="trainer-name" id="def-trainer-name">— Select Trainer —</span>
-        <button class="trainer-nav-btn" onclick="nextTrainer('def')">▶</button>
+        <input class="trainer-search" id="def-trainer-search" type="text" list="def-trainer-list" placeholder="Select trainer…" oninput="filterTrainers('def')" onchange="selectTrainerFromInput('def')">
+        <datalist id="def-trainer-list"></datalist>
+        <div class="trainer-nav-arrows">
+          <button class="trainer-nav-btn" type="button" onclick="prevTrainer('def')">◀</button>
+          <button class="trainer-nav-btn" type="button" onclick="nextTrainer('def')">▶</button>
+        </div>
       </div>
 
       <!-- Info grid -->
@@ -685,10 +784,10 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 
       <!-- Moves (hits input, no Atk button) -->
       <div class="moves-label">Moves</div>
+      <div class="moves-head"><span class="moves-head-label">Hit ×</span></div>
       <div id="def-moves-section">
         <div class="move-row" id="def-move-row-0">
           <select id="def-move-0" onchange="onMoveSelectChange('def',0)"></select>
-          <span class="move-hits-label">×</span>
           <input type="number" id="def-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
           <span class="move-damage" id="def-move-dmg-0"></span>
         </div>
@@ -699,7 +798,6 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="move-row" id="def-move-row-1">
           <select id="def-move-1" onchange="onMoveSelectChange('def',1)"></select>
-          <span class="move-hits-label">×</span>
           <input type="number" id="def-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
           <span class="move-damage" id="def-move-dmg-1"></span>
         </div>
@@ -710,7 +808,6 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="move-row" id="def-move-row-2">
           <select id="def-move-2" onchange="onMoveSelectChange('def',2)"></select>
-          <span class="move-hits-label">×</span>
           <input type="number" id="def-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
           <span class="move-damage" id="def-move-dmg-2"></span>
         </div>
@@ -721,7 +818,6 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="move-row" id="def-move-row-3">
           <select id="def-move-3" onchange="onMoveSelectChange('def',3)"></select>
-          <span class="move-hits-label">×</span>
           <input type="number" id="def-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
           <span class="move-damage" id="def-move-dmg-3"></span>
         </div>
@@ -739,6 +835,13 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 <script>
 const TYPES = ["Normal","Fire","Water","Electric","Grass","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"];
 const STATS = ["HP", "Atk", "Def", "SpA", "SpD", "Spe"];
+const TYPE_COLORS = {
+  Normal: "#A8A77A", Fire: "#EE8130", Water: "#6390F0", Electric: "#F7D02C",
+  Grass: "#7AC74C", Ice: "#96D9D6", Fighting: "#C22E28", Poison: "#A33EA1",
+  Ground: "#E2BF65", Flying: "#A98FF3", Psychic: "#F95587", Bug: "#A6B91A",
+  Rock: "#B6A136", Ghost: "#735797", Dragon: "#6F35FC", Dark: "#705746",
+  Steel: "#B7B7CE", Fairy: "#D685AD"
+};
 
 const TYPE_CHART = {
   Normal:   { Rock: 0.5, Ghost: 0, Steel: 0.5 },
@@ -791,6 +894,7 @@ let moves = {};
 let trainersFlat = [];
 let allItems = [...BASE_ITEMS];
 let lastCalcState = null;
+let importedPokemonSets = [];
 const trainerState = { atk: 0, def: 1 };
 
 function el(id) { return document.getElementById(id); }
@@ -804,6 +908,10 @@ function toSlug(name) {
     .replace(/[^a-z0-9\-]/g, '')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+function trainerDisplayName(trainer) {
+  return `${trainer.trainerName} (${trainer.route})`;
 }
 
 /* ── Toggle helpers ── */
@@ -1020,8 +1128,24 @@ function populateMoveSelects(prefix, moveNames) {
   for (let i = 0; i < 4; i++) {
     setSelectOptions(`${prefix}-move-${i}`, moveNames, moveNames[i] || moveNames[0]);
     updateMoveHitsDefault(prefix, i);
+    updateMoveInfo(prefix, i);
     updateQuickMoveBtn(prefix, i);
   }
+}
+
+function updateMoveInfo(prefix, idx) {
+  const moveName = el(`${prefix}-move-${idx}`)?.value;
+  const move = moveName ? moves[moveName] : null;
+  const typeEl = el(`${prefix}-move-type-${idx}`);
+  const bpEl = el(`${prefix}-move-bp-${idx}`);
+  const accEl = el(`${prefix}-move-acc-${idx}`);
+
+  if (typeEl) {
+    typeEl.textContent = move?.Type || "";
+    typeEl.style.background = move?.Type ? (TYPE_COLORS[move.Type] || "var(--accent)") : "transparent";
+  }
+  if (bpEl) bpEl.textContent = `BP: ${move && num(move.Power, 0) > 0 ? move.Power : "—"}`;
+  if (accEl) accEl.textContent = `Acc: ${move?.Accuracy || "—"}`;
 }
 
 function updateMoveHitsDefault(prefix, idx) {
@@ -1044,6 +1168,7 @@ function updateQuickMoveBtn(prefix, idx) {
 function onMoveSelectChange(prefix, idx) {
   updateQuickMoveBtn(prefix, idx);
   updateMoveHitsDefault(prefix, idx);
+  updateMoveInfo(prefix, idx);
   if (lastCalcState && lastCalcState.atkPrefix === prefix && lastCalcState.moveIdx === idx) {
     const moveName = el(`${prefix}-move-${idx}`)?.value;
     if (moveName) { lastCalcState.moveName = moveName; recalcIfNeeded(); }
@@ -1081,14 +1206,53 @@ function resolveTrainerSpecies(tp) {
   return tp.Name;
 }
 
+function getTrainerMatches(query = "") {
+  const normalized = query.trim().toLowerCase();
+  return trainersFlat
+    .map((trainer, idx) => ({ trainer, idx }))
+    .filter(({ trainer }) => {
+      if (!normalized) return true;
+      const display = trainerDisplayName(trainer).toLowerCase();
+      return display.includes(normalized)
+        || trainer.trainerName.toLowerCase().includes(normalized)
+        || trainer.route.toLowerCase().includes(normalized);
+    });
+}
+
+function populateTrainerOptions(prefix, query = "") {
+  const list = el(`${prefix}-trainer-list`);
+  if (!list) return;
+  list.innerHTML = "";
+  getTrainerMatches(query).slice(0, 100).forEach(({ trainer }) => {
+    const opt = document.createElement("option");
+    opt.value = trainerDisplayName(trainer);
+    list.appendChild(opt);
+  });
+}
+
+function findTrainerIndex(query, allowPartial = false) {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return -1;
+  const exactIdx = trainersFlat.findIndex(trainer => {
+    const display = trainerDisplayName(trainer).toLowerCase();
+    return display === normalized || trainer.trainerName.toLowerCase() === normalized;
+  });
+  if (exactIdx >= 0 || !allowPartial) return exactIdx;
+  const partial = getTrainerMatches(query)[0];
+  return partial ? partial.idx : -1;
+}
+
 function setTrainer(prefix, idx) {
   if (!trainersFlat.length) return;
   trainerState[prefix] = ((idx % trainersFlat.length) + trainersFlat.length) % trainersFlat.length;
   const trainer = trainersFlat[trainerState[prefix]];
   if (!trainer) return;
 
-  el(`${prefix}-trainer-name`).textContent = `${trainer.trainerName} (${trainer.route})`;
+  const trainerSearch = el(`${prefix}-trainer-search`);
+  if (trainerSearch) trainerSearch.value = trainerDisplayName(trainer);
+  populateTrainerOptions(prefix);
   buildTrainerIcons(prefix, trainer);
+  if (prefix === "atk") setImportedSelection(-1);
   selectTrainerPokemon(prefix, 0);
 }
 
@@ -1098,6 +1262,28 @@ function prevTrainer(prefix) {
 
 function nextTrainer(prefix) {
   setTrainer(prefix, trainerState[prefix] + 1);
+}
+
+function filterTrainers(prefix) {
+  const query = el(`${prefix}-trainer-search`)?.value || "";
+  populateTrainerOptions(prefix, query);
+  const exactIdx = findTrainerIndex(query);
+  if (exactIdx >= 0) setTrainer(prefix, exactIdx);
+}
+
+function selectTrainerFromInput(prefix) {
+  const query = el(`${prefix}-trainer-search`)?.value || "";
+  const idx = findTrainerIndex(query, true);
+  if (idx >= 0) setTrainer(prefix, idx);
+}
+
+function clearTrainerSelection(prefix, label = "") {
+  trainerState[prefix] = -1;
+  const trainerSearch = el(`${prefix}-trainer-search`);
+  if (trainerSearch) trainerSearch.value = label;
+  populateTrainerOptions(prefix);
+  const icons = el(`${prefix}-poke-icons`);
+  if (icons) icons.innerHTML = "";
 }
 
 function buildTrainerIcons(prefix, trainer) {
@@ -1199,6 +1385,7 @@ function fillTrainerPokemon(prefix, tp) {
       if (selectHasOption(moveSel, trainerMoves[i])) moveSel.value = trainerMoves[i];
     }
     updateMoveHitsDefault(prefix, i);
+    updateMoveInfo(prefix, i);
     updateQuickMoveBtn(prefix, i);
   }
 
@@ -1233,6 +1420,209 @@ function addOptionIfMissing(selectEl, value) {
     const opt = document.createElement("option");
     opt.value = value; opt.textContent = value;
     selectEl.appendChild(opt);
+  }
+}
+
+function resolveImportedSpecies(name) {
+  if (!name) return null;
+  const exact = Object.keys(pokedex).find(species => species.toLowerCase() === name.toLowerCase());
+  if (exact) return exact;
+  const slug = toSlug(name);
+  return Object.keys(pokedex).find(species => {
+    const baseName = pokedex[species]?.Name || species;
+    return toSlug(species) === slug || toSlug(baseName) === slug;
+  }) || null;
+}
+
+function parseImportedPokemonBlock(block) {
+  const lines = block.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  if (!lines.length) return null;
+
+  const [header, ...rest] = lines;
+  const headerParts = header.split(/\s+@\s+/);
+  const rawSpecies = (headerParts[0] || "").replace(/\s+\((?:M|F)\)$/i, "").trim();
+  const species = resolveImportedSpecies(rawSpecies);
+  if (!species) throw new Error(`Unknown species: ${rawSpecies}`);
+
+  const imported = {
+    species,
+    item: (headerParts[1] || "None").trim() || "None",
+    ability: "",
+    level: 50,
+    nature: "Hardy",
+    ivs: Object.fromEntries(STATS.map(stat => [stat, 31])),
+    moves: []
+  };
+
+  rest.forEach(line => {
+    const abilityMatch = line.match(/^Ability:\s*(.+)$/i);
+    if (abilityMatch) {
+      imported.ability = abilityMatch[1].trim();
+      return;
+    }
+    const levelMatch = line.match(/^Level:\s*(\d+)$/i);
+    if (levelMatch) {
+      imported.level = clamp(num(levelMatch[1], 50), 1, 100);
+      return;
+    }
+    if (/^Friendship:/i.test(line)) return;
+    const natureMatch = line.match(/^([A-Za-z]+)\s+Nature$/i);
+    if (natureMatch && NATURES[natureMatch[1]]) {
+      imported.nature = natureMatch[1];
+      return;
+    }
+    const ivMatch = line.match(/^IVs:\s*(.+)$/i);
+    if (ivMatch) {
+      ivMatch[1].split("/").forEach(part => {
+        const statMatch = part.trim().match(/^(\d+)\s+(HP|Atk|Def|SpA|SpD|Spe)$/i);
+        if (statMatch) imported.ivs[statMatch[2]] = clamp(num(statMatch[1], 31), 0, 31);
+      });
+      return;
+    }
+    const moveMatch = line.match(/^-+\s*(.+)$/);
+    if (moveMatch) imported.moves.push(moveMatch[1].trim());
+  });
+
+  return imported;
+}
+
+function parseImportedPokemonSets(text) {
+  return text
+    .split(/\n\s*\n+/)
+    .map(block => block.trim())
+    .filter(Boolean)
+    .map(parseImportedPokemonBlock);
+}
+
+function setImportedSelection(selectedIdx) {
+  document.querySelectorAll(".imported-poke-btn").forEach((btn, idx) => {
+    btn.classList.toggle("selected", idx === selectedIdx);
+  });
+}
+
+function renderImportedPokemonList() {
+  const section = el("atk-imported-section");
+  const container = el("atk-imported-pokemon");
+  if (!section || !container) return;
+  container.innerHTML = "";
+  if (!importedPokemonSets.length) {
+    section.hidden = true;
+    return;
+  }
+
+  importedPokemonSets.forEach((setData, idx) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "imported-poke-btn";
+    btn.title = `${setData.species}${setData.item && setData.item !== "None" ? ` @ ${setData.item}` : ""}`;
+
+    const img = document.createElement("img");
+    const slug = toSlug(setData.species);
+    const baseSlug = toSlug((pokedex[setData.species]?.Name) || setData.species);
+    img.src = `pokemon_sprites/${slug}.png`;
+    img.alt = setData.species;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.src = `pokemon_sprites/${baseSlug}.png`;
+      }
+    };
+
+    const label = document.createElement("span");
+    label.textContent = setData.species;
+
+    btn.appendChild(img);
+    btn.appendChild(label);
+    btn.addEventListener("click", () => applyImportedPokemon(idx));
+    container.appendChild(btn);
+  });
+
+  section.hidden = false;
+}
+
+function fillImportedPokemon(prefix, imported) {
+  const speciesSel = el(`${prefix}-species`);
+  if (speciesSel && selectHasOption(speciesSel, imported.species)) {
+    speciesSel.value = imported.species;
+  }
+  syncTypeDefaults(prefix, imported.species);
+  updateSprite(prefix);
+
+  const levelInp = el(`${prefix}-level`);
+  if (levelInp) levelInp.value = imported.level;
+
+  const natureSel = el(`${prefix}-nature`);
+  if (natureSel && NATURES[imported.nature]) natureSel.value = imported.nature;
+
+  const abilitySel = el(`${prefix}-ability`);
+  if (abilitySel) {
+    const ability = imported.ability || abilitySel.value || "No Ability";
+    addOptionIfMissing(abilitySel, ability);
+    abilitySel.value = ability;
+  }
+
+  const itemSel = el(`${prefix}-item`);
+  if (itemSel) {
+    const item = imported.item || "None";
+    addOptionIfMissing(itemSel, item);
+    itemSel.value = item;
+  }
+
+  const statusSel = el(`${prefix}-status`);
+  if (statusSel) statusSel.value = "none";
+
+  STATS.forEach(stat => {
+    const ivInput = el(`${prefix}-iv-${stat}`);
+    if (ivInput) ivInput.value = imported.ivs[stat] ?? 31;
+  });
+
+  for (let i = 0; i < 4; i++) {
+    const moveSel = el(`${prefix}-move-${i}`);
+    if (!moveSel) continue;
+    const moveName = imported.moves[i] || moveSel.options[0]?.value || "";
+    if (moveName) {
+      addOptionIfMissing(moveSel, moveName);
+      moveSel.value = moveName;
+    }
+    updateMoveHitsDefault(prefix, i);
+    updateMoveInfo(prefix, i);
+    updateQuickMoveBtn(prefix, i);
+  }
+
+  updateStatTotals(prefix);
+  const maxHP = num(el(`${prefix}-total-HP`)?.textContent, 0);
+  const hpInput = el(`${prefix}-current-hp`);
+  if (hpInput && maxHP > 0) hpInput.value = maxHP;
+  updateHPBar(prefix);
+  recalcIfNeeded();
+}
+
+function applyImportedPokemon(idx) {
+  const imported = importedPokemonSets[idx];
+  if (!imported) return;
+  clearTrainerSelection("atk", "Imported Pokémon");
+  setImportedSelection(idx);
+  fillImportedPokemon("atk", imported);
+}
+
+function importPokemonSets() {
+  const textarea = el("pokemon-importer");
+  const status = el("pokemon-import-status");
+  const raw = textarea?.value.trim() || "";
+  if (!raw) {
+    importedPokemonSets = [];
+    renderImportedPokemonList();
+    if (status) status.textContent = "Paste one or more Pokémon sets to add them below.";
+    return;
+  }
+
+  try {
+    importedPokemonSets = parseImportedPokemonSets(raw);
+    renderImportedPokemonList();
+    if (status) status.textContent = `Imported ${importedPokemonSets.length} Pokémon. Click a sprite below to load it on the You side.`;
+  } catch (error) {
+    importedPokemonSets = [];
+    renderImportedPokemonList();
+    if (status) status.textContent = error.message || "Could not import Pokémon.";
   }
 }
 
@@ -1689,6 +2079,8 @@ function bindInputs() {
       updateSprite(prefix);
       recalcIfNeeded();
     });
+
+    el(`${prefix}-trainer-search`)?.addEventListener("focus", () => populateTrainerOptions(prefix, el(`${prefix}-trainer-search`)?.value || ""));
   });
 
   // Field toggle groups (exclusive)
@@ -1697,6 +2089,10 @@ function bindInputs() {
 
   // Side buttons (independent toggles)
   bindSideButtons();
+
+  el("pokemon-importer")?.addEventListener("keydown", event => {
+    if ((event.ctrlKey || event.metaKey) && event.key === "Enter") importPokemonSets();
+  });
 }
 
 async function init() {
@@ -1721,6 +2117,9 @@ async function init() {
         }
       }
     }
+
+    populateTrainerOptions("atk");
+    populateTrainerOptions("def");
 
     // Collect all trainer items for item selects
     const trainerItems = new Set();
