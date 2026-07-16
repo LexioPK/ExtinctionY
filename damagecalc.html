@@ -915,7 +915,7 @@ let pokedex = {};
 let moves = {};
 let trainersFlat = [];
 let allItems = [...BASE_ITEMS];
-const NO_MOVE = "No Move";
+const NO_MOVE_OPTION = "No Move";
 const DEFAULT_MULTI_HIT_COUNT = 2;
 let lastCalcState = null;
 let importedPokemonSets = [];
@@ -1154,6 +1154,7 @@ function listSpecies() {
 /* ── Move selects ── */
 function populateMoveSelects(prefix, moveNames) {
   for (let i = 0; i < 4; i++) {
+    // moveNames[0] is the explicit "No Move" placeholder, so defaults start from the first real move.
     const defaultMove = moveNames[Math.min(i + 1, moveNames.length - 1)] || moveNames[0];
     setSelectOptions(`${prefix}-move-${i}`, moveNames, defaultMove);
     updateMoveHitsDefault(prefix, i);
@@ -1164,7 +1165,7 @@ function populateMoveSelects(prefix, moveNames) {
 
 function updateMoveInfo(prefix, idx) {
   const moveName = el(`${prefix}-move-${idx}`)?.value;
-  const move = moveName && moveName !== NO_MOVE ? moves[moveName] : null;
+  const move = moveName && moveName !== NO_MOVE_OPTION ? moves[moveName] : null;
   const typeEl = el(`${prefix}-move-type-${idx}`);
   const bpEl = el(`${prefix}-move-bp-${idx}`);
   const accEl = el(`${prefix}-move-acc-${idx}`);
@@ -1481,7 +1482,7 @@ function fillTrainerPokemon(prefix, tp) {
   const trainerMoves = tp.Moves || [];
   for (let i = 0; i < 4; i++) {
     const moveSel = el(`${prefix}-move-${i}`);
-    const moveName = trainerMoves[i] || NO_MOVE;
+    const moveName = trainerMoves[i] || NO_MOVE_OPTION;
     if (moveSel) {
       addOptionIfMissing(moveSel, moveName);
       moveSel.value = moveName;
@@ -1682,7 +1683,7 @@ function fillImportedPokemon(prefix, imported) {
   for (let i = 0; i < 4; i++) {
     const moveSel = el(`${prefix}-move-${i}`);
     if (!moveSel) continue;
-    const moveName = imported.moves[i] || NO_MOVE;
+    const moveName = imported.moves[i] || NO_MOVE_OPTION;
     if (moveName) {
       addOptionIfMissing(moveSel, moveName);
       moveSel.value = moveName;
@@ -2343,7 +2344,7 @@ async function init() {
     allItems = [...new Set([...BASE_ITEMS, ...Array.from(trainerItems).sort()])];
 
     const species = listSpecies();
-    const moveNames = [NO_MOVE, ...Object.keys(moves).sort((a, b) => a.localeCompare(b))];
+    const moveNames = [NO_MOVE_OPTION, ...Object.keys(moves).sort((a, b) => a.localeCompare(b))];
 
     // Species selects
     setSelectOptions("atk-species", species, species[0]);
