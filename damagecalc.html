@@ -174,7 +174,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   height: 20px;
   border: 1px dashed var(--border);
   border-radius: 4px;
-  font-size: 0.56rem;
+  font-size: 0.75rem;
   color: var(--muted);
   display: inline-flex;
   align-items: center;
@@ -2114,7 +2114,7 @@ function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveNam
   if (defenderAbility === "Dune Guard" && ctx.weather === "sand") { def *= 1.25; notes.push("Dune Guard ×1.25 Def/SpD"); }
   if (defenderAbility === "Glacial Guard" && ctx.weather === "hail") { def *= 1.25; notes.push("Glacial Guard ×1.25 Def/SpD"); }
   if (!isPhysical && (defender.type1 === "Rock" || defender.type2 === "Rock") && ctx.weather === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
-  if (defenderAbility === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push("Perserverance ×1.3 Def"); }
+  if (defenderAbility === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push("Perseverance ×1.3 Def"); }
   if (isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") { atk *= 0.5; notes.push("Burn ×0.5 Atk"); }
 
   return { atk: Math.max(1, Math.floor(atk)), def: Math.max(1, Math.floor(def)), isPhysical };
