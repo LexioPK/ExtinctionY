@@ -708,7 +708,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <textarea id="pokemon-importer" class="importer-textarea" placeholder="Paste Showdown-format Pokémon here..."></textarea>
         <div class="importer-actions">
           <button class="trainer-nav-btn" type="button" onclick="importPokemonSets()">Import Pokémon</button>
-          <button class="trainer-nav-btn" type="button" onclick="resetImportedPokemon()">Reset</button>
+          <button class="trainer-nav-btn" type="button" onclick="resetImportedPokemon()" title="Clear all imported Pokémon">Reset</button>
           <span class="import-status" id="pokemon-import-status">Paste one or more Pokémon sets to add them below.</span>
         </div>
       </div>
@@ -903,6 +903,7 @@ let pokedex = {};
 let moves = {};
 let trainersFlat = [];
 let allItems = [...BASE_ITEMS];
+const DEFAULT_MULTI_HIT_COUNT = 2;
 let lastCalcState = null;
 let importedPokemonSets = [];
 const trainerState = { atk: 0, def: 1 };
@@ -1164,7 +1165,7 @@ function updateMoveHitsDefault(prefix, idx) {
   if (!hitsInput) return;
   if (moveName && moves[moveName]) {
     const isMultiHit = autoHitCount(moveName, moves[moveName]) > 1;
-    hitsInput.value = isMultiHit ? 2 : 1;
+    hitsInput.value = isMultiHit ? DEFAULT_MULTI_HIT_COUNT : 1;
   }
 }
 
