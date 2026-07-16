@@ -1154,7 +1154,8 @@ function listSpecies() {
 /* ── Move selects ── */
 function populateMoveSelects(prefix, moveNames) {
   for (let i = 0; i < 4; i++) {
-    setSelectOptions(`${prefix}-move-${i}`, moveNames, moveNames[i + 1] || moveNames[1] || moveNames[0]);
+    const defaultMove = moveNames[Math.min(i + 1, moveNames.length - 1)] || moveNames[0];
+    setSelectOptions(`${prefix}-move-${i}`, moveNames, defaultMove);
     updateMoveHitsDefault(prefix, i);
     updateMoveInfo(prefix, i);
     updateQuickMoveBtn(prefix, i);
