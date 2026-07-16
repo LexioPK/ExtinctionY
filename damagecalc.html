@@ -2000,7 +2000,7 @@ function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveNam
   if (!isPhysical && defender.item === "Assault Vest") { def *= 1.5; notes.push("Assault Vest ×1.5 SpD"); }
   if (defender.item === "Eviolite" && defender.data?.Evolutions?.length) { def *= 1.5; notes.push("Eviolite ×1.5 Def"); }
   if (!isPhysical && (defender.type1 === "Rock" || defender.type2 === "Rock") && getToggleValue("weather-group") === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
-  if (defender.ability === "Marvel Scale" && defender.status !== "none" && isPhysical) { def *= 1.5; notes.push("Marvel Scale ×1.5 Def"); }
+  if (defender.ability === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push("Perserverance ×1.3 Def"); }
   if (isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") { atk *= 0.5; notes.push("Burn ×0.5 Atk"); }
 
   return { atk: Math.max(1, Math.floor(atk)), def: Math.max(1, Math.floor(def)), isPhysical };
@@ -2043,17 +2043,17 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (attacker.ability === "Tinted Lens" && typeMod < 1 && typeMod > 0) { mod *= 2; notes.push("Tinted Lens ×2"); }
   if (attacker.item === "Life Orb") { mod *= 1.3; notes.push("Life Orb ×1.3"); }
   if (attacker.item === "Expert Belt" && typeMod > 1) { mod *= 1.2; notes.push("Expert Belt ×1.2"); }
-  if (attacker.item === "Muscle Band" && moveCategory === "Physical") { mod *= 1.1; notes.push("Muscle Band ×1.1"); }
-  if (attacker.item === "Wise Glasses" && moveCategory === "Special") { mod *= 1.1; notes.push("Wise Glasses ×1.1"); }
+  if (attacker.item === "Muscle Band" && moveCategory === "Physical") { mod *= 1.2; notes.push("Muscle Band ×1.2"); }
+  if (attacker.item === "Wise Glasses" && moveCategory === "Special") { mod *= 1.2; notes.push("Wise Glasses ×1.2"); }
 
   const boostType = TYPE_BOOST_ITEMS[attacker.item];
   if (boostType && boostType === moveType) { mod *= 1.2; notes.push(`${attacker.item} ×1.2`); }
 
   const moveDesc = String(moves[moveName]?.Description || "");
-  if (attacker.ability === "Iron Fist" && /\(.*Punch.*\)/i.test(moveDesc)) { mod *= 1.2; notes.push("Iron Fist ×1.2"); }
+  if (attacker.ability === "Iron Fist" && /\(.*Punch.*\)/i.test(moveDesc)) { mod *= 1.3; notes.push("Iron Fist ×1.3"); }
   if (attacker.ability === "Reckless" && /Recoil/i.test(moveDesc)) { mod *= 1.2; notes.push("Reckless ×1.2"); }
 
-  const isLowHP = attacker.currentHP <= Math.floor(attacker.stats.HP / 3);
+  const isLowHP = attacker.currentHP <= Math.floor(attacker.stats.HP / 2);
   if (isLowHP) {
     if (attacker.ability === "Blaze"   && moveType === "Fire")  { mod *= 1.5; notes.push("Blaze ×1.5"); }
     if (attacker.ability === "Torrent" && moveType === "Water") { mod *= 1.5; notes.push("Torrent ×1.5"); }
