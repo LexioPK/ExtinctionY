@@ -19,6 +19,8 @@
   --hp-green: #4caf50;
   --hp-yellow: #ffc107;
   --hp-red: #f44336;
+  --speed-fast: #2e7d32;
+  --speed-slow: #c62828;
 }
 body {
   font-family: "Lexend", sans-serif;
@@ -149,7 +151,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .field select {
   border: 1px solid var(--border); border-radius: 7px;
   padding: 5px 7px; font: inherit; background: #fff; color: inherit;
-  display: inline-block; max-width: 100%;
+  display: block; width: 100%; max-width: 100%; box-sizing: border-box;
 }
 
 /* ── Pokemon info grid ── */
@@ -180,7 +182,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-nature  { grid-area: nature; }
 .ia-level   { grid-area: level; }
 .ia-level input[type="number"] { max-width: 100%; width: 56px; }
-.form-row { margin-top: 4px; }
+.form-row { margin-top: 4px; width: 100%; }
 .form-row select { width: 100%; }
 
 /* ── Stat + Status row ── */
@@ -211,6 +213,8 @@ h1 { text-align: center; margin: 8px 0 6px; }
 }
 .stat-table td:first-child { font-weight: 600; font-size: 0.73rem; color: var(--muted); }
 .stat-table .st-total { font-weight: 600; color: var(--accent); min-width: 28px; }
+.stat-table .st-total.speed-fast { color: var(--speed-fast); }
+.stat-table .st-total.speed-slow { color: var(--speed-slow); }
 .stat-table input {
   width: 38px; border: 1px solid var(--border); border-radius: 4px;
   padding: 2px 2px; font: inherit; font-size: 0.76rem; text-align: center;
@@ -339,13 +343,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
   padding: 1px 0 0 2px; flex-wrap: wrap; align-items: center;
 }
 .compact-moves-head {
-  grid-template-columns: minmax(0, 175px) auto auto auto 42px;
+  grid-template-columns: minmax(0, 1fr) 72px 56px 62px 42px;
 }
 .compact-moves-head .moves-head-label {
   grid-column: 5;
 }
 .compact-move-row {
-  grid-template-columns: minmax(0, 175px) auto auto auto 42px;
+  grid-template-columns: minmax(0, 1fr) 72px 56px 62px 42px;
   margin-bottom: 5px;
 }
 .compact-move-row .mi-type,
@@ -356,9 +360,11 @@ h1 { text-align: center; margin: 8px 0 6px; }
   font-size: 0.66rem; font-weight: 700; padding: 1px 5px;
   border-radius: 3px; color: #fff; white-space: nowrap;
   text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  width: 72px; box-sizing: border-box; display: inline-flex; justify-content: center;
 }
 .mi-detail {
-  font-size: 0.68rem; color: var(--muted); white-space: nowrap;
+  font-size: 0.68rem; color: var(--muted); white-space: nowrap; width: 100%;
+  text-align: center;
 }
 
 /* ── Result ── */
@@ -1106,6 +1112,21 @@ function updateStatTotals(prefix) {
   });
 
   updateHPBar(prefix);
+}
+
+function updateSpeedComparisonColors() {
+  const atkSpeedCell = el("atk-total-Spe");
+  const defSpeedCell = el("def-total-Spe");
+  if (!atkSpeedCell || !defSpeedCell) return;
+
+  [atkSpeedCell, defSpeedCell].forEach(cell => cell.classList.remove("speed-fast", "speed-slow"));
+
+  const atkSpeed = num(atkSpeedCell.textContent, NaN);
+  const defSpeed = num(defSpeedCell.textContent, NaN);
+  if (!Number.isFinite(atkSpeed) || !Number.isFinite(defSpeed) || atkSpeed === defSpeed) return;
+
+  atkSpeedCell.classList.add(atkSpeed > defSpeed ? "speed-fast" : "speed-slow");
+  defSpeedCell.classList.add(defSpeed > atkSpeed ? "speed-fast" : "speed-slow");
 }
 
 /* ── HP bar ── */
@@ -2141,7 +2162,18 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
     {bold: false, text: ` (${minPct.toFixed(1)}%–${maxPct.toFixed(1)}%)`}
   ]));
 
-  // Line 2: Who attacks with what → who defends
+  // Line 2: KO
+  resultEl.appendChild(resultRow([
+    {bold: false, text: "KO: "},
+    {bold: true,  text: `${pct(ohko)} OHKO`},
+    {bold: false, text: ` | ${pct(twohko)} 2HKO | ${pct(threehko)} 3HKO`}
+  ]));
+
+  const koSep = document.createElement("hr");
+  koSep.className = "result-sep";
+  resultEl.appendChild(koSep);
+
+  // Line 3: Who attacks with what → who defends
   resultEl.appendChild(resultRow([
     {bold: true,  text: `${atkLabel}`},
     {bold: false, text: ` (${attacker.name} Lv.${attacker.level}) used `},
@@ -2151,16 +2183,9 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
     {bold: false, text: ` (${defender.name} Lv.${defender.level}) [HP: ${currentHP}/${hp}]`}
   ]));
 
-  // Line 3: Move details
+  // Line 4: Move details
   resultEl.appendChild(resultRow([
     {bold: false, text: `${moveType} | ${moveCategory} | BP ${power}${hitCount > 1 ? ` | ${hitCount} hits` : ""}`}
-  ]));
-
-  // Line 3: KO
-  resultEl.appendChild(resultRow([
-    {bold: false, text: "KO: "},
-    {bold: true,  text: `${pct(ohko)} OHKO`},
-    {bold: false, text: ` | ${pct(twohko)} 2HKO | ${pct(threehko)} 3HKO`}
   ]));
 
   // Greyed modifier notes (only if any)
@@ -2206,6 +2231,7 @@ function calcFromMove(atkPrefix, defPrefix, moveIdx) {
 function recalcIfNeeded() {
   updateStatTotals("atk");
   updateStatTotals("def");
+  updateSpeedComparisonColors();
   if (lastCalcState) {
     const { atkPrefix, defPrefix, moveName, moveIdx } = lastCalcState;
     const hitsInput = el(`${atkPrefix}-move-hits-${moveIdx}`);
@@ -2329,6 +2355,7 @@ async function init() {
 
     syncTypeDefaults("atk");
     syncTypeDefaults("def");
+    updateSpeedComparisonColors();
 
     // Build quick-moves panel buttons
     buildQuickMoves();
