@@ -1030,6 +1030,33 @@ let lastCalcState = null;
 let importedPokemonSets = [];
 const trainerState = { atk: 0, def: 1 };
 
+// Ability names that were replaced in Extinction Y (old Showdown name → new game name)
+const ABILITY_REPLACEMENTS = {
+  "Forewarn":     "Demoralize",
+  "Frisk":        "Sharpness",
+  "Grass Pelt":   "Biodiverse",
+  "Damp":         "Slush Rush",
+  "Anticipation": "Mending",
+  "Sand Veil":    "Dune Guard",
+  "Snow Cloak":   "Glacial Guard",
+  "Marvel Scale": "Perseverance",
+  "Run Away":     "Overload",
+  "Tangled Feet": "Cyclone",
+  "Zen Mode":     "Versatility",
+  "Poison Touch": "Envenom",
+  "Pickpocket":   "Confiscate",
+  "Heavy Metal":  "Aegis",
+  "Light Metal":  "Hyper Aggresion"
+};
+
+// Abilities that double Speed in a specific weather condition
+const WEATHER_SPEED_ABILITIES = {
+  "Swift Swim":  "rain",
+  "Slush Rush":  "hail",
+  "Chlorophyll": "sun",
+  "Sand Rush":   "sand"
+};
+
 function el(id) { return document.getElementById(id); }
 function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 function num(v, d = 0) { const n = Number(v); return Number.isFinite(n) ? n : d; }
@@ -1208,6 +1235,14 @@ function updateStatTotals(prefix) {
       const boost = clamp(num(el(`${prefix}-boost-${stat}`)?.value, 0), -6, 6);
       // Stage multiplier: +stage = (2+stage)/2, -stage = 2/(2+|stage|)
       if (boost !== 0) display = Math.floor(raw * stageMultiplier(boost));
+      // Weather speed boost (Swift Swim, Slush Rush, Chlorophyll, Sand Rush)
+      if (stat === "Spe") {
+        const ability = el(`${prefix}-ability`)?.value || "";
+        const weather = getToggleValue("weather-group") || "none";
+        if (WEATHER_SPEED_ABILITIES[ability] === weather) {
+          display = display * 2;
+        }
+      }
     }
     const totalCell = el(`${prefix}-total-${stat}`);
     if (totalCell) totalCell.textContent = display;
@@ -1674,7 +1709,10 @@ function parseImportedPokemonBlock(block) {
 
   const [header, ...rest] = lines;
   const headerParts = header.split(/\s+@\s+/);
-  const rawSpecies = (headerParts[0] || "").replace(/\s+\((?:M|F)\)$/i, "").trim();
+  // Strip trailing gender marker then check for nickname pattern "Nickname (Species)"
+  const withoutGender = (headerParts[0] || "").replace(/\s+\((?:M|F)\)$/i, "").trim();
+  const nicknameMatch = withoutGender.match(/\(([^)]+)\)$/);
+  const rawSpecies = nicknameMatch ? nicknameMatch[1].trim() : withoutGender;
   const species = resolveImportedSpecies(rawSpecies);
   if (!species) throw new Error(`Unknown species: ${rawSpecies}`);
 
@@ -1691,7 +1729,9 @@ function parseImportedPokemonBlock(block) {
   rest.forEach(line => {
     const abilityMatch = line.match(/^Ability:\s*(.+)$/i);
     if (abilityMatch) {
-      imported.ability = abilityMatch[1].trim();
+      const rawAbility = abilityMatch[1].trim();
+      // Map replaced ability names to their Extinction Y counterparts
+      imported.ability = ABILITY_REPLACEMENTS[rawAbility] || rawAbility;
       return;
     }
     const levelMatch = line.match(/^Level:\s*(\d+)$/i);
@@ -1855,6 +1895,11 @@ function importPokemonSets() {
     importedPokemonSets = parseImportedPokemonSets(raw);
     renderImportedPokemonList();
     if (status) status.textContent = `Imported ${importedPokemonSets.length} Pokémon. Click a sprite below to load it on the You side.`;
+    // Persist to localStorage so imports survive a page refresh
+    try {
+      localStorage.setItem("importedPokemonSets", JSON.stringify(importedPokemonSets));
+      localStorage.setItem("importedPokemonText", raw);
+    } catch (_) {}
   } catch (error) {
     importedPokemonSets = [];
     renderImportedPokemonList();
@@ -1870,6 +1915,11 @@ function resetImportedPokemon() {
   if (textarea) textarea.value = "";
   const status = el("pokemon-import-status");
   if (status) status.textContent = "Paste one or more Pokémon sets to add them below.";
+  // Clear persisted imports
+  try {
+    localStorage.removeItem("importedPokemonSets");
+    localStorage.removeItem("importedPokemonText");
+  } catch (_) {}
 }
 
 /* ── Per-move damage range (for labels) ── */
@@ -2578,6 +2628,22 @@ async function init() {
       setTrainer("atk", 0);
       setTrainer("def", 0);
     }
+
+    // Restore imported Pokémon sets from a previous session
+    try {
+      const savedSets = localStorage.getItem("importedPokemonSets");
+      const savedText = localStorage.getItem("importedPokemonText");
+      if (savedSets) {
+        importedPokemonSets = JSON.parse(savedSets);
+        renderImportedPokemonList();
+        const textarea = el("pokemon-importer");
+        if (textarea && savedText) textarea.value = savedText;
+        const status = el("pokemon-import-status");
+        if (status && importedPokemonSets.length) {
+          status.textContent = `${importedPokemonSets.length} Pokémon loaded from previous session. Click a sprite to load it on the You side.`;
+        }
+      }
+    } catch (_) {}
 
   } catch (e) {
     console.error("Damage calc init failed:", e);
