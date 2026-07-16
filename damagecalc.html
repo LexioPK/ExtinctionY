@@ -8,318 +8,639 @@
 <link rel="stylesheet" href="header.css">
 <script src="header.js" defer></script>
 <style>
-  :root {
-    --bg: #f1f3f7;
-    --card: #ffffff;
-    --text: #1f1f1f;
-    --muted: #666;
-    --border: #d9deea;
-    --accent: #245cac;
-    --result-bg: #f8faff;
-  }
-  body {
-    font-family: "Lexend", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    margin: 0;
-    padding: 18px;
-  }
-  h1 { text-align: center; margin: 8px 0 6px; }
-  .subtitle { text-align: center; color: var(--muted); margin: 0 0 16px; }
-  .calc-wrap {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: grid;
-    gap: 14px;
-  }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    padding: 14px;
-  }
-  .card h2 {
-    margin: 0 0 10px;
-    font-size: 1.05rem;
-    color: var(--accent);
-  }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .row4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .field label {
-    display: block;
-    font-size: 0.82rem;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
-  .field input, .field select {
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px;
-    font: inherit;
-    background: #fff;
-    color: inherit;
-  }
-  .set-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .stat-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.82rem;
-    margin-top: 8px;
-  }
-  .stat-table th, .stat-table td {
-    padding: 4px 6px;
-    border: 1px solid var(--border);
-    text-align: center;
-    vertical-align: middle;
-  }
-  .stat-table th {
-    background: var(--result-bg);
-    font-weight: 600;
-    color: var(--muted);
-    font-size: 0.76rem;
-  }
-  .stat-table td:first-child {
-    font-weight: 600;
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
-  .stat-table .st-total {
-    font-weight: 600;
-    color: var(--accent);
-    min-width: 36px;
-  }
-  .stat-table input {
-    width: 50px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2px 4px;
-    font: inherit;
-    font-size: 0.82rem;
-    text-align: center;
-    background: #fff;
-    color: inherit;
-    box-sizing: border-box;
-  }
-  .stat-table select {
-    width: 58px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2px;
-    font: inherit;
-    font-size: 0.82rem;
-    background: #fff;
-    color: inherit;
-  }
-  html.dark-mode .stat-table input,
-  html.dark-mode .stat-table select { background: #22293a; color: var(--text); }
-  .result {
-    background: var(--result-bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px;
-    line-height: 1.45;
-    font-size: 0.95rem;
-  }
-  .result b { color: var(--accent); }
-  .rolls {
-    margin-top: 8px;
-    font-size: 0.82rem;
-    color: var(--muted);
-    word-break: break-word;
-  }
-  @media (max-width: 1120px) {
-    .row2, .set-grid { grid-template-columns: 1fr; }
-    .row4 { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 700px) {
-    .row3 { grid-template-columns: 1fr; }
-    .row4 { grid-template-columns: 1fr; }
-  }
-  html.dark-mode {
-    --bg: #10121a;
-    --card: #1a1f2c;
-    --text: #e6e9f2;
-    --muted: #a9b0c7;
-    --border: #3a435b;
-    --accent: #8ab4ff;
-    --result-bg: #151b28;
-  }
-  html.dark-mode .field input,
-  html.dark-mode .field select { background: #22293a; color: var(--text); }
+:root {
+  --bg: #f1f3f7;
+  --card: #ffffff;
+  --text: #1f1f1f;
+  --muted: #666;
+  --border: #d9deea;
+  --accent: #245cac;
+  --result-bg: #f8faff;
+  --hp-green: #4caf50;
+  --hp-yellow: #ffc107;
+  --hp-red: #f44336;
+}
+body {
+  font-family: "Lexend", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 18px;
+}
+h1 { text-align: center; margin: 8px 0 6px; }
+.subtitle { text-align: center; color: var(--muted); margin: 0 0 16px; }
+.calc-wrap { max-width: 1440px; margin: 0 auto; }
+
+/* ── Main 3-column grid ── */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 250px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.middle-col { display: flex; flex-direction: column; gap: 12px; }
+
+/* ── Card base ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.08);
+  padding: 14px;
+}
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  color: var(--accent);
+}
+
+/* ── Field (Battle Context) toggles ── */
+.toggle-group { display: flex; flex-wrap: wrap; gap: 3px; }
+.toggle-btn {
+  padding: 3px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  background: var(--bg);
+  color: var(--text);
+  transition: background .12s, color .12s;
+  white-space: nowrap;
+}
+.toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.field-hr { border: none; border-top: 1px solid var(--border); margin: 7px 0; }
+.field-section-label {
+  font-size: 0.7rem; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .05em; margin: 4px 0 3px;
+}
+.field-toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 6px; margin-bottom: 3px;
+}
+.field-toggle-row .ftlabel { font-size: 0.75rem; color: var(--muted); flex: 1; }
+.battle-row { display: flex; gap: 4px; margin-bottom: 4px; }
+.battle-row .toggle-btn { flex: 1; text-align: center; }
+
+/* ── Fields (inputs/selects inside pokemon cards) ── */
+.field label {
+  display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 2px; white-space: nowrap;
+}
+.field input {
+  border: 1px solid var(--border); border-radius: 7px;
+  padding: 5px 7px; font: inherit; background: #fff; color: inherit;
+  width: 100%; box-sizing: border-box;
+}
+.field select {
+  border: 1px solid var(--border); border-radius: 7px;
+  padding: 5px 7px; font: inherit; background: #fff; color: inherit;
+  display: inline-block; max-width: 100%;
+}
+
+/* ── Pokemon info grid ── */
+.info-grid {
+  display: grid;
+  grid-template-areas:
+    "species species"
+    "types   types"
+    "ability item"
+    "nature  level"
+    "blank   status";
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.ia-species { grid-area: species; }
+.ia-types { grid-area: types; display: flex; gap: 6px; }
+.ia-types .field { flex: 0 0 auto; }
+.ia-ability { grid-area: ability; }
+.ia-item    { grid-area: item; }
+.ia-nature  { grid-area: nature; }
+.ia-level   { grid-area: level; }
+.ia-status  { grid-area: status; }
+
+/* ── Stat table ── */
+.stat-table {
+  width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 6px;
+}
+.stat-table th, .stat-table td {
+  padding: 3px 5px; border: 1px solid var(--border);
+  text-align: center; vertical-align: middle;
+}
+.stat-table th {
+  background: var(--result-bg); font-weight: 600; color: var(--muted); font-size: 0.73rem;
+}
+.stat-table td:first-child { font-weight: 600; font-size: 0.76rem; color: var(--muted); }
+.stat-table .st-total { font-weight: 600; color: var(--accent); min-width: 32px; }
+.stat-table input {
+  width: 46px; border: 1px solid var(--border); border-radius: 4px;
+  padding: 2px 3px; font: inherit; font-size: 0.8rem; text-align: center;
+  background: #fff; color: inherit; box-sizing: border-box;
+}
+.stat-table select {
+  width: 56px; border: 1px solid var(--border); border-radius: 4px;
+  padding: 2px; font: inherit; font-size: 0.8rem; background: #fff; color: inherit;
+}
+
+/* ── HP bar ── */
+.hp-section {
+  margin-top: 8px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+}
+.hp-label { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+.hp-bar {
+  flex: 1; height: 10px; background: var(--border); border-radius: 5px;
+  overflow: hidden; min-width: 50px;
+}
+.hp-bar-fill {
+  height: 100%; border-radius: 5px; background: var(--hp-green);
+  transition: width .2s, background .2s;
+}
+.hp-section input[type="number"] {
+  width: 66px; border: 1px solid var(--border); border-radius: 6px;
+  padding: 3px 5px; font: inherit; font-size: 0.8rem; text-align: center;
+  background: #fff; color: inherit;
+}
+.hp-pct { font-size: 0.8rem; color: var(--muted); min-width: 38px; }
+
+/* ── Trainer loader ── */
+.trainer-row {
+  display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; align-items: center;
+}
+.trainer-row label { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+.trainer-row select {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 3px 6px; font: inherit; font-size: 0.78rem;
+  background: #fff; color: inherit; max-width: 100%;
+}
+
+/* ── Moves section ── */
+.moves-label {
+  font-size: 0.73rem; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .05em; margin: 8px 0 4px;
+}
+.move-row {
+  display: flex; align-items: center; gap: 5px; margin-bottom: 4px;
+}
+.move-row select {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 7px; font: inherit; font-size: 0.82rem;
+  background: #fff; color: inherit; flex: 1; min-width: 0;
+}
+.move-calc-btn {
+  padding: 4px 9px; border-radius: 6px;
+  border: 1px solid var(--accent); background: var(--accent);
+  color: #fff; cursor: pointer; font: inherit; font-size: 0.78rem;
+  flex-shrink: 0; white-space: nowrap;
+}
+.move-calc-btn:hover { opacity: .85; }
+.move-calc-btn.active-move {
+  background: #1a4590; border-color: #1a4590;
+}
+
+/* ── Result ── */
+.result {
+  background: var(--result-bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px; line-height: 1.5; font-size: 0.88rem;
+}
+.result b { color: var(--accent); }
+.result-placeholder { color: var(--muted); font-size: 0.88rem; text-align: center; padding: 16px 0; }
+.rolls { margin-top: 8px; font-size: 0.75rem; color: var(--muted); word-break: break-word; }
+
+/* ── Responsive ── */
+@media (max-width: 1050px) {
+  .main-grid { grid-template-columns: 1fr 1fr; }
+  .middle-col { grid-column: 1 / -1; order: -1; flex-direction: row; flex-wrap: wrap; }
+  .middle-col .card { flex: 1; min-width: 220px; }
+}
+@media (max-width: 620px) {
+  .main-grid { grid-template-columns: 1fr; }
+  .middle-col { flex-direction: column; }
+}
+
+/* ── Dark mode ── */
+html.dark-mode {
+  --bg: #10121a; --card: #1a1f2c; --text: #e6e9f2;
+  --muted: #a9b0c7; --border: #3a435b; --accent: #8ab4ff; --result-bg: #151b28;
+}
+html.dark-mode .field input, html.dark-mode .field select,
+html.dark-mode .trainer-row select, html.dark-mode .move-row select,
+html.dark-mode .hp-section input, html.dark-mode .stat-table input,
+html.dark-mode .stat-table select { background: #22293a; color: var(--text); }
+html.dark-mode .toggle-btn { background: #22293a; color: var(--text); }
+html.dark-mode .toggle-btn.active { background: var(--accent); color: #10121a; }
+html.dark-mode .move-calc-btn { background: var(--accent); color: #10121a; }
+html.dark-mode .move-calc-btn.active-move { background: #6090e0; border-color: #6090e0; }
 </style>
 </head>
 <body>
 <h1>Damage Calc</h1>
-<p class="subtitle">Showdown-style calculator with set builder, field controls, roll range, and KO chance</p>
+<p class="subtitle">Click a move button to calculate damage</p>
 
 <div class="calc-wrap">
-  <div class="card">
-    <h2>Battle Context</h2>
-    <div class="row4">
-      <div class="field"><label for="battle-format">Battle</label><select id="battle-format"><option value="singles">Singles</option><option value="doubles">Doubles</option></select></div>
-      <div class="field"><label for="weather">Weather</label><select id="weather"><option value="none">None</option><option value="sun">Sun</option><option value="rain">Rain</option><option value="sand">Sand</option><option value="hail">Hail</option></select></div>
-      <div class="field"><label for="terrain">Terrain</label><select id="terrain"><option value="none">None</option><option value="electric">Electric</option><option value="grassy">Grassy</option><option value="misty">Misty</option><option value="psychic">Psychic</option></select></div>
-      <div class="field"><label for="prior-damage">Prior chip on defender (%)</label><input id="prior-damage" type="number" min="0" max="99" value="0"></div>
+<div class="main-grid">
+
+  <!-- ══════════════ YOU ══════════════ -->
+  <div class="card" id="you-card">
+    <h2>You</h2>
+
+    <!-- Trainer loader -->
+    <div class="trainer-row">
+      <label>Load trainer:</label>
+      <select id="atk-trainer-select" onchange="onTrainerChange('atk')">
+        <option value="">— Trainer —</option>
+      </select>
+      <select id="atk-trainer-pokemon" style="display:none" onchange="onTrainerPokemonChange('atk')">
+        <option value="">— Pokémon —</option>
+      </select>
     </div>
-    <div class="row4" style="margin-top:10px;">
-      <div class="field"><label for="atk-helping-hand">Attacker Helping Hand</label><select id="atk-helping-hand"><option value="0">No</option><option value="1">Yes</option></select></div>
-      <div class="field"><label for="def-reflect">Reflect (defender side)</label><select id="def-reflect"><option value="0">No</option><option value="1">Yes</option></select></div>
-      <div class="field"><label for="def-light-screen">Light Screen (defender side)</label><select id="def-light-screen"><option value="0">No</option><option value="1">Yes</option></select></div>
-      <div class="field"><label for="critical-hit">Critical hit</label><select id="critical-hit"><option value="0">No</option><option value="1">Yes</option></select></div>
+
+    <!-- Info grid -->
+    <div class="info-grid">
+      <div class="field ia-species">
+        <label for="atk-species">Species</label>
+        <select id="atk-species"></select>
+      </div>
+      <div class="ia-types">
+        <div class="field">
+          <label for="atk-type1">Type 1</label>
+          <select id="atk-type1"></select>
+        </div>
+        <div class="field">
+          <label for="atk-type2">Type 2</label>
+          <select id="atk-type2"></select>
+        </div>
+      </div>
+      <div class="field ia-ability">
+        <label for="atk-ability">Ability</label>
+        <select id="atk-ability"></select>
+      </div>
+      <div class="field ia-item">
+        <label for="atk-item">Item</label>
+        <select id="atk-item"></select>
+      </div>
+      <div class="field ia-nature">
+        <label for="atk-nature">Nature</label>
+        <select id="atk-nature"></select>
+      </div>
+      <div class="field ia-level">
+        <label for="atk-level">Level</label>
+        <input id="atk-level" type="number" min="1" max="100" value="50">
+      </div>
+      <div class="field ia-status">
+        <label for="atk-status">Status</label>
+        <select id="atk-status">
+          <option value="none">None</option>
+          <option value="brn">Burn</option>
+          <option value="par">Paralysis</option>
+          <option value="psn">Poison</option>
+          <option value="tox">Toxic</option>
+          <option value="slp">Sleep</option>
+          <option value="frz">Freeze</option>
+        </select>
+      </div>
     </div>
-    <div class="row4" style="margin-top:10px;">
-      <div class="field"><label for="def-stealth-rock">Stealth Rock on defender side</label><select id="def-stealth-rock"><option value="0">No</option><option value="1">Yes</option></select></div>
-      <div class="field"><label for="def-spikes">Spikes layers</label><select id="def-spikes"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
-      <div class="field"><label for="leftovers-recovery">Include Leftovers in KO chance</label><select id="leftovers-recovery"><option value="0">No</option><option value="1">Yes</option></select></div>
-      <div class="field"><label for="multi-hit">Move hits</label><select id="multi-hit"><option value="auto">Auto</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
+
+    <!-- Stat table -->
+    <div id="atk-stat-wrap"></div>
+
+    <!-- HP bar -->
+    <div class="hp-section">
+      <span class="hp-label">HP</span>
+      <div class="hp-bar"><div class="hp-bar-fill" id="atk-hp-fill" style="width:100%"></div></div>
+      <input id="atk-current-hp" type="number" min="1" placeholder="Current HP"
+             oninput="onCurrentHPInput('atk')" title="Current HP">
+      <span class="hp-pct" id="atk-hp-pct">100%</span>
     </div>
-    <div class="row4" style="margin-top:10px;">
-      <div class="field"><label for="atk-low-hp">Attacker at ≤ 1/3 HP</label><select id="atk-low-hp"><option value="0">No</option><option value="1">Yes</option></select></div>
+
+    <!-- Moves -->
+    <div class="moves-label">Moves</div>
+    <div id="atk-moves-section">
+      <div class="move-row">
+        <select id="atk-move-0" onchange="onMoveSelectChange('atk',0)"></select>
+        <button class="move-calc-btn" id="atk-move-btn-0" onclick="calcFromMove('atk','def',0)">▶ Atk</button>
+      </div>
+      <div class="move-row">
+        <select id="atk-move-1" onchange="onMoveSelectChange('atk',1)"></select>
+        <button class="move-calc-btn" id="atk-move-btn-1" onclick="calcFromMove('atk','def',1)">▶ Atk</button>
+      </div>
+      <div class="move-row">
+        <select id="atk-move-2" onchange="onMoveSelectChange('atk',2)"></select>
+        <button class="move-calc-btn" id="atk-move-btn-2" onclick="calcFromMove('atk','def',2)">▶ Atk</button>
+      </div>
+      <div class="move-row">
+        <select id="atk-move-3" onchange="onMoveSelectChange('atk',3)"></select>
+        <button class="move-calc-btn" id="atk-move-btn-3" onclick="calcFromMove('atk','def',3)">▶ Atk</button>
+      </div>
     </div>
   </div>
 
-  <div class="row2">
+  <!-- ══════════════ MIDDLE: FIELD + RESULT ══════════════ -->
+  <div class="middle-col">
+
+    <!-- Field card -->
     <div class="card">
-      <h2>Attacker</h2>
-      <div class="set-grid">
-        <div class="field"><label for="atk-species">Species</label><select id="atk-species"></select></div>
-        <div class="field"><label for="atk-level">Level</label><input id="atk-level" type="number" min="1" max="100" value="50"></div>
-        <div class="field"><label for="atk-ability">Ability</label><select id="atk-ability"></select></div>
-        <div class="field"><label for="atk-item">Item</label><select id="atk-item"></select></div>
-        <div class="field"><label for="atk-status">Status</label><select id="atk-status"><option value="none">None</option><option value="brn">Burn</option><option value="par">Paralysis</option><option value="psn">Poison</option><option value="tox">Toxic</option><option value="slp">Sleep</option><option value="frz">Freeze</option></select></div>
-        <div class="field"><label for="atk-nature">Nature</label><select id="atk-nature"></select></div>
+      <h2>Field</h2>
+
+      <!-- Battle type -->
+      <div class="field-section-label">Battle Type</div>
+      <div class="battle-row" id="battle-type-group">
+        <button class="toggle-btn active" data-value="singles">Single</button>
+        <button class="toggle-btn" data-value="doubles">Double</button>
       </div>
-      <div class="row3" style="margin-top:10px;">
-        <div class="field"><label for="atk-type1">Type 1</label><select id="atk-type1"></select></div>
-        <div class="field"><label for="atk-type2">Type 2</label><select id="atk-type2"></select></div>
-        <div class="field"><label for="atk-grounded">Grounded (terrain boosts)</label><select id="atk-grounded"><option value="1">Yes</option><option value="0">No</option></select></div>
+
+      <div class="field-hr"></div>
+
+      <!-- Weather (exclusive) -->
+      <div class="field-section-label">Weather</div>
+      <div class="toggle-group" id="weather-group">
+        <button class="toggle-btn active" data-value="none">None</button>
+        <button class="toggle-btn" data-value="sun">Sun</button>
+        <button class="toggle-btn" data-value="rain">Rain</button>
+        <button class="toggle-btn" data-value="sand">Sand</button>
+        <button class="toggle-btn" data-value="hail">Hail</button>
       </div>
-      <div style="margin-top:10px;" id="atk-stat-wrap"></div>
+
+      <!-- Terrain (exclusive) -->
+      <div class="field-section-label" style="margin-top:5px;">Terrain</div>
+      <div class="toggle-group" id="terrain-group">
+        <button class="toggle-btn active" data-value="none">None</button>
+        <button class="toggle-btn" data-value="electric">Electric</button>
+        <button class="toggle-btn" data-value="grassy">Grassy</button>
+        <button class="toggle-btn" data-value="misty">Misty</button>
+        <button class="toggle-btn" data-value="psychic">Psychic</button>
+      </div>
+
+      <div class="field-hr"></div>
+
+      <!-- Other toggles -->
+      <div class="field-toggle-row">
+        <span class="ftlabel">Helping Hand</span>
+        <div class="toggle-group" id="helping-hand-group">
+          <button class="toggle-btn active" data-value="0">No</button>
+          <button class="toggle-btn" data-value="1">Yes</button>
+        </div>
+      </div>
+      <div class="field-toggle-row">
+        <span class="ftlabel">Reflect (opp)</span>
+        <div class="toggle-group" id="reflect-group">
+          <button class="toggle-btn active" data-value="0">No</button>
+          <button class="toggle-btn" data-value="1">Yes</button>
+        </div>
+      </div>
+      <div class="field-toggle-row">
+        <span class="ftlabel">Light Screen (opp)</span>
+        <div class="toggle-group" id="light-screen-group">
+          <button class="toggle-btn active" data-value="0">No</button>
+          <button class="toggle-btn" data-value="1">Yes</button>
+        </div>
+      </div>
+      <div class="field-toggle-row">
+        <span class="ftlabel">Critical Hit</span>
+        <div class="toggle-group" id="critical-hit-group">
+          <button class="toggle-btn active" data-value="0">No</button>
+          <button class="toggle-btn" data-value="1">Yes</button>
+        </div>
+      </div>
+      <div class="field-toggle-row">
+        <span class="ftlabel">Stealth Rock (opp)</span>
+        <div class="toggle-group" id="stealth-rock-group">
+          <button class="toggle-btn active" data-value="0">No</button>
+          <button class="toggle-btn" data-value="1">Yes</button>
+        </div>
+      </div>
+      <div class="field-toggle-row">
+        <span class="ftlabel">Spikes (opp)</span>
+        <div class="toggle-group" id="spikes-group">
+          <button class="toggle-btn active" data-value="0">0</button>
+          <button class="toggle-btn" data-value="1">1</button>
+          <button class="toggle-btn" data-value="2">2</button>
+          <button class="toggle-btn" data-value="3">3</button>
+        </div>
+      </div>
+      <div class="field-toggle-row">
+        <span class="ftlabel">Leftovers KO</span>
+        <div class="toggle-group" id="leftovers-group">
+          <button class="toggle-btn active" data-value="0">No</button>
+          <button class="toggle-btn" data-value="1">Yes</button>
+        </div>
+      </div>
+      <div class="field-toggle-row">
+        <span class="ftlabel">Move hits</span>
+        <div class="toggle-group" id="multi-hit-group">
+          <button class="toggle-btn active" data-value="auto">Auto</button>
+          <button class="toggle-btn" data-value="1">1</button>
+          <button class="toggle-btn" data-value="2">2</button>
+          <button class="toggle-btn" data-value="3">3</button>
+          <button class="toggle-btn" data-value="4">4</button>
+          <button class="toggle-btn" data-value="5">5</button>
+        </div>
+      </div>
     </div>
 
+    <!-- Result card -->
     <div class="card">
-      <h2>Defender</h2>
-      <div class="set-grid">
-        <div class="field"><label for="def-species">Species</label><select id="def-species"></select></div>
-        <div class="field"><label for="def-level">Level</label><input id="def-level" type="number" min="1" max="100" value="50"></div>
-        <div class="field"><label for="def-ability">Ability</label><select id="def-ability"></select></div>
-        <div class="field"><label for="def-item">Item</label><select id="def-item"></select></div>
-        <div class="field"><label for="def-status">Status</label><select id="def-status"><option value="none">None</option><option value="brn">Burn</option><option value="par">Paralysis</option><option value="psn">Poison</option><option value="tox">Toxic</option><option value="slp">Sleep</option><option value="frz">Freeze</option></select></div>
-        <div class="field"><label for="def-nature">Nature</label><select id="def-nature"></select></div>
+      <div id="result" class="result"><p class="result-placeholder">Click a move ▶ button to calculate damage.</p></div>
+      <div id="rolls" class="rolls"></div>
+    </div>
+
+  </div><!-- end middle-col -->
+
+  <!-- ══════════════ OPPONENT ══════════════ -->
+  <div class="card" id="opp-card">
+    <h2>Opponent</h2>
+
+    <!-- Trainer loader -->
+    <div class="trainer-row">
+      <label>Load trainer:</label>
+      <select id="def-trainer-select" onchange="onTrainerChange('def')">
+        <option value="">— Trainer —</option>
+      </select>
+      <select id="def-trainer-pokemon" style="display:none" onchange="onTrainerPokemonChange('def')">
+        <option value="">— Pokémon —</option>
+      </select>
+    </div>
+
+    <!-- Info grid -->
+    <div class="info-grid">
+      <div class="field ia-species">
+        <label for="def-species">Species</label>
+        <select id="def-species"></select>
       </div>
-      <div class="row3" style="margin-top:10px;">
-        <div class="field"><label for="def-type1">Type 1</label><select id="def-type1"></select></div>
-        <div class="field"><label for="def-type2">Type 2</label><select id="def-type2"></select></div>
-        <div class="field"><label for="def-grounded">Grounded (terrain effects)</label><select id="def-grounded"><option value="1">Yes</option><option value="0">No</option></select></div>
+      <div class="ia-types">
+        <div class="field">
+          <label for="def-type1">Type 1</label>
+          <select id="def-type1"></select>
+        </div>
+        <div class="field">
+          <label for="def-type2">Type 2</label>
+          <select id="def-type2"></select>
+        </div>
       </div>
-      <div style="margin-top:10px;" id="def-stat-wrap"></div>
+      <div class="field ia-ability">
+        <label for="def-ability">Ability</label>
+        <select id="def-ability"></select>
+      </div>
+      <div class="field ia-item">
+        <label for="def-item">Item</label>
+        <select id="def-item"></select>
+      </div>
+      <div class="field ia-nature">
+        <label for="def-nature">Nature</label>
+        <select id="def-nature"></select>
+      </div>
+      <div class="field ia-level">
+        <label for="def-level">Level</label>
+        <input id="def-level" type="number" min="1" max="100" value="50">
+      </div>
+      <div class="field ia-status">
+        <label for="def-status">Status</label>
+        <select id="def-status">
+          <option value="none">None</option>
+          <option value="brn">Burn</option>
+          <option value="par">Paralysis</option>
+          <option value="psn">Poison</option>
+          <option value="tox">Toxic</option>
+          <option value="slp">Sleep</option>
+          <option value="frz">Freeze</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Stat table -->
+    <div id="def-stat-wrap"></div>
+
+    <!-- HP bar -->
+    <div class="hp-section">
+      <span class="hp-label">HP</span>
+      <div class="hp-bar"><div class="hp-bar-fill" id="def-hp-fill" style="width:100%"></div></div>
+      <input id="def-current-hp" type="number" min="1" placeholder="Current HP"
+             oninput="onCurrentHPInput('def')" title="Current HP">
+      <span class="hp-pct" id="def-hp-pct">100%</span>
+    </div>
+
+    <!-- Moves -->
+    <div class="moves-label">Moves</div>
+    <div id="def-moves-section">
+      <div class="move-row">
+        <select id="def-move-0" onchange="onMoveSelectChange('def',0)"></select>
+        <button class="move-calc-btn" id="def-move-btn-0" onclick="calcFromMove('def','atk',0)">▶ Atk</button>
+      </div>
+      <div class="move-row">
+        <select id="def-move-1" onchange="onMoveSelectChange('def',1)"></select>
+        <button class="move-calc-btn" id="def-move-btn-1" onclick="calcFromMove('def','atk',1)">▶ Atk</button>
+      </div>
+      <div class="move-row">
+        <select id="def-move-2" onchange="onMoveSelectChange('def',2)"></select>
+        <button class="move-calc-btn" id="def-move-btn-2" onclick="calcFromMove('def','atk',2)">▶ Atk</button>
+      </div>
+      <div class="move-row">
+        <select id="def-move-3" onchange="onMoveSelectChange('def',3)"></select>
+        <button class="move-calc-btn" id="def-move-btn-3" onclick="calcFromMove('def','atk',3)">▶ Atk</button>
+      </div>
     </div>
   </div>
 
-  <div class="card">
-    <h2>Move</h2>
-    <div class="row4">
-      <div class="field"><label for="move">Move</label><select id="move"></select></div>
-      <div class="field"><label for="move-override-type">Move type override</label><select id="move-override-type"></select></div>
-      <div class="field"><label for="move-power-mod">Base power modifier (%)</label><input id="move-power-mod" type="number" min="1" max="400" value="100"></div>
-      <div class="field"><label for="is-zmove">Treat as Z-like fixed high power (1.5x)</label><select id="is-zmove"><option value="0">No</option><option value="1">Yes</option></select></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>Result</h2>
-    <div id="result" class="result">Loading data...</div>
-    <div id="rolls" class="rolls"></div>
-  </div>
-</div>
+</div><!-- end main-grid -->
+</div><!-- end calc-wrap -->
 
 <script>
 const TYPES = ["Normal","Fire","Water","Electric","Grass","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"];
 const STATS = ["HP", "Atk", "Def", "SpA", "SpD", "Spe"];
-const NON_HP_STATS = ["Atk", "Def", "SpA", "SpD", "Spe"];
 
 const TYPE_CHART = {
-  Normal: { Rock: 0.5, Ghost: 0, Steel: 0.5 },
-  Fire: { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 2, Bug: 2, Rock: 0.5, Dragon: 0.5, Steel: 2 },
-  Water: { Fire: 2, Water: 0.5, Grass: 0.5, Ground: 2, Rock: 2, Dragon: 0.5 },
+  Normal:   { Rock: 0.5, Ghost: 0, Steel: 0.5 },
+  Fire:     { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 2, Bug: 2, Rock: 0.5, Dragon: 0.5, Steel: 2 },
+  Water:    { Fire: 2, Water: 0.5, Grass: 0.5, Ground: 2, Rock: 2, Dragon: 0.5 },
   Electric: { Water: 2, Electric: 0.5, Grass: 0.5, Ground: 0, Flying: 2, Dragon: 0.5 },
-  Grass: { Fire: 0.5, Water: 2, Grass: 0.5, Poison: 0.5, Ground: 2, Flying: 0.5, Bug: 0.5, Rock: 2, Dragon: 0.5, Steel: 0.5 },
-  Ice: { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 0.5, Ground: 2, Flying: 2, Dragon: 2, Steel: 0.5 },
+  Grass:    { Fire: 0.5, Water: 2, Grass: 0.5, Poison: 0.5, Ground: 2, Flying: 0.5, Bug: 0.5, Rock: 2, Dragon: 0.5, Steel: 0.5 },
+  Ice:      { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 0.5, Ground: 2, Flying: 2, Dragon: 2, Steel: 0.5 },
   Fighting: { Normal: 2, Ice: 2, Poison: 0.5, Flying: 0.5, Psychic: 0.5, Bug: 0.5, Rock: 2, Ghost: 0, Dark: 2, Steel: 2, Fairy: 0.5 },
-  Poison: { Grass: 2, Poison: 0.5, Ground: 0.5, Rock: 0.5, Ghost: 0.5, Steel: 0, Fairy: 2 },
-  Ground: { Fire: 2, Electric: 2, Grass: 0.5, Poison: 2, Flying: 0, Bug: 0.5, Rock: 2, Steel: 2 },
-  Flying: { Electric: 0.5, Grass: 2, Fighting: 2, Bug: 2, Rock: 0.5, Steel: 0.5 },
-  Psychic: { Fighting: 2, Poison: 2, Psychic: 0.5, Dark: 0, Steel: 0.5 },
-  Bug: { Fire: 0.5, Grass: 2, Fighting: 0.5, Poison: 0.5, Flying: 0.5, Psychic: 2, Ghost: 0.5, Dark: 2, Steel: 0.5, Fairy: 0.5 },
-  Rock: { Fire: 2, Ice: 2, Fighting: 0.5, Ground: 0.5, Flying: 2, Bug: 2, Steel: 0.5 },
-  Ghost: { Normal: 0, Psychic: 2, Ghost: 2, Dark: 0.5 },
-  Dragon: { Dragon: 2, Steel: 0.5, Fairy: 0 },
-  Dark: { Fighting: 0.5, Psychic: 2, Ghost: 2, Dark: 0.5, Fairy: 0.5 },
-  Steel: { Fire: 0.5, Water: 0.5, Electric: 0.5, Ice: 2, Rock: 2, Steel: 0.5, Fairy: 2 },
-  Fairy: { Fire: 0.5, Fighting: 2, Poison: 0.5, Dragon: 2, Dark: 2, Steel: 0.5 }
+  Poison:   { Grass: 2, Poison: 0.5, Ground: 0.5, Rock: 0.5, Ghost: 0.5, Steel: 0, Fairy: 2 },
+  Ground:   { Fire: 2, Electric: 2, Grass: 0.5, Poison: 2, Flying: 0, Bug: 0.5, Rock: 2, Steel: 2 },
+  Flying:   { Electric: 0.5, Grass: 2, Fighting: 2, Bug: 2, Rock: 0.5, Steel: 0.5 },
+  Psychic:  { Fighting: 2, Poison: 2, Psychic: 0.5, Dark: 0, Steel: 0.5 },
+  Bug:      { Fire: 0.5, Grass: 2, Fighting: 0.5, Poison: 0.5, Flying: 0.5, Psychic: 2, Ghost: 0.5, Dark: 2, Steel: 0.5, Fairy: 0.5 },
+  Rock:     { Fire: 2, Ice: 2, Fighting: 0.5, Ground: 0.5, Flying: 2, Bug: 2, Steel: 0.5 },
+  Ghost:    { Normal: 0, Psychic: 2, Ghost: 2, Dark: 0.5 },
+  Dragon:   { Dragon: 2, Steel: 0.5, Fairy: 0 },
+  Dark:     { Fighting: 0.5, Psychic: 2, Ghost: 2, Dark: 0.5, Fairy: 0.5 },
+  Steel:    { Fire: 0.5, Water: 0.5, Electric: 0.5, Ice: 2, Rock: 2, Steel: 0.5, Fairy: 2 },
+  Fairy:    { Fire: 0.5, Fighting: 2, Poison: 0.5, Dragon: 2, Dark: 2, Steel: 0.5 }
 };
 
 const NATURES = {
-  Hardy: { up: null, down: null }, Lonely: { up: "Atk", down: "Def" }, Brave: { up: "Atk", down: "Spe" }, Adamant: { up: "Atk", down: "SpA" }, Naughty: { up: "Atk", down: "SpD" },
-  Bold: { up: "Def", down: "Atk" }, Docile: { up: null, down: null }, Relaxed: { up: "Def", down: "Spe" }, Impish: { up: "Def", down: "SpA" }, Lax: { up: "Def", down: "SpD" },
-  Timid: { up: "Spe", down: "Atk" }, Hasty: { up: "Spe", down: "Def" }, Serious: { up: null, down: null }, Jolly: { up: "Spe", down: "SpA" }, Naive: { up: "Spe", down: "SpD" },
-  Modest: { up: "SpA", down: "Atk" }, Mild: { up: "SpA", down: "Def" }, Quiet: { up: "SpA", down: "Spe" }, Bashful: { up: null, down: null }, Rash: { up: "SpA", down: "SpD" },
-  Calm: { up: "SpD", down: "Atk" }, Gentle: { up: "SpD", down: "Def" }, Sassy: { up: "SpD", down: "Spe" }, Careful: { up: "SpD", down: "SpA" }, Quirky: { up: null, down: null }
+  Hardy: {up:null,down:null}, Lonely: {up:"Atk",down:"Def"}, Brave: {up:"Atk",down:"Spe"},
+  Adamant: {up:"Atk",down:"SpA"}, Naughty: {up:"Atk",down:"SpD"},
+  Bold: {up:"Def",down:"Atk"}, Docile: {up:null,down:null}, Relaxed: {up:"Def",down:"Spe"},
+  Impish: {up:"Def",down:"SpA"}, Lax: {up:"Def",down:"SpD"},
+  Timid: {up:"Spe",down:"Atk"}, Hasty: {up:"Spe",down:"Def"}, Serious: {up:null,down:null},
+  Jolly: {up:"Spe",down:"SpA"}, Naive: {up:"Spe",down:"SpD"},
+  Modest: {up:"SpA",down:"Atk"}, Mild: {up:"SpA",down:"Def"}, Quiet: {up:"SpA",down:"Spe"},
+  Bashful: {up:null,down:null}, Rash: {up:"SpA",down:"SpD"},
+  Calm: {up:"SpD",down:"Atk"}, Gentle: {up:"SpD",down:"Def"}, Sassy: {up:"SpD",down:"Spe"},
+  Careful: {up:"SpD",down:"SpA"}, Quirky: {up:null,down:null}
 };
 
-const ITEM_OPTIONS = [
-  "None",
-  "Life Orb",
-  "Choice Band",
-  "Choice Specs",
-  "Assault Vest",
-  "Eviolite",
-  "Expert Belt",
-  "Muscle Band",
-  "Wise Glasses",
-  "Leftovers",
-  "Air Balloon",
-  "Heavy-Duty Boots"
+const BASE_ITEMS = [
+  "None","Life Orb","Choice Band","Choice Specs","Assault Vest","Eviolite",
+  "Expert Belt","Muscle Band","Wise Glasses","Leftovers","Air Balloon","Heavy-Duty Boots"
 ];
 
 const FIXED_DAMAGE_MOVES = {
   "Seismic Toss": (ctx) => ctx.attacker.level,
-  "Night Shade": (ctx) => ctx.attacker.level,
-  "Dragon Rage": () => 40,
-  "Sonic Boom": () => 20
+  "Night Shade":  (ctx) => ctx.attacker.level,
+  "Dragon Rage":  () => 40,
+  "Sonic Boom":   () => 20
 };
 
 let pokedex = {};
 let moves = {};
+let trainersFlat = [];   // [{trainerKey, trainerName, route, pokemon:[...]}]
+let allItems = [...BASE_ITEMS];
+let lastCalcState = null; // {atkPrefix, defPrefix, moveName}
 
 function el(id) { return document.getElementById(id); }
 function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 function num(v, d = 0) { const n = Number(v); return Number.isFinite(n) ? n : d; }
-function lower(str) { return String(str || "").toLowerCase(); }
 
+/* ── Toggle helpers ── */
+function getToggleValue(groupId) {
+  const active = document.querySelector(`#${groupId} .toggle-btn.active`);
+  return active ? active.dataset.value : null;
+}
+
+function bindToggleGroup(groupId, exclusive = true) {
+  const group = el(groupId);
+  if (!group) return;
+  group.querySelectorAll(".toggle-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (exclusive) {
+        group.querySelectorAll(".toggle-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      } else {
+        btn.classList.toggle("active");
+      }
+      recalcIfNeeded();
+    });
+  });
+}
+
+/* ── Nature / stat math ── */
 function getNatureMultiplier(natureName, stat) {
   const n = NATURES[natureName] || NATURES.Hardy;
   if (n.up === stat) return 1.1;
   if (n.down === stat) return 0.9;
   return 1;
 }
-
-function calcHp(base, iv, ev, level) {
-  return Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + level + 10;
+function calcHp(base, iv, level) {
+  return Math.floor(((2 * base + iv) * level) / 100) + level + 10;
 }
-
-function calcOther(base, iv, ev, level, natureMult) {
-  return Math.floor((Math.floor(((2 * base + iv + Math.floor(ev / 4)) * level) / 100) + 5) * natureMult);
+function calcOther(base, iv, level, natureMult) {
+  return Math.floor((Math.floor(((2 * base + iv) * level) / 100) + 5) * natureMult);
 }
-
 function stageMultiplier(stage) {
   return stage >= 0 ? (2 + stage) / 2 : 2 / (2 - stage);
 }
-
 function effectiveness(moveType, type1, type2) {
   const chart = TYPE_CHART[moveType] || {};
   const m1 = chart[type1] ?? 1;
@@ -327,8 +648,8 @@ function effectiveness(moveType, type1, type2) {
   return m1 * m2;
 }
 
-function isGrounded(type1, type2, ability, item, manualGrounded) {
-  if (!manualGrounded) return false;
+/* Auto-detect grounded: everything is grounded unless Flying-type, Levitate, or Air Balloon */
+function isGrounded(type1, type2, ability, item) {
   if (item === "Air Balloon") return false;
   if (ability === "Levitate") return false;
   if (type1 === "Flying" || type2 === "Flying") return false;
@@ -336,18 +657,18 @@ function isGrounded(type1, type2, ability, item, manualGrounded) {
 }
 
 function toAbilityList(p) {
-  const vals = [p.Ability1, p.Ability2, p.AbilityH].filter(Boolean);
-  return [...new Set(vals)];
+  return [...new Set([p.Ability1, p.Ability2, p.AbilityH].filter(Boolean))];
 }
 
-function buildStatTable(containerId, prefix, defaultEvs, defaultIvs, defaultBoosts) {
+/* ── Stat table (no EVs) ── */
+function buildStatTable(containerId, prefix, defaultIvs, defaultBoosts) {
   const container = el(containerId);
   const table = document.createElement("table");
   table.className = "stat-table";
 
   const thead = document.createElement("thead");
   const hrow = document.createElement("tr");
-  ["Stat", "Base", "IVs", "EVs", "Total", "Boost"].forEach(h => {
+  ["Stat", "Base", "IVs", "Total", "Boost"].forEach(h => {
     const th = document.createElement("th");
     th.textContent = h;
     hrow.appendChild(th);
@@ -371,24 +692,10 @@ function buildStatTable(containerId, prefix, defaultEvs, defaultIvs, defaultBoos
     const tdIv = document.createElement("td");
     const ivInput = document.createElement("input");
     ivInput.id = `${prefix}-iv-${stat}`;
-    ivInput.type = "number";
-    ivInput.min = "0";
-    ivInput.max = "31";
-    ivInput.step = "1";
+    ivInput.type = "number"; ivInput.min = "0"; ivInput.max = "31"; ivInput.step = "1";
     ivInput.value = String(defaultIvs?.[stat] ?? 31);
     tdIv.appendChild(ivInput);
     tr.appendChild(tdIv);
-
-    const tdEv = document.createElement("td");
-    const evInput = document.createElement("input");
-    evInput.id = `${prefix}-ev-${stat}`;
-    evInput.type = "number";
-    evInput.min = "0";
-    evInput.max = "252";
-    evInput.step = "4";
-    evInput.value = String(defaultEvs?.[stat] ?? 0);
-    tdEv.appendChild(evInput);
-    tr.appendChild(tdEv);
 
     const tdTotal = document.createElement("td");
     tdTotal.id = `${prefix}-total-${stat}`;
@@ -398,12 +705,9 @@ function buildStatTable(containerId, prefix, defaultEvs, defaultIvs, defaultBoos
 
     const tdBoost = document.createElement("td");
     if (stat === "HP") {
-      const hiddenHP = document.createElement("input");
-      hiddenHP.id = `${prefix}-boost-${stat}`;
-      hiddenHP.type = "hidden";
-      hiddenHP.value = "0";
-      tdBoost.textContent = "–";
-      tdBoost.appendChild(hiddenHP);
+      const h = document.createElement("input");
+      h.id = `${prefix}-boost-${stat}`; h.type = "hidden"; h.value = "0";
+      tdBoost.textContent = "–"; tdBoost.appendChild(h);
     } else {
       const boostSel = document.createElement("select");
       boostSel.id = `${prefix}-boost-${stat}`;
@@ -417,7 +721,6 @@ function buildStatTable(containerId, prefix, defaultEvs, defaultIvs, defaultBoos
       tdBoost.appendChild(boostSel);
     }
     tr.appendChild(tdBoost);
-
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
@@ -426,47 +729,61 @@ function buildStatTable(containerId, prefix, defaultEvs, defaultIvs, defaultBoos
 }
 
 function updateStatTotals(prefix) {
-  const speciesName = el(`${prefix}-species`).value;
+  const speciesName = el(`${prefix}-species`)?.value;
   const p = pokedex[speciesName];
   if (!p) return;
-  const level = clamp(num(el(`${prefix}-level`).value, 50), 1, 100);
-  const nature = el(`${prefix}-nature`).value || "Hardy";
+  const level = clamp(num(el(`${prefix}-level`)?.value, 50), 1, 100);
+  const nature = el(`${prefix}-nature`)?.value || "Hardy";
 
   STATS.forEach(stat => {
     const base = p.BaseStats?.[stat] ?? 1;
     const baseCell = el(`${prefix}-base-${stat}`);
     if (baseCell) baseCell.textContent = base;
-
     const iv = clamp(num(el(`${prefix}-iv-${stat}`)?.value, 31), 0, 31);
-    const ev = clamp(num(el(`${prefix}-ev-${stat}`)?.value, 0), 0, 252);
     let total;
-    if (stat === "HP") {
-      total = calcHp(base, iv, ev, level);
-    } else {
-      total = calcOther(base, iv, ev, level, getNatureMultiplier(nature, stat));
-    }
+    if (stat === "HP") total = calcHp(base, iv, level);
+    else total = calcOther(base, iv, level, getNatureMultiplier(nature, stat));
     const totalCell = el(`${prefix}-total-${stat}`);
     if (totalCell) totalCell.textContent = total;
   });
+
+  updateHPBar(prefix);
 }
 
-function setResultLines(lines) {
-  const result = el("result");
-  result.textContent = "";
-  lines.forEach(line => {
-    const row = document.createElement("div");
-    row.textContent = line;
-    result.appendChild(row);
-  });
+/* ── HP bar ── */
+function updateHPBar(prefix) {
+  const maxHPCell = el(`${prefix}-total-HP`);
+  const maxHP = maxHPCell ? num(maxHPCell.textContent, 0) : 0;
+  if (!maxHP) return;
+
+  const inp = el(`${prefix}-current-hp`);
+  inp.max = maxHP;
+  if (!inp.value || num(inp.value) > maxHP) inp.value = maxHP;
+
+  const current = clamp(num(inp.value, maxHP), 1, maxHP);
+  const pct = (current / maxHP) * 100;
+  const fill = el(`${prefix}-hp-fill`);
+  if (fill) {
+    fill.style.width = pct.toFixed(1) + "%";
+    fill.style.background = pct > 50 ? "var(--hp-green)" : pct > 25 ? "var(--hp-yellow)" : "var(--hp-red)";
+  }
+  const pctSpan = el(`${prefix}-hp-pct`);
+  if (pctSpan) pctSpan.textContent = pct.toFixed(1) + "%";
 }
 
+function onCurrentHPInput(prefix) {
+  updateHPBar(prefix);
+  recalcIfNeeded();
+}
+
+/* ── Select helpers ── */
 function setSelectOptions(selectId, options, selected) {
   const select = el(selectId);
+  if (!select) return;
   select.innerHTML = "";
   options.forEach(o => {
     const opt = document.createElement("option");
-    opt.value = o;
-    opt.textContent = o;
+    opt.value = o; opt.textContent = o;
     select.appendChild(opt);
   });
   if (selected && options.includes(selected)) select.value = selected;
@@ -483,6 +800,181 @@ function listSpecies() {
     .map(([name]) => name);
 }
 
+/* ── Move selects ── */
+function populateMoveSelects(prefix, moveNames) {
+  for (let i = 0; i < 4; i++) {
+    setSelectOptions(`${prefix}-move-${i}`, moveNames, moveNames[i] || moveNames[0]);
+  }
+}
+
+function onMoveSelectChange(prefix, idx) {
+  // If this is the currently active move button, update and recalc
+  if (lastCalcState && lastCalcState.atkPrefix === prefix && lastCalcState.moveIdx === idx) {
+    const moveName = el(`${prefix}-move-${idx}`)?.value;
+    if (moveName) { lastCalcState.moveName = moveName; recalcIfNeeded(); }
+  }
+}
+
+/* ── Trainer loading ── */
+function parseNatureName(natureStr) {
+  return (natureStr || "Hardy").split(" ")[0];
+}
+
+function resolveTrainerSpecies(tp) {
+  if (tp.Form && pokedex[tp.Form]) return tp.Form;
+  if (pokedex[tp.Name]) return tp.Name;
+  return tp.Name;
+}
+
+function onTrainerChange(prefix) {
+  const trainerSel = el(`${prefix}-trainer-select`);
+  const pokSel = el(`${prefix}-trainer-pokemon`);
+  const trainerKey = trainerSel.value;
+
+  if (!trainerKey) { pokSel.style.display = "none"; pokSel.innerHTML = ""; return; }
+
+  const trainer = trainersFlat.find(t => t.trainerKey === trainerKey);
+  if (!trainer) return;
+
+  pokSel.innerHTML = '<option value="">— Pokémon —</option>';
+  trainer.pokemon.forEach((p, i) => {
+    const opt = document.createElement("option");
+    opt.value = String(i);
+    opt.textContent = `${p.Form || p.Name} (Lv.${p.Level})`;
+    pokSel.appendChild(opt);
+  });
+  pokSel.style.display = "inline-block";
+}
+
+function onTrainerPokemonChange(prefix) {
+  const trainerSel = el(`${prefix}-trainer-select`);
+  const pokSel = el(`${prefix}-trainer-pokemon`);
+  const trainerKey = trainerSel.value;
+  const pokIdx = pokSel.value;
+  if (!trainerKey || pokIdx === "") return;
+
+  const trainer = trainersFlat.find(t => t.trainerKey === trainerKey);
+  if (!trainer) return;
+  const tp = trainer.pokemon[parseInt(pokIdx)];
+  if (!tp) return;
+
+  fillTrainerPokemon(prefix, tp);
+}
+
+function fillTrainerPokemon(prefix, tp) {
+  const speciesName = resolveTrainerSpecies(tp);
+  const speciesSel = el(`${prefix}-species`);
+  if (speciesSel && selectHasOption(speciesSel, speciesName)) {
+    speciesSel.value = speciesName;
+  }
+  syncTypeDefaults(prefix, speciesName);
+
+  // Level
+  const levelInp = el(`${prefix}-level`);
+  if (levelInp) levelInp.value = tp.Level || 50;
+
+  // Nature
+  const natureName = parseNatureName(tp.Nature || "Hardy");
+  const natureSel = el(`${prefix}-nature`);
+  if (natureSel && NATURES[natureName]) natureSel.value = natureName;
+
+  // IVs (all 31)
+  const ivVal = tp.IVs ?? 31;
+  STATS.forEach(s => {
+    const inp = el(`${prefix}-iv-${s}`);
+    if (inp) inp.value = ivVal;
+  });
+
+  const abilitySel = el(`${prefix}-ability`);
+  if (abilitySel && tp.Ability) {
+    addOptionIfMissing(abilitySel, tp.Ability);
+    abilitySel.value = tp.Ability;
+  }
+
+  // Item
+  const itemSel = el(`${prefix}-item`);
+  if (itemSel && tp.HeldItem) {
+    const itemName = tp.HeldItem || "None";
+    addOptionIfMissing(itemSel, itemName);
+    itemSel.value = itemName;
+  }
+
+  // Moves
+  const trainerMoves = tp.Moves || [];
+  for (let i = 0; i < 4; i++) {
+    const moveSel = el(`${prefix}-move-${i}`);
+    if (moveSel && trainerMoves[i]) {
+      if (selectHasOption(moveSel, trainerMoves[i])) moveSel.value = trainerMoves[i];
+    }
+  }
+
+  updateStatTotals(prefix);
+  recalcIfNeeded();
+}
+
+/* ── Option helpers ── */
+function selectHasOption(selectEl, value) {
+  for (const opt of selectEl.options) { if (opt.value === value) return true; }
+  return false;
+}
+function addOptionIfMissing(selectEl, value) {
+  if (!selectHasOption(selectEl, value)) {
+    const opt = document.createElement("option");
+    opt.value = value; opt.textContent = value;
+    selectEl.appendChild(opt);
+  }
+}
+
+
+function getModifierContext() {
+  const battleFormat = getToggleValue("battle-type-group") || "singles";
+  const weather = getToggleValue("weather-group") || "none";
+  const terrain = getToggleValue("terrain-group") || "none";
+  const critical = getToggleValue("critical-hit-group") === "1";
+  const helpingHand = getToggleValue("helping-hand-group") === "1";
+  const reflect = getToggleValue("reflect-group") === "1";
+  const lightScreen = getToggleValue("light-screen-group") === "1";
+  const hitSel = getToggleValue("multi-hit-group") || "auto";
+  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, hitSel };
+}
+
+/* ── Read set ── */
+function readSet(prefix) {
+  const speciesName = el(`${prefix}-species`)?.value;
+  const p = pokedex[speciesName];
+  if (!p) return null;
+
+  const level = clamp(num(el(`${prefix}-level`)?.value, 50), 1, 100);
+  const ability = el(`${prefix}-ability`)?.value || "No Ability";
+  const item = el(`${prefix}-item`)?.value || "None";
+  const nature = el(`${prefix}-nature`)?.value || "Hardy";
+  const status = el(`${prefix}-status`)?.value || "none";
+  const type1 = el(`${prefix}-type1`)?.value || "Normal";
+  const type2 = el(`${prefix}-type2`)?.value || "None";
+  const grounded = isGrounded(type1, type2, ability, item);
+
+  const iv = {}, boost = {};
+  STATS.forEach(s => {
+    iv[s] = clamp(num(el(`${prefix}-iv-${s}`)?.value, 31), 0, 31);
+    boost[s] = clamp(num(el(`${prefix}-boost-${s}`)?.value, 0), -6, 6);
+    if (el(`${prefix}-boost-${s}`)) el(`${prefix}-boost-${s}`).value = boost[s];
+    if (el(`${prefix}-iv-${s}`)) el(`${prefix}-iv-${s}`).value = iv[s];
+  });
+
+  const stats = {};
+  STATS.forEach(stat => {
+    const base = p.BaseStats?.[stat] ?? 1;
+    stats[stat] = stat === "HP" ? calcHp(base, iv.HP, level) : calcOther(base, iv[stat], level, getNatureMultiplier(nature, stat));
+  });
+
+  const maxHP = stats.HP;
+  const currentHPInp = el(`${prefix}-current-hp`);
+  const currentHP = currentHPInp ? clamp(num(currentHPInp.value, maxHP), 1, maxHP) : maxHP;
+
+  return { name: speciesName, level, ability, item, nature, status, type1, type2, grounded, iv, boost, stats, currentHP, data: p };
+}
+
+/* ── Move helpers ── */
 function autoHitCount(moveName, move) {
   const desc = String(move?.Description || "");
   if (/two to five times/i.test(desc)) return 2;
@@ -494,104 +986,39 @@ function autoHitCount(moveName, move) {
   if (/Double Kick|Twineedle/i.test(moveName)) return 2;
   return 1;
 }
-
 function isSpreadMove(move) {
-  const d = String(move?.Description || "");
-  return /opposing Pokémon|everything around it|strikes every Pok/i.test(d);
+  return /opposing Pokémon|everything around it|strikes every Pok/i.test(String(move?.Description || ""));
 }
 
-function getModifierContext() {
-  const battleFormat = el("battle-format").value;
-  const weather = el("weather").value;
-  const terrain = el("terrain").value;
-  const critical = el("critical-hit").value === "1";
-  const helpingHand = el("atk-helping-hand").value === "1";
-  const reflect = el("def-reflect").value === "1";
-  const lightScreen = el("def-light-screen").value === "1";
-  const hitSel = el("multi-hit").value;
-  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, hitSel };
-}
-
-function readSet(prefix) {
-  const speciesName = el(`${prefix}-species`).value;
-  const p = pokedex[speciesName];
-  const level = clamp(num(el(`${prefix}-level`).value, 50), 1, 100);
-  const ability = el(`${prefix}-ability`).value || "No Ability";
-  const item = el(`${prefix}-item`).value || "None";
-  const nature = el(`${prefix}-nature`).value || "Hardy";
-  const status = el(`${prefix}-status`).value || "none";
-  const type1 = el(`${prefix}-type1`).value;
-  const type2 = el(`${prefix}-type2`).value;
-  const grounded = el(`${prefix}-grounded`).value === "1";
-
-  const ev = {};
-  const iv = {};
-  const boost = {};
-  STATS.forEach(s => {
-    ev[s] = clamp(num(el(`${prefix}-ev-${s}`).value, 0), 0, 252);
-    iv[s] = clamp(num(el(`${prefix}-iv-${s}`).value, 31), 0, 31);
-    boost[s] = clamp(num(el(`${prefix}-boost-${s}`).value, 0), -6, 6);
-    el(`${prefix}-ev-${s}`).value = ev[s];
-    el(`${prefix}-iv-${s}`).value = iv[s];
-    el(`${prefix}-boost-${s}`).value = boost[s];
-  });
-
-  const stats = {};
-  STATS.forEach(stat => {
-    const base = p.BaseStats?.[stat] ?? 1;
-    if (stat === "HP") {
-      stats.HP = calcHp(base, iv.HP, ev.HP, level);
-    } else {
-      stats[stat] = calcOther(base, iv[stat], ev[stat], level, getNatureMultiplier(nature, stat));
-    }
-  });
-
-  return { name: speciesName, level, ability, item, nature, status, type1, type2, grounded, ev, iv, boost, stats, data: p };
-}
-
+/* ── Damage modifiers ── */
 function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, ctx) {
-  let type = moveType;
-  let power = basePower;
+  let type = moveType, power = basePower;
   const aAbility = attacker.ability;
-
   if (aAbility === "Aerilate" && type === "Normal") { type = "Flying"; power *= 1.3; }
   if (aAbility === "Pixilate" && type === "Normal") { type = "Fairy"; power *= 1.3; }
   if (aAbility === "Refrigerate" && type === "Normal") { type = "Ice"; power *= 1.3; }
   if (aAbility === "Galvanize" && type === "Normal") { type = "Electric"; power *= 1.3; }
-
   if (moveName === "Facade" && attacker.status !== "none") power *= 2;
   if (moveName === "Acrobatics" && attacker.item === "None") power *= 2;
   if (moveName === "Weather Ball") {
     if (ctx.weather !== "none") power = 100;
-    if (ctx.weather === "sun") type = "Fire";
+    if (ctx.weather === "sun")  type = "Fire";
     if (ctx.weather === "rain") type = "Water";
     if (ctx.weather === "sand") type = "Rock";
     if (ctx.weather === "hail") type = "Ice";
   }
-
-  if (attacker.ability === "Technician" && power <= 60) power *= 1.5;
-  if (el("is-zmove").value === "1") power *= 1.5;
-
-  const powerMod = clamp(num(el("move-power-mod").value, 100), 1, 400) / 100;
-  power *= powerMod;
-
-  const overrideType = el("move-override-type").value;
-  if (overrideType !== "None") type = overrideType;
-
+  if (aAbility === "Technician" && power <= 60) power *= 1.5;
   return { type, power: Math.max(1, Math.floor(power)) };
 }
 
-function getAttackDefense(moveCategory, attacker, defender, critical, moveName) {
+function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName) {
   const isPhysical = moveCategory === "Physical";
   const atkStat = isPhysical ? "Atk" : "SpA";
   const defStat = isPhysical ? "Def" : "SpD";
 
   let atkStage = attacker.boost[atkStat] || 0;
   let defStage = defender.boost[defStat] || 0;
-  if (critical) {
-    if (atkStage < 0) atkStage = 0;
-    if (defStage > 0) defStage = 0;
-  }
+  if (critical) { if (atkStage < 0) atkStage = 0; if (defStage > 0) defStage = 0; }
 
   let atk = attacker.stats[atkStat] * stageMultiplier(atkStage);
   let def = defender.stats[defStat] * stageMultiplier(defStage);
@@ -599,69 +1026,33 @@ function getAttackDefense(moveCategory, attacker, defender, critical, moveName) 
   if (isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) atk *= 2;
   if (isPhysical && attacker.ability === "Hustle") atk *= 1.5;
   if (isPhysical && attacker.ability === "Guts" && attacker.status !== "none") atk *= 1.5;
-
   if (isPhysical && attacker.item === "Choice Band") atk *= 1.5;
   if (!isPhysical && attacker.item === "Choice Specs") atk *= 1.5;
-
   if (!isPhysical && defender.item === "Assault Vest") def *= 1.5;
-  if ((defender.item === "Eviolite") && defender.data?.Evolutions && defender.data.Evolutions.length > 0) def *= 1.5;
-
-  if (!isPhysical && (defender.type1 === "Rock" || defender.type2 === "Rock") && el("weather").value === "sand") def *= 1.5;
-
+  if (defender.item === "Eviolite" && defender.data?.Evolutions?.length) def *= 1.5;
+  if (!isPhysical && (defender.type1 === "Rock" || defender.type2 === "Rock") && getToggleValue("weather-group") === "sand") def *= 1.5;
   if (defender.ability === "Marvel Scale" && defender.status !== "none" && isPhysical) def *= 1.5;
-
   if (isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") atk *= 0.5;
 
   return { atk: Math.max(1, Math.floor(atk)), def: Math.max(1, Math.floor(def)), isPhysical };
 }
 
-function computeHazardChip(defender) {
-  if (defender.item === "Heavy-Duty Boots") return 0;
-  let frac = 0;
-
-  if (el("def-stealth-rock").value === "1") {
-    const rockEffect = effectiveness("Rock", defender.type1, defender.type2);
-    frac += (1 / 8) * rockEffect;
-  }
-
-  const spikes = num(el("def-spikes").value, 0);
-  const grounded = isGrounded(defender.type1, defender.type2, defender.ability, defender.item, defender.grounded);
-  if (grounded && spikes > 0) {
-    if (spikes === 1) frac += 1 / 8;
-    if (spikes === 2) frac += 1 / 6;
-    if (spikes >= 3) frac += 1 / 4;
-  }
-
-  const priorPct = clamp(num(el("prior-damage").value, 0), 0, 99) / 100;
-  frac += priorPct;
-
-  return Math.floor(defender.stats.HP * Math.min(frac, 0.99));
-}
-
 function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod) {
   let mod = 1;
-
   if (ctx.helpingHand) mod *= 1.5;
 
-  if (ctx.weather === "sun") {
-    if (moveType === "Fire") mod *= 1.5;
-    if (moveType === "Water") mod *= 0.5;
-  } else if (ctx.weather === "rain") {
-    if (moveType === "Water") mod *= 1.5;
-    if (moveType === "Fire") mod *= 0.5;
-  }
+  if (ctx.weather === "sun")  { if (moveType === "Fire") mod *= 1.5; if (moveType === "Water") mod *= 0.5; }
+  else if (ctx.weather === "rain") { if (moveType === "Water") mod *= 1.5; if (moveType === "Fire") mod *= 0.5; }
 
-  if (ctx.terrain === "electric" && moveType === "Electric" && isGrounded(attacker.type1, attacker.type2, attacker.ability, attacker.item, attacker.grounded)) mod *= 1.5;
-  if (ctx.terrain === "grassy" && moveType === "Grass" && isGrounded(attacker.type1, attacker.type2, attacker.ability, attacker.item, attacker.grounded)) mod *= 1.5;
-  if (ctx.terrain === "psychic" && moveType === "Psychic" && isGrounded(attacker.type1, attacker.type2, attacker.ability, attacker.item, attacker.grounded)) mod *= 1.5;
-  if (ctx.terrain === "misty" && moveType === "Dragon" && isGrounded(defender.type1, defender.type2, defender.ability, defender.item, defender.grounded)) mod *= 0.5;
-  if (ctx.terrain === "grassy" && ["Earthquake", "Bulldoze", "Magnitude"].includes(moveName) && isGrounded(defender.type1, defender.type2, defender.ability, defender.item, defender.grounded)) mod *= 0.5;
+  if (ctx.terrain === "electric" && moveType === "Electric" && attacker.grounded) mod *= 1.5;
+  if (ctx.terrain === "grassy"   && moveType === "Grass"    && attacker.grounded) mod *= 1.5;
+  if (ctx.terrain === "psychic"  && moveType === "Psychic"  && attacker.grounded) mod *= 1.5;
+  if (ctx.terrain === "misty" && moveType === "Dragon" && defender.grounded) mod *= 0.5;
+  if (ctx.terrain === "grassy" && ["Earthquake","Bulldoze","Magnitude"].includes(moveName) && defender.grounded) mod *= 0.5;
 
   if (ctx.battleFormat === "doubles" && isSpreadMove(moves[moveName])) mod *= 0.75;
-
-  if (!ctx.critical && moveCategory === "Physical" && ctx.reflect) mod *= (ctx.battleFormat === "doubles" ? 2 / 3 : 0.5);
-  if (!ctx.critical && moveCategory === "Special" && ctx.lightScreen) mod *= (ctx.battleFormat === "doubles" ? 2 / 3 : 0.5);
-
+  if (!ctx.critical && moveCategory === "Physical" && ctx.reflect)     mod *= (ctx.battleFormat === "doubles" ? 2/3 : 0.5);
+  if (!ctx.critical && moveCategory === "Special"  && ctx.lightScreen) mod *= (ctx.battleFormat === "doubles" ? 2/3 : 0.5);
   if (ctx.critical) mod *= 1.5;
   if (ctx.critical && attacker.ability === "Sniper") mod *= 1.5;
 
@@ -675,31 +1066,47 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (attacker.ability === "Iron Fist" && /\(.*Punch.*\)/i.test(moveDesc)) mod *= 1.2;
   if (attacker.ability === "Reckless" && /Recoil/i.test(moveDesc)) mod *= 1.2;
 
-  if ((attacker.ability === "Blaze" && moveType === "Fire") || (attacker.ability === "Torrent" && moveType === "Water") || (attacker.ability === "Overgrow" && moveType === "Grass") || (attacker.ability === "Swarm" && moveType === "Bug")) {
-    if (el("atk-low-hp").value === "1") mod *= 1.5;
+  // Low-HP abilities — auto-derived from HP bar
+  const isLowHP = attacker.currentHP <= Math.floor(attacker.stats.HP / 3);
+  if (isLowHP) {
+    if ((attacker.ability === "Blaze"   && moveType === "Fire")  ||
+        (attacker.ability === "Torrent" && moveType === "Water") ||
+        (attacker.ability === "Overgrow"&& moveType === "Grass") ||
+        (attacker.ability === "Swarm"   && moveType === "Bug")) mod *= 1.5;
   }
 
   if (defender.ability === "Thick Fat" && (moveType === "Fire" || moveType === "Ice")) mod *= 0.5;
-  if (["Filter", "Solid Rock", "Prism Armor"].includes(defender.ability) && typeMod > 1) mod *= 0.75;
+  if (["Filter","Solid Rock","Prism Armor"].includes(defender.ability) && typeMod > 1) mod *= 0.75;
 
   return mod;
 }
 
-function calcDamage() {
+/* ── KO chance ── */
+function koChance(rolls, hp, hits, defender) {
+  const includeRec = getToggleValue("leftovers-group") === "1" && defender.item === "Leftovers";
+  const rec = includeRec ? Math.floor(defender.stats.HP / 16) : 0;
+  if (hits === 1) { let w=0; rolls.forEach(r => { if (r >= hp) w++; }); return w/rolls.length; }
+  if (hits === 2) { let w=0; const need=hp+rec; for(const a of rolls) for(const b of rolls) if(a+b>=need) w++; return w/(rolls.length**2); }
+  if (hits === 3) { let w=0; const need=hp+rec*2; for(const a of rolls) for(const b of rolls) for(const c of rolls) if(a+b+c>=need) w++; return w/(rolls.length**3); }
+  return 0;
+}
+function pct(n) { return `${(n*100).toFixed(n===0||n===1?0:1)}%`; }
+
+/* ── Main damage calc ── */
+function calcDamage(atkPrefix, defPrefix, moveName) {
   if (!Object.keys(pokedex).length || !Object.keys(moves).length) return;
 
-  updateStatTotals("atk");
-  updateStatTotals("def");
+  updateStatTotals(atkPrefix);
+  updateStatTotals(defPrefix);
 
-  const attacker = readSet("atk");
-  const defender = readSet("def");
-  const moveName = el("move").value;
+  const attacker = readSet(atkPrefix);
+  const defender = readSet(defPrefix);
   const move = moves[moveName];
-  const result = el("result");
+  const resultEl = el("result");
   const rollsEl = el("rolls");
 
-  if (!attacker?.data || !defender?.data || !move) {
-    result.textContent = "Invalid selection.";
+  if (!attacker || !defender || !move) {
+    resultEl.innerHTML = `<span class="result-placeholder">Invalid selection.</span>`;
     rollsEl.textContent = "";
     return;
   }
@@ -709,16 +1116,15 @@ function calcDamage() {
   const ctx = getModifierContext();
 
   if (moveCategory === "Status") {
-    setResultLines([`${moveName} is a status move and does not deal direct damage.`]);
+    resultEl.innerHTML = `<div>${moveName} is a status move — no direct damage.</div>`;
     rollsEl.textContent = "";
     return;
   }
 
   if (defender.ability === "Wonder Guard") {
-    const testType = el("move-override-type").value !== "None" ? el("move-override-type").value : move.Type;
-    const wm = effectiveness(testType, defender.type1, defender.type2);
+    const wm = effectiveness(move.Type, defender.type1, defender.type2);
     if (wm <= 1) {
-      setResultLines([`${defender.name} is immune via Wonder Guard unless the move is super effective.`]);
+      resultEl.innerHTML = `<div>${defender.name}: immune via Wonder Guard (not super effective).</div>`;
       rollsEl.textContent = "";
       return;
     }
@@ -731,30 +1137,29 @@ function calcDamage() {
     if (/damage equal to the user['\u2019]s level/i.test(move.Description || "")) fixedFn = (c) => c.attacker.level;
   }
 
-  let typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, ctx);
+  const typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, ctx);
   const moveType = typePower.type;
   const power = typePower.power;
 
-  if (moveType === "Ground" && (defender.type1 === "Flying" || defender.type2 === "Flying" || defender.ability === "Levitate" || defender.item === "Air Balloon")) {
-    setResultLines([`${defender.name} is immune to Ground-type damage in this state.`]);
+  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defender.ability, defender.item)) {
+    resultEl.innerHTML = `<div>${defender.name} is immune to Ground-type moves.</div>`;
     rollsEl.textContent = "";
     return;
   }
 
   const typeMod = effectiveness(moveType, defender.type1, defender.type2);
   if (typeMod === 0) {
-    setResultLines([`${attacker.name} uses ${moveName}: no effect (0×).`]);
+    resultEl.innerHTML = `<div>${attacker.name} uses ${moveName}: no effect (0×).</div>`;
     rollsEl.textContent = "";
     return;
   }
 
   const hitCount = ctx.hitSel === "auto" ? autoHitCount(moveName, move) : clamp(num(ctx.hitSel, 1), 1, 5);
-
   const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
 
   if (defender.ability === "Flash Fire" && moveType === "Fire") {
-    setResultLines([`${attacker.name} uses ${moveName}: absorbed by Flash Fire.`]);
+    resultEl.innerHTML = `<div>${defender.name}: absorbed by Flash Fire.</div>`;
     rollsEl.textContent = "";
     return;
   }
@@ -763,7 +1168,7 @@ function calcDamage() {
   if (fixedFn) {
     baseOneHit = fixedFn({ attacker, defender, move, moveType, power });
   } else {
-    const ad = getAttackDefense(moveCategory, attacker, defender, ctx.critical, moveName);
+    const ad = getAttackDefenseFix(moveCategory, attacker, defender, ctx.critical, moveName);
     const levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
     baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
   }
@@ -787,126 +1192,173 @@ function calcDamage() {
   const minD = Math.min(...rolls);
   const maxD = Math.max(...rolls);
   const hp = defender.stats.HP;
-
-  const hazardChip = computeHazardChip(defender);
-  const startHP = Math.max(1, hp - hazardChip);
+  const currentHP = defender.currentHP;
 
   const minPct = (minD / hp) * 100;
   const maxPct = (maxD / hp) * 100;
 
-  const ohko = koChance(rolls, startHP, 1, defender);
-  const twohko = koChance(rolls, startHP, 2, defender);
-  const threehko = koChance(rolls, startHP, 3, defender);
-
-  const effText = typeMod === 4 ? "4×" : typeMod === 2 ? "2×" : typeMod === 1 ? "1×" : typeMod === 0.5 ? "0.5×" : typeMod === 0.25 ? "0.25×" : `${typeMod}×`;
-
-  setResultLines([
-    `${attacker.name} (${attacker.level}) ${moveName} (${moveType}, ${moveCategory}, BP ${power}) vs ${defender.name} (${defender.level})`,
-    `Damage: ${minD} - ${maxD} HP (${minPct.toFixed(1)}% - ${maxPct.toFixed(1)}%)`,
-    `Type: ${effText} | STAB: ${stab.toFixed(1)}× | Hits: ${hitCount} | Critical: ${ctx.critical ? "Yes" : "No"}`,
-    `Defender HP: ${hp} | Entry/Prior chip: ${hazardChip} | Starting HP for KO checks: ${startHP}`,
-    `KO chance: ${pct(ohko)} OHKO | ${pct(twohko)} 2HKO | ${pct(threehko)} 3HKO`
-  ]);
-
-  rollsEl.textContent = `16 rolls: ${rolls.join(", ")}`;
-}
-
-function pct(n) {
-  return `${(n * 100).toFixed(n === 0 || n === 1 ? 0 : 1)}%`;
-}
-
-function koChance(rolls, hp, hits, defender) {
-  const includeRecovery = el("leftovers-recovery").value === "1" && defender.item === "Leftovers";
-  const rec = includeRecovery ? Math.floor(defender.stats.HP / 16) : 0;
-
-  if (hits === 1) {
-    let wins = 0;
-    rolls.forEach(r => { if (r >= hp) wins++; });
-    return wins / rolls.length;
+  // Stealth Rock note
+  let srNote = "";
+  if (getToggleValue("stealth-rock-group") === "1" && defender.item !== "Heavy-Duty Boots") {
+    const rockEffect = effectiveness("Rock", defender.type1, defender.type2);
+    const srDmg = Math.floor(hp * (1/8) * rockEffect);
+    srNote = ` | SR: ${srDmg} HP`;
   }
 
-  if (hits === 2) {
-    let wins = 0;
-    const need = hp + rec;
-    for (const a of rolls) for (const b of rolls) if (a + b >= need) wins++;
-    return wins / (rolls.length ** 2);
-  }
+  const ohko   = koChance(rolls, currentHP, 1, defender);
+  const twohko = koChance(rolls, currentHP, 2, defender);
+  const threehko = koChance(rolls, currentHP, 3, defender);
 
-  if (hits === 3) {
-    let wins = 0;
-    const need = hp + rec * 2;
-    for (const a of rolls) for (const b of rolls) for (const c of rolls) if (a + b + c >= need) wins++;
-    return wins / (rolls.length ** 3);
-  }
+  const effText = typeMod === 4 ? "4×" : typeMod === 2 ? "2×" : typeMod === 1 ? "1×" :
+                  typeMod === 0.5 ? "0.5×" : typeMod === 0.25 ? "0.25×" : `${typeMod}×`;
 
-  return 0;
+  const atkLabel = atkPrefix === "atk" ? "You" : "Opponent";
+  const defLabel = defPrefix === "def" ? "Opponent" : "You";
+
+  const lines = [
+    `<b>${atkLabel}:</b> ${attacker.name} (Lv.${attacker.level}) — <b>${moveName}</b> (${moveType}, ${moveCategory}, BP ${power})`,
+    `<b>${defLabel}:</b> ${defender.name} (Lv.${defender.level}) — HP ${currentHP}/${hp}`,
+    `Damage: <b>${minD}–${maxD}</b> HP (<b>${minPct.toFixed(1)}%–${maxPct.toFixed(1)}%</b>)`,
+    `Type: ${effText} | STAB: ${stab.toFixed(1)}× | Hits: ${hitCount} | Crit: ${ctx.critical ? "Yes" : "No"}${srNote}`,
+    `KO: <b>${pct(ohko)} OHKO</b> | ${pct(twohko)} 2HKO | ${pct(threehko)} 3HKO`
+  ];
+
+  resultEl.innerHTML = lines.map(l => `<div>${l}</div>`).join("");
+  rollsEl.textContent = `Rolls: ${rolls.join(", ")}`;
 }
 
-function syncTypeDefaults(prefix) {
-  const speciesName = el(`${prefix}-species`).value;
+function calcFromMove(atkPrefix, defPrefix, moveIdx) {
+  const moveName = el(`${atkPrefix}-move-${moveIdx}`)?.value;
+  if (!moveName) return;
+  lastCalcState = { atkPrefix, defPrefix, moveName, moveIdx };
+
+  // Highlight active button
+  document.querySelectorAll(".move-calc-btn").forEach(b => b.classList.remove("active-move"));
+  const btn = el(`${atkPrefix}-move-btn-${moveIdx}`);
+  if (btn) btn.classList.add("active-move");
+
+  calcDamage(atkPrefix, defPrefix, moveName);
+}
+
+function recalcIfNeeded() {
+  updateStatTotals("atk");
+  updateStatTotals("def");
+  if (lastCalcState) {
+    calcDamage(lastCalcState.atkPrefix, lastCalcState.defPrefix, lastCalcState.moveName);
+  }
+}
+
+function syncTypeDefaults(prefix, overrideSpecies) {
+  const speciesName = overrideSpecies || el(`${prefix}-species`)?.value;
   const p = pokedex[speciesName];
   if (!p) return;
-  el(`${prefix}-type1`).value = p.Type1;
-  el(`${prefix}-type2`).value = p.Type2 && p.Type2 !== p.Type1 ? p.Type2 : "None";
-
+  const t1 = el(`${prefix}-type1`);
+  const t2 = el(`${prefix}-type2`);
+  if (t1) t1.value = p.Type1;
+  if (t2) t2.value = p.Type2 && p.Type2 !== p.Type1 ? p.Type2 : "None";
   const abilityList = toAbilityList(p);
-  setSelectOptions(`${prefix}-ability`, abilityList.length ? abilityList : ["No Ability"], abilityList[0] || "No Ability");
+  setSelectOptions(`${prefix}-ability`, abilityList.length ? abilityList : ["No Ability"], abilityList[0]);
   updateStatTotals(prefix);
 }
 
 function bindInputs() {
-  document.querySelectorAll("input,select").forEach(node => {
-    node.addEventListener("input", calcDamage);
-    node.addEventListener("change", calcDamage);
+  ["atk","def"].forEach(prefix => {
+    [`${prefix}-species`,`${prefix}-level`,`${prefix}-ability`,`${prefix}-item`,
+     `${prefix}-nature`,`${prefix}-status`,`${prefix}-type1`,`${prefix}-type2`].forEach(id => {
+      const node = el(id);
+      if (node) { node.addEventListener("input", recalcIfNeeded); node.addEventListener("change", recalcIfNeeded); }
+    });
+
+    // stat table inputs / boosts (delegated from container)
+    [`${prefix}-stat-wrap`].forEach(wid => {
+      const wrap = el(wid);
+      if (wrap) {
+        wrap.addEventListener("input", recalcIfNeeded);
+        wrap.addEventListener("change", recalcIfNeeded);
+      }
+    });
+
+    el(`${prefix}-species`)?.addEventListener("change", () => { syncTypeDefaults(prefix); recalcIfNeeded(); });
   });
 
-  el("atk-species").addEventListener("change", () => { syncTypeDefaults("atk"); calcDamage(); });
-  el("def-species").addEventListener("change", () => { syncTypeDefaults("def"); calcDamage(); });
+  // Field toggle groups
+  ["battle-type-group","weather-group","terrain-group","helping-hand-group",
+   "reflect-group","light-screen-group","critical-hit-group","stealth-rock-group",
+   "spikes-group","leftovers-group","multi-hit-group"].forEach(gid => bindToggleGroup(gid));
 }
 
 async function init() {
   try {
-    const [pRes, mRes] = await Promise.all([fetch("data/pokedex.json"), fetch("data/moves.json")]);
+    const [pRes, mRes, tRes] = await Promise.all([
+      fetch("data/pokedex.json"),
+      fetch("data/moves.json"),
+      fetch("data/trainers.json")
+    ]);
     pokedex = await pRes.json();
-    moves = await mRes.json();
+    moves   = await mRes.json();
+    const trainersData = await tRes.json();
+
+    // Flatten trainers
+    trainersFlat = [];
+    for (const [route, routeData] of Object.entries(trainersData)) {
+      for (const trainer of (routeData.Trainers || [])) {
+        if (trainer.Pokemon?.length) {
+          const key = `${trainer.TrainerName}__${route}`;
+          trainersFlat.push({ trainerKey: key, trainerName: trainer.TrainerName, route, pokemon: trainer.Pokemon });
+        }
+      }
+    }
+
+    // Collect all trainer items for item selects
+    const trainerItems = new Set();
+    for (const t of trainersFlat) for (const p of t.pokemon) if (p.HeldItem) trainerItems.add(p.HeldItem);
+    allItems = [...new Set([...BASE_ITEMS, ...Array.from(trainerItems).sort()])];
 
     const species = listSpecies();
     const moveNames = Object.keys(moves).sort((a, b) => a.localeCompare(b));
 
+    // Species selects
     setSelectOptions("atk-species", species, species[0]);
     setSelectOptions("def-species", species, species[1] || species[0]);
-    setSelectOptions("move", moveNames, moveNames[0]);
-    setSelectOptions("atk-item", ITEM_OPTIONS, "None");
-    setSelectOptions("def-item", ITEM_OPTIONS, "None");
 
+    // Item selects
+    setSelectOptions("atk-item", allItems, "None");
+    setSelectOptions("def-item", allItems, "None");
+
+    // Nature selects
     const natureNames = Object.keys(NATURES);
     setSelectOptions("atk-nature", natureNames, "Hardy");
     setSelectOptions("def-nature", natureNames, "Hardy");
 
+    // Type selects
     setTypeOptions("atk");
     setTypeOptions("def");
-    setSelectOptions("move-override-type", ["None", ...TYPES], "None");
 
-    buildStatTable("atk-stat-wrap", "atk",
-      { HP: 0, Atk: 252, Def: 0, SpA: 252, SpD: 0, Spe: 4 },
-      { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 },
-      { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }
-    );
-    buildStatTable("def-stat-wrap", "def",
-      { HP: 252, Atk: 0, Def: 252, SpA: 0, SpD: 4, Spe: 0 },
-      { HP: 31, Atk: 31, Def: 31, SpA: 31, SpD: 31, Spe: 31 },
-      { HP: 0, Atk: 0, Def: 0, SpA: 0, SpD: 0, Spe: 0 }
-    );
+    // Move selects
+    populateMoveSelects("atk", moveNames);
+    populateMoveSelects("def", moveNames);
+
+    // Trainer selects
+    trainersFlat.forEach(t => {
+      ["atk-trainer-select","def-trainer-select"].forEach(selId => {
+        const opt = document.createElement("option");
+        opt.value = t.trainerKey;
+        opt.textContent = `${t.trainerName} (${t.route})`;
+        el(selId)?.appendChild(opt);
+      });
+    });
+
+    // Stat tables
+    buildStatTable("atk-stat-wrap", "atk", {HP:31,Atk:31,Def:31,SpA:31,SpD:31,Spe:31}, {});
+    buildStatTable("def-stat-wrap", "def", {HP:31,Atk:31,Def:31,SpA:31,SpD:31,Spe:31}, {});
 
     syncTypeDefaults("atk");
     syncTypeDefaults("def");
 
     bindInputs();
-    calcDamage();
   } catch (e) {
     console.error("Damage calc init failed:", e);
-    el("result").textContent = "Failed to load calculator data.";
-    el("rolls").textContent = "";
+    el("result").innerHTML = `<span class="result-placeholder">Failed to load calculator data.</span>`;
   }
 }
 
