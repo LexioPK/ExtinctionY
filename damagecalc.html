@@ -1331,11 +1331,11 @@ async function init() {
 
     // Flatten trainers
     trainersFlat = [];
+    let trainerIdx = 0;
     for (const [route, routeData] of Object.entries(trainersData)) {
       for (const trainer of (routeData.Trainers || [])) {
         if (trainer.Pokemon?.length) {
-          const key = `${trainer.TrainerName}__${route}`;
-          trainersFlat.push({ trainerKey: key, trainerName: trainer.TrainerName, route, pokemon: trainer.Pokemon });
+          trainersFlat.push({ trainerKey: String(trainerIdx++), trainerName: trainer.TrainerName, route, pokemon: trainer.Pokemon });
         }
       }
     }
