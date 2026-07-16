@@ -174,8 +174,14 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-radius: 6px;
 }
 .ia-species { grid-area: species; }
-.ia-types { grid-area: types; display: flex; gap: 6px; }
-.ia-types .field { flex: 1; }
+.ia-types {
+  grid-area: types;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 140px));
+  gap: 6px;
+  justify-content: start;
+}
+.ia-types .field { min-width: 0; }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
@@ -321,6 +327,20 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .move-info-row {
   display: flex; gap: 5px; margin-bottom: 5px;
   padding: 1px 0 0 2px; flex-wrap: wrap; align-items: center;
+}
+.compact-moves-head {
+  grid-template-columns: minmax(0, 1fr) auto auto auto 42px;
+}
+.compact-moves-head .moves-head-label {
+  grid-column: 5;
+}
+.compact-move-row {
+  grid-template-columns: minmax(0, 1fr) auto auto auto 42px;
+  margin-bottom: 5px;
+}
+.compact-move-row .mi-type,
+.compact-move-row .mi-detail {
+  align-self: center;
 }
 .mi-type {
   font-size: 0.66rem; font-weight: 700; padding: 1px 5px;
@@ -794,47 +814,35 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
 
       <!-- Moves (hits input, no Atk button) -->
       <div class="moves-label">Moves</div>
-      <div class="moves-head"><span class="moves-head-label">Hits ×</span></div>
+      <div class="moves-head compact-moves-head"><span class="moves-head-label">Hits ×</span></div>
       <div id="def-moves-section">
-        <div class="move-row" id="def-move-row-0">
+        <div class="move-row compact-move-row" id="def-move-row-0">
           <select id="def-move-0" onchange="onMoveSelectChange('def',0)"></select>
-          <input type="number" id="def-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-          <span class="move-damage" id="def-move-dmg-0"></span>
-        </div>
-        <div class="move-info-row" id="def-move-info-0">
           <span class="mi-type" id="def-move-type-0"></span>
           <span class="mi-detail" id="def-move-bp-0">BP: —</span>
           <span class="mi-detail" id="def-move-acc-0">Acc: —</span>
+          <input type="number" id="def-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
         </div>
-        <div class="move-row" id="def-move-row-1">
+        <div class="move-row compact-move-row" id="def-move-row-1">
           <select id="def-move-1" onchange="onMoveSelectChange('def',1)"></select>
-          <input type="number" id="def-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-          <span class="move-damage" id="def-move-dmg-1"></span>
-        </div>
-        <div class="move-info-row" id="def-move-info-1">
           <span class="mi-type" id="def-move-type-1"></span>
           <span class="mi-detail" id="def-move-bp-1">BP: —</span>
           <span class="mi-detail" id="def-move-acc-1">Acc: —</span>
+          <input type="number" id="def-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
         </div>
-        <div class="move-row" id="def-move-row-2">
+        <div class="move-row compact-move-row" id="def-move-row-2">
           <select id="def-move-2" onchange="onMoveSelectChange('def',2)"></select>
-          <input type="number" id="def-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-          <span class="move-damage" id="def-move-dmg-2"></span>
-        </div>
-        <div class="move-info-row" id="def-move-info-2">
           <span class="mi-type" id="def-move-type-2"></span>
           <span class="mi-detail" id="def-move-bp-2">BP: —</span>
           <span class="mi-detail" id="def-move-acc-2">Acc: —</span>
+          <input type="number" id="def-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
         </div>
-        <div class="move-row" id="def-move-row-3">
+        <div class="move-row compact-move-row" id="def-move-row-3">
           <select id="def-move-3" onchange="onMoveSelectChange('def',3)"></select>
-          <input type="number" id="def-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-          <span class="move-damage" id="def-move-dmg-3"></span>
-        </div>
-        <div class="move-info-row" id="def-move-info-3">
           <span class="mi-type" id="def-move-type-3"></span>
           <span class="mi-detail" id="def-move-bp-3">BP: —</span>
           <span class="mi-detail" id="def-move-acc-3">Acc: —</span>
+          <input type="number" id="def-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
         </div>
       </div>
     </div>
@@ -1300,6 +1308,27 @@ function selectTrainerFromInput(prefix) {
   const query = el(`${prefix}-trainer-search`)?.value || "";
   const idx = findTrainerIndex(query, true);
   if (idx >= 0) setTrainer(prefix, idx);
+}
+
+function handleTrainerSearchFocus(prefix) {
+  const trainerSearch = el(`${prefix}-trainer-search`);
+  if (!trainerSearch) return;
+  const trainer = trainersFlat[trainerState[prefix]];
+  const currentLabel = trainer ? trainerDisplayName(trainer) : "";
+  if (trainerSearch.value === currentLabel) {
+    trainerSearch.dataset.restoreValue = currentLabel;
+    trainerSearch.value = "";
+  } else {
+    trainerSearch.dataset.restoreValue = "";
+  }
+  populateTrainerOptions(prefix);
+}
+
+function restoreTrainerSearchValue(prefix) {
+  const trainerSearch = el(`${prefix}-trainer-search`);
+  if (!trainerSearch || trainerSearch.value.trim()) return;
+  const restoreValue = trainerSearch.dataset.restoreValue || "";
+  if (restoreValue) trainerSearch.value = restoreValue;
 }
 
 function clearTrainerSelection(prefix, label = "") {
@@ -2214,7 +2243,8 @@ function bindInputs() {
       recalcIfNeeded();
     });
 
-    el(`${prefix}-trainer-search`)?.addEventListener("focus", () => populateTrainerOptions(prefix, el(`${prefix}-trainer-search`)?.value || ""));
+    el(`${prefix}-trainer-search`)?.addEventListener("focus", () => handleTrainerSearchFocus(prefix));
+    el(`${prefix}-trainer-search`)?.addEventListener("blur", () => restoreTrainerSearchValue(prefix));
   });
 
   // Field toggle groups (exclusive)
