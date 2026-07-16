@@ -1093,6 +1093,27 @@ function koChance(rolls, hp, hits, defender) {
 function pct(n) { return `${(n*100).toFixed(n===0||n===1?0:1)}%`; }
 
 /* ── Main damage calc ── */
+function setResultMsg(text) {
+  el("result").textContent = text;
+  el("rolls").textContent = "";
+}
+
+/* Build a result row using safe DOM nodes (no innerHTML with data) */
+function resultRow(segments) {
+  // segments: Array of {text, bold}
+  const div = document.createElement("div");
+  segments.forEach(seg => {
+    if (seg.bold) {
+      const b = document.createElement("b");
+      b.textContent = seg.text;
+      div.appendChild(b);
+    } else {
+      div.appendChild(document.createTextNode(seg.text));
+    }
+  });
+  return div;
+}
+
 function calcDamage(atkPrefix, defPrefix, moveName) {
   if (!Object.keys(pokedex).length || !Object.keys(moves).length) return;
 
@@ -1106,8 +1127,7 @@ function calcDamage(atkPrefix, defPrefix, moveName) {
   const rollsEl = el("rolls");
 
   if (!attacker || !defender || !move) {
-    resultEl.innerHTML = `<span class="result-placeholder">Invalid selection.</span>`;
-    rollsEl.textContent = "";
+    setResultMsg("Invalid selection.");
     return;
   }
 
@@ -1116,16 +1136,14 @@ function calcDamage(atkPrefix, defPrefix, moveName) {
   const ctx = getModifierContext();
 
   if (moveCategory === "Status") {
-    resultEl.innerHTML = `<div>${moveName} is a status move — no direct damage.</div>`;
-    rollsEl.textContent = "";
+    setResultMsg(`${moveName} is a status move — no direct damage.`);
     return;
   }
 
   if (defender.ability === "Wonder Guard") {
     const wm = effectiveness(move.Type, defender.type1, defender.type2);
     if (wm <= 1) {
-      resultEl.innerHTML = `<div>${defender.name}: immune via Wonder Guard (not super effective).</div>`;
-      rollsEl.textContent = "";
+      setResultMsg(`${defender.name}: immune via Wonder Guard (not super effective).`);
       return;
     }
   }
@@ -1142,15 +1160,13 @@ function calcDamage(atkPrefix, defPrefix, moveName) {
   const power = typePower.power;
 
   if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defender.ability, defender.item)) {
-    resultEl.innerHTML = `<div>${defender.name} is immune to Ground-type moves.</div>`;
-    rollsEl.textContent = "";
+    setResultMsg(`${defender.name} is immune to Ground-type moves.`);
     return;
   }
 
   const typeMod = effectiveness(moveType, defender.type1, defender.type2);
   if (typeMod === 0) {
-    resultEl.innerHTML = `<div>${attacker.name} uses ${moveName}: no effect (0×).</div>`;
-    rollsEl.textContent = "";
+    setResultMsg(`${attacker.name} uses ${moveName}: no effect (0×).`);
     return;
   }
 
@@ -1159,8 +1175,7 @@ function calcDamage(atkPrefix, defPrefix, moveName) {
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
 
   if (defender.ability === "Flash Fire" && moveType === "Fire") {
-    resultEl.innerHTML = `<div>${defender.name}: absorbed by Flash Fire.</div>`;
-    rollsEl.textContent = "";
+    setResultMsg(`${defender.name}: absorbed by Flash Fire.`);
     return;
   }
 
@@ -1215,15 +1230,31 @@ function calcDamage(atkPrefix, defPrefix, moveName) {
   const atkLabel = atkPrefix === "atk" ? "You" : "Opponent";
   const defLabel = defPrefix === "def" ? "Opponent" : "You";
 
-  const lines = [
-    `<b>${atkLabel}:</b> ${attacker.name} (Lv.${attacker.level}) — <b>${moveName}</b> (${moveType}, ${moveCategory}, BP ${power})`,
-    `<b>${defLabel}:</b> ${defender.name} (Lv.${defender.level}) — HP ${currentHP}/${hp}`,
-    `Damage: <b>${minD}–${maxD}</b> HP (<b>${minPct.toFixed(1)}%–${maxPct.toFixed(1)}%</b>)`,
-    `Type: ${effText} | STAB: ${stab.toFixed(1)}× | Hits: ${hitCount} | Crit: ${ctx.critical ? "Yes" : "No"}${srNote}`,
-    `KO: <b>${pct(ohko)} OHKO</b> | ${pct(twohko)} 2HKO | ${pct(threehko)} 3HKO`
-  ];
-
-  resultEl.innerHTML = lines.map(l => `<div>${l}</div>`).join("");
+  // Build result rows using DOM nodes (XSS-safe: no data in innerHTML)
+  resultEl.textContent = "";
+  resultEl.appendChild(resultRow([
+    {bold:true, text:`${atkLabel}:`},
+    {bold:false, text:` ${attacker.name} (Lv.${attacker.level}) — `},
+    {bold:true,  text: moveName},
+    {bold:false, text:` (${moveType}, ${moveCategory}, BP ${power})`}
+  ]));
+  resultEl.appendChild(resultRow([
+    {bold:true,  text:`${defLabel}:`},
+    {bold:false, text:` ${defender.name} (Lv.${defender.level}) — HP ${currentHP}/${hp}`}
+  ]));
+  resultEl.appendChild(resultRow([
+    {bold:false, text:"Damage: "},
+    {bold:true,  text:`${minD}–${maxD} HP`},
+    {bold:false, text:` (${minPct.toFixed(1)}%–${maxPct.toFixed(1)}%)`}
+  ]));
+  resultEl.appendChild(resultRow([
+    {bold:false, text:`Type: ${effText} | STAB: ${stab.toFixed(1)}× | Hits: ${hitCount} | Crit: ${ctx.critical ? "Yes" : "No"}${srNote}`}
+  ]));
+  resultEl.appendChild(resultRow([
+    {bold:false, text:"KO: "},
+    {bold:true,  text:`${pct(ohko)} OHKO`},
+    {bold:false, text:` | ${pct(twohko)} 2HKO | ${pct(threehko)} 3HKO`}
+  ]));
   rollsEl.textContent = `Rolls: ${rolls.join(", ")}`;
 }
 
@@ -1358,7 +1389,7 @@ async function init() {
     bindInputs();
   } catch (e) {
     console.error("Damage calc init failed:", e);
-    el("result").innerHTML = `<span class="result-placeholder">Failed to load calculator data.</span>`;
+    el("result").textContent = "Failed to load calculator data.";
   }
 }
 
