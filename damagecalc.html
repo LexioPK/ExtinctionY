@@ -34,7 +34,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 /* ── Top row: [You→Opp] [Result] [Opp→You] ── */
 .top-row {
   display: grid;
-  grid-template-columns: minmax(250px, 1.2fr) minmax(260px, 0.8fr) minmax(250px, 1.2fr);
+  grid-template-columns: minmax(180px, 0.7fr) minmax(280px, 1.2fr) minmax(180px, 0.7fr);
   gap: 14px;
   margin-bottom: 14px;
   align-items: flex-start;
@@ -51,15 +51,24 @@ h1 { text-align: center; margin: 8px 0 6px; }
   text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px;
 }
 .qm-move-btn {
-  display: block; width: 100%; text-align: left;
-  padding: 4px 8px; margin-bottom: 3px;
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; text-align: left;
+  padding: 5px 9px; margin-bottom: 4px;
   border-radius: 6px; border: 1px solid var(--accent);
   background: var(--accent); color: #fff;
-  cursor: pointer; font: inherit; font-size: 0.78rem;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  cursor: pointer; font: inherit; font-size: 0.92rem;
+  gap: 6px;
 }
 .qm-move-btn:hover { opacity: .85; }
 .qm-move-btn.active-move { background: #1a4590; border-color: #1a4590; }
+.qm-move-name {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  flex: 1; min-width: 0;
+}
+.qm-move-pct {
+  font-size: 0.82rem; font-weight: 700;
+  white-space: nowrap; flex-shrink: 0; opacity: 0.9;
+}
 
 /* ── Main 3-column grid ── */
 .main-grid {
@@ -151,7 +160,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
     "types    types    item  "
     "ability  ability  level "
     "nature   nature   status";
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 108px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(108px, 1fr);
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -303,7 +312,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   text-align: center; background: #fff; color: inherit;
 }
 .move-damage {
-  font-size: 0.68rem; color: var(--muted); flex-shrink: 0;
+  font-size: 0.72rem; color: var(--muted); flex-shrink: 0;
   white-space: nowrap; min-width: 0;
 }
 .move-row.best-move .move-damage {
@@ -699,6 +708,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <textarea id="pokemon-importer" class="importer-textarea" placeholder="Paste Showdown-format Pokémon here..."></textarea>
         <div class="importer-actions">
           <button class="trainer-nav-btn" type="button" onclick="importPokemonSets()">Import Pokémon</button>
+          <button class="trainer-nav-btn" type="button" onclick="resetImportedPokemon()">Reset</button>
           <span class="import-status" id="pokemon-import-status">Paste one or more Pokémon sets to add them below.</span>
         </div>
       </div>
@@ -1154,7 +1164,7 @@ function updateMoveHitsDefault(prefix, idx) {
   if (!hitsInput) return;
   if (moveName && moves[moveName]) {
     const isMultiHit = autoHitCount(moveName, moves[moveName]) > 1;
-    hitsInput.value = isMultiHit ? 3 : 1;
+    hitsInput.value = isMultiHit ? 2 : 1;
   }
 }
 
@@ -1162,7 +1172,8 @@ function updateQuickMoveBtn(prefix, idx) {
   const btn = el(`qm-${prefix}-btn-${idx}`);
   if (!btn) return;
   const moveName = el(`${prefix}-move-${idx}`)?.value || '—';
-  btn.textContent = `▶ ${moveName}`;
+  const nameSpan = btn.querySelector('.qm-move-name');
+  if (nameSpan) nameSpan.textContent = `▶ ${moveName}`;
   btn.setAttribute("aria-label", `Calculate damage with ${moveName}`);
 }
 
@@ -1188,8 +1199,19 @@ function buildQuickMoves() {
       btn.id = `qm-${prefix}-btn-${i}`;
       btn.className = 'qm-move-btn';
       const moveName = el(`${prefix}-move-${i}`)?.value || '—';
-      btn.textContent = `▶ ${moveName}`;
       btn.setAttribute("aria-label", `Calculate damage with ${moveName}`);
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'qm-move-name';
+      nameSpan.textContent = `▶ ${moveName}`;
+
+      const pctSpan = document.createElement('span');
+      pctSpan.className = 'qm-move-pct';
+      pctSpan.id = `qm-${prefix}-pct-${i}`;
+
+      btn.appendChild(nameSpan);
+      btn.appendChild(pctSpan);
+
       const capturedIdx = i;
       btn.addEventListener('click', () => calcFromMove(prefix, defPrefix, capturedIdx));
       container.appendChild(btn);
@@ -1627,6 +1649,114 @@ function importPokemonSets() {
   }
 }
 
+function resetImportedPokemon() {
+  importedPokemonSets = [];
+  renderImportedPokemonList();
+  const textarea = el("pokemon-importer");
+  if (textarea) textarea.value = "";
+  const status = el("pokemon-import-status");
+  if (status) status.textContent = "Paste one or more Pokémon sets to add them below.";
+}
+
+/* ── Per-move damage range (for labels) ── */
+function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
+  const attacker = readSet(atkPrefix);
+  const defender = readSet(defPrefix);
+  const move = moves[moveName];
+  if (!attacker || !defender || !move) return null;
+
+  const moveCategory = move.Category;
+  const rawPower = num(move.Power, 0);
+  const ctx = getModifierContext(atkPrefix);
+
+  if (moveCategory === "Status") return null;
+
+  if (defender.ability === "Wonder Guard") {
+    const wm = effectiveness(move.Type, defender.type1, defender.type2);
+    if (wm <= 1) return null;
+  }
+
+  let fixedFn = FIXED_DAMAGE_MOVES[moveName];
+  if (!fixedFn && rawPower <= 1) {
+    if (/always inflicts 40 HP damage/i.test(move.Description || "")) fixedFn = () => 40;
+    if (/always inflicts 20 HP damage/i.test(move.Description || "")) fixedFn = () => 20;
+    if (/damage equal to the user['\u2019]s level/i.test(move.Description || "")) fixedFn = (c) => c.attacker.level;
+  }
+
+  const notes = [];
+  const typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, ctx, notes);
+  const moveType = typePower.type;
+  const power = typePower.power;
+
+  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defender.ability, defender.item)) return null;
+
+  const typeMod = effectiveness(moveType, defender.type1, defender.type2);
+  if (typeMod === 0) return null;
+
+  if (defender.ability === "Flash Fire" && moveType === "Fire") return null;
+
+  const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
+  const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
+
+  let baseOneHit;
+  if (fixedFn) {
+    baseOneHit = fixedFn({ attacker, defender, move, moveType, power });
+  } else {
+    const ad = getAttackDefenseFix(moveCategory, attacker, defender, ctx.critical, moveName, notes);
+    const levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
+    baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
+  }
+
+  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes);
+
+  const rolls = [];
+  for (let r = 85; r <= 100; r++) {
+    let dmg = baseOneHit;
+    if (!fixedFn) {
+      dmg = Math.floor(dmg * (r / 100));
+      dmg = Math.floor(dmg * stab);
+      dmg = Math.floor(dmg * typeMod);
+      dmg = Math.floor(dmg * otherMod);
+    }
+    dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
+    dmg *= hitCount;
+    rolls.push(dmg);
+  }
+
+  const minD = Math.min(...rolls);
+  const maxD = Math.max(...rolls);
+  const hp = defender.stats.HP;
+  return { minD, maxD, minPct: (minD / hp) * 100, maxPct: (maxD / hp) * 100 };
+}
+
+function updateMoveDamageLabels() {
+  const pairs = [
+    { atkPrefix: 'atk', defPrefix: 'def' },
+    { atkPrefix: 'def', defPrefix: 'atk' }
+  ];
+  pairs.forEach(({ atkPrefix, defPrefix }) => {
+    for (let i = 0; i < 4; i++) {
+      const moveName = el(`${atkPrefix}-move-${i}`)?.value;
+      const hitsInput = el(`${atkPrefix}-move-hits-${i}`);
+      const hitCount = hitsInput ? clamp(num(hitsInput.value, 1), 1, 10) : 1;
+      const dmgSpan = el(`${atkPrefix}-move-dmg-${i}`);
+      const pctSpan = el(`qm-${atkPrefix}-pct-${i}`);
+
+      if (!moveName) continue;
+
+      const range = computeDamageRange(atkPrefix, defPrefix, moveName, hitCount);
+      if (range) {
+        const label = `${range.minPct.toFixed(0)}–${range.maxPct.toFixed(0)}%`;
+        if (dmgSpan) dmgSpan.textContent = label;
+        if (pctSpan) pctSpan.textContent = label;
+      } else {
+        if (dmgSpan) dmgSpan.textContent = '';
+        if (pctSpan) pctSpan.textContent = '';
+      }
+    }
+  });
+}
+
 /* ── Modifier context (side-aware) ── */
 function getModifierContext(atkPrefix) {
   const battleFormat = getToggleValue("battle-type-group") || "singles";
@@ -2029,6 +2159,7 @@ function calcFromMove(atkPrefix, defPrefix, moveIdx) {
   if (qmBtn) qmBtn.classList.add("active-move");
 
   calcDamage(atkPrefix, defPrefix, moveName, hitCount);
+  updateMoveDamageLabels();
 }
 
 function recalcIfNeeded() {
@@ -2041,6 +2172,7 @@ function recalcIfNeeded() {
     lastCalcState.hitCount = hitCount; // keep state in sync with DOM
     calcDamage(atkPrefix, defPrefix, moveName, hitCount);
   }
+  updateMoveDamageLabels();
 }
 
 function syncTypeDefaults(prefix, overrideSpecies) {
@@ -2160,6 +2292,7 @@ async function init() {
 
     // Build quick-moves panel buttons
     buildQuickMoves();
+    updateMoveDamageLabels();
 
     // Update sprites for initial species
     updateSprite("atk");
