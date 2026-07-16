@@ -911,6 +911,7 @@ let pokedex = {};
 let moves = {};
 let trainersFlat = [];
 let allItems = [...BASE_ITEMS];
+const NO_MOVE = "No Move";
 const DEFAULT_MULTI_HIT_COUNT = 2;
 let lastCalcState = null;
 let importedPokemonSets = [];
@@ -931,6 +932,10 @@ function toSlug(name) {
 
 function trainerDisplayName(trainer) {
   return `${trainer.trainerName} (${trainer.route})`;
+}
+
+function importedDisplayName(imported, idx) {
+  return `Imported ${idx + 1}: ${imported.species}`;
 }
 
 /* ── Toggle helpers ── */
@@ -1145,7 +1150,7 @@ function listSpecies() {
 /* ── Move selects ── */
 function populateMoveSelects(prefix, moveNames) {
   for (let i = 0; i < 4; i++) {
-    setSelectOptions(`${prefix}-move-${i}`, moveNames, moveNames[i] || moveNames[0]);
+    setSelectOptions(`${prefix}-move-${i}`, moveNames, moveNames[i + 1] || moveNames[1] || moveNames[0]);
     updateMoveHitsDefault(prefix, i);
     updateMoveInfo(prefix, i);
     updateQuickMoveBtn(prefix, i);
@@ -1154,7 +1159,7 @@ function populateMoveSelects(prefix, moveNames) {
 
 function updateMoveInfo(prefix, idx) {
   const moveName = el(`${prefix}-move-${idx}`)?.value;
-  const move = moveName ? moves[moveName] : null;
+  const move = moveName && moveName !== NO_MOVE ? moves[moveName] : null;
   const typeEl = el(`${prefix}-move-type-${idx}`);
   const bpEl = el(`${prefix}-move-bp-${idx}`);
   const accEl = el(`${prefix}-move-acc-${idx}`);
@@ -1174,6 +1179,8 @@ function updateMoveHitsDefault(prefix, idx) {
   if (moveName && moves[moveName]) {
     const isMultiHit = autoHitCount(moveName, moves[moveName]) > 1;
     hitsInput.value = isMultiHit ? DEFAULT_MULTI_HIT_COUNT : 1;
+  } else {
+    hitsInput.value = 1;
   }
 }
 
@@ -1239,9 +1246,9 @@ function resolveTrainerSpecies(tp) {
   return tp.Name;
 }
 
-function getTrainerMatches(query = "") {
+function getTrainerMatches(prefix, query = "") {
   const normalized = query.trim().toLowerCase();
-  return trainersFlat
+  const trainerMatches = trainersFlat
     .map((trainer, idx) => ({ trainer, idx }))
     .filter(({ trainer }) => {
       if (!normalized) return true;
@@ -1250,29 +1257,62 @@ function getTrainerMatches(query = "") {
         || trainer.trainerName.toLowerCase().includes(normalized)
         || trainer.route.toLowerCase().includes(normalized);
     });
+
+  if (prefix !== "atk") return trainerMatches.map(match => ({ ...match, kind: "trainer" }));
+
+  const importedMatches = importedPokemonSets
+    .map((imported, idx) => ({ imported, idx, label: importedDisplayName(imported, idx) }))
+    .filter(({ imported, label }) => {
+      if (!normalized) return true;
+      return label.toLowerCase().includes(normalized)
+        || imported.species.toLowerCase().includes(normalized)
+        || (imported.item || "").toLowerCase().includes(normalized);
+    })
+    .map(match => ({ ...match, kind: "imported" }));
+
+  return [...trainerMatches.map(match => ({ ...match, kind: "trainer" })), ...importedMatches];
 }
 
 function populateTrainerOptions(prefix, query = "") {
   const list = el(`${prefix}-trainer-list`);
   if (!list) return;
   list.innerHTML = "";
-  getTrainerMatches(query).slice(0, 100).forEach(({ trainer }) => {
+  getTrainerMatches(prefix, query).slice(0, 100).forEach(match => {
     const opt = document.createElement("option");
-    opt.value = trainerDisplayName(trainer);
+    opt.value = match.kind === "trainer" ? trainerDisplayName(match.trainer) : match.label;
     list.appendChild(opt);
   });
 }
 
-function findTrainerIndex(query, allowPartial = false) {
+function findTrainerMatch(prefix, query, allowPartial = false) {
   const normalized = query.trim().toLowerCase();
-  if (!normalized) return -1;
+  if (!normalized) return null;
   const exactIdx = trainersFlat.findIndex(trainer => {
     const display = trainerDisplayName(trainer).toLowerCase();
     return display === normalized || trainer.trainerName.toLowerCase() === normalized;
   });
-  if (exactIdx >= 0 || !allowPartial) return exactIdx;
-  const partial = getTrainerMatches(query)[0];
-  return partial ? partial.idx : -1;
+  if (exactIdx >= 0) return { kind: "trainer", idx: exactIdx };
+
+  if (prefix === "atk") {
+    const importedIdx = importedPokemonSets.findIndex((imported, idx) => {
+      const label = importedDisplayName(imported, idx).toLowerCase();
+      return label === normalized || imported.species.toLowerCase() === normalized;
+    });
+    if (importedIdx >= 0) return { kind: "imported", idx: importedIdx };
+  }
+
+  if (!allowPartial) return null;
+  const partial = getTrainerMatches(prefix, query)[0];
+  return partial ? { kind: partial.kind, idx: partial.idx } : null;
+}
+
+function applyTrainerMatch(prefix, match) {
+  if (!match) return;
+  if (match.kind === "trainer") {
+    setTrainer(prefix, match.idx);
+  } else if (prefix === "atk") {
+    applyImportedPokemon(match.idx);
+  }
 }
 
 function setTrainer(prefix, idx) {
@@ -1300,21 +1340,23 @@ function nextTrainer(prefix) {
 function filterTrainers(prefix) {
   const query = el(`${prefix}-trainer-search`)?.value || "";
   populateTrainerOptions(prefix, query);
-  const exactIdx = findTrainerIndex(query);
-  if (exactIdx >= 0) setTrainer(prefix, exactIdx);
+  applyTrainerMatch(prefix, findTrainerMatch(prefix, query));
 }
 
 function selectTrainerFromInput(prefix) {
   const query = el(`${prefix}-trainer-search`)?.value || "";
-  const idx = findTrainerIndex(query, true);
-  if (idx >= 0) setTrainer(prefix, idx);
+  applyTrainerMatch(prefix, findTrainerMatch(prefix, query, true));
 }
 
 function handleTrainerSearchFocus(prefix) {
   const trainerSearch = el(`${prefix}-trainer-search`);
   if (!trainerSearch) return;
   const trainer = trainersFlat[trainerState[prefix]];
-  const currentLabel = trainer ? trainerDisplayName(trainer) : "";
+  const trainerLabel = trainer ? trainerDisplayName(trainer) : "";
+  const importedLabel = prefix === "atk"
+    ? importedPokemonSets.map((imported, idx) => importedDisplayName(imported, idx)).find(label => label === trainerSearch.value) || ""
+    : "";
+  const currentLabel = importedLabel || trainerLabel;
   if (trainerSearch.value === currentLabel) {
     trainerSearch.dataset.restoreValue = currentLabel;
     trainerSearch.value = "";
@@ -1434,8 +1476,10 @@ function fillTrainerPokemon(prefix, tp) {
   const trainerMoves = tp.Moves || [];
   for (let i = 0; i < 4; i++) {
     const moveSel = el(`${prefix}-move-${i}`);
-    if (moveSel && trainerMoves[i]) {
-      if (selectHasOption(moveSel, trainerMoves[i])) moveSel.value = trainerMoves[i];
+    const moveName = trainerMoves[i] || NO_MOVE;
+    if (moveSel) {
+      addOptionIfMissing(moveSel, moveName);
+      moveSel.value = moveName;
     }
     updateMoveHitsDefault(prefix, i);
     updateMoveInfo(prefix, i);
@@ -1560,6 +1604,7 @@ function renderImportedPokemonList() {
   container.innerHTML = "";
   if (!importedPokemonSets.length) {
     section.hidden = true;
+    populateTrainerOptions("atk");
     return;
   }
 
@@ -1590,6 +1635,7 @@ function renderImportedPokemonList() {
   });
 
   section.hidden = false;
+  populateTrainerOptions("atk");
 }
 
 function fillImportedPokemon(prefix, imported) {
@@ -1631,7 +1677,7 @@ function fillImportedPokemon(prefix, imported) {
   for (let i = 0; i < 4; i++) {
     const moveSel = el(`${prefix}-move-${i}`);
     if (!moveSel) continue;
-    const moveName = imported.moves[i] || moveSel.options[0]?.value || "";
+    const moveName = imported.moves[i] || NO_MOVE;
     if (moveName) {
       addOptionIfMissing(moveSel, moveName);
       moveSel.value = moveName;
@@ -1652,7 +1698,7 @@ function fillImportedPokemon(prefix, imported) {
 function applyImportedPokemon(idx) {
   const imported = importedPokemonSets[idx];
   if (!imported) return;
-  clearTrainerSelection("atk", "Imported Pokémon");
+  clearTrainerSelection("atk", importedDisplayName(imported, idx));
   setImportedSelection(idx);
   fillImportedPokemon("atk", imported);
 }
@@ -1682,6 +1728,7 @@ function importPokemonSets() {
 function resetImportedPokemon() {
   importedPokemonSets = [];
   renderImportedPokemonList();
+  setImportedSelection(-1);
   const textarea = el("pokemon-importer");
   if (textarea) textarea.value = "";
   const status = el("pokemon-import-status");
@@ -2123,7 +2170,14 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   // Build result display
   resultEl.textContent = "";
 
-  // Line 1: Who attacks with what → who defends
+  // Line 1: Damage
+  resultEl.appendChild(resultRow([
+    {bold: false, text: "Damage: "},
+    {bold: true,  text: `${minD}–${maxD} HP`},
+    {bold: false, text: ` (${minPct.toFixed(1)}%–${maxPct.toFixed(1)}%)`}
+  ]));
+
+  // Line 2: Who attacks with what → who defends
   resultEl.appendChild(resultRow([
     {bold: true,  text: `${atkLabel}`},
     {bold: false, text: ` (${attacker.name} Lv.${attacker.level}) used `},
@@ -2133,16 +2187,9 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
     {bold: false, text: ` (${defender.name} Lv.${defender.level}) [HP: ${currentHP}/${hp}]`}
   ]));
 
-  // Move details on same or next line
+  // Line 3: Move details
   resultEl.appendChild(resultRow([
-    {bold: false, text: `${moveType} | ${moveCategory} | BP ${power}${hitCount > 1 ? ` | ${hitCount} hits` : ''}`}
-  ]));
-
-  // Line 2: Damage
-  resultEl.appendChild(resultRow([
-    {bold: false, text: "Damage: "},
-    {bold: true,  text: `${minD}–${maxD} HP`},
-    {bold: false, text: ` (${minPct.toFixed(1)}%–${maxPct.toFixed(1)}%)`}
+    {bold: false, text: `${moveType} | ${moveCategory} | BP ${power}${hitCount > 1 ? ` | ${hitCount} hits` : ""}`}
   ]));
 
   // Line 3: KO
@@ -2291,7 +2338,7 @@ async function init() {
     allItems = [...new Set([...BASE_ITEMS, ...Array.from(trainerItems).sort()])];
 
     const species = listSpecies();
-    const moveNames = Object.keys(moves).sort((a, b) => a.localeCompare(b));
+    const moveNames = [NO_MOVE, ...Object.keys(moves).sort((a, b) => a.localeCompare(b))];
 
     // Species selects
     setSelectOptions("atk-species", species, species[0]);
