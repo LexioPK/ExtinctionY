@@ -31,22 +31,20 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .subtitle { text-align: center; color: var(--muted); margin: 0 0 16px; }
 .calc-wrap { max-width: 1440px; margin: 0 auto; }
 
-/* ── Top row: Result + Quick Moves ── */
+/* ── Top row: [You→Opp] [Result] [Opp→You] ── */
 .top-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 220px 1fr 220px;
   gap: 14px;
   margin-bottom: 14px;
   align-items: flex-start;
 }
-.result-pane { flex: 1; min-width: 0; }
-.quick-moves-pane { width: 220px; flex-shrink: 0; }
-.qm-half { margin-bottom: 8px; }
-.qm-half:last-child { margin-bottom: 0; }
+.result-pane { min-width: 0; }
+.qm-pane { min-width: 0; }
 .qm-label {
   font-size: 0.7rem; font-weight: 600; color: var(--muted);
   text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px;
 }
-.qm-sep { border: none; border-top: 1px solid var(--border); margin: 8px 0; }
 .qm-move-btn {
   display: block; width: 100%; text-align: left;
   padding: 4px 8px; margin-bottom: 3px;
@@ -144,12 +142,11 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid {
   display: grid;
   grid-template-areas:
-    "sprite  species  species"
-    "sprite  types    types"
-    ".       ability  item"
-    ".       nature   level"
-    ".       blank    status";
-  grid-template-columns: 68px 1fr 1fr;
+    "species  species  sprite"
+    "types    types    item  "
+    "ability  level    .     "
+    "nature   status   .     ";
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -164,11 +161,12 @@ h1 { text-align: center; margin: 8px 0 6px; }
 }
 .ia-species { grid-area: species; }
 .ia-types { grid-area: types; display: flex; gap: 6px; }
-.ia-types .field { flex: 0 0 auto; }
+.ia-types .field { flex: 1; }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
 .ia-level   { grid-area: level; }
+.ia-level input[type="number"] { max-width: 52px; }
 .ia-status  { grid-area: status; }
 
 /* ── Stat table ── */
@@ -228,6 +226,12 @@ h1 { text-align: center; margin: 8px 0 6px; }
   flex: 1; text-align: center; font-size: 0.76rem; color: var(--muted);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+.trainer-search {
+  flex: 1; min-width: 0;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 3px 6px; font: inherit; font-size: 0.76rem;
+  background: #fff; color: inherit;
+}
 
 /* ── Pokemon icon strip ── */
 .poke-icons {
@@ -261,12 +265,15 @@ h1 { text-align: center; margin: 8px 0 6px; }
   text-transform: uppercase; letter-spacing: .05em; margin: 8px 0 4px;
 }
 .move-row {
-  display: flex; align-items: center; gap: 5px; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 5px; margin-bottom: 2px;
 }
 .move-row select {
   border: 1px solid var(--border); border-radius: 6px;
   padding: 4px 7px; font: inherit; font-size: 0.82rem;
   background: #fff; color: inherit; flex: 1; min-width: 0;
+}
+.move-row.best-move select {
+  border-color: var(--accent); background: rgba(36,92,172,.06);
 }
 .move-hits-input {
   width: 40px; flex-shrink: 0;
@@ -276,6 +283,25 @@ h1 { text-align: center; margin: 8px 0 6px; }
 }
 .move-hits-label {
   font-size: 0.72rem; color: var(--muted); flex-shrink: 0; white-space: nowrap;
+}
+.move-damage {
+  font-size: 0.68rem; color: var(--muted); flex-shrink: 0;
+  white-space: nowrap; min-width: 0;
+}
+.move-row.best-move .move-damage {
+  color: var(--accent); font-weight: 700;
+}
+.move-info-row {
+  display: flex; gap: 5px; margin-bottom: 5px;
+  padding: 1px 0 0 2px; flex-wrap: wrap; align-items: center;
+}
+.mi-type {
+  font-size: 0.66rem; font-weight: 700; padding: 1px 5px;
+  border-radius: 3px; color: #fff; white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+.mi-detail {
+  font-size: 0.68rem; color: var(--muted); white-space: nowrap;
 }
 
 /* ── Result ── */
@@ -292,15 +318,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
 /* ── Responsive ── */
 @media (max-width: 1100px) {
   .main-grid { grid-template-columns: 1fr 220px 1fr; }
-  .top-row { flex-direction: column; }
-  .quick-moves-pane { width: 100%; display: flex; gap: 12px; }
-  .qm-half { flex: 1; margin-bottom: 0; }
-  .qm-sep { display: none; }
+  .top-row { grid-template-columns: 1fr 1fr; }
+  .top-row .result-pane { grid-column: 1 / -1; order: -1; }
 }
 @media (max-width: 720px) {
   .main-grid { grid-template-columns: 1fr 1fr; }
   .middle-col { grid-column: 1 / -1; order: -1; }
-  .quick-moves-pane { flex-direction: column; }
+  .top-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 500px) {
   .main-grid { grid-template-columns: 1fr; }
@@ -315,7 +339,8 @@ html.dark-mode .field input, html.dark-mode .field select,
 html.dark-mode .move-row select,
 html.dark-mode .hp-section input, html.dark-mode .stat-table input,
 html.dark-mode .stat-table select,
-html.dark-mode .move-hits-input { background: #22293a; color: var(--text); }
+html.dark-mode .move-hits-input,
+html.dark-mode .trainer-search { background: #22293a; color: var(--text); }
 html.dark-mode .toggle-btn { background: #22293a; color: var(--text); }
 html.dark-mode .toggle-btn.active { background: var(--accent); color: #10121a; }
 html.dark-mode .side-btn { background: #22293a; color: var(--muted); }
@@ -325,6 +350,7 @@ html.dark-mode .trainer-nav-btn:hover { background: var(--border); }
 html.dark-mode .poke-icon-slot { background: #22293a; }
 html.dark-mode .qm-move-btn { background: var(--accent); color: #10121a; }
 html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #6090e0; }
+html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 </style>
 </head>
 <body>
@@ -333,23 +359,21 @@ html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #60
 
 <div class="calc-wrap">
 
-  <!-- ══ Top: Result + Quick Moves ══ -->
+  <!-- ══ Top: [You→Opp] [Result] [Opp→You] ══ -->
   <div class="top-row">
+
+    <div class="card qm-pane">
+      <div class="qm-label">You → Opp.</div>
+      <div id="qm-atk"></div>
+    </div>
 
     <div class="card result-pane">
       <div id="result" class="result"><p class="result-placeholder">Click a move ▶ button to calculate damage.</p></div>
     </div>
 
-    <div class="card quick-moves-pane">
-      <div class="qm-half">
-        <div class="qm-label">You → Opp.</div>
-        <div id="qm-atk"></div>
-      </div>
-      <hr class="qm-sep">
-      <div class="qm-half">
-        <div class="qm-label">Opp. → You</div>
-        <div id="qm-def"></div>
-      </div>
+    <div class="card qm-pane">
+      <div class="qm-label">Opp. → You</div>
+      <div id="qm-def"></div>
     </div>
 
   </div>
@@ -364,21 +388,19 @@ html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #60
       <!-- Trainer navigation -->
       <div class="trainer-nav">
         <button class="trainer-nav-btn" onclick="prevTrainer('atk')">◀</button>
+        <input class="trainer-search" id="atk-trainer-search" type="text" placeholder="Search trainer…" oninput="filterTrainers('atk')">
         <span class="trainer-name" id="atk-trainer-name">— Select Trainer —</span>
         <button class="trainer-nav-btn" onclick="nextTrainer('atk')">▶</button>
       </div>
 
-      <!-- Pokémon icon strip -->
-      <div class="poke-icons" id="atk-poke-icons"></div>
-
       <!-- Info grid -->
       <div class="info-grid">
-        <div class="ia-sprite">
-          <img id="atk-sprite" class="poke-sprite" src="" alt="">
-        </div>
         <div class="field ia-species">
           <label for="atk-species">Species</label>
           <select id="atk-species"></select>
+        </div>
+        <div class="ia-sprite">
+          <img id="atk-sprite" class="poke-sprite" src="" alt="">
         </div>
         <div class="ia-types">
           <div class="field">
@@ -390,21 +412,21 @@ html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #60
             <select id="atk-type2"></select>
           </div>
         </div>
-        <div class="field ia-ability">
-          <label for="atk-ability">Ability</label>
-          <select id="atk-ability"></select>
-        </div>
         <div class="field ia-item">
           <label for="atk-item">Item</label>
           <select id="atk-item"></select>
         </div>
-        <div class="field ia-nature">
-          <label for="atk-nature">Nature</label>
-          <select id="atk-nature"></select>
+        <div class="field ia-ability">
+          <label for="atk-ability">Ability</label>
+          <select id="atk-ability"></select>
         </div>
         <div class="field ia-level">
           <label for="atk-level">Level</label>
           <input id="atk-level" type="number" min="1" max="100" value="50">
+        </div>
+        <div class="field ia-nature">
+          <label for="atk-nature">Nature</label>
+          <select id="atk-nature"></select>
         </div>
         <div class="field ia-status">
           <label for="atk-status">Status</label>
@@ -419,6 +441,9 @@ html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #60
           </select>
         </div>
       </div>
+
+      <!-- Pokémon icon strip -->
+      <div class="poke-icons" id="atk-poke-icons"></div>
 
       <!-- Stat table -->
       <div id="atk-stat-wrap"></div>
@@ -435,25 +460,49 @@ html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #60
       <!-- Moves (hits input, no Atk button) -->
       <div class="moves-label">Moves</div>
       <div id="atk-moves-section">
-        <div class="move-row">
+        <div class="move-row" id="atk-move-row-0">
           <select id="atk-move-0" onchange="onMoveSelectChange('atk',0)"></select>
           <span class="move-hits-label">×</span>
           <input type="number" id="atk-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <span class="move-damage" id="atk-move-dmg-0"></span>
         </div>
-        <div class="move-row">
+        <div class="move-info-row" id="atk-move-info-0">
+          <span class="mi-type" id="atk-move-type-0"></span>
+          <span class="mi-detail" id="atk-move-bp-0">BP: —</span>
+          <span class="mi-detail" id="atk-move-acc-0">Acc: —</span>
+        </div>
+        <div class="move-row" id="atk-move-row-1">
           <select id="atk-move-1" onchange="onMoveSelectChange('atk',1)"></select>
           <span class="move-hits-label">×</span>
           <input type="number" id="atk-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <span class="move-damage" id="atk-move-dmg-1"></span>
         </div>
-        <div class="move-row">
+        <div class="move-info-row" id="atk-move-info-1">
+          <span class="mi-type" id="atk-move-type-1"></span>
+          <span class="mi-detail" id="atk-move-bp-1">BP: —</span>
+          <span class="mi-detail" id="atk-move-acc-1">Acc: —</span>
+        </div>
+        <div class="move-row" id="atk-move-row-2">
           <select id="atk-move-2" onchange="onMoveSelectChange('atk',2)"></select>
           <span class="move-hits-label">×</span>
           <input type="number" id="atk-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <span class="move-damage" id="atk-move-dmg-2"></span>
         </div>
-        <div class="move-row">
+        <div class="move-info-row" id="atk-move-info-2">
+          <span class="mi-type" id="atk-move-type-2"></span>
+          <span class="mi-detail" id="atk-move-bp-2">BP: —</span>
+          <span class="mi-detail" id="atk-move-acc-2">Acc: —</span>
+        </div>
+        <div class="move-row" id="atk-move-row-3">
           <select id="atk-move-3" onchange="onMoveSelectChange('atk',3)"></select>
           <span class="move-hits-label">×</span>
           <input type="number" id="atk-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <span class="move-damage" id="atk-move-dmg-3"></span>
+        </div>
+        <div class="move-info-row" id="atk-move-info-3">
+          <span class="mi-type" id="atk-move-type-3"></span>
+          <span class="mi-detail" id="atk-move-bp-3">BP: —</span>
+          <span class="mi-detail" id="atk-move-acc-3">Acc: —</span>
         </div>
       </div>
     </div>
@@ -565,21 +614,19 @@ html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #60
       <!-- Trainer navigation -->
       <div class="trainer-nav">
         <button class="trainer-nav-btn" onclick="prevTrainer('def')">◀</button>
+        <input class="trainer-search" id="def-trainer-search" type="text" placeholder="Search trainer…" oninput="filterTrainers('def')">
         <span class="trainer-name" id="def-trainer-name">— Select Trainer —</span>
         <button class="trainer-nav-btn" onclick="nextTrainer('def')">▶</button>
       </div>
 
-      <!-- Pokémon icon strip -->
-      <div class="poke-icons" id="def-poke-icons"></div>
-
       <!-- Info grid -->
       <div class="info-grid">
-        <div class="ia-sprite">
-          <img id="def-sprite" class="poke-sprite" src="" alt="">
-        </div>
         <div class="field ia-species">
           <label for="def-species">Species</label>
           <select id="def-species"></select>
+        </div>
+        <div class="ia-sprite">
+          <img id="def-sprite" class="poke-sprite" src="" alt="">
         </div>
         <div class="ia-types">
           <div class="field">
@@ -591,21 +638,21 @@ html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #60
             <select id="def-type2"></select>
           </div>
         </div>
-        <div class="field ia-ability">
-          <label for="def-ability">Ability</label>
-          <select id="def-ability"></select>
-        </div>
         <div class="field ia-item">
           <label for="def-item">Item</label>
           <select id="def-item"></select>
         </div>
-        <div class="field ia-nature">
-          <label for="def-nature">Nature</label>
-          <select id="def-nature"></select>
+        <div class="field ia-ability">
+          <label for="def-ability">Ability</label>
+          <select id="def-ability"></select>
         </div>
         <div class="field ia-level">
           <label for="def-level">Level</label>
           <input id="def-level" type="number" min="1" max="100" value="50">
+        </div>
+        <div class="field ia-nature">
+          <label for="def-nature">Nature</label>
+          <select id="def-nature"></select>
         </div>
         <div class="field ia-status">
           <label for="def-status">Status</label>
@@ -620,6 +667,9 @@ html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #60
           </select>
         </div>
       </div>
+
+      <!-- Pokémon icon strip -->
+      <div class="poke-icons" id="def-poke-icons"></div>
 
       <!-- Stat table -->
       <div id="def-stat-wrap"></div>
@@ -636,25 +686,49 @@ html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #60
       <!-- Moves (hits input, no Atk button) -->
       <div class="moves-label">Moves</div>
       <div id="def-moves-section">
-        <div class="move-row">
+        <div class="move-row" id="def-move-row-0">
           <select id="def-move-0" onchange="onMoveSelectChange('def',0)"></select>
           <span class="move-hits-label">×</span>
           <input type="number" id="def-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <span class="move-damage" id="def-move-dmg-0"></span>
         </div>
-        <div class="move-row">
+        <div class="move-info-row" id="def-move-info-0">
+          <span class="mi-type" id="def-move-type-0"></span>
+          <span class="mi-detail" id="def-move-bp-0">BP: —</span>
+          <span class="mi-detail" id="def-move-acc-0">Acc: —</span>
+        </div>
+        <div class="move-row" id="def-move-row-1">
           <select id="def-move-1" onchange="onMoveSelectChange('def',1)"></select>
           <span class="move-hits-label">×</span>
           <input type="number" id="def-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <span class="move-damage" id="def-move-dmg-1"></span>
         </div>
-        <div class="move-row">
+        <div class="move-info-row" id="def-move-info-1">
+          <span class="mi-type" id="def-move-type-1"></span>
+          <span class="mi-detail" id="def-move-bp-1">BP: —</span>
+          <span class="mi-detail" id="def-move-acc-1">Acc: —</span>
+        </div>
+        <div class="move-row" id="def-move-row-2">
           <select id="def-move-2" onchange="onMoveSelectChange('def',2)"></select>
           <span class="move-hits-label">×</span>
           <input type="number" id="def-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <span class="move-damage" id="def-move-dmg-2"></span>
         </div>
-        <div class="move-row">
+        <div class="move-info-row" id="def-move-info-2">
+          <span class="mi-type" id="def-move-type-2"></span>
+          <span class="mi-detail" id="def-move-bp-2">BP: —</span>
+          <span class="mi-detail" id="def-move-acc-2">Acc: —</span>
+        </div>
+        <div class="move-row" id="def-move-row-3">
           <select id="def-move-3" onchange="onMoveSelectChange('def',3)"></select>
           <span class="move-hits-label">×</span>
           <input type="number" id="def-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <span class="move-damage" id="def-move-dmg-3"></span>
+        </div>
+        <div class="move-info-row" id="def-move-info-3">
+          <span class="mi-type" id="def-move-type-3"></span>
+          <span class="mi-detail" id="def-move-bp-3">BP: —</span>
+          <span class="mi-detail" id="def-move-acc-3">Acc: —</span>
         </div>
       </div>
     </div>
