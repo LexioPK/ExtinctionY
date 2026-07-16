@@ -908,8 +908,73 @@ const NATURES = {
 
 const BASE_ITEMS = [
   "None","Life Orb","Choice Band","Choice Specs","Assault Vest","Eviolite",
-  "Expert Belt","Muscle Band","Wise Glasses","Leftovers","Air Balloon","Heavy-Duty Boots"
+  "Expert Belt","Muscle Band","Wise Glasses","Leftovers","Air Balloon","Heavy-Duty Boots",
+  // Type-boosting items
+  "Silk Scarf",
+  "Charcoal","Flame Plate",
+  "Mystic Water","Splash Plate",
+  "Magnet","Zap Plate",
+  "Miracle Seed","Meadow Plate",
+  "Never-Melt Ice","Icicle Plate",
+  "Black Belt","Fist Plate",
+  "Poison Barb","Toxic Plate",
+  "Soft Sand","Earth Plate",
+  "Sharp Beak","Sky Plate",
+  "Twisted Spoon","Mind Plate",
+  "Silver Powder","Insect Plate",
+  "Hard Stone","Stone Plate",
+  "Spell Tag","Spooky Plate",
+  "Dragon Fang","Draco Plate",
+  "Black Glasses","Dread Plate",
+  "Metal Coat","Iron Plate",
+  "Pixie Plate",
+  // Type-resist berries (ordered to match TYPE_RESIST_BERRIES)
+  "Occa Berry","Passho Berry","Wacan Berry","Rindo Berry","Yache Berry",
+  "Chople Berry","Kebia Berry","Shuca Berry","Coba Berry","Payapa Berry",
+  "Tanga Berry","Charti Berry","Kasib Berry","Haban Berry","Colbur Berry",
+  "Babiri Berry","Roseli Berry","Chilan Berry"
 ];
+
+const TYPE_BOOST_ITEMS = {
+  "Silk Scarf": "Normal",
+  "Charcoal": "Fire",    "Flame Plate": "Fire",
+  "Mystic Water": "Water", "Splash Plate": "Water",
+  "Magnet": "Electric",  "Zap Plate": "Electric",
+  "Miracle Seed": "Grass","Meadow Plate": "Grass",
+  "Never-Melt Ice": "Ice","Icicle Plate": "Ice",
+  "Black Belt": "Fighting","Fist Plate": "Fighting",
+  "Poison Barb": "Poison","Toxic Plate": "Poison",
+  "Soft Sand": "Ground",  "Earth Plate": "Ground",
+  "Sharp Beak": "Flying", "Sky Plate": "Flying",
+  "Twisted Spoon": "Psychic","Mind Plate": "Psychic",
+  "Silver Powder": "Bug", "Insect Plate": "Bug",
+  "Hard Stone": "Rock",   "Stone Plate": "Rock",
+  "Spell Tag": "Ghost",   "Spooky Plate": "Ghost",
+  "Dragon Fang": "Dragon","Draco Plate": "Dragon",
+  "Black Glasses": "Dark","Dread Plate": "Dark",
+  "Metal Coat": "Steel",  "Iron Plate": "Steel",
+  "Pixie Plate": "Fairy"
+};
+
+const TYPE_RESIST_BERRIES = {
+  "Occa Berry": "Fire",    "Passho Berry": "Water",  "Wacan Berry": "Electric",
+  "Rindo Berry": "Grass",  "Yache Berry": "Ice",     "Chople Berry": "Fighting",
+  "Kebia Berry": "Poison", "Shuca Berry": "Ground",  "Coba Berry": "Flying",
+  "Payapa Berry": "Psychic","Tanga Berry": "Bug",    "Charti Berry": "Rock",
+  "Kasib Berry": "Ghost",  "Haban Berry": "Dragon",  "Colbur Berry": "Dark",
+  "Babiri Berry": "Steel", "Roseli Berry": "Fairy",
+  "Chilan Berry": "Normal" // halves all Normal-type damage regardless of effectiveness
+};
+
+const IMMUNE_ABILITIES = {
+  "Sap Sipper":  "Grass",
+  "Lightning Rod": "Electric",
+  "Volt Absorb": "Electric",
+  "Water Absorb": "Water",
+  "Storm Drain": "Water",
+  "Motor Drive": "Electric",
+  "Dry Skin":    "Water"  // also ×1.25 weak to Fire — handled separately below
+};
 
 const FIXED_DAMAGE_MOVES = {
   "Seismic Toss": (ctx) => ctx.attacker.level,
@@ -1756,6 +1821,8 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   if (typeMod === 0) return null;
 
   if (defender.ability === "Flash Fire" && moveType === "Fire") return null;
+  const immuneTypeCD = IMMUNE_ABILITIES[defender.ability];
+  if (immuneTypeCD && immuneTypeCD === moveType) return null;
 
   const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
@@ -1979,6 +2046,9 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (attacker.item === "Muscle Band" && moveCategory === "Physical") { mod *= 1.1; notes.push("Muscle Band ×1.1"); }
   if (attacker.item === "Wise Glasses" && moveCategory === "Special") { mod *= 1.1; notes.push("Wise Glasses ×1.1"); }
 
+  const boostType = TYPE_BOOST_ITEMS[attacker.item];
+  if (boostType && boostType === moveType) { mod *= 1.2; notes.push(`${attacker.item} ×1.2`); }
+
   const moveDesc = String(moves[moveName]?.Description || "");
   if (attacker.ability === "Iron Fist" && /\(.*Punch.*\)/i.test(moveDesc)) { mod *= 1.2; notes.push("Iron Fist ×1.2"); }
   if (attacker.ability === "Reckless" && /Recoil/i.test(moveDesc)) { mod *= 1.2; notes.push("Reckless ×1.2"); }
@@ -1993,6 +2063,12 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
 
   if (defender.ability === "Thick Fat" && (moveType === "Fire" || moveType === "Ice")) { mod *= 0.5; notes.push("Thick Fat ×0.5"); }
   if (["Filter","Solid Rock","Prism Armor"].includes(defender.ability) && typeMod > 1) { mod *= 0.75; notes.push(`${defender.ability} ×0.75`); }
+  if (defender.ability === "Dry Skin" && moveType === "Fire") { mod *= 1.25; notes.push("Dry Skin ×1.25 (Fire)"); }
+
+  const resistBerryType = TYPE_RESIST_BERRIES[defender.item];
+  if (resistBerryType && resistBerryType === moveType && (typeMod > 1 || defender.item === "Chilan Berry")) {
+    mod *= 0.5; notes.push(`${defender.item} ×0.5`);
+  }
 
   return mod;
 }
@@ -2087,6 +2163,13 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   if (defender.ability === "Flash Fire" && moveType === "Fire") {
     resultEl.innerHTML = '';
     resultEl.appendChild(resultRow([{bold:false, text:`${defender.name}: absorbed by Flash Fire.`}]));
+    return;
+  }
+
+  const immuneType = IMMUNE_ABILITIES[defender.ability];
+  if (immuneType && immuneType === moveType) {
+    resultEl.innerHTML = '';
+    resultEl.appendChild(resultRow([{bold:false, text:`${defender.name}: immune via ${defender.ability} (${moveType}-type).`}]));
     return;
   }
 
