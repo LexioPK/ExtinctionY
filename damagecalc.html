@@ -176,12 +176,16 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-species { grid-area: species; }
 .ia-types {
   grid-area: types;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 140px));
+  display: flex;
   gap: 6px;
+  flex-wrap: wrap;
   justify-content: start;
 }
-.ia-types .field { min-width: 0; }
+.ia-types .field {
+  flex: 1 1 120px;
+  max-width: 180px;
+  min-width: 0;
+}
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
