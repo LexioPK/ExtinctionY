@@ -157,9 +157,8 @@ h1 { text-align: center; margin: 8px 0 6px; }
   display: grid;
   grid-template-areas:
     "species  species  sprite"
-    "types    types    item  "
-    "ability  ability  level "
-    "nature   nature   status";
+    "type1    ability  item  "
+    "type2    nature   level ";
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(108px, 1fr);
   gap: 6px;
   margin-bottom: 8px;
@@ -174,46 +173,50 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-radius: 6px;
 }
 .ia-species { grid-area: species; }
-.ia-types {
-  grid-area: types;
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  justify-content: start;
-}
-.ia-types .field {
-  flex: 1 1 120px;
-  max-width: 180px;
-  min-width: 0;
-}
+.ia-type1   { grid-area: type1; }
+.ia-type2   { grid-area: type2; }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
 .ia-level   { grid-area: level; }
 .ia-level input[type="number"] { max-width: 100%; }
-.ia-status  { grid-area: status; }
+
+/* ── Stat + Status row ── */
+.stat-status-row {
+  display: flex; gap: 8px; align-items: flex-start; margin-top: 6px;
+}
+.stat-status-row > :first-child { flex: 1; min-width: 0; }
+.stat-status-aside { flex-shrink: 0; }
+.stat-status-aside label {
+  display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 2px; white-space: nowrap;
+}
+.stat-status-aside select {
+  border: 1px solid var(--border); border-radius: 7px;
+  padding: 5px 4px; font: inherit; font-size: 0.78rem;
+  background: #fff; color: inherit;
+}
 
 /* ── Stat table ── */
 .stat-table {
-  width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 6px;
+  width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 0;
 }
 .stat-table th, .stat-table td {
-  padding: 3px 5px; border: 1px solid var(--border);
+  padding: 2px 3px; border: 1px solid var(--border);
   text-align: center; vertical-align: middle;
 }
 .stat-table th {
-  background: var(--result-bg); font-weight: 600; color: var(--muted); font-size: 0.73rem;
+  background: var(--result-bg); font-weight: 600; color: var(--muted); font-size: 0.7rem;
 }
-.stat-table td:first-child { font-weight: 600; font-size: 0.76rem; color: var(--muted); }
-.stat-table .st-total { font-weight: 600; color: var(--accent); min-width: 32px; }
+.stat-table td:first-child { font-weight: 600; font-size: 0.73rem; color: var(--muted); }
+.stat-table .st-total { font-weight: 600; color: var(--accent); min-width: 28px; }
 .stat-table input {
-  width: 46px; border: 1px solid var(--border); border-radius: 4px;
-  padding: 2px 3px; font: inherit; font-size: 0.8rem; text-align: center;
+  width: 38px; border: 1px solid var(--border); border-radius: 4px;
+  padding: 2px 2px; font: inherit; font-size: 0.76rem; text-align: center;
   background: #fff; color: inherit; box-sizing: border-box;
 }
 .stat-table select {
-  width: 56px; border: 1px solid var(--border); border-radius: 4px;
-  padding: 2px; font: inherit; font-size: 0.8rem; background: #fff; color: inherit;
+  width: 44px; border: 1px solid var(--border); border-radius: 4px;
+  padding: 1px; font: inherit; font-size: 0.76rem; background: #fff; color: inherit;
 }
 
 /* ── HP bar ── */
@@ -457,6 +460,7 @@ html.dark-mode .hp-section input, html.dark-mode .stat-table input,
 html.dark-mode .stat-table select,
 html.dark-mode .move-hits-input,
 html.dark-mode .trainer-search,
+html.dark-mode .stat-status-aside select,
 html.dark-mode .importer-textarea { background: #22293a; color: var(--text); }
 html.dark-mode .toggle-btn { background: #22293a; color: var(--text); }
 html.dark-mode .toggle-btn.active { background: var(--accent); color: #10121a; }
@@ -505,8 +509,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
 
       <!-- Trainer navigation -->
       <div class="trainer-nav">
-        <input class="trainer-search" id="atk-trainer-search" type="text" list="atk-trainer-list" placeholder="Select trainer…" oninput="filterTrainers('atk')" onchange="selectTrainerFromInput('atk')">
-        <datalist id="atk-trainer-list"></datalist>
+        <select class="trainer-search" id="atk-trainer-search" onchange="selectTrainerFromSelect('atk')"></select>
         <div class="trainer-nav-arrows">
           <button class="trainer-nav-btn" type="button" onclick="prevTrainer('atk')">◀</button>
           <button class="trainer-nav-btn" type="button" onclick="nextTrainer('atk')">▶</button>
@@ -522,33 +525,39 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <div class="ia-sprite">
           <img id="atk-sprite" class="poke-sprite" src="" alt="">
         </div>
-        <div class="ia-types">
-          <div class="field">
-            <label for="atk-type1">Type 1</label>
-            <select id="atk-type1"></select>
-          </div>
-          <div class="field">
-            <label for="atk-type2">Type 2</label>
-            <select id="atk-type2"></select>
-          </div>
-        </div>
-        <div class="field ia-item">
-          <label for="atk-item">Item</label>
-          <select id="atk-item"></select>
+        <div class="field ia-type1">
+          <label for="atk-type1">Type 1</label>
+          <select id="atk-type1"></select>
         </div>
         <div class="field ia-ability">
           <label for="atk-ability">Ability</label>
           <select id="atk-ability"></select>
         </div>
-        <div class="field ia-level">
-          <label for="atk-level">Level</label>
-          <input id="atk-level" type="number" min="1" max="100" value="50">
+        <div class="field ia-item">
+          <label for="atk-item">Item</label>
+          <select id="atk-item"></select>
+        </div>
+        <div class="field ia-type2">
+          <label for="atk-type2">Type 2</label>
+          <select id="atk-type2"></select>
         </div>
         <div class="field ia-nature">
           <label for="atk-nature">Nature</label>
           <select id="atk-nature"></select>
         </div>
-        <div class="field ia-status">
+        <div class="field ia-level">
+          <label for="atk-level">Level</label>
+          <input id="atk-level" type="number" min="1" max="100" value="50">
+        </div>
+      </div>
+
+      <!-- Pokémon icon strip -->
+      <div class="poke-icons" id="atk-poke-icons"></div>
+
+      <!-- Stat table + Status -->
+      <div class="stat-status-row">
+        <div id="atk-stat-wrap"></div>
+        <div class="stat-status-aside">
           <label for="atk-status">Status</label>
           <select id="atk-status">
             <option value="none">None</option>
@@ -562,12 +571,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
       </div>
 
-      <!-- Pokémon icon strip -->
-      <div class="poke-icons" id="atk-poke-icons"></div>
-
-      <!-- Stat table -->
-      <div id="atk-stat-wrap"></div>
-
       <!-- HP bar -->
       <div class="hp-section">
         <span class="hp-label">HP</span>
@@ -577,49 +580,37 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <span class="hp-pct" id="atk-hp-pct">100%</span>
       </div>
 
-      <!-- Moves (hits input, no Atk button) -->
+      <!-- Moves -->
       <div class="moves-label">Moves</div>
-      <div class="moves-head"><span class="moves-head-label">Hits ×</span></div>
+      <div class="moves-head compact-moves-head"><span class="moves-head-label">Hits ×</span></div>
       <div id="atk-moves-section">
-        <div class="move-row" id="atk-move-row-0">
+        <div class="move-row compact-move-row" id="atk-move-row-0">
           <select id="atk-move-0" onchange="onMoveSelectChange('atk',0)"></select>
-          <input type="number" id="atk-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-          <span class="move-damage" id="atk-move-dmg-0"></span>
-        </div>
-        <div class="move-info-row" id="atk-move-info-0">
           <span class="mi-type" id="atk-move-type-0"></span>
           <span class="mi-detail" id="atk-move-bp-0">BP: —</span>
           <span class="mi-detail" id="atk-move-acc-0">Acc: —</span>
+          <input type="number" id="atk-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
         </div>
-        <div class="move-row" id="atk-move-row-1">
+        <div class="move-row compact-move-row" id="atk-move-row-1">
           <select id="atk-move-1" onchange="onMoveSelectChange('atk',1)"></select>
-          <input type="number" id="atk-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-          <span class="move-damage" id="atk-move-dmg-1"></span>
-        </div>
-        <div class="move-info-row" id="atk-move-info-1">
           <span class="mi-type" id="atk-move-type-1"></span>
           <span class="mi-detail" id="atk-move-bp-1">BP: —</span>
           <span class="mi-detail" id="atk-move-acc-1">Acc: —</span>
+          <input type="number" id="atk-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
         </div>
-        <div class="move-row" id="atk-move-row-2">
+        <div class="move-row compact-move-row" id="atk-move-row-2">
           <select id="atk-move-2" onchange="onMoveSelectChange('atk',2)"></select>
-          <input type="number" id="atk-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-          <span class="move-damage" id="atk-move-dmg-2"></span>
-        </div>
-        <div class="move-info-row" id="atk-move-info-2">
           <span class="mi-type" id="atk-move-type-2"></span>
           <span class="mi-detail" id="atk-move-bp-2">BP: —</span>
           <span class="mi-detail" id="atk-move-acc-2">Acc: —</span>
+          <input type="number" id="atk-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
         </div>
-        <div class="move-row" id="atk-move-row-3">
+        <div class="move-row compact-move-row" id="atk-move-row-3">
           <select id="atk-move-3" onchange="onMoveSelectChange('atk',3)"></select>
-          <input type="number" id="atk-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-          <span class="move-damage" id="atk-move-dmg-3"></span>
-        </div>
-        <div class="move-info-row" id="atk-move-info-3">
           <span class="mi-type" id="atk-move-type-3"></span>
           <span class="mi-detail" id="atk-move-bp-3">BP: —</span>
           <span class="mi-detail" id="atk-move-acc-3">Acc: —</span>
+          <input type="number" id="atk-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
         </div>
       </div>
       <div class="imported-section" id="atk-imported-section" hidden>
@@ -744,8 +735,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
 
       <!-- Trainer navigation -->
       <div class="trainer-nav">
-        <input class="trainer-search" id="def-trainer-search" type="text" list="def-trainer-list" placeholder="Select trainer…" oninput="filterTrainers('def')" onchange="selectTrainerFromInput('def')">
-        <datalist id="def-trainer-list"></datalist>
+        <select class="trainer-search" id="def-trainer-search" onchange="selectTrainerFromSelect('def')"></select>
         <div class="trainer-nav-arrows">
           <button class="trainer-nav-btn" type="button" onclick="prevTrainer('def')">◀</button>
           <button class="trainer-nav-btn" type="button" onclick="nextTrainer('def')">▶</button>
@@ -761,33 +751,39 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <div class="ia-sprite">
           <img id="def-sprite" class="poke-sprite" src="" alt="">
         </div>
-        <div class="ia-types">
-          <div class="field">
-            <label for="def-type1">Type 1</label>
-            <select id="def-type1"></select>
-          </div>
-          <div class="field">
-            <label for="def-type2">Type 2</label>
-            <select id="def-type2"></select>
-          </div>
-        </div>
-        <div class="field ia-item">
-          <label for="def-item">Item</label>
-          <select id="def-item"></select>
+        <div class="field ia-type1">
+          <label for="def-type1">Type 1</label>
+          <select id="def-type1"></select>
         </div>
         <div class="field ia-ability">
           <label for="def-ability">Ability</label>
           <select id="def-ability"></select>
         </div>
-        <div class="field ia-level">
-          <label for="def-level">Level</label>
-          <input id="def-level" type="number" min="1" max="100" value="50">
+        <div class="field ia-item">
+          <label for="def-item">Item</label>
+          <select id="def-item"></select>
+        </div>
+        <div class="field ia-type2">
+          <label for="def-type2">Type 2</label>
+          <select id="def-type2"></select>
         </div>
         <div class="field ia-nature">
           <label for="def-nature">Nature</label>
           <select id="def-nature"></select>
         </div>
-        <div class="field ia-status">
+        <div class="field ia-level">
+          <label for="def-level">Level</label>
+          <input id="def-level" type="number" min="1" max="100" value="50">
+        </div>
+      </div>
+
+      <!-- Pokémon icon strip -->
+      <div class="poke-icons" id="def-poke-icons"></div>
+
+      <!-- Stat table + Status -->
+      <div class="stat-status-row">
+        <div id="def-stat-wrap"></div>
+        <div class="stat-status-aside">
           <label for="def-status">Status</label>
           <select id="def-status">
             <option value="none">None</option>
@@ -800,12 +796,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
           </select>
         </div>
       </div>
-
-      <!-- Pokémon icon strip -->
-      <div class="poke-icons" id="def-poke-icons"></div>
-
-      <!-- Stat table -->
-      <div id="def-stat-wrap"></div>
 
       <!-- HP bar -->
       <div class="hp-section">
@@ -1091,11 +1081,17 @@ function updateStatTotals(prefix) {
     const baseCell = el(`${prefix}-base-${stat}`);
     if (baseCell) baseCell.textContent = base;
     const iv = clamp(num(el(`${prefix}-iv-${stat}`)?.value, 31), 0, 31);
-    let total;
-    if (stat === "HP") total = calcHp(base, iv, level);
-    else total = calcOther(base, iv, level, getNatureMultiplier(nature, stat));
+    let raw;
+    if (stat === "HP") raw = calcHp(base, iv, level);
+    else raw = calcOther(base, iv, level, getNatureMultiplier(nature, stat));
+    let display = raw;
+    if (stat !== "HP") {
+      const boost = clamp(num(el(`${prefix}-boost-${stat}`)?.value, 0), -6, 6);
+      // Stage multiplier: +stage = (2+stage)/2, -stage = 2/(2+|stage|)
+      if (boost !== 0) display = Math.floor(raw * stageMultiplier(boost));
+    }
     const totalCell = el(`${prefix}-total-${stat}`);
-    if (totalCell) totalCell.textContent = total;
+    if (totalCell) totalCell.textContent = display;
   });
 
   updateHPBar(prefix);
@@ -1252,73 +1248,16 @@ function resolveTrainerSpecies(tp) {
   return tp.Name;
 }
 
-function getTrainerMatches(prefix, query = "") {
-  const normalized = query.trim().toLowerCase();
-  const trainerMatches = trainersFlat
-    .map((trainer, idx) => ({ trainer, idx }))
-    .filter(({ trainer }) => {
-      if (!normalized) return true;
-      const display = trainerDisplayName(trainer).toLowerCase();
-      return display.includes(normalized)
-        || trainer.trainerName.toLowerCase().includes(normalized)
-        || trainer.route.toLowerCase().includes(normalized);
-    });
-
-  if (prefix !== "atk") return trainerMatches.map(match => ({ ...match, kind: "trainer" }));
-
-  const importedMatches = importedPokemonSets
-    .map((imported, idx) => ({ imported, idx, label: importedDisplayName(imported, idx) }))
-    .filter(({ imported, label }) => {
-      if (!normalized) return true;
-      return label.toLowerCase().includes(normalized)
-        || imported.species.toLowerCase().includes(normalized)
-        || (imported.item || "").toLowerCase().includes(normalized);
-    })
-    .map(match => ({ ...match, kind: "imported" }));
-
-  return [...trainerMatches.map(match => ({ ...match, kind: "trainer" })), ...importedMatches];
-}
-
-function populateTrainerOptions(prefix, query = "") {
-  const list = el(`${prefix}-trainer-list`);
-  if (!list) return;
-  list.innerHTML = "";
-  getTrainerMatches(prefix, query).slice(0, 100).forEach(match => {
+function populateTrainerOptions(prefix) {
+  const select = el(`${prefix}-trainer-search`);
+  if (!select) return;
+  select.innerHTML = "";
+  trainersFlat.forEach((trainer, idx) => {
     const opt = document.createElement("option");
-    opt.value = match.kind === "trainer" ? trainerDisplayName(match.trainer) : match.label;
-    list.appendChild(opt);
+    opt.value = String(idx);
+    opt.textContent = trainerDisplayName(trainer);
+    select.appendChild(opt);
   });
-}
-
-function findTrainerMatch(prefix, query, allowPartial = false) {
-  const normalized = query.trim().toLowerCase();
-  if (!normalized) return null;
-  const exactIdx = trainersFlat.findIndex(trainer => {
-    const display = trainerDisplayName(trainer).toLowerCase();
-    return display === normalized || trainer.trainerName.toLowerCase() === normalized;
-  });
-  if (exactIdx >= 0) return { kind: "trainer", idx: exactIdx };
-
-  if (prefix === "atk") {
-    const importedIdx = importedPokemonSets.findIndex((imported, idx) => {
-      const label = importedDisplayName(imported, idx).toLowerCase();
-      return label === normalized || imported.species.toLowerCase() === normalized;
-    });
-    if (importedIdx >= 0) return { kind: "imported", idx: importedIdx };
-  }
-
-  if (!allowPartial) return null;
-  const partial = getTrainerMatches(prefix, query)[0];
-  return partial ? { kind: partial.kind, idx: partial.idx } : null;
-}
-
-function applyTrainerMatch(prefix, match) {
-  if (!match) return;
-  if (match.kind === "trainer") {
-    setTrainer(prefix, match.idx);
-  } else if (prefix === "atk") {
-    applyImportedPokemon(match.idx);
-  }
 }
 
 function setTrainer(prefix, idx) {
@@ -1327,9 +1266,8 @@ function setTrainer(prefix, idx) {
   const trainer = trainersFlat[trainerState[prefix]];
   if (!trainer) return;
 
-  const trainerSearch = el(`${prefix}-trainer-search`);
-  if (trainerSearch) trainerSearch.value = trainerDisplayName(trainer);
-  populateTrainerOptions(prefix);
+  const trainerSelect = el(`${prefix}-trainer-search`);
+  if (trainerSelect) trainerSelect.value = String(trainerState[prefix]);
   buildTrainerIcons(prefix, trainer);
   if (prefix === "atk") setImportedSelection(-1);
   selectTrainerPokemon(prefix, 0);
@@ -1343,46 +1281,14 @@ function nextTrainer(prefix) {
   setTrainer(prefix, trainerState[prefix] + 1);
 }
 
-function filterTrainers(prefix) {
-  const query = el(`${prefix}-trainer-search`)?.value || "";
-  populateTrainerOptions(prefix, query);
-  applyTrainerMatch(prefix, findTrainerMatch(prefix, query));
+function selectTrainerFromSelect(prefix) {
+  const select = el(`${prefix}-trainer-search`);
+  if (!select) return;
+  const idx = num(select.value, -1);
+  if (idx >= 0 && idx < trainersFlat.length) setTrainer(prefix, idx);
 }
 
-function selectTrainerFromInput(prefix) {
-  const query = el(`${prefix}-trainer-search`)?.value || "";
-  applyTrainerMatch(prefix, findTrainerMatch(prefix, query, true));
-}
-
-function handleTrainerSearchFocus(prefix) {
-  const trainerSearch = el(`${prefix}-trainer-search`);
-  if (!trainerSearch) return;
-  const trainer = trainersFlat[trainerState[prefix]];
-  const trainerLabel = trainer ? trainerDisplayName(trainer) : "";
-  const importedLabel = prefix === "atk"
-    ? importedPokemonSets.map((imported, idx) => importedDisplayName(imported, idx)).find(label => label === trainerSearch.value) || ""
-    : "";
-  const currentLabel = importedLabel || trainerLabel;
-  if (trainerSearch.value === currentLabel) {
-    trainerSearch.dataset.restoreValue = currentLabel;
-    trainerSearch.value = "";
-  } else {
-    trainerSearch.dataset.restoreValue = "";
-  }
-  populateTrainerOptions(prefix);
-}
-
-function restoreTrainerSearchValue(prefix) {
-  const trainerSearch = el(`${prefix}-trainer-search`);
-  if (!trainerSearch || trainerSearch.value.trim()) return;
-  const restoreValue = trainerSearch.dataset.restoreValue || "";
-  if (restoreValue) trainerSearch.value = restoreValue;
-}
-
-function clearTrainerSelection(prefix, label = "") {
-  const trainerSearch = el(`${prefix}-trainer-search`);
-  if (trainerSearch) trainerSearch.value = label;
-  populateTrainerOptions(prefix);
+function clearTrainerSelection(prefix) {
   const icons = el(`${prefix}-poke-icons`);
   if (icons) icons.innerHTML = "";
 }
@@ -1610,7 +1516,6 @@ function renderImportedPokemonList() {
   container.innerHTML = "";
   if (!importedPokemonSets.length) {
     section.hidden = true;
-    populateTrainerOptions("atk");
     return;
   }
 
@@ -1641,7 +1546,6 @@ function renderImportedPokemonList() {
   });
 
   section.hidden = false;
-  populateTrainerOptions("atk");
 }
 
 function fillImportedPokemon(prefix, imported) {
@@ -1704,7 +1608,7 @@ function fillImportedPokemon(prefix, imported) {
 function applyImportedPokemon(idx) {
   const imported = importedPokemonSets[idx];
   if (!imported) return;
-  clearTrainerSelection("atk", importedDisplayName(imported, idx));
+  clearTrainerSelection("atk");
   setImportedSelection(idx);
   fillImportedPokemon("atk", imported);
 }
@@ -2295,9 +2199,6 @@ function bindInputs() {
       updateSprite(prefix);
       recalcIfNeeded();
     });
-
-    el(`${prefix}-trainer-search`)?.addEventListener("focus", () => handleTrainerSearchFocus(prefix));
-    el(`${prefix}-trainer-search`)?.addEventListener("blur", () => restoreTrainerSearchValue(prefix));
   });
 
   // Field toggle groups (exclusive)
