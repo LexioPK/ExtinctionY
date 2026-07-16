@@ -153,6 +153,35 @@ h1 { text-align: center; margin: 8px 0 6px; }
   padding: 5px 7px; font: inherit; background: #fff; color: inherit;
   display: inline-block; max-width: 100%;
 }
+.item-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.item-select-wrap select {
+  flex: 1;
+  min-width: 0;
+}
+.item-select-sprite {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+.item-select-empty {
+  width: 48px;
+  height: 20px;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  font-size: 0.56rem;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
 
 /* ── Pokemon info grid ── */
 .info-grid {
@@ -276,14 +305,27 @@ h1 { text-align: center; margin: 8px 0 6px; }
   aspect-ratio: 1; min-width: 0;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
+  position: relative;
   border: 2px solid var(--border); border-radius: 8px;
   background: var(--bg);
   transition: border-color .15s, background .15s;
   padding: 2px; box-sizing: border-box;
 }
-.poke-icon-slot img {
+.poke-icon-slot .poke-icon-main {
   width: 100%; height: 100%; object-fit: contain;
   image-rendering: pixelated;
+}
+.poke-icon-slot .poke-item-corner {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.92);
 }
 .poke-icon-slot:hover:not(.empty) { border-color: var(--accent); }
 .poke-icon-slot.selected {
@@ -478,6 +520,7 @@ html.dark-mode .side-btn.active { background: var(--accent); color: #10121a; }
 html.dark-mode .trainer-nav-btn { background: #22293a; color: var(--text); }
 html.dark-mode .trainer-nav-btn:hover { background: var(--border); }
 html.dark-mode .poke-icon-slot { background: #22293a; }
+html.dark-mode .poke-icon-slot .poke-item-corner { background: rgba(26,31,44,0.92); }
 html.dark-mode .qm-move-btn { background: var(--accent); color: #10121a; }
 html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #6090e0; }
 html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
@@ -548,7 +591,11 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
         <div class="field ia-item">
           <label for="atk-item">Item</label>
-          <select id="atk-item"></select>
+          <div class="item-select-wrap">
+            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            <span id="atk-item-empty" class="item-select-empty" hidden>No Item</span>
+            <select id="atk-item"></select>
+          </div>
         </div>
         <div class="field ia-type2">
           <label for="atk-type2">Type 2</label>
@@ -778,7 +825,11 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
         <div class="field ia-item">
           <label for="def-item">Item</label>
-          <select id="def-item"></select>
+          <div class="item-select-wrap">
+            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            <span id="def-item-empty" class="item-select-empty" hidden>No Item</span>
+            <select id="def-item"></select>
+          </div>
         </div>
         <div class="field ia-type2">
           <label for="def-type2">Type 2</label>
@@ -1445,6 +1496,7 @@ function buildTrainerIcons(prefix, trainer) {
     slot.className = 'poke-icon-slot';
     const tp = trainer.pokemon[i];
     const img = document.createElement('img');
+    img.className = 'poke-icon-main';
     const slug = toSlug(tp.Form || tp.Name);
     const baseSlug = toSlug(tp.Name);
     img.alt = tp.Form || tp.Name;
@@ -1455,6 +1507,12 @@ function buildTrainerIcons(prefix, trainer) {
       }
     };
     slot.appendChild(img);
+    if (tp.HeldItem && tp.HeldItem !== "None") {
+      const itemImg = document.createElement("img");
+      itemImg.className = "poke-item-corner";
+      setItemSpriteImage(itemImg, tp.HeldItem);
+      slot.appendChild(itemImg);
+    }
     const capturedIdx = i;
     slot.addEventListener('click', () => selectTrainerPokemon(prefix, capturedIdx));
     container.appendChild(slot);
@@ -1522,6 +1580,7 @@ function fillTrainerPokemon(prefix, tp) {
     addOptionIfMissing(itemSel, itemName);
     itemSel.value = itemName;
   }
+  updateItemSprite(prefix);
 
   // Moves
   const trainerMoves = tp.Moves || [];
@@ -1556,6 +1615,50 @@ function updateSprite(prefix) {
       spriteEl.src = `pokemon_sprites/${baseSlug}.png`;
     }
   };
+}
+
+function itemSlugCandidates(itemName) {
+  const slug = toSlug(itemName);
+  const compact = slug.replace(/-/g, "");
+  return compact && compact !== slug ? [slug, compact] : [slug];
+}
+
+function setItemSpriteImage(imgEl, itemName) {
+  if (!imgEl) return;
+  if (!itemName || itemName === "None") {
+    imgEl.hidden = true;
+    imgEl.removeAttribute("src");
+    imgEl.alt = "";
+    imgEl.onerror = null;
+    return;
+  }
+  const candidates = itemSlugCandidates(itemName);
+  let idx = 0;
+  const tryNext = () => {
+    if (idx >= candidates.length) {
+      imgEl.hidden = true;
+      imgEl.removeAttribute("src");
+      return;
+    }
+    imgEl.hidden = false;
+    imgEl.src = `image/item/${candidates[idx++]}.png`;
+  };
+  imgEl.alt = itemName;
+  imgEl.onerror = () => tryNext();
+  tryNext();
+}
+
+function updateItemSprite(prefix) {
+  const itemName = el(`${prefix}-item`)?.value || "None";
+  const spriteEl = el(`${prefix}-item-sprite`);
+  const emptyEl = el(`${prefix}-item-empty`);
+  if (itemName === "None") {
+    if (spriteEl) spriteEl.hidden = true;
+    if (emptyEl) emptyEl.hidden = false;
+    return;
+  }
+  if (emptyEl) emptyEl.hidden = true;
+  setItemSpriteImage(spriteEl, itemName);
 }
 
 /* ── Option helpers ── */
@@ -1715,6 +1818,7 @@ function fillImportedPokemon(prefix, imported) {
     addOptionIfMissing(itemSel, item);
     itemSel.value = item;
   }
+  updateItemSprite(prefix);
 
   const statusSel = el(`${prefix}-status`);
   if (statusSel) statusSel.value = "none";
@@ -1795,10 +1899,11 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   const moveCategory = move.Category;
   const rawPower = num(move.Power, 0);
   const ctx = getModifierContext(atkPrefix);
+  const defenderAbility = ignoresDefenderAbility(attacker.ability) ? "No Ability" : defender.ability;
 
   if (moveCategory === "Status") return null;
 
-  if (defender.ability === "Wonder Guard") {
+  if (defenderAbility === "Wonder Guard") {
     const wm = effectiveness(move.Type, defender.type1, defender.type2);
     if (wm <= 1) return null;
   }
@@ -1815,13 +1920,13 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   const moveType = typePower.type;
   const power = typePower.power;
 
-  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defender.ability, defender.item)) return null;
+  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item)) return null;
 
   const typeMod = effectiveness(moveType, defender.type1, defender.type2);
   if (typeMod === 0) return null;
 
-  if (defender.ability === "Flash Fire" && moveType === "Fire") return null;
-  const immuneTypeCD = IMMUNE_ABILITIES[defender.ability];
+  if (defenderAbility === "Flash Fire" && moveType === "Fire") return null;
+  const immuneTypeCD = IMMUNE_ABILITIES[defenderAbility];
   if (immuneTypeCD && immuneTypeCD === moveType) return null;
 
   const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
@@ -1831,12 +1936,12 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   if (fixedFn) {
     baseOneHit = fixedFn({ attacker, defender, move, moveType, power });
   } else {
-    const ad = getAttackDefenseFix(moveCategory, attacker, defender, ctx.critical, moveName, notes);
+    const ad = getAttackDefenseFix(moveCategory, attacker, defender, ctx.critical, moveName, notes, ctx, defenderAbility);
     const levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
     baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
   }
 
-  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes);
+  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes, defenderAbility);
 
   const rolls = [];
   for (let r = 85; r <= 100; r++) {
@@ -1905,6 +2010,10 @@ function getModifierContext(atkPrefix) {
   const leftovers   = isSideActive('leftovers', defSide);
 
   return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, spikes, leftovers };
+}
+
+function ignoresDefenderAbility(attackerAbility) {
+  return ["Mold Breaker", "Turboblaze", "Teravolt"].includes(attackerAbility);
 }
 
 /* ── Read set ── */
@@ -1980,7 +2089,7 @@ function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, 
   return { type, power: Math.max(1, Math.floor(power)) };
 }
 
-function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName, notes) {
+function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName, notes, ctx, defenderAbility) {
   const isPhysical = moveCategory === "Physical";
   const atkStat = isPhysical ? "Atk" : "SpA";
   const defStat = isPhysical ? "Def" : "SpD";
@@ -1995,18 +2104,23 @@ function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveNam
   if (isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) { atk *= 2; notes.push(`${attacker.ability} ×2 Atk`); }
   if (isPhysical && attacker.ability === "Hustle") { atk *= 1.5; notes.push("Hustle ×1.5 Atk"); }
   if (isPhysical && attacker.ability === "Guts" && attacker.status !== "none") { atk *= 1.5; notes.push("Guts ×1.5 Atk"); }
+  if (isPhysical && attacker.ability === "Toxic Boost" && ["psn","tox"].includes(attacker.status)) { atk *= 1.5; notes.push("Toxic Boost ×1.5 Atk"); }
   if (isPhysical && attacker.item === "Choice Band") { atk *= 1.5; notes.push("Choice Band ×1.5 Atk"); }
   if (!isPhysical && attacker.item === "Choice Specs") { atk *= 1.5; notes.push("Choice Specs ×1.5 SpA"); }
+  if (!isPhysical && attacker.ability === "Solar Power" && ctx.weather === "sun") { atk *= 1.5; notes.push("Solar Power ×1.5 SpA"); }
   if (!isPhysical && defender.item === "Assault Vest") { def *= 1.5; notes.push("Assault Vest ×1.5 SpD"); }
   if (defender.item === "Eviolite" && defender.data?.Evolutions?.length) { def *= 1.5; notes.push("Eviolite ×1.5 Def"); }
-  if (!isPhysical && (defender.type1 === "Rock" || defender.type2 === "Rock") && getToggleValue("weather-group") === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
-  if (defender.ability === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push("Perserverance ×1.3 Def"); }
+  if (isPhysical && defenderAbility === "Biodiverse" && ctx.terrain !== "none") { def *= 1.5; notes.push("Biodiverse ×1.5 Def"); }
+  if (defenderAbility === "Dune Guard" && ctx.weather === "sand") { def *= 1.25; notes.push("Dune Guard ×1.25 Def/SpD"); }
+  if (defenderAbility === "Glacial Guard" && ctx.weather === "hail") { def *= 1.25; notes.push("Glacial Guard ×1.25 Def/SpD"); }
+  if (!isPhysical && (defender.type1 === "Rock" || defender.type2 === "Rock") && ctx.weather === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
+  if (defenderAbility === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push("Perserverance ×1.3 Def"); }
   if (isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") { atk *= 0.5; notes.push("Burn ×0.5 Atk"); }
 
   return { atk: Math.max(1, Math.floor(atk)), def: Math.max(1, Math.floor(def)), isPhysical };
 }
 
-function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes) {
+function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes, defenderAbility) {
   let mod = 1;
   if (ctx.helpingHand) { mod *= 1.5; notes.push("Helping Hand ×1.5"); }
 
@@ -2050,8 +2164,23 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (boostType && boostType === moveType) { mod *= 1.2; notes.push(`${attacker.item} ×1.2`); }
 
   const moveDesc = String(moves[moveName]?.Description || "");
+  const hasSecondaryEffect = /may also|chance to/i.test(moveDesc);
+  const isContactMove = /\(\s*C\s*\)/i.test(moveDesc);
+  const isBiteMove = /\bBite\b/i.test(moveDesc);
+  const isSliceMove = /\bSlice\b/i.test(moveDesc);
+  const isSpinMove = /\bSpin\b/i.test(moveDesc);
+  const hasStab = attacker.type1 === moveType || attacker.type2 === moveType;
   if (attacker.ability === "Iron Fist" && /\(.*Punch.*\)/i.test(moveDesc)) { mod *= 1.3; notes.push("Iron Fist ×1.3"); }
   if (attacker.ability === "Reckless" && /Recoil/i.test(moveDesc)) { mod *= 1.2; notes.push("Reckless ×1.2"); }
+  if (attacker.ability === "Tough Claws" && isContactMove) { mod *= 1.3; notes.push("Tough Claws ×1.3"); }
+  if (attacker.ability === "Strong Jaw" && isBiteMove) { mod *= 1.5; notes.push("Strong Jaw ×1.5"); }
+  if (attacker.ability === "Sharpness" && isSliceMove) { mod *= 1.3; notes.push("Sharpness ×1.3"); }
+  if (attacker.ability === "Cyclone" && isSpinMove) { mod *= 1.3; notes.push("Cyclone ×1.3"); }
+  if (attacker.ability === "Sheer Force" && hasSecondaryEffect) { mod *= 1.3; notes.push("Sheer Force ×1.3"); }
+  if (attacker.ability === "Sand Force" && ctx.weather === "sand" && ["Ground","Rock","Steel"].includes(moveType)) { mod *= 1.3; notes.push("Sand Force ×1.3"); }
+  if (attacker.ability === "Overload" && moveType === "Electric" && attacker.currentHP <= Math.floor(attacker.stats.HP / 2)) { mod *= 1.5; notes.push("Overload ×1.5"); }
+  if ((attacker.ability === "Parental Bond" || attacker.ability === "Hyper Aggression") && moveCategory !== "Status") { mod *= 1.25; notes.push(`${attacker.ability} ×1.25`); }
+  if (attacker.ability === "Versatility" && !hasStab) { mod *= 1.25; notes.push("Versatility ×1.25 (non-STAB)"); }
 
   const isLowHP = attacker.currentHP <= Math.floor(attacker.stats.HP / 2);
   if (isLowHP) {
@@ -2061,9 +2190,9 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
     if (attacker.ability === "Swarm"   && moveType === "Bug")   { mod *= 1.5; notes.push("Swarm ×1.5"); }
   }
 
-  if (defender.ability === "Thick Fat" && (moveType === "Fire" || moveType === "Ice")) { mod *= 0.5; notes.push("Thick Fat ×0.5"); }
-  if (["Filter","Solid Rock","Prism Armor"].includes(defender.ability) && typeMod > 1) { mod *= 0.75; notes.push(`${defender.ability} ×0.75`); }
-  if (defender.ability === "Dry Skin" && moveType === "Fire") { mod *= 1.25; notes.push("Dry Skin ×1.25 (Fire)"); }
+  if (defenderAbility === "Thick Fat" && (moveType === "Fire" || moveType === "Ice")) { mod *= 0.5; notes.push("Thick Fat ×0.5"); }
+  if (["Filter","Solid Rock","Prism Armor"].includes(defenderAbility) && typeMod > 1) { mod *= 0.75; notes.push(`${defenderAbility} ×0.75`); }
+  if (defenderAbility === "Dry Skin" && moveType === "Fire") { mod *= 1.25; notes.push("Dry Skin ×1.25 (Fire)"); }
 
   const resistBerryType = TYPE_RESIST_BERRIES[defender.item];
   if (resistBerryType && resistBerryType === moveType && (typeMod > 1 || defender.item === "Chilan Berry")) {
@@ -2118,6 +2247,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   const moveCategory = move.Category;
   const rawPower = num(move.Power, 0);
   const ctx = getModifierContext(atkPrefix);
+  const defenderAbility = ignoresDefenderAbility(attacker.ability) ? "No Ability" : defender.ability;
 
   if (moveCategory === "Status") {
     resultEl.innerHTML = '';
@@ -2125,7 +2255,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
     return;
   }
 
-  if (defender.ability === "Wonder Guard") {
+  if (defenderAbility === "Wonder Guard") {
     const wm = effectiveness(move.Type, defender.type1, defender.type2);
     if (wm <= 1) {
       resultEl.innerHTML = '';
@@ -2147,7 +2277,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   const moveType = typePower.type;
   const power = typePower.power;
 
-  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defender.ability, defender.item)) {
+  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item)) {
     resultEl.innerHTML = '';
     resultEl.appendChild(resultRow([{bold:false, text:`${defender.name} is immune to Ground-type moves.`}]));
     return;
@@ -2160,16 +2290,16 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
     return;
   }
 
-  if (defender.ability === "Flash Fire" && moveType === "Fire") {
+  if (defenderAbility === "Flash Fire" && moveType === "Fire") {
     resultEl.innerHTML = '';
     resultEl.appendChild(resultRow([{bold:false, text:`${defender.name}: absorbed by Flash Fire.`}]));
     return;
   }
 
-  const immuneType = IMMUNE_ABILITIES[defender.ability];
+  const immuneType = IMMUNE_ABILITIES[defenderAbility];
   if (immuneType && immuneType === moveType) {
     resultEl.innerHTML = '';
-    resultEl.appendChild(resultRow([{bold:false, text:`${defender.name}: immune via ${defender.ability} (${moveType}-type).`}]));
+    resultEl.appendChild(resultRow([{bold:false, text:`${defender.name}: immune via ${defenderAbility} (${moveType}-type).`}]));
     return;
   }
 
@@ -2185,12 +2315,12 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   if (fixedFn) {
     baseOneHit = fixedFn({ attacker, defender, move, moveType, power });
   } else {
-    const ad = getAttackDefenseFix(moveCategory, attacker, defender, ctx.critical, moveName, notes);
+    const ad = getAttackDefenseFix(moveCategory, attacker, defender, ctx.critical, moveName, notes, ctx, defenderAbility);
     const levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
     baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
   }
 
-  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes);
+  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes, defenderAbility);
 
   const rolls = [];
   for (let r = 85; r <= 100; r++) {
@@ -2226,7 +2356,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   }
 
   // Spikes note
-  if (ctx.spikes > 0 && defender.item !== "Heavy-Duty Boots" && isGrounded(defender.type1, defender.type2, defender.ability, defender.item)) {
+  if (ctx.spikes > 0 && defender.item !== "Heavy-Duty Boots" && isGrounded(defender.type1, defender.type2, defenderAbility, defender.item)) {
     const spikeFracs = [0, 1/8, 1/6, 1/4];
     const spikeDmg = Math.floor(hp * (spikeFracs[ctx.spikes] || 0));
     if (spikeDmg > 0) notes.push(`Spikes (${ctx.spikes}L) −${spikeDmg} HP on switch-in`);
@@ -2348,6 +2478,7 @@ function bindInputs() {
         node.addEventListener("change", recalcIfNeeded);
       }
     });
+    el(`${prefix}-item`)?.addEventListener("change", () => updateItemSprite(prefix));
 
     [`${prefix}-stat-wrap`].forEach(wid => {
       const wrap = el(wid);
@@ -2418,6 +2549,8 @@ async function init() {
     // Item selects
     setSelectOptions("atk-item", allItems, "None");
     setSelectOptions("def-item", allItems, "None");
+    updateItemSprite("atk");
+    updateItemSprite("def");
 
     // Nature selects
     const natureNames = Object.keys(NATURES);
