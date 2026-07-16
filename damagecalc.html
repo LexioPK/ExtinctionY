@@ -169,19 +169,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   image-rendering: pixelated;
   flex-shrink: 0;
 }
-.item-select-empty {
-  width: 48px;
-  height: 20px;
-  border: 1px dashed var(--border);
-  border-radius: 4px;
-  font-size: 0.75rem;
-  color: var(--muted);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  flex-shrink: 0;
-}
+
 
 /* ── Pokemon info grid ── */
 .info-grid {
@@ -319,8 +307,8 @@ h1 { text-align: center; margin: 8px 0 6px; }
   position: absolute;
   top: 1px;
   right: 1px;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
   image-rendering: pixelated;
   border: 1px solid var(--border);
@@ -592,9 +580,8 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <div class="field ia-item">
           <label for="atk-item">Item</label>
           <div class="item-select-wrap">
-            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-            <span id="atk-item-empty" class="item-select-empty" hidden>No Item</span>
             <select id="atk-item"></select>
+            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
           </div>
         </div>
         <div class="field ia-type2">
@@ -826,9 +813,8 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <div class="field ia-item">
           <label for="def-item">Item</label>
           <div class="item-select-wrap">
-            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-            <span id="def-item-empty" class="item-select-empty" hidden>No Item</span>
             <select id="def-item"></select>
+            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
           </div>
         </div>
         <div class="field ia-type2">
@@ -1651,13 +1637,10 @@ function setItemSpriteImage(imgEl, itemName) {
 function updateItemSprite(prefix) {
   const itemName = el(`${prefix}-item`)?.value || "None";
   const spriteEl = el(`${prefix}-item-sprite`);
-  const emptyEl = el(`${prefix}-item-empty`);
   if (itemName === "None") {
     if (spriteEl) spriteEl.hidden = true;
-    if (emptyEl) emptyEl.hidden = false;
     return;
   }
-  if (emptyEl) emptyEl.hidden = true;
   setItemSpriteImage(spriteEl, itemName);
 }
 
