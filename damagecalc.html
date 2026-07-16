@@ -179,7 +179,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
 .ia-level   { grid-area: level; }
-.ia-level input[type="number"] { max-width: 100%; }
+.ia-level input[type="number"] { max-width: 100%; width: 56px; }
+.form-row { margin-top: 4px; }
+.form-row select { width: 100%; }
 
 /* ── Stat + Status row ── */
 .stat-status-row {
@@ -263,10 +265,11 @@ h1 { text-align: center; margin: 8px 0 6px; }
 
 /* ── Pokemon icon strip ── */
 .poke-icons {
-  display: flex; gap: 4px; margin-bottom: 8px;
+  display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px;
 }
 .poke-icon-slot {
-  flex: 1; aspect-ratio: 1; min-width: 0;
+  flex: 0 0 calc((100% - 20px) / 6);
+  aspect-ratio: 1; min-width: 0;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   border: 2px solid var(--border); border-radius: 8px;
@@ -336,13 +339,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
   padding: 1px 0 0 2px; flex-wrap: wrap; align-items: center;
 }
 .compact-moves-head {
-  grid-template-columns: minmax(0, 1fr) auto auto auto 42px;
+  grid-template-columns: minmax(0, 175px) auto auto auto 42px;
 }
 .compact-moves-head .moves-head-label {
   grid-column: 5;
 }
 .compact-move-row {
-  grid-template-columns: minmax(0, 1fr) auto auto auto 42px;
+  grid-template-columns: minmax(0, 175px) auto auto auto 42px;
   margin-bottom: 5px;
 }
 .compact-move-row .mi-type,
@@ -521,6 +524,10 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <div class="field ia-species">
           <label for="atk-species">Species</label>
           <select id="atk-species"></select>
+          <div id="atk-form-row" class="form-row" hidden>
+            <label for="atk-form" style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:2px;">Form</label>
+            <select id="atk-form" onchange="onFormSelectChange('atk')"></select>
+          </div>
         </div>
         <div class="ia-sprite">
           <img id="atk-sprite" class="poke-sprite" src="" alt="">
@@ -747,6 +754,10 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <div class="field ia-species">
           <label for="def-species">Species</label>
           <select id="def-species"></select>
+          <div id="def-form-row" class="form-row" hidden>
+            <label for="def-form" style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:2px;">Form</label>
+            <select id="def-form" onchange="onFormSelectChange('def')"></select>
+          </div>
         </div>
         <div class="ia-sprite">
           <img id="def-sprite" class="poke-sprite" src="" alt="">
@@ -1147,6 +1158,41 @@ function listSpecies() {
     .map(([name]) => name);
 }
 
+/* ── Form selector ── */
+function getFormsForSpecies(speciesName) {
+  if (!speciesName || !pokedex[speciesName]) return [speciesName];
+  const idx = pokedex[speciesName].SpeciesIdx;
+  if (!idx) return [speciesName];
+  return Object.entries(pokedex)
+    .filter(([, v]) => v.SpeciesIdx === idx)
+    .sort((a, b) => (a[1].SpeciesIdx || 9999) - (b[1].SpeciesIdx || 9999) || a[0].localeCompare(b[0]))
+    .map(([name]) => name);
+}
+
+function populateFormSelect(prefix, speciesName) {
+  const formRow = el(`${prefix}-form-row`);
+  const formSel = el(`${prefix}-form`);
+  if (!formRow || !formSel) return;
+  const forms = getFormsForSpecies(speciesName);
+  if (forms.length <= 1) {
+    formRow.hidden = true;
+    return;
+  }
+  formRow.hidden = false;
+  setSelectOptions(`${prefix}-form`, forms, speciesName);
+}
+
+function onFormSelectChange(prefix) {
+  const formVal = el(`${prefix}-form`)?.value;
+  const speciesSel = el(`${prefix}-species`);
+  if (formVal && speciesSel && selectHasOption(speciesSel, formVal)) {
+    speciesSel.value = formVal;
+    syncTypeDefaults(prefix);
+    updateSprite(prefix);
+    recalcIfNeeded();
+  }
+}
+
 /* ── Move selects ── */
 function populateMoveSelects(prefix, moveNames) {
   for (let i = 0; i < 4; i++) {
@@ -1270,6 +1316,16 @@ function setTrainer(prefix, idx) {
   if (trainerSelect) trainerSelect.value = String(trainerState[prefix]);
   buildTrainerIcons(prefix, trainer);
   if (prefix === "atk") setImportedSelection(-1);
+
+  if (prefix === "def") {
+    const bt = (trainer.battleType || 'Single').toLowerCase();
+    const battleVal = bt === 'double' ? 'doubles' : 'singles';
+    const group = el('battle-type-group');
+    if (group) {
+      group.querySelectorAll('.toggle-btn').forEach(b => b.classList.toggle('active', b.dataset.value === battleVal));
+    }
+  }
+
   selectTrainerPokemon(prefix, 0);
 }
 
@@ -1297,28 +1353,25 @@ function buildTrainerIcons(prefix, trainer) {
   const container = el(`${prefix}-poke-icons`);
   if (!container) return;
   container.innerHTML = '';
-  for (let i = 0; i < 6; i++) {
+  const count = trainer.pokemon.length;
+  for (let i = 0; i < count; i++) {
     const slot = document.createElement('div');
     slot.id = `${prefix}-icon-slot-${i}`;
     slot.className = 'poke-icon-slot';
     const tp = trainer.pokemon[i];
-    if (tp) {
-      const img = document.createElement('img');
-      const slug = toSlug(tp.Form || tp.Name);
-      const baseSlug = toSlug(tp.Name);
-      img.alt = tp.Form || tp.Name;
-      img.src = `image/icons/${slug}.png`;
-      img.onerror = () => {
-        if (img.src.includes(slug) && slug !== baseSlug) {
-          img.src = `image/icons/${baseSlug}.png`;
-        }
-      };
-      slot.appendChild(img);
-      const capturedIdx = i;
-      slot.addEventListener('click', () => selectTrainerPokemon(prefix, capturedIdx));
-    } else {
-      slot.classList.add('empty');
-    }
+    const img = document.createElement('img');
+    const slug = toSlug(tp.Form || tp.Name);
+    const baseSlug = toSlug(tp.Name);
+    img.alt = tp.Form || tp.Name;
+    img.src = `image/icons/${slug}.png`;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.src = `image/icons/${baseSlug}.png`;
+      }
+    };
+    slot.appendChild(img);
+    const capturedIdx = i;
+    slot.addEventListener('click', () => selectTrainerPokemon(prefix, capturedIdx));
     container.appendChild(slot);
   }
 }
@@ -1328,7 +1381,7 @@ function selectTrainerPokemon(prefix, pokIdx) {
   if (!trainer || !trainer.pokemon[pokIdx]) return;
 
   // Highlight selected slot
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < trainer.pokemon.length; i++) {
     const slot = el(`${prefix}-icon-slot-${i}`);
     if (slot) slot.classList.toggle('selected', i === pokIdx);
   }
@@ -1353,6 +1406,7 @@ function fillTrainerPokemon(prefix, tp) {
   }
   syncTypeDefaults(prefix, speciesName);
   updateSprite(prefix);
+  populateFormSelect(prefix, speciesName);
 
   // Level
   const levelInp = el(`${prefix}-level`);
@@ -1555,6 +1609,7 @@ function fillImportedPokemon(prefix, imported) {
   }
   syncTypeDefaults(prefix, imported.species);
   updateSprite(prefix);
+  populateFormSelect(prefix, imported.species);
 
   const levelInp = el(`${prefix}-level`);
   if (levelInp) levelInp.value = imported.level;
@@ -2197,6 +2252,7 @@ function bindInputs() {
     el(`${prefix}-species`)?.addEventListener("change", () => {
       syncTypeDefaults(prefix);
       updateSprite(prefix);
+      populateFormSelect(prefix, el(`${prefix}-species`)?.value);
       recalcIfNeeded();
     });
   });
@@ -2231,7 +2287,7 @@ async function init() {
     for (const [route, routeData] of routesSorted) {
       for (const trainer of (routeData.Trainers || [])) {
         if (trainer.Pokemon?.length) {
-          trainersFlat.push({ trainerName: trainer.TrainerName, route, pokemon: trainer.Pokemon });
+          trainersFlat.push({ trainerName: trainer.TrainerName, route, pokemon: trainer.Pokemon, battleType: trainer.BattleType || 'Single' });
         }
       }
     }
@@ -2282,6 +2338,10 @@ async function init() {
     // Update sprites for initial species
     updateSprite("atk");
     updateSprite("def");
+
+    // Populate form selects for initial species
+    populateFormSelect("atk", el("atk-species")?.value);
+    populateFormSelect("def", el("def-species")?.value);
 
     bindInputs();
 
