@@ -1666,10 +1666,10 @@ function buildTrainerIcons(prefix, trainer) {
     const slug = toSlug(tp.Form || tp.Name);
     const baseSlug = toSlug(tp.Name);
     img.alt = tp.Form || tp.Name;
-    img.src = `image/icons/${slug}.png`;
+    img.src = `pokemon_sprites/${slug}.png`;
     img.onerror = () => {
       if (img.src.includes(slug) && slug !== baseSlug) {
-        img.src = `image/icons/${baseSlug}.png`;
+        img.src = `pokemon_sprites/${baseSlug}.png`;
       }
     };
     slot.appendChild(img);
@@ -2316,10 +2316,7 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   for (let r = 85; r <= 100; r++) {
     let dmg = baseOneHit;
     if (!fixedFn) {
-      dmg = Math.floor(dmg * (r / 100));
-      dmg = Math.floor(dmg * stab);
-      dmg = Math.floor(dmg * typeMod);
-      dmg = Math.floor(dmg * otherMod);
+      dmg = Math.ceil(dmg * (r / 100) * stab * typeMod * otherMod);
     }
     dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
     dmg *= hitCount;
@@ -2695,10 +2692,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   for (let r = 85; r <= 100; r++) {
     let dmg = baseOneHit;
     if (!fixedFn) {
-      dmg = Math.floor(dmg * (r / 100));
-      dmg = Math.floor(dmg * stab);
-      dmg = Math.floor(dmg * typeMod);
-      dmg = Math.floor(dmg * otherMod);
+      dmg = Math.ceil(dmg * (r / 100) * stab * typeMod * otherMod);
     }
     dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
     dmg *= hitCount;
