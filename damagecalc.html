@@ -80,6 +80,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
   align-items: start;
 }
 .middle-col { display: flex; flex-direction: column; gap: 12px; }
+.imported-bottom-section {
+  margin-top: 14px;
+}
 
 /* ── Card base ── */
 .card {
@@ -636,8 +639,8 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
           </div>
         </div>
         <div class="ia-sprite">
-          <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
           <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
+          <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
           <img id="atk-sprite" class="poke-sprite" src="" alt="">
         </div>
         <div class="field ia-type1">
@@ -739,11 +742,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
       </div>
 
-      <div class="imported-section" id="atk-imported-section" hidden>
-        <div class="moves-label">Imported Pokémon</div>
-        <div class="imported-poke-list" id="atk-imported-pokemon"></div>
-        <div class="selection-help">Click to load. Right-click to add or remove a Pokémon from your party.</div>
-      </div>
     </div>
 
     <!-- ════ MIDDLE: FIELD ════ -->
@@ -977,6 +975,12 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
     </div>
 
   </div><!-- end main-grid -->
+
+  <div class="card imported-section imported-bottom-section" id="atk-imported-section" hidden>
+    <div class="moves-label">Imported Pokémon</div>
+    <div class="imported-poke-list" id="atk-imported-pokemon"></div>
+    <div class="selection-help">Click to load. Right-click to add or remove a Pokémon from your party.</div>
+  </div>
 </div><!-- end calc-wrap -->
 
 <script>
@@ -1112,6 +1116,7 @@ let importedPokemonSets = [];
 let currentSelectedImportedIdx = -1;
 let importedPartyIds = [];
 const trainerState = { atk: 0, def: 1 };
+const TRAINER_STATE_STORAGE_KEY = "damageCalcTrainerState";
 
 // Ability names that were replaced in Extinction Y (old Showdown name → new game name)
 const ABILITY_REPLACEMENTS = {
@@ -1182,6 +1187,24 @@ function persistImportedState() {
     localStorage.setItem("importedPokemonSets", JSON.stringify(importedPokemonSets));
     localStorage.setItem("importedPartyIds", JSON.stringify(importedPartyIds));
   } catch (_) {}
+}
+
+function persistTrainerState() {
+  try {
+    localStorage.setItem(TRAINER_STATE_STORAGE_KEY, JSON.stringify(trainerState));
+  } catch (_) {}
+}
+
+function loadTrainerState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(TRAINER_STATE_STORAGE_KEY) || "{}");
+    return {
+      atk: Number.isInteger(saved?.atk) ? saved.atk : null,
+      def: Number.isInteger(saved?.def) ? saved.def : null
+    };
+  } catch (_) {
+    return { atk: null, def: null };
+  }
 }
 
 function findImportedIndexById(id) {
@@ -1606,6 +1629,7 @@ function setTrainer(prefix, idx) {
   }
 
   selectTrainerPokemon(prefix, 0);
+  persistTrainerState();
 }
 
 function prevTrainer(prefix) {
@@ -1989,6 +2013,10 @@ function renderImportedParty() {
     };
     slot.appendChild(img);
     slot.addEventListener("click", () => applyImportedPokemon(idx));
+    slot.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+      toggleImportedPokemonInParty(idx);
+    });
     container.appendChild(slot);
   }
 
@@ -2928,13 +2956,12 @@ async function init() {
 
     bindInputs();
 
-    // Load first trainer for each side
-    if (trainersFlat.length >= 2) {
-      setTrainer("atk", 0);
-      setTrainer("def", 1);
-    } else if (trainersFlat.length === 1) {
-      setTrainer("atk", 0);
-      setTrainer("def", 0);
+    // Restore the last selected trainer for each side.
+    if (trainersFlat.length) {
+      const savedTrainerState = loadTrainerState();
+      const defaultDefTrainer = trainersFlat.length >= 2 ? 1 : 0;
+      setTrainer("atk", savedTrainerState.atk ?? 0);
+      setTrainer("def", savedTrainerState.def ?? defaultDefTrainer);
     }
 
     // Restore imported Pokémon sets from a previous session
