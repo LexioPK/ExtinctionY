@@ -1093,7 +1093,7 @@ const ABILITY_REPLACEMENTS = {
   "Poison Touch": "Envenom",
   "Pickpocket":   "Confiscate",
   "Heavy Metal":  "Aegis",
-  "Light Metal":  "Hyper Aggresion"
+  "Light Metal":  "Hyper Aggression"
 };
 
 // Abilities that double Speed in a specific weather condition
@@ -1985,11 +1985,13 @@ function importPokemonSets() {
 
   try {
     const { sets, skipped } = parseImportedPokemonSets(raw);
+    // Append new sets to the existing list rather than replacing it.
     importedPokemonSets = [...importedPokemonSets, ...sets];
     sortImportedByDex();
     renderImportedPokemonList();
     const skippedNote = skipped > 0 ? ` (${skipped} unrecognized skipped)` : "";
     if (status) status.textContent = `Added ${sets.length} Pokémon.${skippedNote} Click a sprite below to load it on the You side.`;
+    // Clear the textarea so the next paste starts fresh.
     if (textarea) textarea.value = "";
     // Persist to localStorage so imports survive a page refresh
     try {
