@@ -2316,7 +2316,7 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   for (let r = 85; r <= 100; r++) {
     let dmg = baseOneHit;
     if (!fixedFn) {
-      dmg = Math.ceil(dmg * (r / 100) * stab * typeMod * otherMod);
+      dmg = Math.floor(dmg * (r / 100) * stab * typeMod * otherMod);
     }
     dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
     dmg *= hitCount;
@@ -2692,7 +2692,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   for (let r = 85; r <= 100; r++) {
     let dmg = baseOneHit;
     if (!fixedFn) {
-      dmg = Math.ceil(dmg * (r / 100) * stab * typeMod * otherMod);
+      dmg = Math.floor(dmg * (r / 100) * stab * typeMod * otherMod);
     }
     dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
     dmg *= hitCount;
