@@ -1672,7 +1672,7 @@ function buildTrainerIcons(prefix, trainer) {
   const container = el(`${prefix}-poke-icons`);
   if (!container) return;
   container.innerHTML = '';
-  const preferIconArt = prefix === "atk";
+  const preferIconArt = true;
   for (let i = 0; i < trainer.pokemon.length; i++) {
     const slot = document.createElement('div');
     slot.id = `${prefix}-icon-slot-${i}`;
