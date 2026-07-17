@@ -1158,6 +1158,22 @@ function toSlug(name) {
     .replace(/^-|-$/g, '');
 }
 
+function setPokemonImage(imgEl, displayName, baseName = displayName, preferIconArt = false) {
+  if (!imgEl) return;
+  const slug = toSlug(displayName);
+  const baseSlug = toSlug(baseName);
+  const candidates = preferIconArt
+    ? [`image/icons/${slug}.png`, `image/icons/${baseSlug}.png`, `pokemon_sprites/${slug}.png`, `pokemon_sprites/${baseSlug}.png`, "image/icons/unknown.png"]
+    : [`pokemon_sprites/${slug}.png`, `pokemon_sprites/${baseSlug}.png`, "pokemon_sprites/unknown.png"];
+  let idx = 0;
+  imgEl.alt = displayName || baseName || "";
+  imgEl.onerror = () => {
+    idx += 1;
+    if (idx < candidates.length) imgEl.src = candidates[idx];
+  };
+  imgEl.src = candidates[idx];
+}
+
 function trainerDisplayName(trainer) {
   return `${trainer.trainerName} (${trainer.route})`;
 }
@@ -1656,6 +1672,7 @@ function buildTrainerIcons(prefix, trainer) {
   const container = el(`${prefix}-poke-icons`);
   if (!container) return;
   container.innerHTML = '';
+  const preferIconArt = prefix === "atk";
   for (let i = 0; i < trainer.pokemon.length; i++) {
     const slot = document.createElement('div');
     slot.id = `${prefix}-icon-slot-${i}`;
@@ -1663,15 +1680,7 @@ function buildTrainerIcons(prefix, trainer) {
     const tp = trainer.pokemon[i];
     const img = document.createElement('img');
     img.className = 'poke-icon-main';
-    const slug = toSlug(tp.Form || tp.Name);
-    const baseSlug = toSlug(tp.Name);
-    img.alt = tp.Form || tp.Name;
-    img.src = `pokemon_sprites/${slug}.png`;
-    img.onerror = () => {
-      if (img.src.includes(slug) && slug !== baseSlug) {
-        img.src = `pokemon_sprites/${baseSlug}.png`;
-      }
-    };
+    setPokemonImage(img, tp.Form || tp.Name, tp.Name, preferIconArt);
     slot.appendChild(img);
     if (tp.HeldItem && tp.HeldItem !== "None") {
       const itemImg = document.createElement("img");
@@ -2002,15 +2011,7 @@ function renderImportedParty() {
     slot.title = importedDisplayName(setData, idx);
     const img = document.createElement("img");
     img.className = "poke-icon-main";
-    const slug = toSlug(setData.species);
-    const baseSlug = toSlug((pokedex[setData.species]?.Name) || setData.species);
-    img.src = `pokemon_sprites/${slug}.png`;
-    img.alt = setData.species;
-    img.onerror = () => {
-      if (img.src.includes(slug) && slug !== baseSlug) {
-        img.src = `pokemon_sprites/${baseSlug}.png`;
-      }
-    };
+    setPokemonImage(img, setData.species, (pokedex[setData.species]?.Name) || setData.species, true);
     slot.appendChild(img);
     slot.addEventListener("click", () => applyImportedPokemon(idx));
     slot.addEventListener("contextmenu", (event) => {
@@ -2067,15 +2068,7 @@ function renderImportedPokemonList() {
     btn.title = `${setData.species}${setData.item && setData.item !== "None" ? ` @ ${setData.item}` : ""}\nClick to load • Right-click to toggle party`;
 
     const img = document.createElement("img");
-    const slug = toSlug(setData.species);
-    const baseSlug = toSlug((pokedex[setData.species]?.Name) || setData.species);
-    img.src = `pokemon_sprites/${slug}.png`;
-    img.alt = setData.species;
-    img.onerror = () => {
-      if (img.src.includes(slug) && slug !== baseSlug) {
-        img.src = `pokemon_sprites/${baseSlug}.png`;
-      }
-    };
+    setPokemonImage(img, setData.species, (pokedex[setData.species]?.Name) || setData.species, true);
 
     const label = document.createElement("span");
     label.textContent = setData.species;
