@@ -616,15 +616,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
     <div class="card side-card" id="you-card">
       <h2>You</h2>
 
-      <!-- HP bar -->
-      <div class="hp-section">
-        <span class="hp-label">HP</span>
-        <div class="hp-bar"><div class="hp-bar-fill" id="atk-hp-fill" style="width:100%"></div></div>
-        <input id="atk-current-hp" type="number" min="1" placeholder="Current HP"
-               oninput="onCurrentHPInput('atk')" title="Current HP">
-        <span class="hp-pct" id="atk-hp-pct">100%</span>
-      </div>
-
       <!-- Info grid -->
       <div class="info-grid">
         <div class="field ia-species">
@@ -669,6 +660,15 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
       </div>
 
+      <!-- HP bar -->
+      <div class="hp-section">
+        <span class="hp-label">HP</span>
+        <div class="hp-bar"><div class="hp-bar-fill" id="atk-hp-fill" style="width:100%"></div></div>
+        <input id="atk-current-hp" type="number" min="1" placeholder="Current HP"
+               oninput="onCurrentHPInput('atk')" title="Current HP">
+        <span class="hp-pct" id="atk-hp-pct">100%</span>
+      </div>
+
       <!-- Stat table + Status -->
       <div class="stat-status-row">
         <div id="atk-stat-wrap"></div>
@@ -684,6 +684,23 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
             <option value="frz">Freeze</option>
           </select>
         </div>
+      </div>
+
+      <div class="imported-section" id="atk-party-section" hidden>
+        <div class="moves-label">Party</div>
+        <div class="poke-icons" id="atk-party-icons"></div>
+      </div>
+
+      <div id="atk-trainer-section">
+        <div class="moves-label">Trainer Pokémon</div>
+        <div class="trainer-nav">
+          <select class="trainer-search" id="atk-trainer-search" onchange="selectTrainerFromSelect('atk')"></select>
+          <div class="trainer-nav-arrows">
+            <button class="trainer-nav-btn" type="button" onclick="prevTrainer('atk')">◀</button>
+            <button class="trainer-nav-btn" type="button" onclick="nextTrainer('atk')">▶</button>
+          </div>
+        </div>
+        <div class="poke-icons" id="atk-poke-icons"></div>
       </div>
 
       <!-- Moves -->
@@ -725,21 +742,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <div class="imported-poke-list" id="atk-imported-pokemon"></div>
         <div class="selection-help">Click to load. Right-click to add or remove a Pokémon from your party.</div>
       </div>
-
-      <div class="imported-section" id="atk-party-section" hidden>
-        <div class="moves-label">Party</div>
-        <div class="poke-icons" id="atk-party-icons"></div>
-      </div>
-
-      <div class="moves-label">Trainer Pokémon</div>
-      <div class="trainer-nav">
-        <select class="trainer-search" id="atk-trainer-search" onchange="selectTrainerFromSelect('atk')"></select>
-        <div class="trainer-nav-arrows">
-          <button class="trainer-nav-btn" type="button" onclick="prevTrainer('atk')">◀</button>
-          <button class="trainer-nav-btn" type="button" onclick="nextTrainer('atk')">▶</button>
-        </div>
-      </div>
-      <div class="poke-icons" id="atk-poke-icons"></div>
     </div>
 
     <!-- ════ MIDDLE: FIELD ════ -->
@@ -1935,6 +1937,13 @@ function setImportedSelection(selectedIdx) {
   });
   const deleteBtn = el("atk-delete-btn");
   if (deleteBtn) deleteBtn.hidden = selectedIdx < 0;
+  updateAtkTrainerPartyVisibility();
+}
+
+function updateAtkTrainerPartyVisibility() {
+  const trainerSection = el("atk-trainer-section");
+  if (!trainerSection) return;
+  trainerSection.hidden = currentSelectedImportedIdx >= 0;
 }
 
 function renderImportedParty() {
@@ -1980,6 +1989,7 @@ function renderImportedParty() {
 
   section.hidden = importedPartyIds.length === 0;
   setImportedSelection(currentSelectedImportedIdx);
+  updateAtkTrainerPartyVisibility();
 }
 
 function toggleImportedPokemonInParty(idx) {
