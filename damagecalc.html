@@ -205,6 +205,24 @@ h1 { text-align: center; margin: 8px 0 6px; }
   background: rgba(36, 92, 172, 0.1);
   border-color: var(--accent);
 }
+.delete-poke-btn {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.delete-poke-btn:hover {
+  background: rgba(220, 53, 53, 0.12);
+  border-color: #c62828;
+}
 .poke-sprite {
   width: 96px; height: 96px; object-fit: contain;
   image-rendering: pixelated;
@@ -539,6 +557,8 @@ html.dark-mode {
   --muted: #a9b0c7; --border: #3a435b; --accent: #8ab4ff; --result-bg: #151b28;
   --speed-fast: #66bb6a; --speed-slow: #ef9a9a;
 }
+html.dark-mode .stat-table .st-total.speed-fast { color: var(--speed-fast) !important; }
+html.dark-mode .stat-table .st-total.speed-slow { color: var(--speed-slow) !important; }
 html.dark-mode .field input, html.dark-mode .field select,
 html.dark-mode .move-row select,
 html.dark-mode .hp-section input, html.dark-mode .stat-table input,
@@ -614,6 +634,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
         <div class="ia-sprite">
           <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
+          <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
           <img id="atk-sprite" class="poke-sprite" src="" alt="">
         </div>
         <div class="field ia-type1">
@@ -1853,6 +1874,8 @@ function setImportedSelection(selectedIdx) {
   document.querySelectorAll(".imported-poke-btn").forEach((btn, idx) => {
     btn.classList.toggle("selected", idx === selectedIdx);
   });
+  const deleteBtn = el("atk-delete-btn");
+  if (deleteBtn) deleteBtn.hidden = selectedIdx < 0;
 }
 
 function renderImportedPokemonList() {
@@ -2063,6 +2086,17 @@ function saveCurrentPokemon() {
     btn.textContent = "✓";
     setTimeout(() => { btn.textContent = "💾"; }, 1200);
   }
+}
+
+function deleteCurrentImportedPokemon() {
+  if (currentSelectedImportedIdx < 0 || currentSelectedImportedIdx >= importedPokemonSets.length) return;
+  importedPokemonSets.splice(currentSelectedImportedIdx, 1);
+  currentSelectedImportedIdx = -1;
+  renderImportedPokemonList();
+  setImportedSelection(-1);
+  try {
+    localStorage.setItem("importedPokemonSets", JSON.stringify(importedPokemonSets));
+  } catch (_) {}
 }
 
 /* ── Per-move damage range (for labels) ── */
