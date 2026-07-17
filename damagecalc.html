@@ -1158,22 +1158,6 @@ function toSlug(name) {
     .replace(/^-|-$/g, '');
 }
 
-function setPokemonImage(imgEl, displayName, baseName = displayName, preferIconArt = false) {
-  if (!imgEl) return;
-  const slug = toSlug(displayName);
-  const baseSlug = toSlug(baseName);
-  const candidates = preferIconArt
-    ? [`image/icons/${slug}.png`, `image/icons/${baseSlug}.png`, `pokemon_sprites/${slug}.png`, `pokemon_sprites/${baseSlug}.png`, "image/icons/unknown.png"]
-    : [`pokemon_sprites/${slug}.png`, `pokemon_sprites/${baseSlug}.png`, "pokemon_sprites/unknown.png"];
-  let idx = 0;
-  imgEl.alt = displayName || baseName || "";
-  imgEl.onerror = () => {
-    idx += 1;
-    if (idx < candidates.length) imgEl.src = candidates[idx];
-  };
-  imgEl.src = candidates[idx];
-}
-
 function trainerDisplayName(trainer) {
   return `${trainer.trainerName} (${trainer.route})`;
 }
@@ -1672,7 +1656,6 @@ function buildTrainerIcons(prefix, trainer) {
   const container = el(`${prefix}-poke-icons`);
   if (!container) return;
   container.innerHTML = '';
-  const preferIconArt = true;
   for (let i = 0; i < trainer.pokemon.length; i++) {
     const slot = document.createElement('div');
     slot.id = `${prefix}-icon-slot-${i}`;
@@ -1680,7 +1663,15 @@ function buildTrainerIcons(prefix, trainer) {
     const tp = trainer.pokemon[i];
     const img = document.createElement('img');
     img.className = 'poke-icon-main';
-    setPokemonImage(img, tp.Form || tp.Name, tp.Name, preferIconArt);
+    const slug = toSlug(tp.Form || tp.Name);
+    const baseSlug = toSlug(tp.Name);
+    img.alt = tp.Form || tp.Name;
+    img.src = `image/icons/${slug}.png`;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.src = `image/icons/${baseSlug}.png`;
+      }
+    };
     slot.appendChild(img);
     if (tp.HeldItem && tp.HeldItem !== "None") {
       const itemImg = document.createElement("img");
@@ -2011,7 +2002,15 @@ function renderImportedParty() {
     slot.title = importedDisplayName(setData, idx);
     const img = document.createElement("img");
     img.className = "poke-icon-main";
-    setPokemonImage(img, setData.species, (pokedex[setData.species]?.Name) || setData.species, true);
+    const slug = toSlug(setData.species);
+    const baseSlug = toSlug((pokedex[setData.species]?.Name) || setData.species);
+    img.src = `pokemon_sprites/${slug}.png`;
+    img.alt = setData.species;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.src = `pokemon_sprites/${baseSlug}.png`;
+      }
+    };
     slot.appendChild(img);
     slot.addEventListener("click", () => applyImportedPokemon(idx));
     slot.addEventListener("contextmenu", (event) => {
@@ -2068,7 +2067,15 @@ function renderImportedPokemonList() {
     btn.title = `${setData.species}${setData.item && setData.item !== "None" ? ` @ ${setData.item}` : ""}\nClick to load • Right-click to toggle party`;
 
     const img = document.createElement("img");
-    setPokemonImage(img, setData.species, (pokedex[setData.species]?.Name) || setData.species, false);
+    const slug = toSlug(setData.species);
+    const baseSlug = toSlug((pokedex[setData.species]?.Name) || setData.species);
+    img.src = `pokemon_sprites/${slug}.png`;
+    img.alt = setData.species;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.src = `pokemon_sprites/${baseSlug}.png`;
+      }
+    };
 
     const label = document.createElement("span");
     label.textContent = setData.species;
@@ -2309,7 +2316,10 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   for (let r = 85; r <= 100; r++) {
     let dmg = baseOneHit;
     if (!fixedFn) {
-      dmg = Math.floor(dmg * (r / 100) * stab * typeMod * otherMod);
+      dmg = Math.floor(dmg * (r / 100));
+      dmg = Math.floor(dmg * stab);
+      dmg = Math.floor(dmg * typeMod);
+      dmg = Math.floor(dmg * otherMod);
     }
     dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
     dmg *= hitCount;
@@ -2685,7 +2695,10 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   for (let r = 85; r <= 100; r++) {
     let dmg = baseOneHit;
     if (!fixedFn) {
-      dmg = Math.floor(dmg * (r / 100) * stab * typeMod * otherMod);
+      dmg = Math.floor(dmg * (r / 100));
+      dmg = Math.floor(dmg * stab);
+      dmg = Math.floor(dmg * typeMod);
+      dmg = Math.floor(dmg * otherMod);
     }
     dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
     dmg *= hitCount;
