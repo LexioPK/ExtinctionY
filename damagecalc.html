@@ -460,6 +460,32 @@ h1 { text-align: center; margin: 8px 0 6px; }
   flex-wrap: wrap;
   gap: 6px;
 }
+.imported-poke-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.imported-poke-remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: #e53935;
+  color: #fff;
+  font-size: 0.65rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 1;
+}
+.imported-poke-remove:hover {
+  background: #b71c1c;
+}
 .imported-poke-btn {
   width: 84px;
   border: 2px solid var(--border);
@@ -1718,10 +1744,19 @@ function resolveImportedSpecies(name) {
   const exact = Object.keys(pokedex).find(species => species.toLowerCase() === name.toLowerCase());
   if (exact) return exact;
   const slug = toSlug(name);
-  return Object.keys(pokedex).find(species => {
+  const bySlug = Object.keys(pokedex).find(species => {
     const baseName = pokedex[species]?.Name || species;
     return toSlug(species) === slug || toSlug(baseName) === slug;
-  }) || null;
+  });
+  if (bySlug) return bySlug;
+  // Strip form suffix after a dash (e.g. "Floette-Yellow" → "Floette").
+  // Pokémon whose dash is part of their name (Ho-Oh, Porygon-Z) resolve via
+  // exact match above, so they are never affected here.
+  const dashIdx = name.lastIndexOf("-");
+  if (dashIdx > 0) {
+    return resolveImportedSpecies(name.substring(0, dashIdx));
+  }
+  return null;
 }
 
 function parseImportedPokemonBlock(block) {
@@ -1735,7 +1770,7 @@ function parseImportedPokemonBlock(block) {
   const nicknameMatch = withoutGender.match(/\(([^)]+)\)$/);
   const rawSpecies = nicknameMatch ? nicknameMatch[1].trim() : withoutGender;
   const species = resolveImportedSpecies(rawSpecies);
-  if (!species) throw new Error(`Unknown species: ${rawSpecies}`);
+  if (!species) return null;
 
   const imported = {
     species,
@@ -1782,12 +1817,36 @@ function parseImportedPokemonBlock(block) {
 }
 
 function parseImportedPokemonSets(text) {
-  return text
+  const all = text
     .split(/\n\s*\n+/)
     .map(block => block.trim())
     .filter(Boolean)
     .map(parseImportedPokemonBlock);
+  const sets = all.filter(Boolean);
+  const skipped = all.length - sets.length;
+  return { sets, skipped };
 }
+
+function sortImportedByDex() {
+  importedPokemonSets.sort((a, b) => {
+    const ia = pokedex[a.species]?.SpeciesIdx ?? 9999;
+    const ib = pokedex[b.species]?.SpeciesIdx ?? 9999;
+    return ia - ib;
+  });
+}
+
+function removeImportedPokemon(idx) {
+  importedPokemonSets.splice(idx, 1);
+  if (currentSelectedImportedIdx === idx) {
+    currentSelectedImportedIdx = -1;
+  } else if (currentSelectedImportedIdx > idx) {
+    currentSelectedImportedIdx--;
+  }
+  renderImportedPokemonList();
+  setImportedSelection(currentSelectedImportedIdx);
+  try { localStorage.setItem("importedPokemonSets", JSON.stringify(importedPokemonSets)); } catch (_) {}
+}
+
 
 function setImportedSelection(selectedIdx) {
   currentSelectedImportedIdx = selectedIdx;
@@ -1807,6 +1866,9 @@ function renderImportedPokemonList() {
   }
 
   importedPokemonSets.forEach((setData, idx) => {
+    const wrap = document.createElement("div");
+    wrap.className = "imported-poke-wrap";
+
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "imported-poke-btn";
@@ -1829,7 +1891,17 @@ function renderImportedPokemonList() {
     btn.appendChild(img);
     btn.appendChild(label);
     btn.addEventListener("click", () => applyImportedPokemon(idx));
-    container.appendChild(btn);
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "imported-poke-remove";
+    removeBtn.title = `Remove ${setData.species}`;
+    removeBtn.textContent = "✕";
+    removeBtn.addEventListener("click", (e) => { e.stopPropagation(); removeImportedPokemon(idx); });
+
+    wrap.appendChild(btn);
+    wrap.appendChild(removeBtn);
+    container.appendChild(wrap);
   });
 
   section.hidden = false;
@@ -1907,23 +1979,23 @@ function importPokemonSets() {
   const status = el("pokemon-import-status");
   const raw = textarea?.value.trim() || "";
   if (!raw) {
-    importedPokemonSets = [];
-    renderImportedPokemonList();
     if (status) status.textContent = "Paste one or more Pokémon sets to add them below.";
     return;
   }
 
   try {
-    importedPokemonSets = parseImportedPokemonSets(raw);
+    const { sets, skipped } = parseImportedPokemonSets(raw);
+    importedPokemonSets = [...importedPokemonSets, ...sets];
+    sortImportedByDex();
     renderImportedPokemonList();
-    if (status) status.textContent = `Imported ${importedPokemonSets.length} Pokémon. Click a sprite below to load it on the You side.`;
+    const skippedNote = skipped > 0 ? ` (${skipped} unrecognized skipped)` : "";
+    if (status) status.textContent = `Added ${sets.length} Pokémon.${skippedNote} Click a sprite below to load it on the You side.`;
+    if (textarea) textarea.value = "";
     // Persist to localStorage so imports survive a page refresh
     try {
       localStorage.setItem("importedPokemonSets", JSON.stringify(importedPokemonSets));
-      localStorage.setItem("importedPokemonText", raw);
     } catch (_) {}
   } catch (error) {
-    importedPokemonSets = [];
     renderImportedPokemonList();
     if (status) status.textContent = error.message || "Could not import Pokémon.";
   }
@@ -1972,7 +2044,9 @@ function saveCurrentPokemon() {
     savedIdx = currentSelectedImportedIdx;
   } else {
     importedPokemonSets.push(set);
-    savedIdx = importedPokemonSets.length - 1;
+    sortImportedByDex();
+    savedIdx = importedPokemonSets.findIndex(s => s === set);
+    if (savedIdx < 0) savedIdx = importedPokemonSets.length - 1;
   }
 
   renderImportedPokemonList();
@@ -2699,12 +2773,9 @@ async function init() {
     // Restore imported Pokémon sets from a previous session
     try {
       const savedSets = localStorage.getItem("importedPokemonSets");
-      const savedText = localStorage.getItem("importedPokemonText");
       if (savedSets) {
         importedPokemonSets = JSON.parse(savedSets);
         renderImportedPokemonList();
-        const textarea = el("pokemon-importer");
-        if (textarea && savedText) textarea.value = savedText;
         const status = el("pokemon-import-status");
         if (status && importedPokemonSets.length) {
           status.textContent = `${importedPokemonSets.length} Pokémon loaded from previous session. Click a sprite to load it on the You side.`;
