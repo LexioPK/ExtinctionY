@@ -493,7 +493,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   gap: 6px;
 }
 .imported-poke-btn {
-  width: 108px;
+  width: 92px;
   border: 2px solid var(--border);
   border-radius: 10px;
   background: var(--bg);
@@ -508,8 +508,8 @@ h1 { text-align: center; margin: 8px 0 6px; }
   position: relative;
 }
 .imported-poke-btn img {
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   image-rendering: pixelated;
 }
@@ -2004,11 +2004,11 @@ function renderImportedParty() {
     img.className = "poke-icon-main";
     const slug = toSlug(setData.species);
     const baseSlug = toSlug((pokedex[setData.species]?.Name) || setData.species);
-    img.src = `image/icons/${slug}.png`;
+    img.src = `pokemon_sprites/${slug}.png`;
     img.alt = setData.species;
     img.onerror = () => {
       if (img.src.includes(slug) && slug !== baseSlug) {
-        img.src = `image/icons/${baseSlug}.png`;
+        img.src = `pokemon_sprites/${baseSlug}.png`;
       }
     };
     slot.appendChild(img);
