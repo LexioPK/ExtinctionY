@@ -223,7 +223,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   background: var(--bg);
   color: inherit;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: .8rem;
   line-height: 1;
   transition: background 0.15s, border-color 0.15s;
   flex-shrink: 0;
@@ -326,7 +326,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .trainer-search {
   flex: 1; min-width: 0;
   border: 1px solid var(--border); border-radius: 6px;
-  padding: 3px 6px; font: inherit; font-size: 0.76rem;
+  padding: 3px 6px; font: inherit; font-size: 0.88rem;
   background: #f0f0f0; color: inherit;
 }
 .selection-help {
@@ -620,7 +620,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
       <h2>You</h2>
 
       <div class="moves-label">Trainer Selection</div>
-      <div class="trainer-nav">
+      <div class="-nav">
         <select class="trainer-search" id="atk-trainer-search" onchange="selectTrainerFromSelect('atk')"></select>
         <div class="trainer-nav-arrows">
           <button class="trainer-nav-btn" type="button" onclick="prevTrainer('atk')">◀</button>
