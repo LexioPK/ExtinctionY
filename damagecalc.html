@@ -259,7 +259,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid .ia-item label,
 .info-grid .ia-nature label,
 .info-grid .ia-ability label {
-  font-size: 1.17rem;
+  font-size: 0.78rem;
 }
 .info-grid .ia-species select,
 .info-grid .ia-type1 select,
@@ -268,7 +268,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid .ia-item select,
 .info-grid .ia-nature select,
 .info-grid .ia-ability select {
-  font-size: 1.12rem;
+  font-size: 1.125rem;
 }
 .info-grid .ia-level input[type="number"] { width: 84px; }
 .form-row { margin-top: 4px; }
@@ -355,28 +355,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
   padding: 6px 8px; font: inherit; font-size: 0.92rem;
   background: #f0f0f0; color: inherit;
 }
-.side-card.side-mirrored .trainer-nav { flex-direction: row-reverse; }
-.side-card.side-mirrored .trainer-search {
-  text-align: right;
-  text-align-last: right;
-}
-.side-card.side-mirrored .hp-section { flex-direction: row-reverse; }
-.side-card.side-mirrored .stat-status-row { flex-direction: row-reverse; }
-.side-card.side-mirrored .compact-move-row,
-.side-card.side-mirrored .compact-moves-head {
-  direction: rtl;
-}
-.side-card.side-mirrored .compact-move-row > *,
-.side-card.side-mirrored .compact-moves-head > * {
-  direction: ltr;
-}
-.side-card.side-mirrored .moves-label {
-  text-align: right;
-}
-.side-card.side-mirrored .compact-move-row select {
-  text-align: right;
-  text-align-last: right;
-}
 .selection-help {
   font-size: 0.68rem;
   color: var(--muted);
@@ -392,9 +370,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   gap: 10px;
   align-items: flex-start;
 }
-.battle-side-layout.side-mirrored {
-  flex-direction: row-reverse;
-}
+
 .battle-side-main {
   flex: 1;
   min-width: 0;
@@ -431,9 +407,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   flex: 0 0 calc((100% - 20px) / 6);
   max-width: calc((100% - 20px) / 6);
 }
-.side-card.side-mirrored .team-slot-group .poke-icons {
-  justify-content: flex-end;
-}
+
 .poke-icon-slot {
   flex: 0 0 calc((100% - 20px) / 6);
   aspect-ratio: 1; min-width: 0;
@@ -579,30 +553,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   font-size: 0.72rem;
   color: var(--muted);
 }
-.side-card.side-mirrored .info-grid {
-  grid-template-areas:
-    "sprite  species species"
-    "item    ability type1"
-    "level   nature  type2";
-  grid-template-columns: minmax(108px, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-}
-.info-grid .field select,
-.info-grid .field input {
-  font-size: 0.75rem;
-}
-.side-card.side-mirrored .info-grid .field label {
-  text-align: right;
-}
-.side-card.side-mirrored .info-grid .field select {
-  width: 100%;
-  text-align: right;
-}
-.side-card.side-mirrored .info-grid .field input {
-  text-align: right;
-}
-.side-card.side-mirrored .info-grid .item-select-wrap {
-  flex-direction: row-reverse;
-}
+
 .imported-section {
   margin-top: 10px;
 }
@@ -1003,7 +954,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
     </div>
 
     <!-- ════ OPPONENT ════ -->
-    <div class="card side-card side-mirrored" id="opp-card">
+    <div class="card side-card" id="opp-card">
       <h2>Opponent</h2>
 
       <div class="moves-label">Trainer Selection</div>
@@ -1057,7 +1008,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
       </div>
 
-      <div class="battle-side-layout side-mirrored">
+      <div class="battle-side-layout">
         <div class="battle-side-main">
           <!-- HP bar -->
           <div class="hp-section">
