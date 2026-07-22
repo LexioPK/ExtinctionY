@@ -36,14 +36,14 @@ h1 { text-align: center; margin: 8px 0 6px; }
 /* ── Top row: [You→Opp] [Result] [Opp→You] ── */
 .top-row {
   display: grid;
-  grid-template-columns: minmax(180px, 0.7fr) minmax(280px, 1.2fr) minmax(180px, 0.7fr);
+  grid-template-columns: minmax(180px, 0.7fr) minmax(340px, 1.35fr) minmax(180px, 0.7fr);
   gap: 14px;
   margin-bottom: 14px;
   align-items: flex-start;
 }
 .result-pane {
   min-width: 0;
-  max-width: 420px;
+  max-width: 520px;
   justify-self: center;
   width: 100%;
 }
@@ -71,18 +71,10 @@ h1 { text-align: center; margin: 8px 0 6px; }
   font-size: 0.82rem; font-weight: 700;
   white-space: nowrap; flex-shrink: 0; opacity: 0.9;
 }
-.top-row .qm-pane:last-child .qm-move-btn {
-  flex-direction: row-reverse;
-  text-align: right;
-}
-.top-row .qm-pane:last-child .qm-move-name {
-  text-align: right;
-}
-
 /* ── Main 3-column grid ── */
 .main-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) 195px minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 1.1fr) 235px minmax(0, 1.1fr);
   gap: 14px;
   align-items: start;
 }
@@ -614,7 +606,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 
 /* ── Responsive ── */
 @media (max-width: 1100px) {
-  .main-grid { grid-template-columns: 1fr 195px 1fr; }
+  .main-grid { grid-template-columns: 1fr 235px 1fr; }
   .top-row { grid-template-columns: 1fr 1fr; }
   .top-row .result-pane { grid-column: 1 / -1; order: -1; max-width: none; }
 }
@@ -856,17 +848,12 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
           <button class="toggle-btn" data-value="psychic" style="display:none">Psychic</button>
         </div>
 
-        <!-- Room Effects -->
-        <div class="field-section-label" style="margin-top:5px;">Room Effects</div>
-        <div class="toggle-group" id="room-effects-group">
+        <div class="field-section-label" style="margin-top:5px;">Misc Effects</div>
+        <div class="toggle-group" id="misc-effects-group">
           <button class="toggle-btn active" data-value="none">None</button>
           <button class="toggle-btn" id="room-magic" data-value="magic-room">Magic Room</button>
           <button class="toggle-btn" id="room-wonder" data-value="wonder-room">Wonder Room</button>
           <button class="toggle-btn" id="room-trick" data-value="trick-room">Trick Room</button>
-        </div>
-        <div class="field-section-label" style="margin-top:5px;">Misc Effects</div>
-        <div class="toggle-group" id="misc-effects-group">
-          <button class="toggle-btn active" data-value="none">None</button>
           <button class="toggle-btn" id="misc-ion" data-value="ion-deluge">Ion Deluge</button>
         </div>
 
@@ -1507,13 +1494,22 @@ function getToggleValue(groupId) {
 function bindToggleGroup(groupId, exclusive = true) {
   const group = el(groupId);
   if (!group) return;
-  group.querySelectorAll(".toggle-btn").forEach(btn => {
+  const buttons = [...group.querySelectorAll(".toggle-btn")];
+  buttons.forEach(btn => {
     btn.addEventListener("click", () => {
       if (exclusive) {
-        group.querySelectorAll(".toggle-btn").forEach(b => b.classList.remove("active"));
+        buttons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
       } else {
-        btn.classList.toggle("active");
+        if (btn.dataset.value === "none") {
+          setMultiToggleGroup(groupId, []);
+        } else {
+          btn.classList.toggle("active");
+          const activeValues = buttons
+            .filter(b => b.dataset.value !== "none" && b.classList.contains("active"))
+            .map(b => b.dataset.value);
+          setMultiToggleGroup(groupId, activeValues);
+        }
       }
       recalcIfNeeded();
     });
@@ -1526,11 +1522,19 @@ function setExclusiveToggle(groupId, value) {
     btn.classList.toggle("active", btn.dataset.value === String(value));
   });
 }
+function setMultiToggleGroup(groupId, values = []) {
+  const group = el(groupId);
+  if (!group) return;
+  const activeValues = new Set(values.map(String));
+  group.querySelectorAll(".toggle-btn").forEach(btn => {
+    const isNone = btn.dataset.value === "none";
+    btn.classList.toggle("active", isNone ? activeValues.size === 0 : activeValues.has(btn.dataset.value));
+  });
+}
 function resetFieldEffects() {
   setExclusiveToggle("weather-group", "none");
   setExclusiveToggle("terrain-group", "none");
-  setExclusiveToggle("room-effects-group", "none");
-  setExclusiveToggle("misc-effects-group", "none");
+  setMultiToggleGroup("misc-effects-group", []);
   setExclusiveToggle("spikes-you-group", "0");
   setExclusiveToggle("spikes-opp-group", "0");
   document.querySelectorAll(".side-btn").forEach(btn => btn.classList.remove("active"));
@@ -1541,9 +1545,7 @@ function isSideActive(group, side) {
 }
 
 function isRoomActive(value) {
-  return document.querySelector(`#room-effects-group [data-value="${value}"]`)?.classList.contains('active')
-    || document.querySelector(`#misc-effects-group [data-value="${value}"]`)?.classList.contains('active')
-    || false;
+  return document.querySelector(`#misc-effects-group [data-value="${value}"]`)?.classList.contains('active') || false;
 }
 
 function bindSideButtons() {
@@ -1844,7 +1846,7 @@ function updateQuickMoveBtn(prefix, idx) {
   if (!btn) return;
   const moveName = el(`${prefix}-move-${idx}`)?.value || '—';
   const nameSpan = btn.querySelector('.qm-move-name');
-  if (nameSpan) nameSpan.textContent = prefix === "def" ? `${moveName} ◀` : `▶ ${moveName}`;
+  if (nameSpan) nameSpan.textContent = `▶ ${moveName}`;
   btn.setAttribute("aria-label", `Calculate damage with ${moveName}`);
 }
 
@@ -1874,7 +1876,7 @@ function buildQuickMoves() {
 
       const nameSpan = document.createElement('span');
       nameSpan.className = 'qm-move-name';
-      nameSpan.textContent = prefix === "def" ? `${moveName} ◀` : `▶ ${moveName}`;
+      nameSpan.textContent = `▶ ${moveName}`;
 
       const pctSpan = document.createElement('span');
       pctSpan.className = 'qm-move-pct';
@@ -2725,11 +2727,13 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
 function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   const outcome = calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount);
   if (!outcome || outcome.noDamageText) return null;
+  const recoilLabel = outcome.selfParts.find(part => /\)\s+(Rec|Abs)$/.test(part)) || "";
   return {
     minD: outcome.minD,
     maxD: outcome.maxD,
     minPct: outcome.minPct,
-    maxPct: outcome.maxPct
+    maxPct: outcome.maxPct,
+    recoilLabel
   };
 }
 
@@ -2746,11 +2750,15 @@ function updateMoveDamageLabels() {
       const dmgSpan = el(`${atkPrefix}-move-dmg-${i}`);
       const pctSpan = el(`qm-${atkPrefix}-pct-${i}`);
 
-      if (!moveName) continue;
+      if (!moveName) {
+        if (dmgSpan) dmgSpan.textContent = '';
+        if (pctSpan) pctSpan.textContent = '';
+        continue;
+      }
 
       const range = computeDamageRange(atkPrefix, defPrefix, moveName, hitCount);
       if (range) {
-        const label = `${range.minPct.toFixed(1)}–${range.maxPct.toFixed(1)}%`;
+        const label = `${range.minPct.toFixed(1)}–${range.maxPct.toFixed(1)}%${range.recoilLabel ? ` ${range.recoilLabel}` : ""}`;
         if (dmgSpan) dmgSpan.textContent = label;
         if (pctSpan) pctSpan.textContent = label;
       } else {
@@ -3354,9 +3362,9 @@ function bindInputs() {
     });
   });
 
-  // Field toggle groups (exclusive)
-  ["battle-type-group","weather-group","terrain-group",
-   "room-effects-group","misc-effects-group","spikes-you-group","spikes-opp-group"].forEach(gid => bindToggleGroup(gid));
+  // Field toggle groups
+  ["battle-type-group","weather-group","terrain-group","spikes-you-group","spikes-opp-group"].forEach(gid => bindToggleGroup(gid));
+  bindToggleGroup("misc-effects-group", false);
 
   // Side buttons (independent toggles)
   bindSideButtons();
