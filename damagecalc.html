@@ -310,7 +310,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 
 /* ── Trainer nav ── */
 .trainer-nav {
-  display: flex; align-items: stretch; gap: 5px; margin-bottom: 6px;
+  display: flex; align-items: stretch; gap: 8px; margin-bottom: 8px;
 }
 .trainer-nav-arrows {
   display: flex;
@@ -318,17 +318,20 @@ h1 { text-align: center; margin: 8px 0 6px; }
   flex-shrink: 0;
 }
 .trainer-nav-btn {
-  padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border);
+  padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border);
   background: var(--bg); color: var(--text); cursor: pointer;
-  font: inherit; font-size: 0.8rem; flex-shrink: 0;
+  font: inherit; font-size: 0.94rem; flex-shrink: 0;
 }
 .trainer-nav-btn:hover { background: var(--border); }
 .trainer-search {
   flex: 1; min-width: 0;
   border: 1px solid var(--border); border-radius: 6px;
-  padding: 3px 6px; font: inherit; font-size: 068rem;
+  padding: 6px 8px; font: inherit; font-size: 0.92rem;
   background: #f0f0f0; color: inherit;
 }
+.side-card.side-mirrored .trainer-nav { flex-direction: row-reverse; }
+.side-card.side-mirrored .hp-section { flex-direction: row-reverse; }
+.side-card.side-mirrored .stat-status-row { flex-direction: row-reverse; }
 .selection-help {
   font-size: 0.68rem;
   color: var(--muted);
@@ -338,6 +341,34 @@ h1 { text-align: center; margin: 8px 0 6px; }
 /* ── Pokemon icon strip ── */
 .poke-icons {
   display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px;
+}
+.battle-side-layout {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.battle-side-layout.side-mirrored {
+  flex-direction: row-reverse;
+}
+.battle-side-main {
+  flex: 1;
+  min-width: 0;
+}
+.pokemon-icon-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 0 0 76px;
+  min-width: 76px;
+}
+.pokemon-icon-rail .poke-icons {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin-bottom: 0;
+}
+.pokemon-icon-rail .poke-icon-slot {
+  flex: none;
+  width: 100%;
 }
 .poke-icon-slot {
   flex: 0 0 calc((100% - 20px) / 6);
@@ -484,6 +515,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
   font-size: 0.72rem;
   color: var(--muted);
 }
+.side-card.side-mirrored .info-grid {
+  grid-template-areas:
+    "sprite  species species"
+    "item    ability type1"
+    "level   nature  type2";
+  grid-template-columns: minmax(108px, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+}
 .imported-section {
   margin-top: 10px;
 }
@@ -620,7 +658,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
       <h2>You</h2>
 
       <div class="moves-label">Trainer Selection</div>
-      <div class="-nav">
+      <div class="trainer-nav">
         <select class="trainer-search" id="atk-trainer-search" onchange="selectTrainerFromSelect('atk')"></select>
         <div class="trainer-nav-arrows">
           <button class="trainer-nav-btn" type="button" onclick="prevTrainer('atk')">◀</button>
@@ -681,64 +719,71 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <span class="hp-pct" id="atk-hp-pct">100%</span>
       </div>
 
-      <!-- Stat table + Status -->
-      <div class="stat-status-row">
-        <div id="atk-stat-wrap"></div>
-        <div class="stat-status-aside">
-          <label for="atk-status">Status</label>
-          <select id="atk-status">
-            <option value="none">None</option>
-            <option value="brn">Burn</option>
-            <option value="par">Paralysis</option>
-            <option value="psn">Poison</option>
-            <option value="tox">Toxic</option>
-            <option value="slp">Sleep</option>
-            <option value="frz">Freeze</option>
-          </select>
-        </div>
-      </div>
+      <div class="battle-side-layout">
+        <div class="pokemon-icon-rail">
+          <div class="imported-section" id="atk-party-section" hidden>
+            <div class="moves-label">Party</div>
+            <div class="poke-icons" id="atk-party-icons"></div>
+          </div>
 
-      <div class="imported-section" id="atk-party-section" hidden>
-        <div class="moves-label">Party</div>
-        <div class="poke-icons" id="atk-party-icons"></div>
-      </div>
+          <div id="atk-trainer-icons-section">
+            <div class="moves-label">Trainer Pokémon</div>
+            <div class="poke-icons" id="atk-poke-icons"></div>
+          </div>
+        </div>
 
-      <div id="atk-trainer-icons-section">
-        <div class="moves-label">Trainer Pokémon</div>
-        <div class="poke-icons" id="atk-poke-icons"></div>
-      </div>
+        <div class="battle-side-main">
+          <!-- Stat table + Status -->
+          <div class="stat-status-row">
+            <div id="atk-stat-wrap"></div>
+            <div class="stat-status-aside">
+              <label for="atk-status">Status</label>
+              <select id="atk-status">
+                <option value="none">None</option>
+                <option value="brn">Burn</option>
+                <option value="par">Paralysis</option>
+                <option value="psn">Poison</option>
+                <option value="tox">Toxic</option>
+                <option value="slp">Sleep</option>
+                <option value="frz">Freeze</option>
+                <option value="leech">Leech Seed</option>
+              </select>
+            </div>
+          </div>
 
-      <!-- Moves -->
-      <div class="moves-label">Moves</div>
-      <div class="moves-head compact-moves-head"><span class="moves-head-label">Hits ×</span></div>
-      <div id="atk-moves-section">
-        <div class="move-row compact-move-row" id="atk-move-row-0">
-          <select id="atk-move-0" onchange="onMoveSelectChange('atk',0)"></select>
-          <span class="mi-type" id="atk-move-type-0"></span>
-          <span class="mi-detail" id="atk-move-bp-0">BP: —</span>
-          <span class="mi-detail" id="atk-move-acc-0">Acc: —</span>
-          <input type="number" id="atk-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-        </div>
-        <div class="move-row compact-move-row" id="atk-move-row-1">
-          <select id="atk-move-1" onchange="onMoveSelectChange('atk',1)"></select>
-          <span class="mi-type" id="atk-move-type-1"></span>
-          <span class="mi-detail" id="atk-move-bp-1">BP: —</span>
-          <span class="mi-detail" id="atk-move-acc-1">Acc: —</span>
-          <input type="number" id="atk-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-        </div>
-        <div class="move-row compact-move-row" id="atk-move-row-2">
-          <select id="atk-move-2" onchange="onMoveSelectChange('atk',2)"></select>
-          <span class="mi-type" id="atk-move-type-2"></span>
-          <span class="mi-detail" id="atk-move-bp-2">BP: —</span>
-          <span class="mi-detail" id="atk-move-acc-2">Acc: —</span>
-          <input type="number" id="atk-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-        </div>
-        <div class="move-row compact-move-row" id="atk-move-row-3">
-          <select id="atk-move-3" onchange="onMoveSelectChange('atk',3)"></select>
-          <span class="mi-type" id="atk-move-type-3"></span>
-          <span class="mi-detail" id="atk-move-bp-3">BP: —</span>
-          <span class="mi-detail" id="atk-move-acc-3">Acc: —</span>
-          <input type="number" id="atk-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <!-- Moves -->
+          <div class="moves-label">Moves</div>
+          <div class="moves-head compact-moves-head"><span class="moves-head-label">Hits ×</span></div>
+          <div id="atk-moves-section">
+            <div class="move-row compact-move-row" id="atk-move-row-0">
+              <select id="atk-move-0" onchange="onMoveSelectChange('atk',0)"></select>
+              <span class="mi-type" id="atk-move-type-0"></span>
+              <span class="mi-detail" id="atk-move-bp-0">BP: —</span>
+              <span class="mi-detail" id="atk-move-acc-0">Acc: —</span>
+              <input type="number" id="atk-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="atk-move-row-1">
+              <select id="atk-move-1" onchange="onMoveSelectChange('atk',1)"></select>
+              <span class="mi-type" id="atk-move-type-1"></span>
+              <span class="mi-detail" id="atk-move-bp-1">BP: —</span>
+              <span class="mi-detail" id="atk-move-acc-1">Acc: —</span>
+              <input type="number" id="atk-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="atk-move-row-2">
+              <select id="atk-move-2" onchange="onMoveSelectChange('atk',2)"></select>
+              <span class="mi-type" id="atk-move-type-2"></span>
+              <span class="mi-detail" id="atk-move-bp-2">BP: —</span>
+              <span class="mi-detail" id="atk-move-acc-2">Acc: —</span>
+              <input type="number" id="atk-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="atk-move-row-3">
+              <select id="atk-move-3" onchange="onMoveSelectChange('atk',3)"></select>
+              <span class="mi-type" id="atk-move-type-3"></span>
+              <span class="mi-detail" id="atk-move-bp-3">BP: —</span>
+              <span class="mi-detail" id="atk-move-acc-3">Acc: —</span>
+              <input type="number" id="atk-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+          </div>
         </div>
       </div>
 
@@ -855,7 +900,7 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
     </div>
 
     <!-- ════ OPPONENT ════ -->
-    <div class="card side-card" id="opp-card">
+    <div class="card side-card side-mirrored" id="opp-card">
       <h2>Opponent</h2>
 
       <div class="moves-label">Trainer Selection</div>
@@ -918,57 +963,66 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <span class="hp-pct" id="def-hp-pct">100%</span>
       </div>
 
-      <!-- Stat table + Status -->
-      <div class="stat-status-row">
-        <div id="def-stat-wrap"></div>
-        <div class="stat-status-aside">
-          <label for="def-status">Status</label>
-          <select id="def-status">
-            <option value="none">None</option>
-            <option value="brn">Burn</option>
-            <option value="par">Paralysis</option>
-            <option value="psn">Poison</option>
-            <option value="tox">Toxic</option>
-            <option value="slp">Sleep</option>
-            <option value="frz">Freeze</option>
-          </select>
+      <div class="battle-side-layout side-mirrored">
+        <div class="pokemon-icon-rail">
+          <div>
+            <div class="moves-label">Trainer Pokémon</div>
+            <div class="poke-icons" id="def-poke-icons"></div>
+          </div>
         </div>
-      </div>
 
-      <div class="moves-label">Trainer Pokémon</div>
-      <div class="poke-icons" id="def-poke-icons"></div>
+        <div class="battle-side-main">
+          <!-- Stat table + Status -->
+          <div class="stat-status-row">
+            <div id="def-stat-wrap"></div>
+            <div class="stat-status-aside">
+              <label for="def-status">Status</label>
+              <select id="def-status">
+                <option value="none">None</option>
+                <option value="brn">Burn</option>
+                <option value="par">Paralysis</option>
+                <option value="psn">Poison</option>
+                <option value="tox">Toxic</option>
+                <option value="slp">Sleep</option>
+                <option value="frz">Freeze</option>
+                <option value="leech">Leech Seed</option>
+              </select>
+            </div>
+          </div>
 
-      <!-- Moves (hits input, no Atk button) -->
-      <div class="moves-label">Moves</div>
-      <div class="moves-head compact-moves-head"><span class="moves-head-label">Hits ×</span></div>
-      <div id="def-moves-section">
-        <div class="move-row compact-move-row" id="def-move-row-0">
-          <select id="def-move-0" onchange="onMoveSelectChange('def',0)"></select>
-          <span class="mi-type" id="def-move-type-0"></span>
-          <span class="mi-detail" id="def-move-bp-0">BP: —</span>
-          <span class="mi-detail" id="def-move-acc-0">Acc: —</span>
-          <input type="number" id="def-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-        </div>
-        <div class="move-row compact-move-row" id="def-move-row-1">
-          <select id="def-move-1" onchange="onMoveSelectChange('def',1)"></select>
-          <span class="mi-type" id="def-move-type-1"></span>
-          <span class="mi-detail" id="def-move-bp-1">BP: —</span>
-          <span class="mi-detail" id="def-move-acc-1">Acc: —</span>
-          <input type="number" id="def-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-        </div>
-        <div class="move-row compact-move-row" id="def-move-row-2">
-          <select id="def-move-2" onchange="onMoveSelectChange('def',2)"></select>
-          <span class="mi-type" id="def-move-type-2"></span>
-          <span class="mi-detail" id="def-move-bp-2">BP: —</span>
-          <span class="mi-detail" id="def-move-acc-2">Acc: —</span>
-          <input type="number" id="def-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
-        </div>
-        <div class="move-row compact-move-row" id="def-move-row-3">
-          <select id="def-move-3" onchange="onMoveSelectChange('def',3)"></select>
-          <span class="mi-type" id="def-move-type-3"></span>
-          <span class="mi-detail" id="def-move-bp-3">BP: —</span>
-          <span class="mi-detail" id="def-move-acc-3">Acc: —</span>
-          <input type="number" id="def-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+          <!-- Moves (hits input, no Atk button) -->
+          <div class="moves-label">Moves</div>
+          <div class="moves-head compact-moves-head"><span class="moves-head-label">Hits ×</span></div>
+          <div id="def-moves-section">
+            <div class="move-row compact-move-row" id="def-move-row-0">
+              <select id="def-move-0" onchange="onMoveSelectChange('def',0)"></select>
+              <span class="mi-type" id="def-move-type-0"></span>
+              <span class="mi-detail" id="def-move-bp-0">BP: —</span>
+              <span class="mi-detail" id="def-move-acc-0">Acc: —</span>
+              <input type="number" id="def-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="def-move-row-1">
+              <select id="def-move-1" onchange="onMoveSelectChange('def',1)"></select>
+              <span class="mi-type" id="def-move-type-1"></span>
+              <span class="mi-detail" id="def-move-bp-1">BP: —</span>
+              <span class="mi-detail" id="def-move-acc-1">Acc: —</span>
+              <input type="number" id="def-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="def-move-row-2">
+              <select id="def-move-2" onchange="onMoveSelectChange('def',2)"></select>
+              <span class="mi-type" id="def-move-type-2"></span>
+              <span class="mi-detail" id="def-move-bp-2">BP: —</span>
+              <span class="mi-detail" id="def-move-acc-2">Acc: —</span>
+              <input type="number" id="def-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="def-move-row-3">
+              <select id="def-move-3" onchange="onMoveSelectChange('def',3)"></select>
+              <span class="mi-type" id="def-move-type-3"></span>
+              <span class="mi-detail" id="def-move-bp-3">BP: —</span>
+              <span class="mi-detail" id="def-move-acc-3">Acc: —</span>
+              <input type="number" id="def-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1148,6 +1202,67 @@ const WEATHER_SPEED_ABILITIES = {
 function el(id) { return document.getElementById(id); }
 function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 function num(v, d = 0) { const n = Number(v); return Number.isFinite(n) ? n : d; }
+function formatBasePower(value) {
+  const n = Math.round(num(value, 0) * 10) / 10;
+  return Number.isInteger(n) ? String(n) : n.toFixed(1);
+}
+function normalizePercentRatio(value) {
+  const n = num(value, 0);
+  if (!n) return 0;
+  return Math.abs(n) > 1 ? n / 100 : n;
+}
+function getMoveRawField(move, ...keys) {
+  if (!move || typeof move !== "object") return undefined;
+  for (const key of keys) {
+    if (key in move) return move[key];
+  }
+  const flags = move.Flags;
+  if (flags && typeof flags === "object") {
+    for (const key of keys) {
+      if (key in flags) return flags[key];
+    }
+  }
+  return undefined;
+}
+function getMoveFlagValue(move, ...keys) {
+  const raw = getMoveRawField(move, ...keys);
+  if (typeof raw === "boolean") return raw;
+  if (typeof raw === "number") return raw !== 0;
+  if (typeof raw === "string") {
+    const lowered = raw.trim().toLowerCase();
+    if (["true", "1", "yes", "y"].includes(lowered)) return true;
+    if (["false", "0", "no", "n"].includes(lowered)) return false;
+  }
+  return null;
+}
+function getMoveHitRange(move) {
+  const minHits = num(getMoveRawField(move, "Min Hits", "MinHits", "minHits"), NaN);
+  const maxHits = num(getMoveRawField(move, "Max Hits", "MaxHits", "maxHits"), NaN);
+  return {
+    minHits: Number.isFinite(minHits) ? minHits : null,
+    maxHits: Number.isFinite(maxHits) ? maxHits : null
+  };
+}
+function moveMakesContact(move) {
+  const flag = getMoveFlagValue(move, "MakesContact", "makesContact");
+  if (flag !== null) return flag;
+  return /\(\s*C\s*\)/i.test(String(move?.Description || ""));
+}
+function getMoveRecoilAbsorbRatio(move) {
+  const rawField = getMoveRawField(move, "RecoilAbsorb", "recoilAbsorb");
+  if (rawField !== undefined) return normalizePercentRatio(rawField);
+
+  const desc = String(move?.Description || "");
+  const recoilMatch = desc.match(/\((\d+(?:\.\d+)?)%\s+Recoil\)/i);
+  if (recoilMatch) return -normalizePercentRatio(recoilMatch[1]);
+
+  const absorbMatch = desc.match(/\((\d+(?:\.\d+)?)%\)/);
+  if (/restored by half|restores? half|drain|healed from the damage|HP is restored/i.test(desc) && absorbMatch) {
+    return normalizePercentRatio(absorbMatch[1]);
+  }
+  if (/restored by half|restores? half|drain/i.test(desc)) return 0.5;
+  return 0;
+}
 
 /* ── Sprite name helper ── */
 function toSlug(name) {
@@ -1242,6 +1357,20 @@ function bindToggleGroup(groupId, exclusive = true) {
       recalcIfNeeded();
     });
   });
+}
+function setExclusiveToggle(groupId, value) {
+  const group = el(groupId);
+  if (!group) return;
+  group.querySelectorAll(".toggle-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.value === String(value));
+  });
+}
+function resetFieldEffects() {
+  setExclusiveToggle("weather-group", "none");
+  setExclusiveToggle("terrain-group", "none");
+  setExclusiveToggle("spikes-you-group", "0");
+  setExclusiveToggle("spikes-opp-group", "0");
+  document.querySelectorAll(".side-btn").forEach(btn => btn.classList.remove("active"));
 }
 
 function isSideActive(group, side) {
@@ -1518,8 +1647,8 @@ function updateMoveInfo(prefix, idx) {
     typeEl.textContent = move?.Type || "";
     typeEl.style.background = move?.Type ? (TYPE_COLORS[move.Type] || "var(--accent)") : "transparent";
   }
-  if (bpEl) bpEl.textContent = `BP: ${move && num(move.Power, 0) > 0 ? move.Power : "—"}`;
-  if (accEl) accEl.textContent = `Acc: ${move?.Accuracy || "—"}`;
+  if (bpEl) bpEl.textContent = `BP: ${move && num(move.Power, 0) > 0 ? formatBasePower(move.Power) : "—"}`;
+  if (accEl) accEl.textContent = `Acc: ${move?.Acc ?? move?.Accuracy ?? "—"}`;
 }
 
 function updateMoveHitsDefault(prefix, idx) {
@@ -1614,6 +1743,8 @@ function setTrainer(prefix, idx) {
   const trainer = trainersFlat[trainerState[prefix]];
   if (!trainer) return;
 
+  resetFieldEffects();
+
   const trainerSelect = el(`${prefix}-trainer-search`);
   if (trainerSelect) trainerSelect.value = String(trainerState[prefix]);
   buildTrainerIcons(prefix, trainer);
@@ -1622,10 +1753,7 @@ function setTrainer(prefix, idx) {
   if (prefix === "def") {
     const battleType = (trainer.battleType || 'Single').toLowerCase();
     const battleVal = battleType === 'double' ? 'doubles' : 'singles';
-    const group = el('battle-type-group');
-    if (group) {
-      group.querySelectorAll('.toggle-btn').forEach(b => b.classList.toggle('active', b.dataset.value === battleVal));
-    }
+    setExclusiveToggle("battle-type-group", battleVal);
   }
 
   selectTrainerPokemon(prefix, 0);
@@ -2012,6 +2140,12 @@ function renderImportedParty() {
       }
     };
     slot.appendChild(img);
+    if (setData.item && setData.item !== "None") {
+      const itemImg = document.createElement("img");
+      itemImg.className = "poke-item-corner";
+      setItemSpriteImage(itemImg, setData.item);
+      slot.appendChild(itemImg);
+    }
     slot.addEventListener("click", () => applyImportedPokemon(idx));
     slot.addEventListener("contextmenu", (event) => {
       event.preventDefault();
@@ -2227,10 +2361,13 @@ function saveCurrentPokemon() {
   };
 
   let savedIdx;
-  if (currentSelectedImportedIdx >= 0 && currentSelectedImportedIdx < importedPokemonSets.length) {
+  const selectedImported = currentSelectedImportedIdx >= 0 && currentSelectedImportedIdx < importedPokemonSets.length
+    ? importedPokemonSets[currentSelectedImportedIdx]
+    : null;
+  if (selectedImported && selectedImported.species === species) {
     importedPokemonSets[currentSelectedImportedIdx] = {
       ...set,
-      id: importedPokemonSets[currentSelectedImportedIdx].id
+      id: selectedImported.id
     };
     savedIdx = currentSelectedImportedIdx;
   } else {
@@ -2259,7 +2396,7 @@ function deleteCurrentImportedPokemon() {
 }
 
 /* ── Per-move damage range (for labels) ── */
-function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
+function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   const attacker = readSet(atkPrefix);
   const defender = readSet(defPrefix);
   const move = moves[moveName];
@@ -2270,11 +2407,11 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   const ctx = getModifierContext(atkPrefix);
   const defenderAbility = ignoresDefenderAbility(attacker.ability) ? "No Ability" : defender.ability;
 
-  if (moveCategory === "Status") return null;
+  if (moveCategory === "Status") return { noDamageText: `${moveName} is a status move — no direct damage.` };
 
   if (defenderAbility === "Wonder Guard") {
     const wm = effectiveness(move.Type, defender.type1, defender.type2);
-    if (wm <= 1) return null;
+    if (wm <= 1) return { noDamageText: `${defender.name}: immune via Wonder Guard (not super effective).` };
   }
 
   let fixedFn = FIXED_DAMAGE_MOVES[moveName];
@@ -2289,14 +2426,20 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
   const moveType = typePower.type;
   const power = typePower.power;
 
-  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item)) return null;
+  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item)) {
+    return { noDamageText: `${defender.name} is immune to Ground-type moves.` };
+  }
 
   const typeMod = effectiveness(moveType, defender.type1, defender.type2);
-  if (typeMod === 0) return null;
+  if (typeMod === 0) return { noDamageText: `${attacker.name} uses ${moveName}: no effect (0×).` };
 
-  if (defenderAbility === "Flash Fire" && moveType === "Fire") return null;
+  if (defenderAbility === "Flash Fire" && moveType === "Fire") {
+    return { noDamageText: `${defender.name}: absorbed by Flash Fire.` };
+  }
   const immuneTypeCD = IMMUNE_ABILITIES[defenderAbility];
-  if (immuneTypeCD && immuneTypeCD === moveType) return null;
+  if (immuneTypeCD && immuneTypeCD === moveType) {
+    return { noDamageText: `${defender.name}: immune via ${defenderAbility} (${moveType}-type).` };
+  }
 
   const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
@@ -2312,7 +2455,7 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
 
   const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes, defenderAbility);
 
-  const rolls = [];
+  const oneHitRolls = [];
   for (let r = 85; r <= 100; r++) {
     let dmg = baseOneHit;
     if (!fixedFn) {
@@ -2322,14 +2465,67 @@ function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
       dmg = Math.floor(dmg * otherMod);
     }
     dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
-    dmg *= hitCount;
-    rolls.push(dmg);
+    oneHitRolls.push(dmg);
   }
 
-  const minD = Math.min(...rolls);
-  const maxD = Math.max(...rolls);
+  const damageCounts = buildTotalDamageDistribution(oneHitRolls, hitCount);
+  const damageRolls = [...damageCounts.keys()].sort((a, b) => a - b);
+  const minD = damageRolls[0];
+  const maxD = damageRolls[damageRolls.length - 1];
   const hp = defender.stats.HP;
-  return { minD, maxD, minPct: (minD / hp) * 100, maxPct: (maxD / hp) * 100 };
+  const defenderEndTurn = getPassiveEndTurnEffects(defender, attacker, ctx);
+  const attackerEndTurn = getPassiveEndTurnEffects(attacker, defender, ctx);
+  const recoilAbsorbRatio = getMoveRecoilAbsorbRatio(move);
+  const rockyHelmet = defender.item === "Rocky Helmet" && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 6) : 0;
+  const lifeOrb = attacker.item === "Life Orb" ? Math.floor(attacker.stats.HP / 10) : 0;
+  const selfCounts = transformCountMap(damageCounts, damage => {
+    let delta = attackerEndTurn.delta;
+    if (recoilAbsorbRatio < 0) delta -= Math.floor(damage * Math.abs(recoilAbsorbRatio));
+    if (recoilAbsorbRatio > 0) delta += Math.floor(damage * recoilAbsorbRatio);
+    if (rockyHelmet > 0) delta -= rockyHelmet;
+    if (lifeOrb > 0) delta -= lifeOrb;
+    return delta;
+  });
+  const selfSummary = buildSwingSummary(selfCounts, attacker.stats.HP);
+  const selfParts = [];
+  if (recoilAbsorbRatio < 0) selfParts.push(`Move recoil ${(Math.abs(recoilAbsorbRatio) * 100).toFixed(0)}%`);
+  if (recoilAbsorbRatio > 0) selfParts.push(`Move recovery ${(recoilAbsorbRatio * 100).toFixed(0)}%`);
+  if (rockyHelmet > 0) selfParts.push(`Rocky Helmet ${signedValueText(-rockyHelmet)}`);
+  if (lifeOrb > 0) selfParts.push(`Life Orb ${signedValueText(-lifeOrb)}`);
+  selfParts.push(...attackerEndTurn.parts);
+
+  return {
+    attacker,
+    defender,
+    move,
+    ctx,
+    notes,
+    moveType,
+    power,
+    typeMod,
+    hitCount,
+    damageCounts,
+    damageRolls,
+    minD,
+    maxD,
+    hp,
+    currentHP: defender.currentHP,
+    minPct: (minD / hp) * 100,
+    maxPct: (maxD / hp) * 100,
+    defenderEndTurn,
+    selfSummary,
+    selfParts
+  };
+}
+function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
+  const outcome = calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount);
+  if (!outcome || outcome.noDamageText) return null;
+  return {
+    minD: outcome.minD,
+    maxD: outcome.maxD,
+    minPct: outcome.minPct,
+    maxPct: outcome.maxPct
+  };
 }
 
 function updateMoveDamageLabels() {
@@ -2423,6 +2619,14 @@ function readSet(prefix) {
 
 /* ── Move helpers ── */
 function autoHitCount(moveName, move) {
+  const hitRange = getMoveHitRange(move);
+  if (hitRange.minHits !== null && hitRange.maxHits !== null) {
+    if (hitRange.minHits === 0 && hitRange.maxHits === 0) return 1;
+    if (hitRange.minHits === hitRange.maxHits) return Math.max(1, hitRange.minHits);
+    if (hitRange.minHits > 0 && hitRange.maxHits > 0) {
+      return Math.max(1, Math.round((hitRange.minHits + hitRange.maxHits) / 2));
+    }
+  }
   const desc = String(move?.Description || "");
   if (/two to five times/i.test(desc)) return 3;
   if (/three times/i.test(desc)) return 3;
@@ -2455,7 +2659,7 @@ function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, 
     if (ctx.weather === "hail") type = "Ice";
   }
   if (aAbility === "Technician" && power <= 60) { power *= 1.5; notes.push("Technician ×1.5 BP"); }
-  return { type, power: Math.max(1, Math.floor(power)) };
+  return { type, power: Math.max(1, Math.round(power * 10) / 10) };
 }
 
 function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName, notes, ctx, defenderAbility) {
@@ -2534,7 +2738,7 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
 
   const moveDesc = String(moves[moveName]?.Description || "");
   const hasSecondaryEffect = /may also|chance to/i.test(moveDesc);
-  const isContactMove = /\(\s*C\s*\)/i.test(moveDesc);
+  const isContactMove = moveMakesContact(moves[moveName]);
   const isBiteMove = /\bBite\b/i.test(moveDesc);
   const isSliceMove = /\bSlice\b/i.test(moveDesc);
   const isSpinMove = /\bSpin\b/i.test(moveDesc);
@@ -2572,12 +2776,121 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
 }
 
 /* ── KO chance ── */
-function koChance(rolls, hp, hits, defender, hasLeftovers) {
-  const rec = hasLeftovers ? Math.floor(defender.stats.HP / 16) : 0;
-  if (hits === 1) { let w=0; rolls.forEach(r => { if (r >= hp) w++; }); return w/rolls.length; }
-  if (hits === 2) { let w=0; const need=hp+rec; for(const a of rolls) for(const b of rolls) if(a+b>=need) w++; return w/(rolls.length**2); }
-  if (hits === 3) { let w=0; const need=hp+rec*2; for(const a of rolls) for(const b of rolls) for(const c of rolls) if(a+b+c>=need) w++; return w/(rolls.length**3); }
-  return 0;
+function convolveCountMaps(leftMap, rightMap) {
+  const result = new Map();
+  for (const [leftValue, leftCount] of leftMap.entries()) {
+    for (const [rightValue, rightCount] of rightMap.entries()) {
+      const sum = leftValue + rightValue;
+      result.set(sum, (result.get(sum) || 0) + (leftCount * rightCount));
+    }
+  }
+  return result;
+}
+function buildRollDistribution(oneHitRolls, hitCount) {
+  return buildTotalDamageDistribution(oneHitRolls, hitCount);
+}
+function buildSingleTurnDistribution(rolls) {
+  const counts = new Map();
+  rolls.forEach(roll => counts.set(roll, (counts.get(roll) || 0) + 1));
+  return counts;
+}
+function buildTotalDamageDistribution(oneHitRolls, hitCount) {
+  let counts = buildSingleTurnDistribution(oneHitRolls);
+  for (let i = 1; i < hitCount; i++) {
+    counts = convolveCountMaps(counts, buildSingleTurnDistribution(oneHitRolls));
+  }
+  return counts;
+}
+function signedValueText(value) {
+  return value > 0 ? `+${value}` : `${value}`;
+}
+function signedPctText(value) {
+  return `${value > 0 ? "+" : ""}${value.toFixed(1)}%`;
+}
+function signedRangeText(minValue, maxValue) {
+  return minValue === maxValue
+    ? signedValueText(minValue)
+    : `${signedValueText(minValue)}–${signedValueText(maxValue)}`;
+}
+function signedPctRangeText(minValue, maxValue) {
+  return minValue === maxValue
+    ? signedPctText(minValue)
+    : `${signedPctText(minValue)}–${signedPctText(maxValue)}`;
+}
+function transformCountMap(countMap, mapper) {
+  const result = new Map();
+  for (const [value, count] of countMap.entries()) {
+    const mapped = mapper(value);
+    result.set(mapped, (result.get(mapped) || 0) + count);
+  }
+  return result;
+}
+function getPassiveEndTurnEffects(target, other, ctx) {
+  const parts = [];
+  let delta = 0;
+  if (target.item === "Leftovers") {
+    const heal = Math.floor(target.stats.HP / 16);
+    delta += heal;
+    if (heal > 0) parts.push(`Leftovers +${heal}`);
+  }
+  if (target.status === "brn") {
+    const burn = Math.floor(target.stats.HP / 16);
+    delta -= burn;
+    if (burn > 0) parts.push(`Burn ${signedValueText(-burn)}`);
+  }
+  if (target.status === "psn" || target.status === "tox") {
+    const poison = Math.floor(target.stats.HP / 8);
+    delta -= poison;
+    if (poison > 0) parts.push(`${target.status === "tox" ? "Toxic" : "Poison"} ${signedValueText(-poison)}`);
+  }
+  if (target.status === "leech") {
+    const drain = Math.floor(target.stats.HP / 8);
+    delta -= drain;
+    if (drain > 0) parts.push(`Leech Seed ${signedValueText(-drain)}`);
+  }
+  if (other?.status === "leech") {
+    const heal = Math.floor(other.stats.HP / 8);
+    delta += heal;
+    if (heal > 0) parts.push(`Leech Seed ${signedValueText(heal)}`);
+  }
+  const weather = ctx.weather;
+  if (weather === "sand" && ![target.type1, target.type2].some(type => ["Rock", "Ground", "Steel"].includes(type))) {
+    const sand = Math.floor(target.stats.HP / 16);
+    delta -= sand;
+    if (sand > 0) parts.push(`Sand ${signedValueText(-sand)}`);
+  }
+  if (weather === "hail" && ![target.type1, target.type2].includes("Ice")) {
+    const hail = Math.floor(target.stats.HP / 16);
+    delta -= hail;
+    if (hail > 0) parts.push(`Hail ${signedValueText(-hail)}`);
+  }
+  return { delta, parts };
+}
+function buildSwingSummary(countMap, hp) {
+  const values = [...countMap.keys()].sort((a, b) => a - b);
+  if (!values.length) return null;
+  const min = values[0];
+  const max = values[values.length - 1];
+  if (min === 0 && max === 0) return null;
+  const minPct = (min / hp) * 100;
+  const maxPct = (max / hp) * 100;
+  return { min, max, minPct, maxPct };
+}
+function koChance(countMap, hp, turns, endTurnNet = 0) {
+  let combined = new Map(countMap);
+  let totalOutcomes = 0;
+  for (const count of countMap.values()) totalOutcomes += count;
+  let allOutcomes = totalOutcomes;
+  for (let i = 1; i < turns; i++) {
+    combined = convolveCountMaps(combined, countMap);
+    allOutcomes *= totalOutcomes;
+  }
+  const needed = hp + (endTurnNet * Math.max(0, turns - 1));
+  let wins = 0;
+  for (const [damage, count] of combined.entries()) {
+    if (damage >= needed) wins += count;
+  }
+  return allOutcomes > 0 ? wins / allOutcomes : 0;
 }
 function pct(n) { return `${(n*100).toFixed(n===0||n===1?0:1)}%`; }
 
@@ -2601,76 +2914,41 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
 
   updateStatTotals(atkPrefix);
   updateStatTotals(defPrefix);
-
-  const attacker = readSet(atkPrefix);
-  const defender = readSet(defPrefix);
-  const move = moves[moveName];
   const resultEl = el("result");
+  const outcome = calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount);
 
-  if (!attacker || !defender || !move) {
+  if (!outcome) {
     resultEl.innerHTML = '';
     resultEl.appendChild(resultRow([{bold:false, text:"Invalid selection."}]));
     return;
   }
-
-  const moveCategory = move.Category;
-  const rawPower = num(move.Power, 0);
-  const ctx = getModifierContext(atkPrefix);
-  const defenderAbility = ignoresDefenderAbility(attacker.ability) ? "No Ability" : defender.ability;
-
-  if (moveCategory === "Status") {
+  if (outcome.noDamageText) {
     resultEl.innerHTML = '';
-    resultEl.appendChild(resultRow([{bold:false, text:`${moveName} is a status move — no direct damage.`}]));
+    resultEl.appendChild(resultRow([{bold:false, text: outcome.noDamageText}]));
     return;
   }
 
-  if (defenderAbility === "Wonder Guard") {
-    const wm = effectiveness(move.Type, defender.type1, defender.type2);
-    if (wm <= 1) {
-      resultEl.innerHTML = '';
-      resultEl.appendChild(resultRow([{bold:false, text:`${defender.name}: immune via Wonder Guard (not super effective).`}]));
-      return;
-    }
-  }
-
-  let fixedFn = FIXED_DAMAGE_MOVES[moveName];
-  if (!fixedFn && rawPower <= 1) {
-    if (/always inflicts 40 HP damage/i.test(move.Description || "")) fixedFn = () => 40;
-    if (/always inflicts 20 HP damage/i.test(move.Description || "")) fixedFn = () => 20;
-    if (/damage equal to the user['\u2019]s level/i.test(move.Description || "")) fixedFn = (c) => c.attacker.level;
-  }
-
-  const notes = [];
-
-  const typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, ctx, notes);
-  const moveType = typePower.type;
-  const power = typePower.power;
-
-  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item)) {
-    resultEl.innerHTML = '';
-    resultEl.appendChild(resultRow([{bold:false, text:`${defender.name} is immune to Ground-type moves.`}]));
-    return;
-  }
-
-  const typeMod = effectiveness(moveType, defender.type1, defender.type2);
-  if (typeMod === 0) {
-    resultEl.innerHTML = '';
-    resultEl.appendChild(resultRow([{bold:false, text:`${attacker.name} uses ${moveName}: no effect (0×).`}]));
-    return;
-  }
-
-  if (defenderAbility === "Flash Fire" && moveType === "Fire") {
-    resultEl.innerHTML = '';
-    resultEl.appendChild(resultRow([{bold:false, text:`${defender.name}: absorbed by Flash Fire.`}]));
-    return;
-  }
-
-  const immuneType = IMMUNE_ABILITIES[defenderAbility];
-  if (immuneType && immuneType === moveType) {
-    resultEl.innerHTML = '';
-    resultEl.appendChild(resultRow([{bold:false, text:`${defender.name}: immune via ${defenderAbility} (${moveType}-type).`}]));
-    return;
-  }
+  const {
+    attacker,
+    defender,
+    move,
+    ctx,
+    notes,
+    moveType,
+    power,
+    typeMod,
+    damageCounts,
+    damageRolls,
+    minD,
+    maxD,
+    hp,
+    currentHP,
+    minPct,
+    maxPct,
+    defenderEndTurn,
+    selfSummary,
+    selfParts
+  } = outcome;
 
   const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
@@ -2680,55 +2958,22 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
                   typeMod === 0.5 ? "0.5×" : typeMod === 0.25 ? "0.25×" : `${typeMod}×`;
   if (typeMod !== 1) notes.push(`Type ${effText}`);
 
-  let baseOneHit;
-  if (fixedFn) {
-    baseOneHit = fixedFn({ attacker, defender, move, moveType, power });
-  } else {
-    const ad = getAttackDefenseFix(moveCategory, attacker, defender, ctx.critical, moveName, notes, ctx, defenderAbility);
-    const levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
-    baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
-  }
+  const ohko    = koChance(damageCounts, currentHP, 1, 0);
+  const twohko  = koChance(damageCounts, currentHP, 2, defenderEndTurn.delta);
+  const threehko= koChance(damageCounts, currentHP, 3, defenderEndTurn.delta);
 
-  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes, defenderAbility);
-
-  const rolls = [];
-  for (let r = 85; r <= 100; r++) {
-    let dmg = baseOneHit;
-    if (!fixedFn) {
-      dmg = Math.floor(dmg * (r / 100));
-      dmg = Math.floor(dmg * stab);
-      dmg = Math.floor(dmg * typeMod);
-      dmg = Math.floor(dmg * otherMod);
-    }
-    dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
-    dmg *= hitCount;
-    rolls.push(dmg);
-  }
-
-  const minD = Math.min(...rolls);
-  const maxD = Math.max(...rolls);
-  const hp = defender.stats.HP;
-  const currentHP = defender.currentHP;
-  const minPct = (minD / hp) * 100;
-  const maxPct = (maxD / hp) * 100;
-
-  const hasLeftovers = ctx.leftovers;
-  const ohko    = koChance(rolls, currentHP, 1, defender, hasLeftovers);
-  const twohko  = koChance(rolls, currentHP, 2, defender, hasLeftovers);
-  const threehko= koChance(rolls, currentHP, 3, defender, hasLeftovers);
-
-  // Stealth Rock note
   if (ctx.stealthRock && defender.item !== "Heavy-Duty Boots") {
     const rockEffect = effectiveness("Rock", defender.type1, defender.type2);
     const srDmg = Math.floor(hp * (1/8) * rockEffect);
     notes.push(`Stealth Rock −${srDmg} HP on switch-in`);
   }
-
-  // Spikes note
-  if (ctx.spikes > 0 && defender.item !== "Heavy-Duty Boots" && isGrounded(defender.type1, defender.type2, defenderAbility, defender.item)) {
+  if (ctx.spikes > 0 && defender.item !== "Heavy-Duty Boots" && isGrounded(defender.type1, defender.type2, defender.ability, defender.item)) {
     const spikeFracs = [0, 1/8, 1/6, 1/4];
     const spikeDmg = Math.floor(hp * (spikeFracs[ctx.spikes] || 0));
     if (spikeDmg > 0) notes.push(`Spikes (${ctx.spikes}L) −${spikeDmg} HP on switch-in`);
+  }
+  if (defenderEndTurn.parts.length) {
+    notes.push(`Opp. end turn: ${defenderEndTurn.parts.join(", ")}`);
   }
 
   const atkLabel = atkPrefix === "atk" ? "You" : "Opponent";
@@ -2741,10 +2986,19 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   resultEl.appendChild(resultRow([
     {bold: false, text: "Damage: "},
     {bold: true,  text: `${minD}–${maxD} HP`},
-    {bold: false, text: ` (${minPct.toFixed(1)}%–${maxPct.toFixed(1)}%)`}
+    {bold: false, text: ` (${minPct.toFixed(1)}%–${maxPct.toFixed(1)}%)`},
+    ...(selfSummary ? [{bold: false, text: ` (${signedRangeText(selfSummary.min, selfSummary.max)} self HP)`}] : [])
   ]));
 
-  // Line 2: KO
+  if (selfSummary) {
+    resultEl.appendChild(resultRow([
+      {bold: false, text: "Self: "},
+      {bold: true, text: `${signedRangeText(selfSummary.min, selfSummary.max)} HP`},
+      {bold: false, text: ` (${signedPctRangeText(selfSummary.minPct, selfSummary.maxPct)})`},
+      ...(selfParts.length ? [{bold: false, text: ` — ${selfParts.join(", ")}`}] : [])
+    ]));
+  }
+
   resultEl.appendChild(resultRow([
     {bold: false, text: "KO: "},
     {bold: true,  text: `${pct(ohko)} OHKO`},
@@ -2767,7 +3021,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
 
   // Line 4: Move details
   resultEl.appendChild(resultRow([
-    {bold: false, text: `${moveType} | ${moveCategory} | BP ${power}${hitCount > 1 ? ` | ${hitCount} hits` : ""}`}
+    {bold: false, text: `${moveType} | ${move.Category} | BP ${formatBasePower(power)}${hitCount > 1 ? ` | ${hitCount} hits` : ""}`}
   ]));
 
   // Greyed modifier notes (only if any)
@@ -2789,7 +3043,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
 
   const rollsDiv = document.createElement("div");
   rollsDiv.className = "result-rolls";
-  rollsDiv.textContent = `Rolls: ${rolls.join(", ")}`;
+  rollsDiv.textContent = `Rolls: ${damageRolls.join(", ")}`;
   resultEl.appendChild(rollsDiv);
 }
 
