@@ -2622,7 +2622,9 @@ function updateMoveDamageLabels() {
 }
 
 /* ── Modifier context (side-aware) ── */
-// Triples count as doubles; rotations count as singles
+// Triples count as doubles; rotations count as singles.
+// These aliases are kept for backwards compatibility with trainer data that may specify
+// "Triple" or "Rotation" battle types, and for any persisted toggle state from older sessions.
 const BATTLE_FORMAT_ALIASES = { triples: "doubles", rotations: "singles" };
 function getModifierContext(atkPrefix) {
   const rawBattleFormat = getToggleValue("battle-type-group") || "singles";
