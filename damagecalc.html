@@ -71,6 +71,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
   font-size: 0.82rem; font-weight: 700;
   white-space: nowrap; flex-shrink: 0; opacity: 0.9;
 }
+.top-row .qm-pane:last-child .qm-move-btn {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.top-row .qm-pane:last-child .qm-move-name {
+  text-align: right;
+}
 
 /* ── Main 3-column grid ── */
 .main-grid {
@@ -245,6 +252,25 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-nature  { grid-area: nature; }
 .ia-level   { grid-area: level; }
 .ia-level input[type="number"] { max-width: 100%; width: 56px; }
+.info-grid .ia-species label,
+.info-grid .ia-type1 label,
+.info-grid .ia-type2 label,
+.info-grid .ia-level label,
+.info-grid .ia-item label,
+.info-grid .ia-nature label,
+.info-grid .ia-ability label {
+  font-size: 1.17rem;
+}
+.info-grid .ia-species select,
+.info-grid .ia-type1 select,
+.info-grid .ia-type2 select,
+.info-grid .ia-level input,
+.info-grid .ia-item select,
+.info-grid .ia-nature select,
+.info-grid .ia-ability select {
+  font-size: 1.12rem;
+}
+.info-grid .ia-level input[type="number"] { width: 84px; }
 .form-row { margin-top: 4px; }
 .form-row select { }
 
@@ -330,6 +356,10 @@ h1 { text-align: center; margin: 8px 0 6px; }
   background: #f0f0f0; color: inherit;
 }
 .side-card.side-mirrored .trainer-nav { flex-direction: row-reverse; }
+.side-card.side-mirrored .trainer-search {
+  text-align: right;
+  text-align-last: right;
+}
 .side-card.side-mirrored .hp-section { flex-direction: row-reverse; }
 .side-card.side-mirrored .stat-status-row { flex-direction: row-reverse; }
 .side-card.side-mirrored .compact-move-row,
@@ -339,6 +369,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .side-card.side-mirrored .compact-move-row > *,
 .side-card.side-mirrored .compact-moves-head > * {
   direction: ltr;
+}
+.side-card.side-mirrored .moves-label {
+  text-align: right;
+}
+.side-card.side-mirrored .compact-move-row select {
+  text-align: right;
+  text-align-last: right;
 }
 .selection-help {
   font-size: 0.68rem;
@@ -377,6 +414,25 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .pokemon-icon-rail .poke-icon-slot {
   flex: none;
   width: 100%;
+}
+.team-slots-section {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+.team-slot-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.team-slot-group .poke-icons {
+  margin-bottom: 0;
+}
+.team-slot-group .poke-icon-slot {
+  flex: 0 0 calc((100% - 20px) / 6);
+  max-width: calc((100% - 20px) / 6);
+}
+.side-card.side-mirrored .team-slot-group .poke-icons {
+  justify-content: flex-end;
 }
 .poke-icon-slot {
   flex: 0 0 calc((100% - 20px) / 6);
@@ -736,18 +792,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
       </div>
 
       <div class="battle-side-layout">
-        <div class="pokemon-icon-rail">
-          <div class="imported-section" id="atk-party-section" hidden>
-            <div class="moves-label">Party</div>
-            <div class="poke-icons" id="atk-party-icons"></div>
-          </div>
-
-          <div id="atk-trainer-icons-section">
-            <div class="moves-label">Trainer Pokémon</div>
-            <div class="poke-icons" id="atk-poke-icons"></div>
-          </div>
-        </div>
-
         <div class="battle-side-main">
           <!-- HP bar -->
           <div class="hp-section">
@@ -773,6 +817,19 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
                 <option value="frz">Freeze</option>
                 <option value="leech">Leech Seed</option>
               </select>
+            </div>
+          </div>
+
+          <div class="team-slots-section">
+            <div class="team-slot-groups">
+              <div class="team-slot-group imported-section" id="atk-party-section" hidden>
+                <div class="moves-label">Party</div>
+                <div class="poke-icons" id="atk-party-icons"></div>
+              </div>
+              <div class="team-slot-group" id="atk-trainer-icons-section">
+                <div class="moves-label">Trainer Pokémon</div>
+                <div class="poke-icons" id="atk-poke-icons"></div>
+              </div>
             </div>
           </div>
 
@@ -851,10 +908,15 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <!-- Room Effects -->
         <div class="field-section-label" style="margin-top:5px;">Room Effects</div>
         <div class="toggle-group" id="room-effects-group">
+          <button class="toggle-btn active" data-value="none">None</button>
           <button class="toggle-btn" id="room-magic" data-value="magic-room">Magic Room</button>
           <button class="toggle-btn" id="room-wonder" data-value="wonder-room">Wonder Room</button>
-          <button class="toggle-btn" id="room-ion" data-value="ion-deluge">Ion Deluge</button>
           <button class="toggle-btn" id="room-trick" data-value="trick-room">Trick Room</button>
+        </div>
+        <div class="field-section-label" style="margin-top:5px;">Misc Effects</div>
+        <div class="toggle-group" id="misc-effects-group">
+          <button class="toggle-btn active" data-value="none">None</button>
+          <button class="toggle-btn" id="misc-ion" data-value="ion-deluge">Ion Deluge</button>
         </div>
 
         <div class="field-hr"></div>
@@ -996,13 +1058,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
       </div>
 
       <div class="battle-side-layout side-mirrored">
-        <div class="pokemon-icon-rail">
-          <div>
-            <div class="moves-label">Trainer Pokémon</div>
-            <div class="poke-icons" id="def-poke-icons"></div>
-          </div>
-        </div>
-
         <div class="battle-side-main">
           <!-- HP bar -->
           <div class="hp-section">
@@ -1028,6 +1083,15 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
                 <option value="frz">Freeze</option>
                 <option value="leech">Leech Seed</option>
               </select>
+            </div>
+          </div>
+
+          <div class="team-slots-section">
+            <div class="team-slot-groups">
+              <div class="team-slot-group">
+                <div class="moves-label">Trainer Pokémon</div>
+                <div class="poke-icons" id="def-poke-icons"></div>
+              </div>
             </div>
           </div>
 
@@ -1514,10 +1578,11 @@ function setExclusiveToggle(groupId, value) {
 function resetFieldEffects() {
   setExclusiveToggle("weather-group", "none");
   setExclusiveToggle("terrain-group", "none");
+  setExclusiveToggle("room-effects-group", "none");
+  setExclusiveToggle("misc-effects-group", "none");
   setExclusiveToggle("spikes-you-group", "0");
   setExclusiveToggle("spikes-opp-group", "0");
   document.querySelectorAll(".side-btn").forEach(btn => btn.classList.remove("active"));
-  document.querySelectorAll("#room-effects-group .toggle-btn").forEach(btn => btn.classList.remove("active"));
 }
 
 function isSideActive(group, side) {
@@ -1525,7 +1590,9 @@ function isSideActive(group, side) {
 }
 
 function isRoomActive(value) {
-  return document.querySelector(`#room-effects-group [data-value="${value}"]`)?.classList.contains('active') || false;
+  return document.querySelector(`#room-effects-group [data-value="${value}"]`)?.classList.contains('active')
+    || document.querySelector(`#misc-effects-group [data-value="${value}"]`)?.classList.contains('active')
+    || false;
 }
 
 function bindSideButtons() {
@@ -1826,7 +1893,7 @@ function updateQuickMoveBtn(prefix, idx) {
   if (!btn) return;
   const moveName = el(`${prefix}-move-${idx}`)?.value || '—';
   const nameSpan = btn.querySelector('.qm-move-name');
-  if (nameSpan) nameSpan.textContent = `▶ ${moveName}`;
+  if (nameSpan) nameSpan.textContent = prefix === "def" ? `${moveName} ◀` : `▶ ${moveName}`;
   btn.setAttribute("aria-label", `Calculate damage with ${moveName}`);
 }
 
@@ -1856,7 +1923,7 @@ function buildQuickMoves() {
 
       const nameSpan = document.createElement('span');
       nameSpan.className = 'qm-move-name';
-      nameSpan.textContent = `▶ ${moveName}`;
+      nameSpan.textContent = prefix === "def" ? `${moveName} ◀` : `▶ ${moveName}`;
 
       const pctSpan = document.createElement('span');
       pctSpan.className = 'qm-move-pct';
@@ -2666,8 +2733,15 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   });
   const selfSummary = buildSwingSummary(selfCounts, attacker.stats.HP);
   const selfParts = [];
-  if (recoilAbsorbRatio < 0) selfParts.push(`Move recoil ${(Math.abs(recoilAbsorbRatio) * 100).toFixed(0)}%`);
-  if (recoilAbsorbRatio > 0) selfParts.push(`Move recovery ${(recoilAbsorbRatio * 100).toFixed(0)}%`);
+  if (recoilAbsorbRatio !== 0) {
+    const recoilAbsPctValues = damageRolls.map(damage => (Math.floor(damage * Math.abs(recoilAbsorbRatio)) / attacker.stats.HP) * 100);
+    const recoilAbsMin = Math.min(...recoilAbsPctValues);
+    const recoilAbsMax = Math.max(...recoilAbsPctValues);
+    const recoilAbsPctText = recoilAbsMin === recoilAbsMax
+      ? `${recoilAbsMin.toFixed(1)}%`
+      : `${recoilAbsMin.toFixed(1)}-${recoilAbsMax.toFixed(1)}%`;
+    selfParts.push(`(${recoilAbsPctText}) ${recoilAbsorbRatio < 0 ? "Rec" : "Abs"}`);
+  }
   if (rockyHelmet > 0) selfParts.push(`Rocky Helmet ${signedValueText(-rockyHelmet)}`);
   if (roughSkin > 0) selfParts.push(`${defenderAbility} ${signedValueText(-roughSkin)}`);
   if (lifeOrb > 0) selfParts.push(`Life Orb ${signedValueText(-lifeOrb)}`);
@@ -2685,6 +2759,7 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
     hitCount,
     damageCounts,
     damageRolls,
+    baseRolls: oneHitRolls,
     minD,
     maxD,
     hp,
@@ -2724,7 +2799,7 @@ function updateMoveDamageLabels() {
 
       const range = computeDamageRange(atkPrefix, defPrefix, moveName, hitCount);
       if (range) {
-        const label = `${range.minPct.toFixed(0)}–${range.maxPct.toFixed(0)}%`;
+        const label = `${range.minPct.toFixed(1)}–${range.maxPct.toFixed(1)}%`;
         if (dmgSpan) dmgSpan.textContent = label;
         if (pctSpan) pctSpan.textContent = label;
       } else {
@@ -3094,7 +3169,7 @@ function koChance(countMap, hp, turns, endTurnNet = 0) {
   }
   return allOutcomes > 0 ? wins / allOutcomes : 0;
 }
-function pct(n) { return `${(n*100).toFixed(n===0||n===1?0:1)}%`; }
+function pct(n) { return `${(n*100).toFixed(1)}%`; }
 
 /* ── Main damage calc ── */
 function resultRow(segments) {
@@ -3141,6 +3216,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
     typeMod,
     damageCounts,
     damageRolls,
+    baseRolls,
     minD,
     maxD,
     hp,
@@ -3245,7 +3321,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
 
   const rollsDiv = document.createElement("div");
   rollsDiv.className = "result-rolls";
-  rollsDiv.textContent = `Rolls: ${damageRolls.join(", ")}`;
+  rollsDiv.textContent = `Rolls: ${baseRolls.join(", ")}`;
   resultEl.appendChild(rollsDiv);
 }
 
@@ -3329,10 +3405,7 @@ function bindInputs() {
 
   // Field toggle groups (exclusive)
   ["battle-type-group","weather-group","terrain-group",
-   "spikes-you-group","spikes-opp-group"].forEach(gid => bindToggleGroup(gid));
-
-  // Room effects (non-exclusive — each button toggles independently)
-  bindToggleGroup("room-effects-group", false);
+   "room-effects-group","misc-effects-group","spikes-you-group","spikes-opp-group"].forEach(gid => bindToggleGroup(gid));
 
   // Side buttons (independent toggles)
   bindSideButtons();
