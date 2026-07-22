@@ -588,6 +588,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
   text-align: center;
   word-break: break-word;
 }
+.imported-poke-item {
+  font-size: 0.6rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--muted);
+  word-break: break-word;
+}
 .imported-poke-btn:hover,
 .imported-poke-btn.selected {
   border-color: var(--accent);
@@ -1255,6 +1262,27 @@ const ABILITY_REPLACEMENTS = {
   "Light Metal":  "Hyper Aggression"
 };
 
+// Move names that were replaced in Extinction Y (Showdown name → new game name)
+const MOVE_REPLACEMENTS = {
+  "Fury Attack":   "Aerial Assault",
+  "Wrap":          "Entangle",
+  "Thrash":        "Shenanigains",
+  "Muddy Water":   "Mudslide",
+  "Force Palm":    "Aura Palm",
+  "Head Charge":   "Headlong Rush",
+  "Glaciate":      "Flash Freeze",
+  "Whirlpool":     "Maelstrom",
+  "Fissure":       "Crater",
+  "Psystrike":     "Psycrash",
+  "Guillotine":    "Snip Snip",
+  "Sheer Cold":    "Absolute Zero",
+  "Triple Kick":   "Triple Axel",
+  "Slash":         "Slice",
+  "Vice Grip":     "Psionic Grip",
+  "Spike Cannon":  "Breaking Swipe",
+  "Rolling Kick":  "Triple Kick"
+};
+
 // Abilities that double Speed in a specific weather condition
 const WEATHER_SPEED_ABILITIES = {
   "Swift Swim":  "rain",
@@ -1876,8 +1904,7 @@ function updateMoveHitsDefault(prefix, idx) {
   const hitsInput = el(`${prefix}-move-hits-${idx}`);
   if (!hitsInput) return;
   if (moveName && moves[moveName]) {
-    const isMultiHit = autoHitCount(moveName, moves[moveName]) > 1;
-    hitsInput.value = isMultiHit ? DEFAULT_MULTI_HIT_COUNT : 1;
+    hitsInput.value = autoHitCount(moveName, moves[moveName]);
   } else {
     hitsInput.value = 1;
   }
@@ -2271,7 +2298,10 @@ function parseImportedPokemonBlock(block) {
       return;
     }
     const moveMatch = line.match(/^-+\s*(.+)$/);
-    if (moveMatch) imported.moves.push(moveMatch[1].trim());
+    if (moveMatch) {
+      const rawMove = moveMatch[1].trim();
+      imported.moves.push(MOVE_REPLACEMENTS[rawMove] || rawMove);
+    }
   });
 
   return imported;
@@ -2448,6 +2478,12 @@ function renderImportedPokemonList() {
 
     btn.appendChild(img);
     btn.appendChild(label);
+    if (setData.item && setData.item !== "None") {
+      const itemLabel = document.createElement("span");
+      itemLabel.className = "imported-poke-item";
+      itemLabel.textContent = `@ ${setData.item}`;
+      btn.appendChild(itemLabel);
+    }
     btn.addEventListener("click", () => applyImportedPokemon(idx));
     btn.addEventListener("contextmenu", (event) => {
       event.preventDefault();
@@ -2539,12 +2575,24 @@ function importPokemonSets() {
 
   try {
     const { sets, skipped } = parseImportedPokemonSets(raw);
-    // Append new sets to the existing list rather than replacing it.
-    importedPokemonSets = [...importedPokemonSets, ...sets.map(normalizeImportedSet).filter(Boolean)];
+    // Add new sets, overwriting any existing entry with the same species.
+    let added = 0, overwritten = 0;
+    sets.map(normalizeImportedSet).filter(Boolean).forEach(newSet => {
+      const existingIdx = importedPokemonSets.findIndex(s => s.species === newSet.species);
+      if (existingIdx >= 0) {
+        importedPokemonSets[existingIdx] = { ...newSet, id: importedPokemonSets[existingIdx].id };
+        overwritten++;
+      } else {
+        importedPokemonSets.push(newSet);
+        added++;
+      }
+    });
     sortImportedByDex();
     renderImportedPokemonList();
     const skippedNote = skipped > 0 ? ` (${skipped} unrecognized skipped)` : "";
-    if (status) status.textContent = `Added ${sets.length} Pokémon.${skippedNote} Click a sprite to load it on the You side or right-click it to toggle it in your party.`;
+    const overwriteNote = overwritten > 0 ? ` (${overwritten} updated)` : "";
+    const total = added + overwritten;
+    if (status) status.textContent = `Imported ${total} Pokémon.${overwriteNote}${skippedNote} Click a sprite to load it on the You side or right-click it to toggle it in your party.`;
     // Clear the textarea so the next paste starts fresh.
     if (textarea) textarea.value = "";
     renderImportedParty();
@@ -2915,9 +2963,7 @@ function autoHitCount(moveName, move) {
   if (hitRange.minHits !== null && hitRange.maxHits !== null) {
     if (hitRange.minHits === 0 && hitRange.maxHits === 0) return 1;
     if (hitRange.minHits === hitRange.maxHits) return Math.max(1, hitRange.minHits);
-    if (hitRange.minHits > 0 && hitRange.maxHits > 0) {
-      return Math.max(1, Math.round((hitRange.minHits + hitRange.maxHits) / 2));
-    }
+    if (hitRange.minHits !== hitRange.maxHits) return 3;
   }
   const desc = String(move?.Description || "");
   if (/two to five times/i.test(desc)) return 3;
