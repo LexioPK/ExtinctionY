@@ -588,12 +588,17 @@ h1 { text-align: center; margin: 8px 0 6px; }
   text-align: center;
   word-break: break-word;
 }
-.imported-poke-item {
-  font-size: 0.6rem;
-  line-height: 1.2;
-  text-align: center;
-  color: var(--muted);
-  word-break: break-word;
+.imported-poke-item-icon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.92);
 }
 .imported-poke-btn:hover,
 .imported-poke-btn.selected {
@@ -661,6 +666,7 @@ html.dark-mode .qm-move-btn { color: var(--qm-move-text-color, #10121a); }
 html.dark-mode .qm-move-btn.active-move { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25); }
 html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 html.dark-mode .imported-poke-btn { background: #22293a; }
+html.dark-mode .imported-poke-item-icon { background: rgba(26,31,44,0.92); }
 </style>
 </head>
 <body>
@@ -2479,10 +2485,11 @@ function renderImportedPokemonList() {
     btn.appendChild(img);
     btn.appendChild(label);
     if (setData.item && setData.item !== "None") {
-      const itemLabel = document.createElement("span");
-      itemLabel.className = "imported-poke-item";
-      itemLabel.textContent = `@ ${setData.item}`;
-      btn.appendChild(itemLabel);
+      const itemIcon = document.createElement("img");
+      itemIcon.className = "imported-poke-item-icon";
+      itemIcon.title = setData.item;
+      setItemSpriteImage(itemIcon, setData.item);
+      btn.appendChild(itemIcon);
     }
     btn.addEventListener("click", () => applyImportedPokemon(idx));
     btn.addEventListener("contextmenu", (event) => {
