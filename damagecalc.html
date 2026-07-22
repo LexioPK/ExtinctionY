@@ -57,12 +57,18 @@ h1 { text-align: center; margin: 8px 0 6px; }
   width: 100%; text-align: left;
   padding: 5px 9px; margin-bottom: 4px;
   border-radius: 6px; border: 1px solid var(--accent);
-  background: var(--accent); color: #fff;
+  background: var(--qm-move-color, var(--accent));
+  border-color: var(--qm-move-color, var(--accent));
+  color: var(--qm-move-text-color, #fff);
   cursor: pointer; font: inherit; font-size: 0.92rem;
   gap: 6px;
+  transition: filter .12s, box-shadow .12s, opacity .12s;
 }
 .qm-move-btn:hover { opacity: .85; }
-.qm-move-btn.active-move { background: #1a4590; border-color: #1a4590; }
+.qm-move-btn.active-move {
+  filter: brightness(0.92);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+}
 .qm-move-name {
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   flex: 1; min-width: 0;
@@ -134,7 +140,8 @@ h1 { text-align: center; margin: 8px 0 6px; }
 /* ── Side buttons (You / Opp.) ── */
 .side-toggle { display: flex; gap: 3px; }
 .side-btn {
-  padding: 3px 8px;
+  padding: 3px 11px;
+  min-width: 46px;
   border-radius: 5px;
   border: 1px solid var(--border);
   cursor: pointer;
@@ -643,8 +650,8 @@ html.dark-mode .trainer-nav-btn { background: #22293a; color: var(--text); }
 html.dark-mode .trainer-nav-btn:hover { background: var(--border); }
 html.dark-mode .poke-icon-slot { background: #22293a; }
 html.dark-mode .poke-icon-slot .poke-item-corner { background: rgba(26,31,44,0.92); }
-html.dark-mode .qm-move-btn { background: var(--accent); color: #10121a; }
-html.dark-mode .qm-move-btn.active-move { background: #6090e0; border-color: #6090e0; }
+html.dark-mode .qm-move-btn { color: var(--qm-move-text-color, #10121a); }
+html.dark-mode .qm-move-btn.active-move { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25); }
 html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 html.dark-mode .imported-poke-btn { background: #22293a; }
 </style>
@@ -850,7 +857,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
 
         <div class="field-section-label" style="margin-top:5px;">Misc Effects</div>
         <div class="toggle-group" id="misc-effects-group">
-          <button class="toggle-btn active" data-value="none">None</button>
           <button class="toggle-btn" id="room-magic" data-value="magic-room">Magic Room</button>
           <button class="toggle-btn" id="room-wonder" data-value="wonder-room">Wonder Room</button>
           <button class="toggle-btn" id="room-trick" data-value="trick-room">Trick Room</button>
@@ -1127,7 +1133,8 @@ const NATURES = {
 
 const BASE_ITEMS = [
   "None","Life Orb","Choice Band","Choice Specs","Assault Vest","Eviolite",
-  "Expert Belt","Muscle Band","Wise Glasses","Leftovers","Air Balloon","Heavy-Duty Boots",
+  "Expert Belt","Muscle Band","Wise Glasses","Leftovers","Shell Bell","Big Root","Rocky Helmet",
+  "Air Balloon","Heavy-Duty Boots","Thick Club","Light Ball",
   // Type-boosting items
   "Silk Scarf",
   "Charcoal","Flame Plate",
@@ -1147,6 +1154,10 @@ const BASE_ITEMS = [
   "Black Glasses","Dread Plate",
   "Metal Coat","Iron Plate",
   "Pixie Plate",
+  // Type gems
+  "Normal Gem","Fire Gem","Water Gem","Electric Gem","Grass Gem","Ice Gem",
+  "Fighting Gem","Poison Gem","Ground Gem","Flying Gem","Psychic Gem","Bug Gem",
+  "Rock Gem","Ghost Gem","Dragon Gem","Dark Gem","Steel Gem","Fairy Gem",
   // Type-resist berries (ordered to match TYPE_RESIST_BERRIES)
   "Occa Berry","Passho Berry","Wacan Berry","Rindo Berry","Yache Berry",
   "Chople Berry","Kebia Berry","Shuca Berry","Coba Berry","Payapa Berry",
@@ -1173,6 +1184,15 @@ const TYPE_BOOST_ITEMS = {
   "Black Glasses": "Dark","Dread Plate": "Dark",
   "Metal Coat": "Steel",  "Iron Plate": "Steel",
   "Pixie Plate": "Fairy"
+};
+
+const TYPE_GEM_ITEMS = {
+  "Normal Gem": "Normal",    "Fire Gem": "Fire",       "Water Gem": "Water",
+  "Electric Gem": "Electric","Grass Gem": "Grass",     "Ice Gem": "Ice",
+  "Fighting Gem": "Fighting","Poison Gem": "Poison",   "Ground Gem": "Ground",
+  "Flying Gem": "Flying",    "Psychic Gem": "Psychic", "Bug Gem": "Bug",
+  "Rock Gem": "Rock",        "Ghost Gem": "Ghost",     "Dragon Gem": "Dragon",
+  "Dark Gem": "Dark",        "Steel Gem": "Steel",     "Fairy Gem": "Fairy"
 };
 
 const TYPE_RESIST_BERRIES = {
@@ -1204,6 +1224,7 @@ const FIXED_DAMAGE_MOVES = {
 
 let pokedex = {};
 let moves = {};
+let evolutions = {};
 let trainersFlat = [];
 let allItems = [...BASE_ITEMS];
 const NO_MOVE_OPTION = "No Move";
@@ -1514,6 +1535,27 @@ function bindToggleGroup(groupId, exclusive = true) {
       recalcIfNeeded();
     });
   });
+}
+function getQuickMoveTextColor(color) {
+  const hex = String(color || "").replace("#", "");
+  if (!/^[0-9a-fA-F]{6}$/.test(hex)) return "#fff";
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  return ((r * 299) + (g * 587) + (b * 114)) / 1000 >= 165 ? "#10121a" : "#fff";
+}
+function isMagicGuardActive(set) {
+  return set?.ability === "Magic Guard";
+}
+function speciesMatches(set, speciesName) {
+  if (!set || !speciesName) return false;
+  if (set.name === speciesName) return true;
+  const speciesIdx = pokedex[speciesName]?.SpeciesIdx;
+  return !!(speciesIdx && set.data?.SpeciesIdx === speciesIdx);
+}
+function canSpeciesEvolve(speciesName) {
+  const evoEntry = evolutions[speciesName];
+  return !!(evoEntry && evoEntry.EvolvesInto && Object.keys(evoEntry.EvolvesInto).length);
 }
 function setExclusiveToggle(groupId, value) {
   const group = el(groupId);
@@ -1845,9 +1887,18 @@ function updateQuickMoveBtn(prefix, idx) {
   const btn = el(`qm-${prefix}-btn-${idx}`);
   if (!btn) return;
   const moveName = el(`${prefix}-move-${idx}`)?.value || '—';
+  const move = moves[moveName];
   const nameSpan = btn.querySelector('.qm-move-name');
   if (nameSpan) nameSpan.textContent = `▶ ${moveName}`;
   btn.setAttribute("aria-label", `Calculate damage with ${moveName}`);
+  if (move?.Type) {
+    const color = TYPE_COLORS[move.Type] || "#245cac";
+    btn.style.setProperty("--qm-move-color", color);
+    btn.style.setProperty("--qm-move-text-color", getQuickMoveTextColor(color));
+  } else {
+    btn.style.removeProperty("--qm-move-color");
+    btn.style.removeProperty("--qm-move-text-color");
+  }
 }
 
 function onMoveSelectChange(prefix, idx) {
@@ -1888,6 +1939,7 @@ function buildQuickMoves() {
       const capturedIdx = i;
       btn.addEventListener('click', () => calcFromMove(prefix, defPrefix, capturedIdx));
       container.appendChild(btn);
+      updateQuickMoveBtn(prefix, i);
     }
   });
 }
@@ -2672,13 +2724,20 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   const defenderEndTurn = getPassiveEndTurnEffects(defender, attacker, ctx);
   const attackerEndTurn = getPassiveEndTurnEffects(attacker, defender, ctx);
   const recoilAbsorbRatio = getMoveRecoilAbsorbRatio(move);
-  const rockyHelmet = !ctx.magicRoom && defender.item === "Rocky Helmet" && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 6) : 0;
-  const roughSkin = ["Rough Skin", "Iron Barbs"].includes(defenderAbility) && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 8) : 0;
-  const lifeOrb = !ctx.magicRoom && attacker.item === "Life Orb" ? Math.floor(attacker.stats.HP / 10) : 0;
+  const drainRatio = recoilAbsorbRatio > 0 && !ctx.magicRoom && attacker.item === "Big Root"
+    ? recoilAbsorbRatio * 1.3
+    : recoilAbsorbRatio;
+  if (drainRatio > recoilAbsorbRatio) notes.push("Big Root ×1.3 drain");
+  const shellBellRatio = !ctx.magicRoom && attacker.item === "Shell Bell" ? 0.2 : 0;
+  const attackerMagicGuard = isMagicGuardActive(attacker);
+  const rockyHelmet = !attackerMagicGuard && !ctx.magicRoom && defender.item === "Rocky Helmet" && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 6) : 0;
+  const roughSkin = !attackerMagicGuard && ["Rough Skin", "Iron Barbs"].includes(defenderAbility) && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 8) : 0;
+  const lifeOrb = !attackerMagicGuard && !ctx.magicRoom && attacker.item === "Life Orb" ? Math.floor(attacker.stats.HP / 10) : 0;
   const selfCounts = transformCountMap(damageCounts, damage => {
     let delta = attackerEndTurn.delta;
-    if (recoilAbsorbRatio < 0) delta -= Math.floor(damage * Math.abs(recoilAbsorbRatio));
-    if (recoilAbsorbRatio > 0) delta += Math.floor(damage * recoilAbsorbRatio);
+    if (!attackerMagicGuard && drainRatio < 0) delta -= Math.floor(damage * Math.abs(drainRatio));
+    if (drainRatio > 0) delta += Math.floor(damage * drainRatio);
+    if (shellBellRatio > 0) delta += Math.floor(damage * shellBellRatio);
     if (rockyHelmet > 0) delta -= rockyHelmet;
     if (roughSkin > 0) delta -= roughSkin;
     if (lifeOrb > 0) delta -= lifeOrb;
@@ -2686,14 +2745,23 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   });
   const selfSummary = buildSwingSummary(selfCounts, attacker.stats.HP);
   const selfParts = [];
-  if (recoilAbsorbRatio !== 0) {
-    const recoilAbsPctValues = damageRolls.map(damage => (Math.floor(damage * Math.abs(recoilAbsorbRatio)) / attacker.stats.HP) * 100);
+  if (drainRatio !== 0) {
+    const recoilAbsPctValues = damageRolls.map(damage => (Math.floor(damage * Math.abs(drainRatio)) / attacker.stats.HP) * 100);
     const recoilAbsMin = Math.min(...recoilAbsPctValues);
     const recoilAbsMax = Math.max(...recoilAbsPctValues);
     const recoilAbsPctText = recoilAbsMin === recoilAbsMax
       ? `${recoilAbsMin.toFixed(1)}%`
       : `${recoilAbsMin.toFixed(1)}-${recoilAbsMax.toFixed(1)}%`;
-    selfParts.push(`(${recoilAbsPctText}) ${recoilAbsorbRatio < 0 ? "Rec" : "Abs"}`);
+    selfParts.push(`(${recoilAbsPctText}) ${drainRatio < 0 ? "Rec" : "Abs"}`);
+  }
+  if (shellBellRatio > 0) {
+    const shellBellPctValues = damageRolls.map(damage => (Math.floor(damage * shellBellRatio) / attacker.stats.HP) * 100);
+    const shellBellMin = Math.min(...shellBellPctValues);
+    const shellBellMax = Math.max(...shellBellPctValues);
+    const shellBellPctText = shellBellMin === shellBellMax
+      ? `${shellBellMin.toFixed(1)}%`
+      : `${shellBellMin.toFixed(1)}-${shellBellMax.toFixed(1)}%`;
+    selfParts.push(`(${shellBellPctText}) Shell Bell`);
   }
   if (rockyHelmet > 0) selfParts.push(`Rocky Helmet ${signedValueText(-rockyHelmet)}`);
   if (roughSkin > 0) selfParts.push(`${defenderAbility} ${signedValueText(-roughSkin)}`);
@@ -2903,6 +2971,11 @@ function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveNam
   let def = defender.stats[defStat] * stageMultiplier(defStage);
 
   if (isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) { atk *= 2; notes.push(`${attacker.ability} ×2 Atk`); }
+  if (!ctx.magicRoom && isPhysical && attacker.item === "Thick Club" && (speciesMatches(attacker, "Cubone") || speciesMatches(attacker, "Marowak"))) { atk *= 2; notes.push("Thick Club ×2 Atk"); }
+  if (!ctx.magicRoom && attacker.item === "Light Ball" && speciesMatches(attacker, "Pikachu")) {
+    atk *= 2;
+    notes.push(`Light Ball ×2 ${atkStat}`);
+  }
   if (isPhysical && attacker.ability === "Hustle") { atk *= 1.5; notes.push("Hustle ×1.5 Atk"); }
   if (isPhysical && attacker.ability === "Guts" && attacker.status !== "none") { atk *= 1.5; notes.push("Guts ×1.5 Atk"); }
   if (isPhysical && attacker.ability === "Toxic Boost" && ["psn","tox"].includes(attacker.status)) { atk *= 1.5; notes.push("Toxic Boost ×1.5 Atk"); }
@@ -2910,7 +2983,10 @@ function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveNam
   if (!ctx.magicRoom && !isPhysical && attacker.item === "Choice Specs") { atk *= 1.5; notes.push("Choice Specs ×1.5 SpA"); }
   if (!isPhysical && attacker.ability === "Solar Power" && ctx.weather === "sun") { atk *= 1.5; notes.push("Solar Power ×1.5 SpA"); }
   if (!ctx.magicRoom && !isPhysical && defender.item === "Assault Vest") { def *= 1.5; notes.push("Assault Vest ×1.5 SpD"); }
-  if (!ctx.magicRoom && defender.item === "Eviolite" && defender.data?.Evolutions?.length) { def *= 1.5; notes.push("Eviolite ×1.5 Def"); }
+  if (!ctx.magicRoom && defender.item === "Eviolite" && canSpeciesEvolve(defender.name)) {
+    def *= 1.5;
+    notes.push(`Eviolite ×1.5 ${defStat}`);
+  }
   if (isPhysical && defenderAbility === "Biodiverse" && ctx.terrain !== "none") { def *= 1.5; notes.push("Biodiverse ×1.5 Def"); }
   if (defenderAbility === "Dune Guard" && ctx.weather === "sand") { def *= 1.25; notes.push("Dune Guard ×1.25 Def/SpD"); }
   if (defenderAbility === "Glacial Guard" && ctx.weather === "hail") { def *= 1.25; notes.push("Glacial Guard ×1.25 Def/SpD"); }
@@ -2969,6 +3045,8 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
 
   const boostType = TYPE_BOOST_ITEMS[attacker.item];
   if (!ctx.magicRoom && boostType && boostType === moveType) { mod *= 1.2; notes.push(`${attacker.item} ×1.2`); }
+  const gemType = TYPE_GEM_ITEMS[attacker.item];
+  if (!ctx.magicRoom && gemType && gemType === moveType) { mod *= 1.3; notes.push(`${attacker.item} ×1.3`); }
 
   const moveDesc = String(moves[moveName]?.Description || "");
   const hasSecondaryEffect = /may also|chance to/i.test(moveDesc);
@@ -3064,22 +3142,23 @@ function transformCountMap(countMap, mapper) {
 function getPassiveEndTurnEffects(target, other, ctx) {
   const parts = [];
   let delta = 0;
+  const magicGuard = isMagicGuardActive(target);
   if (!ctx.magicRoom && target.item === "Leftovers") {
     const heal = Math.floor(target.stats.HP / 16);
     delta += heal;
     if (heal > 0) parts.push(`Leftovers +${heal}`);
   }
-  if (target.status === "brn") {
+  if (!magicGuard && target.status === "brn") {
     const burn = Math.floor(target.stats.HP / 16);
     delta -= burn;
     if (burn > 0) parts.push(`Burn ${signedValueText(-burn)}`);
   }
-  if (target.status === "psn" || target.status === "tox") {
+  if (!magicGuard && (target.status === "psn" || target.status === "tox")) {
     const poison = Math.floor(target.stats.HP / 8);
     delta -= poison;
     if (poison > 0) parts.push(`${target.status === "tox" ? "Toxic" : "Poison"} ${signedValueText(-poison)}`);
   }
-  if (target.status === "leech") {
+  if (!magicGuard && target.status === "leech") {
     const drain = Math.floor(target.stats.HP / 8);
     delta -= drain;
     if (drain > 0) parts.push(`Leech Seed ${signedValueText(-drain)}`);
@@ -3090,12 +3169,12 @@ function getPassiveEndTurnEffects(target, other, ctx) {
     if (heal > 0) parts.push(`Leech Seed ${signedValueText(heal)}`);
   }
   const weather = ctx.weather;
-  if (weather === "sand" && ![target.type1, target.type2].some(type => ["Rock", "Ground", "Steel"].includes(type))) {
+  if (!magicGuard && weather === "sand" && ![target.type1, target.type2].some(type => ["Rock", "Ground", "Steel"].includes(type))) {
     const sand = Math.floor(target.stats.HP / 16);
     delta -= sand;
     if (sand > 0) parts.push(`Sand ${signedValueText(-sand)}`);
   }
-  if (weather === "hail" && ![target.type1, target.type2].includes("Ice")) {
+  if (!magicGuard && weather === "hail" && ![target.type1, target.type2].includes("Ice")) {
     const hail = Math.floor(target.stats.HP / 16);
     delta -= hail;
     if (hail > 0) parts.push(`Hail ${signedValueText(-hail)}`);
@@ -3199,12 +3278,12 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   const twohko  = koChance(damageCounts, currentHP, 2, defenderEndTurn.delta);
   const threehko= koChance(damageCounts, currentHP, 3, defenderEndTurn.delta);
 
-  if (ctx.stealthRock && (ctx.magicRoom || defender.item !== "Heavy-Duty Boots")) {
+  if (!isMagicGuardActive(defender) && ctx.stealthRock && (ctx.magicRoom || defender.item !== "Heavy-Duty Boots")) {
     const rockEffect = effectiveness("Rock", defender.type1, defender.type2);
     const srDmg = Math.floor(hp * (1/8) * rockEffect);
     notes.push(`Stealth Rock −${srDmg} HP on switch-in`);
   }
-  if (ctx.spikes > 0 && (ctx.magicRoom || defender.item !== "Heavy-Duty Boots") && isGrounded(defender.type1, defender.type2, defender.ability, defender.item, ctx.magicRoom)) {
+  if (!isMagicGuardActive(defender) && ctx.spikes > 0 && (ctx.magicRoom || defender.item !== "Heavy-Duty Boots") && isGrounded(defender.type1, defender.type2, defender.ability, defender.item, ctx.magicRoom)) {
     const spikeFracs = [0, 1/8, 1/6, 1/4];
     const spikeDmg = Math.floor(hp * (spikeFracs[ctx.spikes] || 0));
     if (spikeDmg > 0) notes.push(`Spikes (${ctx.spikes}L) −${spikeDmg} HP on switch-in`);
@@ -3376,14 +3455,16 @@ function bindInputs() {
 
 async function init() {
   try {
-    const [pRes, mRes, tRes] = await Promise.all([
+    const [pRes, mRes, tRes, eRes] = await Promise.all([
       fetch("data/pokedex.json"),
       fetch("data/moves.json"),
-      fetch("data/trainers.json")
+      fetch("data/trainers.json"),
+      fetch("data/evolutions.json")
     ]);
     pokedex = await pRes.json();
     moves   = await mRes.json();
     const trainersData = await tRes.json();
+    evolutions = await eRes.json();
 
     // Flatten trainers, sorted by RouteIndex then encounter order
     trainersFlat = [];
