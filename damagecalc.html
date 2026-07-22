@@ -1273,6 +1273,56 @@ function getMoveRawField(move, ...keys) {
   }
   return undefined;
 }
+function getMoveFlags(move) {
+  if (!move || typeof move !== "object") return new Set();
+  const collected = [];
+  const normalizeMoveFlag = flag => {
+    const lowered = String(flag).trim().toLowerCase();
+    if (lowered === "spinning") return "spining";
+    return lowered;
+  };
+  const addFlag = flag => {
+    if (!flag) return;
+    collected.push(normalizeMoveFlag(flag));
+  };
+  const addFromValue = value => {
+    if (!value) return;
+    if (Array.isArray(value)) {
+      value.forEach(addFlag);
+      return;
+    }
+    if (typeof value === "string") {
+      value.split(",").forEach(addFlag);
+      return;
+    }
+    if (typeof value === "object") {
+      Object.entries(value).forEach(([key, raw]) => {
+        if (Array.isArray(raw)) {
+          raw.forEach(addFlag);
+          return;
+        }
+        if (typeof raw === "boolean" && raw) {
+          addFlag(key);
+          return;
+        }
+        if (typeof raw === "number" && raw !== 0) {
+          addFlag(key);
+          return;
+        }
+        if (typeof raw === "string") {
+          const lowered = raw.trim().toLowerCase();
+          if (["true", "1", "yes", "y"].includes(lowered)) addFlag(key);
+        }
+      });
+    }
+  };
+  ["MoveFlags", "moveFlags", "Flags", "flags"].forEach(key => addFromValue(move[key]));
+  return new Set(collected.filter(Boolean));
+}
+function hasMoveFlag(move, ...flags) {
+  const moveFlags = getMoveFlags(move);
+  return flags.some(flag => moveFlags.has(String(flag).trim().toLowerCase().replace(/^spinning$/, "spining")));
+}
 function getMoveFlagValue(move, ...keys) {
   const raw = getMoveRawField(move, ...keys);
   if (typeof raw === "boolean") return raw;
@@ -1282,6 +1332,7 @@ function getMoveFlagValue(move, ...keys) {
     if (["true", "1", "yes", "y"].includes(lowered)) return true;
     if (["false", "0", "no", "n"].includes(lowered)) return false;
   }
+  if (hasMoveFlag(move, ...keys)) return true;
   return null;
 }
 function getMoveHitRange(move) {
@@ -1298,7 +1349,15 @@ function moveMakesContact(move) {
   return /\(\s*C\s*\)/i.test(String(move?.Description || ""));
 }
 function getMoveRecoilAbsorbRatio(move) {
-  const rawField = getMoveRawField(move, "RecoilAbsorb", "recoilAbsorb");
+  const rawField = getMoveRawField(
+    move,
+    "RecoilAbsorbPercentage",
+    "RecoilAbsorbPercent",
+    "RecoilAbsorb",
+    "recoilAbsorbPercentage",
+    "recoilAbsorbPercent",
+    "recoilAbsorb"
+  );
   if (rawField !== undefined) return normalizePercentRatio(rawField);
 
   const desc = String(move?.Description || "");
@@ -1311,6 +1370,44 @@ function getMoveRecoilAbsorbRatio(move) {
   }
   if (/restored by half|restores? half|drain/i.test(desc)) return 0.5;
   return 0;
+}
+function moveCanUseParentalBond(moveName, move, hitCount) {
+  if (!move || move.Category === "Status" || hitCount > 1) return false;
+  return autoHitCount(moveName, move) === 1;
+}
+function moveIsRecklessBoosted(moveName, move) {
+  if (moveName === "Struggle") return false;
+  if (["Jump Kick", "High Jump Kick"].includes(moveName)) return true;
+  return getMoveRecoilAbsorbRatio(move) < 0;
+}
+function critBlockedByAbility(defenderAbility) {
+  return defenderAbility === "Battle Armor" || defenderAbility === "Shell Armor";
+}
+function scrappyTypeMod(moveType, defender) {
+  if (!["Normal", "Fighting"].includes(moveType)) return null;
+  if (defender.type1 !== "Ghost" && defender.type2 !== "Ghost") return null;
+  const chart = TYPE_CHART[moveType] || {};
+  let mod = 1;
+  [defender.type1, defender.type2].forEach(type => {
+    if (!type || type === "None") return;
+    mod *= type === "Ghost" ? 1 : (chart[type] ?? 1);
+  });
+  return mod;
+}
+function buildDamageRolls(baseDamage, stab, typeMod, otherMod, fixedFn) {
+  const rolls = [];
+  for (let r = 85; r <= 100; r++) {
+    let dmg = baseDamage;
+    if (!fixedFn) {
+      dmg = Math.floor(dmg * (r / 100));
+      dmg = Math.floor(dmg * stab);
+      dmg = Math.floor(dmg * typeMod);
+      dmg = Math.floor(dmg * otherMod);
+    }
+    dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
+    rolls.push(dmg);
+  }
+  return rolls;
 }
 
 /* ── Sprite name helper ── */
@@ -2490,64 +2587,80 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   const typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, ctx, notes);
   const moveType = typePower.type;
   const power = typePower.power;
+  const critical = ctx.critical && !critBlockedByAbility(defenderAbility);
+  if (ctx.critical && !critical) notes.push(`${defenderAbility} blocks critical hits`);
 
   if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item, ctx.magicRoom)) {
-    return { noDamageText: `${defender.name} is immune to Ground-type moves.` };
+   return { noDamageText: `${defender.name} is immune to Ground-type moves.` };
   }
 
-  const typeMod = effectiveness(moveType, defender.type1, defender.type2);
+  let typeMod = effectiveness(moveType, defender.type1, defender.type2);
+  if (attacker.ability === "Scrappy" && typeMod === 0) {
+   const scrappyMod = scrappyTypeMod(moveType, defender);
+   if (scrappyMod !== null) {
+     typeMod = scrappyMod;
+     notes.push("Scrappy ignores Ghost immunity");
+   }
+  }
   if (typeMod === 0) return { noDamageText: `${attacker.name} uses ${moveName}: no effect (0×).` };
 
   if (defenderAbility === "Flash Fire" && moveType === "Fire") {
-    return { noDamageText: `${defender.name}: absorbed by Flash Fire.` };
+   return { noDamageText: `${defender.name}: absorbed by Flash Fire.` };
   }
   const immuneTypeCD = IMMUNE_ABILITIES[defenderAbility];
   if (immuneTypeCD && immuneTypeCD === moveType) {
     return { noDamageText: `${defender.name}: immune via ${defenderAbility} (${moveType}-type).` };
   }
+  if (defenderAbility === "Soundproof" && hasMoveFlag(move, "Sound")) {
+    return { noDamageText: `${defender.name}: immune via Soundproof.` };
+  }
+  if (defenderAbility === "Bulletproof" && hasMoveFlag(move, "Bullet")) {
+    return { noDamageText: `${defender.name}: immune via Bulletproof.` };
+  }
 
   const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
 
+  let ad = null;
+  let levelFactor = 0;
   let baseOneHit;
   if (fixedFn) {
     baseOneHit = fixedFn({ attacker, defender, move, moveType, power });
   } else {
-    const ad = getAttackDefenseFix(moveCategory, attacker, defender, ctx.critical, moveName, notes, ctx, defenderAbility);
-    const levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
+    ad = getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName, notes, ctx, defenderAbility);
+    levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
     baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
   }
 
-  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes, defenderAbility);
+  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, { ...ctx, critical }, typeMod, notes, defenderAbility);
 
-  const oneHitRolls = [];
-  for (let r = 85; r <= 100; r++) {
-    let dmg = baseOneHit;
-    if (!fixedFn) {
-      dmg = Math.floor(dmg * (r / 100));
-      dmg = Math.floor(dmg * stab);
-      dmg = Math.floor(dmg * typeMod);
-      dmg = Math.floor(dmg * otherMod);
-    }
-    dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
-    oneHitRolls.push(dmg);
+  const oneHitRolls = buildDamageRolls(baseOneHit, stab, typeMod, otherMod, fixedFn);
+
+  let damageCounts = buildTotalDamageDistribution(oneHitRolls, hitCount);
+  if ((attacker.ability === "Parental Bond" || attacker.ability === "Hyper Aggression") && moveCanUseParentalBond(moveName, move, hitCount)) {
+    const secondHitBase = fixedFn
+      ? Math.max(1, Math.floor(baseOneHit * 0.5))
+      : Math.floor(Math.floor((levelFactor * (power * 0.5) * ad.atk) / ad.def) / 50) + 2;
+    const secondHitRolls = buildDamageRolls(secondHitBase, stab, typeMod, otherMod, fixedFn);
+    damageCounts = convolveCountMaps(damageCounts, buildSingleTurnDistribution(secondHitRolls));
+    notes.push(`${attacker.ability} adds a second hit at 50% power`);
   }
-
-  const damageCounts = buildTotalDamageDistribution(oneHitRolls, hitCount);
-  const damageRolls = oneHitRolls;
-  const minD = oneHitRolls[0];
-  const maxD = oneHitRolls[oneHitRolls.length - 1];
+  const damageRolls = [...damageCounts.keys()].sort((a, b) => a - b);
+  const minD = damageRolls[0];
+  const maxD = damageRolls[damageRolls.length - 1];
   const hp = defender.stats.HP;
   const defenderEndTurn = getPassiveEndTurnEffects(defender, attacker, ctx);
   const attackerEndTurn = getPassiveEndTurnEffects(attacker, defender, ctx);
   const recoilAbsorbRatio = getMoveRecoilAbsorbRatio(move);
   const rockyHelmet = !ctx.magicRoom && defender.item === "Rocky Helmet" && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 6) : 0;
+  const roughSkin = ["Rough Skin", "Iron Barbs"].includes(defenderAbility) && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 8) : 0;
   const lifeOrb = !ctx.magicRoom && attacker.item === "Life Orb" ? Math.floor(attacker.stats.HP / 10) : 0;
   const selfCounts = transformCountMap(damageCounts, damage => {
     let delta = attackerEndTurn.delta;
     if (recoilAbsorbRatio < 0) delta -= Math.floor(damage * Math.abs(recoilAbsorbRatio));
     if (recoilAbsorbRatio > 0) delta += Math.floor(damage * recoilAbsorbRatio);
     if (rockyHelmet > 0) delta -= rockyHelmet;
+    if (roughSkin > 0) delta -= roughSkin;
     if (lifeOrb > 0) delta -= lifeOrb;
     return delta;
   });
@@ -2556,6 +2669,7 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   if (recoilAbsorbRatio < 0) selfParts.push(`Move recoil ${(Math.abs(recoilAbsorbRatio) * 100).toFixed(0)}%`);
   if (recoilAbsorbRatio > 0) selfParts.push(`Move recovery ${(recoilAbsorbRatio * 100).toFixed(0)}%`);
   if (rockyHelmet > 0) selfParts.push(`Rocky Helmet ${signedValueText(-rockyHelmet)}`);
+  if (roughSkin > 0) selfParts.push(`${defenderAbility} ${signedValueText(-roughSkin)}`);
   if (lifeOrb > 0) selfParts.push(`Life Orb ${signedValueText(-lifeOrb)}`);
   selfParts.push(...attackerEndTurn.parts);
 
@@ -2796,15 +2910,18 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
 
   if (ctx.battleFormat === "doubles" && isSpreadMove(moves[moveName])) { mod *= 0.75; notes.push("Spread ×0.75"); }
 
-  if (!ctx.critical && moveCategory === "Physical" && ctx.reflect) {
+  if (!ctx.critical && moveCategory === "Physical" && ctx.reflect && attacker.ability !== "Infiltrator") {
     const refMod = ctx.battleFormat === "doubles" ? 2/3 : 0.5;
     mod *= refMod;
     notes.push(`Reflect ×${ctx.battleFormat === "doubles" ? "0.67" : "0.5"}`);
   }
-  if (!ctx.critical && moveCategory === "Special" && ctx.lightScreen) {
+  if (!ctx.critical && moveCategory === "Special" && ctx.lightScreen && attacker.ability !== "Infiltrator") {
     const lsMod = ctx.battleFormat === "doubles" ? 2/3 : 0.5;
     mod *= lsMod;
     notes.push(`Light Screen ×${ctx.battleFormat === "doubles" ? "0.67" : "0.5"}`);
+  }
+  if (attacker.ability === "Infiltrator" && ((moveCategory === "Physical" && ctx.reflect) || (moveCategory === "Special" && ctx.lightScreen))) {
+    notes.push("Infiltrator ignores screens");
   }
 
   if (ctx.critical) { mod *= 1.5; notes.push("Crit ×1.5"); }
@@ -2822,12 +2939,15 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   const moveDesc = String(moves[moveName]?.Description || "");
   const hasSecondaryEffect = /may also|chance to/i.test(moveDesc);
   const isContactMove = moveMakesContact(moves[moveName]);
-  const isBiteMove = /\bBite\b/i.test(moveDesc);
-  const isSliceMove = /\bSlice\b/i.test(moveDesc);
-  const isSpinMove = /\bSpin\b/i.test(moveDesc);
+  const isMegaLauncherMove = hasMoveFlag(moves[moveName], "MegaLauncher");
+  const isPunchMove = hasMoveFlag(moves[moveName], "Punch");
+  const isBiteMove = hasMoveFlag(moves[moveName], "Biting", "Bite");
+  const isSliceMove = hasMoveFlag(moves[moveName], "Slicing", "Slice");
+  const isSpinMove = hasMoveFlag(moves[moveName], "Spining", "Spinning", "Spin");
   const hasStab = attacker.type1 === moveType || attacker.type2 === moveType;
-  if (attacker.ability === "Iron Fist" && /\(.*Punch.*\)/i.test(moveDesc)) { mod *= 1.3; notes.push("Iron Fist ×1.3"); }
-  if (attacker.ability === "Reckless" && /Recoil/i.test(moveDesc)) { mod *= 1.2; notes.push("Reckless ×1.2"); }
+  if (attacker.ability === "Mega Launcher" && isMegaLauncherMove) { mod *= 1.3; notes.push("Mega Launcher ×1.3"); }
+  if (attacker.ability === "Iron Fist" && isPunchMove) { mod *= 1.3; notes.push("Iron Fist ×1.3"); }
+  if (attacker.ability === "Reckless" && moveIsRecklessBoosted(moveName, moves[moveName])) { mod *= 1.2; notes.push("Reckless ×1.2"); }
   if (attacker.ability === "Tough Claws" && isContactMove) { mod *= 1.3; notes.push("Tough Claws ×1.3"); }
   if (attacker.ability === "Strong Jaw" && isBiteMove) { mod *= 1.5; notes.push("Strong Jaw ×1.5"); }
   if (attacker.ability === "Sharpness" && isSliceMove) { mod *= 1.3; notes.push("Sharpness ×1.3"); }
@@ -2835,7 +2955,6 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (attacker.ability === "Sheer Force" && hasSecondaryEffect) { mod *= 1.3; notes.push("Sheer Force ×1.3"); }
   if (attacker.ability === "Sand Force" && ctx.weather === "sand" && ["Ground","Rock","Steel"].includes(moveType)) { mod *= 1.3; notes.push("Sand Force ×1.3"); }
   if (attacker.ability === "Overload" && moveType === "Electric" && attacker.currentHP <= Math.floor(attacker.stats.HP / 2)) { mod *= 1.5; notes.push("Overload ×1.5"); }
-  if ((attacker.ability === "Parental Bond" || attacker.ability === "Hyper Aggression") && moveCategory !== "Status") { mod *= 1.25; notes.push(`${attacker.ability} ×1.25`); }
   if (attacker.ability === "Versatility" && !hasStab) { mod *= 1.25; notes.push("Versatility ×1.25 (non-STAB)"); }
 
   const isLowHP = attacker.currentHP <= Math.floor(attacker.stats.HP / 2);
