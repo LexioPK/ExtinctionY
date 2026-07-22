@@ -718,15 +718,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
       </div>
 
-      <!-- HP bar -->
-      <div class="hp-section">
-        <span class="hp-label">HP</span>
-        <div class="hp-bar"><div class="hp-bar-fill" id="atk-hp-fill" style="width:100%"></div></div>
-        <input id="atk-current-hp" type="number" min="1" placeholder="Current HP"
-               oninput="onCurrentHPInput('atk')" title="Current HP">
-        <span class="hp-pct" id="atk-hp-pct">100%</span>
-      </div>
-
       <div class="battle-side-layout">
         <div class="pokemon-icon-rail">
           <div class="imported-section" id="atk-party-section" hidden>
@@ -741,6 +732,15 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
 
         <div class="battle-side-main">
+          <!-- HP bar -->
+          <div class="hp-section">
+            <span class="hp-label">HP</span>
+            <div class="hp-bar"><div class="hp-bar-fill" id="atk-hp-fill" style="width:100%"></div></div>
+            <input id="atk-current-hp" type="number" min="1" placeholder="Current HP"
+                   oninput="onCurrentHPInput('atk')" title="Current HP">
+            <span class="hp-pct" id="atk-hp-pct">100%</span>
+          </div>
+
           <!-- Stat table + Status -->
           <div class="stat-status-row">
             <div id="atk-stat-wrap"></div>
@@ -833,6 +833,15 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
           <button class="toggle-btn" data-value="psychic" style="display:none">Psychic</button>
         </div>
 
+        <!-- Room Effects -->
+        <div class="field-section-label" style="margin-top:5px;">Room Effects</div>
+        <div class="toggle-group" id="room-effects-group">
+          <button class="toggle-btn" id="room-magic" data-value="magic-room">Magic Room</button>
+          <button class="toggle-btn" id="room-wonder" data-value="wonder-room">Wonder Room</button>
+          <button class="toggle-btn" id="room-ion" data-value="ion-deluge">Ion Deluge</button>
+          <button class="toggle-btn" id="room-trick" data-value="trick-room">Trick Room</button>
+        </div>
+
         <div class="field-hr"></div>
 
         <!-- Side-based conditions -->
@@ -887,13 +896,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
             <button class="toggle-btn" data-value="1">1</button>
             <button class="toggle-btn" data-value="2">2</button>
             <button class="toggle-btn" data-value="3">3</button>
-          </div>
-        </div>
-        <div class="field-toggle-row">
-          <span class="ftlabel">Leftovers KO</span>
-          <div class="side-toggle">
-            <button class="side-btn" data-field-group="leftovers" data-side="you">You</button>
-            <button class="side-btn" data-field-group="leftovers" data-side="opp">Opp.</button>
           </div>
         </div>
         <div class="field-toggle-row">
@@ -978,15 +980,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
       </div>
 
-      <!-- HP bar -->
-      <div class="hp-section">
-        <span class="hp-label">HP</span>
-        <div class="hp-bar"><div class="hp-bar-fill" id="def-hp-fill" style="width:100%"></div></div>
-        <input id="def-current-hp" type="number" min="1" placeholder="Current HP"
-               oninput="onCurrentHPInput('def')" title="Current HP">
-        <span class="hp-pct" id="def-hp-pct">100%</span>
-      </div>
-
       <div class="battle-side-layout side-mirrored">
         <div class="pokemon-icon-rail">
           <div>
@@ -996,6 +989,15 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         </div>
 
         <div class="battle-side-main">
+          <!-- HP bar -->
+          <div class="hp-section">
+            <span class="hp-label">HP</span>
+            <div class="hp-bar"><div class="hp-bar-fill" id="def-hp-fill" style="width:100%"></div></div>
+            <input id="def-current-hp" type="number" min="1" placeholder="Current HP"
+                   oninput="onCurrentHPInput('def')" title="Current HP">
+            <span class="hp-pct" id="def-hp-pct">100%</span>
+          </div>
+
           <!-- Stat table + Status -->
           <div class="stat-status-row">
             <div id="def-stat-wrap"></div>
@@ -1403,10 +1405,15 @@ function resetFieldEffects() {
   setExclusiveToggle("spikes-you-group", "0");
   setExclusiveToggle("spikes-opp-group", "0");
   document.querySelectorAll(".side-btn").forEach(btn => btn.classList.remove("active"));
+  document.querySelectorAll("#room-effects-group .toggle-btn").forEach(btn => btn.classList.remove("active"));
 }
 
 function isSideActive(group, side) {
   return document.querySelector(`[data-field-group="${group}"][data-side="${side}"]`)?.classList.contains('active') || false;
+}
+
+function isRoomActive(value) {
+  return document.querySelector(`#room-effects-group [data-value="${value}"]`)?.classList.contains('active') || false;
 }
 
 function bindSideButtons() {
@@ -1441,8 +1448,8 @@ function effectiveness(moveType, type1, type2) {
   return m1 * m2;
 }
 
-function isGrounded(type1, type2, ability, item) {
-  if (item === "Air Balloon") return false;
+function isGrounded(type1, type2, ability, item, ignoreBalloon = false) {
+  if (!ignoreBalloon && item === "Air Balloon") return false;
   if (ability === "Levitate") return false;
   if (type1 === "Flying" || type2 === "Flying") return false;
   return true;
@@ -1567,8 +1574,15 @@ function updateSpeedComparisonColors() {
   const defSpeed = num(defSpeedCell.textContent, NaN);
   if (!Number.isFinite(atkSpeed) || !Number.isFinite(defSpeed) || atkSpeed === defSpeed) return;
 
-  atkSpeedCell.classList.add(atkSpeed > defSpeed ? "speed-fast" : "speed-slow");
-  defSpeedCell.classList.add(defSpeed > atkSpeed ? "speed-fast" : "speed-slow");
+  const trickRoom = isRoomActive('trick-room');
+  if (trickRoom) {
+    // In Trick Room, slowest moves first → slower gets "fast" (green), faster gets "slow" (red)
+    atkSpeedCell.classList.add(atkSpeed < defSpeed ? "speed-fast" : "speed-slow");
+    defSpeedCell.classList.add(defSpeed < atkSpeed ? "speed-fast" : "speed-slow");
+  } else {
+    atkSpeedCell.classList.add(atkSpeed > defSpeed ? "speed-fast" : "speed-slow");
+    defSpeedCell.classList.add(defSpeed > atkSpeed ? "speed-fast" : "speed-slow");
+  }
 }
 
 /* ── HP bar ── */
@@ -2463,7 +2477,7 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   const moveType = typePower.type;
   const power = typePower.power;
 
-  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item)) {
+  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item, ctx.magicRoom)) {
     return { noDamageText: `${defender.name} is immune to Ground-type moves.` };
   }
 
@@ -2513,8 +2527,8 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   const defenderEndTurn = getPassiveEndTurnEffects(defender, attacker, ctx);
   const attackerEndTurn = getPassiveEndTurnEffects(attacker, defender, ctx);
   const recoilAbsorbRatio = getMoveRecoilAbsorbRatio(move);
-  const rockyHelmet = defender.item === "Rocky Helmet" && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 6) : 0;
-  const lifeOrb = attacker.item === "Life Orb" ? Math.floor(attacker.stats.HP / 10) : 0;
+  const rockyHelmet = !ctx.magicRoom && defender.item === "Rocky Helmet" && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 6) : 0;
+  const lifeOrb = !ctx.magicRoom && attacker.item === "Life Orb" ? Math.floor(attacker.stats.HP / 10) : 0;
   const selfCounts = transformCountMap(damageCounts, damage => {
     let delta = attackerEndTurn.delta;
     if (recoilAbsorbRatio < 0) delta -= Math.floor(damage * Math.abs(recoilAbsorbRatio));
@@ -2612,12 +2626,15 @@ function getModifierContext(atkPrefix) {
   const lightScreen = isSideActive('light-screen', defSide);
   const stealthRock = isSideActive('stealth-rock', defSide);
   const spikes      = parseInt(getToggleValue(`spikes-${defSide}-group`) || "0");
-  const leftovers   = isSideActive('leftovers', defSide);
   const friendGuard = isSideActive('friend-guard', defSide);
   const flowerGiftAtk = isSideActive('flower-gift', atkSide);
   const flowerGiftDef = isSideActive('flower-gift', defSide);
+  const magicRoom   = isRoomActive('magic-room');
+  const wonderRoom  = isRoomActive('wonder-room');
+  const ionDeluge   = isRoomActive('ion-deluge');
+  const trickRoom   = isRoomActive('trick-room');
 
-  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, spikes, leftovers, friendGuard, flowerGiftAtk, flowerGiftDef };
+  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, spikes, friendGuard, flowerGiftAtk, flowerGiftDef, magicRoom, wonderRoom, ionDeluge, trickRoom };
 }
 
 function ignoresDefenderAbility(attackerAbility) {
@@ -2687,6 +2704,7 @@ function isSpreadMove(move) {
 /* ── Damage modifiers ── */
 function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, ctx, notes) {
   let type = moveType, power = basePower;
+  if (ctx.ionDeluge && type === "Normal") { type = "Electric"; notes.push("Ion Deluge: Normal→Electric"); }
   const aAbility = attacker.ability;
   if (aAbility === "Aerilate" && type === "Normal") { type = "Flying"; power *= 1.3; notes.push("Aerilate: Normal→Flying ×1.3"); }
   if (aAbility === "Pixilate" && type === "Normal") { type = "Fairy";  power *= 1.3; notes.push("Pixilate: Normal→Fairy ×1.3"); }
@@ -2708,7 +2726,10 @@ function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, 
 function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName, notes, ctx, defenderAbility) {
   const isPhysical = moveCategory === "Physical";
   const atkStat = isPhysical ? "Atk" : "SpA";
-  const defStat = isPhysical ? "Def" : "SpD";
+  const defStat = isPhysical
+    ? (ctx.wonderRoom ? "SpD" : "Def")
+    : (ctx.wonderRoom ? "Def" : "SpD");
+  if (ctx.wonderRoom) notes.push("Wonder Room: Def↔SpD");
 
   let atkStage = attacker.boost[atkStat] || 0;
   let defStage = defender.boost[defStat] || 0;
@@ -2721,11 +2742,11 @@ function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveNam
   if (isPhysical && attacker.ability === "Hustle") { atk *= 1.5; notes.push("Hustle ×1.5 Atk"); }
   if (isPhysical && attacker.ability === "Guts" && attacker.status !== "none") { atk *= 1.5; notes.push("Guts ×1.5 Atk"); }
   if (isPhysical && attacker.ability === "Toxic Boost" && ["psn","tox"].includes(attacker.status)) { atk *= 1.5; notes.push("Toxic Boost ×1.5 Atk"); }
-  if (isPhysical && attacker.item === "Choice Band") { atk *= 1.5; notes.push("Choice Band ×1.5 Atk"); }
-  if (!isPhysical && attacker.item === "Choice Specs") { atk *= 1.5; notes.push("Choice Specs ×1.5 SpA"); }
+  if (!ctx.magicRoom && isPhysical && attacker.item === "Choice Band") { atk *= 1.5; notes.push("Choice Band ×1.5 Atk"); }
+  if (!ctx.magicRoom && !isPhysical && attacker.item === "Choice Specs") { atk *= 1.5; notes.push("Choice Specs ×1.5 SpA"); }
   if (!isPhysical && attacker.ability === "Solar Power" && ctx.weather === "sun") { atk *= 1.5; notes.push("Solar Power ×1.5 SpA"); }
-  if (!isPhysical && defender.item === "Assault Vest") { def *= 1.5; notes.push("Assault Vest ×1.5 SpD"); }
-  if (defender.item === "Eviolite" && defender.data?.Evolutions?.length) { def *= 1.5; notes.push("Eviolite ×1.5 Def"); }
+  if (!ctx.magicRoom && !isPhysical && defender.item === "Assault Vest") { def *= 1.5; notes.push("Assault Vest ×1.5 SpD"); }
+  if (!ctx.magicRoom && defender.item === "Eviolite" && defender.data?.Evolutions?.length) { def *= 1.5; notes.push("Eviolite ×1.5 Def"); }
   if (isPhysical && defenderAbility === "Biodiverse" && ctx.terrain !== "none") { def *= 1.5; notes.push("Biodiverse ×1.5 Def"); }
   if (defenderAbility === "Dune Guard" && ctx.weather === "sand") { def *= 1.25; notes.push("Dune Guard ×1.25 Def/SpD"); }
   if (defenderAbility === "Glacial Guard" && ctx.weather === "hail") { def *= 1.25; notes.push("Glacial Guard ×1.25 Def/SpD"); }
@@ -2774,13 +2795,13 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (ctx.critical && attacker.ability === "Sniper") { mod *= 1.5; notes.push("Sniper ×1.5"); }
 
   if (attacker.ability === "Tinted Lens" && typeMod < 1 && typeMod > 0) { mod *= 2; notes.push("Tinted Lens ×2"); }
-  if (attacker.item === "Life Orb") { mod *= 1.3; notes.push("Life Orb ×1.3"); }
-  if (attacker.item === "Expert Belt" && typeMod > 1) { mod *= 1.2; notes.push("Expert Belt ×1.2"); }
-  if (attacker.item === "Muscle Band" && moveCategory === "Physical") { mod *= 1.2; notes.push("Muscle Band ×1.2"); }
-  if (attacker.item === "Wise Glasses" && moveCategory === "Special") { mod *= 1.2; notes.push("Wise Glasses ×1.2"); }
+  if (!ctx.magicRoom && attacker.item === "Life Orb") { mod *= 1.3; notes.push("Life Orb ×1.3"); }
+  if (!ctx.magicRoom && attacker.item === "Expert Belt" && typeMod > 1) { mod *= 1.2; notes.push("Expert Belt ×1.2"); }
+  if (!ctx.magicRoom && attacker.item === "Muscle Band" && moveCategory === "Physical") { mod *= 1.2; notes.push("Muscle Band ×1.2"); }
+  if (!ctx.magicRoom && attacker.item === "Wise Glasses" && moveCategory === "Special") { mod *= 1.2; notes.push("Wise Glasses ×1.2"); }
 
   const boostType = TYPE_BOOST_ITEMS[attacker.item];
-  if (boostType && boostType === moveType) { mod *= 1.2; notes.push(`${attacker.item} ×1.2`); }
+  if (!ctx.magicRoom && boostType && boostType === moveType) { mod *= 1.2; notes.push(`${attacker.item} ×1.2`); }
 
   const moveDesc = String(moves[moveName]?.Description || "");
   const hasSecondaryEffect = /may also|chance to/i.test(moveDesc);
@@ -2814,7 +2835,7 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (defenderAbility === "Dry Skin" && moveType === "Fire") { mod *= 1.25; notes.push("Dry Skin ×1.25 (Fire)"); }
 
   const resistBerryType = TYPE_RESIST_BERRIES[defender.item];
-  if (resistBerryType && resistBerryType === moveType && (typeMod > 1 || defender.item === "Chilan Berry")) {
+  if (!ctx.magicRoom && resistBerryType && resistBerryType === moveType && (typeMod > 1 || defender.item === "Chilan Berry")) {
     mod *= 0.5; notes.push(`${defender.item} ×0.5`);
   }
 
@@ -2874,14 +2895,10 @@ function transformCountMap(countMap, mapper) {
 function getPassiveEndTurnEffects(target, other, ctx) {
   const parts = [];
   let delta = 0;
-  if (target.item === "Leftovers") {
+  if (!ctx.magicRoom && target.item === "Leftovers") {
     const heal = Math.floor(target.stats.HP / 16);
     delta += heal;
     if (heal > 0) parts.push(`Leftovers +${heal}`);
-  } else if (ctx.leftovers) {
-    const heal = Math.floor(target.stats.HP / 16);
-    delta += heal;
-    if (heal > 0) parts.push(`Leftovers KO +${heal}`);
   }
   if (target.status === "brn") {
     const burn = Math.floor(target.stats.HP / 16);
@@ -3012,12 +3029,12 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
   const twohko  = koChance(damageCounts, currentHP, 2, defenderEndTurn.delta);
   const threehko= koChance(damageCounts, currentHP, 3, defenderEndTurn.delta);
 
-  if (ctx.stealthRock && defender.item !== "Heavy-Duty Boots") {
+  if (ctx.stealthRock && (ctx.magicRoom || defender.item !== "Heavy-Duty Boots")) {
     const rockEffect = effectiveness("Rock", defender.type1, defender.type2);
     const srDmg = Math.floor(hp * (1/8) * rockEffect);
     notes.push(`Stealth Rock −${srDmg} HP on switch-in`);
   }
-  if (ctx.spikes > 0 && defender.item !== "Heavy-Duty Boots" && isGrounded(defender.type1, defender.type2, defender.ability, defender.item)) {
+  if (ctx.spikes > 0 && (ctx.magicRoom || defender.item !== "Heavy-Duty Boots") && isGrounded(defender.type1, defender.type2, defender.ability, defender.item, ctx.magicRoom)) {
     const spikeFracs = [0, 1/8, 1/6, 1/4];
     const spikeDmg = Math.floor(hp * (spikeFracs[ctx.spikes] || 0));
     if (spikeDmg > 0) notes.push(`Spikes (${ctx.spikes}L) −${spikeDmg} HP on switch-in`);
@@ -3178,6 +3195,9 @@ function bindInputs() {
   // Field toggle groups (exclusive)
   ["battle-type-group","weather-group","terrain-group",
    "spikes-you-group","spikes-opp-group"].forEach(gid => bindToggleGroup(gid));
+
+  // Room effects (non-exclusive — each button toggles independently)
+  bindToggleGroup("room-effects-group", false);
 
   // Side buttons (independent toggles)
   bindSideButtons();
