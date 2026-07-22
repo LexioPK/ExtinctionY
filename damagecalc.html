@@ -530,6 +530,23 @@ h1 { text-align: center; margin: 8px 0 6px; }
     "level   nature  type2";
   grid-template-columns: minmax(108px, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 }
+.info-grid .field select,
+.info-grid .field input {
+  font-size: 0.75rem;
+}
+.side-card.side-mirrored .info-grid .field label {
+  text-align: right;
+}
+.side-card.side-mirrored .info-grid .field select {
+  width: 100%;
+  text-align: right;
+}
+.side-card.side-mirrored .info-grid .field input {
+  text-align: right;
+}
+.side-card.side-mirrored .info-grid .item-select-wrap {
+  flex-direction: row-reverse;
+}
 .imported-section {
   margin-top: 10px;
 }
@@ -807,8 +824,6 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <div class="battle-row" id="battle-type-group">
           <button class="toggle-btn active" data-value="singles">Single</button>
           <button class="toggle-btn" data-value="doubles">Double</button>
-          <button class="toggle-btn" data-value="triples">Triple</button>
-          <button class="toggle-btn" data-value="rotations">Rotation</button>
         </div>
 
         <div class="field-hr"></div>
@@ -1798,8 +1813,7 @@ function setTrainer(prefix, idx) {
 
   if (prefix === "def") {
     const battleType = (trainer.battleType || 'Single').toLowerCase();
-    const battleVal = (battleType === 'double' || battleType === 'triple') ? 'doubles' :
-                      battleType === 'rotation' ? 'rotations' : 'singles';
+    const battleVal = (battleType === 'double' || battleType === 'triple') ? 'doubles' : 'singles';
     setExclusiveToggle("battle-type-group", battleVal);
   }
 
@@ -2520,9 +2534,9 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   }
 
   const damageCounts = buildTotalDamageDistribution(oneHitRolls, hitCount);
-  const damageRolls = [...damageCounts.keys()].sort((a, b) => a - b);
-  const minD = damageRolls[0];
-  const maxD = damageRolls[damageRolls.length - 1];
+  const damageRolls = oneHitRolls;
+  const minD = oneHitRolls[0];
+  const maxD = oneHitRolls[oneHitRolls.length - 1];
   const hp = defender.stats.HP;
   const defenderEndTurn = getPassiveEndTurnEffects(defender, attacker, ctx);
   const attackerEndTurn = getPassiveEndTurnEffects(attacker, defender, ctx);
