@@ -807,8 +807,8 @@ html.dark-mode .imported-poke-btn { background: #22293a; }
         <div class="battle-row" id="battle-type-group">
           <button class="toggle-btn active" data-value="singles">Single</button>
           <button class="toggle-btn" data-value="doubles">Double</button>
-          <button class="toggle-btn" data-value="triple">Triple</button>
-          <button class="toggle-btn" data-value="rotation">Rotation</button>
+          <button class="toggle-btn" data-value="triples">Triple</button>
+          <button class="toggle-btn" data-value="rotations">Rotation</button>
         </div>
 
         <div class="field-hr"></div>
@@ -1784,7 +1784,8 @@ function setTrainer(prefix, idx) {
 
   if (prefix === "def") {
     const battleType = (trainer.battleType || 'Single').toLowerCase();
-    const battleVal = (battleType === 'double' || battleType === 'triple') ? 'doubles' : 'singles';
+    const battleVal = (battleType === 'double' || battleType === 'triple') ? 'doubles' :
+                      battleType === 'rotation' ? 'rotations' : 'singles';
     setExclusiveToggle("battle-type-group", battleVal);
   }
 
@@ -2593,9 +2594,11 @@ function updateMoveDamageLabels() {
 }
 
 /* ── Modifier context (side-aware) ── */
+// Triples count as doubles; rotations count as singles
+const BATTLE_FORMAT_ALIASES = { triples: "doubles", rotations: "singles" };
 function getModifierContext(atkPrefix) {
   const rawBattleFormat = getToggleValue("battle-type-group") || "singles";
-  const battleFormat = rawBattleFormat === "triple" ? "doubles" : rawBattleFormat === "rotation" ? "singles" : rawBattleFormat;
+  const battleFormat = BATTLE_FORMAT_ALIASES[rawBattleFormat] || rawBattleFormat;
   const weather = getToggleValue("weather-group") || "none";
   const terrain = getToggleValue("terrain-group") || "none";
 
