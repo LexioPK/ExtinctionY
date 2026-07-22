@@ -1278,7 +1278,7 @@ function getMoveFlags(move) {
   const collected = [];
   const normalizeMoveFlag = flag => {
     const lowered = String(flag).trim().toLowerCase();
-    if (lowered === "spinning") return "spining";
+    if (lowered === "spining") return "spinning";
     return lowered;
   };
   const addFlag = flag => {
@@ -1321,7 +1321,7 @@ function getMoveFlags(move) {
 }
 function hasMoveFlag(move, ...flags) {
   const moveFlags = getMoveFlags(move);
-  return flags.some(flag => moveFlags.has(String(flag).trim().toLowerCase().replace(/^spinning$/, "spining")));
+  return flags.some(flag => moveFlags.has(String(flag).trim().toLowerCase().replace(/^spining$/, "spinning")));
 }
 function getMoveFlagValue(move, ...keys) {
   const raw = getMoveRawField(move, ...keys);
@@ -2943,7 +2943,7 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   const isPunchMove = hasMoveFlag(moves[moveName], "Punch");
   const isBiteMove = hasMoveFlag(moves[moveName], "Biting", "Bite");
   const isSliceMove = hasMoveFlag(moves[moveName], "Slicing", "Slice");
-  const isSpinMove = hasMoveFlag(moves[moveName], "Spining", "Spinning", "Spin");
+  const isSpinMove = hasMoveFlag(moves[moveName], "Spinning", "Spin");
   const hasStab = attacker.type1 === moveType || attacker.type2 === moveType;
   if (attacker.ability === "Mega Launcher" && isMegaLauncherMove) { mod *= 1.3; notes.push("Mega Launcher ×1.3"); }
   if (attacker.ability === "Iron Fist" && isPunchMove) { mod *= 1.3; notes.push("Iron Fist ×1.3"); }
