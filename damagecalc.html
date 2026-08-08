@@ -2452,9 +2452,9 @@ function refreshImportedMatchupIndicators() {
     matchupById.set(setData.id, evaluateImportedMatchup(importedSet, opponentSet, atkCtx, defCtx));
   });
 
-  importedButtons.forEach((btn, idx) => {
-    const setData = importedPokemonSets[idx];
-    applyMatchupIndicators(btn, setData ? matchupById.get(setData.id) : null);
+  importedButtons.forEach(btn => {
+    const setId = btn.dataset.setId;
+    applyMatchupIndicators(btn, setId ? matchupById.get(setId) : null);
   });
 
   partySlots.forEach((slot, idx) => {
@@ -2601,6 +2601,7 @@ function renderImportedPokemonList() {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "imported-poke-btn";
+    btn.dataset.setId = setData.id;
     btn.classList.toggle("in-party", importedPartyIds.includes(setData.id));
     btn.title = `${setData.species}${setData.item && setData.item !== "None" ? ` @ ${setData.item}` : ""}\nClick to load • Right-click to toggle party`;
 
@@ -3694,7 +3695,11 @@ async function init() {
     const trainerItems = new Set();
     for (const t of trainersFlat) for (const p of t.pokemon) if (p.HeldItem) trainerItems.add(p.HeldItem);
     allItems = [...new Set([...BASE_ITEMS, ...Array.from(trainerItems)])]
-      .sort((a, b) => a.localeCompare(b));
+      .sort((a, b) => {
+        if (a === "None" && b !== "None") return -1;
+        if (b === "None" && a !== "None") return 1;
+        return a.localeCompare(b);
+      });
 
     const species = listSpecies();
     const moveNames = [NO_MOVE_OPTION, ...Object.keys(moves).sort((a, b) => a.localeCompare(b))];
