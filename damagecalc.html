@@ -232,9 +232,10 @@ h1 { text-align: center; margin: 8px 0 6px; }
   display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;
   gap: 4px;
 }
+.ia-sprite-btns {
+  display: flex; flex-direction: column; gap: 4px; align-self: flex-start;
+}
 .save-poke-btn {
-  align-self: flex-start;
-  margin-top: 4px;
   padding: 5px 7px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -251,8 +252,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-color: var(--accent);
 }
 .delete-poke-btn {
-  align-self: flex-start;
-  margin-top: 4px;
   padding: 5px 7px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -767,9 +766,11 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           </div>
         </div>
         <div class="ia-sprite">
-          <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
-          <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
           <img id="atk-sprite" class="poke-sprite" src="" alt="">
+          <div class="ia-sprite-btns">
+            <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
+            <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
+          </div>
         </div>
         <div class="field ia-type1">
           <label for="atk-type1">Type 1</label>
@@ -786,7 +787,7 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <div id="atk-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
-          <div class="activatable-select-row">
+          <div class="activatable-select-row" style="align-items: flex-end;">
             <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
               <input id="atk-item-toggle" type="checkbox">
             </label>
@@ -1060,7 +1061,7 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <div id="def-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
-          <div class="activatable-select-row">
+          <div class="activatable-select-row" style="align-items: flex-end;">
             <label id="def-item-toggle-wrap" class="activatable-check" hidden>
               <input id="def-item-toggle" type="checkbox">
             </label>
