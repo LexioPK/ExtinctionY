@@ -174,15 +174,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
   gap: 6px;
   min-width: 0;
 }
-.activatable-label-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 2px;
-}
-.activatable-label-row > label[for] {
-  margin-bottom: 0;
-}
 .activatable-check {
   display: inline-flex;
   align-items: center;
@@ -795,15 +786,15 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <div id="atk-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
-          <div class="activatable-label-row">
+          <label for="atk-item">Item</label>
+          <div class="activatable-select-row">
             <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
               <input id="atk-item-toggle" type="checkbox">
             </label>
-            <label for="atk-item">Item</label>
-          </div>
-          <div class="item-select-wrap">
-            <select id="atk-item"></select>
-            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            <div class="item-select-wrap">
+              <select id="atk-item"></select>
+              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
           </div>
           <div id="atk-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
@@ -1067,15 +1058,15 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <div id="def-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
-          <div class="activatable-label-row">
+          <label for="def-item">Item</label>
+          <div class="activatable-select-row">
             <label id="def-item-toggle-wrap" class="activatable-check" hidden>
               <input id="def-item-toggle" type="checkbox">
             </label>
-            <label for="def-item">Item</label>
-          </div>
-          <div class="item-select-wrap">
-            <select id="def-item"></select>
-            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            <div class="item-select-wrap">
+              <select id="def-item"></select>
+              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
           </div>
           <div id="def-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
