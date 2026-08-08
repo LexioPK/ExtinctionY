@@ -279,17 +279,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-toggle  {
   grid-area: toggle;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 13px;
   padding-bottom: 2px;
-}
-.ia-toggle-slot {
-  min-height: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
@@ -784,16 +776,9 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <select id="atk-type1"></select>
         </div>
         <div class="ia-toggle">
-          <div class="ia-toggle-slot">
-            <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
-              <input id="atk-ability-toggle" type="checkbox">
-            </label>
-          </div>
-          <div class="ia-toggle-slot">
-            <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
-              <input id="atk-item-toggle" type="checkbox">
-            </label>
-          </div>
+          <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
+            <input id="atk-ability-toggle" type="checkbox">
+          </label>
         </div>
         <div class="field ia-ability">
           <label for="atk-ability">Ability</label>
@@ -802,9 +787,14 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="field ia-item">
           <label for="atk-item">Item</label>
-          <div class="item-select-wrap">
-            <select id="atk-item"></select>
-            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+          <div class="activatable-select-row">
+            <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="atk-item-toggle" type="checkbox">
+            </label>
+            <div class="item-select-wrap">
+              <select id="atk-item"></select>
+              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
           </div>
           <div id="atk-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
@@ -1058,16 +1048,9 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <select id="def-type1"></select>
         </div>
         <div class="ia-toggle">
-          <div class="ia-toggle-slot">
-            <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
-              <input id="def-ability-toggle" type="checkbox">
-            </label>
-          </div>
-          <div class="ia-toggle-slot">
-            <label id="def-item-toggle-wrap" class="activatable-check" hidden>
-              <input id="def-item-toggle" type="checkbox">
-            </label>
-          </div>
+          <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
+            <input id="def-ability-toggle" type="checkbox">
+          </label>
         </div>
         <div class="field ia-ability">
           <label for="def-ability">Ability</label>
@@ -1076,9 +1059,14 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="field ia-item">
           <label for="def-item">Item</label>
-          <div class="item-select-wrap">
-            <select id="def-item"></select>
-            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+          <div class="activatable-select-row">
+            <label id="def-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="def-item-toggle" type="checkbox">
+            </label>
+            <div class="item-select-wrap">
+              <select id="def-item"></select>
+              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
           </div>
           <div id="def-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
