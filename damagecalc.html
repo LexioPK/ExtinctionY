@@ -193,7 +193,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
     "species  species  sprite"
     "type1    ability  item  "
     "type2    nature   level ";
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(108px, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -414,7 +414,12 @@ h1 { text-align: center; margin: 8px 0 6px; }
   cursor: pointer;
   position: relative;
   border: 2px solid var(--border); border-radius: 8px;
-  background: var(--bg);
+  --slot-bg: var(--bg);
+  --slot-left-indicator: transparent;
+  --slot-right-indicator: transparent;
+  background:
+    linear-gradient(to right, var(--slot-left-indicator) 0 50%, var(--slot-right-indicator) 50% 100%),
+    var(--slot-bg);
   transition: border-color .15s, background .15s;
   padding: 2px; box-sizing: border-box;
 }
@@ -430,14 +435,14 @@ h1 { text-align: center; margin: 8px 0 6px; }
   height: 20px;
   object-fit: contain;
   image-rendering: pixelated;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: rgba(255,255,255,0.92);
+  border: none;
+  border-radius: 0;
+  background: transparent;
 }
 .poke-icon-slot:hover:not(.empty) { border-color: var(--accent); }
 .poke-icon-slot.selected {
   border-color: var(--accent);
-  background: rgba(36,92,172,.1);
+  --slot-bg: rgba(36,92,172,.1);
 }
 .poke-icon-slot.empty {
   opacity: 0.25; cursor: default;
@@ -565,7 +570,12 @@ h1 { text-align: center; margin: 8px 0 6px; }
   width: 108px;
   border: 2px solid var(--border);
   border-radius: 10px;
-  background: var(--bg);
+  --slot-bg: var(--bg);
+  --slot-left-indicator: transparent;
+  --slot-right-indicator: transparent;
+  background:
+    linear-gradient(to right, var(--slot-left-indicator) 0 50%, var(--slot-right-indicator) 50% 100%),
+    var(--slot-bg);
   color: inherit;
   cursor: pointer;
   padding: 6px 4px;
@@ -600,12 +610,16 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .imported-poke-btn:hover,
 .imported-poke-btn.selected {
   border-color: var(--accent);
-  background: rgba(36,92,172,.1);
+  --slot-bg: rgba(36,92,172,.1);
 }
 .imported-poke-btn.in-party {
   border-color: var(--accent);
   box-shadow: inset 0 0 0 1px rgba(36,92,172,.15);
 }
+.matchup-left-ohko { --slot-left-indicator: rgba(56, 181, 74, 0.45); }
+.matchup-left-2hko { --slot-left-indicator: rgba(56, 181, 74, 0.25); }
+.matchup-right-ohko { --slot-right-indicator: rgba(220, 53, 69, 0.45); }
+.matchup-right-2hko { --slot-right-indicator: rgba(220, 53, 69, 0.25); }
 .imported-poke-btn.in-party::after {
   content: "Party";
   position: absolute;
@@ -657,12 +671,11 @@ html.dark-mode .side-btn { background: #22293a; color: var(--muted); }
 html.dark-mode .side-btn.active { background: var(--accent); color: #10121a; }
 html.dark-mode .trainer-nav-btn { background: #22293a; color: var(--text); }
 html.dark-mode .trainer-nav-btn:hover { background: var(--border); }
-html.dark-mode .poke-icon-slot { background: #22293a; }
-html.dark-mode .poke-icon-slot .poke-item-corner { background: rgba(26,31,44,0.92); }
+html.dark-mode .poke-icon-slot { --slot-bg: #22293a; }
+html.dark-mode .imported-poke-btn { --slot-bg: #22293a; }
 html.dark-mode .qm-move-btn { color: var(--qm-move-text-color, #10121a); }
 html.dark-mode .qm-move-btn.active-move { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25); }
 html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
-html.dark-mode .imported-poke-btn { background: #22293a; }
 </style>
 </head>
 <body>
@@ -2322,9 +2335,135 @@ function parseImportedPokemonSets(text) {
 
 function sortImportedByDex() {
   importedPokemonSets.sort((a, b) => {
-    const ia = pokedex[a.species]?.SpeciesIdx ?? 9999;
-    const ib = pokedex[b.species]?.SpeciesIdx ?? 9999;
-    return ia - ib;
+    return String(a.species || "").localeCompare(String(b.species || ""));
+  });
+}
+
+const MATCHUP_INDICATOR_CLASSES = ["matchup-left-ohko", "matchup-left-2hko", "matchup-right-ohko", "matchup-right-2hko"];
+
+function clearMatchupIndicatorClasses(node) {
+  if (!node) return;
+  MATCHUP_INDICATOR_CLASSES.forEach(cls => node.classList.remove(cls));
+}
+
+function buildImportedBattleSet(imported) {
+  if (!imported?.species) return null;
+  const p = pokedex[imported.species];
+  if (!p) return null;
+  const level = clamp(num(imported.level, 50), 1, 100);
+  const ability = imported.ability || toAbilityList(p)[0] || "No Ability";
+  const item = imported.item || "None";
+  const nature = NATURES[imported.nature] ? imported.nature : "Hardy";
+  const type1 = p.Type1 || "Normal";
+  const type2 = p.Type2 && p.Type2 !== type1 ? p.Type2 : "None";
+  const iv = {};
+  const boost = {};
+  STATS.forEach(stat => {
+    iv[stat] = clamp(num(imported.ivs?.[stat], 31), 0, 31);
+    boost[stat] = 0;
+  });
+  const stats = {};
+  STATS.forEach(stat => {
+    const base = p.BaseStats?.[stat] ?? 1;
+    stats[stat] = stat === "HP" ? calcHp(base, iv.HP, level) : calcOther(base, iv[stat], level, getNatureMultiplier(nature, stat));
+  });
+  return {
+    name: imported.species,
+    level,
+    ability,
+    item,
+    nature,
+    status: "none",
+    type1,
+    type2,
+    grounded: isGrounded(type1, type2, ability, item),
+    iv,
+    boost,
+    moves: Array.isArray(imported.moves) ? imported.moves.slice(0, 4) : [],
+    stats,
+    currentHP: stats.HP,
+    data: p
+  };
+}
+
+function getMatchupRating(outcome) {
+  if (!outcome || outcome.noDamageText) return null;
+  const ohkoChance = koChance(outcome.damageCounts, outcome.currentHP, 1, 0);
+  if (ohkoChance > 0) return "ohko";
+  const twohkoChance = koChance(outcome.damageCounts, outcome.currentHP, 2, outcome.defenderEndTurn.delta);
+  if (twohkoChance >= 0.999999) return "2hko";
+  return null;
+}
+
+function evaluateImportedMatchup(importedSet, opponentSet, atkCtx, defCtx) {
+  const result = { offense: null, threat: null };
+  if (!importedSet || !opponentSet) return result;
+
+  for (const moveName of (importedSet.moves || [])) {
+    if (!moveName || moveName === NO_MOVE_OPTION || !moves[moveName]) continue;
+    const hitCount = autoHitCount(moveName, moves[moveName]);
+    const outcome = calculateDamageOutcomeForSets(importedSet, opponentSet, moveName, hitCount, atkCtx);
+    const rating = getMatchupRating(outcome);
+    if (rating === "ohko") {
+      result.offense = "ohko";
+      break;
+    }
+    if (rating === "2hko") result.offense = "2hko";
+  }
+
+  for (let i = 0; i < 4; i++) {
+    const moveName = el(`def-move-${i}`)?.value;
+    if (!moveName || moveName === NO_MOVE_OPTION || !moves[moveName]) continue;
+    const hitsInput = el(`def-move-hits-${i}`);
+    const hitCount = hitsInput ? clamp(num(hitsInput.value, 1), 1, 10) : 1;
+    const outcome = calculateDamageOutcomeForSets(opponentSet, importedSet, moveName, hitCount, defCtx);
+    const rating = getMatchupRating(outcome);
+    if (rating === "ohko") {
+      result.threat = "ohko";
+      break;
+    }
+    if (rating === "2hko") result.threat = "2hko";
+  }
+
+  return result;
+}
+
+function applyMatchupIndicators(node, matchup) {
+  if (!node) return;
+  clearMatchupIndicatorClasses(node);
+  if (matchup?.offense === "ohko") node.classList.add("matchup-left-ohko");
+  else if (matchup?.offense === "2hko") node.classList.add("matchup-left-2hko");
+  if (matchup?.threat === "ohko") node.classList.add("matchup-right-ohko");
+  else if (matchup?.threat === "2hko") node.classList.add("matchup-right-2hko");
+}
+
+function refreshImportedMatchupIndicators() {
+  const importedButtons = document.querySelectorAll("#atk-imported-pokemon .imported-poke-btn");
+  const partySlots = document.querySelectorAll("#atk-party-icons .poke-icon-slot");
+  if (!importedButtons.length && !partySlots.length) return;
+
+  const opponentSet = readSet("def");
+  const atkCtx = getModifierContext("atk");
+  const defCtx = getModifierContext("def");
+  const matchupById = new Map();
+
+  importedPokemonSets.forEach(setData => {
+    const importedSet = buildImportedBattleSet(setData);
+    matchupById.set(setData.id, evaluateImportedMatchup(importedSet, opponentSet, atkCtx, defCtx));
+  });
+
+  importedButtons.forEach((btn, idx) => {
+    const setData = importedPokemonSets[idx];
+    applyMatchupIndicators(btn, setData ? matchupById.get(setData.id) : null);
+  });
+
+  partySlots.forEach((slot, idx) => {
+    const setId = importedPartyIds[idx];
+    if (!setId) {
+      clearMatchupIndicatorClasses(slot);
+      return;
+    }
+    applyMatchupIndicators(slot, matchupById.get(setId));
   });
 }
 
@@ -2364,7 +2503,7 @@ function setImportedSelection(selectedIdx) {
 function updateAtkTrainerPartyVisibility() {
   const trainerIconsSection = el("atk-trainer-icons-section");
   if (!trainerIconsSection) return;
-  trainerIconsSection.hidden = currentSelectedImportedIdx >= 0;
+  trainerIconsSection.hidden = importedPartyIds.length > 0 || currentSelectedImportedIdx >= 0;
 }
 
 function renderImportedParty() {
@@ -2421,6 +2560,7 @@ function renderImportedParty() {
   section.hidden = importedPartyIds.length === 0;
   setImportedSelection(currentSelectedImportedIdx);
   updateAtkTrainerPartyVisibility();
+  refreshImportedMatchupIndicators();
 }
 
 function toggleImportedPokemonInParty(idx) {
@@ -2496,6 +2636,7 @@ function renderImportedPokemonList() {
   });
 
   section.hidden = false;
+  refreshImportedMatchupIndicators();
 }
 
 function fillImportedPokemon(prefix, imported) {
@@ -2684,12 +2825,16 @@ function deleteCurrentImportedPokemon() {
 function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   const attacker = readSet(atkPrefix);
   const defender = readSet(defPrefix);
+  const ctx = getModifierContext(atkPrefix);
+  return calculateDamageOutcomeForSets(attacker, defender, moveName, hitCount, ctx);
+}
+
+function calculateDamageOutcomeForSets(attacker, defender, moveName, hitCount, ctx) {
   const move = moves[moveName];
-  if (!attacker || !defender || !move) return null;
+  if (!attacker || !defender || !move || !ctx) return null;
 
   const moveCategory = move.Category;
   const rawPower = num(move.Power, 0);
-  const ctx = getModifierContext(atkPrefix);
   const defenderAbility = ignoresDefenderAbility(attacker.ability) ? "No Ability" : defender.ability;
 
   if (moveCategory === "Status") return { noDamageText: `${moveName} is a status move — no direct damage.` };
@@ -2775,10 +2920,12 @@ function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
   const defenderEndTurn = getPassiveEndTurnEffects(defender, attacker, ctx);
   const attackerEndTurn = getPassiveEndTurnEffects(attacker, defender, ctx);
   const recoilAbsorbRatio = getMoveRecoilAbsorbRatio(move);
-  const drainRatio = recoilAbsorbRatio > 0 && !ctx.magicRoom && attacker.item === "Big Root"
+  const drainRatioRaw = recoilAbsorbRatio > 0 && !ctx.magicRoom && attacker.item === "Big Root"
     ? recoilAbsorbRatio * 1.3
     : recoilAbsorbRatio;
-  if (drainRatio > recoilAbsorbRatio) notes.push("Big Root ×1.3 drain");
+  if (drainRatioRaw > recoilAbsorbRatio) notes.push("Big Root ×1.3 drain");
+  const drainRatio = drainRatioRaw < 0 && attacker.ability === "Rock Head" ? 0 : drainRatioRaw;
+  if (drainRatioRaw < 0 && attacker.ability === "Rock Head") notes.push("Rock Head blocks recoil");
   const shellBellRatio = !ctx.magicRoom && attacker.item === "Shell Bell" ? 0.2 : 0;
   const attackerMagicGuard = isMagicGuardActive(attacker);
   const rockyHelmet = !attackerMagicGuard && !ctx.magicRoom && defender.item === "Rocky Helmet" && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 6) : 0;
@@ -3128,6 +3275,7 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
 
   if (defenderAbility === "Thick Fat" && (moveType === "Fire" || moveType === "Ice")) { mod *= 0.5; notes.push("Thick Fat ×0.5"); }
   if (["Filter","Solid Rock","Prism Armor"].includes(defenderAbility) && typeMod > 1) { mod *= 0.75; notes.push(`${defenderAbility} ×0.75`); }
+  if (defenderAbility === "Multiscale" && defender.currentHP >= defender.stats.HP) { mod *= 0.5; notes.push("Multiscale ×0.5"); }
   if (defenderAbility === "Dry Skin" && moveType === "Fire") { mod *= 1.25; notes.push("Dry Skin ×1.25 (Fire)"); }
 
   const resistBerryType = TYPE_RESIST_BERRIES[defender.item];
@@ -3213,7 +3361,8 @@ function getPassiveEndTurnEffects(target, other, ctx) {
     if (drain > 0) parts.push(`Leech Seed ${signedValueText(-drain)}`);
   }
   if (other?.status === "leech") {
-    const heal = Math.floor(other.stats.HP / 8);
+    const healBase = Math.floor(other.stats.HP / 8);
+    const heal = !ctx.magicRoom && target.item === "Big Root" ? Math.floor(healBase * 1.3) : healBase;
     delta += heal;
     if (heal > 0) parts.push(`Leech Seed ${signedValueText(heal)}`);
   }
@@ -3441,6 +3590,7 @@ function recalcIfNeeded() {
     calcDamage(atkPrefix, defPrefix, moveName, hitCount);
   }
   updateMoveDamageLabels();
+  refreshImportedMatchupIndicators();
 }
 
 function syncTypeDefaults(prefix, overrideSpecies) {
@@ -3526,6 +3676,16 @@ async function init() {
         }
       }
     }
+    const openingShauna = [];
+    const remainingTrainers = [];
+    for (const trainer of trainersFlat) {
+      if (openingShauna.length < 3 && trainer.route === "Aquacorde Town" && trainer.trainerName === "Shauna") {
+        openingShauna.push(trainer);
+      } else {
+        remainingTrainers.push(trainer);
+      }
+    }
+    trainersFlat = [...openingShauna, ...remainingTrainers];
 
     populateTrainerOptions("atk");
     populateTrainerOptions("def");
@@ -3533,7 +3693,8 @@ async function init() {
     // Collect all trainer items for item selects
     const trainerItems = new Set();
     for (const t of trainersFlat) for (const p of t.pokemon) if (p.HeldItem) trainerItems.add(p.HeldItem);
-    allItems = [...new Set([...BASE_ITEMS, ...Array.from(trainerItems).sort()])];
+    allItems = [...new Set([...BASE_ITEMS, ...Array.from(trainerItems)])]
+      .sort((a, b) => a.localeCompare(b));
 
     const species = listSpecies();
     const moveNames = [NO_MOVE_OPTION, ...Object.keys(moves).sort((a, b) => a.localeCompare(b))];
