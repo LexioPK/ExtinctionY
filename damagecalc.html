@@ -168,10 +168,41 @@ h1 { text-align: center; margin: 8px 0 6px; }
   padding: 5px 7px; font: inherit; background: #f0f0f0; color: inherit;
   display: inline-block; max-width: 100%;
 }
+.activatable-select-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.activatable-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.activatable-check input {
+  width: 13px;
+  height: 13px;
+  margin: 0;
+}
+.activatable-select-row > select,
+.activatable-select-row > .item-select-wrap {
+  flex: 1;
+  min-width: 0;
+}
+.activatable-desc {
+  margin-top: 2px;
+  font-size: 0.68rem;
+  color: var(--muted);
+  line-height: 1.3;
+}
 .item-select-wrap {
   display: flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 }
 .item-select-wrap select {
   flex: 1;
@@ -617,9 +648,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
   box-shadow: inset 0 0 0 1px rgba(36,92,172,.15);
 }
 .matchup-left-ohko { --slot-left-indicator: rgba(56, 181, 74, 0.45); }
-.matchup-left-2hko { --slot-left-indicator: rgba(56, 181, 74, 0.25); }
+.matchup-left-2hko { --slot-left-indicator: rgba(108, 211, 122, 0.18); }
 .matchup-right-ohko { --slot-right-indicator: rgba(220, 53, 69, 0.45); }
-.matchup-right-2hko { --slot-right-indicator: rgba(220, 53, 69, 0.25); }
+.matchup-right-2hko { --slot-right-indicator: rgba(236, 118, 129, 0.18); }
 .imported-poke-btn.in-party::after {
   content: "Party";
   position: absolute;
@@ -740,14 +771,28 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="field ia-ability">
           <label for="atk-ability">Ability</label>
-          <select id="atk-ability"></select>
+          <div class="activatable-select-row">
+            <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
+              <input id="atk-ability-toggle" type="checkbox">
+              <span>On</span>
+            </label>
+            <select id="atk-ability"></select>
+          </div>
+          <div id="atk-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
           <label for="atk-item">Item</label>
-          <div class="item-select-wrap">
-            <select id="atk-item"></select>
-            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+          <div class="activatable-select-row">
+            <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="atk-item-toggle" type="checkbox">
+              <span>On</span>
+            </label>
+            <div class="item-select-wrap">
+              <select id="atk-item"></select>
+              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
           </div>
+          <div id="atk-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-type2">
           <label for="atk-type2">Type 2</label>
@@ -1000,14 +1045,28 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="field ia-ability">
           <label for="def-ability">Ability</label>
-          <select id="def-ability"></select>
+          <div class="activatable-select-row">
+            <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
+              <input id="def-ability-toggle" type="checkbox">
+              <span>On</span>
+            </label>
+            <select id="def-ability"></select>
+          </div>
+          <div id="def-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
           <label for="def-item">Item</label>
-          <div class="item-select-wrap">
-            <select id="def-item"></select>
-            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+          <div class="activatable-select-row">
+            <label id="def-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="def-item-toggle" type="checkbox">
+              <span>On</span>
+            </label>
+            <div class="item-select-wrap">
+              <select id="def-item"></select>
+              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
           </div>
+          <div id="def-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-type2">
           <label for="def-type2">Type 2</label>
@@ -1243,6 +1302,20 @@ const FIXED_DAMAGE_MOVES = {
   "Dragon Rage":  () => 40,
   "Sonic Boom":   () => 20
 };
+const ALWAYS_CRIT_MOVES = new Set(["Storm Throw", "Self-Destruct", "Explosion", "Frost Breath"]);
+const DUAL_TYPE_MOVES = {
+  "Flying Press": ["Fighting", "Flying"]
+};
+const STATUS_POWER_MOVES = {
+  "Venoshock": { statuses: ["psn", "tox"], multiplier: 2, note: "Venoshock (poisoned target) ×2 BP" },
+  "Hex": { statuses: ["brn", "frz", "par", "slp", "psn", "tox"], multiplier: 2, note: "Hex (statused target) ×2 BP" }
+};
+const ACTIVATABLE_ABILITIES = {
+  "Intimidate": "Lowers opposing Pokémon Attack by -1",
+  "Demoralize": "Lowers opposing Pokémon Special Attack by -1",
+  "Transform": "Copies the opposing Pokémon and adds it to your Imported Pokémon",
+  "Trace": "Copies the opposing Pokémon's ability while active"
+};
 
 let pokedex = {};
 let moves = {};
@@ -1257,6 +1330,10 @@ let currentSelectedImportedIdx = -1;
 let importedPartyIds = [];
 const trainerState = { atk: 0, def: 1 };
 const TRAINER_STATE_STORAGE_KEY = "damageCalcTrainerState";
+const transientAbilityState = {
+  atk: { traceAbility: null, transformImportedId: null },
+  def: { traceAbility: null, transformImportedId: null }
+};
 
 // Ability names that were replaced in Extinction Y (old Showdown name → new game name)
 const ABILITY_REPLACEMENTS = {
@@ -1460,6 +1537,28 @@ function scrappyTypeMod(moveType, defender) {
   });
   return mod;
 }
+function getTypeModifier(moveName, moveType, defender) {
+  const dualTypes = DUAL_TYPE_MOVES[moveName];
+  if (dualTypes) {
+    return dualTypes.reduce((mod, type) => mod * effectiveness(type, defender.type1, defender.type2), 1);
+  }
+  if (moveName === "Freeze-Dry") {
+    let mod = 1;
+    [defender.type1, defender.type2].forEach(type => {
+      if (!type || type === "None") return;
+      mod *= type === "Water" ? 2 : ((TYPE_CHART[moveType] || {})[type] ?? 1);
+    });
+    return mod;
+  }
+  return effectiveness(moveType, defender.type1, defender.type2);
+}
+function getMoveStabBase(moveName, moveType, attacker) {
+  const stabTypes = DUAL_TYPE_MOVES[moveName] || [moveType];
+  return stabTypes.some(type => attacker.type1 === type || attacker.type2 === type) ? 1.5 : 1;
+}
+function getDisplayMoveType(moveName, moveType) {
+  return DUAL_TYPE_MOVES[moveName] ? DUAL_TYPE_MOVES[moveName].join("/") : moveType;
+}
 function buildDamageRolls(baseDamage, stab, typeMod, otherMod, fixedFn) {
   const rolls = [];
   for (let r = 85; r <= 100; r++) {
@@ -1547,6 +1646,133 @@ function syncImportedPartyIds() {
 
 function importedDisplayName(imported, idx) {
   return `Imported ${idx + 1}: ${imported.species}`;
+}
+function getOpposingPrefix(prefix) {
+  return prefix === "atk" ? "def" : "atk";
+}
+function isActivatableItem(item) {
+  return item === "Air Balloon" || !!TYPE_GEM_ITEMS[item] || !!TYPE_RESIST_BERRIES[item];
+}
+function getSelectedAbility(prefix) {
+  return el(`${prefix}-ability`)?.value || "No Ability";
+}
+function getSelectedItem(prefix) {
+  return el(`${prefix}-item`)?.value || "None";
+}
+function isAbilityActivationChecked(prefix) {
+  return !!el(`${prefix}-ability-toggle`)?.checked;
+}
+function isItemActivationChecked(prefix) {
+  const item = getSelectedItem(prefix);
+  if (!isActivatableItem(item)) return true;
+  return !!el(`${prefix}-item-toggle`)?.checked;
+}
+function getEffectiveAbilityFromUI(prefix) {
+  const ability = getSelectedAbility(prefix);
+  if (ability === "Trace" && isAbilityActivationChecked(prefix) && transientAbilityState[prefix].traceAbility) {
+    return transientAbilityState[prefix].traceAbility;
+  }
+  return ability;
+}
+function getEffectiveItemFromUI(prefix) {
+  const item = getSelectedItem(prefix);
+  return isActivatableItem(item) && !isItemActivationChecked(prefix) ? "None" : item;
+}
+function getOpposingStatDrop(prefix, stat, targetAbility = getEffectiveAbilityFromUI(prefix)) {
+  if (targetAbility === "Clear Body") return 0;
+  const opposingPrefix = getOpposingPrefix(prefix);
+  const opposingAbility = getEffectiveAbilityFromUI(opposingPrefix);
+  if (stat === "Atk" && opposingAbility === "Intimidate" && isAbilityActivationChecked(opposingPrefix)) return -1;
+  if (stat === "SpA" && opposingAbility === "Demoralize" && isAbilityActivationChecked(opposingPrefix)) return -1;
+  return 0;
+}
+function ensureImportedCopyFromTransform(prefix) {
+  const opponent = readSet(getOpposingPrefix(prefix));
+  const status = el("pokemon-import-status");
+  if (!opponent) return;
+  const importedSet = normalizeImportedSet({
+    species: opponent.name,
+    item: opponent.baseItem || opponent.item || "None",
+    ability: opponent.baseAbility || opponent.ability || "No Ability",
+    level: opponent.level,
+    nature: opponent.nature,
+    ivs: opponent.iv,
+    moves: (opponent.moves || []).map(move => move === NO_MOVE_OPTION ? "" : move)
+  });
+  if (!importedSet) return;
+  importedPokemonSets.push(importedSet);
+  sortImportedByDex();
+  transientAbilityState[prefix].transformImportedId = importedSet.id;
+  renderImportedPokemonList();
+  renderImportedParty();
+  persistImportedState();
+  if (status) status.textContent = `${opponent.name} copied to your Imported Pokémon.`;
+}
+function resetTransientAbilityState(prefix, options = {}) {
+  transientAbilityState[prefix].traceAbility = null;
+  if (options.clearTransformId) transientAbilityState[prefix].transformImportedId = null;
+}
+function refreshAbilityToggleUI(prefix) {
+  const ability = getSelectedAbility(prefix);
+  const wrap = el(`${prefix}-ability-toggle-wrap`);
+  const toggle = el(`${prefix}-ability-toggle`);
+  const desc = el(`${prefix}-ability-toggle-text`);
+  if (!wrap || !toggle || !desc) return;
+  const isActivatable = !!ACTIVATABLE_ABILITIES[ability];
+  wrap.hidden = !isActivatable;
+  desc.hidden = !isActivatable;
+  if (!isActivatable) {
+    toggle.checked = false;
+    desc.textContent = "";
+    resetTransientAbilityState(prefix, { clearTransformId: true });
+    return;
+  }
+  let text = ACTIVATABLE_ABILITIES[ability];
+  if (ability === "Trace" && toggle.checked && transientAbilityState[prefix].traceAbility) {
+    text += ` (active: ${transientAbilityState[prefix].traceAbility})`;
+  }
+  desc.textContent = text;
+}
+function refreshItemToggleUI(prefix) {
+  const item = getSelectedItem(prefix);
+  const wrap = el(`${prefix}-item-toggle-wrap`);
+  const toggle = el(`${prefix}-item-toggle`);
+  const desc = el(`${prefix}-item-toggle-text`);
+  if (!wrap || !toggle || !desc) return;
+  const isActivatable = isActivatableItem(item);
+  wrap.hidden = !isActivatable;
+  desc.hidden = !isActivatable;
+  if (!isActivatable) {
+    toggle.checked = false;
+    toggle.dataset.item = "";
+    desc.textContent = "";
+    return;
+  }
+  if (toggle.dataset.item !== item) {
+    toggle.checked = true;
+    toggle.dataset.item = item;
+  }
+  if (item === "Air Balloon") desc.textContent = "Air Balloon remains active while checked";
+  else if (TYPE_GEM_ITEMS[item]) desc.textContent = `${item} power boost is active while checked`;
+  else desc.textContent = `${item} damage reduction is active while checked`;
+}
+function refreshActivationControls(prefix) {
+  refreshAbilityToggleUI(prefix);
+  refreshItemToggleUI(prefix);
+}
+function onAbilityToggleChange(prefix) {
+  const ability = getSelectedAbility(prefix);
+  const toggle = el(`${prefix}-ability-toggle`);
+  if (!toggle) return;
+  if (ability === "Trace") {
+    if (toggle.checked) transientAbilityState[prefix].traceAbility = getEffectiveAbilityFromUI(getOpposingPrefix(prefix)) || "No Ability";
+    else transientAbilityState[prefix].traceAbility = null;
+  } else if (ability === "Transform") {
+    if (toggle.checked) ensureImportedCopyFromTransform(prefix);
+    else transientAbilityState[prefix].transformImportedId = null;
+  }
+  refreshAbilityToggleUI(prefix);
+  recalcIfNeeded();
 }
 
 /* ── Toggle helpers ── */
@@ -1750,6 +1976,7 @@ function updateStatTotals(prefix) {
   if (!p) return;
   const level = clamp(num(el(`${prefix}-level`)?.value, 50), 1, 100);
   const nature = el(`${prefix}-nature`)?.value || "Hardy";
+  const effectiveAbility = getEffectiveAbilityFromUI(prefix);
 
   STATS.forEach(stat => {
     const base = p.BaseStats?.[stat] ?? 1;
@@ -1762,13 +1989,12 @@ function updateStatTotals(prefix) {
     let display = raw;
     if (stat !== "HP") {
       const boost = clamp(num(el(`${prefix}-boost-${stat}`)?.value, 0), -6, 6);
-      // Stage multiplier: +stage = (2+stage)/2, -stage = 2/(2+|stage|)
-      if (boost !== 0) display = Math.floor(raw * stageMultiplier(boost));
-      // Weather speed boost (Swift Swim, Slush Rush, Chlorophyll, Sand Rush)
+      const externalDrop = getOpposingStatDrop(prefix, stat, effectiveAbility);
+      const stage = clamp(boost + externalDrop, -6, 6);
+      if (stage !== 0) display = Math.floor(raw * stageMultiplier(stage));
       if (stat === "Spe") {
-        const ability = el(`${prefix}-ability`)?.value || "";
         const weather = getToggleValue("weather-group") || "none";
-        if (WEATHER_SPEED_ABILITIES[ability] === weather) {
+        if (WEATHER_SPEED_ABILITIES[effectiveAbility] === weather) {
           display = display * 2;
         }
       }
@@ -2139,6 +2365,10 @@ function fillTrainerPokemon(prefix, tp) {
   if (abilitySel && tp.Ability) {
     addOptionIfMissing(abilitySel, tp.Ability);
     abilitySel.value = tp.Ability;
+    const abilityToggle = el(`${prefix}-ability-toggle`);
+    if (abilityToggle) abilityToggle.checked = false;
+    resetTransientAbilityState(prefix, { clearTransformId: true });
+    refreshAbilityToggleUI(prefix);
     const autoWeather = WEATHER_SET_ABILITIES[tp.Ability];
     if (autoWeather) setExclusiveToggle("weather-group", autoWeather);
   }
@@ -2150,6 +2380,7 @@ function fillTrainerPokemon(prefix, tp) {
     addOptionIfMissing(itemSel, itemName);
     itemSel.value = itemName;
   }
+  refreshItemToggleUI(prefix);
   updateItemSprite(prefix);
 
   // Moves
@@ -2391,7 +2622,7 @@ function getMatchupRating(outcome) {
   const ohkoChance = koChance(outcome.damageCounts, outcome.currentHP, 1, 0);
   if (ohkoChance > 0) return "ohko";
   const twohkoChance = koChance(outcome.damageCounts, outcome.currentHP, 2, outcome.defenderEndTurn.delta);
-  if (twohkoChance >= 0.999999) return "2hko";
+  if (twohkoChance > 0) return "2hko";
   return null;
 }
 
@@ -2660,6 +2891,10 @@ function fillImportedPokemon(prefix, imported) {
     const ability = imported.ability || abilitySel.value || "No Ability";
     addOptionIfMissing(abilitySel, ability);
     abilitySel.value = ability;
+    const abilityToggle = el(`${prefix}-ability-toggle`);
+    if (abilityToggle) abilityToggle.checked = false;
+    resetTransientAbilityState(prefix, { clearTransformId: true });
+    refreshAbilityToggleUI(prefix);
     const autoWeather = WEATHER_SET_ABILITIES[ability];
     if (autoWeather) setExclusiveToggle("weather-group", autoWeather);
   }
@@ -2670,6 +2905,7 @@ function fillImportedPokemon(prefix, imported) {
     addOptionIfMissing(itemSel, item);
     itemSel.value = item;
   }
+  refreshItemToggleUI(prefix);
   updateItemSprite(prefix);
 
   const statusSel = el(`${prefix}-status`);
@@ -2840,39 +3076,48 @@ function calculateDamageOutcomeForSets(attacker, defender, moveName, hitCount, c
 
   if (moveCategory === "Status") return { noDamageText: `${moveName} is a status move — no direct damage.` };
 
-  if (defenderAbility === "Wonder Guard") {
-    const wm = effectiveness(move.Type, defender.type1, defender.type2);
-    if (wm <= 1) return { noDamageText: `${defender.name}: immune via Wonder Guard (not super effective).` };
-  }
-
   let fixedFn = FIXED_DAMAGE_MOVES[moveName];
   if (!fixedFn && rawPower <= 1) {
     if (/always inflicts 40 HP damage/i.test(move.Description || "")) fixedFn = () => 40;
     if (/always inflicts 20 HP damage/i.test(move.Description || "")) fixedFn = () => 20;
-    if (/damage equal to the user['\u2019]s level/i.test(move.Description || "")) fixedFn = (c) => c.attacker.level;
+    if (/damage equal to the user['’]s level/i.test(move.Description || "")) fixedFn = (c) => c.attacker.level;
   }
 
   const notes = [];
-  const typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, ctx, notes);
+  const typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, defender, ctx, notes);
   const moveType = typePower.type;
+  const displayMoveType = getDisplayMoveType(moveName, moveType);
   const power = typePower.power;
-  const critical = ctx.critical && !critBlockedByAbility(defenderAbility);
-  if (ctx.critical && !critical) notes.push(`${defenderAbility} blocks critical hits`);
+  const alwaysCrit = ALWAYS_CRIT_MOVES.has(moveName);
+  const critical = (ctx.critical || alwaysCrit) && !critBlockedByAbility(defenderAbility);
+  if (alwaysCrit && critical) notes.push("Always crit");
+  else if ((ctx.critical || alwaysCrit) && !critical) notes.push(`${defenderAbility} blocks critical hits`);
 
   if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item, ctx.magicRoom)) {
    return { noDamageText: `${defender.name} is immune to Ground-type moves.` };
   }
 
-  let typeMod = effectiveness(moveType, defender.type1, defender.type2);
+  let typeMod = getTypeModifier(moveName, moveType, defender);
   if (attacker.ability === "Scrappy" && typeMod === 0) {
-   const scrappyMod = scrappyTypeMod(moveType, defender);
-   if (scrappyMod !== null) {
-     typeMod = scrappyMod;
-     notes.push("Scrappy ignores Ghost immunity");
-   }
+    if (moveName === "Flying Press") {
+      const scrappyMod = scrappyTypeMod("Fighting", defender);
+      if (scrappyMod !== null) {
+        typeMod = scrappyMod * effectiveness("Flying", defender.type1, defender.type2);
+        notes.push("Scrappy ignores Ghost immunity");
+      }
+    } else {
+      const scrappyMod = scrappyTypeMod(moveType, defender);
+      if (scrappyMod !== null) {
+        typeMod = scrappyMod;
+        notes.push("Scrappy ignores Ghost immunity");
+      }
+    }
   }
   if (typeMod === 0) return { noDamageText: `${attacker.name} uses ${moveName}: no effect (0×).` };
 
+  if (defenderAbility === "Wonder Guard") {
+    if (typeMod <= 1) return { noDamageText: `${defender.name}: immune via Wonder Guard (not super effective).` };
+  }
   if (defenderAbility === "Flash Fire" && moveType === "Fire") {
    return { noDamageText: `${defender.name}: absorbed by Flash Fire.` };
   }
@@ -2887,28 +3132,43 @@ function calculateDamageOutcomeForSets(attacker, defender, moveName, hitCount, c
     return { noDamageText: `${defender.name}: immune via Bulletproof.` };
   }
 
-  const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
+  const stabBase = getMoveStabBase(moveName, moveType, attacker);
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
 
   let ad = null;
   let levelFactor = 0;
-  let baseOneHit;
+  let hitRollGroups = [];
   if (fixedFn) {
-    baseOneHit = fixedFn({ attacker, defender, move, moveType, power });
+    const fixedDamage = fixedFn({ attacker, defender, move, moveType, power });
+    hitRollGroups = [buildDamageRolls(fixedDamage, stab, typeMod, 1, fixedFn)];
   } else {
     ad = getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName, notes, ctx, defenderAbility);
     levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
-    baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
   }
 
   const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, { ...ctx, critical }, typeMod, notes, defenderAbility);
+  if (!fixedFn) {
+    if (moveName === "Triple Axel") {
+      const hitPowers = [20, 40, 60].slice(0, clamp(hitCount, 1, 3));
+      notes.push(`Triple Axel BP ${hitPowers.join("+")}`);
+      hitRollGroups = hitPowers.map(hitPower => {
+        const base = Math.floor(Math.floor((levelFactor * hitPower * ad.atk) / ad.def) / 50) + 2;
+        return buildDamageRolls(base, stab, typeMod, otherMod, null);
+      });
+    } else {
+      const baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
+      const oneHitRolls = buildDamageRolls(baseOneHit, stab, typeMod, otherMod, null);
+      hitRollGroups = Array.from({ length: Math.max(1, hitCount) }, () => oneHitRolls);
+    }
+  }
 
-  const oneHitRolls = buildDamageRolls(baseOneHit, stab, typeMod, otherMod, fixedFn);
-
-  let damageCounts = buildTotalDamageDistribution(oneHitRolls, hitCount);
+  let damageCounts = buildSingleTurnDistribution(hitRollGroups[0] || [0]);
+  for (let i = 1; i < hitRollGroups.length; i++) {
+    damageCounts = convolveCountMaps(damageCounts, buildSingleTurnDistribution(hitRollGroups[i]));
+  }
   if ((attacker.ability === "Parental Bond" || attacker.ability === "Hyper Aggression") && moveCanUseParentalBond(moveName, move, hitCount)) {
     const secondHitBase = fixedFn
-      ? Math.max(1, Math.floor(baseOneHit * 0.5))
+      ? Math.max(1, Math.floor(hitRollGroups[0][0] * 0.5))
       : Math.floor(Math.floor((levelFactor * (power * 0.5) * ad.atk) / ad.def) / 50) + 2;
     const secondHitRolls = buildDamageRolls(secondHitBase, stab, typeMod, otherMod, fixedFn);
     damageCounts = convolveCountMaps(damageCounts, buildSingleTurnDistribution(secondHitRolls));
@@ -2974,12 +3234,13 @@ function calculateDamageOutcomeForSets(attacker, defender, moveName, hitCount, c
     ctx,
     notes,
     moveType,
+    displayMoveType,
     power,
     typeMod,
     hitCount,
     damageCounts,
     damageRolls,
-    baseRolls: oneHitRolls,
+    baseRolls: hitRollGroups.length === 1 ? hitRollGroups[0] : damageRolls,
     minD,
     maxD,
     hp,
@@ -3079,8 +3340,10 @@ function readSet(prefix) {
   if (!p) return null;
 
   const level = clamp(num(el(`${prefix}-level`)?.value, 50), 1, 100);
-  const ability = el(`${prefix}-ability`)?.value || "No Ability";
-  const item = el(`${prefix}-item`)?.value || "None";
+  const baseAbility = getSelectedAbility(prefix);
+  const baseItem = getSelectedItem(prefix);
+  const ability = getEffectiveAbilityFromUI(prefix);
+  const item = getEffectiveItemFromUI(prefix);
   const nature = el(`${prefix}-nature`)?.value || "Hardy";
   const status = el(`${prefix}-status`)?.value || "none";
   const type1 = el(`${prefix}-type1`)?.value || "Normal";
@@ -3090,8 +3353,9 @@ function readSet(prefix) {
   const iv = {}, boost = {};
   STATS.forEach(s => {
     iv[s] = clamp(num(el(`${prefix}-iv-${s}`)?.value, 31), 0, 31);
-    boost[s] = clamp(num(el(`${prefix}-boost-${s}`)?.value, 0), -6, 6);
-    if (el(`${prefix}-boost-${s}`)) el(`${prefix}-boost-${s}`).value = boost[s];
+    const baseBoost = clamp(num(el(`${prefix}-boost-${s}`)?.value, 0), -6, 6);
+    boost[s] = s === "HP" ? baseBoost : clamp(baseBoost + getOpposingStatDrop(prefix, s, ability), -6, 6);
+    if (el(`${prefix}-boost-${s}`)) el(`${prefix}-boost-${s}`).value = baseBoost;
     if (el(`${prefix}-iv-${s}`)) el(`${prefix}-iv-${s}`).value = iv[s];
   });
 
@@ -3104,8 +3368,13 @@ function readSet(prefix) {
   const maxHP = stats.HP;
   const currentHPInp = el(`${prefix}-current-hp`);
   const currentHP = currentHPInp ? clamp(num(currentHPInp.value, maxHP), 1, maxHP) : maxHP;
+  const moveset = [];
+  for (let i = 0; i < 4; i++) {
+    const moveName = el(`${prefix}-move-${i}`)?.value || NO_MOVE_OPTION;
+    moveset.push(moveName === NO_MOVE_OPTION ? "" : moveName);
+  }
 
-  return { name: speciesName, level, ability, item, nature, status, type1, type2, grounded, iv, boost, stats, currentHP, data: p };
+  return { name: speciesName, level, ability, baseAbility, item, baseItem, nature, status, type1, type2, grounded, iv, boost, stats, currentHP, moves: moveset, data: p };
 }
 
 /* ── Move helpers ── */
@@ -3131,7 +3400,7 @@ function isSpreadMove(move) {
 }
 
 /* ── Damage modifiers ── */
-function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, ctx, notes) {
+function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, defender, ctx, notes) {
   let type = moveType, power = basePower;
   if (ctx.ionDeluge && type === "Normal") { type = "Electric"; notes.push("Ion Deluge: Normal→Electric"); }
   const aAbility = attacker.ability;
@@ -3148,50 +3417,65 @@ function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, 
     if (ctx.weather === "sand") type = "Rock";
     if (ctx.weather === "hail") type = "Ice";
   }
+  const statusPower = STATUS_POWER_MOVES[moveName];
+  if (statusPower && statusPower.statuses.includes(defender.status)) {
+    power *= statusPower.multiplier;
+    notes.push(statusPower.note);
+  }
+  if (moveName === "Knock Off" && defender.item !== "None") {
+    power *= 1.5;
+    notes.push("Knock Off (target has item) ×1.5 BP");
+  }
   if (aAbility === "Technician" && power <= 60) { power *= 1.5; notes.push("Technician ×1.5 BP"); }
   return { type, power: Math.max(1, Math.round(power * 10) / 10) };
 }
 
 function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName, notes, ctx, defenderAbility) {
+  const usesDefenseStat = ["Psyshock", "Psycrash"].includes(moveName);
+  const foulPlay = moveName === "Foul Play";
   const isPhysical = moveCategory === "Physical";
-  const atkStat = isPhysical ? "Atk" : "SpA";
-  const defStat = isPhysical
+  const atkStat = foulPlay ? "Atk" : (isPhysical ? "Atk" : "SpA");
+  const defStat = usesDefenseStat
     ? (ctx.wonderRoom ? "SpD" : "Def")
-    : (ctx.wonderRoom ? "Def" : "SpD");
+    : (isPhysical
+      ? (ctx.wonderRoom ? "SpD" : "Def")
+      : (ctx.wonderRoom ? "Def" : "SpD"));
   if (ctx.wonderRoom) notes.push("Wonder Room: Def↔SpD");
+  if (usesDefenseStat) notes.push(`${moveName} targets Defense`);
+  if (foulPlay) notes.push("Foul Play uses the target's Attack");
 
-  let atkStage = attacker.boost[atkStat] || 0;
+  let atkStage = foulPlay ? (defender.boost.Atk || 0) : (attacker.boost[atkStat] || 0);
   let defStage = defender.boost[defStat] || 0;
   if (critical) { if (atkStage < 0) atkStage = 0; if (defStage > 0) defStage = 0; }
 
-  let atk = attacker.stats[atkStat] * stageMultiplier(atkStage);
+  let atk = (foulPlay ? defender.stats.Atk : attacker.stats[atkStat]) * stageMultiplier(atkStage);
   let def = defender.stats[defStat] * stageMultiplier(defStage);
 
-  if (isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) { atk *= 2; notes.push(`${attacker.ability} ×2 Atk`); }
-  if (!ctx.magicRoom && isPhysical && attacker.item === "Thick Club" && (speciesMatches(attacker, "Cubone") || speciesMatches(attacker, "Marowak"))) { atk *= 2; notes.push("Thick Club ×2 Atk"); }
-  if (!ctx.magicRoom && attacker.item === "Light Ball" && speciesMatches(attacker, "Pikachu")) {
+  if (!foulPlay && isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) { atk *= 2; notes.push(`${attacker.ability} ×2 Atk`); }
+  if (!foulPlay && !ctx.magicRoom && isPhysical && attacker.item === "Thick Club" && (speciesMatches(attacker, "Cubone") || speciesMatches(attacker, "Marowak"))) { atk *= 2; notes.push("Thick Club ×2 Atk"); }
+  if (!foulPlay && !ctx.magicRoom && attacker.item === "Light Ball" && speciesMatches(attacker, "Pikachu")) {
     atk *= 2;
     notes.push(`Light Ball ×2 ${atkStat}`);
   }
-  if (isPhysical && attacker.ability === "Hustle") { atk *= 1.5; notes.push("Hustle ×1.5 Atk"); }
-  if (isPhysical && attacker.ability === "Guts" && attacker.status !== "none") { atk *= 1.5; notes.push("Guts ×1.5 Atk"); }
-  if (isPhysical && attacker.ability === "Toxic Boost" && ["psn","tox"].includes(attacker.status)) { atk *= 1.5; notes.push("Toxic Boost ×1.5 Atk"); }
-  if (!ctx.magicRoom && isPhysical && attacker.item === "Choice Band") { atk *= 1.5; notes.push("Choice Band ×1.5 Atk"); }
+  if (!foulPlay && isPhysical && attacker.ability === "Hustle") { atk *= 1.5; notes.push("Hustle ×1.5 Atk"); }
+  if (!foulPlay && isPhysical && attacker.ability === "Guts" && attacker.status !== "none") { atk *= 1.5; notes.push("Guts ×1.5 Atk"); }
+  if (!foulPlay && isPhysical && attacker.ability === "Toxic Boost" && ["psn","tox"].includes(attacker.status)) { atk *= 1.5; notes.push("Toxic Boost ×1.5 Atk"); }
+  if (!foulPlay && !ctx.magicRoom && isPhysical && attacker.item === "Choice Band") { atk *= 1.5; notes.push("Choice Band ×1.5 Atk"); }
   if (!ctx.magicRoom && !isPhysical && attacker.item === "Choice Specs") { atk *= 1.5; notes.push("Choice Specs ×1.5 SpA"); }
   if (!isPhysical && attacker.ability === "Solar Power" && ctx.weather === "sun") { atk *= 1.5; notes.push("Solar Power ×1.5 SpA"); }
-  if (!ctx.magicRoom && !isPhysical && defender.item === "Assault Vest") { def *= 1.5; notes.push("Assault Vest ×1.5 SpD"); }
+  if (!ctx.magicRoom && !usesDefenseStat && !isPhysical && defender.item === "Assault Vest") { def *= 1.5; notes.push("Assault Vest ×1.5 SpD"); }
   if (!ctx.magicRoom && defender.item === "Eviolite" && canSpeciesEvolve(defender.name)) {
     def *= 1.5;
     notes.push(`Eviolite ×1.5 ${defStat}`);
   }
-  if (isPhysical && defenderAbility === "Biodiverse" && ctx.terrain !== "none") { def *= 1.5; notes.push("Biodiverse ×1.5 Def"); }
+  if (defStat === "Def" && defenderAbility === "Biodiverse" && ctx.terrain !== "none") { def *= 1.5; notes.push("Biodiverse ×1.5 Def"); }
   if (defenderAbility === "Dune Guard" && ctx.weather === "sand") { def *= 1.25; notes.push("Dune Guard ×1.25 Def/SpD"); }
   if (defenderAbility === "Glacial Guard" && ctx.weather === "hail") { def *= 1.25; notes.push("Glacial Guard ×1.25 Def/SpD"); }
-  if (!isPhysical && (defender.type1 === "Rock" || defender.type2 === "Rock") && ctx.weather === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
-  if (defenderAbility === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push("Perseverance ×1.3 Def"); }
-  if (isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") { atk *= 0.5; notes.push("Burn ×0.5 Atk"); }
-  if (isPhysical && ctx.flowerGiftAtk && ctx.weather === "sun") { atk *= 1.5; notes.push("Flower Gift ×1.5 Atk"); }
-  if (!isPhysical && ctx.flowerGiftDef && ctx.weather === "sun") { def *= 1.5; notes.push("Flower Gift ×1.5 SpD"); }
+  if (defStat === "SpD" && (defender.type1 === "Rock" || defender.type2 === "Rock") && ctx.weather === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
+  if (defenderAbility === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push(`Perseverance ×1.3 ${defStat}`); }
+  if (!foulPlay && isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") { atk *= 0.5; notes.push("Burn ×0.5 Atk"); }
+  if (!foulPlay && isPhysical && ctx.flowerGiftAtk && ctx.weather === "sun") { atk *= 1.5; notes.push("Flower Gift ×1.5 Atk"); }
+  if ((usesDefenseStat || !isPhysical) && ctx.flowerGiftDef && ctx.weather === "sun") { def *= 1.5; notes.push(`Flower Gift ×1.5 ${defStat}`); }
 
   return { atk: Math.max(1, Math.floor(atk)), def: Math.max(1, Math.floor(def)), isPhysical };
 }
@@ -3449,6 +3733,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
     ctx,
     notes,
     moveType,
+    displayMoveType,
     power,
     typeMod,
     damageCounts,
@@ -3465,7 +3750,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
     selfParts
   } = outcome;
 
-  const stabBase = (attacker.type1 === moveType || attacker.type2 === moveType) ? 1.5 : 1;
+  const stabBase = getMoveStabBase(moveName, moveType, attacker);
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
   if (stab > 1) notes.push(stab === 2 ? "STAB ×2 (Adaptability)" : "STAB ×1.5");
 
@@ -3536,7 +3821,7 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
 
   // Line 4: Move details
   resultEl.appendChild(resultRow([
-    {bold: false, text: `${moveType} | ${move.Category} | BP ${formatBasePower(power)}${hitCount > 1 ? ` | ${hitCount} hits` : ""}`}
+    {bold: false, text: `${displayMoveType} | ${move.Category} | BP ${formatBasePower(power)}${hitCount > 1 ? ` | ${hitCount} hits` : ""}`}
   ]));
 
   // Greyed modifier notes (only if any)
@@ -3604,6 +3889,10 @@ function syncTypeDefaults(prefix, overrideSpecies) {
   if (t2) t2.value = p.Type2 && p.Type2 !== p.Type1 ? p.Type2 : "None";
   const abilityList = toAbilityList(p);
   setSelectOptions(`${prefix}-ability`, abilityList.length ? abilityList : ["No Ability"], abilityList[0]);
+  const abilityToggle = el(`${prefix}-ability-toggle`);
+  if (abilityToggle) abilityToggle.checked = false;
+  resetTransientAbilityState(prefix, { clearTransformId: true });
+  refreshActivationControls(prefix);
   updateStatTotals(prefix);
 }
 
@@ -3617,13 +3906,27 @@ function bindInputs() {
         node.addEventListener("change", recalcIfNeeded);
       }
     });
-    el(`${prefix}-item`)?.addEventListener("change", () => updateItemSprite(prefix));
+    el(`${prefix}-item`)?.addEventListener("change", () => {
+      refreshItemToggleUI(prefix);
+      updateItemSprite(prefix);
+      recalcIfNeeded();
+    });
+    el(`${prefix}-item-toggle`)?.addEventListener("change", () => {
+      refreshItemToggleUI(prefix);
+      recalcIfNeeded();
+    });
 
     el(`${prefix}-ability`)?.addEventListener("change", () => {
       const ability = el(`${prefix}-ability`)?.value;
+      const abilityToggle = el(`${prefix}-ability-toggle`);
+      if (abilityToggle) abilityToggle.checked = false;
+      resetTransientAbilityState(prefix, { clearTransformId: true });
+      refreshAbilityToggleUI(prefix);
       const autoWeather = WEATHER_SET_ABILITIES[ability];
       if (autoWeather) setExclusiveToggle("weather-group", autoWeather);
+      recalcIfNeeded();
     });
+    el(`${prefix}-ability-toggle`)?.addEventListener("change", () => onAbilityToggleChange(prefix));
 
     [`${prefix}-stat-wrap`].forEach(wid => {
       const wrap = el(wid);
