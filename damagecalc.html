@@ -221,10 +221,10 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid {
   display: grid;
   grid-template-areas:
-    "species  species  sprite"
-    "type1    ability  item  "
-    "type2    nature   level ";
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    "species  species  species  sprite"
+    "type1    toggle   ability  item  "
+    "type2    .        nature   level ";
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -277,6 +277,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-species { grid-area: species; }
 .ia-type1   { grid-area: type1; }
 .ia-type2   { grid-area: type2; }
+.ia-toggle  { grid-area: toggle; display: flex; align-items: flex-end; padding-bottom: 2px; }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
@@ -769,15 +770,15 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <label for="atk-type1">Type 1</label>
           <select id="atk-type1"></select>
         </div>
+        <div class="ia-toggle">
+          <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
+            <input id="atk-ability-toggle" type="checkbox">
+            <span>On</span>
+          </label>
+        </div>
         <div class="field ia-ability">
           <label for="atk-ability">Ability</label>
-          <div class="activatable-select-row">
-            <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
-              <input id="atk-ability-toggle" type="checkbox">
-              <span>On</span>
-            </label>
-            <select id="atk-ability"></select>
-          </div>
+          <select id="atk-ability"></select>
           <div id="atk-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
@@ -1043,15 +1044,15 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <label for="def-type1">Type 1</label>
           <select id="def-type1"></select>
         </div>
+        <div class="ia-toggle">
+          <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
+            <input id="def-ability-toggle" type="checkbox">
+            <span>On</span>
+          </label>
+        </div>
         <div class="field ia-ability">
           <label for="def-ability">Ability</label>
-          <div class="activatable-select-row">
-            <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
-              <input id="def-ability-toggle" type="checkbox">
-              <span>On</span>
-            </label>
-            <select id="def-ability"></select>
-          </div>
+          <select id="def-ability"></select>
           <div id="def-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
@@ -2617,12 +2618,12 @@ function buildImportedBattleSet(imported) {
   };
 }
 
-function getMatchupRating(outcome) {
+function getMatchupRating(outcome, guaranteed = false) {
   if (!outcome || outcome.noDamageText) return null;
   const ohkoChance = koChance(outcome.damageCounts, outcome.currentHP, 1, 0);
-  if (ohkoChance > 0) return "ohko";
+  if (guaranteed ? ohkoChance >= 1 : ohkoChance > 0) return "ohko";
   const twohkoChance = koChance(outcome.damageCounts, outcome.currentHP, 2, outcome.defenderEndTurn.delta);
-  if (twohkoChance > 0) return "2hko";
+  if (guaranteed ? twohkoChance >= 1 : twohkoChance > 0) return "2hko";
   return null;
 }
 
@@ -2634,7 +2635,7 @@ function evaluateImportedMatchup(importedSet, opponentSet, atkCtx, defCtx) {
     if (!moveName || moveName === NO_MOVE_OPTION || !moves[moveName]) continue;
     const hitCount = autoHitCount(moveName, moves[moveName]);
     const outcome = calculateDamageOutcomeForSets(importedSet, opponentSet, moveName, hitCount, atkCtx);
-    const rating = getMatchupRating(outcome);
+    const rating = getMatchupRating(outcome, true);
     if (rating === "ohko") {
       result.offense = "ohko";
       break;
@@ -2648,7 +2649,7 @@ function evaluateImportedMatchup(importedSet, opponentSet, atkCtx, defCtx) {
     const hitsInput = el(`def-move-hits-${i}`);
     const hitCount = hitsInput ? clamp(num(hitsInput.value, 1), 1, 10) : 1;
     const outcome = calculateDamageOutcomeForSets(opponentSet, importedSet, moveName, hitCount, defCtx);
-    const rating = getMatchupRating(outcome);
+    const rating = getMatchupRating(outcome, false);
     if (rating === "ohko") {
       result.threat = "ohko";
       break;
