@@ -174,6 +174,15 @@ h1 { text-align: center; margin: 8px 0 6px; }
   gap: 6px;
   min-width: 0;
 }
+.activatable-label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.activatable-label-row > label[for] {
+  margin-bottom: 0;
+}
 .activatable-check {
   display: inline-flex;
   align-items: center;
@@ -279,9 +288,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-toggle  {
   grid-area: toggle;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
-  padding-bottom: 2px;
+  padding-bottom: 8px;
 }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
@@ -775,7 +784,7 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <label for="atk-type1">Type 1</label>
           <select id="atk-type1"></select>
         </div>
-        <div class="ia-toggle">
+        <div id="atk-ability-toggle-slot" class="ia-toggle" hidden>
           <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
             <input id="atk-ability-toggle" type="checkbox">
           </label>
@@ -786,15 +795,15 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <div id="atk-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
-          <label for="atk-item">Item</label>
-          <div class="activatable-select-row">
+          <div class="activatable-label-row">
             <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
               <input id="atk-item-toggle" type="checkbox">
             </label>
-            <div class="item-select-wrap">
-              <select id="atk-item"></select>
-              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-            </div>
+            <label for="atk-item">Item</label>
+          </div>
+          <div class="item-select-wrap">
+            <select id="atk-item"></select>
+            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
           </div>
           <div id="atk-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
@@ -1047,7 +1056,7 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <label for="def-type1">Type 1</label>
           <select id="def-type1"></select>
         </div>
-        <div class="ia-toggle">
+        <div id="def-ability-toggle-slot" class="ia-toggle" hidden>
           <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
             <input id="def-ability-toggle" type="checkbox">
           </label>
@@ -1058,15 +1067,15 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <div id="def-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
-          <label for="def-item">Item</label>
-          <div class="activatable-select-row">
+          <div class="activatable-label-row">
             <label id="def-item-toggle-wrap" class="activatable-check" hidden>
               <input id="def-item-toggle" type="checkbox">
             </label>
-            <div class="item-select-wrap">
-              <select id="def-item"></select>
-              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-            </div>
+            <label for="def-item">Item</label>
+          </div>
+          <div class="item-select-wrap">
+            <select id="def-item"></select>
+            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
           </div>
           <div id="def-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
@@ -1716,11 +1725,13 @@ function resetTransientAbilityState(prefix, options = {}) {
 }
 function refreshAbilityToggleUI(prefix) {
   const ability = getSelectedAbility(prefix);
+  const slot = el(`${prefix}-ability-toggle-slot`);
   const wrap = el(`${prefix}-ability-toggle-wrap`);
   const toggle = el(`${prefix}-ability-toggle`);
   const desc = el(`${prefix}-ability-toggle-text`);
   if (!wrap || !toggle || !desc) return;
   const isActivatable = !!ACTIVATABLE_ABILITIES[ability];
+  if (slot) slot.hidden = !isActivatable;
   wrap.hidden = !isActivatable;
   desc.hidden = !isActivatable;
   if (!isActivatable) {
