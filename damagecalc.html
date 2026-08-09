@@ -224,9 +224,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
   display: grid;
   grid-template-areas:
     "species  species  species  sprite"
-    "type1    toggle   ability  item  "
-    "type2    .        nature   level ";
-  grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) auto;
+    "type1    ability  item     sprite"
+    "type2    nature   level    sprite";
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto auto;
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -278,17 +278,38 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-species { grid-area: species; }
 .ia-type1   { grid-area: type1; }
 .ia-type2   { grid-area: type2; }
-.ia-toggle  {
-  grid-area: toggle;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding-bottom: 8px;
-}
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
 .ia-level   { grid-area: level; }
+.activatable-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "toggle label"
+    "toggle control";
+  column-gap: 6px;
+  align-items: end;
+  min-width: 0;
+}
+.activatable-field > .field-label {
+  grid-area: label;
+}
+.activatable-field > .activatable-select-row,
+.activatable-field > .item-select-row {
+  grid-area: control;
+}
+.activatable-field > .ia-toggle,
+.activatable-field > .activatable-check {
+  grid-area: toggle;
+  align-self: end;
+  padding-bottom: 7px;
+}
+.activatable-field > .ia-toggle {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
 .ia-level input[type="number"] { max-width: 100%; width: 56px; }
 .info-grid .ia-species label,
 .info-grid .ia-type1 label,
@@ -779,21 +800,23 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <label for="atk-type1">Type 1</label>
           <select id="atk-type1"></select>
         </div>
-        <div id="atk-ability-toggle-slot" class="ia-toggle" hidden>
-          <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
-            <input id="atk-ability-toggle" type="checkbox">
-          </label>
-        </div>
-        <div class="field ia-ability">
-          <label for="atk-ability">Ability</label>
-          <select id="atk-ability"></select>
-        </div>
-        <div class="field ia-item">
-          <label for="atk-item">Item</label>
-          <div class="item-select-row">
-            <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
-              <input id="atk-item-toggle" type="checkbox">
+        <div class="field ia-ability activatable-field">
+          <div id="atk-ability-toggle-slot" class="ia-toggle" hidden>
+            <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
+              <input id="atk-ability-toggle" type="checkbox">
             </label>
+          </div>
+          <label for="atk-ability" class="field-label">Ability</label>
+          <div class="activatable-select-row">
+            <select id="atk-ability"></select>
+          </div>
+        </div>
+        <div class="field ia-item activatable-field">
+          <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
+            <input id="atk-item-toggle" type="checkbox">
+          </label>
+          <label for="atk-item" class="field-label">Item</label>
+          <div class="item-select-row">
             <div class="item-select-wrap">
               <select id="atk-item"></select>
               <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
@@ -1049,21 +1072,23 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <label for="def-type1">Type 1</label>
           <select id="def-type1"></select>
         </div>
-        <div id="def-ability-toggle-slot" class="ia-toggle" hidden>
-          <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
-            <input id="def-ability-toggle" type="checkbox">
-          </label>
-        </div>
-        <div class="field ia-ability">
-          <label for="def-ability">Ability</label>
-          <select id="def-ability"></select>
-        </div>
-        <div class="field ia-item">
-          <label for="def-item">Item</label>
-          <div class="item-select-row">
-            <label id="def-item-toggle-wrap" class="activatable-check" hidden>
-              <input id="def-item-toggle" type="checkbox">
+        <div class="field ia-ability activatable-field">
+          <div id="def-ability-toggle-slot" class="ia-toggle" hidden>
+            <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
+              <input id="def-ability-toggle" type="checkbox">
             </label>
+          </div>
+          <label for="def-ability" class="field-label">Ability</label>
+          <div class="activatable-select-row">
+            <select id="def-ability"></select>
+          </div>
+        </div>
+        <div class="field ia-item activatable-field">
+          <label id="def-item-toggle-wrap" class="activatable-check" hidden>
+            <input id="def-item-toggle" type="checkbox">
+          </label>
+          <label for="def-item" class="field-label">Item</label>
+          <div class="item-select-row">
             <div class="item-select-wrap">
               <select id="def-item"></select>
               <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
