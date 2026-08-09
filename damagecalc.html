@@ -197,6 +197,15 @@ h1 { text-align: center; margin: 8px 0 6px; }
   color: var(--muted);
   line-height: 1.3;
 }
+.item-select-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.item-select-row .item-select-wrap {
+  flex: 1;
+}
 .item-select-wrap {
   display: flex;
   align-items: center;
@@ -787,16 +796,14 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <div id="atk-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
-          <div class="activatable-select-row" style="align-items: flex-end;">
+          <label for="atk-item">Item</label>
+          <div class="item-select-row">
             <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
               <input id="atk-item-toggle" type="checkbox">
             </label>
-            <div style="flex: 1; min-width: 0;">
-              <label for="atk-item">Item</label>
-              <div class="item-select-wrap">
-                <select id="atk-item"></select>
-                <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-              </div>
+            <div class="item-select-wrap">
+              <select id="atk-item"></select>
+              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
             </div>
           </div>
           <div id="atk-item-toggle-text" class="activatable-desc" hidden></div>
@@ -1061,16 +1068,14 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <div id="def-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
-          <div class="activatable-select-row" style="align-items: flex-end;">
+          <label for="def-item">Item</label>
+          <div class="item-select-row">
             <label id="def-item-toggle-wrap" class="activatable-check" hidden>
               <input id="def-item-toggle" type="checkbox">
             </label>
-            <div style="flex: 1; min-width: 0;">
-              <label for="def-item">Item</label>
-              <div class="item-select-wrap">
-                <select id="def-item"></select>
-                <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-              </div>
+            <div class="item-select-wrap">
+              <select id="def-item"></select>
+              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
             </div>
           </div>
           <div id="def-item-toggle-text" class="activatable-desc" hidden></div>
@@ -2371,20 +2376,21 @@ function fillTrainerPokemon(prefix, tp) {
   });
 
   const abilitySel = el(`${prefix}-ability`);
-  if (abilitySel && tp.Ability) {
-    addOptionIfMissing(abilitySel, tp.Ability);
-    abilitySel.value = tp.Ability;
+  if (abilitySel) {
+    const abilityName = tp.Ability || abilitySel.value || "No Ability";
+    addOptionIfMissing(abilitySel, abilityName);
+    abilitySel.value = abilityName;
     const abilityToggle = el(`${prefix}-ability-toggle`);
     if (abilityToggle) abilityToggle.checked = false;
     resetTransientAbilityState(prefix, { clearTransformId: true });
     refreshAbilityToggleUI(prefix);
-    const autoWeather = WEATHER_SET_ABILITIES[tp.Ability];
+    const autoWeather = WEATHER_SET_ABILITIES[abilityName];
     if (autoWeather) setExclusiveToggle("weather-group", autoWeather);
   }
 
   // Item
   const itemSel = el(`${prefix}-item`);
-  if (itemSel && tp.HeldItem) {
+  if (itemSel) {
     const itemName = tp.HeldItem || "None";
     addOptionIfMissing(itemSel, itemName);
     itemSel.value = itemName;
