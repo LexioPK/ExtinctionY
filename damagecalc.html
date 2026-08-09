@@ -226,17 +226,22 @@ h1 { text-align: center; margin: 8px 0 6px; }
     "species  species  species  sprite"
     "type1    ability  item     sprite"
     "type2    nature   level    sprite";
-  grid-template-columns: 1fr 1fr 1fr auto;
-  column-gap: 0;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 96px;
+  column-gap: 8px;
   row-gap: 6px;
   margin-bottom: 8px;
 }
 .ia-sprite {
   grid-area: sprite;
   display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;
-  gap: 4px;
+  width: 96px;
+  position: relative;
+  justify-self: end;
 }
 .ia-sprite-btns {
+  position: absolute;
+  top: 4px;
+  left: calc(100% + 4px);
   display: flex; flex-direction: column; gap: 4px; align-self: flex-start;
 }
 .save-poke-btn {
@@ -277,12 +282,12 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-radius: 6px;
 }
 .ia-species { grid-area: species; }
-.ia-type1   { grid-area: type1; justify-self: start; }
-.ia-type2   { grid-area: type2; justify-self: start; }
-.ia-ability { grid-area: ability; justify-self: center; }
-.ia-item    { grid-area: item; justify-self: end; }
-.ia-nature  { grid-area: nature; justify-self: center; }
-.ia-level   { grid-area: level; justify-self: end; }
+.ia-type1   { grid-area: type1; justify-self: stretch; }
+.ia-type2   { grid-area: type2; justify-self: stretch; }
+.ia-ability { grid-area: ability; justify-self: stretch; }
+.ia-item    { grid-area: item; justify-self: stretch; }
+.ia-nature  { grid-area: nature; justify-self: stretch; }
+.ia-level   { grid-area: level; justify-self: stretch; }
 .species-select-row {
   display: flex;
   align-items: flex-end;
@@ -342,9 +347,14 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid .ia-nature select,
 .info-grid .ia-ability select {
   font-size: 0.90rem;
+  width: 100%;
 }
-.info-grid .activatable-select-row > select { flex: none; width: auto; }
-.info-grid .item-select-wrap select { flex: none; width: auto; }
+.info-grid .activatable-select-row > select,
+.info-grid .item-select-wrap select {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+}
 .form-row {
   display: flex;
   flex-direction: column;
@@ -2145,10 +2155,10 @@ function getFormsForSpecies(speciesName) {
   if (!speciesName || !pokedex[speciesName]) return [speciesName];
   const idx = pokedex[speciesName].SpeciesIdx;
   if (!idx) return [speciesName];
-  return Object.entries(pokedex)
+  return [...new Set(Object.entries(pokedex)
     .filter(([, v]) => v.SpeciesIdx === idx)
     .sort((a, b) => (a[1].SpeciesIdx || 9999) - (b[1].SpeciesIdx || 9999) || a[0].localeCompare(b[0]))
-    .map(([name]) => name);
+    .map(([name]) => name))];
 }
 
 function populateFormSelect(prefix, speciesName) {
@@ -2156,8 +2166,10 @@ function populateFormSelect(prefix, speciesName) {
   const formSel = el(`${prefix}-form`);
   if (!formRow || !formSel) return;
   const forms = getFormsForSpecies(speciesName);
-  if (forms.length <= 1) {
+  const hasAlternateForm = forms.some(name => name !== speciesName);
+  if (!hasAlternateForm) {
     formRow.hidden = true;
+    formSel.innerHTML = "";
     return;
   }
   formRow.hidden = false;
