@@ -3317,7 +3317,6 @@ function getModifierContext(atkPrefix) {
   const reflect     = isSideActive('reflect', defSide);
   const lightScreen = isSideActive('light-screen', defSide);
   const stealthRock = isSideActive('stealth-rock', defSide);
-  const tailwindAtk = isSideActive('tailwind', atkSide);
   const spikes      = parseInt(getToggleValue(`spikes-${defSide}-group`) || "0");
   const friendGuard = isSideActive('friend-guard', defSide);
   const flowerGiftAtk = isSideActive('flower-gift', atkSide);
@@ -3327,7 +3326,7 @@ function getModifierContext(atkPrefix) {
   const ionDeluge   = isRoomActive('ion-deluge');
   const trickRoom   = isRoomActive('trick-room');
 
-  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, tailwindAtk, spikes, friendGuard, flowerGiftAtk, flowerGiftDef, magicRoom, wonderRoom, ionDeluge, trickRoom };
+  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, spikes, friendGuard, flowerGiftAtk, flowerGiftDef, magicRoom, wonderRoom, ionDeluge, trickRoom };
 }
 
 function ignoresDefenderAbility(attackerAbility) {
