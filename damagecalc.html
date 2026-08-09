@@ -226,9 +226,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
     "species  species  species  sprite"
     "type1    ability  item     sprite"
     "type2    nature   level    sprite";
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto auto;
-  gap: 6px;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  column-gap: 12px;
+  row-gap: 6px;
   margin-bottom: 8px;
+}
+.info-grid > .field {
+  min-width: 0;
 }
 .ia-sprite {
   grid-area: sprite;
@@ -282,6 +286,16 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
 .ia-level   { grid-area: level; }
+.species-select-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  min-width: 0;
+}
+.species-select-row > select {
+  flex: 1;
+  min-width: 0;
+}
 .activatable-field {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -310,7 +324,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   align-items: flex-end;
   justify-content: flex-start;
 }
-.ia-level input[type="number"] { max-width: 100%; width: 56px; }
+.ia-level input[type="number"] { max-width: 100%; width: 100%; }
 .info-grid .ia-species label,
 .info-grid .ia-type1 label,
 .info-grid .ia-type2 label,
@@ -329,9 +343,21 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid .ia-ability select {
   font-size: 0.90rem;
 }
-.info-grid .ia-level input[type="number"] { width: 84px; }
-.form-row { margin-top: 4px; }
-.form-row select { }
+.info-grid .ia-type1 > select,
+.info-grid .ia-type2 > select,
+.info-grid .ia-nature > select,
+.info-grid .ia-level > input {
+  width: 100%;
+}
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 0;
+  min-width: 0;
+  flex: 0 0 140px;
+}
+.form-row select { width: 100%; }
 
 /* ── Stat + Status row ── */
 .stat-status-row {
@@ -783,10 +809,12 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
       <div class="info-grid">
         <div class="field ia-species">
           <label for="atk-species">Species</label>
-          <select id="atk-species"></select>
-          <div id="atk-form-row" class="form-row" hidden>
-            <label for="atk-form" style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:2px;">Form</label>
-            <select id="atk-form" onchange="onFormSelectChange('atk')"></select>
+          <div class="species-select-row">
+            <select id="atk-species"></select>
+            <div id="atk-form-row" class="form-row" hidden>
+              <label for="atk-form">Form</label>
+              <select id="atk-form" onchange="onFormSelectChange('atk')"></select>
+            </div>
           </div>
         </div>
         <div class="ia-sprite">
@@ -1059,10 +1087,12 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
       <div class="info-grid">
         <div class="field ia-species">
           <label for="def-species">Species</label>
-          <select id="def-species"></select>
-          <div id="def-form-row" class="form-row" hidden>
-            <label for="def-form" style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:2px;">Form</label>
-            <select id="def-form" onchange="onFormSelectChange('def')"></select>
+          <div class="species-select-row">
+            <select id="def-species"></select>
+            <div id="def-form-row" class="form-row" hidden>
+              <label for="def-form">Form</label>
+              <select id="def-form" onchange="onFormSelectChange('def')"></select>
+            </div>
           </div>
         </div>
         <div class="ia-sprite">
