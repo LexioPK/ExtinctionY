@@ -1734,10 +1734,12 @@ function refreshAbilityToggleUI(prefix) {
   const isActivatable = !!ACTIVATABLE_ABILITIES[ability];
   if (slot) slot.hidden = !isActivatable;
   wrap.hidden = !isActivatable;
-  desc.hidden = !isActivatable;
+  desc.hidden = true;
   if (!isActivatable) {
     toggle.checked = false;
     desc.textContent = "";
+    wrap.removeAttribute("title");
+    toggle.removeAttribute("title");
     resetTransientAbilityState(prefix, { clearTransformId: true });
     return;
   }
@@ -1746,6 +1748,8 @@ function refreshAbilityToggleUI(prefix) {
     text += ` (active: ${transientAbilityState[prefix].traceAbility})`;
   }
   desc.textContent = text;
+  wrap.title = text;
+  toggle.title = text;
 }
 function refreshItemToggleUI(prefix) {
   const item = getSelectedItem(prefix);
@@ -1755,11 +1759,13 @@ function refreshItemToggleUI(prefix) {
   if (!wrap || !toggle || !desc) return;
   const isActivatable = isActivatableItem(item);
   wrap.hidden = !isActivatable;
-  desc.hidden = !isActivatable;
+  desc.hidden = true;
   if (!isActivatable) {
     toggle.checked = false;
     toggle.dataset.item = "";
     desc.textContent = "";
+    wrap.removeAttribute("title");
+    toggle.removeAttribute("title");
     return;
   }
   if (toggle.dataset.item !== item) {
@@ -1769,6 +1775,8 @@ function refreshItemToggleUI(prefix) {
   if (item === "Air Balloon") desc.textContent = "Air Balloon remains active while checked";
   else if (TYPE_GEM_ITEMS[item]) desc.textContent = `${item} power boost is active while checked`;
   else desc.textContent = `${item} damage reduction is active while checked`;
+  wrap.title = desc.textContent;
+  toggle.title = desc.textContent;
 }
 function refreshActivationControls(prefix) {
   refreshAbilityToggleUI(prefix);
