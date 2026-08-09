@@ -1703,8 +1703,10 @@ function refreshAbilityToggleUI(prefix) {
   const ability = getSelectedAbility(prefix);
   const wrap = el(`${prefix}-ability-toggle-wrap`);
   const toggle = el(`${prefix}-ability-toggle`);
+  const container = wrap?.parentElement;
   if (!wrap || !toggle) return;
   const isActivatable = !!ACTIVATABLE_ABILITIES[ability];
+  if (container) container.hidden = !isActivatable;
   wrap.hidden = !isActivatable;
   if (!isActivatable) {
     toggle.checked = false;
@@ -1722,8 +1724,10 @@ function refreshItemToggleUI(prefix) {
   const item = getSelectedItem(prefix);
   const wrap = el(`${prefix}-item-toggle-wrap`);
   const toggle = el(`${prefix}-item-toggle`);
+  const container = wrap?.parentElement;
   if (!wrap || !toggle) return;
   const isActivatable = isActivatableItem(item);
+  if (container) container.hidden = !isActivatable;
   wrap.hidden = !isActivatable;
   if (!isActivatable) {
     toggle.checked = false;
