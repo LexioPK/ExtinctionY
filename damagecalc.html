@@ -171,16 +171,17 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .activatable-select-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
 }
 .activatable-check {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
   flex-shrink: 0;
-  font-size: 0.72rem;
-  color: var(--muted);
+  position: relative;
+  min-width: 18px;
+  min-height: 32px;
 }
 .activatable-check input {
   width: 13px;
@@ -193,10 +194,32 @@ h1 { text-align: center; margin: 8px 0 6px; }
   min-width: 0;
 }
 .activatable-desc {
-  margin-top: 2px;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  min-width: max-content;
+  max-width: 180px;
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  box-shadow: 0 3px 10px rgba(0,0,0,.12);
   font-size: 0.68rem;
   color: var(--muted);
   line-height: 1.3;
+  text-align: center;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.12s ease;
+}
+.activatable-check:hover .activatable-desc,
+.activatable-check:focus-within .activatable-desc {
+  opacity: 1;
+  visibility: visible;
 }
 .item-select-wrap {
   display: flex;
@@ -230,12 +253,18 @@ h1 { text-align: center; margin: 8px 0 6px; }
 }
 .ia-sprite {
   grid-area: sprite;
-  display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;
+  display: flex; align-items: center; justify-content: center; padding-top: 4px;
+  gap: 8px;
+}
+.sprite-action-buttons {
+  display: flex;
+  flex-direction: column;
   gap: 4px;
+  align-items: stretch;
 }
 .save-poke-btn {
-  align-self: flex-start;
-  margin-top: 4px;
+  align-self: auto;
+  margin-top: 0;
   padding: 5px 7px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -252,8 +281,8 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-color: var(--accent);
 }
 .delete-poke-btn {
-  align-self: flex-start;
-  margin-top: 4px;
+  align-self: auto;
+  margin-top: 0;
   padding: 5px 7px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -277,7 +306,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-species { grid-area: species; }
 .ia-type1   { grid-area: type1; }
 .ia-type2   { grid-area: type2; }
-.ia-toggle  { grid-area: toggle; display: flex; align-items: flex-end; padding-bottom: 2px; }
+.ia-toggle  { grid-area: toggle; display: flex; align-items: center; justify-content: center; padding-top: 20px; }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
@@ -708,6 +737,7 @@ html.dark-mode .imported-poke-btn { --slot-bg: #22293a; }
 html.dark-mode .qm-move-btn { color: var(--qm-move-text-color, #10121a); }
 html.dark-mode .qm-move-btn.active-move { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25); }
 html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
+html.dark-mode .activatable-desc { background: #22293a; }
 </style>
 </head>
 <body>
@@ -762,9 +792,11 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           </div>
         </div>
         <div class="ia-sprite">
-          <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
-          <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
           <img id="atk-sprite" class="poke-sprite" src="" alt="">
+          <div class="sprite-action-buttons">
+            <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
+            <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
+          </div>
         </div>
         <div class="field ia-type1">
           <label for="atk-type1">Type 1</label>
@@ -773,27 +805,25 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         <div class="ia-toggle">
           <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
             <input id="atk-ability-toggle" type="checkbox">
-            <span>On</span>
+            <span id="atk-ability-toggle-text" class="activatable-desc" hidden></span>
           </label>
         </div>
         <div class="field ia-ability">
           <label for="atk-ability">Ability</label>
           <select id="atk-ability"></select>
-          <div id="atk-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
           <label for="atk-item">Item</label>
           <div class="activatable-select-row">
             <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
               <input id="atk-item-toggle" type="checkbox">
-              <span>On</span>
+              <span id="atk-item-toggle-text" class="activatable-desc" hidden></span>
             </label>
             <div class="item-select-wrap">
               <select id="atk-item"></select>
               <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
             </div>
           </div>
-          <div id="atk-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-type2">
           <label for="atk-type2">Type 2</label>
@@ -1047,27 +1077,25 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         <div class="ia-toggle">
           <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
             <input id="def-ability-toggle" type="checkbox">
-            <span>On</span>
+            <span id="def-ability-toggle-text" class="activatable-desc" hidden></span>
           </label>
         </div>
         <div class="field ia-ability">
           <label for="def-ability">Ability</label>
           <select id="def-ability"></select>
-          <div id="def-ability-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-item">
           <label for="def-item">Item</label>
           <div class="activatable-select-row">
             <label id="def-item-toggle-wrap" class="activatable-check" hidden>
               <input id="def-item-toggle" type="checkbox">
-              <span>On</span>
+              <span id="def-item-toggle-text" class="activatable-desc" hidden></span>
             </label>
             <div class="item-select-wrap">
               <select id="def-item"></select>
               <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
             </div>
           </div>
-          <div id="def-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-type2">
           <label for="def-type2">Type 2</label>
