@@ -188,27 +188,23 @@ h1 { text-align: center; margin: 8px 0 6px; }
 }
 .activatable-select-row > select,
 .activatable-select-row > .item-select-wrap {
-  flex: 1;
   min-width: 0;
 }
 .item-select-row {
   display: flex;
   align-items: center;
   gap: 6px;
-  min-width: 0;
 }
 .item-select-row .item-select-wrap {
-  flex: 1;
+  flex: 0 0 auto;
 }
 .item-select-wrap {
   display: flex;
   align-items: center;
   gap: 6px;
-  min-width: 0;
 }
 .item-select-wrap select {
-  flex: 1;
-  min-width: 0;
+  flex: 0 0 auto;
 }
 .item-select-sprite {
   width: 20px;
@@ -294,12 +290,11 @@ h1 { text-align: center; margin: 8px 0 6px; }
   display: flex;
   flex-direction: column;
   gap: 2px;
-  flex: 1;
-  min-width: 0;
+  flex: 0 0 auto;
 }
 .activatable-field {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: auto auto;
   grid-template-areas:
     "toggle label"
     "toggle control";
@@ -308,7 +303,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   min-width: 0;
 }
 .activatable-field.no-toggle {
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: auto;
   grid-template-areas:
     "label"
     "control";
@@ -844,9 +839,11 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           </div>
         </div>
         <div class="field ia-item activatable-field no-toggle">
-          <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
-            <input id="atk-item-toggle" type="checkbox">
-          </label>
+          <div id="atk-item-toggle-slot" class="ia-toggle" hidden>
+            <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="atk-item-toggle" type="checkbox">
+            </label>
+          </div>
           <label for="atk-item" class="field-label">Item</label>
           <div class="item-select-row">
             <div class="item-select-wrap">
@@ -1120,9 +1117,11 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           </div>
         </div>
         <div class="field ia-item activatable-field no-toggle">
-          <label id="def-item-toggle-wrap" class="activatable-check" hidden>
-            <input id="def-item-toggle" type="checkbox">
-          </label>
+          <div id="def-item-toggle-slot" class="ia-toggle" hidden>
+            <label id="def-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="def-item-toggle" type="checkbox">
+            </label>
+          </div>
           <label for="def-item" class="field-label">Item</label>
           <div class="item-select-row">
             <div class="item-select-wrap">
@@ -1802,12 +1801,14 @@ function refreshAbilityToggleUI(prefix) {
 }
 function refreshItemToggleUI(prefix) {
   const item = getSelectedItem(prefix);
+  const slot = el(`${prefix}-item-toggle-slot`);
   const wrap = el(`${prefix}-item-toggle-wrap`);
   const toggle = el(`${prefix}-item-toggle`);
   if (!wrap || !toggle) return;
   const isActivatable = isActivatableItem(item);
+  if (slot) slot.hidden = !isActivatable;
   wrap.hidden = !isActivatable;
-  const field = wrap.closest(".activatable-field");
+  const field = slot ? slot.closest(".activatable-field") : wrap.closest(".activatable-field");
   if (field) field.classList.toggle("no-toggle", !isActivatable);
   if (!isActivatable) {
     toggle.checked = false;
