@@ -231,14 +231,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
   flex: 1;
   min-width: 0;
 }
-.item-select-icon-slot {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .item-select-sprite {
   width: 20px;
   height: 20px;
@@ -253,9 +245,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
   display: grid;
   grid-template-areas:
     "species  species  species  sprite"
-    "type1    ability  item     sprite"
-    "type2    nature   level    sprite";
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    "type1    toggle   ability  item  "
+    "type2    .        nature   level ";
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -314,6 +306,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-species { grid-area: species; }
 .ia-type1   { grid-area: type1; }
 .ia-type2   { grid-area: type2; }
+.ia-toggle  { grid-area: toggle; display: flex; align-items: center; justify-content: center; padding-top: 20px; }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
@@ -809,15 +802,15 @@ html.dark-mode .activatable-desc { background: #22293a; }
           <label for="atk-type1">Type 1</label>
           <select id="atk-type1"></select>
         </div>
+        <div class="ia-toggle">
+          <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
+            <input id="atk-ability-toggle" type="checkbox">
+            <span id="atk-ability-toggle-text" class="activatable-desc" hidden></span>
+          </label>
+        </div>
         <div class="field ia-ability">
           <label for="atk-ability">Ability</label>
-          <div class="activatable-select-row">
-            <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
-              <input id="atk-ability-toggle" type="checkbox">
-              <span id="atk-ability-toggle-text" class="activatable-desc" hidden></span>
-            </label>
-            <select id="atk-ability"></select>
-          </div>
+          <select id="atk-ability"></select>
         </div>
         <div class="field ia-item">
           <label for="atk-item">Item</label>
@@ -828,9 +821,7 @@ html.dark-mode .activatable-desc { background: #22293a; }
             </label>
             <div class="item-select-wrap">
               <select id="atk-item"></select>
-              <div class="item-select-icon-slot">
-                <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-              </div>
+              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
             </div>
           </div>
         </div>
@@ -1083,15 +1074,15 @@ html.dark-mode .activatable-desc { background: #22293a; }
           <label for="def-type1">Type 1</label>
           <select id="def-type1"></select>
         </div>
+        <div class="ia-toggle">
+          <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
+            <input id="def-ability-toggle" type="checkbox">
+            <span id="def-ability-toggle-text" class="activatable-desc" hidden></span>
+          </label>
+        </div>
         <div class="field ia-ability">
           <label for="def-ability">Ability</label>
-          <div class="activatable-select-row">
-            <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
-              <input id="def-ability-toggle" type="checkbox">
-              <span id="def-ability-toggle-text" class="activatable-desc" hidden></span>
-            </label>
-            <select id="def-ability"></select>
-          </div>
+          <select id="def-ability"></select>
         </div>
         <div class="field ia-item">
           <label for="def-item">Item</label>
@@ -1102,9 +1093,7 @@ html.dark-mode .activatable-desc { background: #22293a; }
             </label>
             <div class="item-select-wrap">
               <select id="def-item"></select>
-              <div class="item-select-icon-slot">
-                <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-              </div>
+              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
             </div>
           </div>
         </div>
