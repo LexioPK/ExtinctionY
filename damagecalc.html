@@ -177,6 +177,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .activatable-check {
   display: inline-flex;
   align-items: center;
+  gap: 4px;
   flex-shrink: 0;
   font-size: 0.72rem;
   color: var(--muted);
@@ -223,7 +224,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
     "species  species  species  sprite"
     "type1    toggle   ability  item  "
     "type2    .        nature   level ";
-  grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -276,21 +277,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-species { grid-area: species; }
 .ia-type1   { grid-area: type1; }
 .ia-type2   { grid-area: type2; }
-.ia-toggle  {
-  grid-area: toggle;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 13px;
-  padding-bottom: 2px;
-}
-.ia-toggle-slot {
-  min-height: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.ia-toggle  { grid-area: toggle; display: flex; align-items: flex-end; padding-bottom: 2px; }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
@@ -603,7 +590,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   color: var(--muted);
 }
 
-.imported-bottom-section {
+.imported-section {
   margin-top: 10px;
 }
 .imported-poke-list {
@@ -784,16 +771,10 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <select id="atk-type1"></select>
         </div>
         <div class="ia-toggle">
-          <div class="ia-toggle-slot">
-            <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
-              <input id="atk-ability-toggle" type="checkbox">
-            </label>
-          </div>
-          <div class="ia-toggle-slot">
-            <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
-              <input id="atk-item-toggle" type="checkbox">
-            </label>
-          </div>
+          <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
+            <input id="atk-ability-toggle" type="checkbox">
+            <span>On</span>
+          </label>
         </div>
         <div class="field ia-ability">
           <label for="atk-ability">Ability</label>
@@ -802,9 +783,15 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="field ia-item">
           <label for="atk-item">Item</label>
-          <div class="item-select-wrap">
-            <select id="atk-item"></select>
-            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+          <div class="activatable-select-row">
+            <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="atk-item-toggle" type="checkbox">
+              <span>On</span>
+            </label>
+            <div class="item-select-wrap">
+              <select id="atk-item"></select>
+              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
           </div>
           <div id="atk-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
@@ -1058,16 +1045,10 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <select id="def-type1"></select>
         </div>
         <div class="ia-toggle">
-          <div class="ia-toggle-slot">
-            <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
-              <input id="def-ability-toggle" type="checkbox">
-            </label>
-          </div>
-          <div class="ia-toggle-slot">
-            <label id="def-item-toggle-wrap" class="activatable-check" hidden>
-              <input id="def-item-toggle" type="checkbox">
-            </label>
-          </div>
+          <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
+            <input id="def-ability-toggle" type="checkbox">
+            <span>On</span>
+          </label>
         </div>
         <div class="field ia-ability">
           <label for="def-ability">Ability</label>
@@ -1076,9 +1057,15 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
         </div>
         <div class="field ia-item">
           <label for="def-item">Item</label>
-          <div class="item-select-wrap">
-            <select id="def-item"></select>
-            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+          <div class="activatable-select-row">
+            <label id="def-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="def-item-toggle" type="checkbox">
+              <span>On</span>
+            </label>
+            <div class="item-select-wrap">
+              <select id="def-item"></select>
+              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
           </div>
           <div id="def-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
@@ -1327,7 +1314,7 @@ const STATUS_POWER_MOVES = {
 const ACTIVATABLE_ABILITIES = {
   "Intimidate": "Lowers opposing Pokémon Attack by -1",
   "Demoralize": "Lowers opposing Pokémon Special Attack by -1",
-  "Imposter": "Copies the opposing Pokémon and adds it to your Imported Pokémon",
+  "Transform": "Copies the opposing Pokémon and adds it to your Imported Pokémon",
   "Trace": "Copies the opposing Pokémon's ability while active"
 };
 
@@ -1781,7 +1768,7 @@ function onAbilityToggleChange(prefix) {
   if (ability === "Trace") {
     if (toggle.checked) transientAbilityState[prefix].traceAbility = getEffectiveAbilityFromUI(getOpposingPrefix(prefix)) || "No Ability";
     else transientAbilityState[prefix].traceAbility = null;
-  } else if (ability === "Imposter") {
+  } else if (ability === "Transform") {
     if (toggle.checked) ensureImportedCopyFromTransform(prefix);
     else transientAbilityState[prefix].transformImportedId = null;
   }
