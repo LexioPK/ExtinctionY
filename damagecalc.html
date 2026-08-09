@@ -191,14 +191,11 @@ h1 { text-align: center; margin: 8px 0 6px; }
   flex: 1;
   min-width: 0;
 }
-.item-select-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-}
-.item-select-row .item-select-wrap {
-  flex: 1;
+.activatable-desc {
+  margin-top: 2px;
+  font-size: 0.68rem;
+  color: var(--muted);
+  line-height: 1.3;
 }
 .item-select-wrap {
   display: flex;
@@ -223,28 +220,21 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid {
   display: grid;
   grid-template-areas:
-    "species  species  sprite"
-    "type1    ability  item"
-    "type2    nature   level";
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-  column-gap: 8px;
-  row-gap: 6px;
+    "species  species  species  sprite"
+    "type1    toggle   ability  item  "
+    "type2    .        nature   level ";
+  grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) auto;
+  gap: 6px;
   margin-bottom: 8px;
 }
 .ia-sprite {
   grid-area: sprite;
   display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;
-  width: 96px;
-  position: relative;
-  justify-self: end;
-}
-.ia-sprite-btns {
-  position: absolute;
-  top: 4px;
-  left: calc(100% + 4px);
-  display: flex; flex-direction: column; gap: 4px; align-self: flex-start;
+  gap: 4px;
 }
 .save-poke-btn {
+  align-self: flex-start;
+  margin-top: 4px;
   padding: 5px 7px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -261,6 +251,8 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-color: var(--accent);
 }
 .delete-poke-btn {
+  align-self: flex-start;
+  margin-top: 4px;
   padding: 5px 7px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -282,53 +274,27 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-radius: 6px;
 }
 .ia-species { grid-area: species; }
-.ia-type1   { grid-area: type1; justify-self: start; margin-top: 2px; }
-.ia-type2   { grid-area: type2; justify-self: start; }
-.ia-ability { grid-area: ability; justify-self: center; margin-top: 2px; }
-.ia-item    { grid-area: item; justify-self: end; margin-top: 2px; }
-.ia-nature  { grid-area: nature; justify-self: center; }
-.ia-level   { grid-area: level; justify-self: end; }
-.species-select-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 12px;
-  min-width: 0;
-}
-.species-select-inner {
+.ia-type1   { grid-area: type1; }
+.ia-type2   { grid-area: type2; }
+.ia-toggle  {
+  grid-area: toggle;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  flex: 1;
-  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 13px;
+  padding-bottom: 2px;
 }
-.activatable-field {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  grid-template-areas:
-    "toggle label"
-    "toggle control";
-  column-gap: 6px;
-  align-items: end;
-  min-width: 0;
-}
-.activatable-field > .field-label {
-  grid-area: label;
-}
-.activatable-field > .activatable-select-row,
-.activatable-field > .item-select-row {
-  grid-area: control;
-}
-.activatable-field > .ia-toggle,
-.activatable-field > .activatable-check {
-  grid-area: toggle;
-  align-self: end;
-  padding-bottom: 7px;
-}
-.activatable-field > .ia-toggle {
+.ia-toggle-slot {
+  min-height: 13px;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
 }
+.ia-ability { grid-area: ability; }
+.ia-item    { grid-area: item; }
+.ia-nature  { grid-area: nature; }
+.ia-level   { grid-area: level; }
 .ia-level input[type="number"] { max-width: 100%; width: 56px; }
 .info-grid .ia-species label,
 .info-grid .ia-type1 label,
@@ -347,25 +313,10 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid .ia-nature select,
 .info-grid .ia-ability select {
   font-size: 0.90rem;
-  width: auto;
-  max-width: 100%;
 }
-.info-grid .activatable-select-row > select,
-.info-grid .item-select-wrap select {
-  flex: 0 1 auto;
-  width: auto;
-  max-width: 100%;
-  min-width: 0;
-}
-.form-row {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-top: 0;
-  min-width: 0;
-  flex: 0 0 140px;
-}
-.form-row select { width: auto; max-width: 100%; }
+.info-grid .ia-level input[type="number"] { width: 84px; }
+.form-row { margin-top: 4px; }
+.form-row select { }
 
 /* ── Stat + Status row ── */
 .stat-status-row {
@@ -816,50 +767,46 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
       <!-- Info grid -->
       <div class="info-grid">
         <div class="field ia-species">
-          <div class="species-select-row">
-            <div class="species-select-inner">
-              <label for="atk-species">Species</label>
-              <select id="atk-species"></select>
-            </div>
-            <div id="atk-form-row" class="form-row" hidden>
-              <label for="atk-form">Form</label>
-              <select id="atk-form" onchange="onFormSelectChange('atk')"></select>
-            </div>
+          <label for="atk-species">Species</label>
+          <select id="atk-species"></select>
+          <div id="atk-form-row" class="form-row" hidden>
+            <label for="atk-form" style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:2px;">Form</label>
+            <select id="atk-form" onchange="onFormSelectChange('atk')"></select>
           </div>
         </div>
         <div class="ia-sprite">
+          <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
+          <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
           <img id="atk-sprite" class="poke-sprite" src="" alt="">
-          <div class="ia-sprite-btns">
-            <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
-            <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
-          </div>
         </div>
         <div class="field ia-type1">
           <label for="atk-type1">Type 1</label>
           <select id="atk-type1"></select>
         </div>
-        <div class="field ia-ability activatable-field">
-          <div id="atk-ability-toggle-slot" class="ia-toggle" hidden>
+        <div class="ia-toggle">
+          <div class="ia-toggle-slot">
             <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
               <input id="atk-ability-toggle" type="checkbox">
             </label>
           </div>
-          <label for="atk-ability" class="field-label">Ability</label>
-          <div class="activatable-select-row">
-            <select id="atk-ability"></select>
+          <div class="ia-toggle-slot">
+            <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="atk-item-toggle" type="checkbox">
+            </label>
           </div>
         </div>
-        <div class="field ia-item activatable-field">
-          <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
-            <input id="atk-item-toggle" type="checkbox">
-          </label>
-          <label for="atk-item" class="field-label">Item</label>
-          <div class="item-select-row">
-            <div class="item-select-wrap">
-              <select id="atk-item"></select>
-              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-            </div>
+        <div class="field ia-ability">
+          <label for="atk-ability">Ability</label>
+          <select id="atk-ability"></select>
+          <div id="atk-ability-toggle-text" class="activatable-desc" hidden></div>
+        </div>
+        <div class="field ia-item">
+          <label for="atk-item">Item</label>
+          <div class="item-select-wrap">
+            <select id="atk-item"></select>
+            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
           </div>
+          <div id="atk-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-type2">
           <label for="atk-type2">Type 2</label>
@@ -1096,15 +1043,11 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
       <!-- Info grid -->
       <div class="info-grid">
         <div class="field ia-species">
-          <div class="species-select-row">
-            <div class="species-select-inner">
-              <label for="def-species">Species</label>
-              <select id="def-species"></select>
-            </div>
-            <div id="def-form-row" class="form-row" hidden>
-              <label for="def-form">Form</label>
-              <select id="def-form" onchange="onFormSelectChange('def')"></select>
-            </div>
+          <label for="def-species">Species</label>
+          <select id="def-species"></select>
+          <div id="def-form-row" class="form-row" hidden>
+            <label for="def-form" style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:2px;">Form</label>
+            <select id="def-form" onchange="onFormSelectChange('def')"></select>
           </div>
         </div>
         <div class="ia-sprite">
@@ -1114,28 +1057,30 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           <label for="def-type1">Type 1</label>
           <select id="def-type1"></select>
         </div>
-        <div class="field ia-ability activatable-field">
-          <div id="def-ability-toggle-slot" class="ia-toggle" hidden>
+        <div class="ia-toggle">
+          <div class="ia-toggle-slot">
             <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
               <input id="def-ability-toggle" type="checkbox">
             </label>
           </div>
-          <label for="def-ability" class="field-label">Ability</label>
-          <div class="activatable-select-row">
-            <select id="def-ability"></select>
+          <div class="ia-toggle-slot">
+            <label id="def-item-toggle-wrap" class="activatable-check" hidden>
+              <input id="def-item-toggle" type="checkbox">
+            </label>
           </div>
         </div>
-        <div class="field ia-item activatable-field">
-          <label id="def-item-toggle-wrap" class="activatable-check" hidden>
-            <input id="def-item-toggle" type="checkbox">
-          </label>
-          <label for="def-item" class="field-label">Item</label>
-          <div class="item-select-row">
-            <div class="item-select-wrap">
-              <select id="def-item"></select>
-              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-            </div>
+        <div class="field ia-ability">
+          <label for="def-ability">Ability</label>
+          <select id="def-ability"></select>
+          <div id="def-ability-toggle-text" class="activatable-desc" hidden></div>
+        </div>
+        <div class="field ia-item">
+          <label for="def-item">Item</label>
+          <div class="item-select-wrap">
+            <select id="def-item"></select>
+            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
           </div>
+          <div id="def-item-toggle-text" class="activatable-desc" hidden></div>
         </div>
         <div class="field ia-type2">
           <label for="def-type2">Type 2</label>
@@ -1783,17 +1728,16 @@ function resetTransientAbilityState(prefix, options = {}) {
 }
 function refreshAbilityToggleUI(prefix) {
   const ability = getSelectedAbility(prefix);
-  const slot = el(`${prefix}-ability-toggle-slot`);
   const wrap = el(`${prefix}-ability-toggle-wrap`);
   const toggle = el(`${prefix}-ability-toggle`);
-  if (!wrap || !toggle) return;
+  const desc = el(`${prefix}-ability-toggle-text`);
+  if (!wrap || !toggle || !desc) return;
   const isActivatable = !!ACTIVATABLE_ABILITIES[ability];
-  if (slot) slot.hidden = !isActivatable;
   wrap.hidden = !isActivatable;
+  desc.hidden = !isActivatable;
   if (!isActivatable) {
     toggle.checked = false;
-    wrap.removeAttribute("title");
-    toggle.removeAttribute("title");
+    desc.textContent = "";
     resetTransientAbilityState(prefix, { clearTransformId: true });
     return;
   }
@@ -1801,34 +1745,30 @@ function refreshAbilityToggleUI(prefix) {
   if (ability === "Trace" && toggle.checked && transientAbilityState[prefix].traceAbility) {
     text += ` (active: ${transientAbilityState[prefix].traceAbility})`;
   }
-  wrap.title = text;
-  toggle.title = text;
+  desc.textContent = text;
 }
 function refreshItemToggleUI(prefix) {
   const item = getSelectedItem(prefix);
   const wrap = el(`${prefix}-item-toggle-wrap`);
   const toggle = el(`${prefix}-item-toggle`);
-  if (!wrap || !toggle) return;
+  const desc = el(`${prefix}-item-toggle-text`);
+  if (!wrap || !toggle || !desc) return;
   const isActivatable = isActivatableItem(item);
   wrap.hidden = !isActivatable;
+  desc.hidden = !isActivatable;
   if (!isActivatable) {
     toggle.checked = false;
     toggle.dataset.item = "";
-    wrap.removeAttribute("title");
-    toggle.removeAttribute("title");
+    desc.textContent = "";
     return;
   }
   if (toggle.dataset.item !== item) {
     toggle.checked = true;
     toggle.dataset.item = item;
   }
-  const text = item === "Air Balloon"
-    ? "Air Balloon remains active while checked"
-    : TYPE_GEM_ITEMS[item]
-      ? `${item} power boost is active while checked`
-      : `${item} damage reduction is active while checked`;
-  wrap.title = text;
-  toggle.title = text;
+  if (item === "Air Balloon") desc.textContent = "Air Balloon remains active while checked";
+  else if (TYPE_GEM_ITEMS[item]) desc.textContent = `${item} power boost is active while checked`;
+  else desc.textContent = `${item} damage reduction is active while checked`;
 }
 function refreshActivationControls(prefix) {
   refreshAbilityToggleUI(prefix);
@@ -2157,10 +2097,10 @@ function getFormsForSpecies(speciesName) {
   if (!speciesName || !pokedex[speciesName]) return [speciesName];
   const idx = pokedex[speciesName].SpeciesIdx;
   if (!idx) return [speciesName];
-  return [...new Set(Object.entries(pokedex)
+  return Object.entries(pokedex)
     .filter(([, v]) => v.SpeciesIdx === idx)
     .sort((a, b) => (a[1].SpeciesIdx || 9999) - (b[1].SpeciesIdx || 9999) || a[0].localeCompare(b[0]))
-    .map(([name]) => name))];
+    .map(([name]) => name);
 }
 
 function populateFormSelect(prefix, speciesName) {
@@ -2168,10 +2108,8 @@ function populateFormSelect(prefix, speciesName) {
   const formSel = el(`${prefix}-form`);
   if (!formRow || !formSel) return;
   const forms = getFormsForSpecies(speciesName);
-  const hasAlternateForm = forms.some(name => name !== speciesName);
-  if (!hasAlternateForm) {
+  if (forms.length <= 1) {
     formRow.hidden = true;
-    formSel.innerHTML = "";
     return;
   }
   formRow.hidden = false;
@@ -2438,21 +2376,20 @@ function fillTrainerPokemon(prefix, tp) {
   });
 
   const abilitySel = el(`${prefix}-ability`);
-  if (abilitySel) {
-    const abilityName = tp.Ability || abilitySel.value || "No Ability";
-    addOptionIfMissing(abilitySel, abilityName);
-    abilitySel.value = abilityName;
+  if (abilitySel && tp.Ability) {
+    addOptionIfMissing(abilitySel, tp.Ability);
+    abilitySel.value = tp.Ability;
     const abilityToggle = el(`${prefix}-ability-toggle`);
     if (abilityToggle) abilityToggle.checked = false;
     resetTransientAbilityState(prefix, { clearTransformId: true });
     refreshAbilityToggleUI(prefix);
-    const autoWeather = WEATHER_SET_ABILITIES[abilityName];
+    const autoWeather = WEATHER_SET_ABILITIES[tp.Ability];
     if (autoWeather) setExclusiveToggle("weather-group", autoWeather);
   }
 
   // Item
   const itemSel = el(`${prefix}-item`);
-  if (itemSel) {
+  if (itemSel && tp.HeldItem) {
     const itemName = tp.HeldItem || "None";
     addOptionIfMissing(itemSel, itemName);
     itemSel.value = itemName;
