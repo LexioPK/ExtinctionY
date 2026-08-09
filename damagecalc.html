@@ -226,8 +226,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
     "species  species  species  sprite"
     "type1    ability  item     sprite"
     "type2    nature   level    sprite";
-  grid-template-columns: auto auto auto auto;
-  justify-content: space-between;
+  grid-template-columns: 1fr 1fr 1fr auto;
   column-gap: 0;
   row-gap: 6px;
   margin-bottom: 8px;
@@ -278,12 +277,12 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-radius: 6px;
 }
 .ia-species { grid-area: species; }
-.ia-type1   { grid-area: type1; }
-.ia-type2   { grid-area: type2; }
-.ia-ability { grid-area: ability; }
-.ia-item    { grid-area: item; }
-.ia-nature  { grid-area: nature; }
-.ia-level   { grid-area: level; }
+.ia-type1   { grid-area: type1; justify-self: start; }
+.ia-type2   { grid-area: type2; justify-self: start; }
+.ia-ability { grid-area: ability; justify-self: center; }
+.ia-item    { grid-area: item; justify-self: end; }
+.ia-nature  { grid-area: nature; justify-self: center; }
+.ia-level   { grid-area: level; justify-self: end; }
 .species-select-row {
   display: flex;
   align-items: flex-end;
@@ -344,6 +343,8 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid .ia-ability select {
   font-size: 0.90rem;
 }
+.info-grid .activatable-select-row > select { flex: none; width: auto; }
+.info-grid .item-select-wrap select { flex: none; width: auto; }
 .form-row {
   display: flex;
   flex-direction: column;
