@@ -270,6 +270,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-type2   { grid-area: type2; }
 .ia-toggle      { grid-area: toggle;  display: flex; align-items: center; justify-content: center; padding-top: 20px; }
 .ia-item-toggle { grid-area: itoggle; display: flex; align-items: center; justify-content: center; padding-top: 20px; }
+[hidden] { display: none !important; }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
@@ -960,6 +961,13 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
           </div>
         </div>
         <div class="field-toggle-row">
+          <span class="ftlabel">Tailwind</span>
+          <div class="side-toggle">
+            <button class="side-btn" data-field-group="tailwind" data-side="you">You</button>
+            <button class="side-btn" data-field-group="tailwind" data-side="opp">Opp.</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
           <span class="ftlabel">Spikes (You)</span>
           <div class="toggle-group" id="spikes-you-group">
             <button class="toggle-btn active" data-value="0">0</button>
@@ -1541,7 +1549,10 @@ function getTypeModifier(moveName, moveType, defender) {
 }
 function getMoveStabBase(moveName, moveType, attacker) {
   const stabTypes = DUAL_TYPE_MOVES[moveName] || [moveType];
-  return stabTypes.some(type => attacker.type1 === type || attacker.type2 === type) ? 1.5 : 1;
+  const hasTypeStab = stabTypes.some(type => attacker.type1 === type || attacker.type2 === type);
+  if (hasTypeStab) return 1.5;
+  if (attacker.ability === "Protean") return 1.5;
+  return 1;
 }
 function getDisplayMoveType(moveName, moveType) {
   return DUAL_TYPE_MOVES[moveName] ? DUAL_TYPE_MOVES[moveName].join("/") : moveType;
@@ -1980,6 +1991,10 @@ function updateStatTotals(prefix) {
       if (stat === "Spe") {
         const weather = getToggleValue("weather-group") || "none";
         if (WEATHER_SPEED_ABILITIES[effectiveAbility] === weather) {
+          display = display * 2;
+        }
+        const side = prefix === 'atk' ? 'you' : 'opp';
+        if (isSideActive('tailwind', side)) {
           display = display * 2;
         }
       }
@@ -3302,6 +3317,7 @@ function getModifierContext(atkPrefix) {
   const reflect     = isSideActive('reflect', defSide);
   const lightScreen = isSideActive('light-screen', defSide);
   const stealthRock = isSideActive('stealth-rock', defSide);
+  const tailwindAtk = isSideActive('tailwind', atkSide);
   const spikes      = parseInt(getToggleValue(`spikes-${defSide}-group`) || "0");
   const friendGuard = isSideActive('friend-guard', defSide);
   const flowerGiftAtk = isSideActive('flower-gift', atkSide);
@@ -3311,7 +3327,7 @@ function getModifierContext(atkPrefix) {
   const ionDeluge   = isRoomActive('ion-deluge');
   const trickRoom   = isRoomActive('trick-room');
 
-  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, spikes, friendGuard, flowerGiftAtk, flowerGiftDef, magicRoom, wonderRoom, ionDeluge, trickRoom };
+  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, tailwindAtk, spikes, friendGuard, flowerGiftAtk, flowerGiftDef, magicRoom, wonderRoom, ionDeluge, trickRoom };
 }
 
 function ignoresDefenderAbility(attackerAbility) {
@@ -3737,7 +3753,13 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
 
   const stabBase = getMoveStabBase(moveName, moveType, attacker);
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
-  if (stab > 1) notes.push(stab === 2 ? "STAB ×2 (Adaptability)" : "STAB ×1.5");
+  if (stab > 1) {
+    const stabTypes = DUAL_TYPE_MOVES[moveName] || [moveType];
+    const hasTypeStab = stabTypes.some(type => attacker.type1 === type || attacker.type2 === type);
+    if (stab === 2) notes.push("STAB ×2 (Adaptability)");
+    else if (!hasTypeStab && attacker.ability === "Protean") notes.push("STAB ×1.5 (Protean)");
+    else notes.push("STAB ×1.5");
+  }
 
   const effText = typeMod === 4 ? "4×" : typeMod === 2 ? "2×" : typeMod === 1 ? "1×" :
                   typeMod === 0.5 ? "0.5×" : typeMod === 0.25 ? "0.25×" : `${typeMod}×`;
