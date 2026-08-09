@@ -1,0 +1,4161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Damage Calc - Extinction Y</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+<style>
+:root {
+  --bg: #f1f3f7;
+  --card: #f5f5f5;
+  --text: #1f1f1f;
+  --muted: #666;
+  --border: #d9deea;
+  --accent: #245cac;
+  --result-bg: #f0f2f7;
+  --hp-green: #4caf50;
+  --hp-yellow: #ffc107;
+  --hp-red: #f44336;
+  --speed-fast: #2e7d32;
+  --speed-slow: #c62828;
+}
+body {
+  font-family: "Lexend", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 18px;
+}
+h1 { text-align: center; margin: 8px 0 6px; }
+.subtitle { text-align: center; color: var(--muted); margin: 0 0 16px; }
+.calc-wrap { max-width: 1440px; margin: 0 auto; }
+
+/* ── Top row: [You→Opp] [Result] [Opp→You] ── */
+.top-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) minmax(340px, 1.35fr) minmax(180px, 0.7fr);
+  gap: 14px;
+  margin-bottom: 14px;
+  align-items: flex-start;
+}
+.result-pane {
+  min-width: 0;
+  max-width: 520px;
+  justify-self: center;
+  width: 100%;
+}
+.qm-pane { min-width: 0; }
+.qm-label {
+  font-size: 0.7rem; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px;
+}
+.qm-move-btn {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; text-align: left;
+  padding: 5px 9px; margin-bottom: 4px;
+  border-radius: 6px; border: 1px solid var(--accent);
+  background: var(--qm-move-color, var(--accent));
+  border-color: var(--qm-move-color, var(--accent));
+  color: var(--qm-move-text-color, #fff);
+  cursor: pointer; font: inherit; font-size: 0.92rem;
+  gap: 6px;
+  transition: filter .12s, box-shadow .12s, opacity .12s;
+}
+.qm-move-btn:hover { opacity: .85; }
+.qm-move-btn.active-move {
+  filter: brightness(0.92);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+}
+.qm-move-name {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  flex: 1; min-width: 0;
+}
+.qm-move-pct {
+  font-size: 0.82rem; font-weight: 700;
+  white-space: nowrap; flex-shrink: 0; opacity: 0.9;
+}
+/* ── Main 3-column grid ── */
+.main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) 235px minmax(0, 1.1fr);
+  gap: 14px;
+  align-items: start;
+}
+.middle-col { display: flex; flex-direction: column; gap: 12px; }
+.imported-bottom-section {
+  margin-top: 14px;
+}
+
+/* ── Card base ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.08);
+  padding: 14px;
+}
+.side-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  color: var(--accent);
+}
+.side-card h2 { margin-bottom: 0; }
+
+/* ── Field (Battle Context) toggles ── */
+.toggle-group { display: flex; flex-wrap: wrap; gap: 3px; }
+.toggle-btn {
+  padding: 3px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  background: var(--bg);
+  color: var(--text);
+  transition: background .12s, color .12s;
+  white-space: nowrap;
+}
+.toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.field-hr { border: none; border-top: 1px solid var(--border); margin: 7px 0; }
+.field-section-label {
+  font-size: 0.7rem; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .05em; margin: 4px 0 3px;
+}
+.field-toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 6px; margin-bottom: 3px;
+}
+.field-toggle-row .ftlabel { font-size: 0.75rem; color: var(--muted); flex: 1; }
+.battle-row { display: flex; gap: 4px; margin-bottom: 4px; }
+.battle-row .toggle-btn { flex: 1; text-align: center; }
+
+/* ── Side buttons (You / Opp.) ── */
+.side-toggle { display: flex; gap: 3px; }
+.side-btn {
+  padding: 3px 11px;
+  min-width: 46px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.73rem;
+  background: var(--bg);
+  color: var(--muted);
+  transition: background .12s, color .12s;
+  white-space: nowrap;
+}
+.side-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Fields (inputs/selects inside pokemon cards) ── */
+.field label {
+  display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 2px; white-space: nowrap;
+}
+.field input {
+  border: 1px solid var(--border); border-radius: 7px;
+  padding: 5px 7px; font: inherit; background: #f0f0f0; color: inherit;
+  width: 100%; box-sizing: border-box;
+}
+.field select {
+  border: 1px solid var(--border); border-radius: 7px;
+  padding: 5px 7px; font: inherit; background: #f0f0f0; color: inherit;
+  display: inline-block; max-width: 100%;
+}
+.activatable-select-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.activatable-check {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.activatable-check input {
+  width: 13px;
+  height: 13px;
+  margin: 0;
+}
+.activatable-select-row > select,
+.activatable-select-row > .item-select-wrap {
+  flex: 1;
+  min-width: 0;
+}
+.item-select-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.item-select-row .item-select-wrap {
+  flex: 1;
+}
+.item-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.item-select-wrap select {
+  flex: 1;
+  min-width: 0;
+}
+.item-select-sprite {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+
+/* ── Pokemon info grid ── */
+.info-grid {
+  display: grid;
+  grid-template-areas:
+    "species  species  species  sprite"
+    "type1    ability  item     sprite"
+    "type2    nature   level    sprite";
+  grid-template-columns: auto auto auto auto;
+  justify-content: space-between;
+  column-gap: 12px;
+  row-gap: 12px;
+  margin-bottom: 8px;
+}
+.ia-sprite {
+  grid-area: sprite;
+  display: flex; align-items: flex-start; justify-content: center; padding-top: 4px;
+  gap: 4px;
+}
+.ia-sprite-btns {
+  display: flex; flex-direction: column; gap: 4px; align-self: flex-start;
+}
+.save-poke-btn {
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.save-poke-btn:hover {
+  background: rgba(36, 92, 172, 0.1);
+  border-color: var(--accent);
+}
+.delete-poke-btn {
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: inherit;
+  cursor: pointer;
+  font-size: .8rem;
+  line-height: 1;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.delete-poke-btn:hover {
+  background: rgba(220, 53, 53, 0.12);
+  border-color: #c62828;
+}
+.poke-sprite {
+  width: 96px; height: 96px; object-fit: contain;
+  image-rendering: pixelated;
+  border-radius: 6px;
+}
+.ia-species { grid-area: species; }
+.ia-type1   { grid-area: type1; }
+.ia-type2   { grid-area: type2; }
+.ia-ability { grid-area: ability; }
+.ia-item    { grid-area: item; }
+.ia-nature  { grid-area: nature; }
+.ia-level   { grid-area: level; }
+.species-select-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  min-width: 0;
+}
+.species-select-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.activatable-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "toggle label"
+    "toggle control";
+  column-gap: 6px;
+  align-items: end;
+  min-width: 0;
+}
+.activatable-field.no-toggle {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "label"
+    "control";
+  column-gap: 0;
+}
+.activatable-field > .field-label {
+  grid-area: label;
+}
+.activatable-field > .activatable-select-row,
+.activatable-field > .item-select-row {
+  grid-area: control;
+}
+.activatable-field > .ia-toggle,
+.activatable-field > .activatable-check {
+  grid-area: toggle;
+  align-self: end;
+  padding-bottom: 7px;
+}
+.activatable-field > .ia-toggle {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.ia-level input[type="number"] { max-width: 100%; width: 56px; }
+.info-grid .ia-species label,
+.info-grid .ia-type1 label,
+.info-grid .ia-type2 label,
+.info-grid .ia-level label,
+.info-grid .ia-item label,
+.info-grid .ia-nature label,
+.info-grid .ia-ability label {
+  font-size: 0.78rem;
+}
+.info-grid .ia-species select,
+.info-grid .ia-type1 select,
+.info-grid .ia-type2 select,
+.info-grid .ia-level input,
+.info-grid .ia-item select,
+.info-grid .ia-nature select,
+.info-grid .ia-ability select {
+  font-size: 0.90rem;
+}
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 0;
+  min-width: 0;
+  flex: 0 0 140px;
+}
+.form-row select { width: 100%; }
+
+/* ── Stat + Status row ── */
+.stat-status-row {
+  display: flex; gap: 8px; align-items: flex-start; margin-top: 6px;
+}
+.stat-status-row > :first-child { flex: 1; min-width: 0; }
+.stat-status-aside { flex-shrink: 0; }
+.stat-status-aside label {
+  display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 2px; white-space: nowrap;
+}
+.stat-status-aside select {
+  border: 1px solid var(--border); border-radius: 7px;
+  padding: 5px 4px; font: inherit; font-size: 0.78rem;
+  background: #f0f0f0; color: inherit;
+}
+
+/* ── Stat table ── */
+.stat-table {
+  width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 0;
+}
+.stat-table th, .stat-table td {
+  padding: 2px 3px; border: 1px solid var(--border);
+  text-align: center; vertical-align: middle;
+}
+.stat-table th {
+  background: var(--result-bg); font-weight: 600; color: var(--muted); font-size: 0.7rem;
+}
+.stat-table td:first-child { font-weight: 600; font-size: 0.73rem; color: var(--muted); }
+.stat-table .st-total { font-weight: 600; color: var(--accent); min-width: 28px; }
+.stat-table .st-total.speed-fast { color: var(--speed-fast); }
+.stat-table .st-total.speed-slow { color: var(--speed-slow); }
+.stat-table input {
+  width: 38px; border: 1px solid var(--border); border-radius: 4px;
+  padding: 2px 2px; font: inherit; font-size: 0.76rem; text-align: center;
+  background: #f0f0f0; color: inherit; box-sizing: border-box;
+}
+.stat-table select {
+  width: 44px; border: 1px solid var(--border); border-radius: 4px;
+  padding: 1px; font: inherit; font-size: 0.76rem; background: #f0f0f0; color: inherit;
+}
+
+/* ── HP bar ── */
+.hp-section {
+  margin-top: 8px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+}
+.hp-label { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+.hp-bar {
+  flex: 1; height: 10px; background: var(--border); border-radius: 5px;
+  overflow: hidden; min-width: 50px;
+}
+.hp-bar-fill {
+  height: 100%; border-radius: 5px; background: var(--hp-green);
+  transition: width .2s, background .2s;
+}
+.hp-section input[type="number"] {
+  width: 66px; border: 1px solid var(--border); border-radius: 6px;
+  padding: 3px 5px; font: inherit; font-size: 0.8rem; text-align: center;
+  background: #f0f0f0; color: inherit;
+}
+.hp-pct { font-size: 0.8rem; color: var(--muted); min-width: 38px; }
+
+/* ── Trainer nav ── */
+.trainer-nav {
+  display: flex; align-items: stretch; gap: 8px; margin-bottom: 8px;
+}
+.trainer-nav-arrows {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.trainer-nav-btn {
+  padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--text); cursor: pointer;
+  font: inherit; font-size: 0.8rem; flex-shrink: 0;
+}
+.trainer-nav-btn:hover { background: var(--border); }
+.trainer-search {
+  flex: 1; min-width: 0;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 8px; font: inherit; font-size: 0.92rem;
+  background: #f0f0f0; color: inherit;
+}
+.selection-help {
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-top: -2px;
+}
+
+/* ── Pokemon icon strip ── */
+.poke-icons {
+  display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px;
+}
+.battle-side-layout {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.battle-side-main {
+  flex: 1;
+  min-width: 0;
+}
+.pokemon-icon-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 0 0 76px;
+  min-width: 76px;
+}
+.pokemon-icon-rail .poke-icons {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin-bottom: 0;
+}
+.pokemon-icon-rail .poke-icon-slot {
+  flex: none;
+  width: 100%;
+}
+.team-slots-section {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+.team-slot-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.team-slot-group .poke-icons {
+  margin-bottom: 0;
+}
+.team-slot-group .poke-icon-slot {
+  flex: 0 0 calc((100% - 20px) / 6);
+  max-width: calc((100% - 20px) / 6);
+}
+
+.poke-icon-slot {
+  flex: 0 0 calc((100% - 20px) / 6);
+  aspect-ratio: 1; min-width: 0;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid var(--border); border-radius: 8px;
+  --slot-bg: var(--bg);
+  --slot-left-indicator: transparent;
+  --slot-right-indicator: transparent;
+  background:
+    linear-gradient(to right, var(--slot-left-indicator) 0 50%, var(--slot-right-indicator) 50% 100%),
+    var(--slot-bg);
+  transition: border-color .15s, background .15s;
+  padding: 2px; box-sizing: border-box;
+}
+.poke-icon-slot .poke-icon-main {
+  width: 100%; height: 100%; object-fit: contain;
+  image-rendering: pixelated;
+}
+.poke-icon-slot .poke-item-corner {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+.poke-icon-slot:hover:not(.empty) { border-color: var(--accent); }
+.poke-icon-slot.selected {
+  border-color: var(--accent);
+  --slot-bg: rgba(36,92,172,.1);
+}
+.poke-icon-slot.empty {
+  opacity: 0.25; cursor: default;
+}
+
+/* ── Moves section ── */
+.moves-label {
+  font-size: 0.73rem; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .05em; margin: 8px 0 4px;
+}
+.moves-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px auto;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+.moves-head-label {
+  grid-column: 2;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  white-space: nowrap;
+}
+.move-row {
+  display: grid; align-items: center; gap: 5px; margin-bottom: 2px;
+  grid-template-columns: minmax(0, 1fr) 42px auto;
+}
+.move-row select {
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 7px; font: inherit; font-size: 0.82rem;
+  background: #f0f0f0; color: inherit; min-width: 0; width: 100%;
+}
+.move-row.best-move select {
+  border-color: var(--accent); background: rgba(36,92,172,.06);
+}
+.move-hits-input {
+  width: 40px; flex-shrink: 0;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 4px; font: inherit; font-size: 0.78rem;
+  text-align: center; background: #f0f0f0; color: inherit;
+}
+.move-damage {
+  font-size: 0.72rem; color: var(--muted); flex-shrink: 0;
+  white-space: nowrap; min-width: 0;
+}
+.move-row.best-move .move-damage {
+  color: var(--accent); font-weight: 700;
+}
+.move-info-row {
+  display: flex; gap: 5px; margin-bottom: 5px;
+  padding: 1px 0 0 2px; flex-wrap: wrap; align-items: center;
+}
+.compact-moves-head {
+  grid-template-columns: minmax(0, 1fr) 72px 56px 62px 42px;
+}
+.compact-moves-head .moves-head-label {
+  grid-column: 5;
+}
+.compact-move-row {
+  grid-template-columns: minmax(0, 1fr) 72px 56px 62px 42px;
+  margin-bottom: 5px;
+}
+.compact-move-row .mi-type,
+.compact-move-row .mi-detail {
+  align-self: center;
+}
+.mi-type {
+  font-size: 0.66rem; font-weight: 700; padding: 1px 5px;
+  border-radius: 3px; color: #fff; white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  width: 72px; box-sizing: border-box; display: inline-flex; justify-content: center;
+}
+.mi-detail {
+  font-size: 0.68rem; color: var(--muted); white-space: nowrap; width: 100%;
+  text-align: center;
+}
+
+/* ── Result ── */
+.result {
+  background: var(--result-bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px; line-height: 1.45; font-size: 0.8rem;
+}
+.result b { color: var(--accent); }
+.result-placeholder { color: var(--muted); font-size: 0.88rem; text-align: center; padding: 16px 0; }
+.result-sep { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+.result-mod-notes { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.result-rolls { font-size: 0.75rem; color: var(--muted); word-break: break-word; }
+
+/* ── Pokémon importer ── */
+.importer-textarea {
+  width: 100%;
+  min-height: 150px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  resize: vertical;
+  background: #f0f0f0;
+  color: inherit;
+}
+.importer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.import-status {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.imported-bottom-section {
+  margin-top: 10px;
+}
+.imported-poke-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.imported-poke-btn {
+  width: 108px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  --slot-bg: var(--bg);
+  --slot-left-indicator: transparent;
+  --slot-right-indicator: transparent;
+  background:
+    linear-gradient(to right, var(--slot-left-indicator) 0 50%, var(--slot-right-indicator) 50% 100%),
+    var(--slot-bg);
+  color: inherit;
+  cursor: pointer;
+  padding: 6px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font: inherit;
+  position: relative;
+}
+.imported-poke-btn img:not(.imported-poke-item-icon) {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.imported-poke-btn span {
+  font-size: 0.68rem;
+  line-height: 1.2;
+  text-align: center;
+  word-break: break-word;
+}
+.imported-poke-item-icon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.imported-poke-btn:hover,
+.imported-poke-btn.selected {
+  border-color: var(--accent);
+  --slot-bg: rgba(36,92,172,.1);
+}
+.imported-poke-btn.in-party {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px rgba(36,92,172,.15);
+}
+.matchup-left-ohko { --slot-left-indicator: rgba(56, 181, 74, 0.45); }
+.matchup-left-2hko { --slot-left-indicator: rgba(108, 211, 122, 0.18); }
+.matchup-right-ohko { --slot-right-indicator: rgba(220, 53, 69, 0.45); }
+.matchup-right-2hko { --slot-right-indicator: rgba(236, 118, 129, 0.18); }
+.imported-poke-btn.in-party::after {
+  content: "Party";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .main-grid { grid-template-columns: 1fr 235px 1fr; }
+  .top-row { grid-template-columns: 1fr 1fr; }
+  .top-row .result-pane { grid-column: 1 / -1; order: -1; max-width: none; }
+}
+@media (max-width: 720px) {
+  .main-grid { grid-template-columns: 1fr 1fr; }
+  .middle-col { grid-column: 1 / -1; order: -1; }
+  .top-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 500px) {
+  .main-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Dark mode ── */
+html.dark-mode {
+  --bg: #10121a; --card: #1a1f2c; --text: #e6e9f2;
+  --muted: #a9b0c7; --border: #3a435b; --accent: #8ab4ff; --result-bg: #151b28;
+  --speed-fast: #66bb6a; --speed-slow: #ef9a9a;
+}
+html.dark-mode .stat-table .st-total.speed-fast { color: var(--speed-fast) !important; }
+html.dark-mode .stat-table .st-total.speed-slow { color: var(--speed-slow) !important; }
+html.dark-mode .field input, html.dark-mode .field select,
+html.dark-mode .move-row select,
+html.dark-mode .hp-section input, html.dark-mode .stat-table input,
+html.dark-mode .stat-table select,
+html.dark-mode .move-hits-input,
+html.dark-mode .trainer-search,
+html.dark-mode .stat-status-aside select,
+html.dark-mode .importer-textarea { background: #22293a; color: var(--text); }
+html.dark-mode .toggle-btn { background: #22293a; color: var(--text); }
+html.dark-mode .toggle-btn.active { background: var(--accent); color: #10121a; }
+html.dark-mode .side-btn { background: #22293a; color: var(--muted); }
+html.dark-mode .side-btn.active { background: var(--accent); color: #10121a; }
+html.dark-mode .trainer-nav-btn { background: #22293a; color: var(--text); }
+html.dark-mode .trainer-nav-btn:hover { background: var(--border); }
+html.dark-mode .poke-icon-slot { --slot-bg: #22293a; }
+html.dark-mode .imported-poke-btn { --slot-bg: #22293a; }
+html.dark-mode .qm-move-btn { color: var(--qm-move-text-color, #10121a); }
+html.dark-mode .qm-move-btn.active-move { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25); }
+html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
+</style>
+</head>
+<body>
+<h1>Damage Calc</h1>
+<p class="subtitle">Select a move button to calculate damage</p>
+
+<div class="calc-wrap">
+
+  <!-- ══ Top: [You→Opp] [Result] [Opp→You] ══ -->
+  <div class="top-row">
+
+    <div class="card qm-pane">
+      <div class="qm-label">You → Opp.</div>
+      <div id="qm-atk"></div>
+    </div>
+
+    <div class="card result-pane">
+      <div id="result" class="result"><p class="result-placeholder">Click a move ▶ button to calculate damage.</p></div>
+    </div>
+
+    <div class="card qm-pane">
+      <div class="qm-label">Opp. → You</div>
+      <div id="qm-def"></div>
+    </div>
+
+  </div>
+
+  <!-- ══ Main 3-column grid ══ -->
+  <div class="main-grid">
+
+    <!-- ════ YOU ════ -->
+    <div class="card side-card" id="you-card">
+      <h2>You</h2>
+
+      <div class="moves-label">Trainer Selection</div>
+      <div class="trainer-nav">
+        <select class="trainer-search" id="atk-trainer-search" onchange="selectTrainerFromSelect('atk')"></select>
+        <div class="trainer-nav-arrows">
+          <button class="trainer-nav-btn" type="button" onclick="prevTrainer('atk')">◀</button>
+          <button class="trainer-nav-btn" type="button" onclick="nextTrainer('atk')">▶</button>
+        </div>
+      </div>
+
+      <!-- Info grid -->
+      <div class="info-grid">
+        <div class="field ia-species">
+          <div class="species-select-row">
+            <div class="species-select-inner">
+              <label for="atk-species">Species</label>
+              <select id="atk-species"></select>
+            </div>
+            <div id="atk-form-row" class="form-row" hidden>
+              <label for="atk-form">Form</label>
+              <select id="atk-form" onchange="onFormSelectChange('atk')"></select>
+            </div>
+          </div>
+        </div>
+        <div class="ia-sprite">
+          <img id="atk-sprite" class="poke-sprite" src="" alt="">
+          <div class="ia-sprite-btns">
+            <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
+            <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
+          </div>
+        </div>
+        <div class="field ia-type1">
+          <label for="atk-type1">Type 1</label>
+          <select id="atk-type1"></select>
+        </div>
+        <div class="field ia-ability activatable-field no-toggle">
+          <div id="atk-ability-toggle-slot" class="ia-toggle" hidden>
+            <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
+              <input id="atk-ability-toggle" type="checkbox">
+            </label>
+          </div>
+          <label for="atk-ability" class="field-label">Ability</label>
+          <div class="activatable-select-row">
+            <select id="atk-ability"></select>
+          </div>
+        </div>
+        <div class="field ia-item activatable-field no-toggle">
+          <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
+            <input id="atk-item-toggle" type="checkbox">
+          </label>
+          <label for="atk-item" class="field-label">Item</label>
+          <div class="item-select-row">
+            <div class="item-select-wrap">
+              <select id="atk-item"></select>
+              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
+          </div>
+        </div>
+        <div class="field ia-type2">
+          <label for="atk-type2">Type 2</label>
+          <select id="atk-type2"></select>
+        </div>
+        <div class="field ia-nature">
+          <label for="atk-nature">Nature</label>
+          <select id="atk-nature"></select>
+        </div>
+        <div class="field ia-level">
+          <label for="atk-level">Level</label>
+          <input id="atk-level" type="number" min="1" max="100" value="50">
+        </div>
+      </div>
+
+      <div class="battle-side-layout">
+        <div class="battle-side-main">
+          <!-- HP bar -->
+          <div class="hp-section">
+            <span class="hp-label">HP</span>
+            <div class="hp-bar"><div class="hp-bar-fill" id="atk-hp-fill" style="width:100%"></div></div>
+            <input id="atk-current-hp" type="number" min="1" placeholder="Current HP"
+                   oninput="onCurrentHPInput('atk')" title="Current HP">
+            <span class="hp-pct" id="atk-hp-pct">100%</span>
+          </div>
+
+          <!-- Stat table + Status -->
+          <div class="stat-status-row">
+            <div id="atk-stat-wrap"></div>
+            <div class="stat-status-aside">
+              <label for="atk-status">Status</label>
+              <select id="atk-status">
+                <option value="none">None</option>
+                <option value="brn">Burn</option>
+                <option value="par">Paralysis</option>
+                <option value="psn">Poison</option>
+                <option value="tox">Toxic</option>
+                <option value="slp">Sleep</option>
+                <option value="frz">Freeze</option>
+                <option value="leech">Leech Seed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="team-slots-section">
+            <div class="team-slot-groups">
+              <div class="team-slot-group imported-section" id="atk-party-section" hidden>
+                <div class="moves-label">Party</div>
+                <div class="poke-icons" id="atk-party-icons"></div>
+              </div>
+              <div class="team-slot-group" id="atk-trainer-icons-section">
+                <div class="moves-label">Trainer Pokémon</div>
+                <div class="poke-icons" id="atk-poke-icons"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Moves -->
+          <div class="moves-label">Moves</div>
+          <div class="moves-head compact-moves-head"><span class="moves-head-label">Hits ×</span></div>
+          <div id="atk-moves-section">
+            <div class="move-row compact-move-row" id="atk-move-row-0">
+              <select id="atk-move-0" onchange="onMoveSelectChange('atk',0)"></select>
+              <span class="mi-type" id="atk-move-type-0"></span>
+              <span class="mi-detail" id="atk-move-bp-0">BP: —</span>
+              <span class="mi-detail" id="atk-move-acc-0">Acc: —</span>
+              <input type="number" id="atk-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="atk-move-row-1">
+              <select id="atk-move-1" onchange="onMoveSelectChange('atk',1)"></select>
+              <span class="mi-type" id="atk-move-type-1"></span>
+              <span class="mi-detail" id="atk-move-bp-1">BP: —</span>
+              <span class="mi-detail" id="atk-move-acc-1">Acc: —</span>
+              <input type="number" id="atk-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="atk-move-row-2">
+              <select id="atk-move-2" onchange="onMoveSelectChange('atk',2)"></select>
+              <span class="mi-type" id="atk-move-type-2"></span>
+              <span class="mi-detail" id="atk-move-bp-2">BP: —</span>
+              <span class="mi-detail" id="atk-move-acc-2">Acc: —</span>
+              <input type="number" id="atk-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="atk-move-row-3">
+              <select id="atk-move-3" onchange="onMoveSelectChange('atk',3)"></select>
+              <span class="mi-type" id="atk-move-type-3"></span>
+              <span class="mi-detail" id="atk-move-bp-3">BP: —</span>
+              <span class="mi-detail" id="atk-move-acc-3">Acc: —</span>
+              <input type="number" id="atk-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ════ MIDDLE: FIELD ════ -->
+    <div class="middle-col">
+      <div class="card">
+        <h2>Field</h2>
+
+        <!-- Battle type -->
+        <div class="field-section-label">Battle Type</div>
+        <div class="battle-row" id="battle-type-group">
+          <button class="toggle-btn active" data-value="singles">Single</button>
+          <button class="toggle-btn" data-value="doubles">Double</button>
+        </div>
+
+        <div class="field-hr"></div>
+
+        <!-- Weather -->
+        <div class="field-section-label">Weather</div>
+        <div class="toggle-group" id="weather-group">
+          <button class="toggle-btn active" data-value="none">None</button>
+          <button class="toggle-btn" data-value="sun">Sun</button>
+          <button class="toggle-btn" data-value="rain">Rain</button>
+          <button class="toggle-btn" data-value="sand">Sand</button>
+          <button class="toggle-btn" data-value="hail">Hail</button>
+        </div>
+
+        <!-- Terrain -->
+        <div class="field-section-label" style="margin-top:5px;">Terrain</div>
+        <div class="toggle-group" id="terrain-group">
+          <button class="toggle-btn active" data-value="none">None</button>
+          <button class="toggle-btn" data-value="electric">Electric</button>
+          <button class="toggle-btn" data-value="grassy">Grassy</button>
+          <button class="toggle-btn" data-value="misty">Misty</button>
+          <button class="toggle-btn" data-value="psychic" style="display:none">Psychic</button>
+        </div>
+
+        <div class="field-section-label" style="margin-top:5px;">Misc Effects</div>
+        <div class="toggle-group" id="misc-effects-group">
+          <button class="toggle-btn" id="room-magic" data-value="magic-room">Magic Room</button>
+          <button class="toggle-btn" id="room-wonder" data-value="wonder-room">Wonder Room</button>
+          <button class="toggle-btn" id="room-trick" data-value="trick-room">Trick Room</button>
+          <button class="toggle-btn" id="misc-ion" data-value="ion-deluge">Ion Deluge</button>
+        </div>
+
+        <div class="field-hr"></div>
+
+        <!-- Side-based conditions -->
+        <div class="field-toggle-row">
+          <span class="ftlabel">Critical Hit</span>
+          <div class="side-toggle">
+            <button class="side-btn" data-field-group="critical-hit" data-side="you">You</button>
+            <button class="side-btn" data-field-group="critical-hit" data-side="opp">Opp.</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
+          <span class="ftlabel">Helping Hand</span>
+          <div class="side-toggle">
+            <button class="side-btn" data-field-group="helping-hand" data-side="you">You</button>
+            <button class="side-btn" data-field-group="helping-hand" data-side="opp">Opp.</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
+          <span class="ftlabel">Reflect</span>
+          <div class="side-toggle">
+            <button class="side-btn" data-field-group="reflect" data-side="you">You</button>
+            <button class="side-btn" data-field-group="reflect" data-side="opp">Opp.</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
+          <span class="ftlabel">Light Screen</span>
+          <div class="side-toggle">
+            <button class="side-btn" data-field-group="light-screen" data-side="you">You</button>
+            <button class="side-btn" data-field-group="light-screen" data-side="opp">Opp.</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
+          <span class="ftlabel">Stealth Rock</span>
+          <div class="side-toggle">
+            <button class="side-btn" data-field-group="stealth-rock" data-side="you">You</button>
+            <button class="side-btn" data-field-group="stealth-rock" data-side="opp">Opp.</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
+          <span class="ftlabel">Spikes (You)</span>
+          <div class="toggle-group" id="spikes-you-group">
+            <button class="toggle-btn active" data-value="0">0</button>
+            <button class="toggle-btn" data-value="1">1</button>
+            <button class="toggle-btn" data-value="2">2</button>
+            <button class="toggle-btn" data-value="3">3</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
+          <span class="ftlabel">Spikes (Opp.)</span>
+          <div class="toggle-group" id="spikes-opp-group">
+            <button class="toggle-btn active" data-value="0">0</button>
+            <button class="toggle-btn" data-value="1">1</button>
+            <button class="toggle-btn" data-value="2">2</button>
+            <button class="toggle-btn" data-value="3">3</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
+          <span class="ftlabel">Friend Guard</span>
+          <div class="side-toggle">
+            <button class="side-btn" data-field-group="friend-guard" data-side="you">You</button>
+            <button class="side-btn" data-field-group="friend-guard" data-side="opp">Opp.</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
+          <span class="ftlabel">Flower Gift</span>
+          <div class="side-toggle">
+            <button class="side-btn" data-field-group="flower-gift" data-side="you">You</button>
+            <button class="side-btn" data-field-group="flower-gift" data-side="opp">Opp.</button>
+          </div>
+        </div>
+
+        <div class="field-hr"></div>
+
+        <div class="field-section-label">Pokémon Importer</div>
+        <textarea id="pokemon-importer" class="importer-textarea" placeholder="Paste Showdown-format Pokémon here..."></textarea>
+        <div class="importer-actions">
+          <button class="trainer-nav-btn" type="button" onclick="importPokemonSets()">Import Pokémon</button>
+          <button class="trainer-nav-btn" type="button" onclick="resetImportedPokemon()" title="Clear all imported Pokémon">Reset</button>
+        </div>
+        <div id="pokemon-import-status" class="import-status">Paste Pokémon sets to import them. Right-click imported Pokémon to toggle them in your party.</div>
+      </div>
+    </div>
+
+    <!-- ════ OPPONENT ════ -->
+    <div class="card side-card" id="opp-card">
+      <h2>Opponent</h2>
+
+      <div class="moves-label">Trainer Selection</div>
+      <div class="trainer-nav">
+        <select class="trainer-search" id="def-trainer-search" onchange="selectTrainerFromSelect('def')"></select>
+        <div class="trainer-nav-arrows">
+          <button class="trainer-nav-btn" type="button" onclick="prevTrainer('def')">◀</button>
+          <button class="trainer-nav-btn" type="button" onclick="nextTrainer('def')">▶</button>
+        </div>
+      </div>
+
+      <!-- Info grid -->
+      <div class="info-grid">
+        <div class="field ia-species">
+          <div class="species-select-row">
+            <div class="species-select-inner">
+              <label for="def-species">Species</label>
+              <select id="def-species"></select>
+            </div>
+            <div id="def-form-row" class="form-row" hidden>
+              <label for="def-form">Form</label>
+              <select id="def-form" onchange="onFormSelectChange('def')"></select>
+            </div>
+          </div>
+        </div>
+        <div class="ia-sprite">
+          <img id="def-sprite" class="poke-sprite" src="" alt="">
+        </div>
+        <div class="field ia-type1">
+          <label for="def-type1">Type 1</label>
+          <select id="def-type1"></select>
+        </div>
+        <div class="field ia-ability activatable-field no-toggle">
+          <div id="def-ability-toggle-slot" class="ia-toggle" hidden>
+            <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
+              <input id="def-ability-toggle" type="checkbox">
+            </label>
+          </div>
+          <label for="def-ability" class="field-label">Ability</label>
+          <div class="activatable-select-row">
+            <select id="def-ability"></select>
+          </div>
+        </div>
+        <div class="field ia-item activatable-field no-toggle">
+          <label id="def-item-toggle-wrap" class="activatable-check" hidden>
+            <input id="def-item-toggle" type="checkbox">
+          </label>
+          <label for="def-item" class="field-label">Item</label>
+          <div class="item-select-row">
+            <div class="item-select-wrap">
+              <select id="def-item"></select>
+              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
+            </div>
+          </div>
+        </div>
+        <div class="field ia-type2">
+          <label for="def-type2">Type 2</label>
+          <select id="def-type2"></select>
+        </div>
+        <div class="field ia-nature">
+          <label for="def-nature">Nature</label>
+          <select id="def-nature"></select>
+        </div>
+        <div class="field ia-level">
+          <label for="def-level">Level</label>
+          <input id="def-level" type="number" min="1" max="100" value="50">
+        </div>
+      </div>
+
+      <div class="battle-side-layout">
+        <div class="battle-side-main">
+          <!-- HP bar -->
+          <div class="hp-section">
+            <span class="hp-label">HP</span>
+            <div class="hp-bar"><div class="hp-bar-fill" id="def-hp-fill" style="width:100%"></div></div>
+            <input id="def-current-hp" type="number" min="1" placeholder="Current HP"
+                   oninput="onCurrentHPInput('def')" title="Current HP">
+            <span class="hp-pct" id="def-hp-pct">100%</span>
+          </div>
+
+          <!-- Stat table + Status -->
+          <div class="stat-status-row">
+            <div id="def-stat-wrap"></div>
+            <div class="stat-status-aside">
+              <label for="def-status">Status</label>
+              <select id="def-status">
+                <option value="none">None</option>
+                <option value="brn">Burn</option>
+                <option value="par">Paralysis</option>
+                <option value="psn">Poison</option>
+                <option value="tox">Toxic</option>
+                <option value="slp">Sleep</option>
+                <option value="frz">Freeze</option>
+                <option value="leech">Leech Seed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="team-slots-section">
+            <div class="team-slot-groups">
+              <div class="team-slot-group">
+                <div class="moves-label">Trainer Pokémon</div>
+                <div class="poke-icons" id="def-poke-icons"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Moves (hits input, no Atk button) -->
+          <div class="moves-label">Moves</div>
+          <div class="moves-head compact-moves-head"><span class="moves-head-label">Hits ×</span></div>
+          <div id="def-moves-section">
+            <div class="move-row compact-move-row" id="def-move-row-0">
+              <select id="def-move-0" onchange="onMoveSelectChange('def',0)"></select>
+              <span class="mi-type" id="def-move-type-0"></span>
+              <span class="mi-detail" id="def-move-bp-0">BP: —</span>
+              <span class="mi-detail" id="def-move-acc-0">Acc: —</span>
+              <input type="number" id="def-move-hits-0" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="def-move-row-1">
+              <select id="def-move-1" onchange="onMoveSelectChange('def',1)"></select>
+              <span class="mi-type" id="def-move-type-1"></span>
+              <span class="mi-detail" id="def-move-bp-1">BP: —</span>
+              <span class="mi-detail" id="def-move-acc-1">Acc: —</span>
+              <input type="number" id="def-move-hits-1" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="def-move-row-2">
+              <select id="def-move-2" onchange="onMoveSelectChange('def',2)"></select>
+              <span class="mi-type" id="def-move-type-2"></span>
+              <span class="mi-detail" id="def-move-bp-2">BP: —</span>
+              <span class="mi-detail" id="def-move-acc-2">Acc: —</span>
+              <input type="number" id="def-move-hits-2" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+            <div class="move-row compact-move-row" id="def-move-row-3">
+              <select id="def-move-3" onchange="onMoveSelectChange('def',3)"></select>
+              <span class="mi-type" id="def-move-type-3"></span>
+              <span class="mi-detail" id="def-move-bp-3">BP: —</span>
+              <span class="mi-detail" id="def-move-acc-3">Acc: —</span>
+              <input type="number" id="def-move-hits-3" class="move-hits-input" value="1" min="1" max="10" title="Hit count" oninput="recalcIfNeeded()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- end main-grid -->
+
+  <div class="card imported-section imported-bottom-section" id="atk-imported-section" hidden>
+    <div class="moves-label">Imported Pokémon</div>
+    <div class="imported-poke-list" id="atk-imported-pokemon"></div>
+    <div class="selection-help">Click to load. Right-click to add or remove a Pokémon from your party.</div>
+  </div>
+</div><!-- end calc-wrap -->
+
+<script>
+const TYPES = ["Normal","Fire","Water","Electric","Grass","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"];
+const STATS = ["HP", "Atk", "Def", "SpA", "SpD", "Spe"];
+const TYPE_COLORS = {
+  Normal: "#898864", Fire: "#C36927", Water: "#5176C4", Electric: "#CAAA24",
+  Grass: "#64A33E", Ice: "#7AB1AF", Fighting: "#9F2520", Poison: "#853284",
+  Ground: "#B99C52", Flying: "#8A75C7", Psychic: "#CC456E", Bug: "#889715",
+  Rock: "#95842C", Ghost: "#5E477B", Dragon: "#5B2BCE", Dark: "#5B4739",
+  Steel: "#9696A8", Fairy: "#AF6D8D"
+};
+
+const TYPE_CHART = {
+  Normal:   { Rock: 0.5, Ghost: 0, Steel: 0.5 },
+  Fire:     { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 2, Bug: 2, Rock: 0.5, Dragon: 0.5, Steel: 2 },
+  Water:    { Fire: 2, Water: 0.5, Grass: 0.5, Ground: 2, Rock: 2, Dragon: 0.5, Ice: 0.5 },
+  Electric: { Water: 2, Electric: 0.5, Grass: 0.5, Ground: 0, Flying: 2, Dragon: 0.5 },
+  Grass:    { Fire: 0.5, Water: 2, Grass: 0.5, Poison: 0.5, Ground: 2, Flying: 0.5, Bug: 0.5, Rock: 2, Steel: 0.5 },
+  Ice:      { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 0, Ground: 2, Flying: 2, Dragon: 2, Steel: 0.5 },
+  Fighting: { Normal: 2, Ice: 2, Poison: 0.5, Flying: 0.5, Psychic: 0.5, Bug: 0.5, Rock: 2, Ghost: 0, Dark: 2, Steel: 2, Fairy: 0.5 },
+  Poison:   { Grass: 2, Poison: 0.5, Ground: 0.5, Rock: 0.5, Ghost: 0.5, Steel: 0, Fairy: 2 },
+  Ground:   { Fire: 2, Electric: 2, Grass: 0.5, Poison: 2, Flying: 0, Bug: 0.5, Rock: 2, Steel: 2, Ice: 0.5 },
+  Flying:   { Electric: 0.5, Grass: 2, Fighting: 2, Bug: 2, Rock: 0.5, Steel: 0.5 },
+  Psychic:  { Fighting: 2, Poison: 2, Psychic: 0.5, Dark: 0, Steel: 0.5 },
+  Bug:      { Fire: 0.5, Grass: 2, Fighting: 0.5, Poison: 0.5, Flying: 0.5, Psychic: 2, Ghost: 0.5, Dark: 2, Steel: 0.5 },
+  Rock:     { Fire: 2, Ice: 2, Fighting: 0.5, Ground: 0.5, Flying: 2, Bug: 2, Steel: 0.5 },
+  Ghost:    { Normal: 0, Psychic: 2, Ghost: 2, Dark: 0.5, Bug: 0.5 },
+  Dragon:   { Dragon: 2, Steel: 0.5, Fairy: 0, Normal: 0.5, Electric: 2 },
+  Dark:     { Fighting: 0.5, Psychic: 2, Ghost: 2, Dark: 0.5, Fairy: 0.5 },
+  Steel:    { Fire: 0.5, Water: 0.5, Electric: 0.5, Ice: 2, Rock: 2, Steel: 0.5, Fairy: 2 },
+  Fairy:    { Fire: 0.5, Fighting: 2, Poison: 0.5, Dragon: 2, Dark: 2, Steel: 0.5, Bug: 0.5}
+};
+
+const NATURES = {
+  Hardy: {up:null,down:null}, Lonely: {up:"Atk",down:"Def"}, Brave: {up:"Atk",down:"Spe"},
+  Adamant: {up:"Atk",down:"SpA"}, Naughty: {up:"Atk",down:"SpD"},
+  Bold: {up:"Def",down:"Atk"}, Docile: {up:null,down:null}, Relaxed: {up:"Def",down:"Spe"},
+  Impish: {up:"Def",down:"SpA"}, Lax: {up:"Def",down:"SpD"},
+  Timid: {up:"Spe",down:"Atk"}, Hasty: {up:"Spe",down:"Def"}, Serious: {up:null,down:null},
+  Jolly: {up:"Spe",down:"SpA"}, Naive: {up:"Spe",down:"SpD"},
+  Modest: {up:"SpA",down:"Atk"}, Mild: {up:"SpA",down:"Def"}, Quiet: {up:"SpA",down:"Spe"},
+  Bashful: {up:null,down:null}, Rash: {up:"SpA",down:"SpD"},
+  Calm: {up:"SpD",down:"Atk"}, Gentle: {up:"SpD",down:"Def"}, Sassy: {up:"SpD",down:"Spe"},
+  Careful: {up:"SpD",down:"SpA"}, Quirky: {up:null,down:null}
+};
+
+const BASE_ITEMS = [
+  "None","Life Orb","Choice Band","Choice Specs","Assault Vest","Eviolite",
+  "Expert Belt","Muscle Band","Wise Glasses","Leftovers","Shell Bell","Big Root","Rocky Helmet",
+  "Air Balloon","Heavy-Duty Boots","Thick Club","Light Ball",
+  // Type-boosting items
+  "Silk Scarf",
+  "Charcoal","Flame Plate",
+  "Mystic Water","Splash Plate",
+  "Magnet","Zap Plate",
+  "Miracle Seed","Meadow Plate",
+  "Never-Melt Ice","Icicle Plate",
+  "Black Belt","Fist Plate",
+  "Poison Barb","Toxic Plate",
+  "Soft Sand","Earth Plate",
+  "Sharp Beak","Sky Plate",
+  "Twisted Spoon","Mind Plate",
+  "Silver Powder","Insect Plate",
+  "Hard Stone","Stone Plate",
+  "Spell Tag","Spooky Plate",
+  "Dragon Fang","Draco Plate",
+  "Black Glasses","Dread Plate",
+  "Metal Coat","Iron Plate",
+  "Pixie Plate",
+  // Type gems
+  "Normal Gem","Fire Gem","Water Gem","Electric Gem","Grass Gem","Ice Gem",
+  "Fighting Gem","Poison Gem","Ground Gem","Flying Gem","Psychic Gem","Bug Gem",
+  "Rock Gem","Ghost Gem","Dragon Gem","Dark Gem","Steel Gem","Fairy Gem",
+  // Type-resist berries (ordered to match TYPE_RESIST_BERRIES)
+  "Occa Berry","Passho Berry","Wacan Berry","Rindo Berry","Yache Berry",
+  "Chople Berry","Kebia Berry","Shuca Berry","Coba Berry","Payapa Berry",
+  "Tanga Berry","Charti Berry","Kasib Berry","Haban Berry","Colbur Berry",
+  "Babiri Berry","Roseli Berry","Chilan Berry"
+];
+
+const TYPE_BOOST_ITEMS = {
+  "Silk Scarf": "Normal",
+  "Charcoal": "Fire",    "Flame Plate": "Fire",
+  "Mystic Water": "Water", "Splash Plate": "Water",
+  "Magnet": "Electric",  "Zap Plate": "Electric",
+  "Miracle Seed": "Grass","Meadow Plate": "Grass",
+  "Never-Melt Ice": "Ice","Icicle Plate": "Ice",
+  "Black Belt": "Fighting","Fist Plate": "Fighting",
+  "Poison Barb": "Poison","Toxic Plate": "Poison",
+  "Soft Sand": "Ground",  "Earth Plate": "Ground",
+  "Sharp Beak": "Flying", "Sky Plate": "Flying",
+  "Twisted Spoon": "Psychic","Mind Plate": "Psychic",
+  "Silver Powder": "Bug", "Insect Plate": "Bug",
+  "Hard Stone": "Rock",   "Stone Plate": "Rock",
+  "Spell Tag": "Ghost",   "Spooky Plate": "Ghost",
+  "Dragon Fang": "Dragon","Draco Plate": "Dragon",
+  "Black Glasses": "Dark","Dread Plate": "Dark",
+  "Metal Coat": "Steel",  "Iron Plate": "Steel",
+  "Pixie Plate": "Fairy"
+};
+
+const TYPE_GEM_ITEMS = {
+  "Normal Gem": "Normal",    "Fire Gem": "Fire",       "Water Gem": "Water",
+  "Electric Gem": "Electric","Grass Gem": "Grass",     "Ice Gem": "Ice",
+  "Fighting Gem": "Fighting","Poison Gem": "Poison",   "Ground Gem": "Ground",
+  "Flying Gem": "Flying",    "Psychic Gem": "Psychic", "Bug Gem": "Bug",
+  "Rock Gem": "Rock",        "Ghost Gem": "Ghost",     "Dragon Gem": "Dragon",
+  "Dark Gem": "Dark",        "Steel Gem": "Steel",     "Fairy Gem": "Fairy"
+};
+
+const TYPE_RESIST_BERRIES = {
+  "Occa Berry": "Fire",    "Passho Berry": "Water",  "Wacan Berry": "Electric",
+  "Rindo Berry": "Grass",  "Yache Berry": "Ice",     "Chople Berry": "Fighting",
+  "Kebia Berry": "Poison", "Shuca Berry": "Ground",  "Coba Berry": "Flying",
+  "Payapa Berry": "Psychic","Tanga Berry": "Bug",    "Charti Berry": "Rock",
+  "Kasib Berry": "Ghost",  "Haban Berry": "Dragon",  "Colbur Berry": "Dark",
+  "Babiri Berry": "Steel", "Roseli Berry": "Fairy",
+  "Chilan Berry": "Normal" // halves all Normal-type damage regardless of effectiveness
+};
+
+const IMMUNE_ABILITIES = {
+  "Sap Sipper":  "Grass",
+  "Lightning Rod": "Electric",
+  "Volt Absorb": "Electric",
+  "Water Absorb": "Water",
+  "Storm Drain": "Water",
+  "Motor Drive": "Electric",
+  "Dry Skin":    "Water"  // also ×1.25 weak to Fire — handled separately below
+};
+
+const FIXED_DAMAGE_MOVES = {
+  "Seismic Toss": (ctx) => ctx.attacker.level,
+  "Night Shade":  (ctx) => ctx.attacker.level,
+  "Dragon Rage":  () => 40,
+  "Sonic Boom":   () => 20
+};
+const ALWAYS_CRIT_MOVES = new Set(["Storm Throw", "Self-Destruct", "Explosion", "Frost Breath"]);
+const DUAL_TYPE_MOVES = {
+  "Flying Press": ["Fighting", "Flying"]
+};
+const STATUS_POWER_MOVES = {
+  "Venoshock": { statuses: ["psn", "tox"], multiplier: 2, note: "Venoshock (poisoned target) ×2 BP" },
+  "Hex": { statuses: ["brn", "frz", "par", "slp", "psn", "tox"], multiplier: 2, note: "Hex (statused target) ×2 BP" }
+};
+const ACTIVATABLE_ABILITIES = {
+  "Intimidate": "Lowers opposing Pokémon Attack by -1",
+  "Demoralize": "Lowers opposing Pokémon Special Attack by -1",
+  "Imposter": "Copies the opposing Pokémon and adds it to your Imported Pokémon",
+  "Trace": "Copies the opposing Pokémon's ability while active"
+};
+
+let pokedex = {};
+let moves = {};
+let evolutions = {};
+let trainersFlat = [];
+let allItems = [...BASE_ITEMS];
+const NO_MOVE_OPTION = "No Move";
+const DEFAULT_MULTI_HIT_COUNT = 2;
+let lastCalcState = null;
+let importedPokemonSets = [];
+let currentSelectedImportedIdx = -1;
+let importedPartyIds = [];
+const trainerState = { atk: 0, def: 1 };
+const TRAINER_STATE_STORAGE_KEY = "damageCalcTrainerState";
+const transientAbilityState = {
+  atk: { traceAbility: null, transformImportedId: null },
+  def: { traceAbility: null, transformImportedId: null }
+};
+
+// Ability names that were replaced in Extinction Y (old Showdown name → new game name)
+const ABILITY_REPLACEMENTS = {
+  "Forewarn":     "Demoralize",
+  "Frisk":        "Sharpness",
+  "Grass Pelt":   "Biodiverse",
+  "Damp":         "Slush Rush",
+  "Anticipation": "Mending",
+  "Sand Veil":    "Dune Guard",
+  "Snow Cloak":   "Glacial Guard",
+  "Marvel Scale": "Perseverance",
+  "Run Away":     "Overload",
+  "Tangled Feet": "Cyclone",
+  "Zen Mode":     "Versatility",
+  "Poison Touch": "Envenom",
+  "Pickpocket":   "Confiscate",
+  "Heavy Metal":  "Aegis",
+  "Light Metal":  "Hyper Aggression"
+};
+
+// Move names that were replaced in Extinction Y (Showdown name → new game name)
+const MOVE_REPLACEMENTS = {
+  "Fury Attack":   "Aerial Assault",
+  "Wrap":          "Entangle",
+  "Thrash":        "Shenanigains",
+  "Muddy Water":   "Mudslide",
+  "Force Palm":    "Aura Palm",
+  "Head Charge":   "Headlong Rush",
+  "Glaciate":      "Flash Freeze",
+  "Whirlpool":     "Maelstrom",
+  "Fissure":       "Crater",
+  "Psystrike":     "Psycrash",
+  "Guillotine":    "Snip Snip",
+  "Sheer Cold":    "Absolute Zero",
+  "Triple Kick":   "Triple Axel",
+  "Slash":         "Slice",
+  "Vice Grip":     "Psionic Grip",
+  "Spike Cannon":  "Breaking Swipe",
+  "Rolling Kick":  "Triple Kick"
+};
+
+// Abilities that double Speed in a specific weather condition
+const WEATHER_SPEED_ABILITIES = {
+  "Swift Swim":  "rain",
+  "Slush Rush":  "hail",
+  "Chlorophyll": "sun",
+  "Sand Rush":   "sand"
+};
+
+// Abilities that automatically set weather when the Pokémon is loaded
+const WEATHER_SET_ABILITIES = {
+  "Drought":      "sun",
+  "Drizzle":      "rain",
+  "Snow Warning": "hail",
+  "Sand Stream":  "sand"
+};
+
+function el(id) { return document.getElementById(id); }
+function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+function num(v, d = 0) { const n = Number(v); return Number.isFinite(n) ? n : d; }
+function formatBasePower(value) {
+  const n = Math.round(num(value, 0) * 10) / 10;
+  return Number.isInteger(n) ? String(n) : n.toFixed(1);
+}
+function normalizePercentRatio(value) {
+  const n = num(value, 0);
+  if (!n) return 0;
+  return Math.abs(n) > 1 ? n / 100 : n;
+}
+function getMoveRawField(move, ...keys) {
+  if (!move || typeof move !== "object") return undefined;
+  for (const key of keys) {
+    if (key in move) return move[key];
+  }
+  const flags = move.Flags;
+  if (flags && typeof flags === "object") {
+    for (const key of keys) {
+      if (key in flags) return flags[key];
+    }
+  }
+  return undefined;
+}
+function getMoveFlags(move) {
+  if (!move || typeof move !== "object") return new Set();
+  const collected = [];
+  const normalizeMoveFlag = flag => {
+    const lowered = String(flag).trim().toLowerCase();
+    if (lowered === "spining") return "spinning";
+    return lowered;
+  };
+  const addFlag = flag => {
+    if (!flag) return;
+    collected.push(normalizeMoveFlag(flag));
+  };
+  const addFromValue = value => {
+    if (!value) return;
+    if (Array.isArray(value)) {
+      value.forEach(addFlag);
+      return;
+    }
+    if (typeof value === "string") {
+      value.split(",").forEach(addFlag);
+      return;
+    }
+    if (typeof value === "object") {
+      Object.entries(value).forEach(([key, raw]) => {
+        if (Array.isArray(raw)) {
+          raw.forEach(addFlag);
+          return;
+        }
+        if (typeof raw === "boolean" && raw) {
+          addFlag(key);
+          return;
+        }
+        if (typeof raw === "number" && raw !== 0) {
+          addFlag(key);
+          return;
+        }
+        if (typeof raw === "string") {
+          const lowered = raw.trim().toLowerCase();
+          if (["true", "1", "yes", "y"].includes(lowered)) addFlag(key);
+        }
+      });
+    }
+  };
+  ["MoveFlags", "moveFlags", "Flags", "flags"].forEach(key => addFromValue(move[key]));
+  return new Set(collected.filter(Boolean));
+}
+function hasMoveFlag(move, ...flags) {
+  const moveFlags = getMoveFlags(move);
+  return flags.some(flag => moveFlags.has(String(flag).trim().toLowerCase().replace(/^spining$/, "spinning")));
+}
+function getMoveFlagValue(move, ...keys) {
+  const raw = getMoveRawField(move, ...keys);
+  if (typeof raw === "boolean") return raw;
+  if (typeof raw === "number") return raw !== 0;
+  if (typeof raw === "string") {
+    const lowered = raw.trim().toLowerCase();
+    if (["true", "1", "yes", "y"].includes(lowered)) return true;
+    if (["false", "0", "no", "n"].includes(lowered)) return false;
+  }
+  if (hasMoveFlag(move, ...keys)) return true;
+  return null;
+}
+function getMoveHitRange(move) {
+  const minHits = num(getMoveRawField(move, "Min Hits", "MinHits", "minHits"), NaN);
+  const maxHits = num(getMoveRawField(move, "Max Hits", "MaxHits", "maxHits"), NaN);
+  return {
+    minHits: Number.isFinite(minHits) ? minHits : null,
+    maxHits: Number.isFinite(maxHits) ? maxHits : null
+  };
+}
+function moveMakesContact(move) {
+  const flag = getMoveFlagValue(move, "MakesContact", "makesContact");
+  if (flag !== null) return flag;
+  return /\(\s*C\s*\)/i.test(String(move?.Description || ""));
+}
+function getMoveRecoilAbsorbRatio(move) {
+  const rawField = getMoveRawField(
+    move,
+    "RecoilAbsorbPercentage",
+    "RecoilAbsorbPercent",
+    "RecoilAbsorb",
+    "recoilAbsorbPercentage",
+    "recoilAbsorbPercent",
+    "recoilAbsorb"
+  );
+  if (rawField !== undefined) return normalizePercentRatio(rawField);
+
+  const desc = String(move?.Description || "");
+  const recoilMatch = desc.match(/\((\d+(?:\.\d+)?)%\s+Recoil\)/i);
+  if (recoilMatch) return -normalizePercentRatio(recoilMatch[1]);
+
+  const absorbMatch = desc.match(/\((\d+(?:\.\d+)?)%\)/);
+  if (/restored by half|restores? half|drain|healed from the damage|HP is restored/i.test(desc) && absorbMatch) {
+    return normalizePercentRatio(absorbMatch[1]);
+  }
+  if (/restored by half|restores? half|drain/i.test(desc)) return 0.5;
+  return 0;
+}
+function moveCanUseParentalBond(moveName, move, hitCount) {
+  if (!move || move.Category === "Status" || hitCount > 1) return false;
+  return autoHitCount(moveName, move) === 1;
+}
+function moveIsRecklessBoosted(moveName, move) {
+  if (moveName === "Struggle") return false;
+  if (["Jump Kick", "High Jump Kick"].includes(moveName)) return true;
+  return getMoveRecoilAbsorbRatio(move) < 0;
+}
+function critBlockedByAbility(defenderAbility) {
+  return defenderAbility === "Battle Armor" || defenderAbility === "Shell Armor";
+}
+function scrappyTypeMod(moveType, defender) {
+  if (!["Normal", "Fighting"].includes(moveType)) return null;
+  if (defender.type1 !== "Ghost" && defender.type2 !== "Ghost") return null;
+  const chart = TYPE_CHART[moveType] || {};
+  let mod = 1;
+  [defender.type1, defender.type2].forEach(type => {
+    if (!type || type === "None") return;
+    mod *= type === "Ghost" ? 1 : (chart[type] ?? 1);
+  });
+  return mod;
+}
+function getTypeModifier(moveName, moveType, defender) {
+  const dualTypes = DUAL_TYPE_MOVES[moveName];
+  if (dualTypes) {
+    return dualTypes.reduce((mod, type) => mod * effectiveness(type, defender.type1, defender.type2), 1);
+  }
+  if (moveName === "Freeze-Dry") {
+    let mod = 1;
+    [defender.type1, defender.type2].forEach(type => {
+      if (!type || type === "None") return;
+      mod *= type === "Water" ? 2 : ((TYPE_CHART[moveType] || {})[type] ?? 1);
+    });
+    return mod;
+  }
+  return effectiveness(moveType, defender.type1, defender.type2);
+}
+function getMoveStabBase(moveName, moveType, attacker) {
+  const stabTypes = DUAL_TYPE_MOVES[moveName] || [moveType];
+  return stabTypes.some(type => attacker.type1 === type || attacker.type2 === type) ? 1.5 : 1;
+}
+function getDisplayMoveType(moveName, moveType) {
+  return DUAL_TYPE_MOVES[moveName] ? DUAL_TYPE_MOVES[moveName].join("/") : moveType;
+}
+function buildDamageRolls(baseDamage, stab, typeMod, otherMod, fixedFn) {
+  const rolls = [];
+  for (let r = 85; r <= 100; r++) {
+    let dmg = baseDamage;
+    if (!fixedFn) {
+      dmg = Math.floor(dmg * (r / 100));
+      dmg = Math.floor(dmg * stab);
+      dmg = Math.floor(dmg * typeMod);
+      dmg = Math.floor(dmg * otherMod);
+    }
+    dmg = Math.max(typeMod > 0 ? 1 : 0, dmg);
+    rolls.push(dmg);
+  }
+  return rolls;
+}
+
+/* ── Sprite name helper ── */
+function toSlug(name) {
+  return (name || '').toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9\-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function trainerDisplayName(trainer) {
+  return `${trainer.trainerName} (${trainer.route})`;
+}
+
+function generateImportedSetId() {
+  return `imp-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function normalizeImportedSet(set) {
+  if (!set || typeof set !== "object") return null;
+  const normalized = {
+    id: set.id || generateImportedSetId(),
+    species: set.species || "",
+    item: set.item || "None",
+    ability: set.ability || "",
+    level: clamp(num(set.level, 50), 1, 100),
+    nature: NATURES[set.nature] ? set.nature : "Hardy",
+    ivs: Object.fromEntries(STATS.map(stat => [stat, clamp(num(set.ivs?.[stat], 31), 0, 31)])),
+    moves: Array.isArray(set.moves) ? set.moves.slice(0, 4).map(move => typeof move === "string" ? move : "") : []
+  };
+  while (normalized.moves.length < 4) normalized.moves.push("");
+  return normalized;
+}
+
+function persistImportedState() {
+  try {
+    localStorage.setItem("importedPokemonSets", JSON.stringify(importedPokemonSets));
+    localStorage.setItem("importedPartyIds", JSON.stringify(importedPartyIds));
+  } catch (_) {}
+}
+
+function persistTrainerState() {
+  try {
+    localStorage.setItem(TRAINER_STATE_STORAGE_KEY, JSON.stringify(trainerState));
+  } catch (_) {}
+}
+
+function loadTrainerState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(TRAINER_STATE_STORAGE_KEY) || "{}");
+    return {
+      atk: Number.isInteger(saved?.atk) ? saved.atk : null,
+      def: Number.isInteger(saved?.def) ? saved.def : null
+    };
+  } catch (_) {
+    return { atk: null, def: null };
+  }
+}
+
+function findImportedIndexById(id) {
+  return importedPokemonSets.findIndex(set => set.id === id);
+}
+
+function syncImportedPartyIds() {
+  const validIds = new Set(importedPokemonSets.map(set => set.id));
+  importedPartyIds = importedPartyIds
+    .filter((id, idx, arr) => id && arr.indexOf(id) === idx && validIds.has(id))
+    .slice(0, 6);
+}
+
+function importedDisplayName(imported, idx) {
+  return `Imported ${idx + 1}: ${imported.species}`;
+}
+function getOpposingPrefix(prefix) {
+  return prefix === "atk" ? "def" : "atk";
+}
+function isActivatableItem(item) {
+  return item === "Air Balloon" || !!TYPE_GEM_ITEMS[item] || !!TYPE_RESIST_BERRIES[item];
+}
+function getSelectedAbility(prefix) {
+  return el(`${prefix}-ability`)?.value || "No Ability";
+}
+function getSelectedItem(prefix) {
+  return el(`${prefix}-item`)?.value || "None";
+}
+function isAbilityActivationChecked(prefix) {
+  return !!el(`${prefix}-ability-toggle`)?.checked;
+}
+function isItemActivationChecked(prefix) {
+  const item = getSelectedItem(prefix);
+  if (!isActivatableItem(item)) return true;
+  return !!el(`${prefix}-item-toggle`)?.checked;
+}
+function getEffectiveAbilityFromUI(prefix) {
+  const ability = getSelectedAbility(prefix);
+  if (ability === "Trace" && isAbilityActivationChecked(prefix) && transientAbilityState[prefix].traceAbility) {
+    return transientAbilityState[prefix].traceAbility;
+  }
+  return ability;
+}
+function getEffectiveItemFromUI(prefix) {
+  const item = getSelectedItem(prefix);
+  return isActivatableItem(item) && !isItemActivationChecked(prefix) ? "None" : item;
+}
+function getOpposingStatDrop(prefix, stat, targetAbility = getEffectiveAbilityFromUI(prefix)) {
+  if (targetAbility === "Clear Body") return 0;
+  const opposingPrefix = getOpposingPrefix(prefix);
+  const opposingAbility = getEffectiveAbilityFromUI(opposingPrefix);
+  if (stat === "Atk" && opposingAbility === "Intimidate" && isAbilityActivationChecked(opposingPrefix)) return -1;
+  if (stat === "SpA" && opposingAbility === "Demoralize" && isAbilityActivationChecked(opposingPrefix)) return -1;
+  return 0;
+}
+function ensureImportedCopyFromTransform(prefix) {
+  const opponent = readSet(getOpposingPrefix(prefix));
+  const status = el("pokemon-import-status");
+  if (!opponent) return;
+  const importedSet = normalizeImportedSet({
+    species: opponent.name,
+    item: opponent.baseItem || opponent.item || "None",
+    ability: opponent.baseAbility || opponent.ability || "No Ability",
+    level: opponent.level,
+    nature: opponent.nature,
+    ivs: opponent.iv,
+    moves: (opponent.moves || []).map(move => move === NO_MOVE_OPTION ? "" : move)
+  });
+  if (!importedSet) return;
+  importedPokemonSets.push(importedSet);
+  sortImportedByDex();
+  transientAbilityState[prefix].transformImportedId = importedSet.id;
+  renderImportedPokemonList();
+  renderImportedParty();
+  persistImportedState();
+  if (status) status.textContent = `${opponent.name} copied to your Imported Pokémon.`;
+}
+function resetTransientAbilityState(prefix, options = {}) {
+  transientAbilityState[prefix].traceAbility = null;
+  if (options.clearTransformId) transientAbilityState[prefix].transformImportedId = null;
+}
+function refreshAbilityToggleUI(prefix) {
+  const ability = getSelectedAbility(prefix);
+  const slot = el(`${prefix}-ability-toggle-slot`);
+  const wrap = el(`${prefix}-ability-toggle-wrap`);
+  const toggle = el(`${prefix}-ability-toggle`);
+  if (!wrap || !toggle) return;
+  const isActivatable = !!ACTIVATABLE_ABILITIES[ability];
+  if (slot) slot.hidden = !isActivatable;
+  wrap.hidden = !isActivatable;
+  const field = slot ? slot.closest(".activatable-field") : wrap.closest(".activatable-field");
+  if (field) field.classList.toggle("no-toggle", !isActivatable);
+  if (!isActivatable) {
+    toggle.checked = false;
+    wrap.removeAttribute("title");
+    toggle.removeAttribute("title");
+    resetTransientAbilityState(prefix, { clearTransformId: true });
+    return;
+  }
+  let text = ACTIVATABLE_ABILITIES[ability];
+  if (ability === "Trace" && toggle.checked && transientAbilityState[prefix].traceAbility) {
+    text += ` (active: ${transientAbilityState[prefix].traceAbility})`;
+  }
+  wrap.title = text;
+  toggle.title = text;
+}
+function refreshItemToggleUI(prefix) {
+  const item = getSelectedItem(prefix);
+  const wrap = el(`${prefix}-item-toggle-wrap`);
+  const toggle = el(`${prefix}-item-toggle`);
+  if (!wrap || !toggle) return;
+  const isActivatable = isActivatableItem(item);
+  wrap.hidden = !isActivatable;
+  const field = wrap.closest(".activatable-field");
+  if (field) field.classList.toggle("no-toggle", !isActivatable);
+  if (!isActivatable) {
+    toggle.checked = false;
+    toggle.dataset.item = "";
+    wrap.removeAttribute("title");
+    toggle.removeAttribute("title");
+    return;
+  }
+  if (toggle.dataset.item !== item) {
+    toggle.checked = true;
+    toggle.dataset.item = item;
+  }
+  const text = item === "Air Balloon"
+    ? "Air Balloon remains active while checked"
+    : TYPE_GEM_ITEMS[item]
+      ? `${item} power boost is active while checked`
+      : `${item} damage reduction is active while checked`;
+  wrap.title = text;
+  toggle.title = text;
+}
+function refreshActivationControls(prefix) {
+  refreshAbilityToggleUI(prefix);
+  refreshItemToggleUI(prefix);
+}
+function onAbilityToggleChange(prefix) {
+  const ability = getSelectedAbility(prefix);
+  const toggle = el(`${prefix}-ability-toggle`);
+  if (!toggle) return;
+  if (ability === "Trace") {
+    if (toggle.checked) transientAbilityState[prefix].traceAbility = getEffectiveAbilityFromUI(getOpposingPrefix(prefix)) || "No Ability";
+    else transientAbilityState[prefix].traceAbility = null;
+  } else if (ability === "Imposter") {
+    if (toggle.checked) ensureImportedCopyFromTransform(prefix);
+    else transientAbilityState[prefix].transformImportedId = null;
+  }
+  refreshAbilityToggleUI(prefix);
+  recalcIfNeeded();
+}
+
+/* ── Toggle helpers ── */
+function getToggleValue(groupId) {
+  const active = document.querySelector(`#${groupId} .toggle-btn.active`);
+  return active ? active.dataset.value : null;
+}
+
+function bindToggleGroup(groupId, exclusive = true) {
+  const group = el(groupId);
+  if (!group) return;
+  const buttons = [...group.querySelectorAll(".toggle-btn")];
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (exclusive) {
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      } else {
+        if (btn.dataset.value === "none") {
+          setMultiToggleGroup(groupId, []);
+        } else {
+          btn.classList.toggle("active");
+          const activeValues = buttons
+            .filter(b => b.dataset.value !== "none" && b.classList.contains("active"))
+            .map(b => b.dataset.value);
+          setMultiToggleGroup(groupId, activeValues);
+        }
+      }
+      recalcIfNeeded();
+    });
+  });
+}
+function getQuickMoveTextColor(color) {
+  const hex = String(color || "").replace("#", "");
+  if (!/^[0-9a-fA-F]{6}$/.test(hex)) return "#fff";
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  return ((r * 299) + (g * 587) + (b * 114)) / 1000 >= 165 ? "#10121a" : "#fff";
+}
+function isMagicGuardActive(set) {
+  return set?.ability === "Magic Guard";
+}
+function speciesMatches(set, speciesName) {
+  if (!set || !speciesName) return false;
+  if (set.name === speciesName) return true;
+  const speciesIdx = pokedex[speciesName]?.SpeciesIdx;
+  return !!(speciesIdx && set.data?.SpeciesIdx === speciesIdx);
+}
+function canSpeciesEvolve(speciesName) {
+  const evoEntry = evolutions[speciesName];
+  return !!(evoEntry && evoEntry.EvolvesInto && Object.keys(evoEntry.EvolvesInto).length);
+}
+function setExclusiveToggle(groupId, value) {
+  const group = el(groupId);
+  if (!group) return;
+  group.querySelectorAll(".toggle-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.value === String(value));
+  });
+}
+function setMultiToggleGroup(groupId, values = []) {
+  const group = el(groupId);
+  if (!group) return;
+  const activeValues = new Set(values.map(String));
+  group.querySelectorAll(".toggle-btn").forEach(btn => {
+    const isNone = btn.dataset.value === "none";
+    btn.classList.toggle("active", isNone ? activeValues.size === 0 : activeValues.has(btn.dataset.value));
+  });
+}
+function resetFieldEffects() {
+  setExclusiveToggle("weather-group", "none");
+  setExclusiveToggle("terrain-group", "none");
+  setMultiToggleGroup("misc-effects-group", []);
+  setExclusiveToggle("spikes-you-group", "0");
+  setExclusiveToggle("spikes-opp-group", "0");
+  document.querySelectorAll(".side-btn").forEach(btn => btn.classList.remove("active"));
+}
+
+function isSideActive(group, side) {
+  return document.querySelector(`[data-field-group="${group}"][data-side="${side}"]`)?.classList.contains('active') || false;
+}
+
+function isRoomActive(value) {
+  return document.querySelector(`#misc-effects-group [data-value="${value}"]`)?.classList.contains('active') || false;
+}
+
+function bindSideButtons() {
+  document.querySelectorAll('.side-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('active');
+      recalcIfNeeded();
+    });
+  });
+}
+
+/* ── Nature / stat math ── */
+function getNatureMultiplier(natureName, stat) {
+  const n = NATURES[natureName] || NATURES.Hardy;
+  if (n.up === stat) return 1.1;
+  if (n.down === stat) return 0.9;
+  return 1;
+}
+function calcHp(base, iv, level) {
+  return Math.floor(((2 * base + iv) * level) / 100) + level + 10;
+}
+function calcOther(base, iv, level, natureMult) {
+  return Math.floor((Math.floor(((2 * base + iv) * level) / 100) + 5) * natureMult);
+}
+function stageMultiplier(stage) {
+  return stage >= 0 ? (2 + stage) / 2 : 2 / (2 - stage);
+}
+function effectiveness(moveType, type1, type2) {
+  const chart = TYPE_CHART[moveType] || {};
+  const m1 = chart[type1] ?? 1;
+  const m2 = type2 && type2 !== "None" && type2 !== type1 ? (chart[type2] ?? 1) : 1;
+  return m1 * m2;
+}
+
+function isGrounded(type1, type2, ability, item, ignoreBalloon = false) {
+  if (!ignoreBalloon && item === "Air Balloon") return false;
+  if (ability === "Levitate") return false;
+  if (type1 === "Flying" || type2 === "Flying") return false;
+  return true;
+}
+
+function toAbilityList(p) {
+  return [...new Set([p.Ability1, p.Ability2, p.AbilityH].filter(Boolean))];
+}
+
+/* ── Stat table (no EVs) ── */
+function buildStatTable(containerId, prefix, defaultIvs, defaultBoosts) {
+  const container = el(containerId);
+  const table = document.createElement("table");
+  table.className = "stat-table";
+
+  const thead = document.createElement("thead");
+  const hrow = document.createElement("tr");
+  ["Stat", "Base", "IVs", "Total", "Boost"].forEach(h => {
+    const th = document.createElement("th");
+    th.textContent = h;
+    hrow.appendChild(th);
+  });
+  thead.appendChild(hrow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  STATS.forEach(stat => {
+    const tr = document.createElement("tr");
+
+    const tdName = document.createElement("td");
+    tdName.textContent = stat;
+    tr.appendChild(tdName);
+
+    const tdBase = document.createElement("td");
+    tdBase.id = `${prefix}-base-${stat}`;
+    tdBase.textContent = "–";
+    tr.appendChild(tdBase);
+
+    const tdIv = document.createElement("td");
+    const ivInput = document.createElement("input");
+    ivInput.id = `${prefix}-iv-${stat}`;
+    ivInput.type = "number"; ivInput.min = "0"; ivInput.max = "31"; ivInput.step = "1";
+    ivInput.value = String(defaultIvs?.[stat] ?? 31);
+    tdIv.appendChild(ivInput);
+    tr.appendChild(tdIv);
+
+    const tdTotal = document.createElement("td");
+    tdTotal.id = `${prefix}-total-${stat}`;
+    tdTotal.className = "st-total";
+    tdTotal.textContent = "–";
+    tr.appendChild(tdTotal);
+
+    const tdBoost = document.createElement("td");
+    if (stat === "HP") {
+      const h = document.createElement("input");
+      h.id = `${prefix}-boost-${stat}`; h.type = "hidden"; h.value = "0";
+      tdBoost.textContent = "–"; tdBoost.appendChild(h);
+    } else {
+      const boostSel = document.createElement("select");
+      boostSel.id = `${prefix}-boost-${stat}`;
+      for (let b = 6; b >= -6; b--) {
+        const opt = document.createElement("option");
+        opt.value = String(b);
+        opt.textContent = b > 0 ? `+${b}` : b === 0 ? "--" : String(b);
+        if ((defaultBoosts?.[stat] ?? 0) === b) opt.selected = true;
+        boostSel.appendChild(opt);
+      }
+      tdBoost.appendChild(boostSel);
+    }
+    tr.appendChild(tdBoost);
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  container.innerHTML = "";
+  container.appendChild(table);
+}
+
+function updateStatTotals(prefix) {
+  const speciesName = el(`${prefix}-species`)?.value;
+  const p = pokedex[speciesName];
+  if (!p) return;
+  const level = clamp(num(el(`${prefix}-level`)?.value, 50), 1, 100);
+  const nature = el(`${prefix}-nature`)?.value || "Hardy";
+  const effectiveAbility = getEffectiveAbilityFromUI(prefix);
+
+  STATS.forEach(stat => {
+    const base = p.BaseStats?.[stat] ?? 1;
+    const baseCell = el(`${prefix}-base-${stat}`);
+    if (baseCell) baseCell.textContent = base;
+    const iv = clamp(num(el(`${prefix}-iv-${stat}`)?.value, 31), 0, 31);
+    let raw;
+    if (stat === "HP") raw = calcHp(base, iv, level);
+    else raw = calcOther(base, iv, level, getNatureMultiplier(nature, stat));
+    let display = raw;
+    if (stat !== "HP") {
+      const boost = clamp(num(el(`${prefix}-boost-${stat}`)?.value, 0), -6, 6);
+      const externalDrop = getOpposingStatDrop(prefix, stat, effectiveAbility);
+      const stage = clamp(boost + externalDrop, -6, 6);
+      if (stage !== 0) display = Math.floor(raw * stageMultiplier(stage));
+      if (stat === "Spe") {
+        const weather = getToggleValue("weather-group") || "none";
+        if (WEATHER_SPEED_ABILITIES[effectiveAbility] === weather) {
+          display = display * 2;
+        }
+      }
+    }
+    const totalCell = el(`${prefix}-total-${stat}`);
+    if (totalCell) totalCell.textContent = display;
+  });
+
+  updateHPBar(prefix);
+}
+
+function updateSpeedComparisonColors() {
+  const atkSpeedCell = el("atk-total-Spe");
+  const defSpeedCell = el("def-total-Spe");
+  if (!atkSpeedCell || !defSpeedCell) return;
+
+  [atkSpeedCell, defSpeedCell].forEach(cell => cell.classList.remove("speed-fast", "speed-slow"));
+
+  const atkSpeed = num(atkSpeedCell.textContent, NaN);
+  const defSpeed = num(defSpeedCell.textContent, NaN);
+  if (!Number.isFinite(atkSpeed) || !Number.isFinite(defSpeed) || atkSpeed === defSpeed) return;
+
+  const trickRoom = isRoomActive('trick-room');
+  if (trickRoom) {
+    // In Trick Room, slowest moves first → slower gets "fast" (green), faster gets "slow" (red)
+    atkSpeedCell.classList.add(atkSpeed < defSpeed ? "speed-fast" : "speed-slow");
+    defSpeedCell.classList.add(defSpeed < atkSpeed ? "speed-fast" : "speed-slow");
+  } else {
+    atkSpeedCell.classList.add(atkSpeed > defSpeed ? "speed-fast" : "speed-slow");
+    defSpeedCell.classList.add(defSpeed > atkSpeed ? "speed-fast" : "speed-slow");
+  }
+}
+
+/* ── HP bar ── */
+function updateHPBar(prefix) {
+  const maxHPCell = el(`${prefix}-total-HP`);
+  const maxHP = maxHPCell ? num(maxHPCell.textContent, 0) : 0;
+  if (!maxHP) return;
+
+  const inp = el(`${prefix}-current-hp`);
+  inp.max = maxHP;
+  if (!inp.value || num(inp.value) > maxHP) inp.value = maxHP;
+
+  const current = clamp(num(inp.value, maxHP), 1, maxHP);
+  const pct = (current / maxHP) * 100;
+  const fill = el(`${prefix}-hp-fill`);
+  if (fill) {
+    fill.style.width = pct.toFixed(1) + "%";
+    fill.style.background = pct > 50 ? "var(--hp-green)" : pct > 25 ? "var(--hp-yellow)" : "var(--hp-red)";
+  }
+  const pctSpan = el(`${prefix}-hp-pct`);
+  if (pctSpan) pctSpan.textContent = pct.toFixed(1) + "%";
+}
+
+function onCurrentHPInput(prefix) {
+  updateHPBar(prefix);
+  recalcIfNeeded();
+}
+
+/* ── Select helpers ── */
+function setSelectOptions(selectId, options, selected) {
+  const select = el(selectId);
+  if (!select) return;
+  select.innerHTML = "";
+  options.forEach(o => {
+    const opt = document.createElement("option");
+    opt.value = o; opt.textContent = o;
+    select.appendChild(opt);
+  });
+  if (selected && options.includes(selected)) select.value = selected;
+}
+
+function setTypeOptions(prefix) {
+  setSelectOptions(`${prefix}-type1`, TYPES, "Normal");
+  setSelectOptions(`${prefix}-type2`, ["None", ...TYPES], "None");
+}
+
+function listSpecies() {
+  return Object.entries(pokedex)
+    .sort((a, b) => (a[1].SpeciesIdx || 9999) - (b[1].SpeciesIdx || 9999) || a[0].localeCompare(b[0]))
+    .map(([name]) => name);
+}
+
+/* ── Form selector ── */
+function getFormsForSpecies(speciesName) {
+  if (!speciesName || !pokedex[speciesName]) return [speciesName];
+  const idx = pokedex[speciesName].SpeciesIdx;
+  if (!idx) return [speciesName];
+  return Object.entries(pokedex)
+    .filter(([, v]) => v.SpeciesIdx === idx)
+    .sort((a, b) => (a[1].SpeciesIdx || 9999) - (b[1].SpeciesIdx || 9999) || a[0].localeCompare(b[0]))
+    .map(([name]) => name);
+}
+
+function populateFormSelect(prefix, speciesName) {
+  const formRow = el(`${prefix}-form-row`);
+  const formSel = el(`${prefix}-form`);
+  if (!formRow || !formSel) return;
+  const forms = getFormsForSpecies(speciesName);
+  if (forms.length <= 1) {
+    formRow.hidden = true;
+    return;
+  }
+  formRow.hidden = false;
+  setSelectOptions(`${prefix}-form`, forms, speciesName);
+}
+
+function onFormSelectChange(prefix) {
+  const formVal = el(`${prefix}-form`)?.value;
+  const speciesSel = el(`${prefix}-species`);
+  if (formVal && speciesSel && selectHasOption(speciesSel, formVal)) {
+    speciesSel.value = formVal;
+    syncTypeDefaults(prefix);
+    updateSprite(prefix);
+    recalcIfNeeded();
+  }
+}
+
+/* ── Move selects ── */
+function populateMoveSelects(prefix, moveNames) {
+  for (let i = 0; i < 4; i++) {
+    // moveNames[0] is the explicit "No Move" placeholder, so defaults start from the first real move.
+    const defaultMove = moveNames[Math.min(i + 1, moveNames.length - 1)] || moveNames[0];
+    setSelectOptions(`${prefix}-move-${i}`, moveNames, defaultMove);
+    updateMoveHitsDefault(prefix, i);
+    updateMoveInfo(prefix, i);
+    updateQuickMoveBtn(prefix, i);
+  }
+}
+
+function updateMoveInfo(prefix, idx) {
+  const moveName = el(`${prefix}-move-${idx}`)?.value;
+  const move = moveName && moveName !== NO_MOVE_OPTION ? moves[moveName] : null;
+  const typeEl = el(`${prefix}-move-type-${idx}`);
+  const bpEl = el(`${prefix}-move-bp-${idx}`);
+  const accEl = el(`${prefix}-move-acc-${idx}`);
+
+  if (typeEl) {
+    typeEl.textContent = move?.Type || "";
+    typeEl.style.background = move?.Type ? (TYPE_COLORS[move.Type] || "var(--accent)") : "transparent";
+  }
+  if (bpEl) bpEl.textContent = `BP: ${move && num(move.Power, 0) > 0 ? formatBasePower(move.Power) : "—"}`;
+  if (accEl) accEl.textContent = `Acc: ${move?.Acc ?? move?.Accuracy ?? "—"}`;
+}
+
+function updateMoveHitsDefault(prefix, idx) {
+  const moveName = el(`${prefix}-move-${idx}`)?.value;
+  const hitsInput = el(`${prefix}-move-hits-${idx}`);
+  if (!hitsInput) return;
+  if (moveName && moves[moveName]) {
+    hitsInput.value = autoHitCount(moveName, moves[moveName]);
+  } else {
+    hitsInput.value = 1;
+  }
+}
+
+function updateQuickMoveBtn(prefix, idx) {
+  const btn = el(`qm-${prefix}-btn-${idx}`);
+  if (!btn) return;
+  const moveName = el(`${prefix}-move-${idx}`)?.value || '—';
+  const move = moves[moveName];
+  const nameSpan = btn.querySelector('.qm-move-name');
+  if (nameSpan) nameSpan.textContent = `▶ ${moveName}`;
+  btn.setAttribute("aria-label", `Calculate damage with ${moveName}`);
+  if (move?.Type) {
+    const color = TYPE_COLORS[move.Type] || "#245cac";
+    btn.style.setProperty("--qm-move-color", color);
+    btn.style.setProperty("--qm-move-text-color", getQuickMoveTextColor(color));
+  } else {
+    btn.style.removeProperty("--qm-move-color");
+    btn.style.removeProperty("--qm-move-text-color");
+  }
+}
+
+function onMoveSelectChange(prefix, idx) {
+  updateQuickMoveBtn(prefix, idx);
+  updateMoveHitsDefault(prefix, idx);
+  updateMoveInfo(prefix, idx);
+  if (lastCalcState && lastCalcState.atkPrefix === prefix && lastCalcState.moveIdx === idx) {
+    const moveName = el(`${prefix}-move-${idx}`)?.value;
+    if (moveName) { lastCalcState.moveName = moveName; recalcIfNeeded(); }
+  }
+}
+
+/* ── Quick moves panel ── */
+function buildQuickMoves() {
+  ['atk', 'def'].forEach(prefix => {
+    const container = el(`qm-${prefix}`);
+    if (!container) return;
+    container.innerHTML = '';
+    const defPrefix = prefix === 'atk' ? 'def' : 'atk';
+    for (let i = 0; i < 4; i++) {
+      const btn = document.createElement('button');
+      btn.id = `qm-${prefix}-btn-${i}`;
+      btn.className = 'qm-move-btn';
+      const moveName = el(`${prefix}-move-${i}`)?.value || '—';
+      btn.setAttribute("aria-label", `Calculate damage with ${moveName}`);
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'qm-move-name';
+      nameSpan.textContent = `▶ ${moveName}`;
+
+      const pctSpan = document.createElement('span');
+      pctSpan.className = 'qm-move-pct';
+      pctSpan.id = `qm-${prefix}-pct-${i}`;
+
+      btn.appendChild(nameSpan);
+      btn.appendChild(pctSpan);
+
+      const capturedIdx = i;
+      btn.addEventListener('click', () => calcFromMove(prefix, defPrefix, capturedIdx));
+      container.appendChild(btn);
+      updateQuickMoveBtn(prefix, i);
+    }
+  });
+}
+
+/* ── Trainer loading ── */
+function parseNatureName(natureStr) {
+  return (natureStr || "Hardy").split(" ")[0];
+}
+
+function resolveTrainerSpecies(tp) {
+  if (tp.Form && pokedex[tp.Form]) return tp.Form;
+  if (pokedex[tp.Name]) return tp.Name;
+  return tp.Name;
+}
+
+function populateTrainerOptions(prefix) {
+  const select = el(`${prefix}-trainer-search`);
+  if (!select) return;
+  select.innerHTML = "";
+  trainersFlat.forEach((trainer, idx) => {
+    const opt = document.createElement("option");
+    opt.value = String(idx);
+    opt.textContent = trainerDisplayName(trainer);
+    select.appendChild(opt);
+  });
+}
+
+function setTrainer(prefix, idx) {
+  if (!trainersFlat.length) return;
+  trainerState[prefix] = ((idx % trainersFlat.length) + trainersFlat.length) % trainersFlat.length;
+  const trainer = trainersFlat[trainerState[prefix]];
+  if (!trainer) return;
+
+  resetFieldEffects();
+
+  const trainerSelect = el(`${prefix}-trainer-search`);
+  if (trainerSelect) trainerSelect.value = String(trainerState[prefix]);
+  buildTrainerIcons(prefix, trainer);
+  if (prefix === "atk") setImportedSelection(-1);
+
+  if (prefix === "def") {
+    const battleType = (trainer.battleType || 'Single').toLowerCase();
+    const battleVal = (battleType === 'double' || battleType === 'triple') ? 'doubles' : 'singles';
+    setExclusiveToggle("battle-type-group", battleVal);
+  }
+
+  selectTrainerPokemon(prefix, 0);
+  persistTrainerState();
+}
+
+function prevTrainer(prefix) {
+  setTrainer(prefix, trainerState[prefix] - 1);
+}
+
+function nextTrainer(prefix) {
+  setTrainer(prefix, trainerState[prefix] + 1);
+}
+
+function selectTrainerFromSelect(prefix) {
+  const select = el(`${prefix}-trainer-search`);
+  if (!select) return;
+  const idx = num(select.value, -1);
+  if (idx >= 0 && idx < trainersFlat.length) setTrainer(prefix, idx);
+}
+
+function clearTrainerSelection(prefix) {
+  el(`${prefix}-poke-icons`)?.querySelectorAll(".poke-icon-slot")
+    .forEach(slot => slot.classList.remove("selected"));
+}
+
+function buildTrainerIcons(prefix, trainer) {
+  const container = el(`${prefix}-poke-icons`);
+  if (!container) return;
+  container.innerHTML = '';
+  for (let i = 0; i < trainer.pokemon.length; i++) {
+    const slot = document.createElement('div');
+    slot.id = `${prefix}-icon-slot-${i}`;
+    slot.className = 'poke-icon-slot';
+    const tp = trainer.pokemon[i];
+    const img = document.createElement('img');
+    img.className = 'poke-icon-main';
+    const slug = toSlug(tp.Form || tp.Name);
+    const baseSlug = toSlug(tp.Name);
+    img.alt = tp.Form || tp.Name;
+    img.src = `image/icons/${slug}.png`;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.src = `image/icons/${baseSlug}.png`;
+      }
+    };
+    slot.appendChild(img);
+    if (tp.HeldItem && tp.HeldItem !== "None") {
+      const itemImg = document.createElement("img");
+      itemImg.className = "poke-item-corner";
+      setItemSpriteImage(itemImg, tp.HeldItem);
+      slot.appendChild(itemImg);
+    }
+    const capturedIdx = i;
+    slot.addEventListener('click', () => selectTrainerPokemon(prefix, capturedIdx));
+    container.appendChild(slot);
+  }
+}
+
+function selectTrainerPokemon(prefix, pokIdx) {
+  const trainer = trainersFlat[trainerState[prefix]];
+  if (!trainer || !trainer.pokemon[pokIdx]) return;
+
+   if (prefix === "atk") setImportedSelection(-1);
+
+  // Highlight selected slot
+  for (let i = 0; i < trainer.pokemon.length; i++) {
+    const slot = el(`${prefix}-icon-slot-${i}`);
+    if (slot) slot.classList.toggle('selected', i === pokIdx);
+  }
+
+  fillTrainerPokemon(prefix, trainer.pokemon[pokIdx]);
+
+  // Always reset HP to max after switching Pokémon
+  const maxHPCell = el(`${prefix}-total-HP`);
+  const maxHP = num(maxHPCell?.textContent, 0);
+  const inp = el(`${prefix}-current-hp`);
+  if (inp && maxHP > 0) {
+    inp.value = maxHP;
+    updateHPBar(prefix);
+  }
+}
+
+function fillTrainerPokemon(prefix, tp) {
+  const speciesName = resolveTrainerSpecies(tp);
+  const speciesSel = el(`${prefix}-species`);
+  if (speciesSel && selectHasOption(speciesSel, speciesName)) {
+    speciesSel.value = speciesName;
+  }
+  syncTypeDefaults(prefix, speciesName);
+  updateSprite(prefix);
+  populateFormSelect(prefix, speciesName);
+
+  // Level
+  const levelInp = el(`${prefix}-level`);
+  if (levelInp) levelInp.value = tp.Level || 50;
+
+  // Nature
+  const natureName = parseNatureName(tp.Nature || "Hardy");
+  const natureSel = el(`${prefix}-nature`);
+  if (natureSel && NATURES[natureName]) natureSel.value = natureName;
+
+  // IVs (all 31)
+  const ivVal = tp.IVs ?? 31;
+  STATS.forEach(s => {
+    const inp = el(`${prefix}-iv-${s}`);
+    if (inp) inp.value = ivVal;
+  });
+
+  const abilitySel = el(`${prefix}-ability`);
+  if (abilitySel) {
+    const abilityName = tp.Ability || abilitySel.value || "No Ability";
+    addOptionIfMissing(abilitySel, abilityName);
+    abilitySel.value = abilityName;
+    const abilityToggle = el(`${prefix}-ability-toggle`);
+    if (abilityToggle) abilityToggle.checked = false;
+    resetTransientAbilityState(prefix, { clearTransformId: true });
+    refreshAbilityToggleUI(prefix);
+    const autoWeather = WEATHER_SET_ABILITIES[abilityName];
+    if (autoWeather) setExclusiveToggle("weather-group", autoWeather);
+  }
+
+  // Item
+  const itemSel = el(`${prefix}-item`);
+  if (itemSel) {
+    const itemName = tp.HeldItem || "None";
+    addOptionIfMissing(itemSel, itemName);
+    itemSel.value = itemName;
+  }
+  refreshItemToggleUI(prefix);
+  updateItemSprite(prefix);
+
+  // Moves
+  const trainerMoves = tp.Moves || [];
+  for (let i = 0; i < 4; i++) {
+    const moveSel = el(`${prefix}-move-${i}`);
+    const moveName = trainerMoves[i] || NO_MOVE_OPTION;
+    if (moveSel) {
+      addOptionIfMissing(moveSel, moveName);
+      moveSel.value = moveName;
+    }
+    updateMoveHitsDefault(prefix, i);
+    updateMoveInfo(prefix, i);
+    updateQuickMoveBtn(prefix, i);
+  }
+
+  updateStatTotals(prefix);
+  recalcIfNeeded();
+}
+
+/* ── Sprite display ── */
+function updateSprite(prefix) {
+  const speciesName = el(`${prefix}-species`)?.value;
+  const spriteEl = el(`${prefix}-sprite`);
+  if (!spriteEl) return;
+  if (!speciesName) { spriteEl.src = ''; spriteEl.alt = ''; return; }
+  const slug = toSlug(speciesName);
+  const baseSlug = toSlug((pokedex[speciesName]?.Name) || speciesName);
+  spriteEl.alt = speciesName;
+  spriteEl.src = `pokemon_sprites/${slug}.png`;
+  spriteEl.onerror = () => {
+    if (spriteEl.src.includes(slug) && slug !== baseSlug) {
+      spriteEl.src = `pokemon_sprites/${baseSlug}.png`;
+    }
+  };
+}
+
+function itemSlugCandidates(itemName) {
+  const slug = toSlug(itemName);
+  const compact = slug.replace(/-/g, "");
+  return compact && compact !== slug ? [slug, compact] : [slug];
+}
+
+function setItemSpriteImage(imgEl, itemName) {
+  if (!imgEl) return;
+  if (!itemName || itemName === "None") {
+    imgEl.hidden = true;
+    imgEl.removeAttribute("src");
+    imgEl.alt = "";
+    imgEl.onerror = null;
+    return;
+  }
+  const candidates = itemSlugCandidates(itemName);
+  let idx = 0;
+  const tryNext = () => {
+    if (idx >= candidates.length) {
+      imgEl.hidden = true;
+      imgEl.removeAttribute("src");
+      return;
+    }
+    imgEl.hidden = false;
+    imgEl.src = `image/item/${candidates[idx++]}.png`;
+  };
+  imgEl.alt = itemName;
+  imgEl.onerror = () => tryNext();
+  tryNext();
+}
+
+function updateItemSprite(prefix) {
+  const itemName = el(`${prefix}-item`)?.value || "None";
+  const spriteEl = el(`${prefix}-item-sprite`);
+  if (itemName === "None") {
+    if (spriteEl) spriteEl.hidden = true;
+    return;
+  }
+  setItemSpriteImage(spriteEl, itemName);
+}
+
+/* ── Option helpers ── */
+function selectHasOption(selectEl, value) {
+  for (const opt of selectEl.options) { if (opt.value === value) return true; }
+  return false;
+}
+function addOptionIfMissing(selectEl, value) {
+  if (!selectHasOption(selectEl, value)) {
+    const opt = document.createElement("option");
+    opt.value = value; opt.textContent = value;
+    selectEl.appendChild(opt);
+  }
+}
+
+function resolveImportedSpecies(name) {
+  if (!name) return null;
+  const exact = Object.keys(pokedex).find(species => species.toLowerCase() === name.toLowerCase());
+  if (exact) return exact;
+  const slug = toSlug(name);
+  const bySlug = Object.keys(pokedex).find(species => {
+    const baseName = pokedex[species]?.Name || species;
+    return toSlug(species) === slug || toSlug(baseName) === slug;
+  });
+  if (bySlug) return bySlug;
+  // Strip form suffix after a dash (e.g. "Floette-Yellow" → "Floette").
+  // Pokémon whose dash is part of their name (Ho-Oh, Porygon-Z) resolve via
+  // exact match above, so they are never affected here.
+  const dashIdx = name.lastIndexOf("-");
+  if (dashIdx > 0) {
+    return resolveImportedSpecies(name.substring(0, dashIdx));
+  }
+  return null;
+}
+
+function parseImportedPokemonBlock(block) {
+  const lines = block.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  if (!lines.length) return null;
+
+  const [header, ...rest] = lines;
+  const headerParts = header.split(/\s+@\s+/);
+  // Strip trailing gender marker then check for nickname pattern "Nickname (Species)"
+  const withoutGender = (headerParts[0] || "").replace(/\s+\((?:M|F)\)$/i, "").trim();
+  const nicknameMatch = withoutGender.match(/\(([^)]+)\)$/);
+  const rawSpecies = nicknameMatch ? nicknameMatch[1].trim() : withoutGender;
+  const species = resolveImportedSpecies(rawSpecies);
+  if (!species) return null;
+
+  const imported = {
+    id: generateImportedSetId(),
+    species,
+    item: (headerParts[1] || "None").trim() || "None",
+    ability: "",
+    level: 50,
+    nature: "Hardy",
+    ivs: Object.fromEntries(STATS.map(stat => [stat, 31])),
+    moves: []
+  };
+
+  rest.forEach(line => {
+    const abilityMatch = line.match(/^Ability:\s*(.+)$/i);
+    if (abilityMatch) {
+      const rawAbility = abilityMatch[1].trim();
+      // Map replaced ability names to their Extinction Y counterparts
+      imported.ability = ABILITY_REPLACEMENTS[rawAbility] || rawAbility;
+      return;
+    }
+    const levelMatch = line.match(/^Level:\s*(\d+)$/i);
+    if (levelMatch) {
+      imported.level = clamp(num(levelMatch[1], 50), 1, 100);
+      return;
+    }
+    if (/^Friendship:/i.test(line)) return;
+    const natureMatch = line.match(/^([A-Za-z]+)\s+Nature$/i);
+    if (natureMatch && NATURES[natureMatch[1]]) {
+      imported.nature = natureMatch[1];
+      return;
+    }
+    const ivMatch = line.match(/^IVs:\s*(.+)$/i);
+    if (ivMatch) {
+      ivMatch[1].split("/").forEach(part => {
+        const statMatch = part.trim().match(/^(\d+)\s+(HP|Atk|Def|SpA|SpD|Spe)$/i);
+        if (statMatch) imported.ivs[statMatch[2]] = clamp(num(statMatch[1], 31), 0, 31);
+      });
+      return;
+    }
+    const moveMatch = line.match(/^-+\s*(.+)$/);
+    if (moveMatch) {
+      const rawMove = moveMatch[1].trim();
+      imported.moves.push(MOVE_REPLACEMENTS[rawMove] || rawMove);
+    }
+  });
+
+  return imported;
+}
+
+function parseImportedPokemonSets(text) {
+  const all = text
+    .split(/\n\s*\n+/)
+    .map(block => block.trim())
+    .filter(Boolean)
+    .map(parseImportedPokemonBlock);
+  const sets = all.filter(Boolean);
+  const skipped = all.length - sets.length;
+  return { sets, skipped };
+}
+
+function sortImportedByDex() {
+  importedPokemonSets.sort((a, b) => {
+    return String(a.species || "").localeCompare(String(b.species || ""));
+  });
+}
+
+const MATCHUP_INDICATOR_CLASSES = ["matchup-left-ohko", "matchup-left-2hko", "matchup-right-ohko", "matchup-right-2hko"];
+
+function clearMatchupIndicatorClasses(node) {
+  if (!node) return;
+  MATCHUP_INDICATOR_CLASSES.forEach(cls => node.classList.remove(cls));
+}
+
+function buildImportedBattleSet(imported) {
+  if (!imported?.species) return null;
+  const p = pokedex[imported.species];
+  if (!p) return null;
+  const level = clamp(num(imported.level, 50), 1, 100);
+  const ability = imported.ability || toAbilityList(p)[0] || "No Ability";
+  const item = imported.item || "None";
+  const nature = NATURES[imported.nature] ? imported.nature : "Hardy";
+  const type1 = p.Type1 || "Normal";
+  const type2 = p.Type2 && p.Type2 !== type1 ? p.Type2 : "None";
+  const iv = {};
+  const boost = {};
+  STATS.forEach(stat => {
+    iv[stat] = clamp(num(imported.ivs?.[stat], 31), 0, 31);
+    boost[stat] = 0;
+  });
+  const stats = {};
+  STATS.forEach(stat => {
+    const base = p.BaseStats?.[stat] ?? 1;
+    stats[stat] = stat === "HP" ? calcHp(base, iv.HP, level) : calcOther(base, iv[stat], level, getNatureMultiplier(nature, stat));
+  });
+  return {
+    name: imported.species,
+    level,
+    ability,
+    item,
+    nature,
+    status: "none",
+    type1,
+    type2,
+    grounded: isGrounded(type1, type2, ability, item),
+    iv,
+    boost,
+    moves: Array.isArray(imported.moves) ? imported.moves.slice(0, 4) : [],
+    stats,
+    currentHP: stats.HP,
+    data: p
+  };
+}
+
+function getMatchupRating(outcome, guaranteed = false) {
+  if (!outcome || outcome.noDamageText) return null;
+  const ohkoChance = koChance(outcome.damageCounts, outcome.currentHP, 1, 0);
+  if (guaranteed ? ohkoChance >= 1 : ohkoChance > 0) return "ohko";
+  const twohkoChance = koChance(outcome.damageCounts, outcome.currentHP, 2, outcome.defenderEndTurn.delta);
+  if (guaranteed ? twohkoChance >= 1 : twohkoChance > 0) return "2hko";
+  return null;
+}
+
+function evaluateImportedMatchup(importedSet, opponentSet, atkCtx, defCtx) {
+  const result = { offense: null, threat: null };
+  if (!importedSet || !opponentSet) return result;
+
+  for (const moveName of (importedSet.moves || [])) {
+    if (!moveName || moveName === NO_MOVE_OPTION || !moves[moveName]) continue;
+    const hitCount = autoHitCount(moveName, moves[moveName]);
+    const outcome = calculateDamageOutcomeForSets(importedSet, opponentSet, moveName, hitCount, atkCtx);
+    const rating = getMatchupRating(outcome, true);
+    if (rating === "ohko") {
+      result.offense = "ohko";
+      break;
+    }
+    if (rating === "2hko") result.offense = "2hko";
+  }
+
+  for (let i = 0; i < 4; i++) {
+    const moveName = el(`def-move-${i}`)?.value;
+    if (!moveName || moveName === NO_MOVE_OPTION || !moves[moveName]) continue;
+    const hitsInput = el(`def-move-hits-${i}`);
+    const hitCount = hitsInput ? clamp(num(hitsInput.value, 1), 1, 10) : 1;
+    const outcome = calculateDamageOutcomeForSets(opponentSet, importedSet, moveName, hitCount, defCtx);
+    const rating = getMatchupRating(outcome, false);
+    if (rating === "ohko") {
+      result.threat = "ohko";
+      break;
+    }
+    if (rating === "2hko") result.threat = "2hko";
+  }
+
+  return result;
+}
+
+function applyMatchupIndicators(node, matchup) {
+  if (!node) return;
+  clearMatchupIndicatorClasses(node);
+  if (matchup?.offense === "ohko") node.classList.add("matchup-left-ohko");
+  else if (matchup?.offense === "2hko") node.classList.add("matchup-left-2hko");
+  if (matchup?.threat === "ohko") node.classList.add("matchup-right-ohko");
+  else if (matchup?.threat === "2hko") node.classList.add("matchup-right-2hko");
+}
+
+function refreshImportedMatchupIndicators() {
+  const importedButtons = document.querySelectorAll("#atk-imported-pokemon .imported-poke-btn");
+  const partySlots = document.querySelectorAll("#atk-party-icons .poke-icon-slot");
+  if (!importedButtons.length && !partySlots.length) return;
+
+  const opponentSet = readSet("def");
+  const atkCtx = getModifierContext("atk");
+  const defCtx = getModifierContext("def");
+  const matchupById = new Map();
+
+  importedPokemonSets.forEach(setData => {
+    const importedSet = buildImportedBattleSet(setData);
+    matchupById.set(setData.id, evaluateImportedMatchup(importedSet, opponentSet, atkCtx, defCtx));
+  });
+
+  importedButtons.forEach(btn => {
+    const setId = btn.dataset.setId;
+    applyMatchupIndicators(btn, setId ? matchupById.get(setId) : null);
+  });
+
+  partySlots.forEach((slot, idx) => {
+    const setId = importedPartyIds[idx];
+    if (!setId) {
+      clearMatchupIndicatorClasses(slot);
+      return;
+    }
+    applyMatchupIndicators(slot, matchupById.get(setId));
+  });
+}
+
+function removeImportedPokemon(idx) {
+  const removed = importedPokemonSets[idx];
+  if (!removed) return;
+  importedPokemonSets.splice(idx, 1);
+  importedPartyIds = importedPartyIds.filter(id => id !== removed.id);
+  if (currentSelectedImportedIdx === idx) {
+    currentSelectedImportedIdx = -1;
+  } else if (currentSelectedImportedIdx > idx) {
+    currentSelectedImportedIdx--;
+  }
+  syncImportedPartyIds();
+  renderImportedPokemonList();
+  renderImportedParty();
+  setImportedSelection(currentSelectedImportedIdx);
+  persistImportedState();
+}
+
+
+function setImportedSelection(selectedIdx) {
+  currentSelectedImportedIdx = selectedIdx;
+  document.querySelectorAll(".imported-poke-btn").forEach((btn, idx) => {
+    btn.classList.toggle("selected", idx === selectedIdx);
+  });
+  document.querySelectorAll("#atk-party-icons .poke-icon-slot").forEach((slot, idx) => {
+    const partyId = importedPartyIds[idx];
+    const selectedSet = selectedIdx >= 0 ? importedPokemonSets[selectedIdx] : null;
+    slot.classList.toggle("selected", !!selectedSet && partyId === selectedSet.id);
+  });
+  const deleteBtn = el("atk-delete-btn");
+  if (deleteBtn) deleteBtn.hidden = selectedIdx < 0;
+  updateAtkTrainerPartyVisibility();
+}
+
+function updateAtkTrainerPartyVisibility() {
+  const trainerIconsSection = el("atk-trainer-icons-section");
+  if (!trainerIconsSection) return;
+  trainerIconsSection.hidden = importedPartyIds.length > 0 || currentSelectedImportedIdx >= 0;
+}
+
+function renderImportedParty() {
+  const section = el("atk-party-section");
+  const container = el("atk-party-icons");
+  if (!section || !container) return;
+  syncImportedPartyIds();
+  container.innerHTML = "";
+  for (let i = 0; i < 6; i++) {
+    const setId = importedPartyIds[i];
+    const slot = document.createElement("div");
+    slot.className = "poke-icon-slot";
+    if (!setId) {
+      slot.classList.add("empty");
+      container.appendChild(slot);
+      continue;
+    }
+
+    const idx = findImportedIndexById(setId);
+    const setData = importedPokemonSets[idx];
+    if (!setData) {
+      slot.classList.add("empty");
+      container.appendChild(slot);
+      continue;
+    }
+
+    slot.title = importedDisplayName(setData, idx);
+    const img = document.createElement("img");
+    img.className = "poke-icon-main";
+    const slug = toSlug(setData.species);
+    const baseSlug = toSlug((pokedex[setData.species]?.Name) || setData.species);
+     img.src = `image/icons/${slug}.png`;
+    img.alt = setData.species;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.src = `image/icons/${baseSlug}.png`;
+      }
+    };
+    slot.appendChild(img);
+    if (setData.item && setData.item !== "None") {
+      const itemImg = document.createElement("img");
+      itemImg.className = "poke-item-corner";
+      setItemSpriteImage(itemImg, setData.item);
+      slot.appendChild(itemImg);
+    }
+    slot.addEventListener("click", () => applyImportedPokemon(idx));
+    slot.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+      toggleImportedPokemonInParty(idx);
+    });
+    container.appendChild(slot);
+  }
+
+  section.hidden = importedPartyIds.length === 0;
+  setImportedSelection(currentSelectedImportedIdx);
+  updateAtkTrainerPartyVisibility();
+  refreshImportedMatchupIndicators();
+}
+
+function toggleImportedPokemonInParty(idx) {
+  const setData = importedPokemonSets[idx];
+  const status = el("pokemon-import-status");
+  if (!setData) return;
+
+  const partyIdx = importedPartyIds.indexOf(setData.id);
+  if (partyIdx >= 0) {
+    importedPartyIds.splice(partyIdx, 1);
+    if (status) status.textContent = `${setData.species} removed from your party.`;
+  } else {
+    if (importedPartyIds.length >= 6) {
+      if (status) status.textContent = "Your party can only hold 6 Pokémon.";
+      return;
+    }
+    importedPartyIds.push(setData.id);
+    if (status) status.textContent = `${setData.species} added to your party.`;
+  }
+
+  syncImportedPartyIds();
+  renderImportedPokemonList();
+  renderImportedParty();
+  persistImportedState();
+}
+
+function renderImportedPokemonList() {
+  const section = el("atk-imported-section");
+  const container = el("atk-imported-pokemon");
+  if (!section || !container) return;
+  container.innerHTML = "";
+  if (!importedPokemonSets.length) {
+    section.hidden = true;
+    return;
+  }
+
+  importedPokemonSets.forEach((setData, idx) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "imported-poke-btn";
+    btn.dataset.setId = setData.id;
+    btn.classList.toggle("in-party", importedPartyIds.includes(setData.id));
+    btn.title = `${setData.species}${setData.item && setData.item !== "None" ? ` @ ${setData.item}` : ""}\nClick to load • Right-click to toggle party`;
+
+    const img = document.createElement("img");
+    const slug = toSlug(setData.species);
+    const baseSlug = toSlug((pokedex[setData.species]?.Name) || setData.species);
+    img.src = `pokemon_sprites/${slug}.png`;
+    img.alt = setData.species;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.src = `pokemon_sprites/${baseSlug}.png`;
+      }
+    };
+
+    const label = document.createElement("span");
+    label.textContent = setData.species;
+
+    btn.appendChild(img);
+    btn.appendChild(label);
+    if (setData.item && setData.item !== "None") {
+      const itemIcon = document.createElement("img");
+      itemIcon.className = "imported-poke-item-icon";
+      itemIcon.title = setData.item;
+      setItemSpriteImage(itemIcon, setData.item);
+      btn.appendChild(itemIcon);
+    }
+    btn.addEventListener("click", () => applyImportedPokemon(idx));
+    btn.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+      toggleImportedPokemonInParty(idx);
+    });
+    container.appendChild(btn);
+  });
+
+  section.hidden = false;
+  refreshImportedMatchupIndicators();
+}
+
+function fillImportedPokemon(prefix, imported) {
+  const speciesSel = el(`${prefix}-species`);
+  if (speciesSel && selectHasOption(speciesSel, imported.species)) {
+    speciesSel.value = imported.species;
+  }
+  syncTypeDefaults(prefix, imported.species);
+  updateSprite(prefix);
+  populateFormSelect(prefix, imported.species);
+
+  const levelInp = el(`${prefix}-level`);
+  if (levelInp) levelInp.value = imported.level;
+
+  const natureSel = el(`${prefix}-nature`);
+  if (natureSel && NATURES[imported.nature]) natureSel.value = imported.nature;
+
+  const abilitySel = el(`${prefix}-ability`);
+  if (abilitySel) {
+    const ability = imported.ability || abilitySel.value || "No Ability";
+    addOptionIfMissing(abilitySel, ability);
+    abilitySel.value = ability;
+    const abilityToggle = el(`${prefix}-ability-toggle`);
+    if (abilityToggle) abilityToggle.checked = false;
+    resetTransientAbilityState(prefix, { clearTransformId: true });
+    refreshAbilityToggleUI(prefix);
+    const autoWeather = WEATHER_SET_ABILITIES[ability];
+    if (autoWeather) setExclusiveToggle("weather-group", autoWeather);
+  }
+
+  const itemSel = el(`${prefix}-item`);
+  if (itemSel) {
+    const item = imported.item || "None";
+    addOptionIfMissing(itemSel, item);
+    itemSel.value = item;
+  }
+  refreshItemToggleUI(prefix);
+  updateItemSprite(prefix);
+
+  const statusSel = el(`${prefix}-status`);
+  if (statusSel) statusSel.value = "none";
+
+  STATS.forEach(stat => {
+    const ivInput = el(`${prefix}-iv-${stat}`);
+    if (ivInput) ivInput.value = imported.ivs[stat] ?? 31;
+  });
+
+  for (let i = 0; i < 4; i++) {
+    const moveSel = el(`${prefix}-move-${i}`);
+    if (!moveSel) continue;
+    const moveName = imported.moves[i] || NO_MOVE_OPTION;
+    if (moveName) {
+      addOptionIfMissing(moveSel, moveName);
+      moveSel.value = moveName;
+    }
+    updateMoveHitsDefault(prefix, i);
+    updateMoveInfo(prefix, i);
+    updateQuickMoveBtn(prefix, i);
+  }
+
+  updateStatTotals(prefix);
+  const maxHP = num(el(`${prefix}-total-HP`)?.textContent, 0);
+  const hpInput = el(`${prefix}-current-hp`);
+  if (hpInput && maxHP > 0) hpInput.value = maxHP;
+  updateHPBar(prefix);
+  recalcIfNeeded();
+}
+
+function applyImportedPokemon(idx) {
+  const imported = importedPokemonSets[idx];
+  if (!imported) return;
+  clearTrainerSelection("atk");
+  setImportedSelection(idx);
+  fillImportedPokemon("atk", imported);
+}
+
+function importPokemonSets() {
+  const textarea = el("pokemon-importer");
+  const status = el("pokemon-import-status");
+  const raw = textarea?.value.trim() || "";
+  if (!raw) {
+    if (status) status.textContent = "Paste one or more Pokémon sets to add them below.";
+    return;
+  }
+
+  try {
+    const { sets, skipped } = parseImportedPokemonSets(raw);
+    // Add new sets, overwriting any existing entry with the same species.
+    let added = 0, overwritten = 0;
+    sets.map(normalizeImportedSet).filter(Boolean).forEach(newSet => {
+      const existingIdx = importedPokemonSets.findIndex(s => s.species === newSet.species);
+      if (existingIdx >= 0) {
+        importedPokemonSets[existingIdx] = { ...newSet, id: importedPokemonSets[existingIdx].id };
+        overwritten++;
+      } else {
+        importedPokemonSets.push(newSet);
+        added++;
+      }
+    });
+    sortImportedByDex();
+    renderImportedPokemonList();
+    const skippedNote = skipped > 0 ? ` (${skipped} unrecognized skipped)` : "";
+    const overwriteNote = overwritten > 0 ? ` (${overwritten} updated)` : "";
+    const total = added + overwritten;
+    if (status) status.textContent = `Imported ${total} Pokémon.${overwriteNote}${skippedNote} Click a sprite to load it on the You side or right-click it to toggle it in your party.`;
+    // Clear the textarea so the next paste starts fresh.
+    if (textarea) textarea.value = "";
+    renderImportedParty();
+    persistImportedState();
+  } catch (error) {
+    renderImportedPokemonList();
+    if (status) status.textContent = error.message || "Could not import Pokémon.";
+  }
+}
+
+function resetImportedPokemon() {
+  importedPokemonSets = [];
+  currentSelectedImportedIdx = -1;
+  importedPartyIds = [];
+  renderImportedPokemonList();
+  renderImportedParty();
+  setImportedSelection(-1);
+  const textarea = el("pokemon-importer");
+  if (textarea) textarea.value = "";
+  const status = el("pokemon-import-status");
+  if (status) status.textContent = "Paste Pokémon sets to import them. Right-click imported Pokémon to toggle them in your party.";
+  // Clear persisted imports
+  try {
+    localStorage.removeItem("importedPokemonSets");
+    localStorage.removeItem("importedPartyIds");
+  } catch (_) {}
+}
+
+function saveCurrentPokemon() {
+  const species = el("atk-species")?.value || "";
+  if (!species) return;
+
+  const ivs = Object.fromEntries(STATS.map(stat => [stat, num(el(`atk-iv-${stat}`)?.value, 31)]));
+  const moves = [];
+  for (let i = 0; i < 4; i++) {
+    const mv = el(`atk-move-${i}`)?.value || NO_MOVE_OPTION;
+    moves.push(mv === NO_MOVE_OPTION ? "" : mv);
+  }
+
+  const set = {
+    species,
+    item: el("atk-item")?.value || "None",
+    ability: el("atk-ability")?.value || "No Ability",
+    level: num(el("atk-level")?.value, 50),
+    nature: el("atk-nature")?.value || "Hardy",
+    ivs,
+    moves
+  };
+
+  let savedIdx;
+  const selectedImported = currentSelectedImportedIdx >= 0 && currentSelectedImportedIdx < importedPokemonSets.length
+    ? importedPokemonSets[currentSelectedImportedIdx]
+    : null;
+  if (selectedImported && selectedImported.species === species) {
+    importedPokemonSets[currentSelectedImportedIdx] = {
+      ...set,
+      id: selectedImported.id
+    };
+    savedIdx = currentSelectedImportedIdx;
+  } else {
+    set.id = generateImportedSetId();
+    importedPokemonSets.push(set);
+    sortImportedByDex();
+    savedIdx = importedPokemonSets.findIndex(s => s.id === set.id);
+    if (savedIdx < 0) savedIdx = importedPokemonSets.length - 1;
+  }
+
+  renderImportedPokemonList();
+  renderImportedParty();
+  setImportedSelection(savedIdx);
+  persistImportedState();
+
+  const btn = el("atk-save-btn");
+  if (btn) {
+    btn.textContent = "✓";
+    setTimeout(() => { btn.textContent = "💾"; }, 1200);
+  }
+}
+
+function deleteCurrentImportedPokemon() {
+  if (currentSelectedImportedIdx < 0 || currentSelectedImportedIdx >= importedPokemonSets.length) return;
+  removeImportedPokemon(currentSelectedImportedIdx);
+}
+
+/* ── Per-move damage range (for labels) ── */
+function calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount) {
+  const attacker = readSet(atkPrefix);
+  const defender = readSet(defPrefix);
+  const ctx = getModifierContext(atkPrefix);
+  return calculateDamageOutcomeForSets(attacker, defender, moveName, hitCount, ctx);
+}
+
+function calculateDamageOutcomeForSets(attacker, defender, moveName, hitCount, ctx) {
+  const move = moves[moveName];
+  if (!attacker || !defender || !move || !ctx) return null;
+
+  const moveCategory = move.Category;
+  const rawPower = num(move.Power, 0);
+  const defenderAbility = ignoresDefenderAbility(attacker.ability) ? "No Ability" : defender.ability;
+
+  if (moveCategory === "Status") return { noDamageText: `${moveName} is a status move — no direct damage.` };
+
+  let fixedFn = FIXED_DAMAGE_MOVES[moveName];
+  if (!fixedFn && rawPower <= 1) {
+    if (/always inflicts 40 HP damage/i.test(move.Description || "")) fixedFn = () => 40;
+    if (/always inflicts 20 HP damage/i.test(move.Description || "")) fixedFn = () => 20;
+    if (/damage equal to the user['’]s level/i.test(move.Description || "")) fixedFn = (c) => c.attacker.level;
+  }
+
+  const notes = [];
+  const typePower = applyAbilityItemMoveTypePower(moveName, move.Type, Math.max(1, rawPower), attacker, defender, ctx, notes);
+  const moveType = typePower.type;
+  const displayMoveType = getDisplayMoveType(moveName, moveType);
+  const power = typePower.power;
+  const alwaysCrit = ALWAYS_CRIT_MOVES.has(moveName);
+  const critical = (ctx.critical || alwaysCrit) && !critBlockedByAbility(defenderAbility);
+  if (alwaysCrit && critical) notes.push("Always crit");
+  else if ((ctx.critical || alwaysCrit) && !critical) notes.push(`${defenderAbility} blocks critical hits`);
+
+  if (moveType === "Ground" && !isGrounded(defender.type1, defender.type2, defenderAbility, defender.item, ctx.magicRoom)) {
+   return { noDamageText: `${defender.name} is immune to Ground-type moves.` };
+  }
+
+  let typeMod = getTypeModifier(moveName, moveType, defender);
+  if (attacker.ability === "Scrappy" && typeMod === 0) {
+    if (moveName === "Flying Press") {
+      const scrappyMod = scrappyTypeMod("Fighting", defender);
+      if (scrappyMod !== null) {
+        typeMod = scrappyMod * effectiveness("Flying", defender.type1, defender.type2);
+        notes.push("Scrappy ignores Ghost immunity");
+      }
+    } else {
+      const scrappyMod = scrappyTypeMod(moveType, defender);
+      if (scrappyMod !== null) {
+        typeMod = scrappyMod;
+        notes.push("Scrappy ignores Ghost immunity");
+      }
+    }
+  }
+  if (typeMod === 0) return { noDamageText: `${attacker.name} uses ${moveName}: no effect (0×).` };
+
+  if (defenderAbility === "Wonder Guard") {
+    if (typeMod <= 1) return { noDamageText: `${defender.name}: immune via Wonder Guard (not super effective).` };
+  }
+  if (defenderAbility === "Flash Fire" && moveType === "Fire") {
+   return { noDamageText: `${defender.name}: absorbed by Flash Fire.` };
+  }
+  const immuneTypeCD = IMMUNE_ABILITIES[defenderAbility];
+  if (immuneTypeCD && immuneTypeCD === moveType) {
+    return { noDamageText: `${defender.name}: immune via ${defenderAbility} (${moveType}-type).` };
+  }
+  if (defenderAbility === "Soundproof" && hasMoveFlag(move, "Sound")) {
+    return { noDamageText: `${defender.name}: immune via Soundproof.` };
+  }
+  if (defenderAbility === "Bulletproof" && hasMoveFlag(move, "Bullet")) {
+    return { noDamageText: `${defender.name}: immune via Bulletproof.` };
+  }
+
+  const stabBase = getMoveStabBase(moveName, moveType, attacker);
+  const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
+
+  let ad = null;
+  let levelFactor = 0;
+  let hitRollGroups = [];
+  if (fixedFn) {
+    const fixedDamage = fixedFn({ attacker, defender, move, moveType, power });
+    hitRollGroups = [buildDamageRolls(fixedDamage, stab, typeMod, 1, fixedFn)];
+  } else {
+    ad = getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName, notes, ctx, defenderAbility);
+    levelFactor = Math.floor((2 * attacker.level) / 5) + 2;
+  }
+
+  const otherMod = modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, { ...ctx, critical }, typeMod, notes, defenderAbility);
+  if (!fixedFn) {
+    if (moveName === "Triple Axel") {
+      const hitPowers = [20, 40, 60].slice(0, clamp(hitCount, 1, 3));
+      notes.push(`Triple Axel BP ${hitPowers.join("+")}`);
+      hitRollGroups = hitPowers.map(hitPower => {
+        const base = Math.floor(Math.floor((levelFactor * hitPower * ad.atk) / ad.def) / 50) + 2;
+        return buildDamageRolls(base, stab, typeMod, otherMod, null);
+      });
+    } else {
+      const baseOneHit = Math.floor(Math.floor((levelFactor * power * ad.atk) / ad.def) / 50) + 2;
+      const oneHitRolls = buildDamageRolls(baseOneHit, stab, typeMod, otherMod, null);
+      hitRollGroups = Array.from({ length: Math.max(1, hitCount) }, () => oneHitRolls);
+    }
+  }
+
+  let damageCounts = buildSingleTurnDistribution(hitRollGroups[0] || [0]);
+  for (let i = 1; i < hitRollGroups.length; i++) {
+    damageCounts = convolveCountMaps(damageCounts, buildSingleTurnDistribution(hitRollGroups[i]));
+  }
+  if ((attacker.ability === "Parental Bond" || attacker.ability === "Hyper Aggression") && moveCanUseParentalBond(moveName, move, hitCount)) {
+    const secondHitBase = fixedFn
+      ? Math.max(1, Math.floor(hitRollGroups[0][0] * 0.5))
+      : Math.floor(Math.floor((levelFactor * (power * 0.5) * ad.atk) / ad.def) / 50) + 2;
+    const secondHitRolls = buildDamageRolls(secondHitBase, stab, typeMod, otherMod, fixedFn);
+    damageCounts = convolveCountMaps(damageCounts, buildSingleTurnDistribution(secondHitRolls));
+    notes.push(`${attacker.ability} adds a second hit at 50% power`);
+  }
+  const damageRolls = [...damageCounts.keys()].sort((a, b) => a - b);
+  const minD = damageRolls[0];
+  const maxD = damageRolls[damageRolls.length - 1];
+  const hp = defender.stats.HP;
+  const defenderEndTurn = getPassiveEndTurnEffects(defender, attacker, ctx);
+  const attackerEndTurn = getPassiveEndTurnEffects(attacker, defender, ctx);
+  const recoilAbsorbRatio = getMoveRecoilAbsorbRatio(move);
+  const drainRatioRaw = recoilAbsorbRatio > 0 && !ctx.magicRoom && attacker.item === "Big Root"
+    ? recoilAbsorbRatio * 1.3
+    : recoilAbsorbRatio;
+  if (drainRatioRaw > recoilAbsorbRatio) notes.push("Big Root ×1.3 drain");
+  const drainRatio = drainRatioRaw < 0 && attacker.ability === "Rock Head" ? 0 : drainRatioRaw;
+  if (drainRatioRaw < 0 && attacker.ability === "Rock Head") notes.push("Rock Head blocks recoil");
+  const shellBellRatio = !ctx.magicRoom && attacker.item === "Shell Bell" ? 0.2 : 0;
+  const attackerMagicGuard = isMagicGuardActive(attacker);
+  const rockyHelmet = !attackerMagicGuard && !ctx.magicRoom && defender.item === "Rocky Helmet" && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 6) : 0;
+  const roughSkin = !attackerMagicGuard && ["Rough Skin", "Iron Barbs"].includes(defenderAbility) && moveMakesContact(move) ? Math.floor(attacker.stats.HP / 8) : 0;
+  const lifeOrb = !attackerMagicGuard && !ctx.magicRoom && attacker.item === "Life Orb" ? Math.floor(attacker.stats.HP / 10) : 0;
+  const selfCounts = transformCountMap(damageCounts, damage => {
+    let delta = attackerEndTurn.delta;
+    if (!attackerMagicGuard && drainRatio < 0) delta -= Math.floor(damage * Math.abs(drainRatio));
+    if (drainRatio > 0) delta += Math.floor(damage * drainRatio);
+    if (shellBellRatio > 0) delta += Math.floor(damage * shellBellRatio);
+    if (rockyHelmet > 0) delta -= rockyHelmet;
+    if (roughSkin > 0) delta -= roughSkin;
+    if (lifeOrb > 0) delta -= lifeOrb;
+    return delta;
+  });
+  const selfSummary = buildSwingSummary(selfCounts, attacker.stats.HP);
+  const selfParts = [];
+  if (drainRatio !== 0) {
+    const recoilAbsPctValues = damageRolls.map(damage => (Math.floor(damage * Math.abs(drainRatio)) / attacker.stats.HP) * 100);
+    const recoilAbsMin = Math.min(...recoilAbsPctValues);
+    const recoilAbsMax = Math.max(...recoilAbsPctValues);
+    const recoilAbsPctText = recoilAbsMin === recoilAbsMax
+      ? `${recoilAbsMin.toFixed(1)}%`
+      : `${recoilAbsMin.toFixed(1)}-${recoilAbsMax.toFixed(1)}%`;
+    selfParts.push(`(${recoilAbsPctText}) ${drainRatio < 0 ? "Rec" : "Abs"}`);
+  }
+  if (shellBellRatio > 0) {
+    const shellBellPctValues = damageRolls.map(damage => (Math.floor(damage * shellBellRatio) / attacker.stats.HP) * 100);
+    const shellBellMin = Math.min(...shellBellPctValues);
+    const shellBellMax = Math.max(...shellBellPctValues);
+    const shellBellPctText = shellBellMin === shellBellMax
+      ? `${shellBellMin.toFixed(1)}%`
+      : `${shellBellMin.toFixed(1)}-${shellBellMax.toFixed(1)}%`;
+    selfParts.push(`(${shellBellPctText}) Shell Bell`);
+  }
+  if (rockyHelmet > 0) selfParts.push(`Rocky Helmet ${signedValueText(-rockyHelmet)}`);
+  if (roughSkin > 0) selfParts.push(`${defenderAbility} ${signedValueText(-roughSkin)}`);
+  if (lifeOrb > 0) selfParts.push(`Life Orb ${signedValueText(-lifeOrb)}`);
+  selfParts.push(...attackerEndTurn.parts);
+
+  return {
+    attacker,
+    defender,
+    move,
+    ctx,
+    notes,
+    moveType,
+    displayMoveType,
+    power,
+    typeMod,
+    hitCount,
+    damageCounts,
+    damageRolls,
+    baseRolls: hitRollGroups.length === 1 ? hitRollGroups[0] : damageRolls,
+    minD,
+    maxD,
+    hp,
+    currentHP: defender.currentHP,
+    minPct: (minD / hp) * 100,
+    maxPct: (maxD / hp) * 100,
+    defenderEndTurn,
+    selfSummary,
+    selfParts
+  };
+}
+function computeDamageRange(atkPrefix, defPrefix, moveName, hitCount) {
+  const outcome = calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount);
+  if (!outcome || outcome.noDamageText) return null;
+  const recoilLabel = outcome.selfParts.find(part => /\)\s+(Rec|Abs)$/.test(part)) || "";
+  return {
+    minD: outcome.minD,
+    maxD: outcome.maxD,
+    minPct: outcome.minPct,
+    maxPct: outcome.maxPct,
+    recoilLabel
+  };
+}
+
+function updateMoveDamageLabels() {
+  const pairs = [
+    { atkPrefix: 'atk', defPrefix: 'def' },
+    { atkPrefix: 'def', defPrefix: 'atk' }
+  ];
+  pairs.forEach(({ atkPrefix, defPrefix }) => {
+    for (let i = 0; i < 4; i++) {
+      const moveName = el(`${atkPrefix}-move-${i}`)?.value;
+      const hitsInput = el(`${atkPrefix}-move-hits-${i}`);
+      const hitCount = hitsInput ? clamp(num(hitsInput.value, 1), 1, 10) : 1;
+      const dmgSpan = el(`${atkPrefix}-move-dmg-${i}`);
+      const pctSpan = el(`qm-${atkPrefix}-pct-${i}`);
+
+      if (!moveName) {
+        if (dmgSpan) dmgSpan.textContent = '';
+        if (pctSpan) pctSpan.textContent = '';
+        continue;
+      }
+
+      const range = computeDamageRange(atkPrefix, defPrefix, moveName, hitCount);
+      if (range) {
+        const label = `${range.minPct.toFixed(1)}–${range.maxPct.toFixed(1)}%${range.recoilLabel ? ` ${range.recoilLabel}` : ""}`;
+        if (dmgSpan) dmgSpan.textContent = label;
+        if (pctSpan) pctSpan.textContent = label;
+      } else {
+        if (dmgSpan) dmgSpan.textContent = '';
+        if (pctSpan) pctSpan.textContent = '';
+      }
+    }
+  });
+}
+
+/* ── Modifier context (side-aware) ── */
+// Triples count as doubles; rotations count as singles.
+// These aliases are kept for backwards compatibility with trainer data that may specify
+// "Triple" or "Rotation" battle types, and for any persisted toggle state from older sessions.
+const BATTLE_FORMAT_ALIASES = { triples: "doubles", rotations: "singles" };
+function getModifierContext(atkPrefix) {
+  const rawBattleFormat = getToggleValue("battle-type-group") || "singles";
+  const battleFormat = BATTLE_FORMAT_ALIASES[rawBattleFormat] || rawBattleFormat;
+  const weather = getToggleValue("weather-group") || "none";
+  const terrain = getToggleValue("terrain-group") || "none";
+
+  // Attacker side = 'you' if atkPrefix='atk', 'opp' if atkPrefix='def'
+  const atkSide = atkPrefix === 'atk' ? 'you' : 'opp';
+  const defSide = atkPrefix === 'atk' ? 'opp' : 'you';
+
+  const critical    = isSideActive('critical-hit', atkSide);
+  const helpingHand = isSideActive('helping-hand', atkSide);
+  const reflect     = isSideActive('reflect', defSide);
+  const lightScreen = isSideActive('light-screen', defSide);
+  const stealthRock = isSideActive('stealth-rock', defSide);
+  const spikes      = parseInt(getToggleValue(`spikes-${defSide}-group`) || "0");
+  const friendGuard = isSideActive('friend-guard', defSide);
+  const flowerGiftAtk = isSideActive('flower-gift', atkSide);
+  const flowerGiftDef = isSideActive('flower-gift', defSide);
+  const magicRoom   = isRoomActive('magic-room');
+  const wonderRoom  = isRoomActive('wonder-room');
+  const ionDeluge   = isRoomActive('ion-deluge');
+  const trickRoom   = isRoomActive('trick-room');
+
+  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, spikes, friendGuard, flowerGiftAtk, flowerGiftDef, magicRoom, wonderRoom, ionDeluge, trickRoom };
+}
+
+function ignoresDefenderAbility(attackerAbility) {
+  return ["Mold Breaker", "Turboblaze", "Teravolt"].includes(attackerAbility);
+}
+
+/* ── Read set ── */
+function readSet(prefix) {
+  const speciesName = el(`${prefix}-species`)?.value;
+  const p = pokedex[speciesName];
+  if (!p) return null;
+
+  const level = clamp(num(el(`${prefix}-level`)?.value, 50), 1, 100);
+  const baseAbility = getSelectedAbility(prefix);
+  const baseItem = getSelectedItem(prefix);
+  const ability = getEffectiveAbilityFromUI(prefix);
+  const item = getEffectiveItemFromUI(prefix);
+  const nature = el(`${prefix}-nature`)?.value || "Hardy";
+  const status = el(`${prefix}-status`)?.value || "none";
+  const type1 = el(`${prefix}-type1`)?.value || "Normal";
+  const type2 = el(`${prefix}-type2`)?.value || "None";
+  const grounded = isGrounded(type1, type2, ability, item);
+
+  const iv = {}, boost = {};
+  STATS.forEach(s => {
+    iv[s] = clamp(num(el(`${prefix}-iv-${s}`)?.value, 31), 0, 31);
+    const baseBoost = clamp(num(el(`${prefix}-boost-${s}`)?.value, 0), -6, 6);
+    boost[s] = s === "HP" ? baseBoost : clamp(baseBoost + getOpposingStatDrop(prefix, s, ability), -6, 6);
+    if (el(`${prefix}-boost-${s}`)) el(`${prefix}-boost-${s}`).value = baseBoost;
+    if (el(`${prefix}-iv-${s}`)) el(`${prefix}-iv-${s}`).value = iv[s];
+  });
+
+  const stats = {};
+  STATS.forEach(stat => {
+    const base = p.BaseStats?.[stat] ?? 1;
+    stats[stat] = stat === "HP" ? calcHp(base, iv.HP, level) : calcOther(base, iv[stat], level, getNatureMultiplier(nature, stat));
+  });
+
+  const maxHP = stats.HP;
+  const currentHPInp = el(`${prefix}-current-hp`);
+  const currentHP = currentHPInp ? clamp(num(currentHPInp.value, maxHP), 1, maxHP) : maxHP;
+  const moveset = [];
+  for (let i = 0; i < 4; i++) {
+    const moveName = el(`${prefix}-move-${i}`)?.value || NO_MOVE_OPTION;
+    moveset.push(moveName === NO_MOVE_OPTION ? "" : moveName);
+  }
+
+  return { name: speciesName, level, ability, baseAbility, item, baseItem, nature, status, type1, type2, grounded, iv, boost, stats, currentHP, moves: moveset, data: p };
+}
+
+/* ── Move helpers ── */
+function autoHitCount(moveName, move) {
+  const hitRange = getMoveHitRange(move);
+  if (hitRange.minHits !== null && hitRange.maxHits !== null) {
+    if (hitRange.minHits === 0 && hitRange.maxHits === 0) return 1;
+    if (hitRange.minHits === hitRange.maxHits) return Math.max(1, hitRange.minHits);
+    if (hitRange.minHits !== hitRange.maxHits) return 3;
+  }
+  const desc = String(move?.Description || "");
+  if (/two to five times/i.test(desc)) return 3;
+  if (/three times/i.test(desc)) return 3;
+  if (/twice|two times|two strikes|hit twice/i.test(desc)) return 2;
+  if (/2 to 3 turns|2 to 3 times|2-3 times/i.test(desc)) return 3;
+  if (/five times/i.test(desc)) return 5;
+  if (/Triple Kick/i.test(moveName)) return 3;
+  if (/Double Kick|Twineedle/i.test(moveName)) return 2;
+  return 1;
+}
+function isSpreadMove(move) {
+  return /opposing Pokémon|everything around it|strikes every Pok/i.test(String(move?.Description || ""));
+}
+
+/* ── Damage modifiers ── */
+function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, defender, ctx, notes) {
+  let type = moveType, power = basePower;
+  if (ctx.ionDeluge && type === "Normal") { type = "Electric"; notes.push("Ion Deluge: Normal→Electric"); }
+  const aAbility = attacker.ability;
+  if (aAbility === "Aerilate" && type === "Normal") { type = "Flying"; power *= 1.3; notes.push("Aerilate: Normal→Flying ×1.3"); }
+  if (aAbility === "Pixilate" && type === "Normal") { type = "Fairy";  power *= 1.3; notes.push("Pixilate: Normal→Fairy ×1.3"); }
+  if (aAbility === "Refrigerate" && type === "Normal") { type = "Ice";  power *= 1.3; notes.push("Refrigerate: Normal→Ice ×1.3"); }
+  if (aAbility === "Galvanize" && type === "Normal") { type = "Electric"; power *= 1.3; notes.push("Galvanize: Normal→Electric ×1.3"); }
+  if (moveName === "Facade" && attacker.status !== "none") { power *= 2; notes.push("Facade (status) ×2 BP"); }
+  if (moveName === "Acrobatics" && attacker.item === "None") { power *= 2; notes.push("Acrobatics (no item) ×2 BP"); }
+  if (moveName === "Weather Ball") {
+    if (ctx.weather !== "none") power = 100;
+    if (ctx.weather === "sun")  type = "Fire";
+    if (ctx.weather === "rain") type = "Water";
+    if (ctx.weather === "sand") type = "Rock";
+    if (ctx.weather === "hail") type = "Ice";
+  }
+  const statusPower = STATUS_POWER_MOVES[moveName];
+  if (statusPower && statusPower.statuses.includes(defender.status)) {
+    power *= statusPower.multiplier;
+    notes.push(statusPower.note);
+  }
+  if (moveName === "Knock Off" && defender.item !== "None") {
+    power *= 1.5;
+    notes.push("Knock Off (target has item) ×1.5 BP");
+  }
+  if (aAbility === "Technician" && power <= 60) { power *= 1.5; notes.push("Technician ×1.5 BP"); }
+  return { type, power: Math.max(1, Math.round(power * 10) / 10) };
+}
+
+function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveName, notes, ctx, defenderAbility) {
+  const usesDefenseStat = ["Psyshock", "Psycrash"].includes(moveName);
+  const foulPlay = moveName === "Foul Play";
+  const isPhysical = moveCategory === "Physical";
+  const atkStat = foulPlay ? "Atk" : (isPhysical ? "Atk" : "SpA");
+  const defStat = usesDefenseStat
+    ? (ctx.wonderRoom ? "SpD" : "Def")
+    : (isPhysical
+      ? (ctx.wonderRoom ? "SpD" : "Def")
+      : (ctx.wonderRoom ? "Def" : "SpD"));
+  if (ctx.wonderRoom) notes.push("Wonder Room: Def↔SpD");
+  if (usesDefenseStat) notes.push(`${moveName} targets Defense`);
+  if (foulPlay) notes.push("Foul Play uses the target's Attack");
+
+  let atkStage = foulPlay ? (defender.boost.Atk || 0) : (attacker.boost[atkStat] || 0);
+  let defStage = defender.boost[defStat] || 0;
+  if (critical) { if (atkStage < 0) atkStage = 0; if (defStage > 0) defStage = 0; }
+
+  let atk = (foulPlay ? defender.stats.Atk : attacker.stats[atkStat]) * stageMultiplier(atkStage);
+  let def = defender.stats[defStat] * stageMultiplier(defStage);
+
+  if (!foulPlay && isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) { atk *= 2; notes.push(`${attacker.ability} ×2 Atk`); }
+  if (!foulPlay && !ctx.magicRoom && isPhysical && attacker.item === "Thick Club" && (speciesMatches(attacker, "Cubone") || speciesMatches(attacker, "Marowak"))) { atk *= 2; notes.push("Thick Club ×2 Atk"); }
+  if (!foulPlay && !ctx.magicRoom && attacker.item === "Light Ball" && speciesMatches(attacker, "Pikachu")) {
+    atk *= 2;
+    notes.push(`Light Ball ×2 ${atkStat}`);
+  }
+  if (!foulPlay && isPhysical && attacker.ability === "Hustle") { atk *= 1.5; notes.push("Hustle ×1.5 Atk"); }
+  if (!foulPlay && isPhysical && attacker.ability === "Guts" && attacker.status !== "none") { atk *= 1.5; notes.push("Guts ×1.5 Atk"); }
+  if (!foulPlay && isPhysical && attacker.ability === "Toxic Boost" && ["psn","tox"].includes(attacker.status)) { atk *= 1.5; notes.push("Toxic Boost ×1.5 Atk"); }
+  if (!foulPlay && !ctx.magicRoom && isPhysical && attacker.item === "Choice Band") { atk *= 1.5; notes.push("Choice Band ×1.5 Atk"); }
+  if (!ctx.magicRoom && !isPhysical && attacker.item === "Choice Specs") { atk *= 1.5; notes.push("Choice Specs ×1.5 SpA"); }
+  if (!isPhysical && attacker.ability === "Solar Power" && ctx.weather === "sun") { atk *= 1.5; notes.push("Solar Power ×1.5 SpA"); }
+  if (!ctx.magicRoom && !usesDefenseStat && !isPhysical && defender.item === "Assault Vest") { def *= 1.5; notes.push("Assault Vest ×1.5 SpD"); }
+  if (!ctx.magicRoom && defender.item === "Eviolite" && canSpeciesEvolve(defender.name)) {
+    def *= 1.5;
+    notes.push(`Eviolite ×1.5 ${defStat}`);
+  }
+  if (defStat === "Def" && defenderAbility === "Biodiverse" && ctx.terrain !== "none") { def *= 1.5; notes.push("Biodiverse ×1.5 Def"); }
+  if (defenderAbility === "Dune Guard" && ctx.weather === "sand") { def *= 1.25; notes.push("Dune Guard ×1.25 Def/SpD"); }
+  if (defenderAbility === "Glacial Guard" && ctx.weather === "hail") { def *= 1.25; notes.push("Glacial Guard ×1.25 Def/SpD"); }
+  if (defStat === "SpD" && (defender.type1 === "Rock" || defender.type2 === "Rock") && ctx.weather === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
+  if (defenderAbility === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push(`Perseverance ×1.3 ${defStat}`); }
+  if (!foulPlay && isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") { atk *= 0.5; notes.push("Burn ×0.5 Atk"); }
+  if (!foulPlay && isPhysical && ctx.flowerGiftAtk && ctx.weather === "sun") { atk *= 1.5; notes.push("Flower Gift ×1.5 Atk"); }
+  if ((usesDefenseStat || !isPhysical) && ctx.flowerGiftDef && ctx.weather === "sun") { def *= 1.5; notes.push(`Flower Gift ×1.5 ${defStat}`); }
+
+  return { atk: Math.max(1, Math.floor(atk)), def: Math.max(1, Math.floor(def)), isPhysical };
+}
+
+function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, defender, ctx, typeMod, notes, defenderAbility) {
+  let mod = 1;
+  if (ctx.helpingHand) { mod *= 1.5; notes.push("Helping Hand ×1.5"); }
+  if (ctx.friendGuard) { mod *= 0.75; notes.push("Friend Guard ×0.75"); }
+
+  if (ctx.weather === "sun")  {
+    if (moveType === "Fire")  { mod *= 1.5; notes.push("Sun ×1.5"); }
+    if (moveType === "Water") { mod *= 0.5; notes.push("Sun ×0.5"); }
+  } else if (ctx.weather === "rain") {
+    if (moveType === "Water") { mod *= 1.5; notes.push("Rain ×1.5"); }
+    if (moveType === "Fire")  { mod *= 0.5; notes.push("Rain ×0.5"); }
+  }
+
+  if (ctx.terrain === "electric" && moveType === "Electric" && attacker.grounded) { mod *= 1.5; notes.push("Electric Terrain ×1.5"); }
+  if (ctx.terrain === "grassy"   && moveType === "Grass"    && attacker.grounded) { mod *= 1.5; notes.push("Grassy Terrain ×1.5"); }
+  if (ctx.terrain === "psychic"  && moveType === "Psychic"  && attacker.grounded) { mod *= 1.5; notes.push("Psychic Terrain ×1.5"); }
+  if (ctx.terrain === "misty" && moveType === "Dragon" && defender.grounded) { mod *= 0.5; notes.push("Misty Terrain ×0.5"); }
+  if (ctx.terrain === "grassy" && ["Earthquake","Bulldoze","Magnitude"].includes(moveName) && defender.grounded) { mod *= 0.5; notes.push("Grassy Terrain ×0.5"); }
+
+  if (ctx.battleFormat === "doubles" && isSpreadMove(moves[moveName])) { mod *= 0.75; notes.push("Spread ×0.75"); }
+
+  if (!ctx.critical && moveCategory === "Physical" && ctx.reflect && attacker.ability !== "Infiltrator") {
+    const refMod = ctx.battleFormat === "doubles" ? 2/3 : 0.5;
+    mod *= refMod;
+    notes.push(`Reflect ×${ctx.battleFormat === "doubles" ? "0.67" : "0.5"}`);
+  }
+  if (!ctx.critical && moveCategory === "Special" && ctx.lightScreen && attacker.ability !== "Infiltrator") {
+    const lsMod = ctx.battleFormat === "doubles" ? 2/3 : 0.5;
+    mod *= lsMod;
+    notes.push(`Light Screen ×${ctx.battleFormat === "doubles" ? "0.67" : "0.5"}`);
+  }
+  if (attacker.ability === "Infiltrator" && ((moveCategory === "Physical" && ctx.reflect) || (moveCategory === "Special" && ctx.lightScreen))) {
+    notes.push("Infiltrator ignores screens");
+  }
+
+  if (ctx.critical) { mod *= 1.5; notes.push("Crit ×1.5"); }
+  if (ctx.critical && attacker.ability === "Sniper") { mod *= 1.5; notes.push("Sniper ×1.5"); }
+
+  if (attacker.ability === "Tinted Lens" && typeMod < 1 && typeMod > 0) { mod *= 2; notes.push("Tinted Lens ×2"); }
+  if (!ctx.magicRoom && attacker.item === "Life Orb") { mod *= 1.3; notes.push("Life Orb ×1.3"); }
+  if (!ctx.magicRoom && attacker.item === "Expert Belt" && typeMod > 1) { mod *= 1.2; notes.push("Expert Belt ×1.2"); }
+  if (!ctx.magicRoom && attacker.item === "Muscle Band" && moveCategory === "Physical") { mod *= 1.2; notes.push("Muscle Band ×1.2"); }
+  if (!ctx.magicRoom && attacker.item === "Wise Glasses" && moveCategory === "Special") { mod *= 1.2; notes.push("Wise Glasses ×1.2"); }
+
+  const boostType = TYPE_BOOST_ITEMS[attacker.item];
+  if (!ctx.magicRoom && boostType && boostType === moveType) { mod *= 1.2; notes.push(`${attacker.item} ×1.2`); }
+  const gemType = TYPE_GEM_ITEMS[attacker.item];
+  if (!ctx.magicRoom && gemType && gemType === moveType) { mod *= 1.3; notes.push(`${attacker.item} ×1.3`); }
+
+  const moveDesc = String(moves[moveName]?.Description || "");
+  const hasSecondaryEffect = /may also|chance to/i.test(moveDesc);
+  const isContactMove = moveMakesContact(moves[moveName]);
+  const isMegaLauncherMove = hasMoveFlag(moves[moveName], "MegaLauncher");
+  const isPunchMove = hasMoveFlag(moves[moveName], "Punch");
+  const isBiteMove = hasMoveFlag(moves[moveName], "Biting", "Bite");
+  const isSliceMove = hasMoveFlag(moves[moveName], "Slicing", "Slice");
+  const isSpinMove = hasMoveFlag(moves[moveName], "Spinning", "Spin");
+  const hasStab = attacker.type1 === moveType || attacker.type2 === moveType;
+  if (attacker.ability === "Mega Launcher" && isMegaLauncherMove) { mod *= 1.3; notes.push("Mega Launcher ×1.3"); }
+  if (attacker.ability === "Iron Fist" && isPunchMove) { mod *= 1.3; notes.push("Iron Fist ×1.3"); }
+  if (attacker.ability === "Reckless" && moveIsRecklessBoosted(moveName, moves[moveName])) { mod *= 1.2; notes.push("Reckless ×1.2"); }
+  if (attacker.ability === "Tough Claws" && isContactMove) { mod *= 1.3; notes.push("Tough Claws ×1.3"); }
+  if (attacker.ability === "Strong Jaw" && isBiteMove) { mod *= 1.5; notes.push("Strong Jaw ×1.5"); }
+  if (attacker.ability === "Sharpness" && isSliceMove) { mod *= 1.3; notes.push("Sharpness ×1.3"); }
+  if (attacker.ability === "Cyclone" && isSpinMove) { mod *= 1.3; notes.push("Cyclone ×1.3"); }
+  if (attacker.ability === "Sheer Force" && hasSecondaryEffect) { mod *= 1.3; notes.push("Sheer Force ×1.3"); }
+  if (attacker.ability === "Sand Force" && ctx.weather === "sand" && ["Ground","Rock","Steel"].includes(moveType)) { mod *= 1.3; notes.push("Sand Force ×1.3"); }
+  if (attacker.ability === "Overload" && moveType === "Electric" && attacker.currentHP <= Math.floor(attacker.stats.HP / 2)) { mod *= 1.5; notes.push("Overload ×1.5"); }
+  if (attacker.ability === "Versatility" && !hasStab) { mod *= 1.25; notes.push("Versatility ×1.25 (non-STAB)"); }
+
+  const isLowHP = attacker.currentHP <= Math.floor(attacker.stats.HP / 2);
+  if (isLowHP) {
+    if (attacker.ability === "Blaze"   && moveType === "Fire")  { mod *= 1.5; notes.push("Blaze ×1.5"); }
+    if (attacker.ability === "Torrent" && moveType === "Water") { mod *= 1.5; notes.push("Torrent ×1.5"); }
+    if (attacker.ability === "Overgrow"&& moveType === "Grass") { mod *= 1.5; notes.push("Overgrow ×1.5"); }
+    if (attacker.ability === "Swarm"   && moveType === "Bug")   { mod *= 1.5; notes.push("Swarm ×1.5"); }
+  }
+
+  if (defenderAbility === "Thick Fat" && (moveType === "Fire" || moveType === "Ice")) { mod *= 0.5; notes.push("Thick Fat ×0.5"); }
+  if (["Filter","Solid Rock","Prism Armor"].includes(defenderAbility) && typeMod > 1) { mod *= 0.75; notes.push(`${defenderAbility} ×0.75`); }
+  if (defenderAbility === "Multiscale" && defender.currentHP >= defender.stats.HP) { mod *= 0.5; notes.push("Multiscale ×0.5"); }
+  if (defenderAbility === "Dry Skin" && moveType === "Fire") { mod *= 1.25; notes.push("Dry Skin ×1.25 (Fire)"); }
+
+  const resistBerryType = TYPE_RESIST_BERRIES[defender.item];
+  if (!ctx.magicRoom && resistBerryType && resistBerryType === moveType && (typeMod > 1 || defender.item === "Chilan Berry")) {
+    mod *= 0.5; notes.push(`${defender.item} ×0.5`);
+  }
+
+  return mod;
+}
+
+/* ── KO chance ── */
+function convolveCountMaps(leftMap, rightMap) {
+  const result = new Map();
+  for (const [leftValue, leftCount] of leftMap.entries()) {
+    for (const [rightValue, rightCount] of rightMap.entries()) {
+      const sum = leftValue + rightValue;
+      result.set(sum, (result.get(sum) || 0) + (leftCount * rightCount));
+    }
+  }
+  return result;
+}
+function buildRollDistribution(oneHitRolls, hitCount) {
+  return buildTotalDamageDistribution(oneHitRolls, hitCount);
+}
+function buildSingleTurnDistribution(rolls) {
+  const counts = new Map();
+  rolls.forEach(roll => counts.set(roll, (counts.get(roll) || 0) + 1));
+  return counts;
+}
+function buildTotalDamageDistribution(oneHitRolls, hitCount) {
+  let counts = buildSingleTurnDistribution(oneHitRolls);
+  for (let i = 1; i < hitCount; i++) {
+    counts = convolveCountMaps(counts, buildSingleTurnDistribution(oneHitRolls));
+  }
+  return counts;
+}
+function signedValueText(value) {
+  return value > 0 ? `+${value}` : `${value}`;
+}
+function signedPctText(value) {
+  return `${value > 0 ? "+" : ""}${value.toFixed(1)}%`;
+}
+function signedRangeText(minValue, maxValue) {
+  return minValue === maxValue
+    ? signedValueText(minValue)
+    : `${signedValueText(minValue)}–${signedValueText(maxValue)}`;
+}
+function signedPctRangeText(minValue, maxValue) {
+  return minValue === maxValue
+    ? signedPctText(minValue)
+    : `${signedPctText(minValue)}–${signedPctText(maxValue)}`;
+}
+function transformCountMap(countMap, mapper) {
+  const result = new Map();
+  for (const [value, count] of countMap.entries()) {
+    const mapped = mapper(value);
+    result.set(mapped, (result.get(mapped) || 0) + count);
+  }
+  return result;
+}
+function getPassiveEndTurnEffects(target, other, ctx) {
+  const parts = [];
+  let delta = 0;
+  const magicGuard = isMagicGuardActive(target);
+  if (!ctx.magicRoom && target.item === "Leftovers") {
+    const heal = Math.floor(target.stats.HP / 16);
+    delta += heal;
+    if (heal > 0) parts.push(`Leftovers +${heal}`);
+  }
+  if (!magicGuard && target.status === "brn") {
+    const burn = Math.floor(target.stats.HP / 16);
+    delta -= burn;
+    if (burn > 0) parts.push(`Burn ${signedValueText(-burn)}`);
+  }
+  if (!magicGuard && (target.status === "psn" || target.status === "tox")) {
+    const poison = Math.floor(target.stats.HP / 8);
+    delta -= poison;
+    if (poison > 0) parts.push(`${target.status === "tox" ? "Toxic" : "Poison"} ${signedValueText(-poison)}`);
+  }
+  if (!magicGuard && target.status === "leech") {
+    const drain = Math.floor(target.stats.HP / 8);
+    delta -= drain;
+    if (drain > 0) parts.push(`Leech Seed ${signedValueText(-drain)}`);
+  }
+  if (other?.status === "leech") {
+    const healBase = Math.floor(other.stats.HP / 8);
+    const heal = !ctx.magicRoom && target.item === "Big Root" ? Math.floor(healBase * 1.3) : healBase;
+    delta += heal;
+    if (heal > 0) parts.push(`Leech Seed ${signedValueText(heal)}`);
+  }
+  const weather = ctx.weather;
+  if (!magicGuard && weather === "sand" && ![target.type1, target.type2].some(type => ["Rock", "Ground", "Steel"].includes(type))) {
+    const sand = Math.floor(target.stats.HP / 16);
+    delta -= sand;
+    if (sand > 0) parts.push(`Sand ${signedValueText(-sand)}`);
+  }
+  if (!magicGuard && weather === "hail" && ![target.type1, target.type2].includes("Ice")) {
+    const hail = Math.floor(target.stats.HP / 16);
+    delta -= hail;
+    if (hail > 0) parts.push(`Hail ${signedValueText(-hail)}`);
+  }
+  return { delta, parts };
+}
+function buildSwingSummary(countMap, hp) {
+  const values = [...countMap.keys()].sort((a, b) => a - b);
+  if (!values.length) return null;
+  const min = values[0];
+  const max = values[values.length - 1];
+  if (min === 0 && max === 0) return null;
+  const minPct = (min / hp) * 100;
+  const maxPct = (max / hp) * 100;
+  return { min, max, minPct, maxPct };
+}
+function koChance(countMap, hp, turns, endTurnNet = 0) {
+  let combined = new Map(countMap);
+  let totalOutcomes = 0;
+  for (const count of countMap.values()) totalOutcomes += count;
+  let allOutcomes = totalOutcomes;
+  for (let i = 1; i < turns; i++) {
+    combined = convolveCountMaps(combined, countMap);
+    allOutcomes *= totalOutcomes;
+  }
+  const needed = hp + (endTurnNet * Math.max(0, turns - 1));
+  let wins = 0;
+  for (const [damage, count] of combined.entries()) {
+    if (damage >= needed) wins += count;
+  }
+  return allOutcomes > 0 ? wins / allOutcomes : 0;
+}
+function pct(n) { return `${(n*100).toFixed(1)}%`; }
+
+/* ── Main damage calc ── */
+function resultRow(segments) {
+  const div = document.createElement("div");
+  segments.forEach(seg => {
+    if (seg.bold) {
+      const b = document.createElement("b");
+      b.textContent = seg.text;
+      div.appendChild(b);
+    } else {
+      div.appendChild(document.createTextNode(seg.text));
+    }
+  });
+  return div;
+}
+
+function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
+  if (!Object.keys(pokedex).length || !Object.keys(moves).length) return;
+
+  updateStatTotals(atkPrefix);
+  updateStatTotals(defPrefix);
+  const resultEl = el("result");
+  const outcome = calculateDamageOutcome(atkPrefix, defPrefix, moveName, hitCount);
+
+  if (!outcome) {
+    resultEl.innerHTML = '';
+    resultEl.appendChild(resultRow([{bold:false, text:"Invalid selection."}]));
+    return;
+  }
+  if (outcome.noDamageText) {
+    resultEl.innerHTML = '';
+    resultEl.appendChild(resultRow([{bold:false, text: outcome.noDamageText}]));
+    return;
+  }
+
+  const {
+    attacker,
+    defender,
+    move,
+    ctx,
+    notes,
+    moveType,
+    displayMoveType,
+    power,
+    typeMod,
+    damageCounts,
+    damageRolls,
+    baseRolls,
+    minD,
+    maxD,
+    hp,
+    currentHP,
+    minPct,
+    maxPct,
+    defenderEndTurn,
+    selfSummary,
+    selfParts
+  } = outcome;
+
+  const stabBase = getMoveStabBase(moveName, moveType, attacker);
+  const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
+  if (stab > 1) notes.push(stab === 2 ? "STAB ×2 (Adaptability)" : "STAB ×1.5");
+
+  const effText = typeMod === 4 ? "4×" : typeMod === 2 ? "2×" : typeMod === 1 ? "1×" :
+                  typeMod === 0.5 ? "0.5×" : typeMod === 0.25 ? "0.25×" : `${typeMod}×`;
+  if (typeMod !== 1) notes.push(`Type ${effText}`);
+
+  const ohko    = koChance(damageCounts, currentHP, 1, 0);
+  const twohko  = koChance(damageCounts, currentHP, 2, defenderEndTurn.delta);
+  const threehko= koChance(damageCounts, currentHP, 3, defenderEndTurn.delta);
+
+  if (!isMagicGuardActive(defender) && ctx.stealthRock && (ctx.magicRoom || defender.item !== "Heavy-Duty Boots")) {
+    const rockEffect = effectiveness("Rock", defender.type1, defender.type2);
+    const srDmg = Math.floor(hp * (1/8) * rockEffect);
+    notes.push(`Stealth Rock −${srDmg} HP on switch-in`);
+  }
+  if (!isMagicGuardActive(defender) && ctx.spikes > 0 && (ctx.magicRoom || defender.item !== "Heavy-Duty Boots") && isGrounded(defender.type1, defender.type2, defender.ability, defender.item, ctx.magicRoom)) {
+    const spikeFracs = [0, 1/8, 1/6, 1/4];
+    const spikeDmg = Math.floor(hp * (spikeFracs[ctx.spikes] || 0));
+    if (spikeDmg > 0) notes.push(`Spikes (${ctx.spikes}L) −${spikeDmg} HP on switch-in`);
+  }
+  if (defenderEndTurn.parts.length) {
+    notes.push(`Opp. end turn: ${defenderEndTurn.parts.join(", ")}`);
+  }
+
+  const atkLabel = atkPrefix === "atk" ? "You" : "Opponent";
+  const defLabel = defPrefix === "def" ? "Opponent" : "You";
+
+  // Build result display
+  resultEl.textContent = "";
+
+  // Line 1: Damage
+  resultEl.appendChild(resultRow([
+    {bold: false, text: "Damage: "},
+    {bold: true,  text: `${minD}–${maxD} HP`},
+    {bold: false, text: ` (${minPct.toFixed(1)}%–${maxPct.toFixed(1)}%)`},
+    ...(selfSummary ? [{bold: false, text: ` (${signedRangeText(selfSummary.min, selfSummary.max)} self HP)`}] : [])
+  ]));
+
+  if (selfSummary) {
+    resultEl.appendChild(resultRow([
+      {bold: false, text: "Self: "},
+      {bold: true, text: `${signedRangeText(selfSummary.min, selfSummary.max)} HP`},
+      {bold: false, text: ` (${signedPctRangeText(selfSummary.minPct, selfSummary.maxPct)})`},
+      ...(selfParts.length ? [{bold: false, text: ` — ${selfParts.join(", ")}`}] : [])
+    ]));
+  }
+
+  resultEl.appendChild(resultRow([
+    {bold: false, text: "KO: "},
+    {bold: true,  text: `${pct(ohko)} OHKO`},
+    {bold: false, text: ` | ${pct(twohko)} 2HKO | ${pct(threehko)} 3HKO`}
+  ]));
+
+  const koSep = document.createElement("hr");
+  koSep.className = "result-sep";
+  resultEl.appendChild(koSep);
+
+  // Line 3: Who attacks with what → who defends
+  resultEl.appendChild(resultRow([
+    {bold: true,  text: `${atkLabel}`},
+    {bold: false, text: ` (${attacker.name} Lv.${attacker.level}) used `},
+    {bold: true,  text: moveName},
+    {bold: false, text: ` → `},
+    {bold: true,  text: defLabel},
+    {bold: false, text: ` (${defender.name} Lv.${defender.level}) [HP: ${currentHP}/${hp}]`}
+  ]));
+
+  // Line 4: Move details
+  resultEl.appendChild(resultRow([
+    {bold: false, text: `${displayMoveType} | ${move.Category} | BP ${formatBasePower(power)}${hitCount > 1 ? ` | ${hitCount} hits` : ""}`}
+  ]));
+
+  // Greyed modifier notes (only if any)
+  if (notes.length > 0) {
+    const sep = document.createElement("hr");
+    sep.className = "result-sep";
+    resultEl.appendChild(sep);
+
+    const notesDiv = document.createElement("div");
+    notesDiv.className = "result-mod-notes";
+    notesDiv.textContent = notes.join(" | ");
+    resultEl.appendChild(notesDiv);
+  }
+
+  // Rolls
+  const sep2 = document.createElement("hr");
+  sep2.className = "result-sep";
+  resultEl.appendChild(sep2);
+
+  const rollsDiv = document.createElement("div");
+  rollsDiv.className = "result-rolls";
+  rollsDiv.textContent = `Rolls: ${baseRolls.join(", ")}`;
+  resultEl.appendChild(rollsDiv);
+}
+
+function calcFromMove(atkPrefix, defPrefix, moveIdx) {
+  const moveName = el(`${atkPrefix}-move-${moveIdx}`)?.value;
+  if (!moveName) return;
+  const hitsInput = el(`${atkPrefix}-move-hits-${moveIdx}`);
+  const hitCount = hitsInput ? clamp(num(hitsInput.value, 1), 1, 10) : 1;
+
+  lastCalcState = { atkPrefix, defPrefix, moveName, moveIdx, hitCount };
+
+  // Highlight active button in quick-moves panel
+  document.querySelectorAll(".qm-move-btn").forEach(b => b.classList.remove("active-move"));
+  const qmBtn = el(`qm-${atkPrefix}-btn-${moveIdx}`);
+  if (qmBtn) qmBtn.classList.add("active-move");
+
+  calcDamage(atkPrefix, defPrefix, moveName, hitCount);
+  updateMoveDamageLabels();
+}
+
+function recalcIfNeeded() {
+  updateStatTotals("atk");
+  updateStatTotals("def");
+  updateSpeedComparisonColors();
+  if (lastCalcState) {
+    const { atkPrefix, defPrefix, moveName, moveIdx } = lastCalcState;
+    const hitsInput = el(`${atkPrefix}-move-hits-${moveIdx}`);
+    const hitCount = hitsInput ? clamp(num(hitsInput.value, 1), 1, 10) : 1;
+    lastCalcState.hitCount = hitCount; // keep state in sync with DOM
+    calcDamage(atkPrefix, defPrefix, moveName, hitCount);
+  }
+  updateMoveDamageLabels();
+  refreshImportedMatchupIndicators();
+}
+
+function syncTypeDefaults(prefix, overrideSpecies) {
+  const speciesName = overrideSpecies || el(`${prefix}-species`)?.value;
+  const p = pokedex[speciesName];
+  if (!p) return;
+  const t1 = el(`${prefix}-type1`);
+  const t2 = el(`${prefix}-type2`);
+  if (t1) t1.value = p.Type1;
+  if (t2) t2.value = p.Type2 && p.Type2 !== p.Type1 ? p.Type2 : "None";
+  const abilityList = toAbilityList(p);
+  setSelectOptions(`${prefix}-ability`, abilityList.length ? abilityList : ["No Ability"], abilityList[0]);
+  const abilityToggle = el(`${prefix}-ability-toggle`);
+  if (abilityToggle) abilityToggle.checked = false;
+  resetTransientAbilityState(prefix, { clearTransformId: true });
+  refreshActivationControls(prefix);
+  updateStatTotals(prefix);
+}
+
+function bindInputs() {
+  ["atk","def"].forEach(prefix => {
+    [`${prefix}-species`,`${prefix}-level`,`${prefix}-ability`,`${prefix}-item`,
+     `${prefix}-nature`,`${prefix}-status`,`${prefix}-type1`,`${prefix}-type2`].forEach(id => {
+      const node = el(id);
+      if (node) {
+        node.addEventListener("input", recalcIfNeeded);
+        node.addEventListener("change", recalcIfNeeded);
+      }
+    });
+    el(`${prefix}-item`)?.addEventListener("change", () => {
+      refreshItemToggleUI(prefix);
+      updateItemSprite(prefix);
+      recalcIfNeeded();
+    });
+    el(`${prefix}-item-toggle`)?.addEventListener("change", () => {
+      refreshItemToggleUI(prefix);
+      recalcIfNeeded();
+    });
+
+    el(`${prefix}-ability`)?.addEventListener("change", () => {
+      const ability = el(`${prefix}-ability`)?.value;
+      const abilityToggle = el(`${prefix}-ability-toggle`);
+      if (abilityToggle) abilityToggle.checked = false;
+      resetTransientAbilityState(prefix, { clearTransformId: true });
+      refreshAbilityToggleUI(prefix);
+      const autoWeather = WEATHER_SET_ABILITIES[ability];
+      if (autoWeather) setExclusiveToggle("weather-group", autoWeather);
+      recalcIfNeeded();
+    });
+    el(`${prefix}-ability-toggle`)?.addEventListener("change", () => onAbilityToggleChange(prefix));
+
+    [`${prefix}-stat-wrap`].forEach(wid => {
+      const wrap = el(wid);
+      if (wrap) {
+        wrap.addEventListener("input", recalcIfNeeded);
+        wrap.addEventListener("change", recalcIfNeeded);
+      }
+    });
+
+    el(`${prefix}-species`)?.addEventListener("change", () => {
+      syncTypeDefaults(prefix);
+      updateSprite(prefix);
+      populateFormSelect(prefix, el(`${prefix}-species`)?.value);
+      recalcIfNeeded();
+    });
+  });
+
+  // Field toggle groups
+  ["battle-type-group","weather-group","terrain-group","spikes-you-group","spikes-opp-group"].forEach(gid => bindToggleGroup(gid));
+  bindToggleGroup("misc-effects-group", false);
+
+  // Side buttons (independent toggles)
+  bindSideButtons();
+
+  el("pokemon-importer")?.addEventListener("keydown", event => {
+    if ((event.ctrlKey || event.metaKey) && event.key === "Enter") importPokemonSets();
+  });
+}
+
+async function init() {
+  try {
+    const [pRes, mRes, tRes, eRes] = await Promise.all([
+      fetch("data/pokedex.json"),
+      fetch("data/moves.json"),
+      fetch("data/trainers.json"),
+      fetch("data/evolutions.json")
+    ]);
+    pokedex = await pRes.json();
+    moves   = await mRes.json();
+    const trainersData = await tRes.json();
+    evolutions = await eRes.json();
+
+    // Flatten trainers, sorted by RouteIndex then encounter order
+    trainersFlat = [];
+    const routesSorted = Object.entries(trainersData)
+      .sort((a, b) => (a[1].RouteIndex || 9999) - (b[1].RouteIndex || 9999));
+    for (const [route, routeData] of routesSorted) {
+      for (const trainer of (routeData.Trainers || [])) {
+        if (trainer.Pokemon?.length) {
+          trainersFlat.push({ trainerName: trainer.TrainerName, route, pokemon: trainer.Pokemon, battleType: trainer.BattleType || 'Single' });
+        }
+      }
+    }
+    const openingShauna = [];
+    const remainingTrainers = [];
+    for (const trainer of trainersFlat) {
+      if (openingShauna.length < 3 && trainer.route === "Aquacorde Town" && trainer.trainerName === "Shauna") {
+        openingShauna.push(trainer);
+      } else {
+        remainingTrainers.push(trainer);
+      }
+    }
+    trainersFlat = [...openingShauna, ...remainingTrainers];
+
+    populateTrainerOptions("atk");
+    populateTrainerOptions("def");
+
+    // Collect all trainer items for item selects
+    const trainerItems = new Set();
+    for (const t of trainersFlat) for (const p of t.pokemon) if (p.HeldItem) trainerItems.add(p.HeldItem);
+    allItems = [...new Set([...BASE_ITEMS, ...Array.from(trainerItems)])]
+      .sort((a, b) => {
+        if (a === "None" && b !== "None") return -1;
+        if (b === "None" && a !== "None") return 1;
+        return a.localeCompare(b);
+      });
+
+    const species = listSpecies();
+    const moveNames = [NO_MOVE_OPTION, ...Object.keys(moves).sort((a, b) => a.localeCompare(b))];
+
+    // Species selects
+    setSelectOptions("atk-species", species, species[0]);
+    setSelectOptions("def-species", species, species[1] || species[0]);
+
+    // Item selects
+    setSelectOptions("atk-item", allItems, "None");
+    setSelectOptions("def-item", allItems, "None");
+    updateItemSprite("atk");
+    updateItemSprite("def");
+
+    // Nature selects
+    const natureNames = Object.keys(NATURES);
+    setSelectOptions("atk-nature", natureNames, "Hardy");
+    setSelectOptions("def-nature", natureNames, "Hardy");
+
+    // Type selects
+    setTypeOptions("atk");
+    setTypeOptions("def");
+
+    // Move selects
+    populateMoveSelects("atk", moveNames);
+    populateMoveSelects("def", moveNames);
+
+    // Stat tables
+    buildStatTable("atk-stat-wrap", "atk", {HP:31,Atk:31,Def:31,SpA:31,SpD:31,Spe:31}, {});
+    buildStatTable("def-stat-wrap", "def", {HP:31,Atk:31,Def:31,SpA:31,SpD:31,Spe:31}, {});
+
+    syncTypeDefaults("atk");
+    syncTypeDefaults("def");
+    updateSpeedComparisonColors();
+
+    // Build quick-moves panel buttons
+    buildQuickMoves();
+    updateMoveDamageLabels();
+
+    // Update sprites for initial species
+    updateSprite("atk");
+    updateSprite("def");
+
+    // Populate form selects for initial species
+    populateFormSelect("atk", el("atk-species")?.value);
+    populateFormSelect("def", el("def-species")?.value);
+
+    bindInputs();
+
+    // Restore the last selected trainer for each side.
+    if (trainersFlat.length) {
+      const savedTrainerState = loadTrainerState();
+      const defaultDefTrainer = trainersFlat.length >= 2 ? 1 : 0;
+      setTrainer("atk", savedTrainerState.atk ?? 0);
+      setTrainer("def", savedTrainerState.def ?? defaultDefTrainer);
+    }
+
+    // Restore imported Pokémon sets from a previous session
+    try {
+      const savedSets = localStorage.getItem("importedPokemonSets");
+      if (savedSets) {
+        importedPokemonSets = JSON.parse(savedSets).map(normalizeImportedSet).filter(Boolean);
+        renderImportedPokemonList();
+        importedPartyIds = JSON.parse(localStorage.getItem("importedPartyIds") || "[]");
+        renderImportedParty();
+        persistImportedState();
+        const status = el("pokemon-import-status");
+        if (status && importedPokemonSets.length) {
+          status.textContent = `${importedPokemonSets.length} Pokémon loaded from the previous session. Click a sprite to load it on the You side or right-click it to toggle it in your party.`;
+        }
+      }
+    } catch (_) {}
+
+  } catch (e) {
+    console.error("Damage calc init failed:", e);
+    el("result").textContent = "Failed to load calculator data.";
+  }
+}
+
+init();
+</script>
+</body>
+</html>
