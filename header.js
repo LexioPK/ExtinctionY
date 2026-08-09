@@ -76,7 +76,7 @@ function searchPokemon() {
 function setActiveHeaderLink() {
   const path = window.location.pathname.split("/").pop() || "index.html";
   // Clear all active classes first
-  ["link-info","link-pokedex","link-moves","link-locations","link-abilities","link-pokemoncount","link-itemusage"].forEach(id => {
+  ["link-info","link-pokedex","link-moves","link-locations","link-abilities","link-pokemoncount","link-itemusage","link-movesetcheck","link-damagecalc"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove("active");
   });
@@ -96,6 +96,8 @@ function setActiveHeaderLink() {
     const el = document.getElementById("link-itemusage"); if (el) el.classList.add("active");
   } else if (path.startsWith("movesetcheck")) {
     const el = document.getElementById("link-movesetcheck"); if (el) el.classList.add("active");
+  } else if (path.startsWith("damagecalc")) {
+    const el = document.getElementById("link-damagecalc"); if (el) el.classList.add("active");
   } else {
     // if on other pages, highlight pokedex tab by default
     const el = document.getElementById("link-pokedex"); if (el) el.classList.add("active");
@@ -167,6 +169,7 @@ function installHeaderFromFile() {
         <a href="index.html">Pokédex</a>
         <a href="moves.html">Moves</a>
         <a href="locations.html">Locations</a>
+        <a href="damagecalc.html">Damage Calc</a>
         <div style="margin-left:auto; display:flex; align-items:center; gap:12px; position:relative;">
           <div style="position:relative;">
             <input id="search" type="text" placeholder="Search Pokémon..." autocomplete="off" />
