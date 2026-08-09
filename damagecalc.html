@@ -223,10 +223,10 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid {
   display: grid;
   grid-template-areas:
-    "species  species  species  sprite"
-    "type1    ability  item     sprite"
-    "type2    nature   level    sprite";
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 96px;
+    "species  species  sprite"
+    "type1    ability  item"
+    "type2    nature   level";
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
   column-gap: 8px;
   row-gap: 6px;
   margin-bottom: 8px;
@@ -282,12 +282,12 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-radius: 6px;
 }
 .ia-species { grid-area: species; }
-.ia-type1   { grid-area: type1; justify-self: stretch; }
-.ia-type2   { grid-area: type2; justify-self: stretch; }
-.ia-ability { grid-area: ability; justify-self: stretch; }
-.ia-item    { grid-area: item; justify-self: stretch; }
-.ia-nature  { grid-area: nature; justify-self: stretch; }
-.ia-level   { grid-area: level; justify-self: stretch; }
+.ia-type1   { grid-area: type1; justify-self: start; margin-top: 2px; }
+.ia-type2   { grid-area: type2; justify-self: start; }
+.ia-ability { grid-area: ability; justify-self: center; margin-top: 2px; }
+.ia-item    { grid-area: item; justify-self: end; margin-top: 2px; }
+.ia-nature  { grid-area: nature; justify-self: center; }
+.ia-level   { grid-area: level; justify-self: end; }
 .species-select-row {
   display: flex;
   align-items: flex-end;
@@ -347,12 +347,14 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid .ia-nature select,
 .info-grid .ia-ability select {
   font-size: 0.90rem;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
 }
 .info-grid .activatable-select-row > select,
 .info-grid .item-select-wrap select {
-  flex: 1;
-  width: 100%;
+  flex: 0 1 auto;
+  width: auto;
+  max-width: 100%;
   min-width: 0;
 }
 .form-row {
@@ -363,7 +365,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   min-width: 0;
   flex: 0 0 140px;
 }
-.form-row select { width: 100%; }
+.form-row select { width: auto; max-width: 100%; }
 
 /* ── Stat + Status row ── */
 .stat-status-row {
