@@ -111,7 +111,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
 
 /* ── Field (Battle Context) toggles ── */
 .toggle-group { display: flex; flex-wrap: wrap; gap: 3px; }
-.toggle-group .toggle-btn { flex: 1; text-align: center; }
 .toggle-btn {
   padding: 3px 7px;
   border-radius: 5px;
@@ -227,13 +226,11 @@ h1 { text-align: center; margin: 8px 0 6px; }
     "species  species  species  sprite"
     "type1    ability  item     sprite"
     "type2    nature   level    sprite";
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
-  column-gap: 12px;
+  grid-template-columns: auto auto auto auto;
+  justify-content: space-between;
+  column-gap: 0;
   row-gap: 6px;
   margin-bottom: 8px;
-}
-.info-grid > .field {
-  min-width: 0;
 }
 .ia-sprite {
   grid-area: sprite;
@@ -293,7 +290,10 @@ h1 { text-align: center; margin: 8px 0 6px; }
   gap: 12px;
   min-width: 0;
 }
-.species-select-row > select {
+.species-select-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   flex: 1;
   min-width: 0;
 }
@@ -325,7 +325,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   align-items: flex-end;
   justify-content: flex-start;
 }
-.ia-level input[type="number"] { max-width: 100%; width: 100%; }
+.ia-level input[type="number"] { max-width: 100%; width: 56px; }
 .info-grid .ia-species label,
 .info-grid .ia-type1 label,
 .info-grid .ia-type2 label,
@@ -343,12 +343,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid .ia-nature select,
 .info-grid .ia-ability select {
   font-size: 0.90rem;
-}
-.info-grid .ia-type1 > select,
-.info-grid .ia-type2 > select,
-.info-grid .ia-nature > select,
-.info-grid .ia-level > input {
-  width: 100%;
 }
 .form-row {
   display: flex;
@@ -809,9 +803,11 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
       <!-- Info grid -->
       <div class="info-grid">
         <div class="field ia-species">
-          <label for="atk-species">Species</label>
           <div class="species-select-row">
-            <select id="atk-species"></select>
+            <div class="species-select-inner">
+              <label for="atk-species">Species</label>
+              <select id="atk-species"></select>
+            </div>
             <div id="atk-form-row" class="form-row" hidden>
               <label for="atk-form">Form</label>
               <select id="atk-form" onchange="onFormSelectChange('atk')"></select>
@@ -1087,9 +1083,11 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
       <!-- Info grid -->
       <div class="info-grid">
         <div class="field ia-species">
-          <label for="def-species">Species</label>
           <div class="species-select-row">
-            <select id="def-species"></select>
+            <div class="species-select-inner">
+              <label for="def-species">Species</label>
+              <select id="def-species"></select>
+            </div>
             <div id="def-form-row" class="form-row" hidden>
               <label for="def-form">Form</label>
               <select id="def-form" onchange="onFormSelectChange('def')"></select>
