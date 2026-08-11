@@ -4568,7 +4568,7 @@ function getFragsheetRows(splitId) {
   return Array.from(rowsByAttacker.values())
     .map(row => ({
       ...row,
-      koPct: (row.kos / totalKos) * 100
+      koPct: totalKos > 0 ? (row.kos / totalKos) * 100 : 0
     }))
     .sort((a, b) => {
       if (b.kos !== a.kos) return b.kos - a.kos;
@@ -4857,17 +4857,17 @@ function toggleFragsheet() {
   const resetBtn = document.getElementById("fragsheet-reset-btn");
   const title = document.getElementById("page-main-title");
   const subtitle = document.getElementById("page-subtitle");
-  const isShowing = !fragSection.hidden;
-  fragSection.hidden = isShowing;
-  calcSection.hidden = !isShowing;
-  btn.classList.toggle("active", !isShowing);
-  btn.textContent = isShowing ? "Fragsheet" : "Damage Calc";
-  if (title) title.textContent = isShowing ? "Damage Calc" : "Fragsheet";
-  if (subtitle) subtitle.textContent = isShowing
+  const wasShowing = !fragSection.hidden;
+  fragSection.hidden = wasShowing;
+  calcSection.hidden = !wasShowing;
+  btn.classList.toggle("active", !wasShowing);
+  btn.textContent = wasShowing ? "Fragsheet" : "Damage Calc";
+  if (title) title.textContent = wasShowing ? "Damage Calc" : "Fragsheet";
+  if (subtitle) subtitle.textContent = wasShowing
     ? "Select a move button to calculate damage"
     : "Track KO leaders across splits";
-  if (resetBtn) resetBtn.hidden = isShowing;
-  if (!isShowing) renderFragsheetLeaderboard();
+  if (resetBtn) resetBtn.hidden = wasShowing;
+  if (!wasShowing) renderFragsheetLeaderboard();
 }
 </script>
 </body>
