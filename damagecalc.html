@@ -2133,7 +2133,7 @@ function getEvolutionBaseSpecies(speciesName) {
     probe = probe.slice(0, probe.lastIndexOf("-"));
     if (evolutions[probe]) return probe;
   }
-  return probe;
+  return raw;
 }
 function getEvolutionLineRoot(speciesName) {
   let current = getEvolutionBaseSpecies(speciesName);
