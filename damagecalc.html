@@ -306,7 +306,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-color: #c62828;
 }
 .poke-sprite {
-  width: 128px; height: 128px; object-fit: contain;
+  width: 96px; height: 96px; object-fit: contain;
   image-rendering: pixelated;
   border-radius: 6px;
 }
@@ -842,7 +842,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 .frag-leaderboard {
   width: 100%;
   border-collapse: collapse;
-  min-width: 760px;
+  min-width: 690px;
 }
 .frag-leaderboard th,
 .frag-leaderboard td {
@@ -855,34 +855,34 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 .frag-leaderboard th {
   background: var(--result-bg);
   color: var(--muted);
-  text-align: left;
+  text-align: center;
   font-size: 0.74rem;
   text-transform: uppercase;
   letter-spacing: .03em;
 }
 .frag-leaderboard th:nth-child(1),
 .frag-leaderboard td:nth-child(1) {
-  width: 58px;
+  width: 46px;
 }
 .frag-leaderboard th:nth-child(2),
 .frag-leaderboard td:nth-child(2) {
-  width: 150px;
+  width: 124px;
 }
 .frag-leaderboard th:nth-child(3),
 .frag-leaderboard td:nth-child(3) {
-  width: 72px;
+  width: 108px;
 }
 .frag-leaderboard th:nth-child(4),
 .frag-leaderboard td:nth-child(4) {
-  width: 150px;
+  width: 124px;
 }
 .frag-leaderboard th:nth-child(5),
 .frag-leaderboard td:nth-child(5) {
-  width: 320px;
+  width: 236px;
 }
 .frag-leaderboard th:nth-child(6),
 .frag-leaderboard td:nth-child(6) {
-  width: 84px;
+  width: 70px;
 }
 .frag-leaderboard td:nth-child(1),
 .frag-leaderboard td:nth-child(5),
@@ -890,8 +890,8 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   text-align: center;
 }
 .frag-ko-sprite {
-  width: 48px;
-  height: 48px;
+  width: 96px;
+  height: 96px;
   object-fit: contain;
   image-rendering: pixelated;
 }
@@ -906,21 +906,22 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   color: var(--accent);
 }
 .frag-split-summary {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
   text-align: left;
 }
 .frag-split-stat {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  gap: 6px;
-  padding: 3px 6px;
+  gap: 4px;
+  padding: 2px 5px;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--result-bg);
   white-space: nowrap;
+  width: auto;
 }
 .frag-split-stat-label {
   color: var(--muted);
@@ -2122,6 +2123,56 @@ function speciesMatches(set, speciesName) {
 function canSpeciesEvolve(speciesName) {
   const evoEntry = evolutions[speciesName];
   return !!(evoEntry && evoEntry.EvolvesInto && Object.keys(evoEntry.EvolvesInto).length);
+}
+function getEvolutionBaseSpecies(speciesName) {
+  const raw = String(speciesName || "").trim();
+  if (!raw) return "";
+  if (evolutions[raw]) return raw;
+  let probe = raw;
+  while (probe.includes("-")) {
+    probe = probe.slice(0, probe.lastIndexOf("-"));
+    if (evolutions[probe]) return probe;
+  }
+  return raw;
+}
+function getEvolutionLineRoot(speciesName) {
+  let current = getEvolutionBaseSpecies(speciesName);
+  const visited = new Set();
+  while (current && evolutions[current]?.EvolvesFrom && !visited.has(current)) {
+    visited.add(current);
+    current = evolutions[current].EvolvesFrom;
+  }
+  return current || getEvolutionBaseSpecies(speciesName);
+}
+function getEvolutionStageDepth(speciesName) {
+  let current = getEvolutionBaseSpecies(speciesName);
+  let depth = 0;
+  const visited = new Set();
+  while (current && evolutions[current]?.EvolvesFrom && !visited.has(current)) {
+    visited.add(current);
+    current = evolutions[current].EvolvesFrom;
+    depth += 1;
+  }
+  return depth;
+}
+function getFragsheetNicknameKey(nickname, speciesName) {
+  const resolved = String(nickname || "").trim() || String(speciesName || "").trim();
+  return toSlug(resolved) || toSlug(speciesName) || "unknown";
+}
+function getFragsheetAttackerGroupKey(speciesName, nickname) {
+  const root = getEvolutionLineRoot(speciesName) || String(speciesName || "").trim();
+  return `${toSlug(root)}|${getFragsheetNicknameKey(nickname, speciesName)}`;
+}
+function getFragsheetSpeciesPriority(speciesName) {
+  const species = String(speciesName || "").trim();
+  const baseSpecies = getEvolutionBaseSpecies(species);
+  let score = getEvolutionStageDepth(baseSpecies) * 10;
+  if (species && baseSpecies && species !== baseSpecies) {
+    if (/-mega$/i.test(species) || /-primal$/i.test(species)) score += 5;
+    else score += 1;
+  }
+  const dex = pokedex[species]?.SpeciesIdx || pokedex[baseSpecies]?.SpeciesIdx || 0;
+  return (score * 10000) + dex;
 }
 function setExclusiveToggle(groupId, value) {
   const group = el(groupId);
@@ -4344,7 +4395,7 @@ function getCurrentAttackerIdentity() {
     ? importedPokemonSets[currentSelectedImportedIdx]
     : null;
   const attackerNickname = (selectedImported?.nickname || selectedImported?.species || attackerSpecies).trim() || attackerSpecies;
-  const attackerId = selectedImported?.id || `manual:${toSlug(attackerSpecies)}:${toSlug(attackerNickname)}`;
+  const attackerId = getFragsheetAttackerGroupKey(attackerSpecies, attackerNickname);
   return { attackerId, attackerSpecies, attackerNickname };
 }
 
@@ -4357,7 +4408,10 @@ function updateKoCountBadge() {
     badge.textContent = "";
     return;
   }
-  const totalKos = koEntries.filter(entry => entry.attackerId === attacker.attackerId).length;
+  const attackerGroupKey = getFragsheetAttackerGroupKey(attacker.attackerSpecies, attacker.attackerNickname);
+  const totalKos = koEntries.filter(entry => (
+    getFragsheetAttackerGroupKey(entry.species, entry.nickname || entry.species) === attackerGroupKey
+  )).length;
   badge.hidden = totalKos === 0;
   badge.textContent = totalKos > 0 ? String(totalKos) : "";
 }
@@ -4379,18 +4433,25 @@ function getFragsheetRows(splitId) {
   const rowsByAttacker = new Map();
   const filtered = splitId === "all" ? koEntries : koEntries.filter(entry => entry.splitId === splitId);
   for (const entry of filtered) {
-    const rowKey = entry.attackerId;
+    const rowKey = getFragsheetAttackerGroupKey(entry.species, entry.nickname || entry.species);
+    const entryPriority = getFragsheetSpeciesPriority(entry.species);
     const existing = rowsByAttacker.get(rowKey);
     if (existing) {
       existing.kos += 1;
       existing.splitCounts[entry.splitId] = (existing.splitCounts[entry.splitId] || 0) + 1;
+      if (entryPriority > existing.speciesPriority) {
+        existing.species = entry.species;
+        existing.nickname = entry.nickname || existing.nickname || entry.species;
+        existing.speciesPriority = entryPriority;
+      }
     } else {
       rowsByAttacker.set(rowKey, {
-        attackerId: entry.attackerId,
+        attackerId: rowKey,
         species: entry.species,
         nickname: entry.nickname || entry.species,
         kos: 1,
-        splitCounts: { [entry.splitId]: 1 }
+        splitCounts: { [entry.splitId]: 1 },
+        speciesPriority: entryPriority
       });
     }
   }
