@@ -224,6 +224,30 @@ h1 { text-align: center; margin: 8px 0 6px; }
   gap: 4px;
   align-items: stretch;
 }
+.ko-poke-btn {
+  align-self: auto;
+  margin-top: 0;
+  padding: 5px 7px;
+  border: 1px solid #c62828;
+  border-radius: 6px;
+  background: rgba(198, 40, 40, 0.1);
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.1;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.ko-poke-btn:hover {
+  background: rgba(198, 40, 40, 0.2);
+  border-color: #b71c1c;
+}
+.ko-poke-btn.active {
+  background: #c62828;
+  color: #fff;
+  border-color: #b71c1c;
+}
 .save-poke-btn {
   align-self: auto;
   margin-top: 0;
@@ -707,17 +731,22 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 
 /* ── Page header with Fragsheet button ── */
 .page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  position: relative;
   max-width: 1440px;
   margin: 0 auto 4px;
   padding: 0 2px;
+  text-align: center;
+}
+.page-header-main {
+  margin: 0 auto;
+  padding-right: 170px;
 }
 .page-header h1 { margin: 8px 0 6px; }
 .page-header .subtitle { margin: 0 0 8px; }
 #fragsheet-toggle-btn {
-  margin-top: 10px;
+  position: absolute;
+  right: 2px;
+  top: 10px;
   padding: 7px 18px;
   border-radius: 8px;
   border: 1px solid var(--accent);
@@ -757,13 +786,75 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
 }
 .frag-placeholder { color: var(--muted); font-size: 0.88rem; margin: 0; }
 html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
+.fragsheet-wrap {
+  max-width: 1440px;
+  margin: 0 auto 18px;
+  padding: 4px 2px 0;
+}
+.frag-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.frag-split-btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 5px 9px;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.frag-split-btn.active {
+  border-color: var(--accent);
+  background: rgba(36,92,172,.12);
+  color: var(--accent);
+  font-weight: 600;
+}
+.frag-leaderboard-wrap {
+  overflow-x: auto;
+}
+.frag-leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+.frag-leaderboard th,
+.frag-leaderboard td {
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  font-size: 0.82rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.frag-leaderboard th {
+  background: var(--result-bg);
+  color: var(--muted);
+  text-align: left;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.frag-leaderboard td:nth-child(1),
+.frag-leaderboard td:nth-child(5),
+.frag-leaderboard td:nth-child(6) {
+  text-align: center;
+}
+.frag-ko-sprite {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
 </style>
 </head>
 <body>
 <div class="page-header">
-  <div>
-    <h1>Damage Calc</h1>
-    <p class="subtitle">Select a move button to calculate damage</p>
+  <div class="page-header-main">
+    <h1 id="page-main-title">Damage Calc</h1>
+    <p id="page-subtitle" class="subtitle">Select a move button to calculate damage</p>
   </div>
   <button id="fragsheet-toggle-btn" onclick="toggleFragsheet()">Fragsheet</button>
 </div>
@@ -819,6 +910,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
         <div class="ia-sprite">
           <img id="atk-sprite" class="poke-sprite" src="" alt="">
           <div class="sprite-action-buttons">
+            <button id="atk-ko-btn" class="ko-poke-btn" type="button" onclick="toggleCurrentKo()" title="Mark or unmark the current opponent Pokémon as a KO">KO</button>
             <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
             <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
           </div>
@@ -1227,71 +1319,30 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 
 <!-- ══ Fragsheet Section ══ -->
 <div id="fragsheet-section" hidden>
-  <div class="frag-grid">
-
-    <div class="card frag-card">
-      <h2 class="frag-title">Viola</h2>
-      <div class="frag-content">
-        <p class="frag-placeholder">Add notes for Viola's gym here.</p>
+  <div class="fragsheet-wrap">
+    <div class="card">
+      <h2 class="frag-title" id="fragsheet-title">Fragsheet — All Splits</h2>
+      <div class="frag-controls" id="fragsheet-split-tabs"></div>
+      <div class="frag-leaderboard-wrap">
+        <table class="frag-leaderboard">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Pokemon Name</th>
+              <th>Pokemon Sprite</th>
+              <th>Nick Name</th>
+              <th>Amount of KO's</th>
+              <th>KO%</th>
+            </tr>
+          </thead>
+          <tbody id="fragsheet-leaderboard-body">
+            <tr>
+              <td colspan="6" class="frag-placeholder">No KOs recorded yet.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-
-    <div class="card frag-card">
-      <h2 class="frag-title">Grant</h2>
-      <div class="frag-content">
-        <p class="frag-placeholder">Add notes for Grant's gym here.</p>
-      </div>
-    </div>
-
-    <div class="card frag-card">
-      <h2 class="frag-title">Korrina</h2>
-      <div class="frag-content">
-        <p class="frag-placeholder">Add notes for Korrina's gym here.</p>
-      </div>
-    </div>
-
-    <div class="card frag-card">
-      <h2 class="frag-title">Ramos</h2>
-      <div class="frag-content">
-        <p class="frag-placeholder">Add notes for Ramos's gym here.</p>
-      </div>
-    </div>
-
-    <div class="card frag-card">
-      <h2 class="frag-title">Clemont</h2>
-      <div class="frag-content">
-        <p class="frag-placeholder">Add notes for Clemont's gym here.</p>
-      </div>
-    </div>
-
-    <div class="card frag-card">
-      <h2 class="frag-title">Valerie</h2>
-      <div class="frag-content">
-        <p class="frag-placeholder">Add notes for Valerie's gym here.</p>
-      </div>
-    </div>
-
-    <div class="card frag-card">
-      <h2 class="frag-title">Olympia</h2>
-      <div class="frag-content">
-        <p class="frag-placeholder">Add notes for Olympia's gym here.</p>
-      </div>
-    </div>
-
-    <div class="card frag-card">
-      <h2 class="frag-title">Wulfric</h2>
-      <div class="frag-content">
-        <p class="frag-placeholder">Add notes for Wulfric's gym here.</p>
-      </div>
-    </div>
-
-    <div class="card frag-card frag-card--elite4">
-      <h2 class="frag-title">Elite 4</h2>
-      <div class="frag-content">
-        <p class="frag-placeholder">Add notes for the Elite 4 here.</p>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -1456,12 +1507,27 @@ let lastCalcState = null;
 let importedPokemonSets = [];
 let currentSelectedImportedIdx = -1;
 let importedPartyIds = [];
+let koEntries = [];
+let activeFragsheetSplitId = "all";
 const trainerState = { atk: 0, def: 1 };
 const TRAINER_STATE_STORAGE_KEY = "damageCalcTrainerState";
+const KO_ENTRIES_STORAGE_KEY = "damageCalcKoEntries";
 const transientAbilityState = {
   atk: { traceAbility: null, transformImportedId: null },
   def: { traceAbility: null, transformImportedId: null }
 };
+const FRAGSHEET_SPLITS = [
+  { id: "all", label: "All Splits" },
+  { id: "viola", label: "Viola", trainerNames: ["Viola"], routeKeywords: ["Santalune Gym"] },
+  { id: "grant", label: "Grant", trainerNames: ["Grant"], routeKeywords: ["Cyllage Gym"] },
+  { id: "korrina", label: "Korrina", trainerNames: ["Korrina"], routeKeywords: ["Shalour Gym"] },
+  { id: "ramos", label: "Ramos", trainerNames: ["Ramos"], routeKeywords: ["Coumarine Gym"] },
+  { id: "clemont", label: "Clemont", trainerNames: ["Clemont"], routeKeywords: ["Lumiose Gym"] },
+  { id: "valerie", label: "Valerie", trainerNames: ["Valerie"], routeKeywords: ["Laverre Gym"] },
+  { id: "olympia", label: "Olympia", trainerNames: ["Olympia"], routeKeywords: ["Anistar Gym"] },
+  { id: "wulfric", label: "Wulfric", trainerNames: ["Wulfric"], routeKeywords: ["Snowbelle Gym"] },
+  { id: "elite4", label: "Elite 4", trainerNames: ["Malva", "Siebold", "Wikstrom", "Drasna", "Diantha"], routeKeywords: ["Pokémon League", "Pokemon League"] }
+];
 
 // Ability names that were replaced in Extinction Y (old Showdown name → new game name)
 const ABILITY_REPLACEMENTS = {
@@ -1728,6 +1794,7 @@ function normalizeImportedSet(set) {
   const normalized = {
     id: set.id || generateImportedSetId(),
     species: set.species || "",
+    nickname: (set.nickname || "").trim() || (set.species || ""),
     item: set.item || "None",
     ability: set.ability || "",
     level: clamp(num(set.level, 50), 1, 100),
@@ -1776,7 +1843,8 @@ function syncImportedPartyIds() {
 }
 
 function importedDisplayName(imported, idx) {
-  return `Imported ${idx + 1}: ${imported.species}`;
+  const nickname = (imported.nickname || "").trim();
+  return `Imported ${idx + 1}: ${nickname || imported.species}`;
 }
 function getOpposingPrefix(prefix) {
   return prefix === "atk" ? "def" : "atk";
@@ -2641,6 +2709,7 @@ function parseImportedPokemonBlock(block) {
   const imported = {
     id: generateImportedSetId(),
     species,
+    nickname: nicknameMatch ? withoutGender.replace(/\(([^)]+)\)$/, "").trim() : species,
     item: (headerParts[1] || "None").trim() || "None",
     ability: "",
     level: 50,
@@ -3138,6 +3207,9 @@ function resetImportedPokemon() {
 function saveCurrentPokemon() {
   const species = el("atk-species")?.value || "";
   if (!species) return;
+  const selectedImported = currentSelectedImportedIdx >= 0 && currentSelectedImportedIdx < importedPokemonSets.length
+    ? importedPokemonSets[currentSelectedImportedIdx]
+    : null;
 
   const ivs = Object.fromEntries(STATS.map(stat => [stat, num(el(`atk-iv-${stat}`)?.value, 31)]));
   const moves = [];
@@ -3148,6 +3220,7 @@ function saveCurrentPokemon() {
 
   const set = {
     species,
+    nickname: selectedImported?.nickname || species,
     item: el("atk-item")?.value || "None",
     ability: el("atk-ability")?.value || "No Ability",
     level: num(el("atk-level")?.value, 50),
@@ -3157,9 +3230,6 @@ function saveCurrentPokemon() {
   };
 
   let savedIdx;
-  const selectedImported = currentSelectedImportedIdx >= 0 && currentSelectedImportedIdx < importedPokemonSets.length
-    ? importedPokemonSets[currentSelectedImportedIdx]
-    : null;
   if (selectedImported && selectedImported.species === species) {
     importedPokemonSets[currentSelectedImportedIdx] = {
       ...set,
@@ -4016,6 +4086,7 @@ function recalcIfNeeded() {
   }
   updateMoveDamageLabels();
   refreshImportedMatchupIndicators();
+  updateKoButtonState();
 }
 
 function syncTypeDefaults(prefix, overrideSpecies) {
@@ -4093,6 +4164,227 @@ function bindInputs() {
   el("pokemon-importer")?.addEventListener("keydown", event => {
     if ((event.ctrlKey || event.metaKey) && event.key === "Enter") importPokemonSets();
   });
+}
+
+function persistKoState() {
+  try {
+    localStorage.setItem(KO_ENTRIES_STORAGE_KEY, JSON.stringify(koEntries));
+  } catch (_) {}
+}
+
+function loadKoState() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(KO_ENTRIES_STORAGE_KEY) || "[]");
+    if (!Array.isArray(parsed)) return;
+    koEntries = parsed
+      .filter(entry => entry && typeof entry === "object")
+      .map(entry => ({
+        key: String(entry.key || ""),
+        splitId: String(entry.splitId || "all"),
+        attackerId: String(entry.attackerId || ""),
+        species: String(entry.species || ""),
+        nickname: String(entry.nickname || entry.species || ""),
+        createdAt: Number(entry.createdAt || Date.now())
+      }))
+      .filter(entry => entry.key && entry.attackerId && entry.species);
+  } catch (_) {
+    koEntries = [];
+  }
+}
+
+function getFragsheetSplitLabel(splitId) {
+  const split = FRAGSHEET_SPLITS.find(item => item.id === splitId);
+  return split ? split.label : "All Splits";
+}
+
+function resolveSplitIdForTrainer(trainer) {
+  if (!trainer) return "all";
+  const trainerName = String(trainer.trainerName || "");
+  const route = String(trainer.route || "");
+  for (const split of FRAGSHEET_SPLITS) {
+    if (split.id === "all") continue;
+    if (Array.isArray(split.trainerNames) && split.trainerNames.includes(trainerName)) return split.id;
+    if (Array.isArray(split.routeKeywords) && split.routeKeywords.some(keyword => route.includes(keyword))) return split.id;
+  }
+  return "all";
+}
+
+function getSelectedTrainerPokemonIndex(prefix) {
+  const selected = document.querySelector(`#${prefix}-poke-icons .poke-icon-slot.selected`);
+  if (!selected?.id) return -1;
+  const match = selected.id.match(/-(\d+)$/);
+  return match ? num(match[1], -1) : -1;
+}
+
+function getCurrentKoContext() {
+  const attackerSpecies = el("atk-species")?.value || "";
+  const defenderSpecies = el("def-species")?.value || "";
+  if (!attackerSpecies || !defenderSpecies) return null;
+  const selectedImported = currentSelectedImportedIdx >= 0 && currentSelectedImportedIdx < importedPokemonSets.length
+    ? importedPokemonSets[currentSelectedImportedIdx]
+    : null;
+  const attackerNickname = (selectedImported?.nickname || selectedImported?.species || attackerSpecies).trim() || attackerSpecies;
+  const attackerId = selectedImported?.id || `manual:${toSlug(attackerSpecies)}:${toSlug(attackerNickname)}`;
+  const defenderTrainer = trainersFlat[trainerState.def] || null;
+  const splitId = resolveSplitIdForTrainer(defenderTrainer);
+  const defTrainerName = defenderTrainer?.trainerName || "";
+  const defTrainerRoute = defenderTrainer?.route || "";
+  const defTrainerPokIdx = getSelectedTrainerPokemonIndex("def");
+  const key = [
+    splitId,
+    attackerId,
+    toSlug(defenderSpecies),
+    toSlug(defTrainerName),
+    toSlug(defTrainerRoute),
+    String(defTrainerPokIdx)
+  ].join("|");
+  return { key, splitId, attackerId, attackerSpecies, attackerNickname };
+}
+
+function updateKoButtonState() {
+  const btn = el("atk-ko-btn");
+  if (!btn) return;
+  const context = getCurrentKoContext();
+  const isActive = !!context && koEntries.some(entry => entry.key === context.key);
+  btn.classList.toggle("active", isActive);
+  btn.textContent = isActive ? "KO ✓" : "KO";
+  btn.title = isActive
+    ? "Remove KO for the current opponent Pokémon"
+    : "Mark the current opponent Pokémon as KO'd";
+}
+
+function getFragsheetRows(splitId) {
+  const rowsByAttacker = new Map();
+  const filtered = splitId === "all" ? koEntries : koEntries.filter(entry => entry.splitId === splitId);
+  for (const entry of filtered) {
+    const rowKey = entry.attackerId;
+    const existing = rowsByAttacker.get(rowKey);
+    if (existing) {
+      existing.kos += 1;
+    } else {
+      rowsByAttacker.set(rowKey, {
+        attackerId: entry.attackerId,
+        species: entry.species,
+        nickname: entry.nickname || entry.species,
+        kos: 1
+      });
+    }
+  }
+  const totalKos = filtered.length || 1;
+  return Array.from(rowsByAttacker.values())
+    .map(row => ({
+      ...row,
+      koPct: (row.kos / totalKos) * 100
+    }))
+    .sort((a, b) => {
+      if (b.kos !== a.kos) return b.kos - a.kos;
+      return a.species.localeCompare(b.species);
+    });
+}
+
+function renderFragsheetLeaderboard() {
+  const body = el("fragsheet-leaderboard-body");
+  const title = el("fragsheet-title");
+  if (!body || !title) return;
+  title.textContent = `Fragsheet — ${getFragsheetSplitLabel(activeFragsheetSplitId)}`;
+  const rows = getFragsheetRows(activeFragsheetSplitId);
+  body.innerHTML = "";
+  if (!rows.length) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 6;
+    td.className = "frag-placeholder";
+    td.textContent = "No KOs recorded for this split yet.";
+    tr.appendChild(td);
+    body.appendChild(tr);
+    return;
+  }
+  rows.forEach((row, idx) => {
+    const tr = document.createElement("tr");
+
+    const rankCell = document.createElement("td");
+    rankCell.textContent = String(idx + 1);
+    tr.appendChild(rankCell);
+
+    const speciesCell = document.createElement("td");
+    speciesCell.textContent = row.species;
+    tr.appendChild(speciesCell);
+
+    const spriteCell = document.createElement("td");
+    const sprite = document.createElement("img");
+    sprite.className = "frag-ko-sprite";
+    const slug = toSlug(row.species);
+    const baseSlug = toSlug((pokedex[row.species]?.Name) || row.species);
+    sprite.src = `pokemon_sprites/${slug}.png`;
+    sprite.alt = row.species;
+    sprite.onerror = () => {
+      if (sprite.src.includes(slug) && slug !== baseSlug) {
+        sprite.src = `pokemon_sprites/${baseSlug}.png`;
+      }
+    };
+    spriteCell.appendChild(sprite);
+    tr.appendChild(spriteCell);
+
+    const nicknameCell = document.createElement("td");
+    nicknameCell.textContent = row.nickname || row.species;
+    tr.appendChild(nicknameCell);
+
+    const koCountCell = document.createElement("td");
+    koCountCell.textContent = String(row.kos);
+    tr.appendChild(koCountCell);
+
+    const koPctCell = document.createElement("td");
+    koPctCell.textContent = `${row.koPct.toFixed(1)}%`;
+    tr.appendChild(koPctCell);
+
+    body.appendChild(tr);
+  });
+}
+
+function setFragsheetSplit(splitId) {
+  const selected = FRAGSHEET_SPLITS.some(split => split.id === splitId) ? splitId : "all";
+  activeFragsheetSplitId = selected;
+  document.querySelectorAll(".frag-split-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.splitId === selected);
+  });
+  renderFragsheetLeaderboard();
+}
+
+function renderFragsheetSplitTabs() {
+  const tabs = el("fragsheet-split-tabs");
+  if (!tabs) return;
+  tabs.innerHTML = "";
+  FRAGSHEET_SPLITS.forEach(split => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "frag-split-btn";
+    btn.dataset.splitId = split.id;
+    btn.textContent = split.label;
+    btn.addEventListener("click", () => setFragsheetSplit(split.id));
+    tabs.appendChild(btn);
+  });
+  setFragsheetSplit(activeFragsheetSplitId);
+}
+
+function toggleCurrentKo() {
+  const context = getCurrentKoContext();
+  if (!context) return;
+  const existingIdx = koEntries.findIndex(entry => entry.key === context.key);
+  if (existingIdx >= 0) {
+    koEntries.splice(existingIdx, 1);
+  } else {
+    koEntries.push({
+      key: context.key,
+      splitId: context.splitId,
+      attackerId: context.attackerId,
+      species: context.attackerSpecies,
+      nickname: context.attackerNickname,
+      createdAt: Date.now()
+    });
+  }
+  persistKoState();
+  updateKoButtonState();
+  renderFragsheetLeaderboard();
 }
 
 async function init() {
@@ -4190,6 +4482,8 @@ async function init() {
     populateFormSelect("def", el("def-species")?.value);
 
     bindInputs();
+    loadKoState();
+    renderFragsheetSplitTabs();
 
     // Restore the last selected trainer for each side.
     if (trainersFlat.length) {
@@ -4214,6 +4508,8 @@ async function init() {
         }
       }
     } catch (_) {}
+    updateKoButtonState();
+    renderFragsheetLeaderboard();
 
   } catch (e) {
     console.error("Damage calc init failed:", e);
@@ -4227,11 +4523,18 @@ function toggleFragsheet() {
   const calcSection = document.getElementById("calc-section");
   const fragSection = document.getElementById("fragsheet-section");
   const btn = document.getElementById("fragsheet-toggle-btn");
+  const title = document.getElementById("page-main-title");
+  const subtitle = document.getElementById("page-subtitle");
   const isShowing = !fragSection.hidden;
   fragSection.hidden = isShowing;
   calcSection.hidden = !isShowing;
   btn.classList.toggle("active", !isShowing);
   btn.textContent = isShowing ? "Fragsheet" : "Damage Calc";
+  if (title) title.textContent = isShowing ? "Damage Calc" : "Fragsheet";
+  if (subtitle) subtitle.textContent = isShowing
+    ? "Select a move button to calculate damage"
+    : "Track KO leaders across splits";
+  if (!isShowing) renderFragsheetLeaderboard();
 }
 </script>
 </body>
