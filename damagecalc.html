@@ -4607,6 +4607,7 @@ function renderFragsheetLeaderboard() {
     sprite.alt = row.species;
     sprite.onerror = () => {
       if (sprite.src.includes(slug) && slug !== baseSlug) {
+        sprite.onerror = null;
         sprite.src = `pokemon_sprites/${baseSlug}.png`;
       }
     };
