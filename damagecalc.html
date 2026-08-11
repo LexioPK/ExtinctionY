@@ -925,6 +925,12 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   display: flex;
   justify-content: center;
 }
+#fragsheet-ko-count-header {
+  min-width: 320px;
+}
+#fragsheet-ko-count-header .frag-ko-split-board {
+  margin-top: 6px;
+}
 .frag-ko-split-board {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
@@ -959,9 +965,9 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 .frag-ko-split-value {
   display: block;
   width: 100%;
-  margin-top: 2px;
-  padding-top: 3px;
-  border-top: 1px solid var(--border);
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
   text-align: center;
   color: var(--accent);
   font-size: 0.82rem;
@@ -1477,7 +1483,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
               <th>Pokémon Name</th>
               <th>Pokémon Sprite</th>
               <th>Nickname</th>
-              <th>KO Count</th>
+              <th id="fragsheet-ko-count-header">KO Count</th>
               <th>KO%</th>
             </tr>
           </thead>
@@ -4583,11 +4589,39 @@ function getFragsheetRows(splitId) {
     });
 }
 
+function renderFragsheetKoHeader() {
+  const koHeader = el("fragsheet-ko-count-header");
+  if (!koHeader) return;
+  koHeader.innerHTML = "";
+  if (activeFragsheetSplitId !== "all") {
+    koHeader.textContent = "KO Count";
+    return;
+  }
+  const title = document.createElement("span");
+  title.textContent = "KO Count";
+  koHeader.appendChild(title);
+
+  const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
+  const splitGrid = document.createElement("div");
+  splitGrid.className = "frag-ko-split-board frag-ko-split-board-header";
+  splitIds.forEach(split => {
+    const splitBox = document.createElement("div");
+    splitBox.className = "frag-ko-split-section";
+    const splitLabel = document.createElement("span");
+    splitLabel.className = "frag-ko-split-label";
+    splitLabel.textContent = String(split.shortLabel || split.label);
+    splitBox.appendChild(splitLabel);
+    splitGrid.appendChild(splitBox);
+  });
+  koHeader.appendChild(splitGrid);
+}
+
 function renderFragsheetLeaderboard() {
   const body = el("fragsheet-leaderboard-body");
   const title = el("fragsheet-title");
   if (!body || !title) return;
   title.textContent = `Fragsheet — ${getFragsheetSplitLabel(activeFragsheetSplitId)}`;
+  renderFragsheetKoHeader();
   const rows = getFragsheetRows(activeFragsheetSplitId);
   body.innerHTML = "";
   if (!rows.length) {
@@ -4644,13 +4678,9 @@ function renderFragsheetLeaderboard() {
       splitIds.forEach(split => {
         const splitBox = document.createElement("div");
         splitBox.className = "frag-ko-split-section";
-        const splitLabel = document.createElement("span");
-        splitLabel.className = "frag-ko-split-label";
-        splitLabel.textContent = String(split.shortLabel || split.label);
         const splitValue = document.createElement("span");
         splitValue.className = "frag-ko-split-value";
         splitValue.textContent = String(row.splitCounts?.[split.id] || 0);
-        splitBox.appendChild(splitLabel);
         splitBox.appendChild(splitValue);
         splitGrid.appendChild(splitBox);
       });
