@@ -4702,6 +4702,7 @@ function toggleCurrentKo() {
 }
 
 function resetFragsheetKos() {
+  if (!window.confirm("Reset all Fragsheet KOs? This cannot be undone.")) return;
   koEntries = [];
   persistKoState();
   updateKoButtonState();
