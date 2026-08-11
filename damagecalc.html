@@ -842,7 +842,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 .frag-leaderboard {
   width: 100%;
   border-collapse: collapse;
-  min-width: 690px;
+  min-width: 620px;
 }
 .frag-leaderboard th,
 .frag-leaderboard td {
@@ -866,19 +866,19 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 }
 .frag-leaderboard th:nth-child(2),
 .frag-leaderboard td:nth-child(2) {
-  width: 124px;
+  width: 108px;
 }
 .frag-leaderboard th:nth-child(3),
 .frag-leaderboard td:nth-child(3) {
-  width: 108px;
+  width: 86px;
 }
 .frag-leaderboard th:nth-child(4),
 .frag-leaderboard td:nth-child(4) {
-  width: 124px;
+  width: 108px;
 }
 .frag-leaderboard th:nth-child(5),
 .frag-leaderboard td:nth-child(5) {
-  width: 236px;
+  width: 210px;
 }
 .frag-leaderboard th:nth-child(6),
 .frag-leaderboard td:nth-child(6) {
@@ -889,46 +889,38 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 .frag-leaderboard td:nth-child(6) {
   text-align: center;
 }
+.frag-leaderboard td:nth-child(3) {
+  text-align: center;
+}
+.frag-name-cell,
+.frag-nickname-cell {
+  font-size: 0.76rem;
+}
 .frag-ko-sprite {
-  width: 96px;
-  height: 96px;
+  width: 68px;
+  height: 68px;
   object-fit: contain;
   image-rendering: pixelated;
 }
 .frag-ko-breakdown {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  align-items: stretch;
-}
-.frag-ko-total {
-  font-weight: 700;
-  color: var(--accent);
-}
-.frag-split-summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
-  text-align: left;
-}
-.frag-split-stat {
-  display: flex;
-  justify-content: flex-start;
+  gap: 2px;
   align-items: center;
-  gap: 4px;
-  padding: 2px 5px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--result-bg);
-  white-space: nowrap;
-  width: auto;
 }
-.frag-split-stat-label {
+.frag-ko-split-labels,
+.frag-ko-split-values {
+  font-family: var(--font-display);
+  letter-spacing: .01em;
+}
+.frag-ko-split-labels {
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
 }
-.frag-split-stat-value {
+.frag-ko-split-values {
+  color: var(--accent);
+  font-size: 0.82rem;
   font-weight: 700;
 }
 @media (max-width: 780px) {
@@ -4492,6 +4484,7 @@ function renderFragsheetLeaderboard() {
     tr.appendChild(rankCell);
 
     const speciesCell = document.createElement("td");
+    speciesCell.className = "frag-name-cell";
     speciesCell.textContent = row.species;
     tr.appendChild(speciesCell);
 
@@ -4511,6 +4504,7 @@ function renderFragsheetLeaderboard() {
     tr.appendChild(spriteCell);
 
     const nicknameCell = document.createElement("td");
+    nicknameCell.className = "frag-nickname-cell";
     nicknameCell.textContent = row.nickname || row.species;
     tr.appendChild(nicknameCell);
 
@@ -4519,47 +4513,26 @@ function renderFragsheetLeaderboard() {
       const breakdown = document.createElement("div");
       breakdown.className = "frag-ko-breakdown";
 
-      const total = document.createElement("div");
-      total.className = "frag-ko-total";
-      total.textContent = `${row.kos} total`;
-      breakdown.appendChild(total);
+      const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
+      const labels = splitIds.map(split => String(split.shortLabel || split.label).toUpperCase());
+      const values = splitIds.map(split => String(row.splitCounts?.[split.id] || 0));
 
-      const splitSummary = document.createElement("div");
-      splitSummary.className = "frag-split-summary";
-      FRAGSHEET_SPLITS.filter(split => split.id !== "all").forEach(split => {
-        const stat = document.createElement("div");
-        stat.className = "frag-split-stat";
-
-        const statLabel = document.createElement("span");
-        statLabel.className = "frag-split-stat-label";
-        statLabel.textContent = split.shortLabel || split.label;
-        stat.appendChild(statLabel);
-
-        const statValue = document.createElement("span");
-        statValue.className = "frag-split-stat-value";
-        statValue.textContent = String(row.splitCounts?.[split.id] || 0);
-        stat.appendChild(statValue);
-
-        splitSummary.appendChild(stat);
-      });
       const unmatchedCount = row.splitCounts?.all || 0;
       if (unmatchedCount > 0) {
-        const otherStat = document.createElement("div");
-        otherStat.className = "frag-split-stat";
-
-        const otherLabel = document.createElement("span");
-        otherLabel.className = "frag-split-stat-label";
-        otherLabel.textContent = "Other";
-        otherStat.appendChild(otherLabel);
-
-        const otherValue = document.createElement("span");
-        otherValue.className = "frag-split-stat-value";
-        otherValue.textContent = String(unmatchedCount);
-        otherStat.appendChild(otherValue);
-
-        splitSummary.appendChild(otherStat);
+        labels.push("O");
+        values.push(String(unmatchedCount));
       }
-      breakdown.appendChild(splitSummary);
+
+      const splitLabels = document.createElement("div");
+      splitLabels.className = "frag-ko-split-labels";
+      splitLabels.textContent = labels.join("/");
+      breakdown.appendChild(splitLabels);
+
+      const splitValues = document.createElement("div");
+      splitValues.className = "frag-ko-split-values";
+      splitValues.textContent = values.join("/");
+      breakdown.appendChild(splitValues);
+
       koCountCell.appendChild(breakdown);
     } else {
       koCountCell.textContent = String(row.kos);
