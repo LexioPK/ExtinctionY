@@ -925,32 +925,39 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   display: flex;
   justify-content: center;
 }
-.frag-ko-split-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 4px;
-}
-.frag-ko-split-box {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+.frag-ko-split-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+  width: 100%;
+  max-width: 460px;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 3px 7px;
+  border-radius: 8px;
+  overflow: hidden;
   background: var(--result-bg);
+}
+.frag-ko-split-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 6px;
+  border-right: 1px solid var(--border);
   font-family: var(--font-display);
-  line-height: 1.1;
+  line-height: 1.05;
+}
+.frag-ko-split-section:last-child {
+  border-right: none;
 }
 .frag-ko-split-label {
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: .02em;
 }
 .frag-ko-split-value {
   color: var(--accent);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 @media (max-width: 780px) {
@@ -979,7 +986,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 <body>
 <div class="page-header">
   <div class="page-header-actions-left">
-    <button id="fragsheet-reset-btn" type="button" onclick="resetFragsheetKos()" title="Reset all Fragsheet KOs">Reset Fragsheet</button>
+  <button id="fragsheet-reset-btn" type="button" onclick="resetFragsheetKos()" title="Reset all Fragsheet KOs" hidden>Reset Fragsheet</button>
   </div>
   <div class="page-header-main">
     <h1 id="page-main-title">Damage Calc</h1>
@@ -4626,10 +4633,10 @@ function renderFragsheetLeaderboard() {
 
       const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
       const splitGrid = document.createElement("div");
-      splitGrid.className = "frag-ko-split-grid";
+      splitGrid.className = "frag-ko-split-board";
       splitIds.forEach(split => {
         const splitBox = document.createElement("div");
-        splitBox.className = "frag-ko-split-box";
+        splitBox.className = "frag-ko-split-section";
         const splitLabel = document.createElement("span");
         splitLabel.className = "frag-ko-split-label";
         splitLabel.textContent = String(split.shortLabel || split.label).toUpperCase();
@@ -4847,6 +4854,7 @@ function toggleFragsheet() {
   const calcSection = document.getElementById("calc-section");
   const fragSection = document.getElementById("fragsheet-section");
   const btn = document.getElementById("fragsheet-toggle-btn");
+  const resetBtn = document.getElementById("fragsheet-reset-btn");
   const title = document.getElementById("page-main-title");
   const subtitle = document.getElementById("page-subtitle");
   const isShowing = !fragSection.hidden;
@@ -4858,6 +4866,7 @@ function toggleFragsheet() {
   if (subtitle) subtitle.textContent = isShowing
     ? "Select a move button to calculate damage"
     : "Track KO leaders across splits";
+  if (resetBtn) resetBtn.hidden = isShowing;
   if (!isShowing) renderFragsheetLeaderboard();
 }
 </script>
