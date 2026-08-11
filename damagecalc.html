@@ -956,6 +956,12 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   letter-spacing: .02em;
 }
 .frag-ko-split-value {
+  display: block;
+  width: 100%;
+  margin-top: 2px;
+  padding-top: 3px;
+  border-top: 1px solid var(--border);
+  text-align: center;
   color: var(--accent);
   font-size: 0.82rem;
   font-weight: 700;
@@ -4639,7 +4645,7 @@ function renderFragsheetLeaderboard() {
         splitBox.className = "frag-ko-split-section";
         const splitLabel = document.createElement("span");
         splitLabel.className = "frag-ko-split-label";
-        splitLabel.textContent = String(split.shortLabel || split.label).toUpperCase();
+        splitLabel.textContent = String(split.shortLabel || split.label);
         const splitValue = document.createElement("span");
         splitValue.className = "frag-ko-split-value";
         splitValue.textContent = String(row.splitCounts?.[split.id] || 0);
