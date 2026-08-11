@@ -2133,7 +2133,7 @@ function getEvolutionBaseSpecies(speciesName) {
     probe = probe.slice(0, probe.lastIndexOf("-"));
     if (evolutions[probe]) return probe;
   }
-  return raw;
+  return probe;
 }
 function getEvolutionLineRoot(speciesName) {
   let current = getEvolutionBaseSpecies(speciesName);
@@ -4542,6 +4542,23 @@ function renderFragsheetLeaderboard() {
 
         splitSummary.appendChild(stat);
       });
+      const unmatchedCount = row.splitCounts?.all || 0;
+      if (unmatchedCount > 0) {
+        const otherStat = document.createElement("div");
+        otherStat.className = "frag-split-stat";
+
+        const otherLabel = document.createElement("span");
+        otherLabel.className = "frag-split-stat-label";
+        otherLabel.textContent = "Other";
+        otherStat.appendChild(otherLabel);
+
+        const otherValue = document.createElement("span");
+        otherValue.className = "frag-split-stat-value";
+        otherValue.textContent = String(unmatchedCount);
+        otherStat.appendChild(otherValue);
+
+        splitSummary.appendChild(otherStat);
+      }
       breakdown.appendChild(splitSummary);
       koCountCell.appendChild(breakdown);
     } else {
