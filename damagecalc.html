@@ -4602,7 +4602,7 @@ function renderFragsheetKoHeader() {
 
   const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
   const splitGrid = document.createElement("div");
-  splitGrid.className = "frag-ko-split-board frag-ko-split-board-header";
+  splitGrid.className = "frag-ko-split-board";
   splitGrid.style.setProperty("--split-count", String(splitIds.length));
   splitIds.forEach(split => {
     const splitBox = document.createElement("div");
