@@ -922,8 +922,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   image-rendering: pixelated;
 }
 .frag-ko-breakdown {
-  display: flex;
-  justify-content: center;
+  width: 100%;
 }
 #fragsheet-ko-count-header {
   min-width: 320px;
@@ -933,9 +932,9 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 }
 .frag-ko-split-board {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+  grid-template-columns: repeat(var(--split-count, 1), minmax(0, 1fr));
   width: 100%;
-  max-width: 460px;
+  box-sizing: border-box;
   border: 1px solid var(--border);
   border-radius: 8px;
   overflow: hidden;
@@ -4604,6 +4603,7 @@ function renderFragsheetKoHeader() {
   const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
   const splitGrid = document.createElement("div");
   splitGrid.className = "frag-ko-split-board frag-ko-split-board-header";
+  splitGrid.style.setProperty("--split-count", String(splitIds.length));
   splitIds.forEach(split => {
     const splitBox = document.createElement("div");
     splitBox.className = "frag-ko-split-section";
@@ -4675,6 +4675,7 @@ function renderFragsheetLeaderboard() {
       const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
       const splitGrid = document.createElement("div");
       splitGrid.className = "frag-ko-split-board";
+      splitGrid.style.setProperty("--split-count", String(splitIds.length));
       splitIds.forEach(split => {
         const splitBox = document.createElement("div");
         splitBox.className = "frag-ko-split-section";
