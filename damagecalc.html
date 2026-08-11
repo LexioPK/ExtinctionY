@@ -763,6 +763,11 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
   grid-column: 2;
   text-align: center;
 }
+.page-header-actions-left {
+  grid-column: 1;
+  justify-self: start;
+  margin-top: 10px;
+}
 .page-header h1 { margin: 8px 0 6px; }
 .page-header .subtitle { margin: 0 0 8px; }
 #fragsheet-toggle-btn {
@@ -786,6 +791,20 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
   background: var(--card);
   color: var(--accent);
 }
+#fragsheet-reset-btn {
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid #bf3e3e;
+  background: #bf3e3e;
+  color: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+#fragsheet-reset-btn:hover { opacity: .85; }
 
 /* ── Fragsheet grid ── */
 .frag-grid {
@@ -878,7 +897,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 }
 .frag-leaderboard th:nth-child(5),
 .frag-leaderboard td:nth-child(5) {
-  width: 210px;
+  width: 280px;
 }
 .frag-leaderboard th:nth-child(6),
 .frag-leaderboard td:nth-child(6) {
@@ -897,30 +916,41 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   font-size: 0.76rem;
 }
 .frag-ko-sprite {
-  width: 68px;
-  height: 68px;
+  width: 96px;
+  height: 96px;
   object-fit: contain;
   image-rendering: pixelated;
 }
 .frag-ko-breakdown {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  justify-content: center;
+}
+.frag-ko-split-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+.frag-ko-split-box {
+  display: inline-flex;
   align-items: center;
-}
-.frag-ko-split-labels,
-.frag-ko-split-values {
+  gap: 5px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 7px;
+  background: var(--result-bg);
   font-family: var(--font-display);
-  letter-spacing: .01em;
+  line-height: 1.1;
 }
-.frag-ko-split-labels {
+.frag-ko-split-label {
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
+  letter-spacing: .02em;
 }
-.frag-ko-split-values {
+.frag-ko-split-value {
   color: var(--accent);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 700;
 }
 @media (max-width: 780px) {
@@ -928,9 +958,15 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
     grid-template-columns: 1fr;
     justify-items: center;
   }
+  .page-header-actions-left,
   .page-header-main,
   #fragsheet-toggle-btn {
     grid-column: 1;
+  }
+  .page-header-actions-left {
+    justify-self: center;
+    margin-top: 0;
+    margin-bottom: 8px;
   }
   #fragsheet-toggle-btn {
     justify-self: center;
@@ -942,6 +978,9 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 </head>
 <body>
 <div class="page-header">
+  <div class="page-header-actions-left">
+    <button id="fragsheet-reset-btn" type="button" onclick="resetFragsheetKos()" title="Reset all Fragsheet KOs">Reset Fragsheet</button>
+  </div>
   <div class="page-header-main">
     <h1 id="page-main-title">Damage Calc</h1>
     <p id="page-subtitle" class="subtitle">Select a move button to calculate damage</p>
@@ -1601,6 +1640,7 @@ let importedPokemonSets = [];
 let currentSelectedImportedIdx = -1;
 let importedPartyIds = [];
 let koEntries = [];
+let fragsheetSplitByTrainerIndex = [];
 let activeFragsheetSplitId = "all";
 const trainerState = { atk: 0, def: 1 };
 const TRAINER_STATE_STORAGE_KEY = "damageCalcTrainerState";
@@ -1611,15 +1651,26 @@ const transientAbilityState = {
 };
 const FRAGSHEET_SPLITS = [
   { id: "all", label: "All Splits" },
-  { id: "viola", label: "Viola", shortLabel: "Vi", trainerNames: ["Viola"], routeKeywords: ["Santalune Gym"] },
-  { id: "grant", label: "Grant", shortLabel: "G", trainerNames: ["Grant"], routeKeywords: ["Cyllage Gym"] },
-  { id: "korrina", label: "Korrina", shortLabel: "K", trainerNames: ["Korrina"], routeKeywords: ["Shalour Gym"] },
-  { id: "ramos", label: "Ramos", shortLabel: "R", trainerNames: ["Ramos"], routeKeywords: ["Coumarine Gym"] },
-  { id: "clemont", label: "Clemont", shortLabel: "C", trainerNames: ["Clemont"], routeKeywords: ["Lumiose Gym"] },
-  { id: "valerie", label: "Valerie", shortLabel: "Va", trainerNames: ["Valerie"], routeKeywords: ["Laverre Gym"] },
-  { id: "olympia", label: "Olympia", shortLabel: "O", trainerNames: ["Olympia"], routeKeywords: ["Anistar Gym"] },
-  { id: "wulfric", label: "Wulfric", shortLabel: "W", trainerNames: ["Wulfric"], routeKeywords: ["Snowbelle Gym"] },
-  { id: "elite4", label: "Elite 4", shortLabel: "E4", trainerNames: ["Malva", "Siebold", "Wikstrom", "Drasna", "Diantha"], routeKeywords: ["Pokémon League", "Pokemon League"] }
+  { id: "viola", label: "Viola", shortLabel: "Vi" },
+  { id: "grant", label: "Grant", shortLabel: "G" },
+  { id: "korrina", label: "Korrina", shortLabel: "K" },
+  { id: "ramos", label: "Ramos", shortLabel: "R" },
+  { id: "clemont", label: "Clemont", shortLabel: "C" },
+  { id: "valerie", label: "Valerie", shortLabel: "Va" },
+  { id: "olympia", label: "Olympia", shortLabel: "O" },
+  { id: "wulfric", label: "Wulfric", shortLabel: "W" },
+  { id: "elite4", label: "Elite 4", shortLabel: "E4" }
+];
+const FRAGSHEET_SPLIT_RANGE_ENDS = [
+  { id: "viola", trainerName: "Viola", routeKeys: ["santalunegym"] },
+  { id: "grant", trainerName: "Grant", routeKeys: ["cyllagegym"] },
+  { id: "korrina", trainerName: "Korrina", routeKeys: ["shalourgym"] },
+  { id: "ramos", trainerName: "Ramos", routeKeys: ["coumarinegym"] },
+  { id: "clemont", trainerName: "Clemont", routeKeys: ["prismtower"] },
+  { id: "valerie", trainerName: "Delta & Gamma", routeKeys: ["pokeballfactory"] },
+  { id: "olympia", trainerName: "Olympia", routeKeys: ["anistargym"] },
+  { id: "wulfric", trainerName: "Wulfric", routeKeys: ["snowbellegym"] },
+  { id: "elite4", trainerName: "AZ", routeKeys: ["lumioseparade", "lumiosecityparade"] }
 ];
 
 // Ability names that were replaced in Extinction Y (old Showdown name → new game name)
@@ -2148,12 +2199,62 @@ function getEvolutionStageDepth(speciesName) {
   return depth;
 }
 function getFragsheetNicknameKey(nickname, speciesName) {
-  const resolved = String(nickname || "").trim() || String(speciesName || "").trim();
+  const resolved = formatFragsheetNickname(nickname, speciesName);
   return toSlug(resolved) || toSlug(speciesName) || "unknown";
 }
 function getFragsheetAttackerGroupKey(speciesName, nickname) {
   const root = getEvolutionLineRoot(speciesName) || String(speciesName || "").trim();
   return `${toSlug(root)}|${getFragsheetNicknameKey(nickname, speciesName)}`;
+}
+function toSplitRouteKey(routeName) {
+  return String(routeName || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
+function formatFragsheetNickname(nickname, speciesName) {
+  const cleanNickname = String(nickname || "").trim();
+  const cleanSpecies = String(speciesName || "").trim();
+  if (!cleanNickname) return cleanSpecies;
+  if (!cleanSpecies) return cleanNickname;
+  if (toSlug(cleanNickname) === toSlug(cleanSpecies)) return cleanSpecies;
+  if (/\([^)]+\)\s*$/.test(cleanNickname)) return cleanNickname.replace(/\s+\(/g, "(");
+  return `${cleanNickname}(${cleanSpecies})`;
+}
+function findTrainerIndexAfter(afterIndex, trainerName, routeKeys = []) {
+  for (let idx = Math.max(-1, afterIndex) + 1; idx < trainersFlat.length; idx++) {
+    const trainer = trainersFlat[idx];
+    if (!trainer || trainer.trainerName !== trainerName) continue;
+    if (!routeKeys.length) return idx;
+    const routeKey = toSplitRouteKey(trainer.route);
+    if (routeKeys.includes(routeKey)) return idx;
+  }
+  return -1;
+}
+function buildFragsheetSplitIndexMap() {
+  const firstSplitId = FRAGSHEET_SPLIT_RANGE_ENDS[0]?.id || "viola";
+  const lastSplitId = FRAGSHEET_SPLIT_RANGE_ENDS[FRAGSHEET_SPLIT_RANGE_ENDS.length - 1]?.id || "elite4";
+  fragsheetSplitByTrainerIndex = new Array(trainersFlat.length).fill(firstSplitId);
+  if (!trainersFlat.length) return;
+  const startIdx = findTrainerIndexAfter(-1, "Shauna", ["aquacordetown"]);
+  const clampedStartIdx = startIdx >= 0 ? startIdx : 0;
+  for (let i = 0; i < clampedStartIdx; i++) fragsheetSplitByTrainerIndex[i] = firstSplitId;
+
+  let previousEndIdx = clampedStartIdx - 1;
+  for (const splitRange of FRAGSHEET_SPLIT_RANGE_ENDS) {
+    let endIdx = findTrainerIndexAfter(previousEndIdx, splitRange.trainerName, splitRange.routeKeys || []);
+    if (endIdx < 0) endIdx = trainersFlat.length - 1;
+    const rangeStartIdx = Math.max(clampedStartIdx, previousEndIdx + 1);
+    for (let idx = rangeStartIdx; idx <= endIdx && idx < trainersFlat.length; idx++) {
+      fragsheetSplitByTrainerIndex[idx] = splitRange.id;
+    }
+    previousEndIdx = Math.max(previousEndIdx, endIdx);
+    if (previousEndIdx >= trainersFlat.length - 1) break;
+  }
+  for (let idx = Math.max(clampedStartIdx, previousEndIdx + 1); idx < trainersFlat.length; idx++) {
+    fragsheetSplitByTrainerIndex[idx] = lastSplitId;
+  }
 }
 function getFragsheetSpeciesPriority(speciesName) {
   const species = String(speciesName || "").trim();
@@ -4326,7 +4427,7 @@ function loadKoState() {
         splitId: String(entry.splitId || "all"),
         attackerId: String(entry.attackerId || ""),
         species: String(entry.species || ""),
-        nickname: String(entry.nickname || entry.species || ""),
+        nickname: formatFragsheetNickname(String(entry.nickname || entry.species || ""), String(entry.species || "")),
         createdAt: Number(entry.createdAt || Date.now())
       }))
       .filter(entry => entry.key && entry.attackerId && entry.species);
@@ -4340,16 +4441,16 @@ function getFragsheetSplitLabel(splitId) {
   return split ? split.label : "All Splits";
 }
 
-function resolveSplitIdForTrainer(trainer) {
-  if (!trainer) return "all";
-  const trainerName = String(trainer.trainerName || "");
-  const route = String(trainer.route || "");
-  for (const split of FRAGSHEET_SPLITS) {
-    if (split.id === "all") continue;
-    if (Array.isArray(split.trainerNames) && split.trainerNames.includes(trainerName)) return split.id;
-    if (Array.isArray(split.routeKeywords) && split.routeKeywords.some(keyword => route.includes(keyword))) return split.id;
+function resolveSplitIdForTrainer(trainer, trainerIndex) {
+  if (Number.isInteger(trainerIndex) && trainerIndex >= 0 && trainerIndex < fragsheetSplitByTrainerIndex.length) {
+    return fragsheetSplitByTrainerIndex[trainerIndex] || "elite4";
   }
-  return "all";
+  if (!trainer) return "elite4";
+  const fallbackIndex = trainersFlat.findIndex(item => item === trainer);
+  if (fallbackIndex >= 0 && fallbackIndex < fragsheetSplitByTrainerIndex.length) {
+    return fragsheetSplitByTrainerIndex[fallbackIndex] || "elite4";
+  }
+  return "elite4";
 }
 
 function getSelectedTrainerPokemonIndex(prefix) {
@@ -4364,8 +4465,9 @@ function getCurrentKoContext() {
   const attackerSpecies = attacker?.attackerSpecies || "";
   const defenderSpecies = el("def-species")?.value || "";
   if (!attackerSpecies || !defenderSpecies) return null;
-  const defenderTrainer = trainersFlat[trainerState.def] || null;
-  const splitId = resolveSplitIdForTrainer(defenderTrainer);
+  const defenderTrainerIdx = Number.isInteger(trainerState.def) ? trainerState.def : -1;
+  const defenderTrainer = trainersFlat[defenderTrainerIdx] || null;
+  const splitId = resolveSplitIdForTrainer(defenderTrainer, defenderTrainerIdx);
   const defTrainerName = defenderTrainer?.trainerName || "";
   const defTrainerRoute = defenderTrainer?.route || "";
   const defTrainerPokIdx = getSelectedTrainerPokemonIndex("def");
@@ -4377,7 +4479,14 @@ function getCurrentKoContext() {
     toSlug(defTrainerRoute),
     String(defTrainerPokIdx)
   ].join("|");
-  return { key, splitId, attackerId: attacker.attackerId, attackerSpecies, attackerNickname: attacker.attackerNickname };
+  return {
+    key,
+    splitId,
+    attackerId: attacker.attackerId,
+    attackerSpecies,
+    attackerNickname: attacker.attackerNickname,
+    attackerFragsheetNickname: attacker.attackerFragsheetNickname
+  };
 }
 
 function getCurrentAttackerIdentity() {
@@ -4387,8 +4496,9 @@ function getCurrentAttackerIdentity() {
     ? importedPokemonSets[currentSelectedImportedIdx]
     : null;
   const attackerNickname = (selectedImported?.nickname || selectedImported?.species || attackerSpecies).trim() || attackerSpecies;
-  const attackerId = getFragsheetAttackerGroupKey(attackerSpecies, attackerNickname);
-  return { attackerId, attackerSpecies, attackerNickname };
+  const attackerFragsheetNickname = formatFragsheetNickname(attackerNickname, attackerSpecies);
+  const attackerId = getFragsheetAttackerGroupKey(attackerSpecies, attackerFragsheetNickname);
+  return { attackerId, attackerSpecies, attackerNickname, attackerFragsheetNickname };
 }
 
 function updateKoCountBadge() {
@@ -4400,7 +4510,7 @@ function updateKoCountBadge() {
     badge.textContent = "";
     return;
   }
-  const attackerGroupKey = getFragsheetAttackerGroupKey(attacker.attackerSpecies, attacker.attackerNickname);
+  const attackerGroupKey = getFragsheetAttackerGroupKey(attacker.attackerSpecies, attacker.attackerFragsheetNickname);
   const totalKos = koEntries.filter(entry => (
     getFragsheetAttackerGroupKey(entry.species, entry.nickname || entry.species) === attackerGroupKey
   )).length;
@@ -4514,24 +4624,22 @@ function renderFragsheetLeaderboard() {
       breakdown.className = "frag-ko-breakdown";
 
       const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
-      const labels = splitIds.map(split => String(split.shortLabel || split.label).toUpperCase());
-      const values = splitIds.map(split => String(row.splitCounts?.[split.id] || 0));
-
-      const unmatchedCount = row.splitCounts?.all || 0;
-      if (unmatchedCount > 0) {
-        labels.push("OTH");
-        values.push(String(unmatchedCount));
-      }
-
-      const splitLabels = document.createElement("div");
-      splitLabels.className = "frag-ko-split-labels";
-      splitLabels.textContent = labels.join("/");
-      breakdown.appendChild(splitLabels);
-
-      const splitValues = document.createElement("div");
-      splitValues.className = "frag-ko-split-values";
-      splitValues.textContent = values.join("/");
-      breakdown.appendChild(splitValues);
+      const splitGrid = document.createElement("div");
+      splitGrid.className = "frag-ko-split-grid";
+      splitIds.forEach(split => {
+        const splitBox = document.createElement("div");
+        splitBox.className = "frag-ko-split-box";
+        const splitLabel = document.createElement("span");
+        splitLabel.className = "frag-ko-split-label";
+        splitLabel.textContent = String(split.shortLabel || split.label).toUpperCase();
+        const splitValue = document.createElement("span");
+        splitValue.className = "frag-ko-split-value";
+        splitValue.textContent = String(row.splitCounts?.[split.id] || 0);
+        splitBox.appendChild(splitLabel);
+        splitBox.appendChild(splitValue);
+        splitGrid.appendChild(splitBox);
+      });
+      breakdown.appendChild(splitGrid);
 
       koCountCell.appendChild(breakdown);
     } else {
@@ -4584,10 +4692,17 @@ function toggleCurrentKo() {
       splitId: context.splitId,
       attackerId: context.attackerId,
       species: context.attackerSpecies,
-      nickname: context.attackerNickname,
+      nickname: context.attackerFragsheetNickname,
       createdAt: Date.now()
     });
   }
+  persistKoState();
+  updateKoButtonState();
+  renderFragsheetLeaderboard();
+}
+
+function resetFragsheetKos() {
+  koEntries = [];
   persistKoState();
   updateKoButtonState();
   renderFragsheetLeaderboard();
@@ -4627,6 +4742,7 @@ async function init() {
       }
     }
     trainersFlat = [...openingShauna, ...remainingTrainers];
+    buildFragsheetSplitIndexMap();
 
     populateTrainerOptions("atk");
     populateTrainerOptions("def");
