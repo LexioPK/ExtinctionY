@@ -1428,10 +1428,10 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
           <thead>
             <tr>
               <th>Rank</th>
-              <th>Pokemon Name</th>
-              <th>Pokemon Sprite</th>
-              <th>Nick Name</th>
-              <th>Amount of KO's</th>
+              <th>Pokémon Name</th>
+              <th>Pokémon Sprite</th>
+              <th>Nickname</th>
+              <th>KO Count</th>
               <th>KO%</th>
             </tr>
           </thead>
@@ -4328,7 +4328,7 @@ function getCurrentKoContext() {
   const defTrainerPokIdx = getSelectedTrainerPokemonIndex("def");
   const key = [
     splitId,
-    attackerId,
+    attacker.attackerId,
     toSlug(defenderSpecies),
     toSlug(defTrainerName),
     toSlug(defTrainerRoute),
@@ -4394,7 +4394,7 @@ function getFragsheetRows(splitId) {
       });
     }
   }
-  const totalKos = filtered.length || 1;
+  const totalKos = filtered.length;
   return Array.from(rowsByAttacker.values())
     .map(row => ({
       ...row,
