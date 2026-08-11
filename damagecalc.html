@@ -704,12 +704,71 @@ html.dark-mode .imported-poke-btn { --slot-bg: #22293a; }
 html.dark-mode .qm-move-btn { color: var(--qm-move-text-color, #10121a); }
 html.dark-mode .qm-move-btn.active-move { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25); }
 html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
+
+/* ── Page header with Fragsheet button ── */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1440px;
+  margin: 0 auto 4px;
+  padding: 0 2px;
+}
+.page-header h1 { margin: 8px 0 6px; }
+.page-header .subtitle { margin: 0 0 8px; }
+#fragsheet-toggle-btn {
+  margin-top: 10px;
+  padding: 7px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+#fragsheet-toggle-btn:hover { opacity: .85; }
+#fragsheet-toggle-btn.active {
+  background: var(--card);
+  color: var(--accent);
+}
+
+/* ── Fragsheet grid ── */
+.frag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 4px 2px 18px;
+}
+.frag-card { min-height: 180px; }
+.frag-card--elite4 { grid-column: 1 / -1; }
+.frag-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+.frag-placeholder { color: var(--muted); font-size: 0.88rem; margin: 0; }
+html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 </style>
 </head>
 <body>
-<h1>Damage Calc</h1>
-<p class="subtitle">Select a move button to calculate damage</p>
+<div class="page-header">
+  <div>
+    <h1>Damage Calc</h1>
+    <p class="subtitle">Select a move button to calculate damage</p>
+  </div>
+  <button id="fragsheet-toggle-btn" onclick="toggleFragsheet()">Fragsheet</button>
+</div>
 
+<div id="calc-section">
 <div class="calc-wrap">
 
   <!-- ══ Top: [You→Opp] [Result] [Opp→You] ══ -->
@@ -1164,6 +1223,77 @@ html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
     <div class="selection-help">Click to load. Right-click to add or remove a Pokémon from your party.</div>
   </div>
 </div><!-- end calc-wrap -->
+</div><!-- end calc-section -->
+
+<!-- ══ Fragsheet Section ══ -->
+<div id="fragsheet-section" hidden>
+  <div class="frag-grid">
+
+    <div class="card frag-card">
+      <h2 class="frag-title">Viola</h2>
+      <div class="frag-content">
+        <p class="frag-placeholder">Add notes for Viola's gym here.</p>
+      </div>
+    </div>
+
+    <div class="card frag-card">
+      <h2 class="frag-title">Grant</h2>
+      <div class="frag-content">
+        <p class="frag-placeholder">Add notes for Grant's gym here.</p>
+      </div>
+    </div>
+
+    <div class="card frag-card">
+      <h2 class="frag-title">Korrina</h2>
+      <div class="frag-content">
+        <p class="frag-placeholder">Add notes for Korrina's gym here.</p>
+      </div>
+    </div>
+
+    <div class="card frag-card">
+      <h2 class="frag-title">Ramos</h2>
+      <div class="frag-content">
+        <p class="frag-placeholder">Add notes for Ramos's gym here.</p>
+      </div>
+    </div>
+
+    <div class="card frag-card">
+      <h2 class="frag-title">Clemont</h2>
+      <div class="frag-content">
+        <p class="frag-placeholder">Add notes for Clemont's gym here.</p>
+      </div>
+    </div>
+
+    <div class="card frag-card">
+      <h2 class="frag-title">Valerie</h2>
+      <div class="frag-content">
+        <p class="frag-placeholder">Add notes for Valerie's gym here.</p>
+      </div>
+    </div>
+
+    <div class="card frag-card">
+      <h2 class="frag-title">Olympia</h2>
+      <div class="frag-content">
+        <p class="frag-placeholder">Add notes for Olympia's gym here.</p>
+      </div>
+    </div>
+
+    <div class="card frag-card">
+      <h2 class="frag-title">Wulfric</h2>
+      <div class="frag-content">
+        <p class="frag-placeholder">Add notes for Wulfric's gym here.</p>
+      </div>
+    </div>
+
+    <div class="card frag-card frag-card--elite4">
+      <h2 class="frag-title">Elite 4</h2>
+      <div class="frag-content">
+        <p class="frag-placeholder">Add notes for the Elite 4 here.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
 const TYPES = ["Normal","Fire","Water","Electric","Grass","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"];
@@ -4092,6 +4222,17 @@ async function init() {
 }
 
 init();
+
+function toggleFragsheet() {
+  const calcSection = document.getElementById("calc-section");
+  const fragSection = document.getElementById("fragsheet-section");
+  const btn = document.getElementById("fragsheet-toggle-btn");
+  const isShowing = !fragSection.hidden;
+  fragSection.hidden = isShowing;
+  calcSection.hidden = !isShowing;
+  btn.classList.toggle("active", !isShowing);
+  btn.textContent = isShowing ? "Fragsheet" : "Damage Calc";
+}
 </script>
 </body>
 </html>
