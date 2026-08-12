@@ -935,6 +935,16 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   width: 100%;
   box-sizing: border-box;
 }
+.frag-ko-split-header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.frag-ko-header-title {
+  display: block;
+  padding: 4px 6px 2px;
+  text-align: center;
+}
 .frag-ko-split-section {
   display: flex;
   flex-direction: column;
@@ -4595,6 +4605,11 @@ function renderFragsheetKoHeader() {
   koHeader.style.padding = "0";
 
   const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
+  const headerWrap = document.createElement("div");
+  headerWrap.className = "frag-ko-split-header";
+  const headerTitle = document.createElement("span");
+  headerTitle.className = "frag-ko-header-title";
+  headerTitle.textContent = "KO Count";
   const splitGrid = document.createElement("div");
   splitGrid.className = "frag-ko-split-board";
   splitGrid.style.setProperty("--split-count", String(splitIds.length));
@@ -4607,7 +4622,9 @@ function renderFragsheetKoHeader() {
     splitBox.appendChild(splitLabel);
     splitGrid.appendChild(splitBox);
   });
-  koHeader.appendChild(splitGrid);
+  headerWrap.appendChild(headerTitle);
+  headerWrap.appendChild(splitGrid);
+  koHeader.appendChild(headerWrap);
 }
 
 function renderFragsheetLeaderboard() {
