@@ -924,6 +924,26 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   object-fit: contain;
   image-rendering: pixelated;
 }
+.frag-rank-gold   { background: #FFD700; color: #3a2a00; font-weight: 700; border-radius: 6px; }
+.frag-rank-silver { background: #C0C0C0; color: #1a1a1a; font-weight: 700; border-radius: 6px; }
+.frag-rank-bronze { background: #CD7F32; color: #fff8f0; font-weight: 700; border-radius: 6px; }
+.frag-rank-purple { background: #7b2fbf; color: #fff; font-weight: 600; border-radius: 6px; }
+.frag-rank-blue   { background: #1a6ebf; color: #fff; font-weight: 600; border-radius: 6px; }
+.frag-rank-green  { background: #2a9e4e; color: #fff; font-weight: 600; border-radius: 6px; }
+.frag-koed-sprites {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+}
+.frag-koed-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
 #fragsheet-ko-count-header {
   min-width: 320px;
   padding: 0;
@@ -2246,6 +2266,10 @@ function formatFragsheetNickname(nickname, speciesName) {
   if (toSlug(cleanNickname) === toSlug(cleanSpecies)) return cleanSpecies;
   if (/\([^)]+\)\s*$/.test(cleanNickname)) return cleanNickname.replace(/\s+\(/g, "(");
   return `${cleanNickname}(${cleanSpecies})`;
+}
+function getFragsheetDisplayNickname(formattedNickname, speciesName) {
+  const s = String(formattedNickname || speciesName || "").trim();
+  return s.replace(/\([^)]+\)\s*$/, "").trim() || String(speciesName || "").trim();
 }
 function findTrainerIndexAfter(afterIndex, trainerName, routeKeys = []) {
   for (let idx = Math.max(-1, afterIndex) + 1; idx < trainersFlat.length; idx++) {
@@ -4453,6 +4477,7 @@ function loadKoState() {
         attackerId: String(entry.attackerId || ""),
         species: String(entry.species || ""),
         nickname: formatFragsheetNickname(String(entry.nickname || entry.species || ""), String(entry.species || "")),
+        defenderSpecies: String(entry.defenderSpecies || ""),
         createdAt: Number(entry.createdAt || Date.now())
       }))
       .filter(entry => entry.key && entry.attackerId && entry.species);
@@ -4510,7 +4535,8 @@ function getCurrentKoContext() {
     attackerId: attacker.attackerId,
     attackerSpecies,
     attackerNickname: attacker.attackerNickname,
-    attackerFragsheetNickname: attacker.attackerFragsheetNickname
+    attackerFragsheetNickname: attacker.attackerFragsheetNickname,
+    defenderSpecies
   };
 }
 
@@ -4566,6 +4592,11 @@ function getFragsheetRows(splitId) {
     if (existing) {
       existing.kos += 1;
       existing.splitCounts[entry.splitId] = (existing.splitCounts[entry.splitId] || 0) + 1;
+      if (entry.defenderSpecies) {
+        existing.koedSpecies.push(entry.defenderSpecies);
+        if (!existing.splitKoedSpecies[entry.splitId]) existing.splitKoedSpecies[entry.splitId] = [];
+        existing.splitKoedSpecies[entry.splitId].push(entry.defenderSpecies);
+      }
       if (entryPriority > existing.speciesPriority) {
         existing.species = entry.species;
         existing.nickname = entry.nickname || existing.nickname || entry.species;
@@ -4578,6 +4609,8 @@ function getFragsheetRows(splitId) {
         nickname: entry.nickname || entry.species,
         kos: 1,
         splitCounts: { [entry.splitId]: 1 },
+        koedSpecies: entry.defenderSpecies ? [entry.defenderSpecies] : [],
+        splitKoedSpecies: entry.defenderSpecies ? { [entry.splitId]: [entry.defenderSpecies] } : {},
         speciesPriority: entryPriority
       });
     }
@@ -4628,6 +4661,28 @@ function renderFragsheetKoHeader() {
   koHeader.appendChild(headerWrap);
 }
 
+function buildKoedSpritesRow(speciesList) {
+  const wrap = document.createElement("div");
+  wrap.className = "frag-koed-sprites";
+  speciesList.forEach(species => {
+    const img = document.createElement("img");
+    img.className = "frag-koed-icon";
+    const slug = toSlug(species);
+    const baseSlug = toSlug((pokedex[species]?.Name) || species);
+    img.src = `pokemon_sprites/${slug}.png`;
+    img.alt = species;
+    img.title = species;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.onerror = null;
+        img.src = `pokemon_sprites/${baseSlug}.png`;
+      }
+    };
+    wrap.appendChild(img);
+  });
+  return wrap;
+}
+
 function renderFragsheetLeaderboard() {
   const body = el("fragsheet-leaderboard-body");
   const title = el("fragsheet-title");
@@ -4648,9 +4703,16 @@ function renderFragsheetLeaderboard() {
   }
   rows.forEach((row, idx) => {
     const tr = document.createElement("tr");
+    const rank = idx + 1;
 
     const rankCell = document.createElement("td");
-    rankCell.textContent = String(idx + 1);
+    rankCell.textContent = String(rank);
+    if (rank === 1) rankCell.className = "frag-rank-gold";
+    else if (rank === 2) rankCell.className = "frag-rank-silver";
+    else if (rank === 3) rankCell.className = "frag-rank-bronze";
+    else if (rank <= 10) rankCell.className = "frag-rank-purple";
+    else if (rank <= 20) rankCell.className = "frag-rank-blue";
+    else if (rank <= 30) rankCell.className = "frag-rank-green";
     tr.appendChild(rankCell);
 
     const speciesCell = document.createElement("td");
@@ -4676,7 +4738,7 @@ function renderFragsheetLeaderboard() {
 
     const nicknameCell = document.createElement("td");
     nicknameCell.className = "frag-nickname-cell";
-    nicknameCell.textContent = row.nickname || row.species;
+    nicknameCell.textContent = getFragsheetDisplayNickname(row.nickname, row.species);
     tr.appendChild(nicknameCell);
 
     const koCountCell = document.createElement("td");
@@ -4688,16 +4750,26 @@ function renderFragsheetLeaderboard() {
       splitIds.forEach(split => {
         const splitBox = document.createElement("div");
         splitBox.className = "frag-ko-split-section";
-        const splitValue = document.createElement("span");
-        splitValue.className = "frag-ko-split-value";
-        splitValue.textContent = String(row.splitCounts?.[split.id] || 0);
-        splitBox.appendChild(splitValue);
+        const sprites = row.splitKoedSpecies?.[split.id] || [];
+        if (sprites.length > 0) {
+          const iconRow = buildKoedSpritesRow(sprites);
+          splitBox.appendChild(iconRow);
+        } else {
+          const splitValue = document.createElement("span");
+          splitValue.className = "frag-ko-split-value";
+          splitValue.textContent = String(row.splitCounts?.[split.id] || 0);
+          splitBox.appendChild(splitValue);
+        }
         splitGrid.appendChild(splitBox);
       });
-
       koCountCell.appendChild(splitGrid);
     } else {
-      koCountCell.textContent = String(row.kos);
+      const sprites = row.koedSpecies || [];
+      if (sprites.length > 0) {
+        koCountCell.appendChild(buildKoedSpritesRow(sprites));
+      } else {
+        koCountCell.textContent = String(row.kos);
+      }
     }
     tr.appendChild(koCountCell);
 
@@ -4747,6 +4819,7 @@ function toggleCurrentKo() {
       attackerId: context.attackerId,
       species: context.attackerSpecies,
       nickname: context.attackerFragsheetNickname,
+      defenderSpecies: context.defenderSpecies || "",
       createdAt: Date.now()
     });
   }
