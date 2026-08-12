@@ -238,11 +238,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
   line-height: 1.2;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0,0,0,.2);
-  transition: opacity 0.15s ease, filter 0.15s ease;
-}
-.ko-count-badge.already-ko {
-  opacity: 0.72;
-  filter: grayscale(0.45);
 }
 .sprite-action-buttons {
   display: flex;
@@ -4566,18 +4561,14 @@ function updateKoCountBadge() {
   if (!attacker) {
     badge.hidden = true;
     badge.textContent = "";
-    badge.classList.remove("already-ko");
     return;
   }
   const attackerGroupKey = getFragsheetAttackerGroupKey(attacker.attackerSpecies, attacker.attackerFragsheetNickname);
   const totalKos = koEntries.filter(entry => (
     getFragsheetAttackerGroupKey(entry.species, entry.nickname || entry.species) === attackerGroupKey
   )).length;
-  const context = getCurrentKoContext();
-  const alreadyKoedCurrentTarget = !!context && koEntries.some(entry => entry.key === context.key);
   badge.hidden = totalKos === 0;
   badge.textContent = totalKos > 0 ? String(totalKos) : "";
-  badge.classList.toggle("already-ko", alreadyKoedCurrentTarget);
 }
 
 function updateKoButtonState() {
