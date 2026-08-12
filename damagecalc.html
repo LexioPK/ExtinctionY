@@ -238,6 +238,11 @@ h1 { text-align: center; margin: 8px 0 6px; }
   line-height: 1.2;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  transition: opacity 0.15s ease, filter 0.15s ease;
+}
+.ko-count-badge.already-ko {
+  opacity: 0.72;
+  filter: grayscale(0.45);
 }
 .sprite-action-buttons {
   display: flex;
@@ -249,9 +254,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
   align-self: auto;
   margin-top: 0;
   padding: 5px 7px;
-  border: 1px solid #c62828;
+  border: 1px solid var(--accent);
   border-radius: 6px;
-  background: rgba(198, 40, 40, 0.1);
+  background: rgba(36, 92, 172, 0.1);
   color: inherit;
   cursor: pointer;
   font-size: 0.72rem;
@@ -261,13 +266,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
   flex-shrink: 0;
 }
 .ko-poke-btn:hover {
-  background: rgba(198, 40, 40, 0.2);
-  border-color: #b71c1c;
+  background: rgba(36, 92, 172, 0.18);
+  border-color: #1a4f94;
 }
 .ko-poke-btn.active {
-  background: rgba(198, 40, 40, 0.16);
-  color: inherit;
-  border-color: #b71c1c;
+  background: rgba(132, 140, 154, 0.18);
+  color: var(--muted);
+  border-color: rgba(132, 140, 154, 0.78);
 }
 .save-poke-btn {
   align-self: auto;
@@ -924,23 +929,25 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   object-fit: contain;
   image-rendering: pixelated;
 }
-.frag-rank-gold   { background: #FFD700; color: #3a2a00; font-weight: 700; border-radius: 6px; }
-.frag-rank-silver { background: #C0C0C0; color: #1a1a1a; font-weight: 700; border-radius: 6px; }
-.frag-rank-bronze { background: #CD7F32; color: #fff8f0; font-weight: 700; border-radius: 6px; }
-.frag-rank-purple { background: #7b2fbf; color: #fff; font-weight: 600; border-radius: 6px; }
-.frag-rank-blue   { background: #1a6ebf; color: #fff; font-weight: 600; border-radius: 6px; }
-.frag-rank-green  { background: #2a9e4e; color: #fff; font-weight: 600; border-radius: 6px; }
+.frag-rank-gold   { background: #e0b600; color: #2d2200; font-weight: 700; border-radius: 6px; }
+.frag-rank-silver { background: #aeb6c3; color: #131820; font-weight: 700; border-radius: 6px; }
+.frag-rank-bronze { background: #b86724; color: #fff8f0; font-weight: 700; border-radius: 6px; }
+.frag-rank-purple { background: #6820b4; color: #fff; font-weight: 600; border-radius: 6px; }
+.frag-rank-blue   { background: #0f5fae; color: #fff; font-weight: 600; border-radius: 6px; }
+.frag-rank-green  { background: #238441; color: #fff; font-weight: 600; border-radius: 6px; }
 .frag-koed-sprites {
   display: flex;
   flex-wrap: wrap;
   gap: 2px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 2px;
+  width: 100%;
+  box-sizing: border-box;
 }
 .frag-koed-icon {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 30px;
   object-fit: contain;
   image-rendering: pixelated;
 }
@@ -4559,14 +4566,18 @@ function updateKoCountBadge() {
   if (!attacker) {
     badge.hidden = true;
     badge.textContent = "";
+    badge.classList.remove("already-ko");
     return;
   }
   const attackerGroupKey = getFragsheetAttackerGroupKey(attacker.attackerSpecies, attacker.attackerFragsheetNickname);
   const totalKos = koEntries.filter(entry => (
     getFragsheetAttackerGroupKey(entry.species, entry.nickname || entry.species) === attackerGroupKey
   )).length;
+  const context = getCurrentKoContext();
+  const alreadyKoedCurrentTarget = !!context && koEntries.some(entry => entry.key === context.key);
   badge.hidden = totalKos === 0;
   badge.textContent = totalKos > 0 ? String(totalKos) : "";
+  badge.classList.toggle("already-ko", alreadyKoedCurrentTarget);
 }
 
 function updateKoButtonState() {
@@ -4669,13 +4680,13 @@ function buildKoedSpritesRow(speciesList) {
     img.className = "frag-koed-icon";
     const slug = toSlug(species);
     const baseSlug = toSlug((pokedex[species]?.Name) || species);
-    img.src = `pokemon_sprites/${slug}.png`;
+    img.src = `image/icons/${slug}.png`;
     img.alt = species;
     img.title = species;
     img.onerror = () => {
       if (img.src.includes(slug) && slug !== baseSlug) {
         img.onerror = null;
-        img.src = `pokemon_sprites/${baseSlug}.png`;
+        img.src = `image/icons/${baseSlug}.png`;
       }
     };
     wrap.appendChild(img);
@@ -4750,16 +4761,10 @@ function renderFragsheetLeaderboard() {
       splitIds.forEach(split => {
         const splitBox = document.createElement("div");
         splitBox.className = "frag-ko-split-section";
-        const sprites = row.splitKoedSpecies?.[split.id] || [];
-        if (sprites.length > 0) {
-          const iconRow = buildKoedSpritesRow(sprites);
-          splitBox.appendChild(iconRow);
-        } else {
-          const splitValue = document.createElement("span");
-          splitValue.className = "frag-ko-split-value";
-          splitValue.textContent = String(row.splitCounts?.[split.id] || 0);
-          splitBox.appendChild(splitValue);
-        }
+        const splitValue = document.createElement("span");
+        splitValue.className = "frag-ko-split-value";
+        splitValue.textContent = String(row.splitCounts?.[split.id] || 0);
+        splitBox.appendChild(splitValue);
         splitGrid.appendChild(splitBox);
       });
       koCountCell.appendChild(splitGrid);
