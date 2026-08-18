@@ -168,18 +168,12 @@ h1 { text-align: center; margin: 8px 0 6px; }
   padding: 5px 7px; font: inherit; background: #f0f0f0; color: inherit;
   display: inline-block; max-width: 100%;
 }
-.activatable-select-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
 .activatable-check {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  position: relative;
+  cursor: help;
   min-width: 18px;
   min-height: 32px;
 }
@@ -187,39 +181,7 @@ h1 { text-align: center; margin: 8px 0 6px; }
   width: 13px;
   height: 13px;
   margin: 0;
-}
-.activatable-select-row > select,
-.activatable-select-row > .item-select-wrap {
-  flex: 1;
-  min-width: 0;
-}
-.activatable-desc {
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 6px);
-  transform: translateX(-50%);
-  min-width: max-content;
-  max-width: 180px;
-  padding: 5px 7px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--card);
-  box-shadow: 0 3px 10px rgba(0,0,0,.12);
-  font-size: 0.68rem;
-  color: var(--muted);
-  line-height: 1.3;
-  text-align: center;
-  white-space: normal;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  z-index: 5;
-  transition: opacity 0.12s ease;
-}
-.activatable-check:hover .activatable-desc,
-.activatable-check:focus-within .activatable-desc {
-  opacity: 1;
-  visibility: visible;
+  cursor: pointer;
 }
 .item-select-wrap {
   display: flex;
@@ -244,10 +206,10 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .info-grid {
   display: grid;
   grid-template-areas:
-    "species  species  species  sprite"
-    "type1    toggle   ability  item  "
-    "type2    .        nature   level ";
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
+    "species  species  species  sprite  sprite"
+    "type1    toggle   ability  itoggle item  "
+    "type2    .        nature   .       level ";
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
   gap: 6px;
   margin-bottom: 8px;
 }
@@ -256,11 +218,56 @@ h1 { text-align: center; margin: 8px 0 6px; }
   display: flex; align-items: center; justify-content: center; padding-top: 4px;
   gap: 8px;
 }
+.poke-sprite-stack {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ko-count-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  min-width: 22px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
 .sprite-action-buttons {
   display: flex;
   flex-direction: column;
   gap: 4px;
   align-items: stretch;
+}
+.ko-poke-btn {
+  align-self: auto;
+  margin-top: 0;
+  padding: 5px 7px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: rgba(36, 92, 172, 0.1);
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.1;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.ko-poke-btn:hover {
+  background: rgba(36, 92, 172, 0.18);
+  border-color: #1a4f94;
+}
+.ko-poke-btn.active {
+  background: rgba(132, 140, 154, 0.18);
+  color: var(--muted);
+  border-color: rgba(132, 140, 154, 0.78);
 }
 .save-poke-btn {
   align-self: auto;
@@ -306,7 +313,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .ia-species { grid-area: species; }
 .ia-type1   { grid-area: type1; }
 .ia-type2   { grid-area: type2; }
-.ia-toggle  { grid-area: toggle; display: flex; align-items: center; justify-content: center; padding-top: 20px; }
+.ia-toggle      { grid-area: toggle;  display: flex; align-items: center; justify-content: center; padding-top: 20px; }
+.ia-item-toggle { grid-area: itoggle; display: flex; align-items: center; justify-content: center; padding-top: 20px; }
+[hidden] { display: none !important; }
 .ia-ability { grid-area: ability; }
 .ia-item    { grid-area: item; }
 .ia-nature  { grid-area: nature; }
@@ -622,6 +631,9 @@ h1 { text-align: center; margin: 8px 0 6px; }
 .imported-section {
   margin-top: 10px;
 }
+#atk-party-section {
+  margin-top: 0;
+}
 .imported-poke-list {
   display: flex;
   flex-wrap: wrap;
@@ -737,13 +749,293 @@ html.dark-mode .imported-poke-btn { --slot-bg: #22293a; }
 html.dark-mode .qm-move-btn { color: var(--qm-move-text-color, #10121a); }
 html.dark-mode .qm-move-btn.active-move { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25); }
 html.dark-mode .move-row.best-move select { background: rgba(138,180,255,.08); }
-html.dark-mode .activatable-desc { background: #22293a; }
+
+/* ── Page header with Fragsheet button ── */
+.page-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  max-width: 1440px;
+  margin: 0 auto 4px;
+  padding: 0 2px;
+}
+.page-header-main {
+  grid-column: 2;
+  text-align: center;
+}
+.page-header-actions-left {
+  grid-column: 1;
+  justify-self: start;
+  margin-top: 10px;
+}
+.page-header h1 { margin: 8px 0 6px; }
+.page-header .subtitle { margin: 0 0 8px; }
+#fragsheet-toggle-btn {
+  grid-column: 3;
+  justify-self: end;
+  margin-top: 10px;
+  padding: 7px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+#fragsheet-toggle-btn:hover { opacity: .85; }
+#fragsheet-toggle-btn.active {
+  background: var(--card);
+  color: var(--accent);
+}
+#fragsheet-reset-btn {
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid #bf3e3e;
+  background: #bf3e3e;
+  color: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+#fragsheet-reset-btn:hover { opacity: .85; }
+
+/* ── Fragsheet grid ── */
+.frag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 4px 2px 18px;
+}
+.frag-card { min-height: 180px; }
+.frag-card--elite4 { grid-column: 1 / -1; }
+.frag-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+.frag-placeholder { color: var(--muted); font-size: 0.88rem; margin: 0; }
+html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
+.fragsheet-wrap {
+  max-width: 1440px;
+  margin: 0 auto 18px;
+  padding: 4px 2px 0;
+}
+.frag-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.frag-split-btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 0.94rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.frag-split-btn.active {
+  border-color: var(--accent);
+  background: rgba(36,92,172,.12);
+  color: var(--accent);
+  font-weight: 600;
+}
+.frag-leaderboard-wrap {
+  overflow-x: auto;
+}
+.frag-leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+.frag-leaderboard th,
+.frag-leaderboard td {
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  font-size: 0.82rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.frag-leaderboard th {
+  background: var(--result-bg);
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.frag-leaderboard th:nth-child(1),
+.frag-leaderboard td:nth-child(1) {
+  width: 46px;
+}
+.frag-leaderboard th:nth-child(2),
+.frag-leaderboard td:nth-child(2) {
+  width: 108px;
+}
+.frag-leaderboard th:nth-child(3),
+.frag-leaderboard td:nth-child(3) {
+  width: 86px;
+}
+.frag-leaderboard th:nth-child(4),
+.frag-leaderboard td:nth-child(4) {
+  width: 108px;
+}
+.frag-leaderboard th:nth-child(5),
+.frag-leaderboard td:nth-child(5) {
+  width: 280px;
+}
+.frag-leaderboard th:nth-child(6),
+.frag-leaderboard td:nth-child(6) {
+  width: 70px;
+}
+.frag-leaderboard td:nth-child(1),
+.frag-leaderboard td:nth-child(5),
+.frag-leaderboard td:nth-child(6) {
+  text-align: center;
+}
+.frag-leaderboard td:nth-child(3) {
+  text-align: center;
+}
+.frag-leaderboard td:nth-child(5):has(.frag-ko-split-board) {
+  padding: 0;
+}
+.frag-name-cell,
+.frag-nickname-cell {
+  font-size: 0.76rem;
+}
+.frag-ko-sprite {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.frag-rank-gold   { background: #e0b600; color: #2d2200; font-weight: 700; border-radius: 6px; }
+.frag-rank-silver { background: #aeb6c3; color: #131820; font-weight: 700; border-radius: 6px; }
+.frag-rank-bronze { background: #b86724; color: #fff8f0; font-weight: 700; border-radius: 6px; }
+.frag-rank-purple { background: #6820b4; color: #fff; font-weight: 600; border-radius: 6px; }
+.frag-rank-blue   { background: #0f5fae; color: #fff; font-weight: 600; border-radius: 6px; }
+.frag-rank-green  { background: #238441; color: #fff; font-weight: 600; border-radius: 6px; }
+.frag-koed-sprites {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.frag-koed-icon {
+  width: 40px;
+  height: 30px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+#fragsheet-ko-count-header {
+  min-width: 320px;
+  padding: 0;
+  vertical-align: middle;
+}
+.frag-ko-split-board {
+  display: grid;
+  grid-template-columns: repeat(var(--split-count, 1), minmax(0, 1fr));
+  width: 100%;
+  box-sizing: border-box;
+}
+.frag-ko-split-header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.frag-ko-header-title {
+  display: block;
+  padding: 4px 6px 2px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.frag-ko-split-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 6px;
+  border-right: 1px solid var(--border);
+  font-family: var(--font-display);
+  line-height: 1.05;
+}
+.frag-ko-split-section:last-child {
+  border-right: none;
+}
+.frag-ko-split-label {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: none;
+}
+.frag-ko-split-value {
+  display: block;
+  width: 100%;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  text-align: center;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+@media (max-width: 780px) {
+  .page-header {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .page-header-actions-left,
+  .page-header-main,
+  #fragsheet-toggle-btn {
+    grid-column: 1;
+  }
+  .page-header-actions-left {
+    justify-self: center;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+  #fragsheet-toggle-btn {
+    justify-self: center;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+}
 </style>
 </head>
 <body>
-<h1>Damage Calc</h1>
-<p class="subtitle">Select a move button to calculate damage</p>
+<div class="page-header">
+  <div class="page-header-actions-left">
+  <button id="fragsheet-reset-btn" type="button" onclick="resetFragsheetKos()" title="Reset all Fragsheet KOs" hidden>Reset Fragsheet</button>
+  </div>
+  <div class="page-header-main">
+    <h1 id="page-main-title">Damage Calc</h1>
+    <p id="page-subtitle" class="subtitle">Select a move button to calculate damage</p>
+  </div>
+  <button id="fragsheet-toggle-btn" onclick="toggleFragsheet()">Fragsheet</button>
+</div>
 
+<div id="calc-section">
 <div class="calc-wrap">
 
   <!-- ══ Top: [You→Opp] [Result] [Opp→You] ══ -->
@@ -792,8 +1084,12 @@ html.dark-mode .activatable-desc { background: #22293a; }
           </div>
         </div>
         <div class="ia-sprite">
-          <img id="atk-sprite" class="poke-sprite" src="" alt="">
+          <div class="poke-sprite-stack">
+            <img id="atk-sprite" class="poke-sprite" src="" alt="">
+            <span id="atk-ko-count-badge" class="ko-count-badge" hidden></span>
+          </div>
           <div class="sprite-action-buttons">
+            <button id="atk-ko-btn" class="ko-poke-btn" type="button" onclick="toggleCurrentKo()" title="Mark or unmark the current opponent Pokémon as a KO">KO</button>
             <button id="atk-save-btn" class="save-poke-btn" type="button" onclick="saveCurrentPokemon()" title="Save / update imported Pokémon">💾</button>
             <button id="atk-delete-btn" class="delete-poke-btn" type="button" onclick="deleteCurrentImportedPokemon()" title="Delete selected imported Pokémon" hidden>🗑️</button>
           </div>
@@ -802,27 +1098,25 @@ html.dark-mode .activatable-desc { background: #22293a; }
           <label for="atk-type1">Type 1</label>
           <select id="atk-type1"></select>
         </div>
-        <div class="ia-toggle">
-          <label id="atk-ability-toggle-wrap" class="activatable-check" hidden>
+        <div class="ia-toggle" hidden>
+          <label id="atk-ability-toggle-wrap" class="activatable-check">
             <input id="atk-ability-toggle" type="checkbox">
-            <span id="atk-ability-toggle-text" class="activatable-desc" hidden></span>
           </label>
         </div>
         <div class="field ia-ability">
           <label for="atk-ability">Ability</label>
           <select id="atk-ability"></select>
         </div>
+        <div class="ia-item-toggle" hidden>
+          <label id="atk-item-toggle-wrap" class="activatable-check">
+            <input id="atk-item-toggle" type="checkbox">
+          </label>
+        </div>
         <div class="field ia-item">
           <label for="atk-item">Item</label>
-          <div class="activatable-select-row">
-            <label id="atk-item-toggle-wrap" class="activatable-check" hidden>
-              <input id="atk-item-toggle" type="checkbox">
-              <span id="atk-item-toggle-text" class="activatable-desc" hidden></span>
-            </label>
-            <div class="item-select-wrap">
-              <select id="atk-item"></select>
-              <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-            </div>
+          <div class="item-select-wrap">
+            <select id="atk-item"></select>
+            <img id="atk-item-sprite" class="item-select-sprite" src="" alt="" hidden>
           </div>
         </div>
         <div class="field ia-type2">
@@ -1000,6 +1294,13 @@ html.dark-mode .activatable-desc { background: #22293a; }
           </div>
         </div>
         <div class="field-toggle-row">
+          <span class="ftlabel">Tailwind</span>
+          <div class="side-toggle">
+            <button class="side-btn" data-field-group="tailwind" data-side="you">You</button>
+            <button class="side-btn" data-field-group="tailwind" data-side="opp">Opp.</button>
+          </div>
+        </div>
+        <div class="field-toggle-row">
           <span class="ftlabel">Spikes (You)</span>
           <div class="toggle-group" id="spikes-you-group">
             <button class="toggle-btn active" data-value="0">0</button>
@@ -1074,27 +1375,25 @@ html.dark-mode .activatable-desc { background: #22293a; }
           <label for="def-type1">Type 1</label>
           <select id="def-type1"></select>
         </div>
-        <div class="ia-toggle">
-          <label id="def-ability-toggle-wrap" class="activatable-check" hidden>
+        <div class="ia-toggle" hidden>
+          <label id="def-ability-toggle-wrap" class="activatable-check">
             <input id="def-ability-toggle" type="checkbox">
-            <span id="def-ability-toggle-text" class="activatable-desc" hidden></span>
           </label>
         </div>
         <div class="field ia-ability">
           <label for="def-ability">Ability</label>
           <select id="def-ability"></select>
         </div>
+        <div class="ia-item-toggle" hidden>
+          <label id="def-item-toggle-wrap" class="activatable-check">
+            <input id="def-item-toggle" type="checkbox">
+          </label>
+        </div>
         <div class="field ia-item">
           <label for="def-item">Item</label>
-          <div class="activatable-select-row">
-            <label id="def-item-toggle-wrap" class="activatable-check" hidden>
-              <input id="def-item-toggle" type="checkbox">
-              <span id="def-item-toggle-text" class="activatable-desc" hidden></span>
-            </label>
-            <div class="item-select-wrap">
-              <select id="def-item"></select>
-              <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
-            </div>
+          <div class="item-select-wrap">
+            <select id="def-item"></select>
+            <img id="def-item-sprite" class="item-select-sprite" src="" alt="" hidden>
           </div>
         </div>
         <div class="field ia-type2">
@@ -1195,6 +1494,36 @@ html.dark-mode .activatable-desc { background: #22293a; }
     <div class="selection-help">Click to load. Right-click to add or remove a Pokémon from your party.</div>
   </div>
 </div><!-- end calc-wrap -->
+</div><!-- end calc-section -->
+
+<!-- ══ Fragsheet Section ══ -->
+<div id="fragsheet-section" hidden>
+  <div class="fragsheet-wrap">
+    <div class="card">
+      <h2 class="frag-title" id="fragsheet-title">Fragsheet — All Splits</h2>
+      <div class="frag-controls" id="fragsheet-split-tabs"></div>
+      <div class="frag-leaderboard-wrap">
+        <table class="frag-leaderboard">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Pokémon Name</th>
+              <th>Pokémon Sprite</th>
+              <th>Nickname</th>
+              <th id="fragsheet-ko-count-header">KO Count</th>
+              <th>KO%</th>
+            </tr>
+          </thead>
+          <tbody id="fragsheet-leaderboard-body">
+            <tr>
+              <td colspan="6" class="frag-placeholder">No KOs recorded yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 const TYPES = ["Normal","Fire","Water","Electric","Grass","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"];
@@ -1357,12 +1686,39 @@ let lastCalcState = null;
 let importedPokemonSets = [];
 let currentSelectedImportedIdx = -1;
 let importedPartyIds = [];
+let koEntries = [];
+let fragsheetSplitByTrainerIndex = [];
+let activeFragsheetSplitId = "all";
 const trainerState = { atk: 0, def: 1 };
 const TRAINER_STATE_STORAGE_KEY = "damageCalcTrainerState";
+const KO_ENTRIES_STORAGE_KEY = "damageCalcKoEntries";
 const transientAbilityState = {
   atk: { traceAbility: null, transformImportedId: null },
   def: { traceAbility: null, transformImportedId: null }
 };
+const FRAGSHEET_SPLITS = [
+  { id: "all", label: "All Splits" },
+  { id: "viola", label: "Viola", shortLabel: "Vi" },
+  { id: "grant", label: "Grant", shortLabel: "G" },
+  { id: "korrina", label: "Korrina", shortLabel: "K" },
+  { id: "ramos", label: "Ramos", shortLabel: "R" },
+  { id: "clemont", label: "Clemont", shortLabel: "C" },
+  { id: "valerie", label: "Valerie", shortLabel: "Va" },
+  { id: "olympia", label: "Olympia", shortLabel: "O" },
+  { id: "wulfric", label: "Wulfric", shortLabel: "W" },
+  { id: "elite4", label: "Elite 4", shortLabel: "E4" }
+];
+const FRAGSHEET_SPLIT_RANGE_ENDS = [
+  { id: "viola", trainerName: "Viola", routeKeys: ["santalunegym"] },
+  { id: "grant", trainerName: "Grant", routeKeys: ["cyllagegym"] },
+  { id: "korrina", trainerName: "Korrina", routeKeys: ["shalourgym"] },
+  { id: "ramos", trainerName: "Ramos", routeKeys: ["coumarinegym"] },
+  { id: "clemont", trainerName: "Clemont", routeKeys: ["lumiosegym"] },
+  { id: "valerie", trainerName: "Valerie", routeKeys: ["laverregym"] },
+  { id: "olympia", trainerName: "Olympia", routeKeys: ["anistargym"] },
+  { id: "wulfric", trainerName: "Wulfric", routeKeys: ["snowbellegym"] },
+  { id: "elite4", trainerName: "AZ", routeKeys: ["lumioseparade", "lumiosecityparade"] }
+];
 
 // Ability names that were replaced in Extinction Y (old Showdown name → new game name)
 const ABILITY_REPLACEMENTS = {
@@ -1371,8 +1727,6 @@ const ABILITY_REPLACEMENTS = {
   "Grass Pelt":   "Biodiverse",
   "Damp":         "Slush Rush",
   "Anticipation": "Mending",
-  "Sand Veil":    "Dune Guard",
-  "Snow Cloak":   "Glacial Guard",
   "Marvel Scale": "Perseverance",
   "Run Away":     "Overload",
   "Tangled Feet": "Cyclone",
@@ -1583,7 +1937,10 @@ function getTypeModifier(moveName, moveType, defender) {
 }
 function getMoveStabBase(moveName, moveType, attacker) {
   const stabTypes = DUAL_TYPE_MOVES[moveName] || [moveType];
-  return stabTypes.some(type => attacker.type1 === type || attacker.type2 === type) ? 1.5 : 1;
+  const hasTypeStab = stabTypes.some(type => attacker.type1 === type || attacker.type2 === type);
+  if (hasTypeStab) return 1.5;
+  if (attacker.ability === "Protean") return 1.5;
+  return 1;
 }
 function getDisplayMoveType(moveName, moveType) {
   return DUAL_TYPE_MOVES[moveName] ? DUAL_TYPE_MOVES[moveName].join("/") : moveType;
@@ -1626,6 +1983,7 @@ function normalizeImportedSet(set) {
   const normalized = {
     id: set.id || generateImportedSetId(),
     species: set.species || "",
+    nickname: (set.nickname || "").trim() || (set.species || ""),
     item: set.item || "None",
     ability: set.ability || "",
     level: clamp(num(set.level, 50), 1, 100),
@@ -1674,7 +2032,8 @@ function syncImportedPartyIds() {
 }
 
 function importedDisplayName(imported, idx) {
-  return `Imported ${idx + 1}: ${imported.species}`;
+  const nickname = (imported.nickname || "").trim();
+  return `Imported ${idx + 1}: ${nickname || imported.species}`;
 }
 function getOpposingPrefix(prefix) {
   return prefix === "atk" ? "def" : "atk";
@@ -1745,14 +2104,13 @@ function refreshAbilityToggleUI(prefix) {
   const ability = getSelectedAbility(prefix);
   const wrap = el(`${prefix}-ability-toggle-wrap`);
   const toggle = el(`${prefix}-ability-toggle`);
-  const desc = el(`${prefix}-ability-toggle-text`);
-  if (!wrap || !toggle || !desc) return;
+  if (!wrap || !toggle) return;
+  const container = wrap.parentElement;
   const isActivatable = !!ACTIVATABLE_ABILITIES[ability];
-  wrap.hidden = !isActivatable;
-  desc.hidden = !isActivatable;
+  if (container) container.hidden = !isActivatable;
   if (!isActivatable) {
     toggle.checked = false;
-    desc.textContent = "";
+    wrap.title = "";
     resetTransientAbilityState(prefix, { clearTransformId: true });
     return;
   }
@@ -1760,30 +2118,29 @@ function refreshAbilityToggleUI(prefix) {
   if (ability === "Trace" && toggle.checked && transientAbilityState[prefix].traceAbility) {
     text += ` (active: ${transientAbilityState[prefix].traceAbility})`;
   }
-  desc.textContent = text;
+  wrap.title = text;
 }
 function refreshItemToggleUI(prefix) {
   const item = getSelectedItem(prefix);
   const wrap = el(`${prefix}-item-toggle-wrap`);
   const toggle = el(`${prefix}-item-toggle`);
-  const desc = el(`${prefix}-item-toggle-text`);
-  if (!wrap || !toggle || !desc) return;
+  if (!wrap || !toggle) return;
+  const container = wrap.parentElement;
   const isActivatable = isActivatableItem(item);
-  wrap.hidden = !isActivatable;
-  desc.hidden = !isActivatable;
+  if (container) container.hidden = !isActivatable;
   if (!isActivatable) {
     toggle.checked = false;
     toggle.dataset.item = "";
-    desc.textContent = "";
+    wrap.title = "";
     return;
   }
   if (toggle.dataset.item !== item) {
     toggle.checked = true;
     toggle.dataset.item = item;
   }
-  if (item === "Air Balloon") desc.textContent = "Air Balloon remains active while checked";
-  else if (TYPE_GEM_ITEMS[item]) desc.textContent = `${item} power boost is active while checked`;
-  else desc.textContent = `${item} damage reduction is active while checked`;
+  if (item === "Air Balloon") wrap.title = "Air Balloon remains active while checked";
+  else if (TYPE_GEM_ITEMS[item]) wrap.title = `${item} power boost is active while checked`;
+  else wrap.title = `${item} damage reduction is active while checked`;
 }
 function refreshActivationControls(prefix) {
   refreshAbilityToggleUI(prefix);
@@ -1854,6 +2211,110 @@ function speciesMatches(set, speciesName) {
 function canSpeciesEvolve(speciesName) {
   const evoEntry = evolutions[speciesName];
   return !!(evoEntry && evoEntry.EvolvesInto && Object.keys(evoEntry.EvolvesInto).length);
+}
+function getEvolutionBaseSpecies(speciesName) {
+  const raw = String(speciesName || "").trim();
+  if (!raw) return "";
+  if (evolutions[raw]) return raw;
+  let probe = raw;
+  while (probe.includes("-")) {
+    probe = probe.slice(0, probe.lastIndexOf("-"));
+    if (evolutions[probe]) return probe;
+  }
+  return raw;
+}
+function getEvolutionLineRoot(speciesName) {
+  let current = getEvolutionBaseSpecies(speciesName);
+  const visited = new Set();
+  while (current && evolutions[current]?.EvolvesFrom && !visited.has(current)) {
+    visited.add(current);
+    current = evolutions[current].EvolvesFrom;
+  }
+  return current || getEvolutionBaseSpecies(speciesName);
+}
+function getEvolutionStageDepth(speciesName) {
+  let current = getEvolutionBaseSpecies(speciesName);
+  let depth = 0;
+  const visited = new Set();
+  while (current && evolutions[current]?.EvolvesFrom && !visited.has(current)) {
+    visited.add(current);
+    current = evolutions[current].EvolvesFrom;
+    depth += 1;
+  }
+  return depth;
+}
+function getFragsheetNicknameKey(nickname, speciesName) {
+  const resolved = formatFragsheetNickname(nickname, speciesName);
+  return toSlug(resolved) || toSlug(speciesName) || "unknown";
+}
+function getFragsheetAttackerGroupKey(speciesName, nickname) {
+  const root = getEvolutionLineRoot(speciesName) || String(speciesName || "").trim();
+  return `${toSlug(root)}|${getFragsheetNicknameKey(nickname, speciesName)}`;
+}
+function toSplitRouteKey(routeName) {
+  return String(routeName || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
+function formatFragsheetNickname(nickname, speciesName) {
+  const cleanNickname = String(nickname || "").trim();
+  const cleanSpecies = String(speciesName || "").trim();
+  if (!cleanNickname) return cleanSpecies;
+  if (!cleanSpecies) return cleanNickname;
+  if (toSlug(cleanNickname) === toSlug(cleanSpecies)) return cleanSpecies;
+  if (/\([^)]+\)\s*$/.test(cleanNickname)) return cleanNickname.replace(/\s+\(/g, "(");
+  return `${cleanNickname}(${cleanSpecies})`;
+}
+function getFragsheetDisplayNickname(formattedNickname, speciesName) {
+  const s = String(formattedNickname || speciesName || "").trim();
+  return s.replace(/\([^)]+\)\s*$/, "").trim() || String(speciesName || "").trim();
+}
+function findTrainerIndexAfter(afterIndex, trainerName, routeKeys = []) {
+  for (let idx = Math.max(-1, afterIndex) + 1; idx < trainersFlat.length; idx++) {
+    const trainer = trainersFlat[idx];
+    if (!trainer || trainer.trainerName !== trainerName) continue;
+    if (!routeKeys.length) return idx;
+    const routeKey = toSplitRouteKey(trainer.route);
+    if (routeKeys.includes(routeKey)) return idx;
+  }
+  return -1;
+}
+function buildFragsheetSplitIndexMap() {
+  const firstSplitId = FRAGSHEET_SPLIT_RANGE_ENDS[0]?.id || "viola";
+  const lastSplitId = FRAGSHEET_SPLIT_RANGE_ENDS[FRAGSHEET_SPLIT_RANGE_ENDS.length - 1]?.id || "elite4";
+  fragsheetSplitByTrainerIndex = new Array(trainersFlat.length).fill(firstSplitId);
+  if (!trainersFlat.length) return;
+  const startIdx = findTrainerIndexAfter(-1, "Shauna", ["aquacordetown"]);
+  const clampedStartIdx = startIdx >= 0 ? startIdx : 0;
+  for (let i = 0; i < clampedStartIdx; i++) fragsheetSplitByTrainerIndex[i] = firstSplitId;
+
+  let previousEndIdx = clampedStartIdx - 1;
+  for (const splitRange of FRAGSHEET_SPLIT_RANGE_ENDS) {
+    let endIdx = findTrainerIndexAfter(previousEndIdx, splitRange.trainerName, splitRange.routeKeys || []);
+    if (endIdx < 0) endIdx = trainersFlat.length - 1;
+    const rangeStartIdx = Math.max(clampedStartIdx, previousEndIdx + 1);
+    for (let idx = rangeStartIdx; idx <= endIdx && idx < trainersFlat.length; idx++) {
+      fragsheetSplitByTrainerIndex[idx] = splitRange.id;
+    }
+    previousEndIdx = Math.max(previousEndIdx, endIdx);
+    if (previousEndIdx >= trainersFlat.length - 1) break;
+  }
+  for (let idx = Math.max(clampedStartIdx, previousEndIdx + 1); idx < trainersFlat.length; idx++) {
+    fragsheetSplitByTrainerIndex[idx] = lastSplitId;
+  }
+}
+function getFragsheetSpeciesPriority(speciesName) {
+  const species = String(speciesName || "").trim();
+  const baseSpecies = getEvolutionBaseSpecies(species);
+  let score = getEvolutionStageDepth(baseSpecies) * 10;
+  if (species && baseSpecies && species !== baseSpecies) {
+    if (/-mega$/i.test(species) || /-primal$/i.test(species)) score += 5;
+    else score += 1;
+  }
+  const dex = pokedex[species]?.SpeciesIdx || pokedex[baseSpecies]?.SpeciesIdx || 0;
+  return (score * 10000) + dex;
 }
 function setExclusiveToggle(groupId, value) {
   const group = el(groupId);
@@ -2024,6 +2485,10 @@ function updateStatTotals(prefix) {
       if (stat === "Spe") {
         const weather = getToggleValue("weather-group") || "none";
         if (WEATHER_SPEED_ABILITIES[effectiveAbility] === weather) {
+          display = display * 2;
+        }
+        const side = prefix === 'atk' ? 'you' : 'opp';
+        if (isSideActive('tailwind', side)) {
           display = display * 2;
         }
       }
@@ -2537,6 +3002,7 @@ function parseImportedPokemonBlock(block) {
   const imported = {
     id: generateImportedSetId(),
     species,
+    nickname: nicknameMatch ? withoutGender.replace(/\(([^)]+)\)$/, "").trim() : species,
     item: (headerParts[1] || "None").trim() || "None",
     ability: "",
     level: 50,
@@ -3034,6 +3500,9 @@ function resetImportedPokemon() {
 function saveCurrentPokemon() {
   const species = el("atk-species")?.value || "";
   if (!species) return;
+  const selectedImported = currentSelectedImportedIdx >= 0 && currentSelectedImportedIdx < importedPokemonSets.length
+    ? importedPokemonSets[currentSelectedImportedIdx]
+    : null;
 
   const ivs = Object.fromEntries(STATS.map(stat => [stat, num(el(`atk-iv-${stat}`)?.value, 31)]));
   const moves = [];
@@ -3044,6 +3513,7 @@ function saveCurrentPokemon() {
 
   const set = {
     species,
+    nickname: selectedImported?.nickname || species,
     item: el("atk-item")?.value || "None",
     ability: el("atk-ability")?.value || "No Ability",
     level: num(el("atk-level")?.value, 50),
@@ -3053,9 +3523,6 @@ function saveCurrentPokemon() {
   };
 
   let savedIdx;
-  const selectedImported = currentSelectedImportedIdx >= 0 && currentSelectedImportedIdx < importedPokemonSets.length
-    ? importedPokemonSets[currentSelectedImportedIdx]
-    : null;
   if (selectedImported && selectedImported.species === species) {
     importedPokemonSets[currentSelectedImportedIdx] = {
       ...set,
@@ -3498,8 +3965,8 @@ function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveNam
     notes.push(`Eviolite ×1.5 ${defStat}`);
   }
   if (defStat === "Def" && defenderAbility === "Biodiverse" && ctx.terrain !== "none") { def *= 1.5; notes.push("Biodiverse ×1.5 Def"); }
-  if (defenderAbility === "Dune Guard" && ctx.weather === "sand") { def *= 1.25; notes.push("Dune Guard ×1.25 Def/SpD"); }
-  if (defenderAbility === "Glacial Guard" && ctx.weather === "hail") { def *= 1.25; notes.push("Glacial Guard ×1.25 Def/SpD"); }
+  if (defenderAbility === "Sand Veil" && ctx.weather === "sand") { def *= 1.25; notes.push("Sand Veil ×1.25 Def/SpD"); }
+  if (defenderAbility === "Snow Cloak" && ctx.weather === "hail") { def *= 1.25; notes.push("Snow Cloak ×1.25 Def/SpD"); }
   if (defStat === "SpD" && (defender.type1 === "Rock" || defender.type2 === "Rock") && ctx.weather === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
   if (defenderAbility === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push(`Perseverance ×1.3 ${defStat}`); }
   if (!foulPlay && isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") { atk *= 0.5; notes.push("Burn ×0.5 Atk"); }
@@ -3577,7 +4044,7 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (attacker.ability === "Sheer Force" && hasSecondaryEffect) { mod *= 1.3; notes.push("Sheer Force ×1.3"); }
   if (attacker.ability === "Sand Force" && ctx.weather === "sand" && ["Ground","Rock","Steel"].includes(moveType)) { mod *= 1.3; notes.push("Sand Force ×1.3"); }
   if (attacker.ability === "Overload" && moveType === "Electric" && attacker.currentHP <= Math.floor(attacker.stats.HP / 2)) { mod *= 1.5; notes.push("Overload ×1.5"); }
-  if (attacker.ability === "Versatility" && !hasStab) { mod *= 1.25; notes.push("Versatility ×1.25 (non-STAB)"); }
+  if (attacker.ability === "Versatility" && !hasStab) { mod *= 1.25; notes.push("Versatility ×1.25"); }
 
   const isLowHP = attacker.currentHP <= Math.floor(attacker.stats.HP / 2);
   if (isLowHP) {
@@ -3781,7 +4248,13 @@ function calcDamage(atkPrefix, defPrefix, moveName, hitCount) {
 
   const stabBase = getMoveStabBase(moveName, moveType, attacker);
   const stab = attacker.ability === "Adaptability" && stabBase > 1 ? 2 : stabBase;
-  if (stab > 1) notes.push(stab === 2 ? "STAB ×2 (Adaptability)" : "STAB ×1.5");
+  if (stab > 1) {
+    const stabTypes = DUAL_TYPE_MOVES[moveName] || [moveType];
+    const hasTypeStab = stabTypes.some(type => attacker.type1 === type || attacker.type2 === type);
+    if (stab === 2) notes.push("STAB ×2 (Adaptability)");
+    else if (!hasTypeStab && attacker.ability === "Protean") notes.push("STAB ×1.5 (Protean)");
+    else notes.push("STAB ×1.5");
+  }
 
   const effText = typeMod === 4 ? "4×" : typeMod === 2 ? "2×" : typeMod === 1 ? "1×" :
                   typeMod === 0.5 ? "0.5×" : typeMod === 0.25 ? "0.25×" : `${typeMod}×`;
@@ -3906,6 +4379,7 @@ function recalcIfNeeded() {
   }
   updateMoveDamageLabels();
   refreshImportedMatchupIndicators();
+  updateKoButtonState();
 }
 
 function syncTypeDefaults(prefix, overrideSpecies) {
@@ -3985,6 +4459,377 @@ function bindInputs() {
   });
 }
 
+function persistKoState() {
+  try {
+    localStorage.setItem(KO_ENTRIES_STORAGE_KEY, JSON.stringify(koEntries));
+  } catch (_) {}
+}
+
+function loadKoState() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(KO_ENTRIES_STORAGE_KEY) || "[]");
+    if (!Array.isArray(parsed)) return;
+    koEntries = parsed
+      .filter(entry => entry && typeof entry === "object")
+      .map(entry => ({
+        key: String(entry.key || ""),
+        splitId: String(entry.splitId || "all"),
+        attackerId: String(entry.attackerId || ""),
+        species: String(entry.species || ""),
+        nickname: formatFragsheetNickname(String(entry.nickname || entry.species || ""), String(entry.species || "")),
+        defenderSpecies: String(entry.defenderSpecies || ""),
+        createdAt: Number(entry.createdAt || Date.now())
+      }))
+      .filter(entry => entry.key && entry.attackerId && entry.species);
+  } catch (_) {
+    koEntries = [];
+  }
+}
+
+function getFragsheetSplitLabel(splitId) {
+  const split = FRAGSHEET_SPLITS.find(item => item.id === splitId);
+  return split ? split.label : "All Splits";
+}
+
+function resolveSplitIdForTrainer(trainer, trainerIndex) {
+  if (Number.isInteger(trainerIndex) && trainerIndex >= 0 && trainerIndex < fragsheetSplitByTrainerIndex.length) {
+    return fragsheetSplitByTrainerIndex[trainerIndex] || "elite4";
+  }
+  if (!trainer) return "elite4";
+  const fallbackIndex = trainersFlat.findIndex(item => item === trainer);
+  if (fallbackIndex >= 0 && fallbackIndex < fragsheetSplitByTrainerIndex.length) {
+    return fragsheetSplitByTrainerIndex[fallbackIndex] || "elite4";
+  }
+  return "elite4";
+}
+
+function getSelectedTrainerPokemonIndex(prefix) {
+  const selected = document.querySelector(`#${prefix}-poke-icons .poke-icon-slot.selected`);
+  if (!selected?.id) return -1;
+  const match = selected.id.match(/-(\d+)$/);
+  return match ? num(match[1], -1) : -1;
+}
+
+function getCurrentKoContext() {
+  const attacker = getCurrentAttackerIdentity();
+  const attackerSpecies = attacker?.attackerSpecies || "";
+  const defenderSpecies = el("def-species")?.value || "";
+  if (!attackerSpecies || !defenderSpecies) return null;
+  const defenderTrainerIdx = Number.isInteger(trainerState.def) ? trainerState.def : -1;
+  const defenderTrainer = trainersFlat[defenderTrainerIdx] || null;
+  const splitId = resolveSplitIdForTrainer(defenderTrainer, defenderTrainerIdx);
+  const defTrainerName = defenderTrainer?.trainerName || "";
+  const defTrainerRoute = defenderTrainer?.route || "";
+  const defTrainerPokIdx = getSelectedTrainerPokemonIndex("def");
+  const key = [
+    splitId,
+    attacker.attackerId,
+    toSlug(defenderSpecies),
+    toSlug(defTrainerName),
+    toSlug(defTrainerRoute),
+    String(defTrainerPokIdx)
+  ].join("|");
+  return {
+    key,
+    splitId,
+    attackerId: attacker.attackerId,
+    attackerSpecies,
+    attackerNickname: attacker.attackerNickname,
+    attackerFragsheetNickname: attacker.attackerFragsheetNickname,
+    defenderSpecies
+  };
+}
+
+function getCurrentAttackerIdentity() {
+  const attackerSpecies = el("atk-species")?.value || "";
+  if (!attackerSpecies) return null;
+  const selectedImported = currentSelectedImportedIdx >= 0 && currentSelectedImportedIdx < importedPokemonSets.length
+    ? importedPokemonSets[currentSelectedImportedIdx]
+    : null;
+  const attackerNickname = (selectedImported?.nickname || selectedImported?.species || attackerSpecies).trim() || attackerSpecies;
+  const attackerFragsheetNickname = formatFragsheetNickname(attackerNickname, attackerSpecies);
+  const attackerId = getFragsheetAttackerGroupKey(attackerSpecies, attackerFragsheetNickname);
+  return { attackerId, attackerSpecies, attackerNickname, attackerFragsheetNickname };
+}
+
+function updateKoCountBadge() {
+  const badge = el("atk-ko-count-badge");
+  if (!badge) return;
+  const attacker = getCurrentAttackerIdentity();
+  if (!attacker) {
+    badge.hidden = true;
+    badge.textContent = "";
+    return;
+  }
+  const attackerGroupKey = getFragsheetAttackerGroupKey(attacker.attackerSpecies, attacker.attackerFragsheetNickname);
+  const totalKos = koEntries.filter(entry => (
+    getFragsheetAttackerGroupKey(entry.species, entry.nickname || entry.species) === attackerGroupKey
+  )).length;
+  badge.hidden = totalKos === 0;
+  badge.textContent = totalKos > 0 ? String(totalKos) : "";
+}
+
+function updateKoButtonState() {
+  const btn = el("atk-ko-btn");
+  if (!btn) return;
+  const context = getCurrentKoContext();
+  const isActive = !!context && koEntries.some(entry => entry.key === context.key);
+  btn.classList.toggle("active", isActive);
+  btn.textContent = "KO";
+  btn.title = isActive
+    ? "Remove KO for the current opponent Pokémon"
+    : "Mark the current opponent Pokémon as KO'd";
+  updateKoCountBadge();
+}
+
+function getFragsheetRows(splitId) {
+  const rowsByAttacker = new Map();
+  const filtered = splitId === "all" ? koEntries : koEntries.filter(entry => entry.splitId === splitId);
+  for (const entry of filtered) {
+    const rowKey = getFragsheetAttackerGroupKey(entry.species, entry.nickname || entry.species);
+    const entryPriority = getFragsheetSpeciesPriority(entry.species);
+    const existing = rowsByAttacker.get(rowKey);
+    if (existing) {
+      existing.kos += 1;
+      existing.splitCounts[entry.splitId] = (existing.splitCounts[entry.splitId] || 0) + 1;
+      if (entry.defenderSpecies) {
+        existing.koedSpecies.push(entry.defenderSpecies);
+        if (!existing.splitKoedSpecies[entry.splitId]) existing.splitKoedSpecies[entry.splitId] = [];
+        existing.splitKoedSpecies[entry.splitId].push(entry.defenderSpecies);
+      }
+      if (entryPriority > existing.speciesPriority) {
+        existing.species = entry.species;
+        existing.nickname = entry.nickname || existing.nickname || entry.species;
+        existing.speciesPriority = entryPriority;
+      }
+    } else {
+      rowsByAttacker.set(rowKey, {
+        attackerId: rowKey,
+        species: entry.species,
+        nickname: entry.nickname || entry.species,
+        kos: 1,
+        splitCounts: { [entry.splitId]: 1 },
+        koedSpecies: entry.defenderSpecies ? [entry.defenderSpecies] : [],
+        splitKoedSpecies: entry.defenderSpecies ? { [entry.splitId]: [entry.defenderSpecies] } : {},
+        speciesPriority: entryPriority
+      });
+    }
+  }
+  const totalKos = filtered.length;
+  return Array.from(rowsByAttacker.values())
+    .map(row => ({
+      ...row,
+      koPct: totalKos > 0 ? (row.kos / totalKos) * 100 : 0
+    }))
+    .sort((a, b) => {
+      if (b.kos !== a.kos) return b.kos - a.kos;
+      return a.species.localeCompare(b.species);
+    });
+}
+
+function renderFragsheetKoHeader() {
+  const koHeader = el("fragsheet-ko-count-header");
+  if (!koHeader) return;
+  koHeader.innerHTML = "";
+  if (activeFragsheetSplitId !== "all") {
+    koHeader.style.padding = "";
+    koHeader.textContent = "KO Count";
+    return;
+  }
+  koHeader.style.padding = "0";
+
+  const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
+  const headerWrap = document.createElement("div");
+  headerWrap.className = "frag-ko-split-header";
+  const headerTitle = document.createElement("span");
+  headerTitle.className = "frag-ko-header-title";
+  headerTitle.textContent = "KO Count";
+  const splitGrid = document.createElement("div");
+  splitGrid.className = "frag-ko-split-board";
+  splitGrid.style.setProperty("--split-count", String(splitIds.length));
+  splitIds.forEach(split => {
+    const splitBox = document.createElement("div");
+    splitBox.className = "frag-ko-split-section";
+    const splitLabel = document.createElement("span");
+    splitLabel.className = "frag-ko-split-label";
+    splitLabel.textContent = String(split.shortLabel || split.label);
+    splitBox.appendChild(splitLabel);
+    splitGrid.appendChild(splitBox);
+  });
+  headerWrap.appendChild(headerTitle);
+  headerWrap.appendChild(splitGrid);
+  koHeader.appendChild(headerWrap);
+}
+
+function buildKoedSpritesRow(speciesList) {
+  const wrap = document.createElement("div");
+  wrap.className = "frag-koed-sprites";
+  speciesList.forEach(species => {
+    const img = document.createElement("img");
+    img.className = "frag-koed-icon";
+    const slug = toSlug(species);
+    const baseSlug = toSlug((pokedex[species]?.Name) || species);
+    img.src = `image/icons/${slug}.png`;
+    img.alt = species;
+    img.title = species;
+    img.onerror = () => {
+      if (img.src.includes(slug) && slug !== baseSlug) {
+        img.onerror = null;
+        img.src = `image/icons/${baseSlug}.png`;
+      }
+    };
+    wrap.appendChild(img);
+  });
+  return wrap;
+}
+
+function renderFragsheetLeaderboard() {
+  const body = el("fragsheet-leaderboard-body");
+  const title = el("fragsheet-title");
+  if (!body || !title) return;
+  title.textContent = `Fragsheet — ${getFragsheetSplitLabel(activeFragsheetSplitId)}`;
+  renderFragsheetKoHeader();
+  const rows = getFragsheetRows(activeFragsheetSplitId);
+  body.innerHTML = "";
+  if (!rows.length) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 6;
+    td.className = "frag-placeholder";
+    td.textContent = "No KOs recorded for this split yet.";
+    tr.appendChild(td);
+    body.appendChild(tr);
+    return;
+  }
+  rows.forEach((row, idx) => {
+    const tr = document.createElement("tr");
+    const rank = idx + 1;
+
+    const rankCell = document.createElement("td");
+    rankCell.textContent = String(rank);
+    if (rank === 1) rankCell.className = "frag-rank-gold";
+    else if (rank === 2) rankCell.className = "frag-rank-silver";
+    else if (rank === 3) rankCell.className = "frag-rank-bronze";
+    else if (rank <= 10) rankCell.className = "frag-rank-purple";
+    else if (rank <= 20) rankCell.className = "frag-rank-blue";
+    else if (rank <= 30) rankCell.className = "frag-rank-green";
+    tr.appendChild(rankCell);
+
+    const speciesCell = document.createElement("td");
+    speciesCell.className = "frag-name-cell";
+    speciesCell.textContent = row.species;
+    tr.appendChild(speciesCell);
+
+    const spriteCell = document.createElement("td");
+    const sprite = document.createElement("img");
+    sprite.className = "frag-ko-sprite";
+    const slug = toSlug(row.species);
+    const baseSlug = toSlug((pokedex[row.species]?.Name) || row.species);
+    sprite.src = `pokemon_sprites/${slug}.png`;
+    sprite.alt = row.species;
+    sprite.onerror = () => {
+      if (sprite.src.includes(slug) && slug !== baseSlug) {
+        sprite.onerror = null;
+        sprite.src = `pokemon_sprites/${baseSlug}.png`;
+      }
+    };
+    spriteCell.appendChild(sprite);
+    tr.appendChild(spriteCell);
+
+    const nicknameCell = document.createElement("td");
+    nicknameCell.className = "frag-nickname-cell";
+    nicknameCell.textContent = getFragsheetDisplayNickname(row.nickname, row.species);
+    tr.appendChild(nicknameCell);
+
+    const koCountCell = document.createElement("td");
+    if (activeFragsheetSplitId === "all") {
+      const splitIds = FRAGSHEET_SPLITS.filter(split => split.id !== "all");
+      const splitGrid = document.createElement("div");
+      splitGrid.className = "frag-ko-split-board";
+      splitGrid.style.setProperty("--split-count", String(splitIds.length));
+      splitIds.forEach(split => {
+        const splitBox = document.createElement("div");
+        splitBox.className = "frag-ko-split-section";
+        const splitValue = document.createElement("span");
+        splitValue.className = "frag-ko-split-value";
+        splitValue.textContent = String(row.splitCounts?.[split.id] || 0);
+        splitBox.appendChild(splitValue);
+        splitGrid.appendChild(splitBox);
+      });
+      koCountCell.appendChild(splitGrid);
+    } else {
+      const sprites = row.koedSpecies || [];
+      if (sprites.length > 0) {
+        koCountCell.appendChild(buildKoedSpritesRow(sprites));
+      } else {
+        koCountCell.textContent = String(row.kos);
+      }
+    }
+    tr.appendChild(koCountCell);
+
+    const koPctCell = document.createElement("td");
+    koPctCell.textContent = `${row.koPct.toFixed(1)}%`;
+    tr.appendChild(koPctCell);
+
+    body.appendChild(tr);
+  });
+}
+
+function setFragsheetSplit(splitId) {
+  const selected = FRAGSHEET_SPLITS.some(split => split.id === splitId) ? splitId : "all";
+  activeFragsheetSplitId = selected;
+  document.querySelectorAll(".frag-split-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.splitId === selected);
+  });
+  renderFragsheetLeaderboard();
+}
+
+function renderFragsheetSplitTabs() {
+  const tabs = el("fragsheet-split-tabs");
+  if (!tabs) return;
+  tabs.innerHTML = "";
+  FRAGSHEET_SPLITS.forEach(split => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "frag-split-btn";
+    btn.dataset.splitId = split.id;
+    btn.textContent = split.label;
+    btn.addEventListener("click", () => setFragsheetSplit(split.id));
+    tabs.appendChild(btn);
+  });
+  setFragsheetSplit(activeFragsheetSplitId);
+}
+
+function toggleCurrentKo() {
+  const context = getCurrentKoContext();
+  if (!context) return;
+  const existingIdx = koEntries.findIndex(entry => entry.key === context.key);
+  if (existingIdx >= 0) {
+    koEntries.splice(existingIdx, 1);
+  } else {
+    koEntries.push({
+      key: context.key,
+      splitId: context.splitId,
+      attackerId: context.attackerId,
+      species: context.attackerSpecies,
+      nickname: context.attackerFragsheetNickname,
+      defenderSpecies: context.defenderSpecies || "",
+      createdAt: Date.now()
+    });
+  }
+  persistKoState();
+  updateKoButtonState();
+  renderFragsheetLeaderboard();
+}
+
+function resetFragsheetKos() {
+  if (!window.confirm("Reset all Fragsheet KOs? This cannot be undone.")) return;
+  koEntries = [];
+  persistKoState();
+  updateKoButtonState();
+  renderFragsheetLeaderboard();
+}
+
 async function init() {
   try {
     const [pRes, mRes, tRes, eRes] = await Promise.all([
@@ -4019,6 +4864,7 @@ async function init() {
       }
     }
     trainersFlat = [...openingShauna, ...remainingTrainers];
+    buildFragsheetSplitIndexMap();
 
     populateTrainerOptions("atk");
     populateTrainerOptions("def");
@@ -4080,6 +4926,8 @@ async function init() {
     populateFormSelect("def", el("def-species")?.value);
 
     bindInputs();
+    loadKoState();
+    renderFragsheetSplitTabs();
 
     // Restore the last selected trainer for each side.
     if (trainersFlat.length) {
@@ -4104,6 +4952,8 @@ async function init() {
         }
       }
     } catch (_) {}
+    updateKoButtonState();
+    renderFragsheetLeaderboard();
 
   } catch (e) {
     console.error("Damage calc init failed:", e);
@@ -4112,6 +4962,26 @@ async function init() {
 }
 
 init();
+
+function toggleFragsheet() {
+  const calcSection = document.getElementById("calc-section");
+  const fragSection = document.getElementById("fragsheet-section");
+  const btn = document.getElementById("fragsheet-toggle-btn");
+  const resetBtn = document.getElementById("fragsheet-reset-btn");
+  const title = document.getElementById("page-main-title");
+  const subtitle = document.getElementById("page-subtitle");
+  const wasShowing = !fragSection.hidden;
+  fragSection.hidden = wasShowing;
+  calcSection.hidden = !wasShowing;
+  btn.classList.toggle("active", !wasShowing);
+  btn.textContent = wasShowing ? "Fragsheet" : "Damage Calc";
+  if (title) title.textContent = wasShowing ? "Damage Calc" : "Fragsheet";
+  if (subtitle) subtitle.textContent = wasShowing
+    ? "Select a move button to calculate damage"
+    : "Track KO leaders across splits";
+  if (resetBtn) resetBtn.hidden = wasShowing;
+  if (!wasShowing) renderFragsheetLeaderboard();
+}
 </script>
 </body>
 </html>

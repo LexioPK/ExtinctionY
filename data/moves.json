@@ -110,7 +110,7 @@
     "Power": 80,
     "Acc": 100,
     "PP": 15,
-    "Description": "The target is punched with a fiery fist.\nThis may also leave the target with a burn. (10%, Punch)(C)",
+    "Description": "The target is punched with a fiery fist.\nThis may also leave the\ntarget with a burn.(10%, Punch)(C)",
     "MinHits": 0,
     "MaxHits": 0,
     "RecoilAbsorbPercent": 0,
@@ -1091,7 +1091,7 @@
     "Power": 120,
     "Acc": 100,
     "PP": 10,
-    "Description": "The target is attacked with a powerful\nbeam. The user can\u2019t move on the next turn.\nThe user is healed from the damage delt.(20%, Beam)",
+    "Description": "The target is attacked with a powerful beam.\nThe user is takes some recoil\nfrom the damage delt.(33%, Beam)",
     "MinHits": 0,
     "MaxHits": 0,
     "RecoilAbsorbPercent": -33,
@@ -1099,7 +1099,6 @@
     "MoveFlags": [
       "Protect",
       "Mirror",
-      "HealBlock",
       "MegaLauncher"
     ]
   },
