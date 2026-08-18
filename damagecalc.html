@@ -1727,8 +1727,6 @@ const ABILITY_REPLACEMENTS = {
   "Grass Pelt":   "Biodiverse",
   "Damp":         "Slush Rush",
   "Anticipation": "Mending",
-  "Sand Veil":    "Dune Guard",
-  "Snow Cloak":   "Glacial Guard",
   "Marvel Scale": "Perseverance",
   "Run Away":     "Overload",
   "Tangled Feet": "Cyclone",
@@ -3967,8 +3965,8 @@ function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveNam
     notes.push(`Eviolite ×1.5 ${defStat}`);
   }
   if (defStat === "Def" && defenderAbility === "Biodiverse" && ctx.terrain !== "none") { def *= 1.5; notes.push("Biodiverse ×1.5 Def"); }
-  if (defenderAbility === "Dune Guard" && ctx.weather === "sand") { def *= 1.25; notes.push("Dune Guard ×1.25 Def/SpD"); }
-  if (defenderAbility === "Glacial Guard" && ctx.weather === "hail") { def *= 1.25; notes.push("Glacial Guard ×1.25 Def/SpD"); }
+  if (defenderAbility === "Sand Veil" && ctx.weather === "sand") { def *= 1.25; notes.push("Sand Veil ×1.25 Def/SpD"); }
+  if (defenderAbility === "Snow Cloak" && ctx.weather === "hail") { def *= 1.25; notes.push("Snow Cloak ×1.25 Def/SpD"); }
   if (defStat === "SpD" && (defender.type1 === "Rock" || defender.type2 === "Rock") && ctx.weather === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
   if (defenderAbility === "Perseverance" && defender.status !== "none") { def *= 1.3; notes.push(`Perseverance ×1.3 ${defStat}`); }
   if (!foulPlay && isPhysical && attacker.status === "brn" && attacker.ability !== "Guts" && moveName !== "Facade") { atk *= 0.5; notes.push("Burn ×0.5 Atk"); }
@@ -4046,7 +4044,7 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (attacker.ability === "Sheer Force" && hasSecondaryEffect) { mod *= 1.3; notes.push("Sheer Force ×1.3"); }
   if (attacker.ability === "Sand Force" && ctx.weather === "sand" && ["Ground","Rock","Steel"].includes(moveType)) { mod *= 1.3; notes.push("Sand Force ×1.3"); }
   if (attacker.ability === "Overload" && moveType === "Electric" && attacker.currentHP <= Math.floor(attacker.stats.HP / 2)) { mod *= 1.5; notes.push("Overload ×1.5"); }
-  if (attacker.ability === "Versatility" && !hasStab) { mod *= 1.25; notes.push("Versatility ×1.25 (non-STAB)"); }
+  if (attacker.ability === "Versatility" && !hasStab) { mod *= 1.25; notes.push("Versatility ×1.25"); }
 
   const isLowHP = attacker.currentHP <= Math.floor(attacker.stats.HP / 2);
   if (isLowHP) {
