@@ -19586,19 +19586,19 @@
             ]
           },
           {
-            "Name": "Stunfisk",
+            "Name": "Marowak",
             "Form": "",
             "Gender": "",
             "Level": 57,
-            "Ability": "Dry Skin",
-            "HeldItem": "Sitrus Berry",
-            "Nature": "Bold (\u002BDef / -Atk)",
+            "Ability": "Battle Armor",
+            "HeldItem": "Iron Ball",
+            "Nature": "Relaxed (\u002BDef / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Mudslide",
-              "Sludge Bomb",
-              "Thunderbolt",
-              "Pain Split"
+              "Earthquake",
+              "Shadow Punch",
+              "Thief",
+              "Fling"
             ]
           },
           {
@@ -19696,19 +19696,19 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Lanturn",
+            "Name": "Walrein",
             "Form": "",
             "Gender": "",
             "Level": 57,
-            "Ability": "Volt Absorb",
-            "HeldItem": "Bright Powder",
-            "Nature": "Gentle (\u002BSpD / -Def)",
+            "Ability": "Oblivious",
+            "HeldItem": "Sitrus Berry",
+            "Nature": "Jolly (\u002BSpe / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Thunderbolt",
-              "Electrify",
-              "Dazzling Gleam",
-              "Surf"
+              "Waterfall",
+              "Icicle Crash",
+              "Iron Head",
+              "Body Slam"
             ]
           },
           {
@@ -19775,35 +19775,35 @@
             ]
           },
           {
-            "Name": "Zebstrika",
+            "Name": "Lanturn",
             "Form": "",
             "Gender": "",
             "Level": 57,
-            "Ability": "Overload",
+            "Ability": "Volt Absorb",
             "HeldItem": "Wide Lens",
-            "Nature": "Serious (Neutral)",
+            "Nature": "Modest (\u002BSpA / -Atk)",
             "IVs": 31,
             "Moves": [
               "Discharge",
-              "High Jump Kick",
-              "Play Rough",
-              "Blaze Kick"
+              "Dazzling Gleam",
+              "Water Pulse",
+              "Electrify"
             ]
           },
           {
-            "Name": "Walrein",
+            "Name": "Ninjask",
             "Form": "",
             "Gender": "",
             "Level": 57,
-            "Ability": "Oblivious",
-            "HeldItem": "Sitrus Berry",
-            "Nature": "Mild (\u002BSpA / -Def)",
+            "Ability": "Levitate",
+            "HeldItem": "Bright Powder",
+            "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Waterfall",
-              "Icicle Crash",
-              "Iron Head",
-              "Body Slam"
+              "Wing Attack",
+              "X-Scissor",
+              "Night Slash",
+              "Double Team"
             ]
           },
           {
@@ -19904,583 +19904,13 @@
         ]
       },
       {
-        "TrainerName": "Serena",
-        "TrainerID": 607,
-        "TrainerClass": "Pok\u00E9mon Trainer",
-        "TrainerClassIndex": 104,
-        "BattleType": "Double",
-        "Route": "Pok\u00E9 Ball Factory",
-        "EncounterIndex": 6,
-        "Required": "DoublesPartner",
-        "Notes": "If Chespin Chosen",
-        "IsTagBattle": false,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Klefki",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 58,
-            "Ability": "Prankster",
-            "HeldItem": "Light Clay",
-            "Nature": "Calm (\u002BSpD / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Flash Cannon",
-              "Dazzling Gleam",
-              "Reflect",
-              "Light Screen"
-            ]
-          },
-          {
-            "Name": "Absol",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 58,
-            "Ability": "Super Luck",
-            "HeldItem": "Shell Bell",
-            "Nature": "Naughty (\u002BAtk / -SpD)",
-            "IVs": 31,
-            "Moves": [
-              "Play Rough",
-              "Night Slash",
-              "Psycho Cut",
-              "Detect"
-            ]
-          },
-          {
-            "Name": "Rotom",
-            "Form": "Rotom-Mow",
-            "Gender": "",
-            "Level": 58,
-            "Ability": "Levitate",
-            "HeldItem": "White Herb",
-            "Nature": "Bold (\u002BDef / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Leaf Storm",
-              "Thunderbolt",
-              "Shadow Ball",
-              "Will-O-Wisp"
-            ]
-          },
-          {
-            "Name": "Delphox",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 59,
-            "Ability": "Magic Guard",
-            "HeldItem": "Life Orb",
-            "Nature": "Mild (\u002BSpA / -Def)",
-            "IVs": 31,
-            "Moves": [
-              "Fire Pledge",
-              "Psychic",
-              "Dazzling Gleam",
-              "Calm Mind"
-            ]
-          },
-          {
-            "Name": "Swampert",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 59,
-            "Ability": "Torrent",
-            "HeldItem": "Blue Orb",
-            "Nature": "Careful (\u002BSpD / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Crater",
-              "Waterfall",
-              "Avalanche",
-              "Curse"
-            ]
-          }
-        ]
-      },
-      {
-        "TrainerName": "Serena",
-        "TrainerID": 608,
-        "TrainerClass": "Pok\u00E9mon Trainer",
-        "TrainerClassIndex": 104,
-        "BattleType": "Double",
-        "Route": "Pok\u00E9 Ball Factory",
-        "EncounterIndex": 7,
-        "Required": "DoublesPartner",
-        "Notes": "If Fennekin Chosen",
-        "IsTagBattle": false,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Klefki",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 58,
-            "Ability": "Prankster",
-            "HeldItem": "Light Clay",
-            "Nature": "Calm (\u002BSpD / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Light Screen",
-              "Reflect",
-              "Flash Cannon",
-              "Dazzling Gleam"
-            ]
-          },
-          {
-            "Name": "Absol",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 58,
-            "Ability": "Super Luck",
-            "HeldItem": "Shell Bell",
-            "Nature": "Naughty (\u002BAtk / -SpD)",
-            "IVs": 31,
-            "Moves": [
-              "Play Rough",
-              "Night Slash",
-              "Psycho Cut",
-              "Detect"
-            ]
-          },
-          {
-            "Name": "Rotom",
-            "Form": "Rotom-Heat",
-            "Gender": "",
-            "Level": 58,
-            "Ability": "Levitate",
-            "HeldItem": "White Herb",
-            "Nature": "Bold (\u002BDef / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Overheat",
-              "Thunderbolt",
-              "Shadow Ball",
-              "Will-O-Wisp"
-            ]
-          },
-          {
-            "Name": "Greninja",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 59,
-            "Ability": "Protean",
-            "HeldItem": "Dark Gem",
-            "Nature": "Modest (\u002BSpA / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Water Pledge",
-              "Ice Beam",
-              "Acrobatics",
-              "Dark Pulse"
-            ]
-          },
-          {
-            "Name": "Sceptile",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 59,
-            "Ability": "Overgrow",
-            "HeldItem": "Blue Orb",
-            "Nature": "Hasty (\u002BSpe / -Def)",
-            "IVs": 31,
-            "Moves": [
-              "Leaf Blade",
-              "Dragon Claw",
-              "X-Scissor",
-              "Grass Whistle"
-            ]
-          }
-        ]
-      },
-      {
-        "TrainerName": "Serena",
-        "TrainerID": 609,
-        "TrainerClass": "Pok\u00E9mon Trainer",
-        "TrainerClassIndex": 104,
-        "BattleType": "Double",
-        "Route": "Pok\u00E9 Ball Factory",
-        "EncounterIndex": 8,
-        "Required": "DoublesPartner",
-        "Notes": "If Froakie Chosen",
-        "IsTagBattle": false,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Klefki",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 58,
-            "Ability": "Prankster",
-            "HeldItem": "Light Clay",
-            "Nature": "Calm (\u002BSpD / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Reflect",
-              "Light Screen",
-              "Flash Cannon",
-              "Dazzling Gleam"
-            ]
-          },
-          {
-            "Name": "Absol",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 58,
-            "Ability": "Super Luck",
-            "HeldItem": "Shell Bell",
-            "Nature": "Naughty (\u002BAtk / -SpD)",
-            "IVs": 31,
-            "Moves": [
-              "Play Rough",
-              "Night Slash",
-              "Psycho Cut",
-              "Detect"
-            ]
-          },
-          {
-            "Name": "Rotom",
-            "Form": "Rotom-Wash",
-            "Gender": "",
-            "Level": 58,
-            "Ability": "Levitate",
-            "HeldItem": "Wide Lens",
-            "Nature": "Bold (\u002BDef / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Hydro Pump",
-              "Thunderbolt",
-              "Shadow Ball",
-              "Will-O-Wisp"
-            ]
-          },
-          {
-            "Name": "Chesnaught",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 59,
-            "Ability": "Rough Skin",
-            "HeldItem": "Rocky Helmet",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
-            "IVs": 31,
-            "Moves": [
-              "Horn Leech",
-              "Drain Punch",
-              "Spiky Shield",
-              "Bulk Up"
-            ]
-          },
-          {
-            "Name": "Blaziken",
-            "Form": "",
-            "Gender": "\u2640 / Female",
-            "Level": 59,
-            "Ability": "Blaze",
-            "HeldItem": "Blazikenite",
-            "Nature": "Adamant (\u002BAtk / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Blaze Kick",
-              "Sky Uppercut",
-              "Brave Bird",
-              "Bulk Up"
-            ]
-          }
-        ]
-      },
-      {
-        "TrainerName": "Calem",
-        "TrainerID": 604,
-        "TrainerClass": "Pok\u00E9mon Trainer",
-        "TrainerClassIndex": 103,
-        "BattleType": "Double",
-        "Route": "Pok\u00E9 Ball Factory",
-        "EncounterIndex": 9,
-        "Required": "DoublesPartner",
-        "Notes": "If Chespin Chosen",
-        "IsTagBattle": false,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Klefki",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 58,
-            "Ability": "Prankster",
-            "HeldItem": "Light Clay",
-            "Nature": "Calm (\u002BSpD / -Atk)",
-            "IVs": 30,
-            "Moves": [
-              "Reflect",
-              "Light Screen",
-              "Flash Cannon",
-              "Dazzling Gleam"
-            ]
-          },
-          {
-            "Name": "Absol",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 58,
-            "Ability": "Super Luck",
-            "HeldItem": "Shell Bell",
-            "Nature": "Brave (\u002BAtk / -Spe)",
-            "IVs": 31,
-            "Moves": [
-              "Play Rough",
-              "Night Slash",
-              "Psycho Cut",
-              "Detect"
-            ]
-          },
-          {
-            "Name": "Rotom",
-            "Form": "Rotom-Mow",
-            "Gender": "",
-            "Level": 58,
-            "Ability": "Levitate",
-            "HeldItem": "White Herb",
-            "Nature": "Bold (\u002BDef / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Leaf Storm",
-              "Thunderbolt",
-              "Shadow Ball",
-              "Will-O-Wisp"
-            ]
-          },
-          {
-            "Name": "Delphox",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 59,
-            "Ability": "Magic Guard",
-            "HeldItem": "Life Orb",
-            "Nature": "Timid (\u002BSpe / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Fire Pledge",
-              "Psychic",
-              "Dazzling Gleam",
-              "Calm Mind"
-            ]
-          },
-          {
-            "Name": "Swampert",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 59,
-            "Ability": "Torrent",
-            "HeldItem": "Blue Orb",
-            "Nature": "Adamant (\u002BAtk / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Waterfall",
-              "Crater",
-              "Avalanche",
-              "Curse"
-            ]
-          }
-        ]
-      },
-      {
-        "TrainerName": "Calem",
-        "TrainerID": 605,
-        "TrainerClass": "Pok\u00E9mon Trainer",
-        "TrainerClassIndex": 103,
-        "BattleType": "Double",
-        "Route": "Pok\u00E9 Ball Factory",
-        "EncounterIndex": 10,
-        "Required": "DoublesPartner",
-        "Notes": "If Fennekin Chosen",
-        "IsTagBattle": false,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Klefki",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 58,
-            "Ability": "Prankster",
-            "HeldItem": "Light Clay",
-            "Nature": "Calm (\u002BSpD / -Atk)",
-            "IVs": 30,
-            "Moves": [
-              "Light Screen",
-              "Reflect",
-              "Flash Cannon",
-              "Dazzling Gleam"
-            ]
-          },
-          {
-            "Name": "Absol",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 58,
-            "Ability": "Super Luck",
-            "HeldItem": "Shell Bell",
-            "Nature": "Brave (\u002BAtk / -Spe)",
-            "IVs": 31,
-            "Moves": [
-              "Play Rough",
-              "Night Slash",
-              "Psycho Cut",
-              "Detect"
-            ]
-          },
-          {
-            "Name": "Rotom",
-            "Form": "Rotom-Heat",
-            "Gender": "",
-            "Level": 58,
-            "Ability": "Levitate",
-            "HeldItem": "White Herb",
-            "Nature": "Bold (\u002BDef / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Overheat",
-              "Thunderbolt",
-              "Shadow Ball",
-              "Will-O-Wisp"
-            ]
-          },
-          {
-            "Name": "Greninja",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 59,
-            "Ability": "Protean",
-            "HeldItem": "Dark Gem",
-            "Nature": "Modest (\u002BSpA / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Water Pledge",
-              "Ice Beam",
-              "Acrobatics",
-              "Dark Pulse"
-            ]
-          },
-          {
-            "Name": "Sceptile",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 59,
-            "Ability": "Overgrow",
-            "HeldItem": "Blue Orb",
-            "Nature": "Lonely (\u002BAtk / -Def)",
-            "IVs": 31,
-            "Moves": [
-              "Leaf Blade",
-              "Dragon Claw",
-              "X-Scissor",
-              "Grass Whistle"
-            ]
-          }
-        ]
-      },
-      {
-        "TrainerName": "Calem",
-        "TrainerID": 606,
-        "TrainerClass": "Pok\u00E9mon Trainer",
-        "TrainerClassIndex": 103,
-        "BattleType": "Double",
-        "Route": "Pok\u00E9 Ball Factory",
-        "EncounterIndex": 11,
-        "Required": "DoublesPartner",
-        "Notes": "If Froakie Chosen",
-        "IsTagBattle": false,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Klefki",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 58,
-            "Ability": "Prankster",
-            "HeldItem": "Light Clay",
-            "Nature": "Calm (\u002BSpD / -Atk)",
-            "IVs": 30,
-            "Moves": [
-              "Reflect",
-              "Light Screen",
-              "Flash Cannon",
-              "Dazzling Gleam"
-            ]
-          },
-          {
-            "Name": "Absol",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 58,
-            "Ability": "Super Luck",
-            "HeldItem": "Shell Bell",
-            "Nature": "Brave (\u002BAtk / -Spe)",
-            "IVs": 31,
-            "Moves": [
-              "Play Rough",
-              "Night Slash",
-              "Psycho Cut",
-              "Detect"
-            ]
-          },
-          {
-            "Name": "Rotom",
-            "Form": "Rotom-Wash",
-            "Gender": "",
-            "Level": 58,
-            "Ability": "Levitate",
-            "HeldItem": "Wide Lens",
-            "Nature": "Bold (\u002BDef / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Hydro Pump",
-              "Thunderbolt",
-              "Shadow Ball",
-              "Will-O-Wisp"
-            ]
-          },
-          {
-            "Name": "Chesnaught",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 59,
-            "Ability": "Rough Skin",
-            "HeldItem": "Rocky Helmet",
-            "Nature": "Careful (\u002BSpD / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Horn Leech",
-              "Drain Punch",
-              "Spiky Shield",
-              "Bulk Up"
-            ]
-          },
-          {
-            "Name": "Blaziken",
-            "Form": "",
-            "Gender": "\u2642 / Male",
-            "Level": 59,
-            "Ability": "Blaze",
-            "HeldItem": "Blazikenite",
-            "Nature": "Adamant (\u002BAtk / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Blaze Kick",
-              "Sky Uppercut",
-              "Brave Bird",
-              "Bulk Up"
-            ]
-          }
-        ]
-      },
-      {
         "TrainerName": "Delta \u0026 Gamma",
         "TrainerID": 348,
         "TrainerClass": "Team Flare",
         "TrainerClassIndex": 20,
         "BattleType": "Double",
         "Route": "Pok\u00E9 Ball Factory",
-        "EncounterIndex": 12,
+        "EncounterIndex": 6,
         "Required": "Mandatory",
         "Notes": "",
         "IsTagBattle": true,
@@ -20644,6 +20074,576 @@
               "Zen Headbutt",
               "Stone Edge",
               "Crunch"
+            ]
+          }
+        ]
+      },
+      {
+        "TrainerName": "Serena",
+        "TrainerID": 607,
+        "TrainerClass": "Pok\u00E9mon Trainer",
+        "TrainerClassIndex": 104,
+        "BattleType": "Double",
+        "Route": "Pok\u00E9 Ball Factory",
+        "EncounterIndex": 8,
+        "Required": "DoublesPartner",
+        "Notes": "If Chespin Chosen",
+        "IsTagBattle": false,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Klefki",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 58,
+            "Ability": "Prankster",
+            "HeldItem": "Light Clay",
+            "Nature": "Calm (\u002BSpD / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Flash Cannon",
+              "Dazzling Gleam",
+              "Reflect",
+              "Light Screen"
+            ]
+          },
+          {
+            "Name": "Absol",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 58,
+            "Ability": "Super Luck",
+            "HeldItem": "Shell Bell",
+            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Play Rough",
+              "Night Slash",
+              "Psycho Cut",
+              "Detect"
+            ]
+          },
+          {
+            "Name": "Rotom",
+            "Form": "Rotom-Mow",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Levitate",
+            "HeldItem": "White Herb",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Leaf Storm",
+              "Thunderbolt",
+              "Shadow Ball",
+              "Will-O-Wisp"
+            ]
+          },
+          {
+            "Name": "Delphox",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 59,
+            "Ability": "Magic Guard",
+            "HeldItem": "Life Orb",
+            "Nature": "Mild (\u002BSpA / -Def)",
+            "IVs": 31,
+            "Moves": [
+              "Fire Pledge",
+              "Psychic",
+              "Dazzling Gleam",
+              "Calm Mind"
+            ]
+          },
+          {
+            "Name": "Swampert",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 59,
+            "Ability": "Torrent",
+            "HeldItem": "Blue Orb",
+            "Nature": "Careful (\u002BSpD / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Crater",
+              "Waterfall",
+              "Avalanche",
+              "Curse"
+            ]
+          }
+        ]
+      },
+      {
+        "TrainerName": "Serena",
+        "TrainerID": 608,
+        "TrainerClass": "Pok\u00E9mon Trainer",
+        "TrainerClassIndex": 104,
+        "BattleType": "Double",
+        "Route": "Pok\u00E9 Ball Factory",
+        "EncounterIndex": 9,
+        "Required": "DoublesPartner",
+        "Notes": "If Fennekin Chosen",
+        "IsTagBattle": false,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Klefki",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 58,
+            "Ability": "Prankster",
+            "HeldItem": "Light Clay",
+            "Nature": "Calm (\u002BSpD / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Light Screen",
+              "Reflect",
+              "Flash Cannon",
+              "Dazzling Gleam"
+            ]
+          },
+          {
+            "Name": "Absol",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 58,
+            "Ability": "Super Luck",
+            "HeldItem": "Shell Bell",
+            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Play Rough",
+              "Night Slash",
+              "Psycho Cut",
+              "Detect"
+            ]
+          },
+          {
+            "Name": "Rotom",
+            "Form": "Rotom-Heat",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Levitate",
+            "HeldItem": "White Herb",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Overheat",
+              "Thunderbolt",
+              "Shadow Ball",
+              "Will-O-Wisp"
+            ]
+          },
+          {
+            "Name": "Greninja",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 59,
+            "Ability": "Protean",
+            "HeldItem": "Dark Gem",
+            "Nature": "Modest (\u002BSpA / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Water Pledge",
+              "Ice Beam",
+              "Acrobatics",
+              "Dark Pulse"
+            ]
+          },
+          {
+            "Name": "Sceptile",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 59,
+            "Ability": "Overgrow",
+            "HeldItem": "Blue Orb",
+            "Nature": "Hasty (\u002BSpe / -Def)",
+            "IVs": 31,
+            "Moves": [
+              "Leaf Blade",
+              "Dragon Claw",
+              "X-Scissor",
+              "Grass Whistle"
+            ]
+          }
+        ]
+      },
+      {
+        "TrainerName": "Serena",
+        "TrainerID": 609,
+        "TrainerClass": "Pok\u00E9mon Trainer",
+        "TrainerClassIndex": 104,
+        "BattleType": "Double",
+        "Route": "Pok\u00E9 Ball Factory",
+        "EncounterIndex": 10,
+        "Required": "DoublesPartner",
+        "Notes": "If Froakie Chosen",
+        "IsTagBattle": false,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Klefki",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 58,
+            "Ability": "Prankster",
+            "HeldItem": "Light Clay",
+            "Nature": "Calm (\u002BSpD / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Reflect",
+              "Light Screen",
+              "Flash Cannon",
+              "Dazzling Gleam"
+            ]
+          },
+          {
+            "Name": "Absol",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 58,
+            "Ability": "Super Luck",
+            "HeldItem": "Shell Bell",
+            "Nature": "Naughty (\u002BAtk / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Play Rough",
+              "Night Slash",
+              "Psycho Cut",
+              "Detect"
+            ]
+          },
+          {
+            "Name": "Rotom",
+            "Form": "Rotom-Wash",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Levitate",
+            "HeldItem": "Wide Lens",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Hydro Pump",
+              "Thunderbolt",
+              "Shadow Ball",
+              "Will-O-Wisp"
+            ]
+          },
+          {
+            "Name": "Chesnaught",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 59,
+            "Ability": "Rough Skin",
+            "HeldItem": "Rocky Helmet",
+            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Horn Leech",
+              "Drain Punch",
+              "Spiky Shield",
+              "Bulk Up"
+            ]
+          },
+          {
+            "Name": "Blaziken",
+            "Form": "",
+            "Gender": "\u2640 / Female",
+            "Level": 59,
+            "Ability": "Blaze",
+            "HeldItem": "Blazikenite",
+            "Nature": "Adamant (\u002BAtk / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Blaze Kick",
+              "Sky Uppercut",
+              "Brave Bird",
+              "Bulk Up"
+            ]
+          }
+        ]
+      },
+      {
+        "TrainerName": "Calem",
+        "TrainerID": 604,
+        "TrainerClass": "Pok\u00E9mon Trainer",
+        "TrainerClassIndex": 103,
+        "BattleType": "Double",
+        "Route": "Pok\u00E9 Ball Factory",
+        "EncounterIndex": 11,
+        "Required": "DoublesPartner",
+        "Notes": "If Chespin Chosen",
+        "IsTagBattle": false,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Klefki",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 58,
+            "Ability": "Prankster",
+            "HeldItem": "Light Clay",
+            "Nature": "Calm (\u002BSpD / -Atk)",
+            "IVs": 30,
+            "Moves": [
+              "Reflect",
+              "Light Screen",
+              "Flash Cannon",
+              "Dazzling Gleam"
+            ]
+          },
+          {
+            "Name": "Absol",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 58,
+            "Ability": "Super Luck",
+            "HeldItem": "Shell Bell",
+            "Nature": "Brave (\u002BAtk / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Play Rough",
+              "Night Slash",
+              "Psycho Cut",
+              "Detect"
+            ]
+          },
+          {
+            "Name": "Rotom",
+            "Form": "Rotom-Mow",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Levitate",
+            "HeldItem": "White Herb",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Leaf Storm",
+              "Thunderbolt",
+              "Shadow Ball",
+              "Will-O-Wisp"
+            ]
+          },
+          {
+            "Name": "Delphox",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 59,
+            "Ability": "Magic Guard",
+            "HeldItem": "Life Orb",
+            "Nature": "Timid (\u002BSpe / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Fire Pledge",
+              "Psychic",
+              "Dazzling Gleam",
+              "Calm Mind"
+            ]
+          },
+          {
+            "Name": "Swampert",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 59,
+            "Ability": "Torrent",
+            "HeldItem": "Blue Orb",
+            "Nature": "Adamant (\u002BAtk / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Waterfall",
+              "Crater",
+              "Avalanche",
+              "Curse"
+            ]
+          }
+        ]
+      },
+      {
+        "TrainerName": "Calem",
+        "TrainerID": 605,
+        "TrainerClass": "Pok\u00E9mon Trainer",
+        "TrainerClassIndex": 103,
+        "BattleType": "Double",
+        "Route": "Pok\u00E9 Ball Factory",
+        "EncounterIndex": 12,
+        "Required": "DoublesPartner",
+        "Notes": "If Fennekin Chosen",
+        "IsTagBattle": false,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Klefki",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 58,
+            "Ability": "Prankster",
+            "HeldItem": "Light Clay",
+            "Nature": "Calm (\u002BSpD / -Atk)",
+            "IVs": 30,
+            "Moves": [
+              "Light Screen",
+              "Reflect",
+              "Flash Cannon",
+              "Dazzling Gleam"
+            ]
+          },
+          {
+            "Name": "Absol",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 58,
+            "Ability": "Super Luck",
+            "HeldItem": "Shell Bell",
+            "Nature": "Brave (\u002BAtk / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Play Rough",
+              "Night Slash",
+              "Psycho Cut",
+              "Detect"
+            ]
+          },
+          {
+            "Name": "Rotom",
+            "Form": "Rotom-Heat",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Levitate",
+            "HeldItem": "White Herb",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Overheat",
+              "Thunderbolt",
+              "Shadow Ball",
+              "Will-O-Wisp"
+            ]
+          },
+          {
+            "Name": "Greninja",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 59,
+            "Ability": "Protean",
+            "HeldItem": "Dark Gem",
+            "Nature": "Modest (\u002BSpA / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Water Pledge",
+              "Ice Beam",
+              "Acrobatics",
+              "Dark Pulse"
+            ]
+          },
+          {
+            "Name": "Sceptile",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 59,
+            "Ability": "Overgrow",
+            "HeldItem": "Blue Orb",
+            "Nature": "Lonely (\u002BAtk / -Def)",
+            "IVs": 31,
+            "Moves": [
+              "Leaf Blade",
+              "Dragon Claw",
+              "X-Scissor",
+              "Grass Whistle"
+            ]
+          }
+        ]
+      },
+      {
+        "TrainerName": "Calem",
+        "TrainerID": 606,
+        "TrainerClass": "Pok\u00E9mon Trainer",
+        "TrainerClassIndex": 103,
+        "BattleType": "Double",
+        "Route": "Pok\u00E9 Ball Factory",
+        "EncounterIndex": 13,
+        "Required": "DoublesPartner",
+        "Notes": "If Froakie Chosen",
+        "IsTagBattle": false,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Klefki",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 58,
+            "Ability": "Prankster",
+            "HeldItem": "Light Clay",
+            "Nature": "Calm (\u002BSpD / -Atk)",
+            "IVs": 30,
+            "Moves": [
+              "Reflect",
+              "Light Screen",
+              "Flash Cannon",
+              "Dazzling Gleam"
+            ]
+          },
+          {
+            "Name": "Absol",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 58,
+            "Ability": "Super Luck",
+            "HeldItem": "Shell Bell",
+            "Nature": "Brave (\u002BAtk / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Play Rough",
+              "Night Slash",
+              "Psycho Cut",
+              "Detect"
+            ]
+          },
+          {
+            "Name": "Rotom",
+            "Form": "Rotom-Wash",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Levitate",
+            "HeldItem": "Wide Lens",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Hydro Pump",
+              "Thunderbolt",
+              "Shadow Ball",
+              "Will-O-Wisp"
+            ]
+          },
+          {
+            "Name": "Chesnaught",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 59,
+            "Ability": "Rough Skin",
+            "HeldItem": "Rocky Helmet",
+            "Nature": "Careful (\u002BSpD / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Horn Leech",
+              "Drain Punch",
+              "Spiky Shield",
+              "Bulk Up"
+            ]
+          },
+          {
+            "Name": "Blaziken",
+            "Form": "",
+            "Gender": "\u2642 / Male",
+            "Level": 59,
+            "Ability": "Blaze",
+            "HeldItem": "Blazikenite",
+            "Nature": "Adamant (\u002BAtk / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Blaze Kick",
+              "Sky Uppercut",
+              "Brave Bird",
+              "Bulk Up"
             ]
           }
         ]
@@ -20857,19 +20857,19 @@
             ]
           },
           {
-            "Name": "Aggron",
+            "Name": "Snorlax",
             "Form": "",
             "Gender": "",
             "Level": 65,
-            "Ability": "Rock Head",
-            "HeldItem": "Shuca Berry",
-            "Nature": "Impish (\u002BDef / -SpA)",
+            "Ability": "Immunity",
+            "HeldItem": "Chople Berry",
+            "Nature": "Relaxed (\u002BDef / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Iron Tail",
-              "Dragon Claw",
-              "Stone Edge",
-              "Fire Punch"
+              "Headlong Rush",
+              "Body Slam",
+              "Crunch",
+              "Slack Off"
             ]
           },
           {
@@ -20936,35 +20936,35 @@
             ]
           },
           {
-            "Name": "Primeape",
+            "Name": "Conkeldurr",
             "Form": "",
             "Gender": "",
             "Level": 65,
-            "Ability": "Defiant",
+            "Ability": "Sheer Force",
             "HeldItem": "Lum Berry",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Thunder Punch",
-              "Earthquake",
-              "Close Combat",
-              "Screech"
+              "Hammer Arm",
+              "Body Slam",
+              "Rock Climb",
+              "Detect"
             ]
           },
           {
-            "Name": "Electivire",
+            "Name": "Aggron",
             "Form": "",
             "Gender": "",
             "Level": 66,
-            "Ability": "Iron Fist",
-            "HeldItem": "Shell Bell",
-            "Nature": "Brave (\u002BAtk / -Spe)",
+            "Ability": "Iron Barbs",
+            "HeldItem": "White Herb",
+            "Nature": "Lax (\u002BDef / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Drain Punch",
-              "Thunder Punch",
-              "Ice Punch",
-              "Fire Punch"
+              "Iron Tail",
+              "Dragon Claw",
+              "Stone Edge",
+              "Superpower"
             ]
           }
         ]
@@ -22451,6 +22451,133 @@
         ]
       },
       {
+        "TrainerName": "Admin Upsilon \u0026 Grunt Phi",
+        "TrainerID": 470,
+        "TrainerClass": "Team Flare",
+        "TrainerClassIndex": 78,
+        "BattleType": "Double",
+        "Route": "Team Flare Secret HQ - Walkway",
+        "EncounterIndex": 1,
+        "Required": "Mandatory",
+        "Notes": "",
+        "IsTagBattle": true,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Torkoal",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Drought",
+            "HeldItem": "Heat Rock",
+            "Nature": "Quiet (\u002BSpA / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Gyro Ball",
+              "Morning Sun",
+              "Eruption",
+              "Heat Wave"
+            ]
+          },
+          {
+            "Name": "Sunflora",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Solar Power",
+            "HeldItem": "Life Orb",
+            "Nature": "Hardy (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Solar Beam",
+              "Overheat",
+              "Earth Power",
+              "Sunny Day"
+            ]
+          },
+          {
+            "Name": "Charizard",
+            "Form": "",
+            "Gender": "",
+            "Level": 76,
+            "Ability": "Flash Fire",
+            "HeldItem": "Flame Plate",
+            "Nature": "Naive (\u002BSpe / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Heat Wave",
+              "Aeroblast",
+              "Crunch",
+              "Rock Slide"
+            ]
+          },
+          {
+            "Name": "Trevenant",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Harvest",
+            "HeldItem": "Wiki Berry",
+            "Nature": "Impish (\u002BDef / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Horn Leech",
+              "Shadow Force",
+              "Drain Punch",
+              "Protect"
+            ]
+          },
+          {
+            "Name": "Victreebel",
+            "Form": "",
+            "Gender": "",
+            "Level": 74,
+            "Ability": "Chlorophyll",
+            "HeldItem": "Wide Lens",
+            "Nature": "Careful (\u002BSpD / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Power Whip",
+              "Gunk Shot",
+              "Swords Dance",
+              "Sucker Punch"
+            ]
+          },
+          {
+            "Name": "Bellossom",
+            "Form": "",
+            "Gender": "",
+            "Level": 74,
+            "Ability": "Chlorophyll",
+            "HeldItem": "White Herb",
+            "Nature": "Calm (\u002BSpD / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Moonblast",
+              "Earth Power",
+              "Leaf Storm",
+              "Protect"
+            ]
+          },
+          {
+            "Name": "Espeon",
+            "Form": "",
+            "Gender": "",
+            "Level": 74,
+            "Ability": "Synchronize",
+            "HeldItem": "Colbur Berry",
+            "Nature": "Timid (\u002BSpe / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Mystical Fire",
+              "Psyshock",
+              "Helping Hand",
+              "Morning Sun"
+            ]
+          }
+        ]
+      },
+      {
         "TrainerName": "Serena",
         "TrainerID": 591,
         "TrainerClass": "Pok\u00E9mon Trainer",
@@ -22688,6 +22815,133 @@
         ]
       },
       {
+        "TrainerName": "Admin Epsilon \u0026 Goon Xi",
+        "TrainerID": 476,
+        "TrainerClass": "Team Flare",
+        "TrainerClassIndex": 77,
+        "BattleType": "Double",
+        "Route": "Team Flare Secret HQ - Walkway",
+        "EncounterIndex": 3,
+        "Required": "Mandatory",
+        "Notes": "",
+        "IsTagBattle": true,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Wailord",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Drizzle",
+            "HeldItem": "Damp Rock",
+            "Nature": "Serious (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Water Spout",
+              "Heavy Slam",
+              "Zen Headbutt",
+              "Protect"
+            ]
+          },
+          {
+            "Name": "Heliolisk",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Dry Skin",
+            "HeldItem": "Leftovers",
+            "Nature": "Naive (\u002BSpe / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Thunder",
+              "Tri Attack",
+              "Dragon Pulse",
+              "Weather Ball"
+            ]
+          },
+          {
+            "Name": "Alomomola",
+            "Form": "",
+            "Gender": "",
+            "Level": 76,
+            "Ability": "Hydration",
+            "HeldItem": "Splash Plate",
+            "Nature": "Bashful (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Surf",
+              "Moonblast",
+              "Rest",
+              "Helping Hand"
+            ]
+          },
+          {
+            "Name": "Bronzong",
+            "Form": "",
+            "Gender": "",
+            "Level": 75,
+            "Ability": "Lightning Rod",
+            "HeldItem": "Shell Bell",
+            "Nature": "Careful (\u002BSpD / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Zen Headbutt",
+              "Heavy Slam",
+              "Hypnosis",
+              "Rain Dance"
+            ]
+          },
+          {
+            "Name": "Seaking",
+            "Form": "",
+            "Gender": "",
+            "Level": 74,
+            "Ability": "Water Veil",
+            "HeldItem": "Power Herb",
+            "Nature": "Hasty (\u002BSpe / -Def)",
+            "IVs": 31,
+            "Moves": [
+              "Hyper Drill",
+              "Skull Bash",
+              "Megahorn",
+              "Knock Off"
+            ]
+          },
+          {
+            "Name": "Gorebyss",
+            "Form": "",
+            "Gender": "",
+            "Level": 74,
+            "Ability": "Swift Swim",
+            "HeldItem": "Focus Sash",
+            "Nature": "Hardy (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Shell Smash",
+              "Draining Kiss",
+              "Scald",
+              "Psychic"
+            ]
+          },
+          {
+            "Name": "Mantine",
+            "Form": "",
+            "Gender": "",
+            "Level": 74,
+            "Ability": "Rain Dish",
+            "HeldItem": "Sitrus Berry",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Surf",
+              "Aeroblast",
+              "Aqua Ring",
+              "Wide Guard"
+            ]
+          }
+        ]
+      },
+      {
         "TrainerName": "Calem",
         "TrainerID": 339,
         "TrainerClass": "Pok\u00E9mon Trainer",
@@ -22846,267 +23100,13 @@
         ]
       },
       {
-        "TrainerName": "Admin Upsilon \u0026 Grunt Phi",
-        "TrainerID": 470,
-        "TrainerClass": "Team Flare",
-        "TrainerClassIndex": 78,
-        "BattleType": "Double",
-        "Route": "Team Flare Secret HQ - Walkway",
-        "EncounterIndex": 6,
-        "Required": "Mandatory",
-        "Notes": "",
-        "IsTagBattle": true,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Torkoal",
-            "Form": "",
-            "Gender": "",
-            "Level": 75,
-            "Ability": "Drought",
-            "HeldItem": "Heat Rock",
-            "Nature": "Quiet (\u002BSpA / -Spe)",
-            "IVs": 31,
-            "Moves": [
-              "Gyro Ball",
-              "Morning Sun",
-              "Eruption",
-              "Heat Wave"
-            ]
-          },
-          {
-            "Name": "Sunflora",
-            "Form": "",
-            "Gender": "",
-            "Level": 75,
-            "Ability": "Solar Power",
-            "HeldItem": "Life Orb",
-            "Nature": "Hardy (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Solar Beam",
-              "Overheat",
-              "Earth Power",
-              "Sunny Day"
-            ]
-          },
-          {
-            "Name": "Charizard",
-            "Form": "",
-            "Gender": "",
-            "Level": 76,
-            "Ability": "Flash Fire",
-            "HeldItem": "Flame Plate",
-            "Nature": "Naive (\u002BSpe / -SpD)",
-            "IVs": 31,
-            "Moves": [
-              "Heat Wave",
-              "Aeroblast",
-              "Crunch",
-              "Rock Slide"
-            ]
-          },
-          {
-            "Name": "Trevenant",
-            "Form": "",
-            "Gender": "",
-            "Level": 75,
-            "Ability": "Harvest",
-            "HeldItem": "Wiki Berry",
-            "Nature": "Impish (\u002BDef / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Horn Leech",
-              "Shadow Force",
-              "Drain Punch",
-              "Protect"
-            ]
-          },
-          {
-            "Name": "Victreebel",
-            "Form": "",
-            "Gender": "",
-            "Level": 74,
-            "Ability": "Chlorophyll",
-            "HeldItem": "Wide Lens",
-            "Nature": "Careful (\u002BSpD / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Power Whip",
-              "Gunk Shot",
-              "Swords Dance",
-              "Sucker Punch"
-            ]
-          },
-          {
-            "Name": "Bellossom",
-            "Form": "",
-            "Gender": "",
-            "Level": 74,
-            "Ability": "Chlorophyll",
-            "HeldItem": "White Herb",
-            "Nature": "Calm (\u002BSpD / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Moonblast",
-              "Earth Power",
-              "Leaf Storm",
-              "Protect"
-            ]
-          },
-          {
-            "Name": "Espeon",
-            "Form": "",
-            "Gender": "",
-            "Level": 74,
-            "Ability": "Synchronize",
-            "HeldItem": "Colbur Berry",
-            "Nature": "Timid (\u002BSpe / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Mystical Fire",
-              "Psyshock",
-              "Helping Hand",
-              "Morning Sun"
-            ]
-          }
-        ]
-      },
-      {
-        "TrainerName": "Admin Epsilon \u0026 Goon Xi",
-        "TrainerID": 476,
-        "TrainerClass": "Team Flare",
-        "TrainerClassIndex": 77,
-        "BattleType": "Double",
-        "Route": "Team Flare Secret HQ - Walkway",
-        "EncounterIndex": 8,
-        "Required": "Mandatory",
-        "Notes": "",
-        "IsTagBattle": true,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Wailord",
-            "Form": "",
-            "Gender": "",
-            "Level": 75,
-            "Ability": "Drizzle",
-            "HeldItem": "Damp Rock",
-            "Nature": "Serious (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Water Spout",
-              "Heavy Slam",
-              "Zen Headbutt",
-              "Protect"
-            ]
-          },
-          {
-            "Name": "Heliolisk",
-            "Form": "",
-            "Gender": "",
-            "Level": 75,
-            "Ability": "Dry Skin",
-            "HeldItem": "Leftovers",
-            "Nature": "Naive (\u002BSpe / -SpD)",
-            "IVs": 31,
-            "Moves": [
-              "Thunder",
-              "Tri Attack",
-              "Dragon Pulse",
-              "Weather Ball"
-            ]
-          },
-          {
-            "Name": "Alomomola",
-            "Form": "",
-            "Gender": "",
-            "Level": 76,
-            "Ability": "Hydration",
-            "HeldItem": "Splash Plate",
-            "Nature": "Bashful (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Surf",
-              "Moonblast",
-              "Rest",
-              "Helping Hand"
-            ]
-          },
-          {
-            "Name": "Bronzong",
-            "Form": "",
-            "Gender": "",
-            "Level": 75,
-            "Ability": "Lightning Rod",
-            "HeldItem": "Shell Bell",
-            "Nature": "Careful (\u002BSpD / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Zen Headbutt",
-              "Heavy Slam",
-              "Hypnosis",
-              "Rain Dance"
-            ]
-          },
-          {
-            "Name": "Seaking",
-            "Form": "",
-            "Gender": "",
-            "Level": 74,
-            "Ability": "Water Veil",
-            "HeldItem": "Power Herb",
-            "Nature": "Hasty (\u002BSpe / -Def)",
-            "IVs": 31,
-            "Moves": [
-              "Hyper Drill",
-              "Skull Bash",
-              "Megahorn",
-              "Knock Off"
-            ]
-          },
-          {
-            "Name": "Gorebyss",
-            "Form": "",
-            "Gender": "",
-            "Level": 74,
-            "Ability": "Swift Swim",
-            "HeldItem": "Focus Sash",
-            "Nature": "Hardy (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Shell Smash",
-              "Draining Kiss",
-              "Scald",
-              "Psychic"
-            ]
-          },
-          {
-            "Name": "Mantine",
-            "Form": "",
-            "Gender": "",
-            "Level": 74,
-            "Ability": "Rain Dish",
-            "HeldItem": "Sitrus Berry",
-            "Nature": "Bold (\u002BDef / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Surf",
-              "Aeroblast",
-              "Aqua Ring",
-              "Wide Guard"
-            ]
-          }
-        ]
-      },
-      {
         "TrainerName": "Admin Theta \u0026 Grunt Pi",
         "TrainerID": 472,
         "TrainerClass": "Team Flare",
         "TrainerClassIndex": 78,
         "BattleType": "Double",
         "Route": "Team Flare Secret HQ - Walkway",
-        "EncounterIndex": 10,
+        "EncounterIndex": 5,
         "Required": "Mandatory",
         "Notes": "",
         "IsTagBattle": true,
@@ -23233,7 +23233,7 @@
         "TrainerClassIndex": 77,
         "BattleType": "Single",
         "Route": "Team Flare Secret HQ - Walkway",
-        "EncounterIndex": 12,
+        "EncounterIndex": 6,
         "Required": "Mandatory",
         "Notes": "Left (F)",
         "IsTagBattle": false,
@@ -23296,7 +23296,7 @@
         "TrainerClassIndex": 77,
         "BattleType": "Double",
         "Route": "Team Flare Secret HQ - Walkway",
-        "EncounterIndex": 13,
+        "EncounterIndex": 7,
         "Required": "Mandatory",
         "Notes": "Middle Front (F)",
         "IsTagBattle": false,
@@ -23375,7 +23375,7 @@
         "TrainerClassIndex": 78,
         "BattleType": "Double",
         "Route": "Team Flare Secret HQ - Walkway",
-        "EncounterIndex": 14,
+        "EncounterIndex": 8,
         "Required": "Mandatory",
         "Notes": "Right (M)",
         "IsTagBattle": false,
@@ -23454,7 +23454,7 @@
         "TrainerClassIndex": 78,
         "BattleType": "Single",
         "Route": "Team Flare Secret HQ - Walkway",
-        "EncounterIndex": 15,
+        "EncounterIndex": 9,
         "Required": "Mandatory",
         "Notes": "Back (M)",
         "IsTagBattle": false,
@@ -23517,7 +23517,7 @@
         "TrainerClassIndex": 175,
         "BattleType": "Single",
         "Route": "Team Flare Secret HQ - Walkway",
-        "EncounterIndex": 16,
+        "EncounterIndex": 10,
         "Required": "Mandatory",
         "Notes": "",
         "IsTagBattle": false,
@@ -24765,19 +24765,19 @@
             ]
           },
           {
-            "Name": "Relicanth",
+            "Name": "Gigalith",
             "Form": "",
             "Gender": "",
             "Level": 65,
-            "Ability": "Water Absorb",
+            "Ability": "Sturdy",
             "HeldItem": "Shell Bell",
-            "Nature": "Brave (\u002BAtk / -Spe)",
+            "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Stone Edge",
-              "Zen Headbutt",
-              "Double-Edge",
-              "Phantom Force"
+              "Power Gem",
+              "Disarming Voice",
+              "Earth Power",
+              "Flash Cannon"
             ]
           },
           {
@@ -25364,66 +25364,66 @@
         "RewardItem": "Absolite",
         "Pokemon": [
           {
-            "Name": "Alakazam",
+            "Name": "Forretress",
             "Form": "",
             "Gender": "",
             "Level": 63,
-            "Ability": "Synchronize",
-            "HeldItem": "Scope Lens",
+            "Ability": "Aftermath",
+            "HeldItem": "Rocky Helmet",
+            "Nature": "Impish (\u002BDef / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Iron Head",
+              "Payback",
+              "Explosion",
+              "Sticky Web"
+            ]
+          },
+          {
+            "Name": "Lapras",
+            "Form": "",
+            "Gender": "",
+            "Level": 63,
+            "Ability": "Shell Armor",
+            "HeldItem": "Jaboca Berry",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Psychic",
-              "Flash Cannon",
-              "Aura Sphere",
-              "Calm Mind"
+              "Ice Beam",
+              "Surf",
+              "Hyper Voice",
+              "Confuse Ray"
             ]
           },
           {
-            "Name": "Malamar",
-            "Form": "",
-            "Gender": "",
-            "Level": 63,
-            "Ability": "Contrary",
-            "HeldItem": "Dark Gem",
-            "Nature": "Bashful (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Superpower",
-              "Baton Pass",
-              "Psycho Cut",
-              "Foul Play"
-            ]
-          },
-          {
-            "Name": "Lunatone",
+            "Name": "Hydreigon",
             "Form": "",
             "Gender": "",
             "Level": 63,
             "Ability": "Levitate",
-            "HeldItem": "Babiri Berry",
-            "Nature": "Mild (\u002BSpA / -Def)",
+            "HeldItem": "Draco Plate",
+            "Nature": "Hardy (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Ice Beam",
-              "Shadow Ball",
-              "Moonblast",
-              "Power Gem"
+              "Dark Pulse",
+              "Dragon Pulse",
+              "Earth Power",
+              "Heat Wave"
             ]
           },
           {
-            "Name": "Amoonguss",
+            "Name": "Leafeon",
             "Form": "",
             "Gender": "",
             "Level": 62,
-            "Ability": "Regenerator",
+            "Ability": "Sap Sipper",
             "HeldItem": "Big Root",
-            "Nature": "Bold (\u002BDef / -Atk)",
+            "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Sludge Bomb",
-              "Giga Drain",
-              "Spore",
+              "Horn Leech",
+              "Night Slash",
+              "Psycho Cut",
               "Leech Seed"
             ]
           },
@@ -25463,7 +25463,7 @@
             "Form": "",
             "Gender": "",
             "Level": 61,
-            "Ability": "Victory Star",
+            "Ability": "Aegis",
             "HeldItem": "Sitrus Berry",
             "Nature": "Quirky (Neutral)",
             "IVs": 31,
@@ -25475,19 +25475,19 @@
             ]
           },
           {
-            "Name": "Beedrill",
+            "Name": "Honchkrow",
             "Form": "",
             "Gender": "",
             "Level": 62,
-            "Ability": "Swarm",
-            "HeldItem": "Charti Berry",
-            "Nature": "Naive (\u002BSpe / -SpD)",
+            "Ability": "Defiant",
+            "HeldItem": "Scope Lens",
+            "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Twineedle",
-              "Poison Jab",
-              "Knock Off",
-              "Toxic Spikes"
+              "Drill Peck",
+              "Foul Play",
+              "Heat Wave",
+              "Confide"
             ]
           },
           {
@@ -25507,19 +25507,19 @@
             ]
           },
           {
-            "Name": "Magnezone",
+            "Name": "Volcarona",
             "Form": "",
             "Gender": "",
             "Level": 60,
-            "Ability": "Magnet Pull",
-            "HeldItem": "Light Clay",
-            "Nature": "Sassy (\u002BSpD / -Spe)",
+            "Ability": "Flash Fire",
+            "HeldItem": "Charti Berry",
+            "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
             "Moves": [
-              "Thunderbolt",
-              "Flash Cannon",
-              "Light Screen",
-              "Mirror Coat"
+              "Bug Buzz",
+              "Fiery Dance",
+              "Aeroblast",
+              "Morning Sun"
             ]
           },
           {
@@ -26066,35 +26066,35 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Forretress",
+            "Name": "Rhyperior",
             "Form": "",
             "Gender": "",
             "Level": 64,
-            "Ability": "Aftermath",
-            "HeldItem": "Eject Button",
-            "Nature": "Impish (\u002BDef / -SpA)",
+            "Ability": "Solid Rock",
+            "HeldItem": "Earth Plate",
+            "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Attack Order",
-              "Iron Head",
-              "Sticky Web",
-              "Spikes"
+              "Earthquake",
+              "Double-Edge",
+              "Stone Edge",
+              "Submission"
             ]
           },
           {
-            "Name": "Kabutops",
+            "Name": "Crustle",
             "Form": "",
             "Gender": "",
             "Level": 64,
-            "Ability": "Battle Armor",
-            "HeldItem": "King\u2019s Rock",
-            "Nature": "Docile (Neutral)",
+            "Ability": "Shell Armor",
+            "HeldItem": "Big Root",
+            "Nature": "Rash (\u002BSpA / -SpD)",
             "IVs": 31,
             "Moves": [
               "Knock Off",
               "Leech Life",
               "Rock Slide",
-              "Waterfall"
+              "Withdraw"
             ]
           },
           {
@@ -26129,19 +26129,19 @@
         "RewardItem": "Darmanitite",
         "Pokemon": [
           {
-            "Name": "Golduck",
+            "Name": "Jynx",
             "Form": "",
             "Gender": "",
             "Level": 65,
-            "Ability": "Cloud Nine",
-            "HeldItem": "Water Gem",
-            "Nature": "Modest (\u002BSpA / -Atk)",
+            "Ability": "Dry Skin",
+            "HeldItem": "Ice Gem",
+            "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
             "Moves": [
-              "Icy Wind",
-              "Aura Sphere",
-              "Scald",
-              "Psychic"
+              "Draining Kiss",
+              "Psychic",
+              "Ice Beam",
+              "Shadow Ball"
             ]
           },
           {
@@ -26161,19 +26161,19 @@
             ]
           },
           {
-            "Name": "Gothitelle",
+            "Name": "Reuniclus",
             "Form": "",
             "Gender": "",
             "Level": 66,
-            "Ability": "Competitive",
-            "HeldItem": "Black Glasses",
-            "Nature": "Hasty (\u002BSpe / -Def)",
+            "Ability": "Magic Guard",
+            "HeldItem": "Leftovers",
+            "Nature": "Calm (\u002BSpD / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Fake Out",
               "Psychic",
-              "Heal Pulse",
-              "Dark Pulse"
+              "Power Gem",
+              "Pain Split",
+              "Cosmic Power"
             ]
           },
           {
@@ -26224,35 +26224,35 @@
         "RewardItem": "Yache Berry",
         "Pokemon": [
           {
-            "Name": "Scrafty",
+            "Name": "Poliwrath",
             "Form": "",
             "Gender": "",
             "Level": 64,
-            "Ability": "Intimidate",
+            "Ability": "Iron Fist",
+            "HeldItem": "Yache Berry",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Waterfall",
+              "Drain Punch",
+              "Sucker Punch",
+              "Ice Punch"
+            ]
+          },
+          {
+            "Name": "Archeops",
+            "Form": "",
+            "Gender": "",
+            "Level": 65,
+            "Ability": "Defeatist",
             "HeldItem": "Yache Berry",
             "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Drain Punch",
-              "Foul Play",
-              "Dual Chop",
-              "Parting Shot"
-            ]
-          },
-          {
-            "Name": "Krookodile",
-            "Form": "",
-            "Gender": "",
-            "Level": 65,
-            "Ability": "Moxie",
-            "HeldItem": "Yache Berry",
-            "Nature": "Jolly (\u002BSpe / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Earthquake",
-              "Superpower",
-              "Crunch",
-              "Taunt"
+              "Noble Roar",
+              "Aeroblast",
+              "Power Gem",
+              "Earth Power"
             ]
           },
           {
@@ -26287,35 +26287,35 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Staraptor",
+            "Name": "Accelgor",
             "Form": "",
             "Gender": "",
             "Level": 64,
-            "Ability": "Reckless",
-            "HeldItem": "Shell Bell",
-            "Nature": "Naive (\u002BSpe / -SpD)",
+            "Ability": "Speed Boost",
+            "HeldItem": "Focus Sash",
+            "Nature": "Brave (\u002BAtk / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Flying Press",
-              "Double-Edge",
-              "Brave Bird",
-              "Agility"
+              "Focus Blast",
+              "Dark Pulse",
+              "Bug Buzz",
+              "Baton Pass"
             ]
           },
           {
-            "Name": "Druddigon",
+            "Name": "Rampardos",
             "Form": "",
             "Gender": "",
             "Level": 65,
-            "Ability": "Rough Skin",
-            "HeldItem": "Maranga Berry",
-            "Nature": "Quirky (Neutral)",
+            "Ability": "Rock Head",
+            "HeldItem": "Eject Button",
+            "Nature": "Sassy (\u002BSpD / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Fire Punch",
-              "Superpower",
+              "Double-Edge",
               "Stone Edge",
-              "Dragon Claw"
+              "Crunch",
+              "Iron Tail"
             ]
           },
           {
@@ -26775,19 +26775,19 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Tyrantrum",
+            "Name": "Magmortar",
             "Form": "",
             "Gender": "",
-            "Level": 63,
-            "Ability": "Strong Jaw",
-            "HeldItem": "Rock Gem",
-            "Nature": "Lonely (\u002BAtk / -Def)",
+            "Level": 64,
+            "Ability": "Mega Launcher",
+            "HeldItem": "Fire Gem",
+            "Nature": "Modest (\u002BSpA / -Atk)",
             "IVs": 31,
             "Moves": [
-              "Stone Edge",
-              "Crunch",
-              "Ice Fang",
-              "Dragon Claw"
+              "Hyper Beam",
+              "Scald",
+              "Aura Sphere",
+              "Lava Plume"
             ]
           },
           {
@@ -26826,10 +26826,10 @@
             "Name": "Wormadam",
             "Form": "Wormadam-Trash",
             "Gender": "",
-            "Level": 64,
+            "Level": 63,
             "Ability": "Biodiverse",
             "HeldItem": "Sitrus Berry",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
               "Iron Head",
@@ -26854,19 +26854,19 @@
         "RewardItem": "",
         "Pokemon": [
           {
-            "Name": "Serperior",
+            "Name": "Alakazam",
             "Form": "",
             "Gender": "",
             "Level": 64,
-            "Ability": "Mending",
-            "HeldItem": "Leftovers",
-            "Nature": "Rash (\u002BSpA / -SpD)",
+            "Ability": "Magician",
+            "HeldItem": "",
+            "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Leech Life",
-              "Leaf Blade",
-              "Dragon Claw",
-              "Dragon Dance"
+              "Psychic",
+              "Thunderbolt",
+              "Aura Sphere",
+              "Barrier"
             ]
           },
           {
@@ -26882,7 +26882,7 @@
               "Freeze-Dry",
               "Flash Cannon",
               "Reflect",
-              "Light Screen"
+              "Dazzling Gleam"
             ]
           },
           {
@@ -27401,40 +27401,40 @@
             "Moves": [
               "Wild Charge",
               "Blaze Kick",
-              "Jump Kick",
-              "Agility"
+              "Play Rough",
+              "Pursuit"
             ]
           },
           {
-            "Name": "Manectric",
+            "Name": "Porygon2",
             "Form": "",
             "Gender": "",
-            "Level": 60,
-            "Ability": "Intimidate",
+            "Level": 62,
+            "Ability": "Trace",
             "HeldItem": "Electric Gem",
-            "Nature": "Gentle (\u002BSpD / -Def)",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Volt Switch",
-              "Hyper Voice",
-              "Flamethrower",
-              "Luster Purge"
+              "Zap Cannon",
+              "Secret Power",
+              "Recycle",
+              "Recover"
             ]
           },
           {
-            "Name": "Emolga",
+            "Name": "Muk",
             "Form": "",
             "Gender": "",
             "Level": 60,
-            "Ability": "Motor Drive",
+            "Ability": "Envenom",
             "HeldItem": "Electric Gem",
-            "Nature": "Bold (\u002BDef / -Atk)",
+            "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Air Slash",
-              "Thunderbolt",
-              "Nuzzle",
-              "Light Screen"
+              "Poison Jab",
+              "Explosion",
+              "Thunder Punch",
+              "Shadow Sneak"
             ]
           }
         ]
@@ -27469,35 +27469,35 @@
             ]
           },
           {
-            "Name": "Skarmory",
+            "Name": "Cloyster",
             "Form": "",
             "Gender": "",
             "Level": 62,
-            "Ability": "Sturdy",
+            "Ability": "Shell Armor",
             "HeldItem": "Shell Bell",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "Nature": "Lonely (\u002BAtk / -Def)",
             "IVs": 31,
             "Moves": [
-              "Wing Attack",
-              "Iron Head",
-              "Swords Dance",
-              "Autotomize"
+              "Icicle Crash",
+              "Surf",
+              "Drill Run",
+              "Withdraw"
             ]
           },
           {
-            "Name": "Venusaur",
+            "Name": "Serperior",
             "Form": "",
             "Gender": "",
             "Level": 62,
-            "Ability": "Effect Spore",
-            "HeldItem": "Focus Sash",
-            "Nature": "Modest (\u002BSpA / -Atk)",
+            "Ability": "Mending",
+            "HeldItem": "Leftovers",
+            "Nature": "Rash (\u002BSpA / -SpD)",
             "IVs": 31,
             "Moves": [
               "Giga Drain",
-              "Sludge Bomb",
-              "Body Slam",
-              "Earth Power"
+              "Breaking Swipe",
+              "Leech Seed",
+              "Protect"
             ]
           },
           {
@@ -27650,19 +27650,19 @@
             ]
           },
           {
-            "Name": "Flygon",
+            "Name": "Amoonguss",
             "Form": "",
             "Gender": "",
             "Level": 62,
-            "Ability": "Levitate",
-            "HeldItem": "Expert Belt",
-            "Nature": "Hardy (Neutral)",
+            "Ability": "Natural Cure",
+            "HeldItem": "Black Sludge",
+            "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
             "Moves": [
-              "X-Scissor",
-              "Dragon Claw",
-              "Earth Power",
-              "Power Gem"
+              "Giga Drain",
+              "Sludge Bomb",
+              "Toxic",
+              "Leech Seed"
             ]
           },
           {
@@ -27682,19 +27682,19 @@
             ]
           },
           {
-            "Name": "Carnivine",
+            "Name": "Dewgong",
             "Form": "",
             "Gender": "",
             "Level": 62,
-            "Ability": "Poison Heal",
-            "HeldItem": "Toxic Orb",
+            "Ability": "Ice Body",
+            "HeldItem": "Life Orb",
             "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Petal Blizzard",
-              "Knock Off",
-              "Ingrain",
-              "Protect"
+              "Play Rough",
+              "Waterfall",
+              "Icicle Crash",
+              "Fake Out"
             ]
           }
         ]
