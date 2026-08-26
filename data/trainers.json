@@ -5354,19 +5354,19 @@
             ]
           },
           {
-            "Name": "Sudowoodo",
+            "Name": "Delcatty",
             "Form": "",
             "Gender": "",
             "Level": 39,
-            "Ability": "Rock Head",
+            "Ability": "Normalize",
             "HeldItem": "Lum Berry",
-            "Nature": "Naive (\u002BSpe / -SpD)",
+            "Nature": "Quiet (\u002BSpA / -Spe)",
             "IVs": 31,
             "Moves": [
-              "Needle Arm",
-              "Thunder Punch",
-              "Strength",
-              "Copycat"
+              "Hyper Voice",
+              "Mud Bomb",
+              "Charm",
+              "Metronome"
             ]
           }
         ]
@@ -5623,19 +5623,19 @@
             ]
           },
           {
-            "Name": "Simisage",
+            "Name": "Seviper",
             "Form": "",
             "Gender": "",
             "Level": 41,
-            "Ability": "Sap Sipper",
+            "Ability": "Perseverance",
             "HeldItem": "King\u2019s Rock",
-            "Nature": "Jolly (\u002BSpe / -SpA)",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Mega Punch",
-              "Acrobatics",
-              "Grass Pledge",
-              "Fling"
+              "Crunch",
+              "Poison Jab",
+              "Aqua Tail",
+              "Ice Fang"
             ]
           }
         ]
@@ -6041,19 +6041,19 @@
             ]
           },
           {
-            "Name": "Stunfisk",
+            "Name": "Ampharos",
             "Form": "",
             "Gender": "",
             "Level": 47,
             "Ability": "Static",
             "HeldItem": "Lum Berry",
-            "Nature": "Mild (\u002BSpA / -Def)",
+            "Nature": "Serious (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Water Pulse",
-              "Mudslide",
-              "Parabolic Charge",
-              "Reflect Type"
+              "Power Gem",
+              "Luster Purge",
+              "Thunderbolt",
+              "Dragon Pulse"
             ]
           }
         ]
@@ -11072,19 +11072,19 @@
             ]
           },
           {
-            "Name": "Jellicent",
+            "Name": "Sealeo",
             "Form": "",
             "Gender": "",
             "Level": 39,
-            "Ability": "Cursed Body",
+            "Ability": "Oblivious",
             "HeldItem": "Wacan Berry",
-            "Nature": "Bold (\u002BDef / -Atk)",
+            "Nature": "Careful (\u002BSpD / -SpA)",
             "IVs": 31,
             "Moves": [
-              "Hex",
-              "Brine",
-              "Wring Out",
-              "Recover"
+              "Aqua Tail",
+              "Ice Fang",
+              "Body Slam",
+              "Bulldoze"
             ]
           },
           {
@@ -11187,7 +11187,7 @@
             "Form": "",
             "Gender": "",
             "Level": 40,
-            "Ability": "Dry Skin",
+            "Ability": "Mending",
             "HeldItem": "Magnet",
             "Nature": "Bold (\u002BDef / -Atk)",
             "IVs": 31,
@@ -15814,19 +15814,19 @@
         "RewardItem": "Kebia Berry",
         "Pokemon": [
           {
-            "Name": "Politoed",
+            "Name": "Lapras",
             "Form": "",
             "Gender": "",
             "Level": 53,
-            "Ability": "Water Absorb",
+            "Ability": "Hydration",
             "HeldItem": "Lum Berry",
-            "Nature": "Brave (\u002BAtk / -Spe)",
+            "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
             "Moves": [
               "Surf",
               "Hyper Voice",
-              "Earth Power",
-              "Swagger"
+              "Ice Beam",
+              "Perish Song"
             ]
           },
           {

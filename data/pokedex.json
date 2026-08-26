@@ -18797,6 +18797,10 @@
         "Move": "Rock Tomb"
       },
       {
+        "Label": "TM40",
+        "Move": "Aerial Ace"
+      },
+      {
         "Label": "TM42",
         "Move": "Facade"
       },
@@ -28896,12 +28900,12 @@
     "Ability2": "Water Absorb",
     "AbilityH": "Simple",
     "BaseStats": {
-      "HP": 65,
-      "Atk": 55,
+      "HP": 75,
+      "Atk": 65,
       "Def": 55,
-      "SpA": 45,
-      "SpD": 35,
-      "Spe": 15
+      "SpA": 35,
+      "SpD": 55,
+      "Spe": 25
     },
     "CatchRate": 255,
     "BaseXP": 22,
@@ -29030,10 +29034,10 @@
     "AbilityH": "Simple",
     "BaseStats": {
       "HP": 105,
-      "Atk": 95,
+      "Atk": 105,
       "Def": 95,
       "SpA": 65,
-      "SpD": 65,
+      "SpD": 75,
       "Spe": 35
     },
     "CatchRate": 255,
@@ -104399,12 +104403,12 @@
     "Ability2": "Sweet Veil",
     "AbilityH": "Gooey",
     "BaseStats": {
-      "HP": 102,
-      "Atk": 95,
+      "HP": 107,
+      "Atk": 93,
       "Def": 91,
       "SpA": 80,
       "SpD": 75,
-      "Spe": 52
+      "Spe": 64
     },
     "CatchRate": 255,
     "BaseXP": 88,
