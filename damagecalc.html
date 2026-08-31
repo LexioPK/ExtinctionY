@@ -4616,7 +4616,7 @@ function getFragsheetRows(splitId) {
     }
   }
   const totalKos = filtered.length;
-  return Array.from(rowsByAttacker.values())
+  const sortedRows = Array.from(rowsByAttacker.values())
     .map(row => ({
       ...row,
       koPct: totalKos > 0 ? (row.kos / totalKos) * 100 : 0
@@ -4625,6 +4625,16 @@ function getFragsheetRows(splitId) {
       if (b.kos !== a.kos) return b.kos - a.kos;
       return a.species.localeCompare(b.species);
     });
+  let currentRank = 0;
+  let previousKos = null;
+  return sortedRows.map((row, idx) => {
+    const currentKos = Number(row.kos) || 0;
+    if (idx === 0 || currentKos !== previousKos) {
+      currentRank = idx + 1;
+      previousKos = currentKos;
+    }
+    return { ...row, rank: currentRank };
+  });
 }
 
 function renderFragsheetKoHeader() {
@@ -4701,15 +4711,9 @@ function renderFragsheetLeaderboard() {
     body.appendChild(tr);
     return;
   }
-  let currentRank = 0;
-  let previousKos = null;
   rows.forEach((row, idx) => {
     const tr = document.createElement("tr");
-    if (row.kos !== previousKos) {
-      currentRank = idx + 1;
-      previousKos = row.kos;
-    }
-    const rank = currentRank;
+    const rank = Number(row.rank) || (idx + 1);
 
     const rankCell = document.createElement("td");
     rankCell.textContent = String(rank);
