@@ -4701,9 +4701,15 @@ function renderFragsheetLeaderboard() {
     body.appendChild(tr);
     return;
   }
+  let currentRank = 0;
+  let previousKos = null;
   rows.forEach((row, idx) => {
     const tr = document.createElement("tr");
-    const rank = idx + 1;
+    if (row.kos !== previousKos) {
+      currentRank = idx + 1;
+      previousKos = row.kos;
+    }
+    const rank = currentRank;
 
     const rankCell = document.createElement("td");
     rankCell.textContent = String(rank);
