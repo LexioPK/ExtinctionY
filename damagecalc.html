@@ -4713,7 +4713,7 @@ function renderFragsheetLeaderboard() {
   }
   rows.forEach((row, idx) => {
     const tr = document.createElement("tr");
-    const rank = Number(row.rank) || (idx + 1);
+    const rank = row.rank ?? (idx + 1);
 
     const rankCell = document.createElement("td");
     rankCell.textContent = String(rank);
