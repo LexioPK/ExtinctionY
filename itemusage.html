@@ -141,16 +141,6 @@
 </style>
 </head>
 <body>
-<script>
-const isEmbedded = new URLSearchParams(window.location.search).get("embedded") === "1";
-if (isEmbedded) {
-    document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("site-header")?.remove();
-        document.body.style.paddingTop = "20px";
-    });
-}
-</script>
-
 <h1>Held Item Usage Rankings</h1>
 <p class="subtitle">Items used by trainer Pokémon, ranked by frequency</p>
 

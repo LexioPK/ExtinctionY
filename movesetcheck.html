@@ -145,14 +145,6 @@
 </head>
 <body>
 <script>
-const isEmbedded = new URLSearchParams(window.location.search).get("embedded") === "1";
-if (isEmbedded) {
-    document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("site-header")?.remove();
-        document.body.style.paddingTop = "20px";
-    });
-}
-
 function displayPokemonName(name) {
     return window.formatPokemonDisplayName ? window.formatPokemonDisplayName(name) : name;
 }

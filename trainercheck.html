@@ -38,14 +38,6 @@
   <div id="trainer-grid" class="trainer-grid"></div>
 
 <script>
-const isEmbedded = new URLSearchParams(window.location.search).get("embedded") === "1";
-if (isEmbedded) {
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("site-header")?.remove();
-    document.body.style.paddingTop = "20px";
-  });
-}
-
 function resolveMovesetKey(poke, movesets) {
   const form = String(poke.Form || "").trim();
   const name = String(poke.Name || "").trim();
