@@ -60,13 +60,14 @@
   .evo-img { width:120px; height:120px; image-rendering: auto; display:block; margin:0 auto 5px; }
   .evo-name { font-weight:bold; font-size:18px; }
   .evo-arrow-block { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:80px; }
-  .method-text { font-size:13px; font-weight:600; text-decoration:underline; margin-bottom:8px; }
-  .arrow { font-size:48px; font-weight:900; color:#888; }
+  .method-text { font-size:13px; font-weight:600; text-decoration:underline; margin-bottom:8px; color:#5f6f8a; font-family:"Lexend", sans-serif; }
+  .arrow { font-size:48px; font-weight:900; color:#5f6f8a; line-height:1; }
   .evo-node { text-align:center; }
   .evo-node img { width:120px; height:120px; image-rendering:auto; }
   .evo-node-name { margin-top:5px; font-weight:700; font-size:18px; color:inherit; }
-  .evo-special-arrow { font-size:48px; color:#888; font-weight:900; line-height:1; }
-  .evo-special-method { font-size:13px; color:#888; font-weight:600; text-decoration:underline; }
+  .evo-special-arrow { font-size:48px; color:#5f6f8a; font-weight:900; line-height:1; }
+  .evo-special-method { font-size:13px; color:#5f6f8a; font-weight:600; text-decoration:underline; font-family:"Lexend", sans-serif; }
+  .evo-method-inline { position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; text-decoration:underline; white-space:nowrap; color:#5f6f8a; font-family:"Lexend", sans-serif; }
   
   /* Branching evolution styles */
   .branch-container { display:flex; flex-direction:row; align-items:center; gap:15px; position:relative; }
@@ -75,7 +76,7 @@
   
   /* Diagonal arrow styling for branches */
   .diagonal-arrow { position:relative; display:flex; align-items:center; justify-content:center; width:100px; height:60px; }
-  .diagonal-arrow .arrow { font-size:48px; font-weight:900; color:#888; transform:rotate(-45deg); }
+  .diagonal-arrow .arrow { font-size:48px; font-weight:900; color:#5f6f8a; transform:rotate(-45deg); }
   .diagonal-arrow.down .arrow { transform:rotate(45deg); }
   
   /* Eevee circular layout */
@@ -84,7 +85,7 @@
   .eevee-evo { position:absolute; }
   .eevee-evo .evo-block { position:relative; }
   .eevee-evo .method-text { position:absolute; top:-30px; left:50%; transform:translateX(-50%); white-space:nowrap; font-size:13px; font-weight:600; }
-  .eevee-arrow { position:absolute; font-size:36px; font-weight:900; color:#4285F4; }
+  .eevee-arrow { position:absolute; font-size:48px; font-weight:900; color:#5f6f8a; line-height:1; }
 
   /* Horizontal centering for multi-branch */
   .multi-branch-container { display:flex; flex-direction:row; align-items:flex-start; gap:50px; }
@@ -861,7 +862,7 @@ function loadEvolutions(currentName, data) {
                       <div class="arrow">→</div>
                     </div>
                     <div style="position:relative;">
-                      <div style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; text-decoration:underline; white-space:nowrap;">${method1}</div>
+                      <div class="evo-method-inline">${method1}</div>
                       ${branch1Evo}
                     </div>
                     ${branch1Rest !== branch1Evo ? branch1Rest.replace(branch1Evo, '') : ''}
@@ -871,7 +872,7 @@ function loadEvolutions(currentName, data) {
                       <div class="arrow">→</div>
                     </div>
                     <div style="position:relative;">
-                      <div style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; text-decoration:underline; white-space:nowrap;">${method2}</div>
+                      <div class="evo-method-inline">${method2}</div>
                       ${branch2Evo}
                     </div>
                     ${branch2Rest !== branch2Evo ? branch2Rest.replace(branch2Evo, '') : ''}
