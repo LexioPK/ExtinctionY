@@ -48,6 +48,14 @@ window.toSpriteSlug = toSpriteSlug;
 window.formatPokemonDisplayName = formatPokemonDisplayName;
 window.isMegaFormName = isMegaFormName;
 
+function isEmbeddedPage() {
+  try {
+    return new URLSearchParams(window.location.search).get("embedded") === "1";
+  } catch (_) {
+    return false;
+  }
+}
+
 async function loadSearchPokedex() {
   if (window._searchPokedex) return window._searchPokedex;
   try {
@@ -225,9 +233,11 @@ function installHeaderFromFile() {
 
 // Initialize once DOM is ready
 document.addEventListener("DOMContentLoaded", async () => {
-  await installHeaderFromFile();
-  // Preload pokedex for search
-  await loadSearchPokedex();
+  if (!isEmbeddedPage()) {
+    await installHeaderFromFile();
+    // Preload pokedex for search
+    await loadSearchPokedex();
+  }
   // Expose search function globally (used by inline oninput if any)
   window.searchPokemon = searchPokemon;
   // Wire up dark mode toggle
