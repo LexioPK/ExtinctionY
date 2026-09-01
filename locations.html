@@ -2192,9 +2192,9 @@
 
                 // Table body
                 const tbody = document.createElement("tbody");
+                const darkMode = document.documentElement.classList.contains("dark-mode");
                 items.forEach((item, idx) => {
                     const row = document.createElement("tr");
-                    const darkMode = document.documentElement.classList.contains("dark-mode");
                     row.style.borderBottom = darkMode ? "1px solid #333" : "1px solid #eee";
                     if (darkMode) {
                         row.style.backgroundColor = idx % 2 === 0 ? "#222233" : "#2a2a3a";
