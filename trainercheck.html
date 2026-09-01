@@ -74,6 +74,8 @@ async function runTrainerCheck() {
   const trainersData = await trainersRes.json();
   const movesets = await movesetsRes.json();
   const pokedex = await pokedexRes.json();
+  const routeOrder = Object.keys(trainersData || {});
+  const routeOrderMap = new Map(routeOrder.map((route, idx) => [route, idx]));
   const grid = document.getElementById("trainer-grid");
   grid.innerHTML = "";
 
@@ -111,13 +113,20 @@ async function runTrainerCheck() {
         flagged.push({
           route: routeName,
           trainer: trainerLabel(trainer),
+          encounterIndex: Number.isInteger(trainer.EncounterIndex) ? trainer.EncounterIndex : Number.MAX_SAFE_INTEGER,
           issues: pokemonIssues
         });
       }
     }
   }
 
-  flagged.sort((a, b) => a.route.localeCompare(b.route) || a.trainer.localeCompare(b.trainer));
+  flagged.sort((a, b) => {
+    const routeA = routeOrderMap.has(a.route) ? routeOrderMap.get(a.route) : Number.MAX_SAFE_INTEGER;
+    const routeB = routeOrderMap.has(b.route) ? routeOrderMap.get(b.route) : Number.MAX_SAFE_INTEGER;
+    if (routeA !== routeB) return routeA - routeB;
+    if (a.encounterIndex !== b.encounterIndex) return a.encounterIndex - b.encounterIndex;
+    return a.trainer.localeCompare(b.trainer);
+  });
 
   document.getElementById("total-trainers").textContent = String(totalTrainers);
   document.getElementById("flagged-trainers").textContent = String(flagged.length);
