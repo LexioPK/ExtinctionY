@@ -29,7 +29,7 @@
 </head>
 <body>
   <h1>Trainer Check</h1>
-  <p class="subtitle">Flags trainers with Pokémon that use moves not in their level-up learnset.</p>
+  <p class="subtitle">Flags trainers with Pokémon that use moves they cannot learn at all.</p>
   <div class="stats-container">
     <div class="stat-box"><div class="stat-number" id="total-trainers">0</div><div class="stat-label">Total Trainers</div></div>
     <div class="stat-box"><div class="stat-number" id="flagged-trainers">0</div><div class="stat-label">Flagged Trainers</div></div>
@@ -38,6 +38,26 @@
   <div id="trainer-grid" class="trainer-grid"></div>
 
 <script>
+const CHECKLIST_ROUTE_ORDER = [
+  "Vaniville Town","Route 1","Aquacorde Town","Route 2","Santalune Forest","Route 3",
+  "Santalune City","Route 22","Route 22 - Part 2","Santalune Gym","Route 4","Lumiose City",
+  "Route 5","Camphrier Town","Kalos Hotels","Berry Fields","Route 6","Route 6 - Pathway","Route 6 - East",
+  "Route 6 - West","Parfum Palace","Route 7","Connecting Cave","Route 8","Route 8 - Upper",
+  "Route 8 - Lower","Route 8 - Sea","Ambrette Town","Ambrette Town Aquarium","Route 9","Glittering Cave","Ambrette Town Aquarium",
+  "Cyllage City","Route 10","Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11",
+  "Reflection Cave","Reflection Cave - 1F","Reflection Cave - B1F","Shalour City","Tower of Mastery","Shalour Gym",
+  "Route 12","Azure Bay","Snow Spirit's Den","Coumarine City","Coumarine City - Seaside","Coumarine City - Cliffside","Coumarine Gym","Route 13",
+  "Kalos Power Plant","Lumiose Gym/Prism Tower","Route 14","Laverre City","Laverre Gym","Poké Ball Factory",
+  "Route 15","Route 16","Lost Hotel","Lost Hotel - Route 15 Side","Lost Hotel  - Route 16 Side","Dendemille Town",
+  "Frost Cavern","Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F","Route 17",
+  "Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs","Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Cafe/Lysandre Labs - Lysandre Labs - B1","Lysandre Cafe/Lysandre Labs - Lysandre Labs - B3",
+  "Team Flare Secret HQ","Team Flare Secret HQ - Entrance","Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
+  "Terminus Cave - B2F","Couriway Town","Route 19","Snowbelle City","Route 20","Pokémon Village",
+  "Snowbelle Gym","Route 21","Chamber of Emptiness","Victory Road","Victory Road - Entrance","Victory Road - Inside 1",
+  "Victory Road - Outside 2","Victory Road - Inside 2","Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4","Victory Road - Inside 4",
+  "Elite Four/Kalos League Champion","Elite Four/Kalos League Champion - Elite Four","Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade","Unknown Dungeon","Kiloude City"
+];
+
 function resolveMovesetKey(poke, movesets) {
   const form = String(poke.Form || "").trim();
   const name = String(poke.Name || "").trim();
@@ -65,6 +85,13 @@ function trainerLabel(trainer) {
   return className ? `${className} ${trainerName}`.trim() : trainerName;
 }
 
+function getTrainerRouteIndex(routeName) {
+  const directIndex = CHECKLIST_ROUTE_ORDER.indexOf(routeName);
+  if (directIndex !== -1) return directIndex;
+  const partialIndex = CHECKLIST_ROUTE_ORDER.findIndex(route => routeName.startsWith(route) || route.startsWith(routeName));
+  return partialIndex !== -1 ? partialIndex : Number.MAX_SAFE_INTEGER;
+}
+
 async function runTrainerCheck() {
   const [trainersRes, movesetsRes, pokedexRes] = await Promise.all([
     fetch("data/trainers.json"),
@@ -74,8 +101,6 @@ async function runTrainerCheck() {
   const trainersData = await trainersRes.json();
   const movesets = await movesetsRes.json();
   const pokedex = await pokedexRes.json();
-  const routeOrder = Object.keys(trainersData || {});
-  const routeOrderMap = new Map(routeOrder.map((route, idx) => [route, idx]));
   const grid = document.getElementById("trainer-grid");
   grid.innerHTML = "";
 
@@ -112,6 +137,7 @@ async function runTrainerCheck() {
       if (pokemonIssues.length > 0) {
         flagged.push({
           route: routeName,
+          routeIndex: getTrainerRouteIndex(routeName),
           trainer: trainerLabel(trainer),
           encounterIndex: Number.isInteger(trainer.EncounterIndex) ? trainer.EncounterIndex : Number.MAX_SAFE_INTEGER,
           issues: pokemonIssues
@@ -121,9 +147,7 @@ async function runTrainerCheck() {
   }
 
   flagged.sort((a, b) => {
-    const routeA = routeOrderMap.has(a.route) ? routeOrderMap.get(a.route) : Number.MAX_SAFE_INTEGER;
-    const routeB = routeOrderMap.has(b.route) ? routeOrderMap.get(b.route) : Number.MAX_SAFE_INTEGER;
-    if (routeA !== routeB) return routeA - routeB;
+    if (a.routeIndex !== b.routeIndex) return a.routeIndex - b.routeIndex;
     if (a.encounterIndex !== b.encounterIndex) return a.encounterIndex - b.encounterIndex;
     return a.trainer.localeCompare(b.trainer);
   });
