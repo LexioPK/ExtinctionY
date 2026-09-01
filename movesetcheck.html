@@ -144,7 +144,19 @@
 </style>
 </head>
 <body>
-<div id="header-placeholder"></div>
+<script>
+const isEmbedded = new URLSearchParams(window.location.search).get("embedded") === "1";
+if (isEmbedded) {
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("site-header")?.remove();
+        document.body.style.paddingTop = "20px";
+    });
+}
+
+function displayPokemonName(name) {
+    return window.formatPokemonDisplayName ? window.formatPokemonDisplayName(name) : name;
+}
+</script>
 
 <h1>Moveset Validation</h1>
 <div class="subtitle">Checking for duplicate moves in level-up movesets and level-up moves that have TMs the Pokemon doesn't learn</div>
@@ -190,7 +202,7 @@ async function loadMovesetData() {
 
 function getPokemonIconPath(pokemonName) {
     // Convert Pokemon name to icon filename format
-    const iconName = pokemonName.toLowerCase().replace(/\s+/g, '-');
+    const iconName = window.toSpriteSlug ? window.toSpriteSlug(pokemonName) : pokemonName.toLowerCase().replace(/\s+/g, '-');
     return `image/icons/${iconName}.png`;
 }
 
@@ -267,10 +279,10 @@ function createMovesetCard(pokemonName, issues) {
     html += `<img src="${getPokemonIconPath(pokemonName)}" 
                   alt="${pokemonName}" 
                   class="pokemon-icon"
-                  onerror="this.src='image/icons/unknown.png'">`;
+                  onerror="this.src='pokemon_sprites/substitute.png'">`;
     
     // Pokemon name
-    html += `<div class="pokemon-name">${pokemonName}</div>`;
+    html += `<div class="pokemon-name">${displayPokemonName(pokemonName)}</div>`;
     
     // Issues list or no issues message
     if (issues.length > 0) {

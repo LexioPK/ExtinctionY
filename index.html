@@ -448,6 +448,8 @@
 
 <script>
 let allPokemon = {};
+const displayPokemonName = (name) => window.formatPokemonDisplayName ? window.formatPokemonDisplayName(name) : name;
+const getPokemonSlug = (name) => window.toSpriteSlug ? window.toSpriteSlug(name) : String(name || "").toLowerCase().replace(/\s+/g, '-');
 
 // Region definitions
 const regions = {
@@ -501,7 +503,7 @@ function loadPokedex() {
             /* ⭐ Multi-folder sprite folders */
             const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
             const getPokemonImage = (pokeName) => {
-                const lowerName = pokeName.toLowerCase().replace(/\s+/g,'-');
+                const lowerName = getPokemonSlug(pokeName);
                 return `${spriteFolders[0]}/${lowerName}.png`;
             };
 
@@ -592,11 +594,11 @@ function loadPokedex() {
                     };
 
                     card.innerHTML = `
-<h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${name}</h3>
+<h3><span class="dex">#${String(mon.SpeciesIdx).padStart(3, "0")}</span> ${displayPokemonName(name)}</h3>
 
 <img class="sprite"
      src="${getPokemonImage(name)}"
-     onerror="this.onerror=null; this.src='pokemon_sprties2/${name.toLowerCase().replace(/\s+/g,'-')}.png'; this.onerror=null;">
+     onerror="this.onerror=null; this.src='pokemon_sprties2/${getPokemonSlug(name)}.png'; this.onerror=function(){ this.src='pokemon_sprites/substitute.png'; this.onerror=null; };">
 
 <div class="types">
     <span class="type type-${mon.Type1.toLowerCase()}">${mon.Type1}</span>
@@ -681,7 +683,7 @@ function searchPokemon() {
             return `
             <div style="padding:8px; cursor:pointer;"
                  onclick="window.location.href='${linkUrl}'">
-                ${name}
+               ${displayPokemonName(name)}
             </div>
         `;
         })

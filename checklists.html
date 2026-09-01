@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Check-Lists - Extinction Y</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="header.css">
+<script src="header.js" defer></script>
+<style>
+  body {
+    font-family: "Lexend", sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .checklist-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .checklist-tab {
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+  }
+  .checklist-tab.active {
+    background: #4285F4;
+    border-color: #4285F4;
+    color: #fff;
+  }
+  .checklist-panel {
+    background: #f5f5f5;
+    border-radius: 14px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+    overflow: hidden;
+  }
+  .checklist-frame {
+    width: 100%;
+    min-height: 78vh;
+    border: 0;
+    background: transparent;
+    display: none;
+  }
+  .checklist-frame.active {
+    display: block;
+  }
+  html.dark-mode .checklist-tab {
+    background: #2a2a3a;
+    border-color: #444;
+    color: #e0e0e0;
+  }
+  html.dark-mode .checklist-tab.active {
+    background: #4285F4;
+    border-color: #4285F4;
+    color: #fff;
+  }
+  html.dark-mode .checklist-panel {
+    background: #1e1e2e;
+  }
+</style>
+</head>
+<body>
+  <h1>Check-Lists</h1>
+  <div class="checklist-tabs" id="checklist-tabs">
+    <button class="checklist-tab active" data-target="pokemoncount-frame">Pokémon Count</button>
+    <button class="checklist-tab" data-target="itemusage-frame">Item Usage</button>
+    <button class="checklist-tab" data-target="movesetcheck-frame">Moveset Check</button>
+    <button class="checklist-tab" data-target="trainercheck-frame">Trainer Check</button>
+  </div>
+  <div class="checklist-panel">
+    <iframe id="pokemoncount-frame" class="checklist-frame active" src="pokemoncount.html?embedded=1" title="Pokemon Count"></iframe>
+    <iframe id="itemusage-frame" class="checklist-frame" src="itemusage.html?embedded=1" title="Item Usage"></iframe>
+    <iframe id="movesetcheck-frame" class="checklist-frame" src="movesetcheck.html?embedded=1" title="Moveset Check"></iframe>
+    <iframe id="trainercheck-frame" class="checklist-frame" src="trainercheck.html?embedded=1" title="Trainer Check"></iframe>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll(".checklist-tab");
+    const frames = document.querySelectorAll(".checklist-frame");
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        frames.forEach(f => f.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.target)?.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>

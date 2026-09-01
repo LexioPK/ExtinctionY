@@ -514,6 +514,16 @@ h1 { text-align: center; margin: 8px 0 6px; }
   border-color: var(--accent);
   --slot-bg: rgba(36,92,172,.1);
 }
+.poke-icon-slot.switch-in-candidate:not(.selected) {
+  border-color: #8b5cf6;
+  --slot-bg: rgba(139,92,246,.16);
+}
+.poke-icon-slot.fainted {
+  opacity: 0.45;
+}
+.poke-icon-slot.fainted .poke-icon-main {
+  filter: grayscale(1);
+}
 .poke-icon-slot.empty {
   opacity: 0.25; cursor: default;
 }
@@ -1253,6 +1263,9 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
           <button class="toggle-btn" id="room-wonder" data-value="wonder-room">Wonder Room</button>
           <button class="toggle-btn" id="room-trick" data-value="trick-room">Trick Room</button>
           <button class="toggle-btn" id="misc-ion" data-value="ion-deluge">Ion Deluge</button>
+          <button class="toggle-btn" data-value="fairy-aura">Fairy Aura</button>
+          <button class="toggle-btn" data-value="dark-aura">Dark Aura</button>
+          <button class="toggle-btn" data-value="aura-break">Aura Break</button>
         </div>
 
         <div class="field-hr"></div>
@@ -1689,9 +1702,11 @@ let importedPartyIds = [];
 let koEntries = [];
 let fragsheetSplitByTrainerIndex = [];
 let activeFragsheetSplitId = "all";
+let faintedTrainerSlots = {};
 const trainerState = { atk: 0, def: 1 };
 const TRAINER_STATE_STORAGE_KEY = "damageCalcTrainerState";
 const KO_ENTRIES_STORAGE_KEY = "damageCalcKoEntries";
+const FAINTED_TRAINER_SLOTS_STORAGE_KEY = "damageCalcFaintedTrainerSlots";
 const transientAbilityState = {
   atk: { traceAbility: null, transformImportedId: null },
   def: { traceAbility: null, transformImportedId: null }
@@ -1963,11 +1978,22 @@ function buildDamageRolls(baseDamage, stab, typeMod, otherMod, fixedFn) {
 
 /* ── Sprite name helper ── */
 function toSlug(name) {
+  if (window.toSpriteSlug) return window.toSpriteSlug(name);
   return (name || '').toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9\-]/g, '')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+function displayPokemonName(name) {
+  return window.formatPokemonDisplayName ? window.formatPokemonDisplayName(name) : String(name || "");
+}
+
+function getTrainerKey(prefix) {
+  const trainer = trainersFlat[trainerState[prefix]];
+  if (!trainer) return "";
+  return `${prefix}|${toSlug(trainer.route)}|${toSlug(trainer.trainerName)}`;
 }
 
 function trainerDisplayName(trainer) {
@@ -2033,7 +2059,7 @@ function syncImportedPartyIds() {
 
 function importedDisplayName(imported, idx) {
   const nickname = (imported.nickname || "").trim();
-  return `Imported ${idx + 1}: ${nickname || imported.species}`;
+  return `Imported ${idx + 1}: ${displayPokemonName(nickname || imported.species)}`;
 }
 function getOpposingPrefix(prefix) {
   return prefix === "atk" ? "def" : "atk";
@@ -2067,7 +2093,7 @@ function getEffectiveItemFromUI(prefix) {
   return isActivatableItem(item) && !isItemActivationChecked(prefix) ? "None" : item;
 }
 function getOpposingStatDrop(prefix, stat, targetAbility = getEffectiveAbilityFromUI(prefix)) {
-  if (targetAbility === "Clear Body") return 0;
+  if (targetAbility === "Clear Body" || targetAbility === "Clear Body-old") return 0;
   const opposingPrefix = getOpposingPrefix(prefix);
   const opposingAbility = getEffectiveAbilityFromUI(opposingPrefix);
   if (stat === "Atk" && opposingAbility === "Intimidate" && isAbilityActivationChecked(opposingPrefix)) return -1;
@@ -2553,9 +2579,11 @@ function setSelectOptions(selectId, options, selected) {
   const select = el(selectId);
   if (!select) return;
   select.innerHTML = "";
+  const isSpeciesLikeSelect = /-(species|form)$/.test(String(selectId || ""));
   options.forEach(o => {
     const opt = document.createElement("option");
-    opt.value = o; opt.textContent = o;
+    opt.value = o;
+    opt.textContent = isSpeciesLikeSelect ? displayPokemonName(o) : o;
     select.appendChild(opt);
   });
   if (selected && options.includes(selected)) select.value = selected;
@@ -2772,6 +2800,88 @@ function clearTrainerSelection(prefix) {
     .forEach(slot => slot.classList.remove("selected"));
 }
 
+function getFaintedSetForPrefix(prefix) {
+  const trainerKey = getTrainerKey(prefix);
+  if (!trainerKey) return new Set();
+  const raw = faintedTrainerSlots[trainerKey] || [];
+  return new Set(Array.isArray(raw) ? raw : []);
+}
+
+function getTrainerPokemonBestSwitchScore(tp, defenderSet) {
+  if (!tp || !defenderSet) return 0;
+  const moveList = Array.isArray(tp.Moves) ? tp.Moves : [];
+  let best = 0;
+  for (const moveName of moveList) {
+    const move = moves[moveName];
+    if (!move) continue;
+    const power = Number(move.Power) || 0;
+    if (power <= 0) continue;
+    const moveType = move.Type || "Normal";
+    const typeMod = effectiveness(moveType, defenderSet.type1, defenderSet.type2);
+    const score = power * typeMod;
+    if (score > best) best = score;
+  }
+  return best;
+}
+
+function getSwitchInCandidateIndex() {
+  const trainer = trainersFlat[trainerState.def];
+  if (!trainer?.pokemon?.length) return -1;
+  const defenderSet = readSet("atk");
+  if (!defenderSet) return -1;
+  const fainted = getFaintedSetForPrefix("def");
+  const selected = getSelectedTrainerPokemonIndex("def");
+  const candidates = [];
+  trainer.pokemon.forEach((tp, idx) => {
+    if (idx === selected) return;
+    if (fainted.has(idx)) return;
+    const megaLast = /-Mega(?:-|$)/i.test(String(tp.Form || tp.Name || ""));
+    candidates.push({
+      idx,
+      score: getTrainerPokemonBestSwitchScore(tp, defenderSet),
+      megaLast
+    });
+  });
+  if (!candidates.length) return -1;
+  candidates.sort((a, b) => {
+    if (a.megaLast !== b.megaLast) return a.megaLast ? 1 : -1;
+    if (b.score !== a.score) return b.score - a.score;
+    return a.idx - b.idx;
+  });
+  return candidates[0].idx;
+}
+
+function refreshDefSwitchInIndicator() {
+  const trainer = trainersFlat[trainerState.def];
+  if (!trainer?.pokemon?.length) return;
+  const fainted = getFaintedSetForPrefix("def");
+  const candidateIdx = getSwitchInCandidateIndex();
+  trainer.pokemon.forEach((_, idx) => {
+    const slot = el(`def-icon-slot-${idx}`);
+    if (!slot) return;
+    slot.classList.toggle("fainted", fainted.has(idx));
+    slot.classList.toggle("switch-in-candidate", idx === candidateIdx);
+  });
+}
+
+function persistFaintedTrainerSlots() {
+  try {
+    localStorage.setItem(FAINTED_TRAINER_SLOTS_STORAGE_KEY, JSON.stringify(faintedTrainerSlots));
+  } catch (_) {}
+}
+
+function toggleDefTrainerSlotFainted(pokIdx) {
+  const trainerKey = getTrainerKey("def");
+  const trainer = trainersFlat[trainerState.def];
+  if (!trainerKey || !trainer?.pokemon?.[pokIdx]) return;
+  const fainted = getFaintedSetForPrefix("def");
+  if (fainted.has(pokIdx)) fainted.delete(pokIdx);
+  else fainted.add(pokIdx);
+  faintedTrainerSlots[trainerKey] = Array.from(fainted).sort((a, b) => a - b);
+  persistFaintedTrainerSlots();
+  refreshDefSwitchInIndicator();
+}
+
 function buildTrainerIcons(prefix, trainer) {
   const container = el(`${prefix}-poke-icons`);
   if (!container) return;
@@ -2785,11 +2895,14 @@ function buildTrainerIcons(prefix, trainer) {
     img.className = 'poke-icon-main';
     const slug = toSlug(tp.Form || tp.Name);
     const baseSlug = toSlug(tp.Name);
-    img.alt = tp.Form || tp.Name;
+    img.alt = displayPokemonName(tp.Form || tp.Name);
     img.src = `image/icons/${slug}.png`;
     img.onerror = () => {
       if (img.src.includes(slug) && slug !== baseSlug) {
         img.src = `image/icons/${baseSlug}.png`;
+      } else {
+        img.onerror = null;
+        img.src = "pokemon_sprites/substitute.png";
       }
     };
     slot.appendChild(img);
@@ -2801,8 +2914,15 @@ function buildTrainerIcons(prefix, trainer) {
     }
     const capturedIdx = i;
     slot.addEventListener('click', () => selectTrainerPokemon(prefix, capturedIdx));
+    if (prefix === "def") {
+      slot.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+        toggleDefTrainerSlotFainted(capturedIdx);
+      });
+    }
     container.appendChild(slot);
   }
+  if (prefix === "def") refreshDefSwitchInIndicator();
 }
 
 function selectTrainerPokemon(prefix, pokIdx) {
@@ -2827,6 +2947,7 @@ function selectTrainerPokemon(prefix, pokIdx) {
     inp.value = maxHP;
     updateHPBar(prefix);
   }
+  if (prefix === "def") refreshDefSwitchInIndicator();
 }
 
 function fillTrainerPokemon(prefix, tp) {
@@ -2908,6 +3029,9 @@ function updateSprite(prefix) {
   spriteEl.onerror = () => {
     if (spriteEl.src.includes(slug) && slug !== baseSlug) {
       spriteEl.src = `pokemon_sprites/${baseSlug}.png`;
+    } else {
+      spriteEl.onerror = null;
+      spriteEl.src = "pokemon_sprites/substitute.png";
     }
   };
 }
@@ -3266,6 +3390,9 @@ function renderImportedParty() {
     img.onerror = () => {
       if (img.src.includes(slug) && slug !== baseSlug) {
         img.src = `image/icons/${baseSlug}.png`;
+      } else {
+        img.onerror = null;
+        img.src = "pokemon_sprites/substitute.png";
       }
     };
     slot.appendChild(img);
@@ -3297,14 +3424,14 @@ function toggleImportedPokemonInParty(idx) {
   const partyIdx = importedPartyIds.indexOf(setData.id);
   if (partyIdx >= 0) {
     importedPartyIds.splice(partyIdx, 1);
-    if (status) status.textContent = `${setData.species} removed from your party.`;
+    if (status) status.textContent = `${displayPokemonName(setData.species)} removed from your party.`;
   } else {
     if (importedPartyIds.length >= 6) {
       if (status) status.textContent = "Your party can only hold 6 Pokémon.";
       return;
     }
     importedPartyIds.push(setData.id);
-    if (status) status.textContent = `${setData.species} added to your party.`;
+    if (status) status.textContent = `${displayPokemonName(setData.species)} added to your party.`;
   }
 
   syncImportedPartyIds();
@@ -3329,7 +3456,7 @@ function renderImportedPokemonList() {
     btn.className = "imported-poke-btn";
     btn.dataset.setId = setData.id;
     btn.classList.toggle("in-party", importedPartyIds.includes(setData.id));
-    btn.title = `${setData.species}${setData.item && setData.item !== "None" ? ` @ ${setData.item}` : ""}\nClick to load • Right-click to toggle party`;
+    btn.title = `${displayPokemonName(setData.species)}${setData.item && setData.item !== "None" ? ` @ ${setData.item}` : ""}\nClick to load • Right-click to toggle party`;
 
     const img = document.createElement("img");
     const slug = toSlug(setData.species);
@@ -3339,11 +3466,14 @@ function renderImportedPokemonList() {
     img.onerror = () => {
       if (img.src.includes(slug) && slug !== baseSlug) {
         img.src = `pokemon_sprites/${baseSlug}.png`;
+      } else {
+        img.onerror = null;
+        img.src = "pokemon_sprites/substitute.png";
       }
     };
 
     const label = document.createElement("span");
-    label.textContent = setData.species;
+    label.textContent = displayPokemonName(setData.species);
 
     btn.appendChild(img);
     btn.appendChild(label);
@@ -3821,8 +3951,11 @@ function getModifierContext(atkPrefix) {
   const wonderRoom  = isRoomActive('wonder-room');
   const ionDeluge   = isRoomActive('ion-deluge');
   const trickRoom   = isRoomActive('trick-room');
+  const fairyAura   = isRoomActive('fairy-aura');
+  const darkAura    = isRoomActive('dark-aura');
+  const auraBreak   = isRoomActive('aura-break');
 
-  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, spikes, friendGuard, flowerGiftAtk, flowerGiftDef, magicRoom, wonderRoom, ionDeluge, trickRoom };
+  return { battleFormat, weather, terrain, critical, helpingHand, reflect, lightScreen, stealthRock, spikes, friendGuard, flowerGiftAtk, flowerGiftDef, magicRoom, wonderRoom, ionDeluge, trickRoom, fairyAura, darkAura, auraBreak };
 }
 
 function ignoresDefenderAbility(attackerAbility) {
@@ -3922,6 +4055,10 @@ function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, 
     power *= 1.5;
     notes.push("Knock Off (target has item) ×1.5 BP");
   }
+  if (moveName === "Brine" && defender.currentHP <= Math.floor(defender.stats.HP / 2)) {
+    power *= 2;
+    notes.push("Brine (target ≤50% HP) ×2 BP");
+  }
   if (aAbility === "Technician" && power <= 60) { power *= 1.5; notes.push("Technician ×1.5 BP"); }
   return { type, power: Math.max(1, Math.round(power * 10) / 10) };
 }
@@ -3965,6 +4102,7 @@ function getAttackDefenseFix(moveCategory, attacker, defender, critical, moveNam
     notes.push(`Eviolite ×1.5 ${defStat}`);
   }
   if (defStat === "Def" && defenderAbility === "Biodiverse" && ctx.terrain !== "none") { def *= 1.5; notes.push("Biodiverse ×1.5 Def"); }
+  if (isPhysical && defenderAbility === "Fur Coat") { def *= 2; notes.push("Fur Coat ×2 Def"); }
   if (defenderAbility === "Sand Veil" && ctx.weather === "sand") { def *= 1.25; notes.push("Sand Veil ×1.25 Def/SpD"); }
   if (defenderAbility === "Snow Cloak" && ctx.weather === "hail") { def *= 1.25; notes.push("Snow Cloak ×1.25 Def/SpD"); }
   if (defStat === "SpD" && (defender.type1 === "Rock" || defender.type2 === "Rock") && ctx.weather === "sand") { def *= 1.5; notes.push("Sand ×1.5 SpD (Rock)"); }
@@ -3987,6 +4125,16 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   } else if (ctx.weather === "rain") {
     if (moveType === "Water") { mod *= 1.5; notes.push("Rain ×1.5"); }
     if (moveType === "Fire")  { mod *= 0.5; notes.push("Rain ×0.5"); }
+  }
+
+  const auraBoost = 5448 / 4096;
+  if (ctx.fairyAura && moveType === "Fairy") {
+    if (ctx.auraBreak) { mod *= 0.75; notes.push("Aura Break: Fairy Aura ×0.75"); }
+    else { mod *= auraBoost; notes.push("Fairy Aura ×1.33"); }
+  }
+  if (ctx.darkAura && moveType === "Dark") {
+    if (ctx.auraBreak) { mod *= 0.75; notes.push("Aura Break: Dark Aura ×0.75"); }
+    else { mod *= auraBoost; notes.push("Dark Aura ×1.33"); }
   }
 
   if (ctx.terrain === "electric" && moveType === "Electric" && attacker.grounded) { mod *= 1.5; notes.push("Electric Terrain ×1.5"); }
@@ -4379,6 +4527,7 @@ function recalcIfNeeded() {
   }
   updateMoveDamageLabels();
   refreshImportedMatchupIndicators();
+  refreshDefSwitchInIndicator();
   updateKoButtonState();
 }
 
@@ -4483,6 +4632,22 @@ function loadKoState() {
       .filter(entry => entry.key && entry.attackerId && entry.species);
   } catch (_) {
     koEntries = [];
+  }
+}
+
+function loadFaintedTrainerSlotsState() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(FAINTED_TRAINER_SLOTS_STORAGE_KEY) || "{}");
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return;
+    faintedTrainerSlots = {};
+    for (const [trainerKey, values] of Object.entries(parsed)) {
+      if (!Array.isArray(values)) continue;
+      faintedTrainerSlots[trainerKey] = values
+        .map(v => num(v, -1))
+        .filter(v => Number.isInteger(v) && v >= 0);
+    }
+  } catch (_) {
+    faintedTrainerSlots = {};
   }
 }
 
@@ -4680,12 +4845,15 @@ function buildKoedSpritesRow(speciesList) {
     const slug = toSlug(species);
     const baseSlug = toSlug((pokedex[species]?.Name) || species);
     img.src = `image/icons/${slug}.png`;
-    img.alt = species;
-    img.title = species;
+    img.alt = displayPokemonName(species);
+    img.title = displayPokemonName(species);
     img.onerror = () => {
       if (img.src.includes(slug) && slug !== baseSlug) {
         img.onerror = null;
         img.src = `image/icons/${baseSlug}.png`;
+      } else {
+        img.onerror = null;
+        img.src = "pokemon_sprites/substitute.png";
       }
     };
     wrap.appendChild(img);
@@ -4727,7 +4895,7 @@ function renderFragsheetLeaderboard() {
 
     const speciesCell = document.createElement("td");
     speciesCell.className = "frag-name-cell";
-    speciesCell.textContent = row.species;
+    speciesCell.textContent = displayPokemonName(row.species);
     tr.appendChild(speciesCell);
 
     const spriteCell = document.createElement("td");
@@ -4736,11 +4904,14 @@ function renderFragsheetLeaderboard() {
     const slug = toSlug(row.species);
     const baseSlug = toSlug((pokedex[row.species]?.Name) || row.species);
     sprite.src = `pokemon_sprites/${slug}.png`;
-    sprite.alt = row.species;
+    sprite.alt = displayPokemonName(row.species);
     sprite.onerror = () => {
       if (sprite.src.includes(slug) && slug !== baseSlug) {
         sprite.onerror = null;
         sprite.src = `pokemon_sprites/${baseSlug}.png`;
+      } else {
+        sprite.onerror = null;
+        sprite.src = "pokemon_sprites/substitute.png";
       }
     };
     spriteCell.appendChild(sprite);
@@ -4748,7 +4919,7 @@ function renderFragsheetLeaderboard() {
 
     const nicknameCell = document.createElement("td");
     nicknameCell.className = "frag-nickname-cell";
-    nicknameCell.textContent = getFragsheetDisplayNickname(row.nickname, row.species);
+    nicknameCell.textContent = displayPokemonName(getFragsheetDisplayNickname(row.nickname, row.species));
     tr.appendChild(nicknameCell);
 
     const koCountCell = document.createElement("td");
@@ -4937,6 +5108,7 @@ async function init() {
 
     bindInputs();
     loadKoState();
+    loadFaintedTrainerSlotsState();
     renderFragsheetSplitTabs();
 
     // Restore the last selected trainer for each side.
@@ -4964,6 +5136,7 @@ async function init() {
     } catch (_) {}
     updateKoButtonState();
     renderFragsheetLeaderboard();
+    refreshDefSwitchInIndicator();
 
   } catch (e) {
     console.error("Damage calc init failed:", e);

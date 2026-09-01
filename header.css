@@ -228,6 +228,14 @@ html.dark-mode .pokemon-container > .pokemon-col:nth-child(2n) {
     background: #222233 !important;
 }
 
+html.dark-mode {
+    --sep-color: #4a4a4a;
+}
+
+html.dark-mode .move-list .move-item {
+    border-bottom-color: #3a3a4a !important;
+}
+
 html.dark-mode .pokemon-inner .info-box {
     color: #e0e0e0 !important;
 }
