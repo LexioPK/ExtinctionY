@@ -66,12 +66,14 @@ function trainerLabel(trainer) {
 }
 
 async function runTrainerCheck() {
-  const [trainersRes, movesetsRes] = await Promise.all([
+  const [trainersRes, movesetsRes, pokedexRes] = await Promise.all([
     fetch("data/trainers.json"),
-    fetch("data/movesets.json")
+    fetch("data/movesets.json"),
+    fetch("data/pokedex.json")
   ]);
   const trainersData = await trainersRes.json();
   const movesets = await movesetsRes.json();
+  const pokedex = await pokedexRes.json();
   const grid = document.getElementById("trainer-grid");
   grid.innerHTML = "";
 
@@ -86,9 +88,16 @@ async function runTrainerCheck() {
       const pokemonIssues = [];
       for (const poke of (trainer.Pokemon || [])) {
         const speciesKey = resolveMovesetKey(poke, movesets);
-        const levelMoves = new Set((movesets[speciesKey] || []).map(m => String(m?.Move || "").trim()).filter(Boolean));
+        const levelMoves = (movesets[speciesKey] || []).map(m => String(m?.Move || "").trim()).filter(Boolean);
+        const tmMoves = (pokedex[speciesKey]?.TMs || [])
+          .map(tm => String(tm?.Move || "").trim())
+          .filter(Boolean);
+        const eggMoves = (pokedex[speciesKey]?.EggMoves || [])
+          .map(move => String(move || "").trim())
+          .filter(Boolean);
+        const learnableMoves = new Set([...levelMoves, ...tmMoves, ...eggMoves]);
         const usedMoves = (poke.Moves || []).map(m => String(m || "").trim()).filter(Boolean);
-        const invalidMoves = usedMoves.filter(move => !levelMoves.has(move));
+        const invalidMoves = usedMoves.filter(move => !learnableMoves.has(move));
         if (invalidMoves.length > 0) {
           flaggedPokemonCount++;
           pokemonIssues.push({
