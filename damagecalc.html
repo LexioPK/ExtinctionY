@@ -1681,7 +1681,10 @@ const STATUS_POWER_MOVES = {
   "Hex": { statuses: ["brn", "frz", "par", "slp", "psn", "tox"], multiplier: 2, note: "Hex (statused target) ×2 BP" }
 };
 const ACTIVATABLE_ABILITIES = {
-  "Imposter": "Copies the opposing Pokémon and adds it to your Imported Pokémon"
+  "Intimidate": "Lowers opposing Pokémon Attack by -1",
+  "Demoralize": "Lowers opposing Pokémon Special Attack by -1",
+  "Transform": "Copies the opposing Pokémon and adds it to your Imported Pokémon",
+  "Trace": "Copies the opposing Pokémon's ability while active"
 };
 
 let pokedex = {};
@@ -2195,7 +2198,10 @@ function onAbilityToggleChange(prefix) {
   const ability = getSelectedAbility(prefix);
   const toggle = el(`${prefix}-ability-toggle`);
   if (!toggle) return;
-  if (ability === "Imposter") {
+  if (ability === "Trace") {
+    if (toggle.checked) transientAbilityState[prefix].traceAbility = getEffectiveAbilityFromUI(getOpposingPrefix(prefix)) || "No Ability";
+    else transientAbilityState[prefix].traceAbility = null;
+  } else if (ability === "Transform") {
     if (toggle.checked) ensureImportedCopyFromTransform(prefix);
     else transientAbilityState[prefix].transformImportedId = null;
   }
