@@ -2102,8 +2102,8 @@ function getOpposingStatDrop(prefix, stat, targetAbility = getEffectiveAbilityFr
   if (targetAbility === "Clear Body" || targetAbility === "Clear Body-old") return 0;
   const opposingPrefix = getOpposingPrefix(prefix);
   const opposingAbility = getEffectiveAbilityFromUI(opposingPrefix);
-  if (stat === "Atk" && opposingAbility === "Intimidate") return -1;
-  if (stat === "SpA" && opposingAbility === "Demoralize") return -1;
+  if (stat === "Atk" && opposingAbility === "Intimidate" && isAbilityActivationChecked(opposingPrefix)) return -1;
+  if (stat === "SpA" && opposingAbility === "Demoralize" && isAbilityActivationChecked(opposingPrefix)) return -1;
   return 0;
 }
 function syncAuraTogglesFromAbilities() {
