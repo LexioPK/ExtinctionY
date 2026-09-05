@@ -3311,7 +3311,7 @@
     "Type2": "Normal",
     "Ability1": "Rough Skin",
     "Ability2": "Sand Rush",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 50,
       "Atk": 75,
@@ -3472,7 +3472,7 @@
     "Type2": "Normal",
     "Ability1": "Rough Skin",
     "Ability2": "Sand Rush",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 75,
       "Atk": 110,
@@ -7660,12 +7660,12 @@
     "Ability2": "Cloud Nine",
     "AbilityH": "Mending",
     "BaseStats": {
-      "HP": 50,
+      "HP": 55,
       "Atk": 42,
       "Def": 68,
-      "SpA": 70,
+      "SpA": 83,
       "SpD": 60,
-      "Spe": 55
+      "Spe": 65
     },
     "CatchRate": 255,
     "BaseXP": 34,
@@ -8959,9 +8959,9 @@
       "HP": 90,
       "Atk": 110,
       "Def": 95,
-      "SpA": 55,
+      "SpA": 90,
       "SpD": 95,
-      "Spe": 85
+      "Spe": 65
     },
     "CatchRate": 255,
     "BaseXP": 120,
@@ -10554,10 +10554,10 @@
     "Ability2": "Liquid Ooze",
     "AbilityH": "Rain Dish",
     "BaseStats": {
-      "HP": 40,
+      "HP": 60,
       "Atk": 40,
-      "Def": 35,
-      "SpA": 50,
+      "Def": 45,
+      "SpA": 65,
       "SpD": 100,
       "Spe": 70
     },
@@ -11939,12 +11939,12 @@
     "Ability2": "Analytic",
     "AbilityH": "Sturdy",
     "BaseStats": {
-      "HP": 25,
+      "HP": 35,
       "Atk": 35,
       "Def": 70,
       "SpA": 95,
       "SpD": 55,
-      "Spe": 45
+      "Spe": 55
     },
     "CatchRate": 255,
     "BaseXP": 34,
@@ -12306,7 +12306,7 @@
       "Atk": 85,
       "Def": 45,
       "SpA": 35,
-      "SpD": 35,
+      "SpD": 45,
       "Spe": 85
     },
     "CatchRate": 255,
@@ -13078,8 +13078,8 @@
     "BaseStats": {
       "HP": 35,
       "Atk": 65,
-      "Def": 100,
-      "SpA": 55,
+      "Def": 130,
+      "SpA": 65,
       "SpD": 35,
       "Spe": 40
     },
@@ -13911,9 +13911,9 @@
     "AbilityH": "Mending",
     "BaseStats": {
       "HP": 60,
-      "Atk": 48,
+      "Atk": 58,
       "Def": 45,
-      "SpA": 43,
+      "SpA": 53,
       "SpD": 90,
       "Spe": 42
     },
@@ -15930,9 +15930,9 @@
       "HP": 50,
       "Atk": 60,
       "Def": 95,
-      "SpA": 65,
-      "SpD": 45,
-      "Spe": 35
+      "SpA": 70,
+      "SpD": 55,
+      "Spe": 45
     },
     "CatchRate": 255,
     "BaseXP": 36,
@@ -18260,7 +18260,7 @@
     "Type2": "Psychic",
     "Ability1": "Dry Skin",
     "Ability2": "Ice Body",
-    "AbilityH": "Glacial Guard",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 80,
       "Atk": 64,
@@ -18797,6 +18797,10 @@
         "Move": "Rock Tomb"
       },
       {
+        "Label": "TM40",
+        "Move": "Aerial Ace"
+      },
+      {
         "Label": "TM42",
         "Move": "Facade"
       },
@@ -18859,6 +18863,10 @@
       {
         "Label": "TM81",
         "Move": "X-Scissor"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM87",
@@ -19971,7 +19979,7 @@
     "Ability2": "Download",
     "AbilityH": "Analytic",
     "BaseStats": {
-      "HP": 65,
+      "HP": 85,
       "Atk": 60,
       "Def": 70,
       "SpA": 85,
@@ -20116,11 +20124,11 @@
     "Ability2": "Shell Armor",
     "AbilityH": "Weak Armor",
     "BaseStats": {
-      "HP": 35,
+      "HP": 45,
       "Atk": 40,
       "Def": 100,
       "SpA": 90,
-      "SpD": 55,
+      "SpD": 65,
       "Spe": 35
     },
     "CatchRate": 255,
@@ -20398,7 +20406,7 @@
       "Atk": 80,
       "Def": 90,
       "SpA": 55,
-      "SpD": 45,
+      "SpD": 65,
       "Spe": 55
     },
     "CatchRate": 255,
@@ -21071,7 +21079,7 @@
     "Type1": "Ice",
     "Type2": "Flying",
     "Ability1": "Ice Body",
-    "Ability2": "Glacial Guard",
+    "Ability2": "Snow Cloak",
     "AbilityH": "Snow Warning",
     "BaseStats": {
       "HP": 90,
@@ -24567,7 +24575,7 @@
     "Type2": "Flying",
     "Ability1": "Tinted Lens",
     "Ability2": "Analytic",
-    "AbilityH": "Glacial Guard",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 60,
       "Atk": 30,
@@ -24692,7 +24700,7 @@
     "Type2": "Flying",
     "Ability1": "Tinted Lens",
     "Ability2": "Analytic",
-    "AbilityH": "Glacial Guard",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 100,
       "Atk": 50,
@@ -26515,7 +26523,7 @@
     "SpeciesIdx": 177,
     "Type1": "Psychic",
     "Type2": "Flying",
-    "Ability1": "Dune Guard",
+    "Ability1": "Sand Veil",
     "Ability2": "Magic Bounce",
     "AbilityH": "Telepathy",
     "BaseStats": {
@@ -26660,7 +26668,7 @@
     "SpeciesIdx": 178,
     "Type1": "Psychic",
     "Type2": "Flying",
-    "Ability1": "Dune Guard",
+    "Ability1": "Sand Veil",
     "Ability2": "Magic Bounce",
     "AbilityH": "Telepathy",
     "BaseStats": {
@@ -27825,11 +27833,11 @@
     "AbilityH": "Storm Drain",
     "BaseStats": {
       "HP": 90,
-      "Atk": 75,
+      "Atk": 70,
       "Def": 85,
-      "SpA": 100,
+      "SpA": 95,
       "SpD": 105,
-      "Spe": 70
+      "Spe": 80
     },
     "CatchRate": 255,
     "BaseXP": 118,
@@ -28128,9 +28136,9 @@
     "BaseStats": {
       "HP": 55,
       "Atk": 55,
-      "Def": 50,
+      "Def": 60,
       "SpA": 55,
-      "SpD": 65,
+      "SpD": 70,
       "Spe": 80
     },
     "CatchRate": 255,
@@ -28244,8 +28252,8 @@
     "AbilityH": "Friend Guard",
     "BaseStats": {
       "HP": 75,
-      "Atk": 75,
-      "Def": 70,
+      "Atk": 65,
+      "Def": 80,
       "SpA": 75,
       "SpD": 95,
       "Spe": 110
@@ -28790,7 +28798,7 @@
       "HP": 65,
       "Atk": 65,
       "Def": 45,
-      "SpA": 75,
+      "SpA": 85,
       "SpD": 45,
       "Spe": 95
     },
@@ -28892,12 +28900,12 @@
     "Ability2": "Water Absorb",
     "AbilityH": "Simple",
     "BaseStats": {
-      "HP": 65,
-      "Atk": 55,
+      "HP": 75,
+      "Atk": 65,
       "Def": 55,
-      "SpA": 45,
-      "SpD": 35,
-      "Spe": 15
+      "SpA": 35,
+      "SpD": 55,
+      "Spe": 25
     },
     "CatchRate": 255,
     "BaseXP": 22,
@@ -29026,10 +29034,10 @@
     "AbilityH": "Simple",
     "BaseStats": {
       "HP": 105,
-      "Atk": 95,
+      "Atk": 105,
       "Def": 95,
       "SpA": 65,
-      "SpD": 65,
+      "SpD": 75,
       "Spe": 35
     },
     "CatchRate": 255,
@@ -30687,7 +30695,7 @@
     "Type2": "Flying",
     "Ability1": "Versatility",
     "Ability2": "Immunity",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 65,
       "Atk": 75,
@@ -32266,12 +32274,12 @@
     "Ability2": "Cute Charm",
     "AbilityH": "Honey Gather",
     "BaseStats": {
-      "HP": 60,
-      "Atk": 80,
+      "HP": 65,
+      "Atk": 85,
       "Def": 50,
       "SpA": 50,
       "SpD": 50,
-      "Spe": 60
+      "Spe": 75
     },
     "CatchRate": 255,
     "BaseXP": 35,
@@ -34559,7 +34567,7 @@
     "Type2": "Ground",
     "Ability1": "Pickup",
     "Ability2": "Battle Armor",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 90,
       "Atk": 70,
@@ -34684,7 +34692,7 @@
     "Type2": "Ground",
     "Ability1": "Rock Head",
     "Ability2": "Battle Armor",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 95,
       "Atk": 120,
@@ -37214,7 +37222,7 @@
     "Type2": "Ground",
     "Ability1": "Guts",
     "Ability2": "Guts",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 50,
       "Atk": 64,
@@ -42371,8 +42379,8 @@
       "Atk": 35,
       "Def": 45,
       "SpA": 85,
-      "SpD": 65,
-      "Spe": 60
+      "SpD": 75,
+      "Spe": 64
     },
     "CatchRate": 255,
     "BaseXP": 51,
@@ -44209,9 +44217,9 @@
     "BaseStats": {
       "HP": 64,
       "Atk": 51,
-      "Def": 28,
+      "Def": 35,
       "SpA": 51,
-      "SpD": 28,
+      "SpD": 35,
       "Spe": 28
     },
     "CatchRate": 255,
@@ -50223,14 +50231,14 @@
     "Type2": "Grass",
     "Ability1": "Rough Skin",
     "Ability2": "Water Absorb",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 50,
       "Atk": 85,
-      "Def": 40,
+      "Def": 50,
       "SpA": 85,
-      "SpD": 40,
-      "Spe": 35
+      "SpD": 50,
+      "Spe": 55
     },
     "CatchRate": 255,
     "BaseXP": 35,
@@ -50512,11 +50520,11 @@
     "AbilityH": "Natural Cure",
     "BaseStats": {
       "HP": 65,
-      "Atk": 45,
+      "Atk": 55,
       "Def": 60,
       "SpA": 55,
       "SpD": 75,
-      "Spe": 50
+      "Spe": 70
     },
     "CatchRate": 255,
     "BaseXP": 32,
@@ -51165,7 +51173,7 @@
     "Type2": "Ghost",
     "Ability1": "Levitate",
     "Ability2": "Levitate",
-    "AbilityH": "Glacial Guard",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 90,
       "Atk": 55,
@@ -51822,8 +51830,8 @@
       "HP": 43,
       "Atk": 80,
       "Def": 65,
-      "SpA": 50,
-      "SpD": 35,
+      "SpA": 65,
+      "SpD": 45,
       "Spe": 35
     },
     "CatchRate": 255,
@@ -52145,12 +52153,12 @@
     "Ability2": "Telepathy",
     "AbilityH": "Magic Bounce",
     "BaseStats": {
-      "HP": 40,
+      "HP": 45,
       "Atk": 40,
-      "Def": 55,
+      "Def": 75,
       "SpA": 60,
-      "SpD": 70,
-      "Spe": 55
+      "SpD": 85,
+      "Spe": 65
     },
     "CatchRate": 255,
     "BaseXP": 32,
@@ -52488,7 +52496,7 @@
     "AbilityH": "Confiscate",
     "BaseStats": {
       "HP": 66,
-      "Atk": 41,
+      "Atk": 61,
       "Def": 77,
       "SpA": 61,
       "SpD": 87,
@@ -52783,7 +52791,7 @@
     "BaseStats": {
       "HP": 45,
       "Atk": 95,
-      "Def": 50,
+      "Def": 70,
       "SpA": 40,
       "SpD": 50,
       "Spe": 75
@@ -55129,9 +55137,9 @@
     "SpeciesIdx": 363,
     "Type1": "Ice",
     "Type2": "Water",
-    "Ability1": "Glacial Guard",
+    "Ability1": "Oblivious",
     "Ability2": "Ice Body",
-    "AbilityH": "Oblivious",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 70,
       "Atk": 55,
@@ -55258,9 +55266,9 @@
     "SpeciesIdx": 364,
     "Type1": "Ice",
     "Type2": "Water",
-    "Ability1": "Glacial Guard",
+    "Ability1": "Oblivious",
     "Ability2": "Ice Body",
-    "AbilityH": "Oblivious",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 90,
       "Atk": 75,
@@ -55399,9 +55407,9 @@
     "SpeciesIdx": 365,
     "Type1": "Ice",
     "Type2": "Water",
-    "Ability1": "Glacial Guard",
+    "Ability1": "Oblivious",
     "Ability2": "Ice Body",
-    "AbilityH": "Oblivious",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 110,
       "Atk": 105,
@@ -57722,6 +57730,10 @@
         "Move": "Bulldoze"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM86",
         "Move": "Grass Knot"
       },
@@ -57949,6 +57961,10 @@
       {
         "Label": "TM78",
         "Move": "Bulldoze"
+      },
+      {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
       },
       {
         "Label": "TM86",
@@ -61078,10 +61094,10 @@
     "Ability2": "Unaware",
     "AbilityH": "Moody",
     "BaseStats": {
-      "HP": 90,
+      "HP": 101,
       "Atk": 95,
       "Def": 75,
-      "SpA": 55,
+      "SpA": 65,
       "SpD": 75,
       "Spe": 71
     },
@@ -62068,9 +62084,9 @@
     "BaseStats": {
       "HP": 67,
       "Atk": 125,
-      "Def": 40,
+      "Def": 50,
       "SpA": 30,
-      "SpD": 40,
+      "SpD": 45,
       "Spe": 58
     },
     "CatchRate": 255,
@@ -62472,9 +62488,9 @@
     "Ability2": "Solid Rock",
     "AbilityH": "Soundproof",
     "BaseStats": {
-      "HP": 40,
+      "HP": 45,
       "Atk": 52,
-      "Def": 118,
+      "Def": 128,
       "SpA": 32,
       "SpD": 88,
       "Spe": 30
@@ -65330,10 +65346,10 @@
     "AbilityH": "Keen Eye",
     "BaseStats": {
       "HP": 49,
-      "Atk": 65,
+      "Atk": 70,
       "Def": 42,
       "SpA": 42,
-      "SpD": 37,
+      "SpD": 47,
       "Spe": 95
     },
     "CatchRate": 255,
@@ -67027,7 +67043,7 @@
     "Type2": "Ground",
     "Ability1": "Sand Force",
     "Ability2": "Rough Skin",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 58,
       "Atk": 70,
@@ -67196,7 +67212,7 @@
     "Type2": "Ground",
     "Ability1": "Sand Force",
     "Ability2": "Rough Skin",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 73,
       "Atk": 100,
@@ -67377,7 +67393,7 @@
     "Type2": "Ground",
     "Ability1": "Sand Force",
     "Ability2": "Rough Skin",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 108,
       "Atk": 130,
@@ -68385,10 +68401,10 @@
     "Ability2": "Envenom",
     "AbilityH": "Sniper",
     "BaseStats": {
-      "HP": 50,
+      "HP": 60,
       "Atk": 70,
       "Def": 90,
-      "SpA": 30,
+      "SpA": 45,
       "SpD": 55,
       "Spe": 65
     },
@@ -71695,7 +71711,7 @@
     "Type2": "Ice",
     "Ability1": "Perseverance",
     "Ability2": "Slush Rush",
-    "AbilityH": "Glacial Guard",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 65,
       "Atk": 60,
@@ -71836,7 +71852,7 @@
     "Type2": "Flying",
     "Ability1": "Versatility",
     "Ability2": "Poison Heal",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 80,
       "Atk": 100,
@@ -72949,7 +72965,7 @@
     "Type1": "Ice",
     "Type2": "Ghost",
     "Ability1": "Cursed Body",
-    "Ability2": "Glacial Guard",
+    "Ability2": "Snow Cloak",
     "AbilityH": "Snow Warning",
     "BaseStats": {
       "HP": 50,
@@ -85096,7 +85112,7 @@
     "Type2": "Water",
     "Ability1": "Rough Skin",
     "Ability2": "Storm Drain",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 85,
       "Atk": 60,
@@ -85220,11 +85236,11 @@
     "AbilityH": "Weak Armor",
     "BaseStats": {
       "HP": 60,
-      "Atk": 65,
+      "Atk": 75,
       "Def": 85,
       "SpA": 35,
       "SpD": 55,
-      "Spe": 55
+      "Spe": 65
     },
     "CatchRate": 255,
     "BaseXP": 34,
@@ -85949,7 +85965,7 @@
     "Type2": "Flying",
     "Ability1": "Wonder Skin",
     "Ability2": "Magic Guard",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 72,
       "Atk": 58,
@@ -86122,9 +86138,9 @@
     "BaseStats": {
       "HP": 38,
       "Atk": 30,
-      "Def": 85,
-      "SpA": 55,
-      "SpD": 65,
+      "Def": 95,
+      "SpA": 70,
+      "SpD": 75,
       "Spe": 30
     },
     "CatchRate": 255,
@@ -86374,7 +86390,7 @@
       "Atk": 78,
       "Def": 103,
       "SpA": 53,
-      "SpD": 45,
+      "SpD": 65,
       "Spe": 22
     },
     "CatchRate": 255,
@@ -87233,7 +87249,7 @@
     "AbilityH": "Illusion",
     "BaseStats": {
       "HP": 40,
-      "Atk": 65,
+      "Atk": 80,
       "Def": 40,
       "SpA": 80,
       "SpD": 40,
@@ -89368,7 +89384,7 @@
     "AbilityH": "Biodiverse",
     "BaseStats": {
       "HP": 60,
-      "Atk": 72,
+      "Atk": 77,
       "Def": 55,
       "SpA": 40,
       "SpD": 50,
@@ -90222,9 +90238,9 @@
     "Ability2": "Cursed Body",
     "AbilityH": "Torrent",
     "BaseStats": {
-      "HP": 55,
+      "HP": 85,
       "Atk": 40,
-      "Def": 50,
+      "Def": 55,
       "SpA": 65,
       "SpD": 85,
       "Spe": 40
@@ -90355,7 +90371,7 @@
     "Ability2": "Cursed Body",
     "AbilityH": "Torrent",
     "BaseStats": {
-      "HP": 100,
+      "HP": 115,
       "Atk": 50,
       "Def": 70,
       "SpA": 95,
@@ -90612,7 +90628,7 @@
       "HP": 50,
       "Atk": 57,
       "Def": 50,
-      "SpA": 67,
+      "SpA": 77,
       "SpD": 50,
       "Spe": 85
     },
@@ -91903,11 +91919,11 @@
     "Ability2": "Analytic",
     "AbilityH": "Magic Bounce",
     "BaseStats": {
-      "HP": 55,
+      "HP": 60,
       "Atk": 55,
       "Def": 55,
       "SpA": 85,
-      "SpD": 70,
+      "SpD": 85,
       "Spe": 30
     },
     "CatchRate": 255,
@@ -93262,7 +93278,7 @@
     "Type2": "Fighting",
     "Ability1": "Tough Claws",
     "Ability2": "Slush Rush",
-    "AbilityH": "Glacial Guard",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 100,
       "Atk": 115,
@@ -93463,7 +93479,7 @@
     "Type2": "Ice",
     "Ability1": "Levitate",
     "Ability2": "Snow Warning",
-    "AbilityH": "Glacial Guard",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 80,
       "Atk": 40,
@@ -94896,9 +94912,9 @@
     "BaseStats": {
       "HP": 45,
       "Atk": 85,
-      "Def": 70,
-      "SpA": 40,
-      "SpD": 40,
+      "Def": 75,
+      "SpA": 45,
+      "SpD": 50,
       "Spe": 60
     },
     "CatchRate": 255,
@@ -102494,11 +102510,11 @@
     "Ability2": "Rock Head",
     "AbilityH": "Biodiverse",
     "BaseStats": {
-      "HP": 66,
+      "HP": 86,
       "Atk": 65,
       "Def": 48,
       "SpA": 62,
-      "SpD": 57,
+      "SpD": 67,
       "Spe": 52
     },
     "CatchRate": 255,
@@ -102798,9 +102814,9 @@
     "BaseStats": {
       "HP": 67,
       "Atk": 82,
-      "Def": 62,
+      "Def": 67,
       "SpA": 46,
-      "SpD": 48,
+      "SpD": 54,
       "Spe": 43
     },
     "CatchRate": 255,
@@ -104387,12 +104403,12 @@
     "Ability2": "Sweet Veil",
     "AbilityH": "Gooey",
     "BaseStats": {
-      "HP": 102,
-      "Atk": 95,
+      "HP": 107,
+      "Atk": 93,
       "Def": 91,
       "SpA": 80,
       "SpD": 75,
-      "Spe": 52
+      "Spe": 64
     },
     "CatchRate": 255,
     "BaseXP": 88,
@@ -105770,13 +105786,13 @@
     "Type2": "Normal",
     "Ability1": "Dry Skin",
     "Ability2": "Lightning Rod",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 44,
       "Atk": 38,
-      "Def": 40,
-      "SpA": 75,
-      "SpD": 62,
+      "Def": 45,
+      "SpA": 81,
+      "SpD": 72,
       "Spe": 81
     },
     "CatchRate": 255,
@@ -105939,7 +105955,7 @@
     "Type2": "Normal",
     "Ability1": "Dry Skin",
     "Ability2": "Solar Power",
-    "AbilityH": "Dune Guard",
+    "AbilityH": "Sand Veil",
     "BaseStats": {
       "HP": 62,
       "Atk": 55,
@@ -106540,6 +106556,10 @@
         "Move": "Iron Head"
       },
       {
+        "Label": "TM54",
+        "Move": "Shock Wave"
+      },
+      {
         "Label": "TM57",
         "Move": "Charge Beam"
       },
@@ -106731,6 +106751,10 @@
       {
         "Label": "TM51",
         "Move": "Iron Head"
+      },
+      {
+        "Label": "TM54",
+        "Move": "Shock Wave"
       },
       {
         "Label": "TM57",
@@ -110835,7 +110859,7 @@
     "SpeciesIdx": 413,
     "Type1": "Bug",
     "Type2": "Ground",
-    "Ability1": "Dune Guard",
+    "Ability1": "Sand Veil",
     "Ability2": "Overcoat",
     "AbilityH": "Biodiverse",
     "BaseStats": {
@@ -110984,7 +111008,7 @@
     "SpeciesIdx": 413,
     "Type1": "Bug",
     "Type2": "Steel",
-    "Ability1": "Glacial Guard",
+    "Ability1": "Snow Cloak",
     "Ability2": "Overcoat",
     "AbilityH": "Biodiverse",
     "BaseStats": {
@@ -118822,6 +118846,10 @@
         "Move": "X-Scissor"
       },
       {
+        "Label": "TM82",
+        "Move": "Breaking Swipe"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -119233,9 +119261,9 @@
     "SpeciesIdx": 460,
     "Type1": "Grass",
     "Type2": "Ice",
-    "Ability1": "Glacial Guard",
-    "Ability2": "Glacial Guard",
-    "AbilityH": "Glacial Guard",
+    "Ability1": "Snow Cloak",
+    "Ability2": "Snow Cloak",
+    "AbilityH": "Snow Cloak",
     "BaseStats": {
       "HP": 105,
       "Atk": 132,

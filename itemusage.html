@@ -54,7 +54,7 @@
         position: absolute;
         top: 10px;
         left: 10px;
-        background: #4285F4;
+        background: rgba(66, 133, 244, 0.65);
         color: white;
         border-radius: 50%;
         width: 35px;
@@ -67,17 +67,17 @@
     }
 
     .rank-badge.top-1 {
-        background: #FFD700;
+        background: rgba(255, 215, 0, 0.65);
         color: #333;
     }
 
     .rank-badge.top-2 {
-        background: #C0C0C0;
+        background: rgba(192, 192, 192, 0.65);
         color: #333;
     }
 
     .rank-badge.top-3 {
-        background: #CD7F32;
+        background: rgba(205, 127, 50, 0.65);
         color: white;
     }
 
@@ -141,10 +141,6 @@
 </style>
 </head>
 <body>
-
-<!-- Header placeholder -->
-<div id="header-placeholder"></div>
-
 <h1>Held Item Usage Rankings</h1>
 <p class="subtitle">Items used by trainer Pokémon, ranked by frequency</p>
 
@@ -255,9 +251,17 @@
         }
         
         loading.style.display = 'none';
+
+        let currentRank = 0;
+        let previousCount = null;
         
         itemUsageArray.forEach((itemData, index) => {
-            const rank = index + 1;
+            if (itemData.count !== previousCount) {
+                currentRank = index + 1;
+                previousCount = itemData.count;
+            }
+
+            const rank = currentRank;
             const card = document.createElement('div');
             card.className = 'item-usage-card';
             

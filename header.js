@@ -17,6 +17,45 @@ function normalizeName(n) {
   return (n || "").toString().toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
+function toSpriteSlug(name) {
+  const raw = String(name || "").trim();
+  if (!raw) return "unknown";
+  const lower = raw.toLowerCase();
+  if (lower === "mr. mime" || lower === "mr mime") return "mr-mime";
+  if (lower === "mime jr." || lower === "mime jr") return "mime-jr";
+  return lower
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "") || "unknown";
+}
+
+function formatPokemonDisplayName(name) {
+  const raw = String(name || "").trim();
+  if (!raw) return "";
+  const megaMatch = raw.match(/^(.*?)-Mega(?:-(.*))?$/i);
+  if (!megaMatch) return raw;
+  const baseName = (megaMatch[1] || "").trim();
+  const suffix = (megaMatch[2] || "").trim().replace(/-/g, " ");
+  return `Mega ${baseName}${suffix ? ` ${suffix}` : ""}`.trim();
+}
+
+function isMegaFormName(name) {
+  return /-Mega(?:-|$)/i.test(String(name || ""));
+}
+
+window.toSpriteSlug = toSpriteSlug;
+window.formatPokemonDisplayName = formatPokemonDisplayName;
+window.isMegaFormName = isMegaFormName;
+
+function isEmbeddedPage() {
+  try {
+    return new URLSearchParams(window.location.search).get("embedded") === "1";
+  } catch (_) {
+    return false;
+  }
+}
+
 async function loadSearchPokedex() {
   if (window._searchPokedex) return window._searchPokedex;
   try {
@@ -40,7 +79,9 @@ function renderSearchResults(matches) {
     box.setAttribute("aria-hidden", "true");
     return;
   }
-  box.innerHTML = matches.map(name => `<div class="result" data-name="${encodeURIComponent(name)}">${name}</div>`).join("");
+  box.innerHTML = matches
+    .map(({ name, label }) => `<div class="result" data-name="${encodeURIComponent(name)}">${label}</div>`)
+    .join("");
   // Add click handlers
   box.querySelectorAll(".result").forEach(el => {
     el.addEventListener("click", e => {
@@ -61,14 +102,18 @@ function searchPokemon() {
   // Debounce quick typing
   if (_searchDebounceTimer) clearTimeout(_searchDebounceTimer);
   _searchDebounceTimer = setTimeout(async () => {
-    const raw = qEl.value.trim().toLowerCase();
-    if (!raw) {
+    const raw = qEl.value.trim();
+    const normalizedQuery = normalizeName(raw);
+    if (!normalizedQuery) {
       renderSearchResults(null);
       return;
     }
     const pokedex = await loadSearchPokedex();
     const names = Object.keys(pokedex || {});
-    const matches = names.filter(name => name.toLowerCase().includes(raw)).slice(0, 15);
+    const matches = names
+      .filter(name => normalizeName(name).startsWith(normalizedQuery))
+      .slice(0, 15)
+      .map(name => ({ name, label: formatPokemonDisplayName(name) }));
     renderSearchResults(matches);
   }, 120);
 }
@@ -76,7 +121,7 @@ function searchPokemon() {
 function setActiveHeaderLink() {
   const path = window.location.pathname.split("/").pop() || "index.html";
   // Clear all active classes first
-  ["link-info","link-pokedex","link-moves","link-locations","link-abilities","link-pokemoncount","link-itemusage","link-movesetcheck","link-damagecalc"].forEach(id => {
+  ["link-info","link-pokedex","link-moves","link-locations","link-abilities","link-checklists","link-damagecalc"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove("active");
   });
@@ -90,12 +135,8 @@ function setActiveHeaderLink() {
     const el = document.getElementById("link-locations"); if (el) el.classList.add("active");
   } else if (path.startsWith("abilities")) {
     const el = document.getElementById("link-abilities"); if (el) el.classList.add("active");
-  } else if (path.startsWith("pokemoncount")) {
-    const el = document.getElementById("link-pokemoncount"); if (el) el.classList.add("active");
-  } else if (path.startsWith("itemusage")) {
-    const el = document.getElementById("link-itemusage"); if (el) el.classList.add("active");
-  } else if (path.startsWith("movesetcheck")) {
-    const el = document.getElementById("link-movesetcheck"); if (el) el.classList.add("active");
+  } else if (path.startsWith("checklists") || path.startsWith("pokemoncount") || path.startsWith("itemusage") || path.startsWith("movesetcheck") || path.startsWith("trainercheck")) {
+    const el = document.getElementById("link-checklists"); if (el) el.classList.add("active");
   } else if (path.startsWith("damagecalc")) {
     const el = document.getElementById("link-damagecalc"); if (el) el.classList.add("active");
   } else {
@@ -169,6 +210,7 @@ function installHeaderFromFile() {
         <a href="index.html">Pokédex</a>
         <a href="moves.html">Moves</a>
         <a href="locations.html">Locations</a>
+        <a href="checklists.html">Check-Lists</a>
         <a href="damagecalc.html">Damage Calc</a>
         <div style="margin-left:auto; display:flex; align-items:center; gap:12px; position:relative;">
           <div style="position:relative;">
@@ -191,9 +233,11 @@ function installHeaderFromFile() {
 
 // Initialize once DOM is ready
 document.addEventListener("DOMContentLoaded", async () => {
-  await installHeaderFromFile();
-  // Preload pokedex for search
-  await loadSearchPokedex();
+  if (!isEmbeddedPage()) {
+    await installHeaderFromFile();
+    // Preload pokedex for search
+    await loadSearchPokedex();
+  }
   // Expose search function globally (used by inline oninput if any)
   window.searchPokemon = searchPokemon;
   // Wire up dark mode toggle
