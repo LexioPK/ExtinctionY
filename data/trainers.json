@@ -129,19 +129,19 @@
             ]
           },
           {
-            "Name": "Dusclops",
+            "Name": "Marowak",
             "Form": "",
             "Gender": "",
             "Level": 38,
-            "Ability": "Pressure",
+            "Ability": "Aegis",
             "HeldItem": "Ghost Gem",
-            "Nature": "Jolly (\u002BSpe / -SpA)",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
               "Shadow Punch",
-              "Payback",
-              "Confuse Ray",
-              "Will-O-Wisp"
+              "Thief",
+              "Bonemerang",
+              "Fire Punch"
             ]
           }
         ]
@@ -501,76 +501,13 @@
         ]
       },
       {
-        "TrainerName": "Luna",
-        "TrainerID": 362,
-        "TrainerClass": "Hex Maniac",
-        "TrainerClassIndex": 13,
-        "BattleType": "Single",
-        "Route": "Route 15",
-        "EncounterIndex": 2,
-        "Required": "Mandatory",
-        "Notes": "",
-        "IsTagBattle": false,
-        "RewardItem": "",
-        "Pokemon": [
-          {
-            "Name": "Zoroark",
-            "Form": "",
-            "Gender": "",
-            "Level": 58,
-            "Ability": "Illusion",
-            "HeldItem": "Dread Plate",
-            "Nature": "Quirky (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Foul Play",
-              "Aura Sphere",
-              "Shadow Ball",
-              "U-turn"
-            ]
-          },
-          {
-            "Name": "Skuntank",
-            "Form": "",
-            "Gender": "",
-            "Level": 58,
-            "Ability": "Stench",
-            "HeldItem": "Wise Glasses",
-            "Nature": "Modest (\u002BSpA / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Flamethrower",
-              "Sludge Bomb",
-              "Dark Pulse",
-              "Pursuit"
-            ]
-          },
-          {
-            "Name": "Shedinja",
-            "Form": "",
-            "Gender": "",
-            "Level": 58,
-            "Ability": "Wonder Guard",
-            "HeldItem": "Bug Gem",
-            "Nature": "Lax (\u002BDef / -SpD)",
-            "IVs": 31,
-            "Moves": [
-              "Bug Buzz",
-              "Shadow Ball",
-              "Hypnosis",
-              "Shadow Sneak"
-            ]
-          }
-        ]
-      },
-      {
         "TrainerName": "Dean",
         "TrainerID": 429,
         "TrainerClass": "Pok\u00E9mon Guardian",
         "TrainerClassIndex": 89,
         "BattleType": "Triple",
         "Route": "Route 15",
-        "EncounterIndex": 3,
+        "EncounterIndex": 2,
         "Required": "Optional",
         "Notes": "",
         "IsTagBattle": false,
@@ -633,7 +570,7 @@
         "TrainerClassIndex": 89,
         "BattleType": "Single",
         "Route": "Route 15",
-        "EncounterIndex": 4,
+        "EncounterIndex": 3,
         "Required": "Optional",
         "Notes": "",
         "IsTagBattle": false,
@@ -701,6 +638,69 @@
               "Crunch",
               "Rock Slide",
               "Screech"
+            ]
+          }
+        ]
+      },
+      {
+        "TrainerName": "Luna",
+        "TrainerID": 362,
+        "TrainerClass": "Hex Maniac",
+        "TrainerClassIndex": 13,
+        "BattleType": "Single",
+        "Route": "Route 15",
+        "EncounterIndex": 4,
+        "Required": "Mandatory",
+        "Notes": "",
+        "IsTagBattle": false,
+        "RewardItem": "",
+        "Pokemon": [
+          {
+            "Name": "Zoroark",
+            "Form": "",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Illusion",
+            "HeldItem": "Dread Plate",
+            "Nature": "Quirky (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Foul Play",
+              "Aura Sphere",
+              "Shadow Ball",
+              "U-turn"
+            ]
+          },
+          {
+            "Name": "Skuntank",
+            "Form": "",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Stench",
+            "HeldItem": "Wise Glasses",
+            "Nature": "Modest (\u002BSpA / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Flamethrower",
+              "Sludge Bomb",
+              "Dark Pulse",
+              "Pursuit"
+            ]
+          },
+          {
+            "Name": "Shedinja",
+            "Form": "",
+            "Gender": "",
+            "Level": 58,
+            "Ability": "Wonder Guard",
+            "HeldItem": "Bug Gem",
+            "Nature": "Lax (\u002BDef / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "Bug Buzz",
+              "Shadow Ball",
+              "Hypnosis",
+              "Shadow Sneak"
             ]
           }
         ]
@@ -913,7 +913,7 @@
             "Form": "",
             "Gender": "",
             "Level": 60,
-            "Ability": "Competitive",
+            "Ability": "Cute Charm",
             "HeldItem": "Shell Bell",
             "Nature": "Adamant (\u002BAtk / -SpA)",
             "IVs": 31,
@@ -2808,7 +2808,7 @@
               "Roost",
               "Flame Charge",
               "Steel Wing",
-              "Acrobatics"
+              "Pluck"
             ]
           },
           {
@@ -3092,7 +3092,7 @@
             "Moves": [
               "Flame Charge",
               "Steel Wing",
-              "Acrobatics",
+              "Pluck",
               "Roost"
             ]
           },
@@ -3707,7 +3707,7 @@
             "Form": "",
             "Gender": "",
             "Level": 64,
-            "Ability": "Rivalry",
+            "Ability": "Guts",
             "HeldItem": "Flame Orb",
             "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
@@ -3730,7 +3730,7 @@
             "Moves": [
               "Close Combat",
               "Ice Punch",
-              "Mega Kick",
+              "Crush Claw",
               "Swords Dance"
             ]
           },
@@ -3744,7 +3744,7 @@
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
-              "Dark Pulse",
+              "Crunch",
               "Iron Tail",
               "Zen Headbutt",
               "Poison Jab"
@@ -6416,7 +6416,7 @@
             "Gender": "",
             "Level": 54,
             "Ability": "Symbiosis",
-            "HeldItem": "Mental Herb",
+            "HeldItem": "Pixie Plate",
             "Nature": "Gentle (\u002BSpD / -Def)",
             "IVs": 31,
             "Moves": [
@@ -6564,7 +6564,7 @@
             "IVs": 31,
             "Moves": [
               "Psychic",
-              "Synchronoise",
+              "Hyper Voice",
               "Aura Sphere",
               "Energy Ball"
             ]
@@ -8857,7 +8857,7 @@
             "IVs": 20,
             "Moves": [
               "Tackle",
-              "Leer",
+              "Tail Whip",
               "Mud-Slap",
               ""
             ]
@@ -9157,7 +9157,7 @@
               "Round",
               "Disarming Voice",
               "Disable",
-              "Copycat"
+              "Charm"
             ]
           }
         ]
@@ -9691,7 +9691,7 @@
             "IVs": 31,
             "Moves": [
               "Entangle",
-              "Stun Spore",
+              "Poison Powder",
               "Headbutt",
               "Leech Seed"
             ]
@@ -10327,7 +10327,7 @@
             "IVs": 20,
             "Moves": [
               "Thunder Shock",
-              "Leer",
+              "Tail Whip",
               "Charge",
               ""
             ]
@@ -10581,7 +10581,7 @@
               "Scratch",
               "Assist",
               "Growl",
-              "Feint"
+              "Feint Attack"
             ]
           },
           {
@@ -10676,7 +10676,7 @@
               "Peck",
               "Fury Cutter",
               "Sharpen",
-              "Leer"
+              "Endure"
             ]
           },
           {
@@ -11610,7 +11610,7 @@
             "IVs": 31,
             "Moves": [
               "Confusion",
-              "Double Team",
+              "Echoed Voice",
               "Teleport",
               "Disarming Voice"
             ]
@@ -14593,7 +14593,7 @@
             "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 24,
             "Moves": [
-              "Tackle",
+              "Lick",
               "Double Team",
               "Bubble",
               ""
@@ -14619,7 +14619,7 @@
             "Form": "",
             "Gender": "\u2640 / Female",
             "Level": 3,
-            "Ability": "Shell Armor",
+            "Ability": "Torrent",
             "HeldItem": "",
             "Nature": "Naughty (\u002BAtk / -SpD)",
             "IVs": 24,
@@ -14641,7 +14641,7 @@
             "IVs": 24,
             "Moves": [
               "Tackle",
-              "Growl",
+              "Defense Curl",
               "Vine Whip",
               ""
             ]
@@ -14682,13 +14682,13 @@
             "Form": "",
             "Gender": "\u2640 / Female",
             "Level": 5,
-            "Ability": "Magic Guard",
+            "Ability": "Magician",
             "HeldItem": "",
             "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 24,
             "Moves": [
               "Scratch",
-              "Tail Whip",
+              "Lucky Chant",
               "Ember",
               ""
             ]
@@ -19586,16 +19586,16 @@
             ]
           },
           {
-            "Name": "Marowak",
+            "Name": "Banette",
             "Form": "",
             "Gender": "",
             "Level": 57,
-            "Ability": "Battle Armor",
+            "Ability": "Infiltrator",
             "HeldItem": "Iron Ball",
-            "Nature": "Relaxed (\u002BDef / -Spe)",
+            "Nature": "Hasty (\u002BSpe / -Def)",
             "IVs": 31,
             "Moves": [
-              "Earthquake",
+              "Crush Claw",
               "Shadow Punch",
               "Thief",
               "Fling"
@@ -19944,7 +19944,7 @@
             "Moves": [
               "Wing Attack",
               "Crater",
-              "U-turn",
+              "Rock Climb",
               "Spikes"
             ]
           },
@@ -20008,7 +20008,7 @@
             "Moves": [
               "Cross Poison",
               "Wing Attack",
-              "Hyper Voice",
+              "U-turn",
               "Tailwind"
             ]
           },
@@ -20023,7 +20023,7 @@
             "IVs": 31,
             "Moves": [
               "Giga Drain",
-              "Shadow Ball",
+              "Hex",
               "Mystical Fire",
               "Will-O-Wisp"
             ]
@@ -24647,10 +24647,10 @@
             "Nature": "Mild (\u002BSpA / -Def)",
             "IVs": 31,
             "Moves": [
-              "Tailwind",
+              "Hyper Voice",
               "Heat Wave",
               "Aeroblast",
-              "Hyper Voice"
+              "Roost"
             ]
           },
           {
@@ -24775,7 +24775,7 @@
             "IVs": 31,
             "Moves": [
               "Power Gem",
-              "Disarming Voice",
+              "Discharge",
               "Earth Power",
               "Flash Cannon"
             ]
@@ -24792,7 +24792,7 @@
             "Moves": [
               "Brave Bird",
               "Blaze Kick",
-              "High Jump Kick",
+              "Drill Run",
               "Mega Kick"
             ]
           }
@@ -25272,93 +25272,14 @@
     "Notes": "",
     "Trainers": [
       {
-        "TrainerName": "Jet",
-        "TrainerID": 423,
-        "TrainerClass": "Roller Skater",
-        "TrainerClassIndex": 100,
-        "BattleType": "Double",
-        "Route": "Route 16",
-        "EncounterIndex": 0,
-        "Required": "Megastone",
-        "Notes": "",
-        "IsTagBattle": false,
-        "RewardItem": "Charti Berry",
-        "Pokemon": [
-          {
-            "Name": "Audino",
-            "Form": "",
-            "Gender": "",
-            "Level": 60,
-            "Ability": "Healer",
-            "HeldItem": "Rocky Helmet",
-            "Nature": "Bold (\u002BDef / -Atk)",
-            "IVs": 31,
-            "Moves": [
-              "Dazzling Gleam",
-              "Hyper Voice",
-              "Yawn",
-              "Simple Beam"
-            ]
-          },
-          {
-            "Name": "Leavanny",
-            "Form": "",
-            "Gender": "",
-            "Level": 60,
-            "Ability": "Shield Dust",
-            "HeldItem": "Charti Berry",
-            "Nature": "Adamant (\u002BAtk / -SpA)",
-            "IVs": 31,
-            "Moves": [
-              "Leaf Blade",
-              "Snip Snip",
-              "X-Scissor",
-              "Swords Dance"
-            ]
-          },
-          {
-            "Name": "Heatmor",
-            "Form": "",
-            "Gender": "",
-            "Level": 61,
-            "Ability": "White Smoke",
-            "HeldItem": "Charti Berry",
-            "Nature": "Hardy (Neutral)",
-            "IVs": 31,
-            "Moves": [
-              "Dragon Pulse",
-              "Flamethrower",
-              "Giga Drain",
-              "Amnesia"
-            ]
-          },
-          {
-            "Name": "Braviary",
-            "Form": "",
-            "Gender": "",
-            "Level": 61,
-            "Ability": "Justified",
-            "HeldItem": "Charti Berry",
-            "Nature": "Brave (\u002BAtk / -Spe)",
-            "IVs": 31,
-            "Moves": [
-              "Close Combat",
-              "Crush Claw",
-              "Wing Attack",
-              "Psycho Cut"
-            ]
-          }
-        ]
-      },
-      {
         "TrainerName": "Osanna",
         "TrainerID": 364,
         "TrainerClass": "Hex Maniac",
         "TrainerClassIndex": 13,
         "BattleType": "Single",
         "Route": "Route 16",
-        "EncounterIndex": 1,
-        "Required": "Mandatory",
+        "EncounterIndex": 0,
+        "Required": "Megastone",
         "Notes": "",
         "IsTagBattle": false,
         "RewardItem": "Absolite",
@@ -25399,7 +25320,7 @@
             "Name": "Hydreigon",
             "Form": "",
             "Gender": "",
-            "Level": 63,
+            "Level": 62,
             "Ability": "Levitate",
             "HeldItem": "Draco Plate",
             "Nature": "Hardy (Neutral)",
@@ -25452,7 +25373,7 @@
         "TrainerClassIndex": 101,
         "BattleType": "Single",
         "Route": "Route 16",
-        "EncounterIndex": 2,
+        "EncounterIndex": 1,
         "Required": "Megastone",
         "Notes": "",
         "IsTagBattle": false,
@@ -25536,6 +25457,85 @@
               "Psychic",
               "Captivate",
               "Aura Sphere"
+            ]
+          }
+        ]
+      },
+      {
+        "TrainerName": "Jet",
+        "TrainerID": 423,
+        "TrainerClass": "Roller Skater",
+        "TrainerClassIndex": 100,
+        "BattleType": "Double",
+        "Route": "Route 16",
+        "EncounterIndex": 2,
+        "Required": "Mandatory",
+        "Notes": "",
+        "IsTagBattle": false,
+        "RewardItem": "Charti Berry",
+        "Pokemon": [
+          {
+            "Name": "Audino",
+            "Form": "",
+            "Gender": "",
+            "Level": 60,
+            "Ability": "Healer",
+            "HeldItem": "Rocky Helmet",
+            "Nature": "Bold (\u002BDef / -Atk)",
+            "IVs": 31,
+            "Moves": [
+              "Dazzling Gleam",
+              "Hyper Voice",
+              "Yawn",
+              "Simple Beam"
+            ]
+          },
+          {
+            "Name": "Leavanny",
+            "Form": "",
+            "Gender": "",
+            "Level": 60,
+            "Ability": "Shield Dust",
+            "HeldItem": "Charti Berry",
+            "Nature": "Adamant (\u002BAtk / -SpA)",
+            "IVs": 31,
+            "Moves": [
+              "Leaf Blade",
+              "Snip Snip",
+              "X-Scissor",
+              "Swords Dance"
+            ]
+          },
+          {
+            "Name": "Heatmor",
+            "Form": "",
+            "Gender": "",
+            "Level": 61,
+            "Ability": "White Smoke",
+            "HeldItem": "Charti Berry",
+            "Nature": "Hardy (Neutral)",
+            "IVs": 31,
+            "Moves": [
+              "Dragon Pulse",
+              "Flamethrower",
+              "Giga Drain",
+              "Amnesia"
+            ]
+          },
+          {
+            "Name": "Braviary",
+            "Form": "",
+            "Gender": "",
+            "Level": 61,
+            "Ability": "Justified",
+            "HeldItem": "Charti Berry",
+            "Nature": "Brave (\u002BAtk / -Spe)",
+            "IVs": 31,
+            "Moves": [
+              "Close Combat",
+              "Crush Claw",
+              "Wing Attack",
+              "Psycho Cut"
             ]
           }
         ]
@@ -25675,7 +25675,7 @@
             "IVs": 31,
             "Moves": [
               "Surf",
-              "Venoshock",
+              "Sludge Bomb",
               "Acid Armor",
               "Mirror Coat"
             ]
@@ -26315,7 +26315,7 @@
               "Double-Edge",
               "Stone Edge",
               "Crunch",
-              "Iron Tail"
+              "Iron Head"
             ]
           },
           {
@@ -26801,7 +26801,7 @@
             "IVs": 31,
             "Moves": [
               "Icicle Crash",
-              "Crunch",
+              "Stalagbite",
               "Heavy Slam",
               "Recover"
             ]
@@ -26864,7 +26864,7 @@
             "IVs": 31,
             "Moves": [
               "Psychic",
-              "Thunderbolt",
+              "Energy Ball",
               "Aura Sphere",
               "Barrier"
             ]
@@ -27662,7 +27662,7 @@
               "Giga Drain",
               "Sludge Bomb",
               "Toxic",
-              "Leech Seed"
+              "Ingrain"
             ]
           },
           {
@@ -27739,7 +27739,7 @@
             "IVs": 31,
             "Moves": [
               "Double-Edge",
-              "X-Scissor",
+              "Attack Order",
               "Close Combat",
               "Protect"
             ]

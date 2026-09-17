@@ -2902,7 +2902,7 @@
   "Flame Wheel": {
     "Type": "Fire",
     "Category": "Physical",
-    "Power": 60,
+    "Power": 70,
     "Acc": 100,
     "PP": 25,
     "Description": "The user cloaks itself in fire and\ncharges at the target.\nThis may also leave the target with a burn.(10%, Spin)(C)",
@@ -8890,7 +8890,7 @@
     "Description": "The user shrouds itself in electricity and smashes\ninto its target with a chance for paralysis.\nThis also damages the user a lot.(10%,5%)(C)",
     "MinHits": 0,
     "MaxHits": 0,
-    "RecoilAbsorbPercent": -5,
+    "RecoilAbsorbPercent": -10,
     "Targeting": "Single Adjacent Ally/Foe",
     "MoveFlags": [
       "MakesContact",

@@ -17355,6 +17355,10 @@
         "Move": "Scald"
       },
       {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
+      },
+      {
         "Label": "TM69",
         "Move": "Signal Beam"
       },
@@ -30314,6 +30318,10 @@
         "Move": "Rock Slide"
       },
       {
+        "Label": "TM83",
+        "Move": "Infestation"
+      },
+      {
         "Label": "TM87",
         "Move": "Swagger"
       },
@@ -30457,6 +30465,10 @@
       {
         "Label": "TM80",
         "Move": "Rock Slide"
+      },
+      {
+        "Label": "TM83",
+        "Move": "Infestation"
       },
       {
         "Label": "TM87",
@@ -34514,6 +34526,10 @@
       {
         "Label": "TM55",
         "Move": "Scald"
+      },
+      {
+        "Label": "TM64",
+        "Move": "Aura Sphere"
       },
       {
         "Label": "TM68",
@@ -48336,6 +48352,10 @@
         "Move": "Dark Pulse"
       },
       {
+        "Label": "HM01",
+        "Move": "Cut"
+      },
+      {
         "Label": "HM03",
         "Move": "Surf"
       },
@@ -48487,6 +48507,10 @@
       {
         "Label": "TM97",
         "Move": "Dark Pulse"
+      },
+      {
+        "Label": "HM01",
+        "Move": "Cut"
       },
       {
         "Label": "HM03",
@@ -85224,6 +85248,10 @@
       {
         "Label": "TM96",
         "Move": "Nature Power"
+      },
+      {
+        "Label": "HM03",
+        "Move": "Surf"
       }
     ]
   },
@@ -90957,6 +90985,10 @@
       {
         "Label": "TM74",
         "Move": "Gyro Ball"
+      },
+      {
+        "Label": "TM78",
+        "Move": "Bulldoze"
       },
       {
         "Label": "TM84",
@@ -100341,6 +100373,10 @@
         "Move": "Power-Up Punch"
       },
       {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
+      },
+      {
         "Label": "HM01",
         "Move": "Cut"
       },
@@ -104497,6 +104533,10 @@
       {
         "Label": "TM60",
         "Move": "Slam"
+      },
+      {
+        "Label": "TM63",
+        "Move": "Fire Punch"
       },
       {
         "Label": "TM68",
@@ -114578,10 +114618,6 @@
         "Move": "Payback"
       },
       {
-        "Label": "TM68",
-        "Move": "Double-Edge"
-      },
-      {
         "Label": "TM69",
         "Move": "Signal Beam"
       },
@@ -114612,6 +114648,10 @@
       {
         "Label": "TM98",
         "Move": "Power-Up Punch"
+      },
+      {
+        "Label": "TM99",
+        "Move": "Dazzling Gleam"
       },
       {
         "Label": "HM01",
@@ -118565,9 +118605,9 @@
     "SpeciesIdx": 212,
     "Type1": "Bug",
     "Type2": "Steel",
-    "Ability1": "Technician",
-    "Ability2": "Technician",
-    "AbilityH": "Technician",
+    "Ability1": "Tough Claws",
+    "Ability2": "Tough Claws",
+    "AbilityH": "Tough Claws",
     "BaseStats": {
       "HP": 90,
       "Atk": 145,
