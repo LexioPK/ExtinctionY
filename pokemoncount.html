@@ -115,18 +115,10 @@
 </style>
 </head>
 <body>
-
-<!-- Include navigation header -->
-<div id="header-placeholder"></div>
 <script>
-fetch("header.html")
-  .then(response => response.text())
-  .then(html => {
-    document.getElementById("header-placeholder").innerHTML = html;
-    // Set active tab
-    const activeTab = document.getElementById("link-pokemoncount");
-    if (activeTab) activeTab.classList.add("active");
-  });
+function displayPokemonName(name) {
+    return window.formatPokemonDisplayName ? window.formatPokemonDisplayName(name) : name;
+}
 </script>
 
 <h1>Pokémon Usage in Trainer Battles</h1>
@@ -213,7 +205,7 @@ async function loadPokemonCount() {
         // Update stats summary
         document.getElementById('unique-pokemon-count').textContent = sortedPokemon.length;
         document.getElementById('total-pokemon-count').textContent = totalAppearances;
-        document.getElementById('most-used-pokemon').textContent = `${mostUsed[0]} (${mostUsed[1]}×)`;
+        document.getElementById('most-used-pokemon').textContent = `${displayPokemonName(mostUsed[0])} (${mostUsed[1]}×)`;
         
         // Add zero use count if element exists
         const zeroUseElement = document.getElementById('zero-use-count');
@@ -244,7 +236,7 @@ function createPokemonCard(name, count, dexNum) {
     card.onclick = () => window.location.href = `pokemon.html?name=${encodeURIComponent(name)}`;
 
     // Try to load sprite from multiple locations
-    const spriteSlug = name.toLowerCase().replace(/\s+/g, '-');
+    const spriteSlug = window.toSpriteSlug ? window.toSpriteSlug(name) : name.toLowerCase().replace(/\s+/g, '-');
     const sprite = document.createElement('img');
     sprite.className = 'sprite';
     sprite.alt = name;
@@ -254,14 +246,14 @@ function createPokemonCard(name, count, dexNum) {
     sprite.onerror = () => {
         sprite.src = `pokemon_sprties2/${spriteSlug}.png`;
         sprite.onerror = () => {
-            sprite.src = 'pokemon_sprites/unknown.png';
+            sprite.src = 'pokemon_sprites/substitute.png';
             sprite.onerror = null;
         };
     };
 
     const nameDiv = document.createElement('div');
     nameDiv.className = 'pokemon-name';
-    nameDiv.textContent = name;
+    nameDiv.textContent = displayPokemonName(name);
 
     const dexDiv = document.createElement('div');
     dexDiv.className = 'dex-number';

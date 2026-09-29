@@ -204,13 +204,14 @@ function loadAbilities() {
 
                     const img = document.createElement("img");
                     // Convert Pokémon name to lowercase for sprite filename
-                    const spriteName = pokemonName.toLowerCase().replace(/[^a-z0-9-]/g, '');
+                    const spriteName = window.toSpriteSlug ? window.toSpriteSlug(pokemonName) : pokemonName.toLowerCase().replace(/[^a-z0-9-]/g, '');
                     img.src = `image/icons/${spriteName}.png`;
                     img.alt = pokemonName;
-                    img.title = pokemonName;
+                    img.title = window.formatPokemonDisplayName ? window.formatPokemonDisplayName(pokemonName) : pokemonName;
                     // Handle missing images gracefully
                     img.onerror = function() {
-                        this.parentElement.style.display = 'none';
+                        this.onerror = null;
+                        this.src = 'pokemon_sprites/substitute.png';
                     };
                     wrapper.appendChild(img);
 

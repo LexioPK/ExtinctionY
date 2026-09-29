@@ -167,6 +167,10 @@ html.dark-mode .pokemon-card h3 {
     color: #e0e0e0;
 }
 
+html.dark-mode .pokemon-card .dex-corner {
+    color: #a9b0bf !important;
+}
+
 html.dark-mode .pokemon-card .label {
     border-bottom-color: #444;
     color: #ccc;
@@ -226,6 +230,14 @@ html.dark-mode .pokemon-container > .pokemon-col {
 
 html.dark-mode .pokemon-container > .pokemon-col:nth-child(2n) {
     background: #222233 !important;
+}
+
+html.dark-mode {
+    --sep-color: #4a4a4a;
+}
+
+html.dark-mode .move-list .move-item {
+    border-bottom-color: #3a3a4a !important;
 }
 
 html.dark-mode .pokemon-inner .info-box {
@@ -337,6 +349,31 @@ html.dark-mode .section {
 html.dark-mode .section h2 {
     border-bottom-color: #444 !important;
     color: #e0e0e0 !important;
+}
+
+html.dark-mode .section.stats {
+    background: #1e1e2e !important;
+}
+
+html.dark-mode .section.stats .base-stats-container,
+html.dark-mode .section.stats .stat-changes-content {
+    background: #1a1a28 !important;
+    border: 1px solid #3a3a4a !important;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+html.dark-mode .section.stats .stat-bar-bg {
+    background: #333a4a !important;
+}
+
+html.dark-mode .arrow,
+html.dark-mode .evo-special-arrow,
+html.dark-mode .eevee-arrow,
+html.dark-mode .method-text,
+html.dark-mode .evo-special-method,
+html.dark-mode .evo-method-inline {
+    color: #9fb3d9 !important;
 }
 
 html.dark-mode .moves-table {

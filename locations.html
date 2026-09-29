@@ -690,9 +690,14 @@
     }
 
     function getPokemonIconPath(pokemonName) {
-        // Normalize the pokemon name for the icon filename
-        const normalized = pokemonName.toLowerCase().replace(/[^a-z0-9]/g, "");
+        const normalized = window.toSpriteSlug
+            ? window.toSpriteSlug(pokemonName)
+            : pokemonName.toLowerCase().replace(/[^a-z0-9]/g, "");
         return `image/icons/${normalized}.png`;
+    }
+
+    function displayPokemonName(name) {
+        return window.formatPokemonDisplayName ? window.formatPokemonDisplayName(name) : name;
     }
 
     function getItemIconPath(itemName) {
@@ -1468,7 +1473,9 @@
                     
                     // Use Form as display name if available, otherwise use Name
                     const displayName = p.Form || p.Name;
-                    const spriteName = displayName.toLowerCase().replace(/\s+/g, '-');
+                    const spriteName = window.toSpriteSlug
+                        ? window.toSpriteSlug(displayName)
+                        : displayName.toLowerCase().replace(/\s+/g, '-');
 
                     // ensure 4 moves, convert empty strings or whitespace to '---'
                     const moves = Array.isArray(p.Moves)
@@ -1529,14 +1536,14 @@
                         <div class="pokemon-inner">
                             <div class="poke-name" style="padding: 6px 0; text-align:center; font-weight:bold;">
                                 <a href="pokemon.html?name=${encodeURIComponent(displayName)}" style="text-decoration:none; color:#000;">
-                                    ${displayName} — Lv ${p.Level}
+                                    ${displayPokemonName(displayName)} — Lv ${p.Level}
                                 </a>
                             </div>
 
                             <a href="pokemon.html?name=${encodeURIComponent(displayName)}">
                                 <img class="poke-img"
                                      src="pokemon_sprites/${spriteName}.png"
-                                     onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/unknown.png'; }">
+                                     onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteName}.png'; this.onerror=function(){ this.src='pokemon_sprites/substitute.png'; this.onerror=null; }">
                             </a>
 
                             <div class="types">
@@ -1874,7 +1881,7 @@
                     // Pokemon name
                     const name = document.createElement("div");
                     name.className = "pokemon-name";
-                    name.textContent = pokemonData.Species;
+                    name.textContent = displayPokemonName(pokemonData.Species);
                     box.appendChild(name);
 
                     // Pokemon icon (clickable link to pokemon page)
@@ -1890,7 +1897,7 @@
                     icon.onerror = function() {
                         if (!iconFailed) {
                             iconFailed = true;
-                            this.src = 'image/icons/unknown.png';
+                            this.src = 'pokemon_sprites/substitute.png';
                         } else {
                             this.style.display = 'none';
                         }
@@ -1975,7 +1982,7 @@
                         // Pokemon name
                         const name = document.createElement("div");
                         name.className = "pokemon-name";
-                        name.textContent = pokemonData.Species;
+                        name.textContent = displayPokemonName(pokemonData.Species);
                         box.appendChild(name);
 
                         // Pokemon icon (clickable link to pokemon page)
@@ -1991,7 +1998,7 @@
                         icon.onerror = function() {
                             if (!iconFailed) {
                                 iconFailed = true;
-                                this.src = 'image/icons/unknown.png';
+                                this.src = 'pokemon_sprites/substitute.png';
                             } else {
                                 // If even the fallback fails, hide the image
                                 this.style.display = 'none';
@@ -2074,7 +2081,7 @@
                 // Pokemon name
                 const name = document.createElement("div");
                 name.className = "pokemon-name";
-                name.textContent = static.Pokemon;
+                name.textContent = displayPokemonName(static.Pokemon);
                 box.appendChild(name);
 
                 // Pokemon icon (clickable link to pokemon page)
@@ -2090,7 +2097,7 @@
                 icon.onerror = function() {
                     if (!iconFailed) {
                         iconFailed = true;
-                        this.src = 'image/icons/unknown.png';
+                        this.src = 'pokemon_sprites/substitute.png';
                     } else {
                         this.style.display = 'none';
                     }
@@ -2185,10 +2192,13 @@
 
                 // Table body
                 const tbody = document.createElement("tbody");
+                const darkMode = document.documentElement.classList.contains("dark-mode");
                 items.forEach((item, idx) => {
                     const row = document.createElement("tr");
-                    row.style.borderBottom = "1px solid #eee";
-                    if (idx % 2 === 0) {
+                    row.style.borderBottom = darkMode ? "1px solid #333" : "1px solid #eee";
+                    if (darkMode) {
+                        row.style.backgroundColor = idx % 2 === 0 ? "#222233" : "#2a2a3a";
+                    } else if (idx % 2 === 0) {
                         row.style.backgroundColor = "#fafafa";
                     }
 
@@ -2203,7 +2213,7 @@
                     icon.style.height = "40px";
                     icon.onerror = function() {
                         // Use substitute/unknown pokemon sprite as fallback
-                        this.src = 'pokemon_sprites/unknown.png';
+                        this.src = 'pokemon_sprites/substitute.png';
                         this.onerror = function() {
                             this.style.display = 'none';
                         };

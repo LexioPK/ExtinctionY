@@ -60,8 +60,14 @@
   .evo-img { width:120px; height:120px; image-rendering: auto; display:block; margin:0 auto 5px; }
   .evo-name { font-weight:bold; font-size:18px; }
   .evo-arrow-block { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:80px; }
-  .method-text { font-size:13px; font-weight:600; text-decoration:underline; margin-bottom:8px; }
-  .arrow { font-size:48px; font-weight:900; color:#888; }
+  .method-text { font-size:13px; font-weight:600; text-decoration:underline; margin-bottom:8px; color:#5f6f8a; font-family:"Lexend", sans-serif; }
+  .arrow { font-size:48px; font-weight:900; color:#5f6f8a; line-height:1; }
+  .evo-node { text-align:center; }
+  .evo-node img { width:120px; height:120px; image-rendering:auto; }
+  .evo-node-name { margin-top:5px; font-weight:700; font-size:18px; color:inherit; }
+  .evo-special-arrow { font-size:48px; color:#5f6f8a; font-weight:900; line-height:1; }
+  .evo-special-method { font-size:13px; color:#5f6f8a; font-weight:600; text-decoration:underline; font-family:"Lexend", sans-serif; }
+  .evo-method-inline { position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; text-decoration:underline; white-space:nowrap; color:#5f6f8a; font-family:"Lexend", sans-serif; }
   
   /* Branching evolution styles */
   .branch-container { display:flex; flex-direction:row; align-items:center; gap:15px; position:relative; }
@@ -70,7 +76,7 @@
   
   /* Diagonal arrow styling for branches */
   .diagonal-arrow { position:relative; display:flex; align-items:center; justify-content:center; width:100px; height:60px; }
-  .diagonal-arrow .arrow { font-size:48px; font-weight:900; color:#888; transform:rotate(-45deg); }
+  .diagonal-arrow .arrow { font-size:48px; font-weight:900; color:#5f6f8a; transform:rotate(-45deg); }
   .diagonal-arrow.down .arrow { transform:rotate(45deg); }
   
   /* Eevee circular layout */
@@ -79,7 +85,7 @@
   .eevee-evo { position:absolute; }
   .eevee-evo .evo-block { position:relative; }
   .eevee-evo .method-text { position:absolute; top:-30px; left:50%; transform:translateX(-50%); white-space:nowrap; font-size:13px; font-weight:600; }
-  .eevee-arrow { position:absolute; font-size:36px; font-weight:900; color:#4285F4; }
+  .eevee-arrow { position:absolute; font-size:48px; font-weight:900; color:#5f6f8a; line-height:1; }
 
   /* Horizontal centering for multi-branch */
   .multi-branch-container { display:flex; flex-direction:row; align-items:flex-start; gap:50px; }
@@ -246,15 +252,23 @@ function normalizeNameForLookup(text) {
   return normalizeDisplayApostrophes(text).toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
 }
 
+function displayPokemonName(name) {
+  return window.formatPokemonDisplayName ? window.formatPokemonDisplayName(name) : name;
+}
+
+function getPokemonSlug(name) {
+  return window.toSpriteSlug ? window.toSpriteSlug(name) : String(name || "").toLowerCase().replace(/\s+/g, "-");
+}
+
 // --- Multi-folder sprite support ---
 const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
 function getPokemonImage(name) {
-    const spriteName = name.toLowerCase().replace(/\s+/g, '-');
+    const spriteName = getPokemonSlug(name);
     return new Promise(resolve => {
         let index = 0;
         function tryNext() {
             if(index >= spriteFolders.length){
-                resolve('pokemon_sprites_unknown/unknown.png');
+                resolve('pokemon_sprites/substitute.png');
                 return;
             }
             const url = `${spriteFolders[index]}/${spriteName}.png`;
@@ -552,23 +566,23 @@ Promise.all([
   // --- Everything else unchanged, with requested layout changes ---
   cardDiv.innerHTML = `
     <button class="nav-btn prev-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(prevMon)}'">
-      ← #${String(prevMonData.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(prevMon)}
+      ← #${String(prevMonData.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(displayPokemonName(prevMon))}
     </button>
     <button class="nav-btn next-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(nextMon)}'">
-      #${String(nextMonData.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(nextMon)} →
+      #${String(nextMonData.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(displayPokemonName(nextMon))} →
     </button>
 
-      <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(monName)}</h1>
-    <img class="sprite" src="${spriteUrl}" onerror="this.src='pokemon_sprites_unknown/unknown.png'">
+      <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(displayPokemonName(monName))}</h1>
+    <img class="sprite" src="${spriteUrl}" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;">
 
     <!-- Alternate Forms Tabs (only show if there are multiple forms) -->
     ${alternateForms.length > 1 ? `
       <div class="form-tabs">
         ${alternateForms.map(formName => {
-          const iconName = formName.toLowerCase().replace(/\s+/g, '-');
+          const iconName = getPokemonSlug(formName);
           return `
           <div class="form-tab ${formName === monName ? 'active' : ''}" data-form-name="${formName}" onclick="updateFormData('${formName}')">
-            <img src="image/icons/${iconName}.png" alt="" class="form-tab-icon" onerror="this.src='pokemon_sprites/unknown.png'; this.onerror=null;">
+            <img src="image/icons/${iconName}.png" alt="" class="form-tab-icon" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;">
             <span>${formatFormName(formName)}</span>
           </div>
         `;
@@ -742,8 +756,8 @@ function loadEvolutions(currentName, data) {
         return `
             <div class="evo-block">
               <a href="pokemon.html?name=${encodeURIComponent(name)}" style="text-decoration:none; color:inherit;">
-                <img src="${imgSrc}" class="evo-img" onerror="this.src='pokemon_sprites_unknown/unknown.png'">
-                <div class="evo-name">${name}</div>
+                <img src="${imgSrc}" class="evo-img" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;">
+                <div class="evo-name">${displayPokemonName(name)}</div>
               </a>
             </div>
         `;
@@ -848,7 +862,7 @@ function loadEvolutions(currentName, data) {
                       <div class="arrow">→</div>
                     </div>
                     <div style="position:relative;">
-                      <div style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; text-decoration:underline; white-space:nowrap;">${method1}</div>
+                      <div class="evo-method-inline">${method1}</div>
                       ${branch1Evo}
                     </div>
                     ${branch1Rest !== branch1Evo ? branch1Rest.replace(branch1Evo, '') : ''}
@@ -858,7 +872,7 @@ function loadEvolutions(currentName, data) {
                       <div class="arrow">→</div>
                     </div>
                     <div style="position:relative;">
-                      <div style="position:absolute; top:-25px; left:50%; transform:translateX(-50%); font-size:13px; font-weight:600; text-decoration:underline; white-space:nowrap;">${method2}</div>
+                      <div class="evo-method-inline">${method2}</div>
                       ${branch2Evo}
                     </div>
                     ${branch2Rest !== branch2Evo ? branch2Rest.replace(branch2Evo, '') : ''}
@@ -949,34 +963,34 @@ function loadEvolutions(currentName, data) {
                 <!-- Row 1: Porygon at top center -->
                 <div></div>
                 <div class="evo-node">
-                    <a href="pokemon.html?name=Porygon"><img src="pokemon_sprites/porygon.png" alt="Porygon" style="width:96px; height:96px; image-rendering: auto;"></a>
-                    <div style="text-align:center; margin-top:5px; font-weight:600;">Porygon</div>
+                    <a href="pokemon.html?name=Porygon"><img src="pokemon_sprites/porygon.png" alt="Porygon" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;"></a>
+                    <div class="evo-node-name">${displayPokemonName("Porygon")}</div>
                 </div>
                 <div></div>
                 
                 <!-- Row 2: Arrows and methods -->
                 <div style="text-align:center;">
-                    <div style="font-size:2rem; color:#888; font-weight:900;">↙</div>
-                    <div style="font-size:0.9rem; color:#888;">Use Item:<br>Up-Grade</div>
+                    <div class="evo-special-arrow">↙</div>
+                    <div class="evo-special-method">Use Item:<br>Up-Grade</div>
                 </div>
                 <div></div>
                 <div style="text-align:center;">
-                    <div style="font-size:2rem; color:#888; font-weight:900;">↘</div>
-                    <div style="font-size:0.9rem; color:#888;">Use Item:<br>Dubious Disc</div>
+                    <div class="evo-special-arrow">↘</div>
+                    <div class="evo-special-method">Use Item:<br>Dubious Disc</div>
                 </div>
                 
                 <!-- Row 3: Porygon2 and Porygon-Z -->
                 <div class="evo-node">
-                    <a href="pokemon.html?name=Porygon2"><img src="pokemon_sprites/porygon2.png" alt="Porygon2" style="width:96px; height:96px; image-rendering: auto;"></a>
-                    <div style="text-align:center; margin-top:5px; font-weight:600;">Porygon2</div>
+                    <a href="pokemon.html?name=Porygon2"><img src="pokemon_sprites/porygon2.png" alt="Porygon2" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;"></a>
+                    <div class="evo-node-name">${displayPokemonName("Porygon2")}</div>
                 </div>
                 <div style="text-align:center;">
-                    <div style="font-size:2rem; color:#888; font-weight:900;">→</div>
-                    <div style="font-size:0.9rem; color:#888;">Use Item:<br>Dubious Disc</div>
+                    <div class="evo-special-arrow">→</div>
+                    <div class="evo-special-method">Use Item:<br>Dubious Disc</div>
                 </div>
                 <div class="evo-node">
-                    <a href="pokemon.html?name=Porygon-Z"><img src="pokemon_sprites/porygon-z.png" alt="Porygon-Z" style="width:96px; height:96px; image-rendering: auto;"></a>
-                    <div style="text-align:center; margin-top:5px; font-weight:600;">Porygon-Z</div>
+                    <a href="pokemon.html?name=Porygon-Z"><img src="pokemon_sprites/porygon-z.png" alt="Porygon-Z" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;"></a>
+                    <div class="evo-node-name">${displayPokemonName("Porygon-Z")}</div>
                 </div>
             </div>
         `;
@@ -991,40 +1005,40 @@ function loadEvolutions(currentName, data) {
                 <!-- Main evolution line: Weedle -> Kakuna -> Beedrill -->
                 <div style="display:flex; align-items:center; justify-content:center; gap:20px; margin-bottom:30px;">
                     <div class="evo-node">
-                        <a href="pokemon.html?name=Weedle"><img src="pokemon_sprites/weedle.png" alt="Weedle" style="width:96px; height:96px; image-rendering: auto;"></a>
-                        <div style="text-align:center; margin-top:5px; font-weight:600;">Weedle</div>
+                        <a href="pokemon.html?name=Weedle"><img src="pokemon_sprites/weedle.png" alt="Weedle" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;"></a>
+                        <div class="evo-node-name">${displayPokemonName("Weedle")}</div>
                     </div>
                     <div style="text-align:center;">
-                        <div style="font-size:2rem; color:#888; font-weight:900;">→</div>
-                        <div style="font-size:0.9rem; color:#888;">Level 10</div>
+                        <div class="evo-special-arrow">→</div>
+                        <div class="evo-special-method">Level 10</div>
                     </div>
                     <div class="evo-node">
-                        <a href="pokemon.html?name=Kakuna"><img src="pokemon_sprites/kakuna.png" alt="Kakuna" style="width:96px; height:96px; image-rendering: auto;"></a>
-                        <div style="text-align:center; margin-top:5px; font-weight:600;">Kakuna</div>
+                        <a href="pokemon.html?name=Kakuna"><img src="pokemon_sprites/kakuna.png" alt="Kakuna" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;"></a>
+                        <div class="evo-node-name">${displayPokemonName("Kakuna")}</div>
                     </div>
                     <div style="text-align:center;">
-                        <div style="font-size:2rem; color:#888; font-weight:900;">→</div>
-                        <div style="font-size:0.9rem; color:#888;">Level 15</div>
+                        <div class="evo-special-arrow">→</div>
+                        <div class="evo-special-method">Level 15</div>
                     </div>
                     <div class="evo-node">
-                        <a href="pokemon.html?name=Beedrill"><img src="pokemon_sprites/beedrill.png" alt="Beedrill" style="width:96px; height:96px; image-rendering: auto;"></a>
-                        <div style="text-align:center; margin-top:5px; font-weight:600;">Beedrill</div>
+                        <a href="pokemon.html?name=Beedrill"><img src="pokemon_sprites/beedrill.png" alt="Beedrill" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;"></a>
+                        <div class="evo-node-name">${displayPokemonName("Beedrill")}</div>
                     </div>
                 </div>
                 
                 <!-- Combee line underneath -->
                 <div style="display:flex; align-items:center; justify-content:center; gap:20px;">
                     <div class="evo-node">
-                        <a href="pokemon.html?name=Combee"><img src="pokemon_sprites/combee.png" alt="Combee" style="width:96px; height:96px; image-rendering: auto;"></a>
-                        <div style="text-align:center; margin-top:5px; font-weight:600;">Combee</div>
+                        <a href="pokemon.html?name=Combee"><img src="pokemon_sprites/combee.png" alt="Combee" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;"></a>
+                        <div class="evo-node-name">${displayPokemonName("Combee")}</div>
                     </div>
                     <div style="text-align:center;">
-                        <div style="font-size:2rem; color:#888; font-weight:900;">→</div>
-                        <div style="font-size:0.9rem; color:#888;">Level Up: 30 (Male)</div>
+                        <div class="evo-special-arrow">→</div>
+                        <div class="evo-special-method">Level Up: 30 (Male)</div>
                     </div>
                     <div class="evo-node">
-                        <a href="pokemon.html?name=Beedrill"><img src="pokemon_sprites/beedrill.png" alt="Beedrill" style="width:96px; height:96px; image-rendering: auto;"></a>
-                        <div style="text-align:center; margin-top:5px; font-weight:600;">Beedrill</div>
+                        <a href="pokemon.html?name=Beedrill"><img src="pokemon_sprites/beedrill.png" alt="Beedrill" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;"></a>
+                        <div class="evo-node-name">${displayPokemonName("Beedrill")}</div>
                     </div>
                 </div>
             </div>

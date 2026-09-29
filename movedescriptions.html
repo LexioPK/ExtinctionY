@@ -303,16 +303,18 @@
   const learnersLevelSection = document.getElementById("learnersLevel");
   const learnersTMSection = document.getElementById("learnersTM");
   const learnColumns = document.getElementById("learnColumns");
+  const displayPokemonName = (name) => window.formatPokemonDisplayName ? window.formatPokemonDisplayName(name) : name;
+  const getPokemonSlug = (name) => window.toSpriteSlug ? window.toSpriteSlug(name) : String(name || "").toLowerCase().replace(/\s+/g, '-');
 
   // Multi-folder sprite support (same approach as pokemon.html)
   const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
   function getPokemonImage(name) {
-    const spriteName = name.toLowerCase().replace(/\s+/g, '-');
+    const spriteName = getPokemonSlug(name);
     return new Promise(resolve => {
       let i = 0;
       function tryOne() {
         if (i >= spriteFolders.length) {
-          resolve('pokemon_sprites_unknown/unknown.png');
+          resolve('pokemon_sprites/substitute.png');
           return;
         }
         const url = `${spriteFolders[i]}/${spriteName}.png`;
@@ -507,7 +509,7 @@
           <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
             <img src="${imgUrl}" alt="${escapeHtml(name)}">
             <div class="meta">
-              <div class="poke-link-name">${escapeHtml(name)}</div>
+              <div class="poke-link-name">${escapeHtml(displayPokemonName(name))}</div>
             </div>
           </a>
           <div class="learn-type">${lvl ? 'Lv ' + escapeHtml(String(lvl)) : 'Lv'}</div>
@@ -531,7 +533,7 @@
           <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
             <img src="${imgUrl}" alt="${escapeHtml(name)}">
             <div class="meta">
-              <div class="poke-link-name">${escapeHtml(name)}</div>
+              <div class="poke-link-name">${escapeHtml(displayPokemonName(name))}</div>
             </div>
           </a>
           <div class="learn-type">${escapeHtml(String(label))}</div>

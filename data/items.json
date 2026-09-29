@@ -1960,7 +1960,7 @@
     "Location/Price": "At the end of the first branch of the path east of the Lumiose City Gate (requires Rock Smash) (hidden)"
   },
   {
-    "Item": "Kasib Berry",
+    "Item": "Roseli Berry",
     "Area": "Route 14",
     "Location/Price": "Reward for beating Pok\u00e9mon Ranger Reed (Repeatable)"
   },
@@ -1980,7 +1980,7 @@
     "Location/Price": "Reward for beating Pok\u00e9mon Ranger Nash (Repeatable)"
   },
   {
-    "Item": "Roseli Berry",
+    "Item": "Kasib Berry",
     "Area": "Route 14",
     "Location/Price": "Reward for beating Pok\u00e9mon Ranger Melina (Repeatable)"
   },
