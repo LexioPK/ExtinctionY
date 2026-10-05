@@ -120,7 +120,7 @@
     text-decoration:none;
     display:inline-block;
   }
-  button.nav-btn-move:hover:not(:disabled) {
+  .nav-btn-move:not(:disabled):hover {
     background:#336fd1;
   }
   a.nav-btn-move:hover {
@@ -365,27 +365,27 @@
   const pokemonIconSlugOverrides = {
     flabebe: "flabb"
   };
-  function getPokemonIcon(name) {
+  function setPokemonIcon(img, name) {
     const normalizedName = String(name || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     const iconSlugs = [...new Set([
       pokemonIconSlugOverrides[normalizedName] || getPokemonSlug(name),
       normalizedName.replace(/[^a-z0-9]/g, '')
     ])];
-    return new Promise(resolve => {
-      let index = 0;
-      function tryNextIcon() {
-        if (index >= iconSlugs.length) {
-          resolve('pokemon_sprites/substitute.png');
-          return;
-        }
-        const path = `image/icons/${iconSlugs[index++]}.png`;
-        const img = new Image();
-        img.onload = () => resolve(path);
-        img.onerror = tryNextIcon;
-        img.src = path;
+    let index = 0;
+    img.onload = () => {
+      img.onerror = null;
+      img.onload = null;
+    };
+    img.onerror = () => {
+      if (index < iconSlugs.length) {
+        img.src = `image/icons/${iconSlugs[index++]}.png`;
+      } else {
+        img.onerror = null;
+        img.onload = null;
+        img.src = 'pokemon_sprites/substitute.png';
       }
-      tryNextIcon();
-    });
+    };
+    img.src = `image/icons/${iconSlugs[index++]}.png`;
   }
 
   // We'll need the sorted list of moves to compute "next" and "prev"
@@ -551,9 +551,6 @@
       return 0;
     });
     tmLearners.sort(comparePokedexOrder);
-    const iconNames = [...new Set([...levelLearners, ...tmLearners].map(learner => learner.pokeName))];
-    const iconEntries = await Promise.all(iconNames.map(async name => [name, await getPokemonIcon(name)]));
-    const pokemonIconPaths = new Map(iconEntries);
 
     // Show/hide sections and apply layout classes
     const hasLevel = levelLearners.length > 0;
@@ -583,14 +580,12 @@
         const entry = document.createElement('div');
         entry.className = 'learn-item';
 
-        const imgUrl = pokemonIconPaths.get(name);
-
         // Anchor wraps image and name so the pokemon is clickable
         const pokeHref = `pokemon.html?name=${encodeURIComponent(name)}`;
 
         entry.innerHTML = `
           <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
-            <img src="${imgUrl}" alt="${escapeHtml(name)}">
+            <img alt="${escapeHtml(name)}">
             <div class="meta">
               <div class="poke-link-name">${escapeHtml(displayPokemonName(name))}</div>
               <span class="learn-level">${levelText}</span>
@@ -598,6 +593,7 @@
           </a>
         `;
         levelList.appendChild(entry);
+        setPokemonIcon(entry.querySelector('img'), name);
       }
     }
 
@@ -609,12 +605,11 @@
         const entry = document.createElement('div');
         entry.className = 'learn-item';
 
-        const imgUrl = pokemonIconPaths.get(name);
         const pokeHref = `pokemon.html?name=${encodeURIComponent(name)}`;
 
         entry.innerHTML = `
           <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
-            <img src="${imgUrl}" alt="${escapeHtml(name)}">
+            <img alt="${escapeHtml(name)}">
             <div class="meta">
               <div class="poke-link-name">${escapeHtml(displayPokemonName(name))}</div>
             </div>
@@ -622,6 +617,7 @@
           <div class="learn-type">${escapeHtml(String(label))}</div>
         `;
         tmList.appendChild(entry);
+        setPokemonIcon(entry.querySelector('img'), name);
       }
     }
 
