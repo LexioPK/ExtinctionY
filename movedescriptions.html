@@ -125,11 +125,17 @@
   .nav-btn-move:visited {
     color:white;
   }
+  .nav-btn-move:hover {
+    background:#336fd1;
+  }
   .nav-btn-move:focus-visible {
     outline:2px solid #1f4e99;
     outline-offset:2px;
   }
-  .nav-btn-move:disabled {
+  html.dark-mode .nav-btn-move:focus-visible {
+    outline-color:#90caf9;
+  }
+  button.nav-btn-move:disabled {
     background:#9bb8f2;
     cursor:default;
   }
@@ -496,7 +502,7 @@
 
     // Both learner lists follow Pokédex order, regardless of learn level.
     const pokedex = pokedexData || {};
-    let pokedexOrder;
+    const pokedexOrder = new Map(Object.keys(pokedex).map((name, index) => [name, index]));
     const comparePokedexOrder = (a, b) => {
       const speciesA = Number(pokedex[a.pokeName]?.SpeciesIdx);
       const speciesB = Number(pokedex[b.pokeName]?.SpeciesIdx);
