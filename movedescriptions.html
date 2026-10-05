@@ -125,7 +125,8 @@
   .nav-btn-move:visited {
     color:white;
   }
-  .nav-btn-move:hover:not(:disabled) {
+  button.nav-btn-move:hover:not(:disabled),
+  a.nav-btn-move:hover {
     background:#336fd1;
   }
   .nav-btn-move:focus-visible {
@@ -502,16 +503,19 @@
 
     // Both learner lists follow Pokédex order, regardless of learn level.
     const pokedex = pokedexData || {};
-    const pokedexOrder = new Map(Object.keys(pokedex).map((name, index) => [name, index]));
+    const pokedexOrder = new Map(Object.entries(pokedex).map(([name, mon], index) => {
+      const speciesIdx = Number(mon?.SpeciesIdx);
+      return [name, {
+        speciesIdx: Number.isFinite(speciesIdx) ? speciesIdx : Infinity,
+        index
+      }];
+    }));
+    const fallbackPokedexOrder = { speciesIdx: Infinity, index: Infinity };
     const comparePokedexOrder = (a, b) => {
-      const speciesA = Number(pokedex[a.pokeName]?.SpeciesIdx);
-      const speciesB = Number(pokedex[b.pokeName]?.SpeciesIdx);
-      const dexIndexA = Number.isFinite(speciesA) ? speciesA : Infinity;
-      const dexIndexB = Number.isFinite(speciesB) ? speciesB : Infinity;
-      if (dexIndexA !== dexIndexB) return dexIndexA - dexIndexB;
-      const orderA = pokedexOrder.get(a.pokeName) ?? Infinity;
-      const orderB = pokedexOrder.get(b.pokeName) ?? Infinity;
-      if (orderA !== orderB) return orderA - orderB;
+      const orderA = pokedexOrder.get(a.pokeName) || fallbackPokedexOrder;
+      const orderB = pokedexOrder.get(b.pokeName) || fallbackPokedexOrder;
+      if (orderA.speciesIdx !== orderB.speciesIdx) return orderA.speciesIdx - orderB.speciesIdx;
+      if (orderA.index !== orderB.index) return orderA.index - orderB.index;
       return a.pokeName.localeCompare(b.pokeName);
     };
     levelLearners.sort(comparePokedexOrder);
