@@ -124,7 +124,6 @@
     background:#336fd1;
   }
   a.nav-btn-move:hover {
-    background:#336fd1;
     color:white;
   }
   a.nav-btn-move:visited,
@@ -552,6 +551,9 @@
       return 0;
     });
     tmLearners.sort(comparePokedexOrder);
+    const iconNames = [...new Set([...levelLearners, ...tmLearners].map(learner => learner.pokeName))];
+    const iconEntries = await Promise.all(iconNames.map(async name => [name, await getPokemonIcon(name)]));
+    const pokemonIconPaths = new Map(iconEntries);
 
     // Show/hide sections and apply layout classes
     const hasLevel = levelLearners.length > 0;
@@ -581,14 +583,14 @@
         const entry = document.createElement('div');
         entry.className = 'learn-item';
 
-        const imgUrl = await getPokemonIcon(name);
+        const imgUrl = pokemonIconPaths.get(name);
 
         // Anchor wraps image and name so the pokemon is clickable
         const pokeHref = `pokemon.html?name=${encodeURIComponent(name)}`;
 
         entry.innerHTML = `
           <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
-            <img src="${imgUrl}" alt="${escapeHtml(name)}" onerror="this.onerror=null;this.src='pokemon_sprites/substitute.png'">
+            <img src="${imgUrl}" alt="${escapeHtml(name)}">
             <div class="meta">
               <div class="poke-link-name">${escapeHtml(displayPokemonName(name))}</div>
               <span class="learn-level">${levelText}</span>
@@ -607,12 +609,12 @@
         const entry = document.createElement('div');
         entry.className = 'learn-item';
 
-        const imgUrl = await getPokemonIcon(name);
+        const imgUrl = pokemonIconPaths.get(name);
         const pokeHref = `pokemon.html?name=${encodeURIComponent(name)}`;
 
         entry.innerHTML = `
           <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
-            <img src="${imgUrl}" alt="${escapeHtml(name)}" onerror="this.onerror=null;this.src='pokemon_sprites/substitute.png'">
+            <img src="${imgUrl}" alt="${escapeHtml(name)}">
             <div class="meta">
               <div class="poke-link-name">${escapeHtml(displayPokemonName(name))}</div>
             </div>
