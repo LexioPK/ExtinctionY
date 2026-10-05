@@ -18,6 +18,7 @@
     --move-padding: 18px; /* matches .move-card padding */
     --card-border-color: #ddd;
     --item-border-color: #eee;
+    --learn-cols: 2;
   }
 
   html.dark-mode {
@@ -97,9 +98,6 @@
     margin-top:14px;
     line-height:1.45;
     color:#222;
-    border:1px solid var(--card-border-color);
-    border-radius:8px;
-    padding:12px;
   }
 
   .top-controls {
@@ -122,12 +120,14 @@
     text-decoration:none;
     display:inline-block;
   }
-  button.nav-btn-move:hover:not(:disabled),
-  a.nav-btn-move:hover {
+  button.nav-btn-move:hover:not(:disabled) {
     background:#336fd1;
   }
+  a.nav-btn-move:hover {
+    background:#336fd1;
+    color:white;
+  }
   a.nav-btn-move:visited,
-  a.nav-btn-move:hover,
   a.nav-btn-move:active {
     color:white;
   }
@@ -188,13 +188,13 @@
 
   .learn-list {
     display:grid;
-    grid-template-columns:repeat(2, minmax(0, 1fr));
+    grid-template-columns:repeat(var(--learn-cols), minmax(0, 1fr));
     gap:8px;
     width:100%;
   }
 
   .learn-columns.single .learn-list {
-    grid-template-columns:repeat(4, minmax(0, 1fr));
+    --learn-cols: 4;
   }
 
   .learn-item {
@@ -218,8 +218,8 @@
   }
 
   .learn-item img {
-    width:48px;
-    height:48px;
+    width:40px;
+    height:40px;
     image-rendering: auto;
     display:block;
     border-radius:6px;
@@ -259,6 +259,17 @@
     text-align:center;
   }
 
+  .learn-item .learn-level {
+    font-weight:600;
+    color:#555;
+    font-size:0.9rem;
+    white-space:nowrap;
+  }
+
+  html.dark-mode .learn-item .learn-level {
+    color:#ccc;
+  }
+
   /* type colors */
   .type-normal  { background:#A8A77A; }
   .type-fire    { background:#EE8130; }
@@ -292,7 +303,7 @@
       max-width: 100%;
     }
     .learn-columns.single .learn-list {
-      grid-template-columns:repeat(2, minmax(0, 1fr));
+      --learn-cols: 2;
     }
     .learn-columns.single .learn-col {
       margin: 0;
@@ -310,7 +321,7 @@
   @media (max-width:480px) {
     .learn-list,
     .learn-columns.single .learn-list {
-      grid-template-columns:1fr;
+      --learn-cols: 1;
     }
   }
 </style>
@@ -345,27 +356,14 @@
   const learnColumns = document.getElementById("learnColumns");
   const displayPokemonName = (name) => window.formatPokemonDisplayName ? window.formatPokemonDisplayName(name) : name;
   const getPokemonSlug = (name) => window.toSpriteSlug ? window.toSpriteSlug(name) : String(name || "").toLowerCase().replace(/\s+/g, '-');
+  const getSpeciesIdx = (mon) => {
+    const rawSpeciesIdx = mon?.SpeciesIdx;
+    if (rawSpeciesIdx === null || rawSpeciesIdx === undefined || rawSpeciesIdx === '') return Infinity;
+    const speciesIdx = Number(rawSpeciesIdx);
+    return Number.isFinite(speciesIdx) ? speciesIdx : Infinity;
+  };
 
-  // Multi-folder sprite support (same approach as pokemon.html)
-  const spriteFolders = ["pokemon_sprites", "pokemon_sprties2"];
-  function getPokemonImage(name) {
-    const spriteName = getPokemonSlug(name);
-    return new Promise(resolve => {
-      let i = 0;
-      function tryOne() {
-        if (i >= spriteFolders.length) {
-          resolve('pokemon_sprites/substitute.png');
-          return;
-        }
-        const url = `${spriteFolders[i]}/${spriteName}.png`;
-        const img = new Image();
-        img.onload = () => resolve(url);
-        img.onerror = () => { i++; tryOne(); };
-        img.src = url;
-      }
-      tryOne();
-    });
-  }
+  const getPokemonIconPath = (name) => `image/icons/${getPokemonSlug(name)}.png`;
 
   // We'll need the sorted list of moves to compute "next" and "prev"
   let sortedMoveNames = [];
@@ -487,12 +485,8 @@
     const pokedex = pokedexData || {};
     const pokedexOrder = new Map();
     for (const [index, [pokeName, mon]] of Object.entries(pokedex).entries()) {
-      const rawSpeciesIdx = mon?.SpeciesIdx;
-      const speciesIdx = rawSpeciesIdx === null || rawSpeciesIdx === undefined || rawSpeciesIdx === ''
-        ? NaN
-        : Number(rawSpeciesIdx);
       pokedexOrder.set(pokeName, {
-        speciesIdx: Number.isFinite(speciesIdx) ? speciesIdx : Infinity,
+        speciesIdx: getSpeciesIdx(mon),
         index
       });
       if (!mon) continue;
@@ -561,19 +555,19 @@
         entry.className = 'learn-item';
 
         // image url
-        const imgUrl = await getPokemonImage(name);
+        const imgUrl = getPokemonIconPath(name);
 
         // Anchor wraps image and name so the pokemon is clickable
         const pokeHref = `pokemon.html?name=${encodeURIComponent(name)}`;
 
         entry.innerHTML = `
           <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
-            <img src="${imgUrl}" alt="${escapeHtml(name)}">
+            <img src="${imgUrl}" alt="${escapeHtml(name)}" onerror="this.onerror=null;this.src='pokemon_sprites/substitute.png'">
             <div class="meta">
               <div class="poke-link-name">${escapeHtml(displayPokemonName(name))}</div>
+              <span class="learn-level">${lvl === null ? 'Lv' : 'Lv ' + escapeHtml(String(lvl))}</span>
             </div>
           </a>
-          <div class="learn-type">${lvl ? 'Lv ' + escapeHtml(String(lvl)) : 'Lv'}</div>
         `;
         levelList.appendChild(entry);
       }
@@ -587,12 +581,12 @@
         const entry = document.createElement('div');
         entry.className = 'learn-item';
 
-        const imgUrl = await getPokemonImage(name);
+        const imgUrl = getPokemonIconPath(name);
         const pokeHref = `pokemon.html?name=${encodeURIComponent(name)}`;
 
         entry.innerHTML = `
           <a class="poke-link" href="${pokeHref}" title="${escapeHtml(name)}">
-            <img src="${imgUrl}" alt="${escapeHtml(name)}">
+            <img src="${imgUrl}" alt="${escapeHtml(name)}" onerror="this.onerror=null;this.src='pokemon_sprites/substitute.png'">
             <div class="meta">
               <div class="poke-link-name">${escapeHtml(displayPokemonName(name))}</div>
             </div>
