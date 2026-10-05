@@ -131,8 +131,10 @@
   .stat-reading {
       display:flex;
       align-items:baseline;
+      justify-content:flex-end;
       gap:6px;
       white-space:nowrap;
+      width:100%;
   }
   .stat-name {
       width:35px;
@@ -167,10 +169,10 @@
   }
   .pokemon-info-grid {
     display:grid;
-    grid-template-columns:minmax(90px, 0.7fr) minmax(0, 1.3fr);
+    grid-template-columns:minmax(0, 1.2fr) minmax(140px, 0.8fr);
+    grid-template-rows:auto auto;
     gap:0;
     align-items:start;
-    border-right:1px solid #c8c8c8;
     padding-right:20px;
   }
   .pokemon-info-grid h3,
@@ -178,63 +180,53 @@
   .section h2,
   .section h3 { text-decoration:none; }
   .pokemon-info-grid .type-info,
-  .pokemon-info-grid .ability-info {
-    grid-column:1;
-    padding:12px;
-    border-right:1px solid #d5d5d5;
-  }
-  .pokemon-info-grid .type-info {
-    border-bottom:1px solid #d5d5d5;
-  }
+  .pokemon-info-grid .weight-info,
+  .pokemon-info-grid .ability-info,
+  .pokemon-info-grid .location-info { padding:12px; }
+  .pokemon-info-grid .type-info,
+  .pokemon-info-grid .ability-info { border-right:1px solid #777; }
+  .pokemon-info-grid .type-info,
+  .pokemon-info-grid .weight-info { border-bottom:1px solid #777; }
   .type-info h3,
-  .ability-info h3 {
-    display:inline;
-    margin:0 8px 0 0;
-  }
+  .weight-info h3,
+  .ability-info h3,
+  .location-info h3 { display:block; margin:0 0 8px; }
   .type-info .types {
     display:inline-flex;
     align-items:center;
     vertical-align:middle;
     margin:0;
   }
-  .pokemon-info-grid .ability-info {
-    display:flex;
-    align-items:flex-start;
-    gap:8px;
-    grid-row:2;
-  }
   .ability-list {
     text-align:left;
-    flex:1;
+    margin:0;
   }
-  .pokemon-info-grid .location-info {
-    grid-column:2;
-    grid-row:1 / span 2;
-    padding:12px;
-    border-bottom:1px solid #d5d5d5;
-  }
-  .location-info .location-list { padding-bottom:10px; border-bottom:1px solid #d5d5d5; }
-  .additional-info { padding:12px 0 0; }
+  .weight-info p { margin:0; }
+  .pokemon-info-grid .location-info { grid-column:2; }
   .base-stats-panel {
     width:100%;
     max-width:620px;
     justify-self:end;
     padding:12px 0 12px 20px;
+    border-left:1px solid #c8c8c8;
   }
+  .base-stats-panel > h3 { text-align:right; }
   .base-stats-container { text-align:left; }
   .info-stats > h2 { border-bottom:1px solid #c8c8c8; padding-bottom:8px; }
   .evolutions h2 { text-decoration:none; }
   @media (max-width:900px) {
     .info-stats-layout { grid-template-columns:1fr; }
-    .pokemon-info-grid { border-right:0; border-bottom:1px solid #c8c8c8; padding:0 0 16px; }
-    .base-stats-panel { max-width:none; padding:16px 0 0; }
+    .pokemon-info-grid { border-right:0; padding:0; }
+    .base-stats-panel { max-width:none; border-left:0; border-top:1px solid #c8c8c8; padding:16px 0 0; }
+    .base-stats-panel > h3 { text-align:left; }
   }
   @media (max-width:560px) {
-    .pokemon-info-grid { grid-template-columns:minmax(80px, 0.65fr) minmax(0, 1.35fr); gap:12px; }
+    .info-stats-layout { grid-template-columns:minmax(0, 1fr); }
+    .pokemon-info-grid { grid-template-columns:minmax(0, 1.1fr) minmax(120px, 0.9fr); }
     .stat-row { grid-template-columns:120px minmax(0, 1fr); gap:8px; }
-    .pokemon-info-grid { gap:0; }
     .pokemon-info-grid .type-info,
-    .pokemon-info-grid .ability-info { padding:10px 6px; }
+    .pokemon-info-grid .weight-info,
+    .pokemon-info-grid .ability-info,
     .pokemon-info-grid .location-info { padding:10px 6px; }
   }
   .ability-list,
@@ -687,6 +679,8 @@ Promise.all([
     
     // Update types
     document.querySelector('.types').innerHTML = formTypes.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("");
+
+    document.querySelector('[data-weight]').textContent = `${currentFormData.Weight || 'N/A'} kg`;
     
     // Update abilities
     const abilitiesUl = document.querySelector('.ability-list');
@@ -752,8 +746,22 @@ Promise.all([
            </div>
          </div>
 
+         <div class="weight-info">
+           <h3>Weight:</h3>
+           <p data-weight>${mon.Weight || 'N/A'} kg</p>
+         </div>
+
+         <div class="ability-info">
+           <h3>Abilities:</h3>
+           <ul class="ability-list">
+             <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
+             ${mon.Ability2 && mon.Ability2 !== mon.Ability1 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
+             ${mon.AbilityH && mon.AbilityH !== mon.Ability1 && mon.AbilityH !== mon.Ability2 ? `<li class="hidden-ability-marker">${formatAbilityWithTooltip(mon.AbilityH)} (H)</li>` : ""}
+           </ul>
+         </div>
+
          <div class="location-info">
-           <h3>Location</h3>
+           <h3>Location:</h3>
            <ul class="location-list">
               ${locations.length > 0 ? locations.map(loc => `
                 <li class="location-entry">
@@ -764,19 +772,6 @@ Promise.all([
                 </li>
               `).join('') : '<li>N/A</li>'}
             </ul>
-            <div class="additional-info">
-              <h3>Additional Info</h3>
-              <p style="margin:2px 0;" data-weight>${mon.Weight || 'N/A'} kg</p>
-            </div>
-         </div>
-
-         <div class="ability-info">
-           <h3>Abilities:</h3>
-           <ul class="ability-list">
-             <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
-             ${mon.Ability2 && mon.Ability2 !== mon.Ability1 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
-             ${mon.AbilityH && mon.AbilityH !== mon.Ability1 && mon.AbilityH !== mon.Ability2 ? `<li class="hidden-ability-marker">${formatAbilityWithTooltip(mon.AbilityH)} (H)</li>` : ""}
-           </ul>
          </div>
        </div>
 
