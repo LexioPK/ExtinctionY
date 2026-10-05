@@ -125,7 +125,7 @@
   .nav-btn-move:visited {
     color:white;
   }
-  .nav-btn-move:hover {
+  .nav-btn-move:hover:not(:disabled) {
     background:#336fd1;
   }
   .nav-btn-move:focus-visible {
@@ -509,9 +509,6 @@
       const dexIndexA = Number.isFinite(speciesA) ? speciesA : Infinity;
       const dexIndexB = Number.isFinite(speciesB) ? speciesB : Infinity;
       if (dexIndexA !== dexIndexB) return dexIndexA - dexIndexB;
-      if (!pokedexOrder) {
-        pokedexOrder = new Map(Object.keys(pokedex).map((name, index) => [name, index]));
-      }
       const orderA = pokedexOrder.get(a.pokeName) ?? Infinity;
       const orderB = pokedexOrder.get(b.pokeName) ?? Infinity;
       if (orderA !== orderB) return orderA - orderB;
