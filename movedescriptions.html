@@ -120,10 +120,9 @@
     text-decoration:none;
     display:inline-block;
   }
-  .nav-btn-move:not(:disabled):hover {
-    background:#336fd1;
-  }
+  button.nav-btn-move:hover:not(:disabled),
   a.nav-btn-move:hover {
+    background:#336fd1;
     color:white;
   }
   a.nav-btn-move:visited,
@@ -361,6 +360,13 @@
     const speciesIdx = Number(rawSpeciesIdx);
     return Number.isFinite(speciesIdx) ? speciesIdx : Infinity;
   };
+  function buildPokedexOrder(pokedex) {
+    const order = new Map();
+    Object.keys(pokedex).forEach((name, index) => {
+      order.set(name, { speciesIdx: getSpeciesIdx(pokedex[name]), index });
+    });
+    return order;
+  }
 
   const pokemonIconSlugOverrides = {
     flabebe: "flabb"
@@ -372,20 +378,17 @@
       normalizedName.replace(/[^a-z0-9]/g, '')
     ])];
     let index = 0;
-    img.onload = () => {
-      img.onerror = null;
-      img.onload = null;
-    };
-    img.onerror = () => {
+    const tryNext = () => {
       if (index < iconSlugs.length) {
         img.src = `image/icons/${iconSlugs[index++]}.png`;
-      } else {
-        img.onerror = null;
-        img.onload = null;
-        img.src = 'pokemon_sprites/substitute.png';
+        return;
       }
+      img.onerror = null;
+      img.src = 'pokemon_sprites/substitute.png';
     };
-    img.src = `image/icons/${iconSlugs[index++]}.png`;
+    img.onerror = tryNext;
+    img.onload = () => { img.onerror = null; };
+    tryNext();
   }
 
   // We'll need the sorted list of moves to compute "next" and "prev"
@@ -506,12 +509,8 @@
     // Find learners by TM/HM/Tutor/Egg via pokedexData (mon.TMs array used by pokemon.html)
     const tmLearners = [];
     const pokedex = pokedexData || {};
-    const pokedexOrder = new Map();
-    for (const [index, [pokeName, mon]] of Object.entries(pokedex).entries()) {
-      pokedexOrder.set(pokeName, {
-        speciesIdx: getSpeciesIdx(mon),
-        index
-      });
+    const pokedexOrder = buildPokedexOrder(pokedex);
+    for (const [pokeName, mon] of Object.entries(pokedex)) {
       if (!mon) continue;
       const tms = mon.TMs || [];
       if (Array.isArray(tms)) {
