@@ -487,14 +487,18 @@
       }
     }
 
-    const pokedexOrder = new Map(Object.keys(pokedexData || {}).map((name, index) => [name, index]));
+    // Both learner lists follow Pokédex order, regardless of learn level.
+    const pokedex = pokedexData || {};
+    const pokedexOrder = new Map(Object.keys(pokedex).map((name, index) => [name, index]));
     const comparePokedexOrder = (a, b) => {
-      const speciesA = Number(pokedexData[a.pokeName]?.SpeciesIdx);
-      const speciesB = Number(pokedexData[b.pokeName]?.SpeciesIdx);
+      const speciesA = Number(pokedex[a.pokeName]?.SpeciesIdx);
+      const speciesB = Number(pokedex[b.pokeName]?.SpeciesIdx);
       if (Number.isFinite(speciesA) && Number.isFinite(speciesB) && speciesA !== speciesB) {
         return speciesA - speciesB;
       }
-      return (pokedexOrder.get(a.pokeName) ?? Infinity) - (pokedexOrder.get(b.pokeName) ?? Infinity);
+      const orderA = pokedexOrder.get(a.pokeName) ?? Infinity;
+      const orderB = pokedexOrder.get(b.pokeName) ?? Infinity;
+      return orderA === orderB ? a.pokeName.localeCompare(b.pokeName) : orderA - orderB;
     };
     levelLearners.sort(comparePokedexOrder);
     tmLearners.sort(comparePokedexOrder);
