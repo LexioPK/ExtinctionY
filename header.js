@@ -5,7 +5,7 @@
 
 // Apply dark mode immediately to prevent flash of light mode
 (function() {
-  if (localStorage.getItem("darkMode") === "1") {
+  if (localStorage.getItem("darkMode") !== "0") {
     document.documentElement.classList.add("dark-mode");
   }
 })();
@@ -256,8 +256,8 @@ function applyDarkMode(on) {
 }
 
 function initDarkMode() {
-  // Apply saved preference immediately
-  const saved = localStorage.getItem("darkMode") === "1";
+  // Dark mode is the default unless light mode was explicitly selected
+  const saved = localStorage.getItem("darkMode") !== "0";
   applyDarkMode(saved);
 
   const cb = document.getElementById("dark-mode-checkbox");
