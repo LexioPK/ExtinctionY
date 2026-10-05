@@ -120,22 +120,30 @@
   .moves-table th.cat, .moves-table td.cat { text-align:center; }
   .moves-table th.cat { vertical-align:middle; }
 
-  /* ⭐ Base Stats Bars */
+  /* Base stats and their labels share a fixed chart start position. */
   .stat-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin: 3px 0;
+      display:grid;
+      grid-template-columns:125px minmax(0, 1fr);
+      align-items:center;
+      gap:10px;
+      margin:8px 0;
+  }
+  .stat-reading {
+      display:flex;
+      align-items:baseline;
+      gap:6px;
+      white-space:nowrap;
   }
   .stat-name {
-      width: 35px;
-      font-weight: bold;
-      text-align: right;
+      width:35px;
+      font-weight:bold;
   }
   .stat-num {
-      width: 30px;
-      text-align: left;
-      font-size: 0.9em;
+      font-size:0.9em;
+  }
+  .stat-delta {
+      font-size:0.85em;
+      font-weight:600;
   }
   .stat-bar-bg {
       flex-grow: 1;
@@ -149,20 +157,42 @@
       border-radius: 4px;
   }
 
-  /* Info section columns - make 4 equal width and evenly spaced */
-  .info .info-cols {
-    display:flex;
-    gap:20px;
-    justify-content:space-between;
-    align-items:flex-start;
-    flex-wrap:wrap;
+  .info-stats-layout {
+    display:grid;
+    grid-template-columns:minmax(280px, 0.9fr) minmax(0, 1.5fr);
+    gap:28px;
+    align-items:start;
   }
-  .info .info-cols > div {
-    flex:1;
-    min-width:180px;
-    text-align:left;
+  .pokemon-info-grid {
+    display:grid;
+    grid-template-columns:minmax(90px, 0.7fr) minmax(0, 1.3fr);
+    gap:18px;
+    align-items:start;
   }
-  .info .info-cols h3 { margin:0 0 8px 0; text-decoration:underline; }
+  .pokemon-info-grid h3,
+  .base-stats-panel > h3 { margin:0 0 8px 0; text-decoration:underline; }
+  .pokemon-info-grid .type-info,
+  .pokemon-info-grid .ability-info {
+    grid-column:1;
+  }
+  .pokemon-info-grid .ability-info h3 {
+    text-align:center;
+  }
+  .ability-list { text-align:left; }
+  .pokemon-info-grid .location-info {
+    grid-column:2;
+    grid-row:1 / span 2;
+  }
+  .pokemon-info-grid .ability-info { grid-row:2; }
+  .additional-info { margin-top:18px; }
+  .base-stats-container { text-align:left; }
+  @media (max-width:900px) {
+    .info-stats-layout { grid-template-columns:1fr; }
+  }
+  @media (max-width:560px) {
+    .pokemon-info-grid { grid-template-columns:minmax(80px, 0.65fr) minmax(0, 1.35fr); gap:12px; }
+    .stat-row { grid-template-columns:120px minmax(0, 1fr); gap:8px; }
+  }
   .ability-list,
   .location-list {
     list-style:none;
@@ -506,32 +536,19 @@ Promise.all([
 
   // Calculate stat changes compared to base game
   const baseGameMon = baseGameStatsData[monName];
-  let statChanges = [];
+  const statDeltas = {};
   let bstChange = 0;
   
   if (baseGameMon && baseGameMon.BaseStats) {
-    const stats = ['HP', 'Atk', 'Def', 'SpA', 'SpD', 'Spe'];
-    const statLabels = {'HP': 'HP', 'Atk': 'Atk', 'Def': 'Def', 'SpA': 'SpA', 'SpD': 'SpD', 'Spe': 'Spe'};
-    
-    stats.forEach(stat => {
+    ['HP', 'Atk', 'Def', 'SpA', 'SpD', 'Spe'].forEach(stat => {
       const currentVal = mon.BaseStats[stat];
       const baseVal = baseGameMon.BaseStats[stat];
       const diff = currentVal - baseVal;
-      
-      if (diff !== 0) {
-        const color = diff > 0 ? '#28a745' : '#dc3545';  // green for positive, red for negative
-        const sign = diff > 0 ? '+' : '';
-        statChanges.push(`<span style="color:${color}; font-weight:600;">${statLabels[stat]} (${sign}${diff})</span>`);
-        bstChange += diff;
-      }
+      statDeltas[stat] = diff;
+      bstChange += diff;
     });
-    
-    if (bstChange !== 0) {
-      const color = bstChange > 0 ? '#28a745' : '#dc3545';
-      const sign = bstChange > 0 ? '+' : '';
-      statChanges.push(`<span style="color:${color}; font-weight:600;">BST (${sign}${bstChange})</span>`);
-    }
   }
+  statDeltas.BST = bstChange;
 
   const moveList = movesetsData[monName] || [];
 
@@ -540,12 +557,16 @@ Promise.all([
   const cardDiv = document.getElementById("pokemonCard");
 
   /* ⭐ Helper for stat bars */
-  function createStatRow(label, value, min, max, color) {
+  function createStatRow(label, value, min, max, color, delta = 0) {
       const pct = Math.max(3, Math.min(100, (value - min) / (max - min) * 100));
+      const deltaText = delta ? ` (${delta > 0 ? '+' : ''}${delta})` : '';
+      const deltaColor = delta > 0 ? '#28a745' : '#dc3545';
       return `
           <div class="stat-row">
-              <div class="stat-name">${label}</div>
-              <div class="stat-num">${value}</div>
+              <div class="stat-reading">
+                <span class="stat-name">${label}</span>
+                <span class="stat-num">${value}<span class="stat-delta" style="color:${deltaColor}">${deltaText}</span></span>
+              </div>
               <div class="stat-bar-bg">
                   <div class="stat-bar-fill" style="width:${pct}%; background:${color};"></div>
               </div>
@@ -603,32 +624,19 @@ Promise.all([
     
     // Calculate stat changes for this form
     const baseGameFormData = baseGameStatsData[formName];
-    let formStatChanges = [];
+    const formStatDeltas = {};
     let formBstChange = 0;
     
     if (baseGameFormData && baseGameFormData.BaseStats) {
-      const stats = ['HP', 'Atk', 'Def', 'SpA', 'SpD', 'Spe'];
-      const statLabels = {'HP': 'HP', 'Atk': 'Atk', 'Def': 'Def', 'SpA': 'SpA', 'SpD': 'SpD', 'Spe': 'Spe'};
-      
-      stats.forEach(stat => {
+      ['HP', 'Atk', 'Def', 'SpA', 'SpD', 'Spe'].forEach(stat => {
         const currentVal = currentFormData.BaseStats[stat];
         const baseVal = baseGameFormData.BaseStats[stat];
         const diff = currentVal - baseVal;
-        
-        if (diff !== 0) {
-          const color = diff > 0 ? '#28a745' : '#dc3545';
-          const sign = diff > 0 ? '+' : '';
-          formStatChanges.push(`<span style="color:${color}; font-weight:600;">${statLabels[stat]} (${sign}${diff})</span>`);
-          formBstChange += diff;
-        }
+        formStatDeltas[stat] = diff;
+        formBstChange += diff;
       });
-      
-      if (formBstChange !== 0) {
-        const color = formBstChange > 0 ? '#28a745' : '#dc3545';
-        const sign = formBstChange > 0 ? '+' : '';
-        formStatChanges.push(`<span style="color:${color}; font-weight:600;">BST (${sign}${formBstChange})</span>`);
-      }
     }
+    formStatDeltas.BST = formBstChange;
     
     // Update sprite
     document.querySelector('.sprite').src = formSpriteUrl;
@@ -647,22 +655,14 @@ Promise.all([
     // Update base stats (use same ranges as initial display for consistency)
     const statsContainer = document.querySelector('.base-stats-container');
     statsContainer.innerHTML = `
-      ${createStatRow('HP', currentFormData.BaseStats.HP, 15, 180, statColors.HP)}
-      ${createStatRow('Atk', currentFormData.BaseStats.Atk, 15, 180, statColors.Atk)}
-      ${createStatRow('Def', currentFormData.BaseStats.Def, 15, 180, statColors.Def)}
-      ${createStatRow('SpA', currentFormData.BaseStats.SpA, 15, 180, statColors.SpA)}
-      ${createStatRow('SpD', currentFormData.BaseStats.SpD, 15, 180, statColors.SpD)}
-      ${createStatRow('Spe', currentFormData.BaseStats.Spe, 15, 180, statColors.Spe)}
-      ${createStatRow('BST', formBst, 250, 600, statColors.BST)}
+      ${createStatRow('HP', currentFormData.BaseStats.HP, 15, 180, statColors.HP, formStatDeltas.HP)}
+      ${createStatRow('Atk', currentFormData.BaseStats.Atk, 15, 180, statColors.Atk, formStatDeltas.Atk)}
+      ${createStatRow('Def', currentFormData.BaseStats.Def, 15, 180, statColors.Def, formStatDeltas.Def)}
+      ${createStatRow('SpA', currentFormData.BaseStats.SpA, 15, 180, statColors.SpA, formStatDeltas.SpA)}
+      ${createStatRow('SpD', currentFormData.BaseStats.SpD, 15, 180, statColors.SpD, formStatDeltas.SpD)}
+      ${createStatRow('Spe', currentFormData.BaseStats.Spe, 15, 180, statColors.Spe, formStatDeltas.Spe)}
+      ${createStatRow('BST', formBst, 250, 600, statColors.BST, formStatDeltas.BST)}
     `;
-    
-    // Update stat changes
-    const statChangesDiv = document.querySelector('.stat-changes-content');
-    if (formStatChanges.length > 0) {
-      statChangesDiv.innerHTML = formStatChanges.map(change => `<div>${change}</div>`).join('');
-    } else {
-      statChangesDiv.textContent = 'No changes from base game';
-    }
     
     // Update active tab
     document.querySelectorAll('.form-tab').forEach(tab => {
@@ -697,72 +697,59 @@ Promise.all([
       </div>
     ` : ''}
 
-   <!-- Info / Type / Abilities / Location / Additional Info -->
-   <div class="section info">
-     <h2>Info</h2>
-     <div class="info-cols">
-       <div>
-         <h3>Type</h3>
-         <div class="types">
-           ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
+   <div class="section info-stats">
+     <h2>Info &amp; Base Stats</h2>
+     <div class="info-stats-layout">
+       <div class="pokemon-info-grid">
+         <div class="type-info">
+           <h3>Type:</h3>
+           <div class="types">
+             ${types.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("")}
+           </div>
+         </div>
+
+         <div class="location-info">
+           <h3>Location</h3>
+           <ul class="location-list">
+              ${locations.length > 0 ? locations.map(loc => `
+                <li class="location-entry">
+                  <span>${normalizeDisplayApostrophes(loc)}</span>
+                  <span class="location-pokemon-icons">
+                    ${Array.from(locationPokemon.get(loc)).map(species => `<img data-pokemon-icon="${species}" alt="${normalizeDisplayApostrophes(species)}" title="${normalizeDisplayApostrophes(species)}">`).join('')}
+                  </span>
+                </li>
+              `).join('') : '<li>N/A</li>'}
+            </ul>
+            <div class="additional-info">
+              <h3>Additional Info</h3>
+              <p style="margin:2px 0;" data-weight>${mon.Weight || 'N/A'} kg</p>
+            </div>
+         </div>
+
+         <div class="ability-info">
+           <h3>Abilities:</h3>
+           <ul class="ability-list">
+             <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
+             ${mon.Ability2 && mon.Ability2 !== mon.Ability1 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
+             ${mon.AbilityH && mon.AbilityH !== mon.Ability1 && mon.AbilityH !== mon.Ability2 ? `<li class="hidden-ability-marker">${formatAbilityWithTooltip(mon.AbilityH)} (H)</li>` : ""}
+           </ul>
          </div>
        </div>
 
-       <div>
-         <h3>Location</h3>
-         <ul class="location-list">
-            ${locations.length > 0 ? locations.map(loc => `
-              <li class="location-entry">
-                <span>${normalizeDisplayApostrophes(loc)}</span>
-                <span class="location-pokemon-icons">
-                  ${Array.from(locationPokemon.get(loc)).map(species => `<img data-pokemon-icon="${species}" alt="${normalizeDisplayApostrophes(species)}" title="${normalizeDisplayApostrophes(species)}">`).join('')}
-                </span>
-              </li>
-            `).join('') : '<li>N/A</li>'}
-          </ul>
-       </div>
-
-       <div>
-         <h3>Abilities</h3>
-          <ul class="ability-list">
-            <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
-            ${mon.Ability2 && mon.Ability2 !== mon.Ability1 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
-            ${mon.AbilityH && mon.AbilityH !== mon.Ability1 && mon.AbilityH !== mon.Ability2 ? `<li class="hidden-ability-marker">${formatAbilityWithTooltip(mon.AbilityH)} (H)</li>` : ""}
-          </ul>
-       </div>
-
-       <div>
-         <h3>Additional Info</h3>
-         <p style="margin:2px 0;" data-weight>${mon.Weight || 'N/A'} kg</p>
+       <div class="base-stats-panel">
+         <h3>Base Stats</h3>
+         <div class="base-stats-container">
+           ${createStatRow("HP", mon.BaseStats.HP, 15, 180, statColors.HP, statDeltas.HP)}
+           ${createStatRow("Atk", mon.BaseStats.Atk, 15, 180, statColors.Atk, statDeltas.Atk)}
+           ${createStatRow("Def", mon.BaseStats.Def, 15, 180, statColors.Def, statDeltas.Def)}
+           ${createStatRow("SpA", mon.BaseStats.SpA, 15, 180, statColors.SpA, statDeltas.SpA)}
+           ${createStatRow("SpD", mon.BaseStats.SpD, 15, 180, statColors.SpD, statDeltas.SpD)}
+           ${createStatRow("Spe", mon.BaseStats.Spe, 15, 180, statColors.Spe, statDeltas.Spe)}
+           ${createStatRow("BST", bst, 250, 600, statColors.BST, statDeltas.BST)}
+         </div>
        </div>
      </div>
    </div>
-
-  <!-- Base Stats -->
-<div class="section stats">
-  <h2>Base Stats</h2>
-  <div style="display:flex; gap:20px; flex-wrap:wrap;">
-    <div style="flex:1; min-width:200px; text-align:center;">
-      <h3 style="text-decoration:underline;">Updated stats</h3>
-      <div class="base-stats-container" style="text-align:left; margin-top:10px;">
-        ${createStatRow("HP", mon.BaseStats.HP, 15, 180, statColors.HP)}
-        ${createStatRow("Atk", mon.BaseStats.Atk, 15, 180, statColors.Atk)}
-        ${createStatRow("Def", mon.BaseStats.Def, 15, 180, statColors.Def)}
-        ${createStatRow("SpA", mon.BaseStats.SpA, 15, 180, statColors.SpA)}
-        ${createStatRow("SpD", mon.BaseStats.SpD, 15, 180, statColors.SpD)}
-        ${createStatRow("Spe", mon.BaseStats.Spe, 15, 180, statColors.Spe)}
-        ${createStatRow("BST", bst, 250, 600, statColors.BST)}
-      </div>
-    </div>
-
-    <div style="flex:1; min-width:200px; text-align:center;">
-      <h3 style="text-decoration:underline;">Stat Changes</h3>
-      <div class="stat-changes-content" style="text-align:center; margin-top:10px;">
-        ${statChanges.length > 0 ? statChanges.map(change => `<div>${change}</div>`).join('') : '<p style="margin:0;">No changes from base game</p>'}
-      </div>
-    </div>
-  </div>
-</div>
 
    <!-- Evolutions -->
    <div class="section evolutions">
