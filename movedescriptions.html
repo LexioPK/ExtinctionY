@@ -95,12 +95,6 @@
     padding:12px;
   }
 
-  html.dark-mode .move-card,
-  html.dark-mode .learn-item,
-  html.dark-mode .description {
-    border-color:#55556a;
-  }
-
   .top-controls {
     margin-left:auto;
     display:flex;
@@ -119,6 +113,13 @@
     font-weight:700;
     text-decoration:none;
     display:inline-block;
+  }
+  .nav-btn-move:visited {
+    color:white;
+  }
+  .nav-btn-move:focus-visible {
+    outline:2px solid #1f4e99;
+    outline-offset:2px;
   }
   .nav-btn-move:disabled {
     background:#9bb8f2;
@@ -189,6 +190,12 @@
     box-shadow: 0 1px 4px rgba(0,0,0,0.02);
     border: 1px solid #eee;
     min-width: 0;
+  }
+
+  html.dark-mode .move-card,
+  html.dark-mode .learn-item,
+  html.dark-mode .description {
+    border-color:#55556a;
   }
 
   .learn-item a.poke-link {
