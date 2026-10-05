@@ -32,6 +32,7 @@
 
   .move-card {
     background: #f5f5f5;
+    border: 1px solid #ddd;
     border-radius: 12px;
     padding: var(--move-padding);
     box-shadow: 0 3px 12px rgba(0,0,0,0.08);
@@ -89,6 +90,15 @@
     margin-top:14px;
     line-height:1.45;
     color:#222;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:12px;
+  }
+
+  html.dark-mode .move-card,
+  html.dark-mode .learn-item,
+  html.dark-mode .description {
+    border-color:#55556a;
   }
 
   .top-controls {
@@ -148,9 +158,9 @@
     justify-content: center;
   }
   .learn-columns.single .learn-col {
-    flex: 0 0 calc((100% - var(--learn-gap)) / 2);
-    max-width: calc((100% - var(--learn-gap)) / 2);
-    min-width: 200px;
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .learn-col {
@@ -158,10 +168,14 @@
   }
 
   .learn-list {
-    display:flex;
-    flex-direction:column;
-    gap:0;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:8px;
     width:100%;
+  }
+
+  .learn-columns.single .learn-list {
+    grid-template-columns:repeat(4, minmax(0, 1fr));
   }
 
   .learn-item {
@@ -170,13 +184,10 @@
     padding:8px 10px;
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.02);
-    border-bottom: 1px solid #eee; /* subtle line between items */
-  }
-
-  .learn-item:last-child {
-    border-bottom: none;
+    border: 1px solid #eee;
+    min-width: 0;
   }
 
   .learn-item a.poke-link {
@@ -261,6 +272,9 @@
       flex: 1 1 auto;
       max-width: 100%;
     }
+    .learn-columns.single .learn-list {
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
     .learn-columns.single .learn-col {
       margin: 0;
     }
@@ -272,6 +286,13 @@
     .move-stats { width:100%; }
     .learn-item { padding:10px; }
     .top-controls { width:100%; justify-content:flex-start; margin-top:8px; }
+  }
+
+  @media (max-width:480px) {
+    .learn-list,
+    .learn-columns.single .learn-list {
+      grid-template-columns:1fr;
+    }
   }
 </style>
 </head>
@@ -396,6 +417,7 @@
         </div>
 
         <div class="top-controls">
+          <button id="backToMovesBtn" class="nav-btn-move">Back to Moves</button>
           ${prevButtonHtml}
           ${nextButtonHtml}
         </div>
@@ -424,6 +446,9 @@
         location.href = `movedescriptions.html?name=${encodeURIComponent(prevMoveName)}`;
       });
     }
+    document.getElementById('backToMovesBtn').addEventListener('click', () => {
+      location.href = 'moves.html';
+    });
 
     // Clear previous lists (important when the page is navigated to via JS)
     levelList.innerHTML = '';
@@ -463,16 +488,17 @@
       }
     }
 
-    // Sort level learners by level (nulls after)
-    levelLearners.sort((a,b) => {
-      const la = a.level === null ? 9999 : Number(a.level);
-      const lb = b.level === null ? 9999 : Number(b.level);
-      if (la === lb) return a.pokeName.localeCompare(b.pokeName);
-      return la - lb;
-    });
-
-    // Sort tm learners alphabetically
-    tmLearners.sort((a,b) => a.pokeName.localeCompare(b.pokeName));
+    const pokedexOrder = new Map(Object.keys(pokedexData || {}).map((name, index) => [name, index]));
+    const comparePokedexOrder = (a, b) => {
+      const speciesA = Number(pokedexData[a.pokeName]?.SpeciesIdx);
+      const speciesB = Number(pokedexData[b.pokeName]?.SpeciesIdx);
+      if (Number.isFinite(speciesA) && Number.isFinite(speciesB) && speciesA !== speciesB) {
+        return speciesA - speciesB;
+      }
+      return (pokedexOrder.get(a.pokeName) ?? Infinity) - (pokedexOrder.get(b.pokeName) ?? Infinity);
+    };
+    levelLearners.sort(comparePokedexOrder);
+    tmLearners.sort(comparePokedexOrder);
 
     // Show/hide sections and apply layout classes
     const hasLevel = levelLearners.length > 0;
