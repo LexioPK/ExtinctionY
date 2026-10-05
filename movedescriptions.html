@@ -109,7 +109,7 @@
     flex-wrap:wrap;
   }
 
-  button.nav-btn-move {
+  .nav-btn-move {
     background:#4285F4;
     color:white;
     border:none;
@@ -117,6 +117,8 @@
     border-radius:8px;
     cursor:pointer;
     font-weight:700;
+    text-decoration:none;
+    display:inline-block;
   }
   button.nav-btn-move:disabled {
     background:#9bb8f2;
@@ -416,7 +418,7 @@
         </div>
 
         <div class="top-controls">
-          <button id="backToMovesBtn" class="nav-btn-move">Back to Moves</button>
+          <a id="backToMovesBtn" class="nav-btn-move" href="moves.html">Back to Moves</a>
           ${prevButtonHtml}
           ${nextButtonHtml}
         </div>
@@ -445,8 +447,14 @@
         location.href = `movedescriptions.html?name=${encodeURIComponent(prevMoveName)}`;
       });
     }
-    document.getElementById('backToMovesBtn').addEventListener('click', () => {
-      location.href = 'moves.html';
+    document.getElementById('backToMovesBtn').addEventListener('click', (event) => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      try {
+        if (new URL(document.referrer).pathname.endsWith('/moves.html')) {
+          event.preventDefault();
+          history.back();
+        }
+      } catch (_) {}
     });
 
     // Clear previous lists (important when the page is navigated to via JS)
@@ -493,12 +501,13 @@
     const comparePokedexOrder = (a, b) => {
       const speciesA = Number(pokedex[a.pokeName]?.SpeciesIdx);
       const speciesB = Number(pokedex[b.pokeName]?.SpeciesIdx);
-      if (Number.isFinite(speciesA) && Number.isFinite(speciesB) && speciesA !== speciesB) {
-        return speciesA - speciesB;
-      }
+      const dexIndexA = Number.isFinite(speciesA) ? speciesA : Infinity;
+      const dexIndexB = Number.isFinite(speciesB) ? speciesB : Infinity;
+      if (dexIndexA !== dexIndexB) return dexIndexA - dexIndexB;
       const orderA = pokedexOrder.get(a.pokeName) ?? Infinity;
       const orderB = pokedexOrder.get(b.pokeName) ?? Infinity;
-      return orderA === orderB ? a.pokeName.localeCompare(b.pokeName) : orderA - orderB;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.pokeName.localeCompare(b.pokeName);
     };
     levelLearners.sort(comparePokedexOrder);
     tmLearners.sort(comparePokedexOrder);
