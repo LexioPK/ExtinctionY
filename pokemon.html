@@ -19,7 +19,7 @@
   .section { margin-bottom:25px; background:#fafafa; padding:15px 20px; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
   .section h2 { margin-top:0; border-bottom:1px solid #ddd; padding-bottom:5px; margin-bottom:10px; }
 
-  .sprite { display:block; margin:10px auto; width:128px; height:128px; image-rendering: auto; }
+  .sprite { display:block; margin:10px auto; width:96px; height:96px; }
   .types { text-align:center; margin-bottom:10px; }
   .type { display:inline-block; padding:4px 10px; border-radius:12px; font-size:0.85em; color:white; margin:3px; }
 
@@ -57,13 +57,13 @@
   #evolution-chain { display:flex; align-items:center; justify-content:center; gap:30px; flex-wrap:wrap; margin-top:20px; min-height:200px; }
   .evo-stage { display:flex; align-items:center; gap:30px; }
   .evo-block { text-align:center; }
-  .evo-img { width:120px; height:120px; image-rendering: auto; display:block; margin:0 auto 5px; }
+  .evo-img { width:96px; height:96px; display:block; margin:0 auto 5px; }
   .evo-name { font-weight:bold; font-size:18px; }
   .evo-arrow-block { text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:80px; }
   .method-text { font-size:13px; font-weight:600; text-decoration:underline; margin-bottom:8px; color:#5f6f8a; font-family:"Lexend", sans-serif; }
   .arrow { font-size:48px; font-weight:900; color:#5f6f8a; line-height:1; }
   .evo-node { text-align:center; }
-  .evo-node img { width:120px; height:120px; image-rendering:auto; }
+  .evo-node img { width:96px; height:96px; }
   .evo-node-name { margin-top:5px; font-weight:700; font-size:18px; color:inherit; }
   .evo-special-arrow { font-size:48px; color:#5f6f8a; font-weight:900; line-height:1; }
   .evo-special-method { font-size:13px; color:#5f6f8a; font-weight:600; text-decoration:underline; font-family:"Lexend", sans-serif; }
@@ -160,9 +160,47 @@
   .info .info-cols > div {
     flex:1;
     min-width:180px;
-    text-align:center;
+    text-align:left;
   }
   .info .info-cols h3 { margin:0 0 8px 0; text-decoration:underline; }
+  .ability-list,
+  .location-list {
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+  .location-list {
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .location-entry {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .location-pokemon-icons {
+    display:flex;
+    align-items:center;
+    flex-shrink:0;
+  }
+  .location-pokemon-icons img {
+    width:32px;
+    height:24px;
+    object-fit:contain;
+  }
+  .nav-btn {
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .nav-pokemon-icon {
+    width:32px;
+    height:24px;
+    object-fit:contain;
+    vertical-align:middle;
+  }
 
   /* Larger tooltip font size for abilities */
   [title] {
@@ -234,6 +272,26 @@ const typeColors = {
   Steel:"#5a8ea2", Fairy:"#ec8fe6"
 };
 
+const locationRouteOrder = [
+  "Vaniville Town","Route 1","Aquacorde Town","Route 2","Santalune Forest","Route 3",
+  "Santalune City","Route 22","Route 22 - Part 2","Santalune Gym","Route 4","Lumiose City",
+  "Route 5","Camphrier Town","Kalos Hotels","Berry Fields","Route 6","Route 6 - Pathway","Route 6 - East",
+  "Route 6 - West","Parfum Palace","Route 7","Connecting Cave","Route 8","Route 8 - Upper",
+  "Route 8 - Lower","Route 8 - Sea","Ambrette Town","Ambrette Town Aquarium","Route 9","Glittering Cave","Ambrette Town Aquarium",
+  "Cyllage City","Route 10","Cyllage Gym","Geosenge Town","Geosenge Town - Part 2","Route 11",
+  "Reflection Cave","Reflection Cave - 1F","Reflection Cave - B1F","Shalour City","Tower of Mastery","Shalour Gym",
+  "Route 12","Azure Bay","Snow Spirit's Den","Coumarine City","Coumarine City - Seaside","Coumarine City - Cliffside","Coumarine Gym","Route 13",
+  "Kalos Power Plant","Lumiose Gym/Prism Tower","Route 14","Laverre City","Laverre Gym","Poké Ball Factory",
+  "Route 15","Route 16","Lost Hotel","Lost Hotel - Route 15 Side","Lost Hotel  - Route 16 Side","Dendemille Town",
+  "Frost Cavern","Frost Cavern - Outside","Frost Cavern - 1F","Frost Cavern - 2F","Frost Cavern - 3F","Route 17",
+  "Anistar City","Anistar Gym","Lysandre Cafe/Lysandre Labs","Lysandre Cafe/Lysandre Labs - Lysandre Cafe","Lysandre Cafe/Lysandre Labs - Lysandre Labs - B1","Lysandre Cafe/Lysandre Labs - Lysandre Labs - B3",
+  "Team Flare Secret HQ","Team Flare Secret HQ - Entrance","Team Flare Secret HQ - Walkway","Route 18","Terminus Cave","Terminus Cave - B1F",
+  "Terminus Cave - B2F","Couriway Town","Route 19","Snowbelle City","Route 20","Pokémon Village",
+  "Snowbelle Gym","Route 21","Chamber of Emptiness","Victory Road","Victory Road - Entrance","Victory Road - Inside 1",
+  "Victory Road - Outside 2","Victory Road - Inside 2","Victory Road - Outside 3","Victory Road - Inside 3","Victory Road - Outside 4","Victory Road - Inside 4",
+  "Elite Four/Kalos League Champion","Elite Four/Kalos League Champion - Elite Four","Elite Four/Kalos League Champion - Kalos League Champion","Lumiose Parade","Unknown Dungeon","Kiloude City"
+];
+
 const urlParams = new URLSearchParams(window.location.search);
 let monName = urlParams.get("name");
 const formParam = urlParams.get("form"); // Optional form parameter
@@ -258,6 +316,28 @@ function displayPokemonName(name) {
 
 function getPokemonSlug(name) {
   return window.toSpriteSlug ? window.toSpriteSlug(name) : String(name || "").toLowerCase().replace(/\s+/g, "-");
+}
+
+function setPokemonIcon(img, name) {
+  const normalizedName = String(name || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const aliases = { flabebe: "flabb" };
+  const iconSlugs = [...new Set([
+    getPokemonSlug(name),
+    aliases[normalizedName],
+    normalizedName.replace(/[^a-z0-9]/g, "")
+  ].filter(Boolean))];
+  let index = 0;
+  const tryNext = () => {
+    if (index < iconSlugs.length) {
+      img.src = `image/icons/${iconSlugs[index++]}.png`;
+      return;
+    }
+    img.onerror = null;
+    img.src = "pokemon_sprites/substitute.png";
+  };
+  img.onerror = tryNext;
+  img.onload = () => { img.onerror = null; };
+  tryNext();
 }
 
 // --- Multi-folder sprite support ---
@@ -379,9 +459,23 @@ Promise.all([
 
   const bst = mon.BST ?? (mon.BaseStats.HP+mon.BaseStats.Atk+mon.BaseStats.Def+mon.BaseStats.SpA+mon.BaseStats.SpD+mon.BaseStats.Spe);
 
-  // Extract unique locations where this Pokemon can be found
-  // Parse the hierarchical encounters.json structure
-  const locationSet = new Set();
+  // Gather encounter locations for every species in this Pokémon's evolution line.
+  const evolutionLine = new Set([monName]);
+  let evolutionPointer = monName;
+  while (evolutionsData[evolutionPointer]?.EvolvesFrom && !evolutionLine.has(evolutionsData[evolutionPointer].EvolvesFrom)) {
+    evolutionPointer = evolutionsData[evolutionPointer].EvolvesFrom;
+    evolutionLine.add(evolutionPointer);
+  }
+  const addDescendants = name => {
+    for (const descendant of Object.keys(evolutionsData[name]?.EvolvesInto || {})) {
+      if (evolutionLine.has(descendant)) continue;
+      evolutionLine.add(descendant);
+      addDescendants(descendant);
+    }
+  };
+  addDescendants(evolutionPointer);
+
+  const locationPokemon = new Map();
   encountersData.forEach(locationData => {
     const locationName = locationData.LocationName;
     const encounterTypes = locationData.Encounters || [];
@@ -389,13 +483,26 @@ Promise.all([
     encounterTypes.forEach(encounterType => {
       const slots = encounterType.Slots || [];
       slots.forEach(slot => {
-        if (slot.Species === monName) {
-          locationSet.add(locationName);
+        if (evolutionLine.has(slot.Species)) {
+          if (!locationPokemon.has(locationName)) locationPokemon.set(locationName, new Set());
+          locationPokemon.get(locationName).add(slot.Species);
         }
       });
     });
   });
-  const locations = Array.from(locationSet).sort();
+  const routeIndexFor = name => {
+    const directIndex = locationRouteOrder.indexOf(name);
+    if (directIndex !== -1) return directIndex;
+    const nameRoot = name.split(" - ")[0].split(/[\/\\]/)[0].trim();
+    const matchingIndex = locationRouteOrder.findIndex(candidate =>
+      candidate.split(" - ")[0].split(/[\/\\]/)[0].trim() === nameRoot
+    );
+    return matchingIndex === -1 ? Infinity : matchingIndex;
+  };
+  const locations = Array.from(locationPokemon.keys()).sort((a, b) => {
+    const indexDiff = routeIndexFor(a) - routeIndexFor(b);
+    return indexDiff || a.localeCompare(b);
+  });
 
   // Calculate stat changes compared to base game
   const baseGameMon = baseGameStatsData[monName];
@@ -530,7 +637,7 @@ Promise.all([
     document.querySelector('.types').innerHTML = formTypes.map(t=>`<span class="type" style="background:${typeColors[t]}">${t}</span>`).join("");
     
     // Update abilities
-    const abilitiesUl = document.querySelector('.info-cols div:nth-child(2) ul');
+    const abilitiesUl = document.querySelector('.ability-list');
     abilitiesUl.innerHTML = `
       <li>${formatAbilityWithTooltip(currentFormData.Ability1)}</li>
       ${currentFormData.Ability2 && currentFormData.Ability2 !== currentFormData.Ability1 ? `<li>${formatAbilityWithTooltip(currentFormData.Ability2)}</li>` : ""}
@@ -566,10 +673,10 @@ Promise.all([
   // --- Everything else unchanged, with requested layout changes ---
   cardDiv.innerHTML = `
     <button class="nav-btn prev-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(prevMon)}'">
-      ← #${String(prevMonData.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(displayPokemonName(prevMon))}
+      ← #${String(prevMonData.SpeciesIdx).padStart(3,"0")} <img class="nav-pokemon-icon" data-pokemon-icon="${prevMon}" alt=""> ${normalizeDisplayApostrophes(displayPokemonName(prevMon))}
     </button>
     <button class="nav-btn next-btn" onclick="location.href='pokemon.html?name=${encodeURIComponent(nextMon)}'">
-      #${String(nextMonData.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(displayPokemonName(nextMon))} →
+      #${String(nextMonData.SpeciesIdx).padStart(3,"0")} <img class="nav-pokemon-icon" data-pokemon-icon="${nextMon}" alt=""> ${normalizeDisplayApostrophes(displayPokemonName(nextMon))} →
     </button>
 
       <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(displayPokemonName(monName))}</h1>
@@ -602,8 +709,22 @@ Promise.all([
        </div>
 
        <div>
+         <h3>Location</h3>
+         <ul class="location-list">
+            ${locations.length > 0 ? locations.map(loc => `
+              <li class="location-entry">
+                <span>${normalizeDisplayApostrophes(loc)}</span>
+                <span class="location-pokemon-icons">
+                  ${Array.from(locationPokemon.get(loc)).map(species => `<img data-pokemon-icon="${species}" alt="${normalizeDisplayApostrophes(species)}" title="${normalizeDisplayApostrophes(species)}">`).join('')}
+                </span>
+              </li>
+            `).join('') : '<li>N/A</li>'}
+          </ul>
+       </div>
+
+       <div>
          <h3>Abilities</h3>
-          <ul style="text-align:center; display:inline-block; list-style:none; padding-left:0;">
+          <ul class="ability-list">
             <li>${formatAbilityWithTooltip(mon.Ability1)}</li>
             ${mon.Ability2 && mon.Ability2 !== mon.Ability1 ? `<li>${formatAbilityWithTooltip(mon.Ability2)}</li>` : ""}
             ${mon.AbilityH && mon.AbilityH !== mon.Ability1 && mon.AbilityH !== mon.Ability2 ? `<li class="hidden-ability-marker">${formatAbilityWithTooltip(mon.AbilityH)} (H)</li>` : ""}
@@ -611,15 +732,7 @@ Promise.all([
        </div>
 
        <div>
-         <h3>Location</h3>
-         <ul style="text-align:center; display:inline-block; padding-left:0; margin:0; list-style:none;">
-            ${locations.length > 0 ? locations.map(loc => `<li>${normalizeDisplayApostrophes(loc)}</li>`).join('') : '<li>N/A</li>'}
-          </ul>
-       </div>
-
-       <div>
          <h3>Additional Info</h3>
-         <p style="margin:2px 0;" data-height>${mon.Height || 'N/A'} m</p>
          <p style="margin:2px 0;" data-weight>${mon.Weight || 'N/A'} kg</p>
        </div>
      </div>
@@ -728,6 +841,10 @@ Promise.all([
      </div>
    </div>
   `;
+
+  cardDiv.querySelectorAll("img[data-pokemon-icon]").forEach(img => {
+    setPokemonIcon(img, img.dataset.pokemonIcon);
+  });
 
   loadEvolutions(monName, evolutionsData);
   
