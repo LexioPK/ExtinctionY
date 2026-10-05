@@ -120,7 +120,7 @@
     text-decoration:none;
     display:inline-block;
   }
-  button.nav-btn-move:disabled {
+  .nav-btn-move:disabled {
     background:#9bb8f2;
     cursor:default;
   }
@@ -447,16 +447,6 @@
         location.href = `movedescriptions.html?name=${encodeURIComponent(prevMoveName)}`;
       });
     }
-    document.getElementById('backToMovesBtn').addEventListener('click', (event) => {
-      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      try {
-        if (new URL(document.referrer).pathname.endsWith('/moves.html')) {
-          event.preventDefault();
-          history.back();
-        }
-      } catch (_) {}
-    });
-
     // Clear previous lists (important when the page is navigated to via JS)
     levelList.innerHTML = '';
     tmList.innerHTML = '';
@@ -497,13 +487,16 @@
 
     // Both learner lists follow Pokédex order, regardless of learn level.
     const pokedex = pokedexData || {};
-    const pokedexOrder = new Map(Object.keys(pokedex).map((name, index) => [name, index]));
+    let pokedexOrder;
     const comparePokedexOrder = (a, b) => {
       const speciesA = Number(pokedex[a.pokeName]?.SpeciesIdx);
       const speciesB = Number(pokedex[b.pokeName]?.SpeciesIdx);
       const dexIndexA = Number.isFinite(speciesA) ? speciesA : Infinity;
       const dexIndexB = Number.isFinite(speciesB) ? speciesB : Infinity;
       if (dexIndexA !== dexIndexB) return dexIndexA - dexIndexB;
+      if (!pokedexOrder) {
+        pokedexOrder = new Map(Object.keys(pokedex).map((name, index) => [name, index]));
+      }
       const orderA = pokedexOrder.get(a.pokeName) ?? Infinity;
       const orderB = pokedexOrder.get(b.pokeName) ?? Infinity;
       if (orderA !== orderB) return orderA - orderB;
