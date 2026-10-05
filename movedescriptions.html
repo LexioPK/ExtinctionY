@@ -129,6 +129,10 @@
   a.nav-btn-move:hover {
     background:#336fd1;
   }
+  a.nav-btn-move:hover,
+  a.nav-btn-move:active {
+    color:white;
+  }
   .nav-btn-move:focus-visible {
     outline:2px solid #1f4e99;
     outline-offset:2px;
@@ -514,8 +518,10 @@
     const comparePokedexOrder = (a, b) => {
       const orderA = pokedexOrder.get(a.pokeName) || fallbackPokedexOrder;
       const orderB = pokedexOrder.get(b.pokeName) || fallbackPokedexOrder;
-      if (orderA.speciesIdx !== orderB.speciesIdx) return orderA.speciesIdx - orderB.speciesIdx;
-      if (orderA.index !== orderB.index) return orderA.index - orderB.index;
+      if (orderA.speciesIdx < orderB.speciesIdx) return -1;
+      if (orderA.speciesIdx > orderB.speciesIdx) return 1;
+      if (orderA.index < orderB.index) return -1;
+      if (orderA.index > orderB.index) return 1;
       return a.pokeName.localeCompare(b.pokeName);
     };
     levelLearners.sort(comparePokedexOrder);
