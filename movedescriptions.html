@@ -486,7 +486,14 @@
 
     // Find learners by TM/HM/Tutor/Egg via pokedexData (mon.TMs array used by pokemon.html)
     const tmLearners = [];
-    for (const [pokeName, mon] of Object.entries(pokedexData || {})) {
+    const pokedex = pokedexData || {};
+    const pokedexOrder = new Map();
+    for (const [index, [pokeName, mon]] of Object.entries(pokedex).entries()) {
+      const speciesIdx = Number(mon?.SpeciesIdx);
+      pokedexOrder.set(pokeName, {
+        speciesIdx: Number.isFinite(speciesIdx) ? speciesIdx : Infinity,
+        index
+      });
       if (!mon) continue;
       const tms = mon.TMs || [];
       if (Array.isArray(tms)) {
@@ -506,14 +513,6 @@
     }
 
     // Both learner lists follow Pokédex order, regardless of learn level.
-    const pokedex = pokedexData || {};
-    const pokedexOrder = new Map(Object.entries(pokedex).map(([name, mon], index) => {
-      const speciesIdx = Number(mon?.SpeciesIdx);
-      return [name, {
-        speciesIdx: Number.isFinite(speciesIdx) ? speciesIdx : Infinity,
-        index
-      }];
-    }));
     const fallbackPokedexOrder = { speciesIdx: Infinity, index: Infinity };
     const comparePokedexOrder = (a, b) => {
       const orderA = pokedexOrder.get(a.pokeName) || fallbackPokedexOrder;
