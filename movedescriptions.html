@@ -122,13 +122,11 @@
     text-decoration:none;
     display:inline-block;
   }
-  .nav-btn-move:visited {
-    color:white;
-  }
   button.nav-btn-move:hover:not(:disabled),
   a.nav-btn-move:hover {
     background:#336fd1;
   }
+  a.nav-btn-move:visited,
   a.nav-btn-move:hover,
   a.nav-btn-move:active {
     color:white;
@@ -489,7 +487,10 @@
     const pokedex = pokedexData || {};
     const pokedexOrder = new Map();
     for (const [index, [pokeName, mon]] of Object.entries(pokedex).entries()) {
-      const speciesIdx = Number(mon?.SpeciesIdx);
+      const rawSpeciesIdx = mon?.SpeciesIdx;
+      const speciesIdx = rawSpeciesIdx === null || rawSpeciesIdx === undefined || rawSpeciesIdx === ''
+        ? NaN
+        : Number(rawSpeciesIdx);
       pokedexOrder.set(pokeName, {
         speciesIdx: Number.isFinite(speciesIdx) ? speciesIdx : Infinity,
         index
@@ -523,7 +524,15 @@
       if (orderA.index > orderB.index) return 1;
       return a.pokeName.localeCompare(b.pokeName);
     };
-    levelLearners.sort(comparePokedexOrder);
+    levelLearners.sort((a, b) => {
+      const order = comparePokedexOrder(a, b);
+      if (order !== 0) return order;
+      const levelA = a.level === null ? Infinity : Number(a.level);
+      const levelB = b.level === null ? Infinity : Number(b.level);
+      if (levelA < levelB) return -1;
+      if (levelA > levelB) return 1;
+      return 0;
+    });
     tmLearners.sort(comparePokedexOrder);
 
     // Show/hide sections and apply layout classes
