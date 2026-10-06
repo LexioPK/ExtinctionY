@@ -189,7 +189,7 @@
   .pokemon-info-grid .type-info .types { display:flex; flex-wrap:nowrap; gap:4px; }
   .pokemon-info-grid .weight-info p { display:block; margin:0; white-space:nowrap; }
   .pokemon-info-grid h3,
-  .base-stats-panel > h3 { border-bottom:1px solid #777; padding-bottom:3px; }
+  .base-stats-panel > h3 { border-bottom:2px solid #777; padding-bottom:3px; }
   .pokemon-info-grid .type-info h3,
   .pokemon-info-grid .weight-info h3 { padding-bottom:0; border-bottom:0; }
   .type-info h3,
@@ -537,9 +537,11 @@ Promise.all([
     evolutionPointer = evolutionsData[evolutionPointer].EvolvesFrom;
     evolutionLine.add(evolutionPointer);
   }
+  const visitedDescendants = new Set();
   const addDescendants = name => {
+    if (visitedDescendants.has(name)) return;
+    visitedDescendants.add(name);
     for (const descendant of Object.keys(evolutionsData[name]?.EvolvesInto || {})) {
-      if (evolutionLine.has(descendant)) continue;
       evolutionLine.add(descendant);
       addDescendants(descendant);
     }
