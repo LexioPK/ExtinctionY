@@ -196,9 +196,9 @@
   .pokemon-info-grid .ability-info,
   .pokemon-info-grid .location-info { padding-top:16px; padding-bottom:16px; }
   .ability-list li, .location-list li { margin-bottom:4px; }
-  .info-header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; border-bottom:2px solid #777; padding-bottom:8px; margin-bottom:10px; }
+  .info-header { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; border-bottom:2px solid #777; padding-bottom:8px; margin-bottom:10px; }
   .info-header h2 { margin:0; border-bottom:0; padding-bottom:0; }
-  .info-header .form-tabs { margin:0; justify-content:flex-end; }
+  .info-header .form-tabs { margin:0; justify-content:center; grid-column:2; }
   .pokemon-info-grid .type-info h3,
   .pokemon-info-grid .weight-info h3 { padding-bottom:0; border-bottom:0; }
   .type-info h3,
@@ -228,6 +228,8 @@
   .base-stats-container { text-align:left; }
   .evolutions h2 { text-decoration:none; }
   @media (max-width:900px) {
+    .info-header { grid-template-columns:1fr; justify-items:center; }
+    .info-header .form-tabs { grid-column:1; }
     .info-stats-layout { grid-template-columns:1fr; }
     .base-stats-panel::before { display:none; }
     .pokemon-info-grid { border-right:0; padding:0; }

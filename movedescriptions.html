@@ -605,9 +605,9 @@
             <img alt="${escapeHtml(name)}">
             <div class="meta">
               <div class="poke-link-name">${escapeHtml(displayPokemonName(name))}</div>
+              <span class="learn-level">${escapeHtml(String(label))}</span>
             </div>
           </a>
-          <div class="learn-type">${escapeHtml(String(label))}</div>
         `;
         tmList.appendChild(entry);
         setPokemonIcon(entry.querySelector('img'), name);
