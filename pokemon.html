@@ -188,8 +188,17 @@
   .pokemon-info-grid .weight-info h3 { margin:0; white-space:nowrap; }
   .pokemon-info-grid .type-info .types { display:flex; flex-wrap:nowrap; gap:4px; }
   .pokemon-info-grid .weight-info p { display:block; margin:0; white-space:nowrap; }
-  .pokemon-info-grid h3,
   .base-stats-panel > h3 { border-bottom:2px solid #777; padding-bottom:3px; }
+  .pokemon-info-grid .ability-info h3,
+  .pokemon-info-grid .location-info h3 { border-bottom:1px solid #777; padding-bottom:3px; }
+  .pokemon-info-grid { font-size:1.08em; }
+  .pokemon-info-grid h3 { font-size:1.1em; }
+  .pokemon-info-grid .ability-info,
+  .pokemon-info-grid .location-info { padding-top:16px; padding-bottom:16px; }
+  .ability-list li, .location-list li { margin-bottom:4px; }
+  .info-header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; border-bottom:2px solid #777; padding-bottom:8px; margin-bottom:10px; }
+  .info-header h2 { margin:0; border-bottom:0; padding-bottom:0; }
+  .info-header .form-tabs { margin:0; justify-content:flex-end; }
   .pokemon-info-grid .type-info h3,
   .pokemon-info-grid .weight-info h3 { padding-bottom:0; border-bottom:0; }
   .type-info h3,
@@ -217,7 +226,6 @@
   }
   .base-stats-panel::before { content:""; position:absolute; left:0; top:10px; bottom:10px; border-left:2px solid #777; }
   .base-stats-container { text-align:left; }
-  .info-stats > h2 { border-bottom:2px solid #777; padding-bottom:8px; }
   .evolutions h2 { text-decoration:none; }
   @media (max-width:900px) {
     .info-stats-layout { grid-template-columns:1fr; }
@@ -478,6 +486,14 @@ Promise.all([
     }).sort(); // Sort to ensure consistent order
   }
   
+  // Alternate forms open on the base Pokémon's page with that form selected
+  let requestedForm = formParam;
+  if (!requestedForm && baseFormName !== monName && alternateForms.includes(baseFormName) && pokedexData[baseFormName]) {
+    requestedForm = monName;
+    monName = baseFormName;
+    mon = pokedexData[baseFormName];
+  }
+
   // Keep track of currently displayed form
   let currentFormName = monName;
   let currentFormData = mon;
@@ -727,6 +743,9 @@ Promise.all([
       <h1>#${String(mon.SpeciesIdx).padStart(3,"0")} ${normalizeDisplayApostrophes(displayPokemonName(monName))}</h1>
     <img class="sprite" src="${spriteUrl}" onerror="this.src='pokemon_sprites/substitute.png'; this.onerror=null;">
 
+   <div class="section info-stats">
+     <div class="info-header">
+       <h2>Information</h2>
     <!-- Alternate Forms Tabs (only show if there are multiple forms) -->
     ${alternateForms.length > 1 ? `
       <div class="form-tabs">
@@ -741,9 +760,7 @@ Promise.all([
         }).join('')}
       </div>
     ` : ''}
-
-   <div class="section info-stats">
-     <h2>Information</h2>
+     </div>
      <div class="info-stats-layout">
        <div class="pokemon-info-grid">
          <div class="type-info">
@@ -882,8 +899,8 @@ Promise.all([
   loadEvolutions(monName, evolutionsData);
   
   // If form parameter is provided, automatically switch to that form
-  if (formParam && alternateForms.includes(formParam)) {
-    updateFormData(formParam);
+  if (requestedForm && requestedForm !== monName && alternateForms.includes(requestedForm)) {
+    updateFormData(requestedForm);
   }
 });
 
