@@ -24,6 +24,7 @@
   .type { display:inline-block; padding:4px 10px; border-radius:12px; font-size:0.85em; color:white; margin:3px; }
 
   .nav-btn { position:absolute; top:20px; padding:10px 20px; background:#4285F4; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:600; font-size:14px; transition: background 0.2s; }
+  .back-btn { position:static; display:inline-flex !important; margin-bottom:20px; }
   .prev-btn { left:20px; }
   .next-btn { right:20px; }
   .nav-btn:hover { background:#3367d6; }
@@ -354,7 +355,7 @@
 </head>
 <body>
 
-<a class="back" href="index.html">← Back to Pokédex</a>
+<button class="nav-btn back-btn" onclick="location.href='index.html'">← Back to Pokédex</button>
 <div id="pokemonCard" class="card">Loading…</div>
 
 <script>
