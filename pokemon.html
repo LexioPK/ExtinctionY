@@ -195,7 +195,8 @@
   .pokemon-info-grid h3 { font-size:1.1em; }
   .pokemon-info-grid .ability-info,
   .pokemon-info-grid .location-info { padding-top:16px; padding-bottom:16px; }
-  .ability-list li, .location-list li { margin-bottom:4px; }
+  .ability-list li { margin-bottom:12px; }
+  .ability-list li:last-child { margin-bottom:0; }
   .info-header { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; border-bottom:2px solid #777; padding-bottom:8px; margin-bottom:10px; }
   .info-header h2 { margin:0; border-bottom:0; padding-bottom:0; }
   .info-header .form-tabs { margin:0; justify-content:center; grid-column:2; }
@@ -253,7 +254,7 @@
   .location-list {
     display:flex;
     flex-direction:column;
-    gap:6px;
+    gap:0;
   }
   .location-entry {
     display:flex;
@@ -269,8 +270,9 @@
   .location-pokemon-icons img {
     width:68px;
     height:56px;
-    object-fit:none;
+    object-fit:contain;
     object-position:center;
+    image-rendering:pixelated;
     flex-shrink:0;
     image-rendering:pixelated;
   }
@@ -282,8 +284,9 @@
   .nav-pokemon-icon {
     width:68px;
     height:56px;
-    object-fit:none;
+    object-fit:contain;
     object-position:center;
+    image-rendering:pixelated;
     flex-shrink:0;
     image-rendering:pixelated;
     vertical-align:middle;
@@ -339,8 +342,9 @@
   .form-tab-icon {
     width:68px;
     height:56px;
-    object-fit:none;
+    object-fit:contain;
     object-position:center;
+    image-rendering:pixelated;
     flex-shrink:0;
     image-rendering: pixelated;
   }
