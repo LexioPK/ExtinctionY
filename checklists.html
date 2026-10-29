@@ -228,6 +228,7 @@ async function loadPokemonCountPanel() {
     });
 
     const sortedPokemon = Object.entries(pokemonCounts).sort((a, b) => {
+      if (b[1] !== a[1]) return b[1] - a[1];
       const dexA = pokedexData[a[0]]?.SpeciesIdx || 9999;
       const dexB = pokedexData[b[0]]?.SpeciesIdx || 9999;
       return dexA - dexB;

@@ -34,6 +34,8 @@
     padding: 8px 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
+    background: #fff;
+    color: #1a1a1a;
     font-size: 0.95rem;
     box-sizing: border-box;
 }
@@ -58,6 +60,7 @@
     padding: 8px 12px;
     cursor: pointer;
     font-size: 0.95rem;
+    color: #1a1a1a;
 }
 
 .search-results .result:hover {
@@ -139,6 +142,11 @@ html.dark-mode .header a {
 html.dark-mode .header a.active {
     color: #90caf9;
     background: rgba(144,202,249,0.12);
+}
+
+html.dark-mode .search-results .result {
+    color: #e0e0e0;
+    background: transparent;
 }
 
 html.dark-mode #search {
