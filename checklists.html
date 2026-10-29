@@ -275,9 +275,9 @@ async function loadPokemonCountPanel() {
         <img class="sprite" alt="${pokemonName}" src="pokemon_sprites/${spriteSlug}.png"
              onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteSlug}.png'; this.onerror=function(){ this.src='pokemon_sprites/substitute.png'; this.onerror=null; }">
         <div class="pokemon-name">${displayPokemonName(pokemonName)}</div>
-        <div class="dex-number">#${String(dexNum).padStart(3, '0')}</div>
+        <div class="dex-number">${count}×</div>
         <div class="trainer-list">${(pokemonTrainers[pokemonName] || []).map(e =>
-          `<div class="trainer-entry">${e.trainer} Lv ${e.level ?? '?'} (${e.tag})</div>`).join('')}</div>
+          `${e.trainer} Lv ${e.level ?? '?'} (${e.tag})`).join(', ')}</div>
       `;
       grid.appendChild(card);
     });
