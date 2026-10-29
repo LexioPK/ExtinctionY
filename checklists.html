@@ -28,6 +28,8 @@
   #panel-pokemoncount .sprite { display: block; margin: 0 auto; width: 96px; height: 96px; image-rendering: auto; }
   #panel-pokemoncount .pokemon-name { font-weight: 600; font-size: 1.1em; margin: 10px 0 5px 0; }
   #panel-pokemoncount .pokemon-count { color: #4285F4; font-size: 1.2em; font-weight: bold; margin: 5px 0; }
+  #panel-pokemoncount .trainer-list { margin-top: 6px; font-size: 0.85em; color: #444; }
+  #panel-pokemoncount .trainer-entry { margin: 2px 0; }
   #panel-pokemoncount .count-label { color: #666; font-size: 0.9em; }
   #panel-pokemoncount .dex-number { color: #999; font-size: 0.85em; }
 
@@ -86,6 +88,7 @@
   html.dark-mode .checklist-tab { background: #2a2a3a; border-color: #444; color: #e0e0e0; }
   html.dark-mode .checklist-tab.active { background: #4285F4; border-color: #4285F4; color: #fff; }
   html.dark-mode .checklist-panel { background: #1e1e2e; }
+  html.dark-mode #panel-pokemoncount .trainer-list { color: #ccc; }
 </style>
 </head>
 <body>
@@ -207,7 +210,14 @@ async function loadPokemonCountPanel() {
     const pokedexData = await pokedexResponse.json();
 
     const pokemonCounts = {};
+    const pokemonTrainers = {};
     let totalAppearances = 0;
+    const bossClassPattern = /leader|elite|champion|boss|successor/i;
+    const rivalNames = new Set(['Serena', 'Calem', 'Shauna', 'Tierno', 'Trevor & Tierno']);
+    const trainerTag = trainer => {
+      if (bossClassPattern.test(trainer.TrainerClass || '') || rivalNames.has(trainer.TrainerName)) return 'B';
+      return /^mandatory/i.test(trainer.Required || '') ? 'M' : 'O';
+    };
     Object.values(trainersData).forEach(route => {
       if (!route?.Trainers) return;
       route.Trainers.forEach(trainer => {
@@ -216,6 +226,11 @@ async function loadPokemonCountPanel() {
           const name = pokemon?.Name;
           if (!name) return;
           pokemonCounts[name] = (pokemonCounts[name] || 0) + 1;
+          (pokemonTrainers[name] = pokemonTrainers[name] || []).push({
+            trainer: trainer.TrainerName || 'Unknown',
+            level: pokemon.Level,
+            tag: trainerTag(trainer)
+          });
           totalAppearances++;
         });
       });
@@ -261,8 +276,8 @@ async function loadPokemonCountPanel() {
              onerror="this.onerror=null; this.src='pokemon_sprties2/${spriteSlug}.png'; this.onerror=function(){ this.src='pokemon_sprites/substitute.png'; this.onerror=null; }">
         <div class="pokemon-name">${displayPokemonName(pokemonName)}</div>
         <div class="dex-number">#${String(dexNum).padStart(3, '0')}</div>
-        <div class="pokemon-count">${count}×</div>
-        <div class="count-label">${count === 1 ? 'appearance' : 'appearances'}</div>
+        <div class="trainer-list">${(pokemonTrainers[pokemonName] || []).map(e =>
+          `<div class="trainer-entry">${e.trainer} Lv ${e.level ?? '?'} (${e.tag})</div>`).join('')}</div>
       `;
       grid.appendChild(card);
     });
