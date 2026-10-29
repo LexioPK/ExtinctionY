@@ -218,9 +218,11 @@ async function loadPokemonCountPanel() {
       if (bossClassPattern.test(trainer.TrainerClass || '') || rivalNames.has(trainer.TrainerName)) return 'B';
       return /^mandatory/i.test(trainer.Required || '') ? 'M' : 'O';
     };
-    Object.values(trainersData).forEach(route => {
+    Object.values(trainersData)
+      .sort((a, b) => (a?.RouteIndex ?? 9999) - (b?.RouteIndex ?? 9999))
+      .forEach(route => {
       if (!route?.Trainers) return;
-      route.Trainers.forEach(trainer => {
+      [...route.Trainers].sort((a, b) => (a?.EncounterIndex ?? 9999) - (b?.EncounterIndex ?? 9999)).forEach(trainer => {
         if (!trainer?.Pokemon) return;
         trainer.Pokemon.forEach(pokemon => {
           const name = pokemon?.Name;
@@ -277,7 +279,7 @@ async function loadPokemonCountPanel() {
         <div class="pokemon-name">${displayPokemonName(pokemonName)}</div>
         <div class="dex-number">${count}×</div>
         <div class="trainer-list">${(pokemonTrainers[pokemonName] || []).map(e =>
-          `${e.trainer} Lv ${e.level ?? '?'} (${e.tag})`).join(', ')}</div>
+          `<div class="trainer-entry">${e.trainer} Lv ${e.level ?? '?'} (${e.tag})</div>`).join('')}</div>
       `;
       grid.appendChild(card);
     });
