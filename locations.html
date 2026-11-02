@@ -420,11 +420,12 @@
         .battle-single { background: #6BAED6; }
         .battle-double { background: #D4A017; }
         .battle-triple { background: #5CB85C; }
-        .battle-rotation { background: #E75480; }
+        .battle-rotation { background: #1ABC9C; }
 
         /* Mandatory/Optional colors */
         .battle-mandatory { background: #DC3545; }
         .battle-optional { background: #9B59B6; }
+        .battle-megastone { background: #E75480; }
 
         /* Reward color */
         .battle-reward { background: #808080; }
@@ -1443,6 +1444,7 @@
                 const requiredText = tr.Required || "N/A";
                 let requiredClass = "battle-mandatory";
                 if (requiredText.toLowerCase().includes("optional")) requiredClass = "battle-optional";
+                else if (requiredText.toLowerCase().includes("megastone") || requiredText.toLowerCase().includes("mega stone")) requiredClass = "battle-megastone";
                 
                 const requiredBubble = document.createElement("div");
                 requiredBubble.className = `info-bubble ${requiredClass}`;
