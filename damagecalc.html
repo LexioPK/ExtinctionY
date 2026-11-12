@@ -424,7 +424,7 @@ html.dark-mode select.type-pill option { color: #eee; background: #2a2a2a; }
 .boost-btn:hover { border-color: var(--accent); }
 html.dark-mode .boost-btn { background: #22293a; }
 .stat-status-aside select { font-size: 0.82rem; }
-.stat-table select { width: 44px; height: 24px; padding: 1px 2px; font-size: 0.76rem; border-radius: 5px; }
+.stat-table select { width: 48px; height: 24px; padding: 1px 2px; font-size: 0.76rem; border-radius: 5px; }
 .item-select-wrap select { width: auto; }
 
 /* ── HP bar ── */
@@ -2599,21 +2599,7 @@ function buildStatTable(containerId, prefix, defaultIvs, defaultBoosts) {
         if ((defaultBoosts?.[stat] ?? 0) === b) opt.selected = true;
         boostSel.appendChild(opt);
       }
-      const ctl = document.createElement("span");
-      ctl.className = "boost-ctl";
-      const mkBtn = (label, delta) => {
-        const b = document.createElement("button");
-        b.type = "button"; b.className = "boost-btn"; b.textContent = label;
-        b.title = delta > 0 ? "Increase boost" : "Decrease boost";
-        b.addEventListener("click", () => {
-          const v = clamp(num(boostSel.value, 0) + delta, -6, 6);
-          boostSel.value = String(v);
-          boostSel.dispatchEvent(new Event("change", { bubbles: true }));
-        });
-        return b;
-      };
-      ctl.append(mkBtn("−", -1), boostSel, mkBtn("+", 1));
-      tdBoost.appendChild(ctl);
+      tdBoost.appendChild(boostSel);
     }
     tr.appendChild(tdBoost);
     tbody.appendChild(tr);
@@ -2792,6 +2778,15 @@ function addImportedFormButton(slot, setData) {
   btn.addEventListener("contextmenu", event => event.stopPropagation());
   slot.appendChild(btn);
 }
+function mapAbilityToForm(origSpecies, origAbility, newSpecies) {
+  const ab = n => [pokedex[n]?.Ability1, pokedex[n]?.Ability2, pokedex[n]?.AbilityH].filter(Boolean);
+  const newList = ab(newSpecies);
+  if (!newList.length) return origAbility;
+  const rawOrig = [pokedex[origSpecies]?.Ability1, pokedex[origSpecies]?.Ability2, pokedex[origSpecies]?.AbilityH];
+  const pos = rawOrig.indexOf(origAbility);
+  if (pos === 2 && newList.length > 1) return newList[newList.length - 1];
+  return newList[0];
+}
 function cycleImportedForm(setData) {
   const cycle = getToggleFormCycle(setData.species);
   if (!cycle) return;
@@ -2801,16 +2796,16 @@ function cycleImportedForm(setData) {
   if (targetIdx === undefined) {
     targetIdx = importedPokemonSets.findIndex(set => set.species === next);
     if (targetIdx < 0) {
-      const form = pokedex[next] || {};
       const copy = normalizeImportedSet({
         ...setData,
         id: generateImportedSetId(),
         species: next,
         nickname: next,
-        ability: form.Ability1 || setData.ability
+        ability: mapAbilityToForm(setData.species, setData.ability, next)
       });
       importedPokemonSets.push(copy);
-      targetIdx = importedPokemonSets.length - 1;
+      sortImportedByDex();
+      targetIdx = findImportedIndexById(copy.id);
     }
     const slotPos = importedPartyIds.indexOf(setData.id);
     const targetId = importedPokemonSets[targetIdx].id;
@@ -3265,8 +3260,10 @@ function fillTrainerPokemon(prefix, tp) {
 
   const abilitySel = el(`${prefix}-ability`);
   if (abilitySel && tp.Ability) {
-    addOptionIfMissing(abilitySel, tp.Ability);
-    abilitySel.value = tp.Ability;
+    const shownAbility = slotFormOverrides.has(tp) && speciesName !== tp.Name && pokedex[tp.Name]
+      ? mapAbilityToForm(tp.Name, tp.Ability, speciesName) : tp.Ability;
+    addOptionIfMissing(abilitySel, shownAbility);
+    abilitySel.value = shownAbility;
     const abilityToggle = el(`${prefix}-ability-toggle`);
     if (abilityToggle) abilityToggle.checked = false;
     resetTransientAbilityState(prefix, { clearTransformId: true });
