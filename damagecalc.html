@@ -340,13 +340,6 @@ h1 { text-align: center; margin: 8px 0 6px; }
   font-size: 0.90rem;
 }
 .info-grid .ia-level input[type="number"] { width: 84px; }
-select.type-pill {
-  color: #fff; font-weight: 700; border-radius: 12px; text-align: center;
-  text-align-last: center; text-shadow: 0 1px 2px rgba(0,0,0,.4);
-  border-color: transparent !important;
-}
-select.type-pill option { color: #000; background: #fff; text-shadow: none; }
-html.dark-mode select.type-pill option { color: #eee; background: #2a2a2a; }
 .slot-form-btn {
   position: absolute; top: 1px; left: 1px; width: 18px; height: 18px;
   padding: 0; font-size: 0.6rem; font-weight: 800; line-height: 1; cursor: pointer;
@@ -413,12 +406,13 @@ html.dark-mode select.type-pill option { color: #eee; background: #2a2a2a; }
   font-size: 0.88rem;
   line-height: 1.3;
   height: 30px;
-  min-width: 0;
+  background: #f0f0f0;
+  color: inherit;
   cursor: pointer;
   appearance: auto;
 }
-.field select, .move-row select, .trainer-search, .form-row select { width: 100%; }
-.stat-status-aside select { width: 100%; font-size: 0.82rem; }
+select { max-width: 100%; }
+.stat-status-aside select { font-size: 0.82rem; }
 .stat-table select { width: 48px; height: 24px; padding: 1px 2px; font-size: 0.76rem; border-radius: 5px; }
 .item-select-wrap select { width: auto; }
 
@@ -2783,16 +2777,43 @@ function addSlotFormButton(slot, img, dataObj, baseSpecies, reselect) {
   btn.addEventListener("contextmenu", event => event.stopPropagation());
   slot.appendChild(btn);
 }
+let selectMeasureCtx = null;
+function fitSelectWidth(sel) {
+  if (!sel || !sel.options || !sel.options.length) return;
+  if (sel.offsetParent === null) return;
+  if (!selectMeasureCtx) selectMeasureCtx = document.createElement("canvas").getContext("2d");
+  const cs = getComputedStyle(sel);
+  selectMeasureCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  let max = 0;
+  for (const opt of sel.options) {
+    max = Math.max(max, selectMeasureCtx.measureText(opt.text).width);
+  }
+  const extra = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth) + 22;
+  sel.style.width = `${Math.ceil(max + extra)}px`;
+}
+function fitAllSelects() {
+  document.querySelectorAll("select").forEach(fitSelectWidth);
+}
+let fitSelectsTimer = null;
+function scheduleFitSelects() {
+  clearTimeout(fitSelectsTimer);
+  fitSelectsTimer = setTimeout(fitAllSelects, 30);
+}
+window.addEventListener("load", () => {
+  scheduleFitSelects();
+  new MutationObserver(scheduleFitSelects).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["hidden", "class"] });
+});
+document.addEventListener("click", scheduleFitSelects);
+
 function updateTypePills() {
   ["atk", "def"].forEach(prefix => {
     ["type1", "type2"].forEach(key => {
       const sel = el(`${prefix}-${key}`);
       if (!sel) return;
       sel.classList.add("type-pill");
-      const color = TYPE_COLORS[sel.value];
-      sel.style.background = color || "var(--bg)";
-      if (!color) { sel.style.color = "var(--muted)"; sel.style.textShadow = "none"; }
-      else { sel.style.color = ""; sel.style.textShadow = ""; }
+      sel.style.background = "";
+      sel.style.color = "";
+      sel.style.textShadow = "";
     });
   });
 }
