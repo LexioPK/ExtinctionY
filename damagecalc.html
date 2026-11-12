@@ -347,17 +347,14 @@ select.type-pill {
 }
 select.type-pill option { color: #000; background: #fff; text-shadow: none; }
 html.dark-mode select.type-pill option { color: #eee; background: #2a2a2a; }
-.slot-row { display: flex; align-items: stretch; gap: 6px; }
-.slot-row .poke-icons { flex: 1; min-width: 0; }
-.mega-toggle-btn {
-  flex: 0 0 auto; align-self: flex-start; width: 34px; aspect-ratio: 1;
-  padding: 0; cursor: pointer; font-size: 0.7rem; font-weight: 700;
-  border: 2px solid var(--border); border-radius: 8px;
+.slot-form-btn {
+  position: absolute; top: 1px; left: 1px; width: 18px; height: 18px;
+  padding: 0; font-size: 0.6rem; font-weight: 800; line-height: 1; cursor: pointer;
+  border: 1px solid var(--border); border-radius: 4px; z-index: 2;
   background: var(--bg); color: var(--text, inherit);
 }
-.mega-toggle-btn:hover:not(:disabled) { border-color: var(--accent); }
-.mega-toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.mega-toggle-btn:disabled { opacity: 0.35; cursor: default; }
+.slot-form-btn:hover { border-color: var(--accent); }
+.slot-form-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 .form-row { margin-top: 4px; }
 .form-row select { }
 
@@ -400,6 +397,30 @@ html.dark-mode select.type-pill option { color: #eee; background: #2a2a2a; }
   width: 44px; border: 1px solid var(--border); border-radius: 4px;
   padding: 1px; font: inherit; font-size: 0.76rem; background: #f0f0f0; color: inherit;
 }
+
+/* ── Standardized dropdown menus ── */
+.field select,
+.stat-status-aside select,
+.move-row select,
+.trainer-search,
+.stat-table select,
+.form-row select {
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 4px 7px;
+  font: inherit;
+  font-size: 0.88rem;
+  line-height: 1.3;
+  height: 30px;
+  min-width: 0;
+  cursor: pointer;
+  appearance: auto;
+}
+.field select, .move-row select, .trainer-search, .form-row select { width: 100%; }
+.stat-status-aside select { width: 100%; font-size: 0.82rem; }
+.stat-table select { width: 48px; height: 24px; padding: 1px 2px; font-size: 0.76rem; border-radius: 5px; }
+.item-select-wrap select { width: auto; }
 
 /* ── HP bar ── */
 .hp-section {
@@ -888,8 +909,8 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 }
 .frag-leaderboard {
   table-layout: fixed;
-  width: 766px;
-  min-width: 766px;
+  width: 970px;
+  min-width: 970px;
   border-collapse: collapse;
 }
 .frag-leaderboard th,
@@ -914,7 +935,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 }
 .frag-leaderboard th:nth-child(2),
 .frag-leaderboard td:nth-child(2) {
-  width: 108px;
+  width: 170px;
 }
 .frag-leaderboard th:nth-child(3),
 .frag-leaderboard td:nth-child(3) {
@@ -922,11 +943,11 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 }
 .frag-leaderboard th:nth-child(4),
 .frag-leaderboard td:nth-child(4) {
-  width: 108px;
+  width: 170px;
 }
 .frag-leaderboard th:nth-child(5),
 .frag-leaderboard td:nth-child(5) {
-  width: 320px;
+  width: 400px;
 }
 .frag-leaderboard th:nth-child(6),
 .frag-leaderboard td:nth-child(6) {
@@ -977,7 +998,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   image-rendering: pixelated;
 }
 #fragsheet-ko-count-header {
-  width: 320px;
+  width: 400px;
   padding: 0;
   vertical-align: middle;
 }
@@ -1196,17 +1217,11 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
             <div class="team-slot-groups">
               <div class="team-slot-group imported-section" id="atk-party-section" hidden>
                 <div class="moves-label">Party</div>
-                <div class="slot-row">
-                  <button type="button" class="mega-toggle-btn" id="atk-party-mega-btn" title="Toggle Mega / alternate form" onclick="cycleMegaForm('atk')">M</button>
-                  <div class="poke-icons" id="atk-party-icons"></div>
-                </div>
+                <div class="poke-icons" id="atk-party-icons"></div>
               </div>
               <div class="team-slot-group" id="atk-trainer-icons-section">
                 <div class="moves-label">Trainer Pokémon</div>
-                <div class="slot-row">
-                  <button type="button" class="mega-toggle-btn" id="atk-mega-btn" title="Toggle Mega / alternate form" onclick="cycleMegaForm('atk')">M</button>
-                  <div class="poke-icons" id="atk-poke-icons"></div>
-                </div>
+                <div class="poke-icons" id="atk-poke-icons"></div>
               </div>
             </div>
           </div>
@@ -1481,10 +1496,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
             <div class="team-slot-groups">
               <div class="team-slot-group">
                 <div class="moves-label">Trainer Pokémon</div>
-                <div class="slot-row">
-                  <button type="button" class="mega-toggle-btn" id="def-mega-btn" title="Toggle Mega / alternate form" onclick="cycleMegaForm('def')">M</button>
-                  <div class="poke-icons" id="def-poke-icons"></div>
-                </div>
+                <div class="poke-icons" id="def-poke-icons"></div>
               </div>
             </div>
           </div>
@@ -1780,7 +1792,7 @@ const FRAGSHEET_SPLITS = [
   { id: "clemont", label: "Clemont", shortLabel: "C" },
   { id: "valerie", label: "Valerie", shortLabel: "Va" },
   { id: "olympia", label: "Olympia", shortLabel: "O" },
-  { id: "lysandre", label: "Lysandre Cafe", shortLabel: "Ly" },
+  { id: "lysandre", label: "Lysandre", shortLabel: "L" },
   { id: "wulfric", label: "Wulfric", shortLabel: "W" },
   { id: "elite4", label: "Elite 4", shortLabel: "E4" }
 ];
@@ -2731,36 +2743,45 @@ function getToggleFormCycle(speciesName) {
   if (!base) return null;
   return [base, ...specials];
 }
-function cycleMegaForm(prefix) {
-  const speciesSel = el(`${prefix}-species`);
-  if (!speciesSel) return;
-  const cycle = getToggleFormCycle(speciesSel.value);
-  if (!cycle) return;
-  const next = cycle[(cycle.indexOf(speciesSel.value) + 1) % cycle.length];
-  if (!selectHasOption(speciesSel, next)) return;
-  const prevAbility = getSelectedAbility(prefix);
-  speciesSel.value = next;
-  const formSel = el(`${prefix}-form`);
-  if (formSel && selectHasOption(formSel, next)) formSel.value = next;
-  syncTypeDefaults(prefix);
-  const abilitySel = el(`${prefix}-ability`);
-  if (abilitySel && prevAbility && selectHasOption(abilitySel, prevAbility)) abilitySel.value = prevAbility;
-  refreshActivationControls(prefix);
-  for (let i = 0; i < 4; i++) updateMoveHitsDefault(prefix, i);
-  updateSprite(prefix);
-  recalcIfNeeded();
+const slotFormOverrides = new WeakMap();
+function setIconImage(img, species) {
+  const slug = toSlug(species);
+  const baseSlug = toSlug((pokedex[species]?.Name) || species);
+  img.onerror = () => {
+    if (img.src.includes(slug) && slug !== baseSlug) {
+      img.src = `image/icons/${baseSlug}.png`;
+    } else {
+      img.onerror = null;
+      img.src = "pokemon_sprites/substitute.png";
+    }
+  };
+  img.src = `image/icons/${slug}.png`;
+  img.alt = displayPokemonName(species);
 }
-function updateMegaToggleButtons() {
-  [["atk", ["atk-party-mega-btn", "atk-mega-btn"]], ["def", ["def-mega-btn"]]].forEach(([prefix, ids]) => {
-    const species = el(`${prefix}-species`)?.value;
-    const cycle = getToggleFormCycle(species);
-    ids.forEach(id => {
-      const btn = el(id);
-      if (!btn) return;
-      btn.disabled = !cycle;
-      btn.classList.toggle("active", !!cycle && isToggleForm(species));
-    });
+function addSlotFormButton(slot, img, dataObj, baseSpecies, reselect) {
+  const cycle = getToggleFormCycle(baseSpecies);
+  if (!cycle) return;
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "slot-form-btn";
+  btn.title = "Switch form";
+  const refresh = () => {
+    const cur = slotFormOverrides.get(dataObj) || baseSpecies;
+    btn.textContent = "M";
+    btn.classList.toggle("active", isToggleForm(cur));
+  };
+  refresh();
+  btn.addEventListener("click", event => {
+    event.stopPropagation();
+    const cur = slotFormOverrides.get(dataObj) || baseSpecies;
+    const next = cycle[(cycle.indexOf(cur) + 1) % cycle.length];
+    slotFormOverrides.set(dataObj, next);
+    setIconImage(img, next);
+    refresh();
+    reselect();
   });
+  btn.addEventListener("contextmenu", event => event.stopPropagation());
+  slot.appendChild(btn);
 }
 function updateTypePills() {
   ["atk", "def"].forEach(prefix => {
@@ -2905,6 +2926,8 @@ function parseNatureName(natureStr) {
 }
 
 function resolveTrainerSpecies(tp) {
+  const override = slotFormOverrides.get(tp);
+  if (override && pokedex[override]) return override;
   if (tp.Form && pokedex[tp.Form]) return tp.Form;
   if (pokedex[tp.Name]) return tp.Name;
   return tp.Name;
@@ -3063,7 +3086,7 @@ function buildTrainerIcons(prefix, trainer) {
     const tp = trainer.pokemon[i];
     const img = document.createElement('img');
     img.className = 'poke-icon-main';
-    const slug = toSlug(tp.Form || tp.Name);
+    const slug = toSlug(resolveTrainerSpecies(tp));
     const baseSlug = toSlug(tp.Name);
     img.alt = displayPokemonName(tp.Form || tp.Name);
     img.src = `image/icons/${slug}.png`;
@@ -3076,6 +3099,7 @@ function buildTrainerIcons(prefix, trainer) {
       }
     };
     slot.appendChild(img);
+    addSlotFormButton(slot, img, tp, resolveTrainerSpecies({ Name: tp.Name, Form: tp.Form }), () => selectTrainerPokemon(prefix, i));
     if (tp.HeldItem && tp.HeldItem !== "None") {
       const itemImg = document.createElement("img");
       itemImg.className = "poke-item-corner";
@@ -3568,10 +3592,11 @@ function renderImportedParty() {
     slot.title = importedDisplayName(setData, idx);
     const img = document.createElement("img");
     img.className = "poke-icon-main";
-    const slug = toSlug(setData.species);
-    const baseSlug = toSlug((pokedex[setData.species]?.Name) || setData.species);
+    const shownSpecies = slotFormOverrides.get(setData) || setData.species;
+    const slug = toSlug(shownSpecies);
+    const baseSlug = toSlug((pokedex[shownSpecies]?.Name) || shownSpecies);
      img.src = `image/icons/${slug}.png`;
-    img.alt = setData.species;
+    img.alt = shownSpecies;
     img.onerror = () => {
       if (img.src.includes(slug) && slug !== baseSlug) {
         img.src = `image/icons/${baseSlug}.png`;
@@ -3581,6 +3606,7 @@ function renderImportedParty() {
       }
     };
     slot.appendChild(img);
+    addSlotFormButton(slot, img, setData, setData.species, () => applyImportedPokemon(idx));
     if (setData.item && setData.item !== "None") {
       const itemImg = document.createElement("img");
       itemImg.className = "poke-item-corner";
@@ -3682,13 +3708,14 @@ function renderImportedPokemonList() {
 }
 
 function fillImportedPokemon(prefix, imported) {
+  const importedSpecies = slotFormOverrides.get(imported) || imported.species;
   const speciesSel = el(`${prefix}-species`);
-  if (speciesSel && selectHasOption(speciesSel, imported.species)) {
-    speciesSel.value = imported.species;
+  if (speciesSel && selectHasOption(speciesSel, importedSpecies)) {
+    speciesSel.value = importedSpecies;
   }
-  syncTypeDefaults(prefix, imported.species);
+  syncTypeDefaults(prefix, importedSpecies);
   updateSprite(prefix);
-  populateFormSelect(prefix, imported.species);
+  populateFormSelect(prefix, importedSpecies);
 
   const levelInp = el(`${prefix}-level`);
   if (levelInp) levelInp.value = imported.level;
@@ -4714,7 +4741,6 @@ function calcFromMove(atkPrefix, defPrefix, moveIdx) {
 
 function recalcIfNeeded() {
   updateTypePills();
-  updateMegaToggleButtons();
   syncAuraTogglesFromAbilities();
   updateStatTotals("atk");
   updateStatTotals("def");
