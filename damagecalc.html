@@ -341,13 +341,13 @@ h1 { text-align: center; margin: 8px 0 6px; }
 }
 .info-grid .ia-level input[type="number"] { width: 84px; }
 .slot-form-btn {
-  position: absolute; top: 1px; left: 1px; width: 18px; height: 18px;
+  position: absolute; top: -2px; left: -2px; width: 20px; height: 20px;
   padding: 0; font-size: 0.6rem; font-weight: 800; line-height: 1; cursor: pointer;
-  border: 1px solid var(--border); border-radius: 4px; z-index: 2;
-  background: var(--bg); color: var(--text, inherit);
+  border: 0; border-radius: 6px 0 6px 0; z-index: 2;
+  background: var(--border); color: var(--text, inherit);
 }
-.slot-form-btn:hover { border-color: var(--accent); }
-.slot-form-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.slot-form-btn:hover { filter: brightness(1.15); }
+.slot-form-btn.active { background: var(--accent); color: #fff; }
 .form-row { margin-top: 4px; }
 .form-row select { }
 
@@ -412,8 +412,19 @@ h1 { text-align: center; margin: 8px 0 6px; }
   appearance: auto;
 }
 select { max-width: 100%; }
+select.type-pill { font-weight: 700; }
+select.type-pill option { color: #000; background: #fff; text-shadow: none; font-weight: 400; }
+html.dark-mode select.type-pill option { color: #eee; background: #2a2a2a; }
+.move-row select { width: 100%; }
+.boost-ctl { display: inline-flex; align-items: center; gap: 2px; }
+.boost-btn {
+  width: 18px; height: 22px; padding: 0; line-height: 1; font-weight: 700;
+  border: 1px solid var(--border); border-radius: 4px; background: #f0f0f0; color: inherit; cursor: pointer;
+}
+.boost-btn:hover { border-color: var(--accent); }
+html.dark-mode .boost-btn { background: #22293a; }
 .stat-status-aside select { font-size: 0.82rem; }
-.stat-table select { width: 48px; height: 24px; padding: 1px 2px; font-size: 0.76rem; border-radius: 5px; }
+.stat-table select { width: 44px; height: 24px; padding: 1px 2px; font-size: 0.76rem; border-radius: 5px; }
 .item-select-wrap select { width: auto; }
 
 /* ── HP bar ── */
@@ -2588,7 +2599,21 @@ function buildStatTable(containerId, prefix, defaultIvs, defaultBoosts) {
         if ((defaultBoosts?.[stat] ?? 0) === b) opt.selected = true;
         boostSel.appendChild(opt);
       }
-      tdBoost.appendChild(boostSel);
+      const ctl = document.createElement("span");
+      ctl.className = "boost-ctl";
+      const mkBtn = (label, delta) => {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "boost-btn"; b.textContent = label;
+        b.title = delta > 0 ? "Increase boost" : "Decrease boost";
+        b.addEventListener("click", () => {
+          const v = clamp(num(boostSel.value, 0) + delta, -6, 6);
+          boostSel.value = String(v);
+          boostSel.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+        return b;
+      };
+      ctl.append(mkBtn("−", -1), boostSel, mkBtn("+", 1));
+      tdBoost.appendChild(ctl);
     }
     tr.appendChild(tdBoost);
     tbody.appendChild(tr);
@@ -2752,6 +2777,47 @@ function setIconImage(img, species) {
   img.src = `image/icons/${slug}.png`;
   img.alt = displayPokemonName(species);
 }
+function addImportedFormButton(slot, setData) {
+  if (!getToggleFormCycle(setData.species)) return;
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "slot-form-btn";
+  btn.title = "Switch to alternate form";
+  btn.textContent = "M";
+  btn.classList.toggle("active", isToggleForm(setData.species));
+  btn.addEventListener("click", event => {
+    event.stopPropagation();
+    cycleImportedForm(setData);
+  });
+  btn.addEventListener("contextmenu", event => event.stopPropagation());
+  slot.appendChild(btn);
+}
+function cycleImportedForm(setData) {
+  const cycle = getToggleFormCycle(setData.species);
+  if (!cycle) return;
+  const next = cycle[(cycle.indexOf(setData.species) + 1) % cycle.length];
+  let targetIdx = importedPartyIds
+    .map(findImportedIndexById)
+    .find(i => i >= 0 && importedPokemonSets[i].species === next);
+  if (targetIdx === undefined) {
+    const form = pokedex[next] || {};
+    const copy = normalizeImportedSet({
+      ...setData,
+      id: generateImportedSetId(),
+      species: next,
+      nickname: next,
+      ability: form.Ability1 || setData.ability
+    });
+    importedPokemonSets.push(copy);
+    targetIdx = importedPokemonSets.length - 1;
+    if (importedPartyIds.length < 6) importedPartyIds.push(copy.id);
+    syncImportedPartyIds();
+    renderImportedPokemonList();
+  }
+  persistImportedState();
+  renderImportedParty();
+  applyImportedPokemon(targetIdx);
+}
 function addSlotFormButton(slot, img, dataObj, baseSpecies, reselect) {
   const cycle = getToggleFormCycle(baseSpecies);
   if (!cycle) return;
@@ -2780,7 +2846,7 @@ function addSlotFormButton(slot, img, dataObj, baseSpecies, reselect) {
 let selectMeasureCtx = null;
 function fitSelectWidth(sel) {
   if (!sel || !sel.options || !sel.options.length) return;
-  if (sel.offsetParent === null) return;
+  if (sel.offsetParent === null || sel.closest(".move-row")) return;
   if (!selectMeasureCtx) selectMeasureCtx = document.createElement("canvas").getContext("2d");
   const cs = getComputedStyle(sel);
   selectMeasureCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
@@ -2811,9 +2877,10 @@ function updateTypePills() {
       const sel = el(`${prefix}-${key}`);
       if (!sel) return;
       sel.classList.add("type-pill");
-      sel.style.background = "";
-      sel.style.color = "";
-      sel.style.textShadow = "";
+      const color = TYPE_COLORS[sel.value];
+      sel.style.background = color || "";
+      sel.style.color = color ? "#fff" : "";
+      sel.style.textShadow = color ? "0 1px 2px rgba(0,0,0,.4)" : "";
     });
   });
 }
@@ -3627,7 +3694,7 @@ function renderImportedParty() {
       }
     };
     slot.appendChild(img);
-    addSlotFormButton(slot, img, setData, setData.species, () => applyImportedPokemon(idx));
+    addImportedFormButton(slot, setData);
     if (setData.item && setData.item !== "None") {
       const itemImg = document.createElement("img");
       itemImg.className = "poke-item-corner";
