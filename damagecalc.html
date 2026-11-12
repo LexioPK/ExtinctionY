@@ -340,6 +340,24 @@ h1 { text-align: center; margin: 8px 0 6px; }
   font-size: 0.90rem;
 }
 .info-grid .ia-level input[type="number"] { width: 84px; }
+select.type-pill {
+  color: #fff; font-weight: 700; border-radius: 12px; text-align: center;
+  text-align-last: center; text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  border-color: transparent !important;
+}
+select.type-pill option { color: #000; background: #fff; text-shadow: none; }
+html.dark-mode select.type-pill option { color: #eee; background: #2a2a2a; }
+.slot-row { display: flex; align-items: stretch; gap: 6px; }
+.slot-row .poke-icons { flex: 1; min-width: 0; }
+.mega-toggle-btn {
+  flex: 0 0 auto; align-self: flex-start; width: 34px; aspect-ratio: 1;
+  padding: 0; cursor: pointer; font-size: 0.7rem; font-weight: 700;
+  border: 2px solid var(--border); border-radius: 8px;
+  background: var(--bg); color: var(--text, inherit);
+}
+.mega-toggle-btn:hover:not(:disabled) { border-color: var(--accent); }
+.mega-toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.mega-toggle-btn:disabled { opacity: 0.35; cursor: default; }
 .form-row { margin-top: 4px; }
 .form-row select { }
 
@@ -869,9 +887,10 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   overflow-x: auto;
 }
 .frag-leaderboard {
-  width: 100%;
+  table-layout: fixed;
+  width: 766px;
+  min-width: 766px;
   border-collapse: collapse;
-  min-width: 620px;
 }
 .frag-leaderboard th,
 .frag-leaderboard td {
@@ -899,7 +918,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 }
 .frag-leaderboard th:nth-child(3),
 .frag-leaderboard td:nth-child(3) {
-  width: 86px;
+  width: 114px;
 }
 .frag-leaderboard th:nth-child(4),
 .frag-leaderboard td:nth-child(4) {
@@ -907,7 +926,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 }
 .frag-leaderboard th:nth-child(5),
 .frag-leaderboard td:nth-child(5) {
-  width: 280px;
+  width: 320px;
 }
 .frag-leaderboard th:nth-child(6),
 .frag-leaderboard td:nth-child(6) {
@@ -924,6 +943,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
 .frag-leaderboard td:nth-child(5):has(.frag-ko-split-board) {
   padding: 0;
 }
+.frag-ko-fraction { font-size: 0.7rem; color: var(--muted); line-height: 1.1; }
 .frag-name-cell,
 .frag-nickname-cell {
   font-size: 0.76rem;
@@ -957,7 +977,7 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
   image-rendering: pixelated;
 }
 #fragsheet-ko-count-header {
-  min-width: 320px;
+  width: 320px;
   padding: 0;
   vertical-align: middle;
 }
@@ -1176,11 +1196,17 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
             <div class="team-slot-groups">
               <div class="team-slot-group imported-section" id="atk-party-section" hidden>
                 <div class="moves-label">Party</div>
-                <div class="poke-icons" id="atk-party-icons"></div>
+                <div class="slot-row">
+                  <button type="button" class="mega-toggle-btn" id="atk-party-mega-btn" title="Toggle Mega / alternate form" onclick="cycleMegaForm('atk')">M</button>
+                  <div class="poke-icons" id="atk-party-icons"></div>
+                </div>
               </div>
               <div class="team-slot-group" id="atk-trainer-icons-section">
                 <div class="moves-label">Trainer Pokémon</div>
-                <div class="poke-icons" id="atk-poke-icons"></div>
+                <div class="slot-row">
+                  <button type="button" class="mega-toggle-btn" id="atk-mega-btn" title="Toggle Mega / alternate form" onclick="cycleMegaForm('atk')">M</button>
+                  <div class="poke-icons" id="atk-poke-icons"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -1455,7 +1481,10 @@ html.dark-mode #fragsheet-toggle-btn.active { background: #1a2030; }
             <div class="team-slot-groups">
               <div class="team-slot-group">
                 <div class="moves-label">Trainer Pokémon</div>
-                <div class="poke-icons" id="def-poke-icons"></div>
+                <div class="slot-row">
+                  <button type="button" class="mega-toggle-btn" id="def-mega-btn" title="Toggle Mega / alternate form" onclick="cycleMegaForm('def')">M</button>
+                  <div class="poke-icons" id="def-poke-icons"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -1670,8 +1699,36 @@ const FIXED_DAMAGE_MOVES = {
   "Seismic Toss": (ctx) => ctx.attacker.level,
   "Night Shade":  (ctx) => ctx.attacker.level,
   "Dragon Rage":  () => 40,
-  "Sonic Boom":   () => 20
+  "Sonic Boom":   () => 20,
+  "Final Gambit": (ctx) => ctx.attacker.currentHP
 };
+function getMoveWeight(mon) {
+  const w = parseFloat(mon?.data?.Weight);
+  return Number.isFinite(w) && w > 0 ? w : null;
+}
+function getWeightBasedPower(moveName, attacker, defender) {
+  if (moveName === "Grass Knot" || moveName === "Low Kick") {
+    const w = getMoveWeight(defender);
+    if (w === null) return null;
+    if (w < 10) return 20;
+    if (w < 25) return 40;
+    if (w < 50) return 60;
+    if (w < 100) return 80;
+    if (w < 200) return 100;
+    return 120;
+  }
+  if (moveName === "Heavy Slam" || moveName === "Heat Crash") {
+    const aw = getMoveWeight(attacker), dw = getMoveWeight(defender);
+    if (aw === null || dw === null) return null;
+    const ratio = dw / aw;
+    if (ratio > 0.5) return 40;
+    if (ratio > 1 / 3) return 60;
+    if (ratio > 0.25) return 80;
+    if (ratio > 0.2) return 100;
+    return 120;
+  }
+  return null;
+}
 const ALWAYS_CRIT_MOVES = new Set(["Storm Throw", "Self-Destruct", "Explosion", "Frost Breath"]);
 const DUAL_TYPE_MOVES = {
   "Flying Press": ["Fighting", "Flying"]
@@ -1684,7 +1741,11 @@ const ACTIVATABLE_ABILITIES = {
   "Intimidate": "Lowers opposing Pokémon Attack by -1",
   "Demoralize": "Lowers opposing Pokémon Special Attack by -1",
   "Transform": "Copies the opposing Pokémon and adds it to your Imported Pokémon",
-  "Trace": "Copies the opposing Pokémon's ability while active"
+  "Trace": "Copies the opposing Pokémon's ability while active",
+  "Imposter": "Copies the opposing Pokémon and adds it to your Imported Pokémon",
+  "Rivalry": "1.3x boost against the same gender (toggle on when the target is the same gender)",
+  "Flash Fire": "Boosts Fire-type moves by 50% while active",
+  "Unburdened": "Doubles Speed while active"
 };
 
 let pokedex = {};
@@ -1719,6 +1780,7 @@ const FRAGSHEET_SPLITS = [
   { id: "clemont", label: "Clemont", shortLabel: "C" },
   { id: "valerie", label: "Valerie", shortLabel: "Va" },
   { id: "olympia", label: "Olympia", shortLabel: "O" },
+  { id: "lysandre", label: "Lysandre Cafe", shortLabel: "Ly" },
   { id: "wulfric", label: "Wulfric", shortLabel: "W" },
   { id: "elite4", label: "Elite 4", shortLabel: "E4" }
 ];
@@ -1730,6 +1792,7 @@ const FRAGSHEET_SPLIT_RANGE_ENDS = [
   { id: "clemont", trainerName: "Clemont", routeKeys: ["lumiosegym"] },
   { id: "valerie", trainerName: "Delta & Gamma", routeKeys: ["pokeballfactory"] },
   { id: "olympia", trainerName: "Olympia", routeKeys: ["anistargym"] },
+  { id: "lysandre", trainerName: "Goon Mu", routeKeys: ["lysandrecafe"] },
   { id: "wulfric", trainerName: "Wulfric", routeKeys: ["snowbellegym"] },
   { id: "elite4", trainerName: "AZ", routeKeys: ["lumioseparade", "lumiosecityparade"] }
 ];
@@ -2088,6 +2151,18 @@ function getStatusWithItemEffects(statusValue, heldItem) {
   if (heldItem === "Toxic Orb") return "tox";
   return status;
 }
+function syncItemStatus(prefix) {
+  const statusSel = el(`${prefix}-status`);
+  if (!statusSel) return;
+  const orbStatus = getStatusWithItemEffects("none", getSelectedItem(prefix));
+  if (orbStatus !== "none") {
+    statusSel.value = orbStatus;
+    statusSel.dataset.orbStatus = orbStatus;
+  } else if (statusSel.dataset.orbStatus) {
+    if (statusSel.value === statusSel.dataset.orbStatus) statusSel.value = "none";
+    delete statusSel.dataset.orbStatus;
+  }
+}
 function getEffectiveAbilityFromUI(prefix) {
   const ability = getSelectedAbility(prefix);
   if (ability === "Trace" && isAbilityActivationChecked(prefix) && transientAbilityState[prefix].traceAbility) {
@@ -2170,6 +2245,7 @@ function refreshAbilityToggleUI(prefix) {
   wrap.title = text;
 }
 function refreshItemToggleUI(prefix) {
+  syncItemStatus(prefix);
   const item = getSelectedItem(prefix);
   const wrap = el(`${prefix}-item-toggle-wrap`);
   const toggle = el(`${prefix}-item-toggle`);
@@ -2202,11 +2278,12 @@ function onAbilityToggleChange(prefix) {
   if (ability === "Trace") {
     if (toggle.checked) transientAbilityState[prefix].traceAbility = getEffectiveAbilityFromUI(getOpposingPrefix(prefix)) || "No Ability";
     else transientAbilityState[prefix].traceAbility = null;
-  } else if (ability === "Transform") {
+  } else if (ability === "Transform" || ability === "Imposter") {
     if (toggle.checked) ensureImportedCopyFromTransform(prefix);
     else transientAbilityState[prefix].transformImportedId = null;
   }
   refreshAbilityToggleUI(prefix);
+  updateStatTotals(prefix);
   recalcIfNeeded();
 }
 
@@ -2542,6 +2619,9 @@ function updateStatTotals(prefix) {
         if (WEATHER_SPEED_ABILITIES[effectiveAbility] === weather) {
           display = display * 2;
         }
+        if (effectiveAbility === "Unburdened" && isAbilityActivationChecked(prefix)) {
+          display = display * 2;
+        }
         const side = prefix === 'atk' ? 'you' : 'opp';
         if (isSideActive('tailwind', side)) {
           display = display * 2;
@@ -2640,6 +2720,62 @@ function getFormsForSpecies(speciesName) {
     .map(([name]) => name);
 }
 
+function isToggleForm(name) {
+  return /-Mega(-|$)/.test(name) || name === "Cherrim-Sunshine" || name === "Aegislash-Blade" || name === "Aegislash-Sword";
+}
+function getToggleFormCycle(speciesName) {
+  const forms = getFormsForSpecies(speciesName);
+  const specials = forms.filter(isToggleForm);
+  if (!specials.length) return null;
+  const base = forms.find(f => !isToggleForm(f));
+  if (!base) return null;
+  return [base, ...specials];
+}
+function cycleMegaForm(prefix) {
+  const speciesSel = el(`${prefix}-species`);
+  if (!speciesSel) return;
+  const cycle = getToggleFormCycle(speciesSel.value);
+  if (!cycle) return;
+  const next = cycle[(cycle.indexOf(speciesSel.value) + 1) % cycle.length];
+  if (!selectHasOption(speciesSel, next)) return;
+  const prevAbility = getSelectedAbility(prefix);
+  speciesSel.value = next;
+  const formSel = el(`${prefix}-form`);
+  if (formSel && selectHasOption(formSel, next)) formSel.value = next;
+  syncTypeDefaults(prefix);
+  const abilitySel = el(`${prefix}-ability`);
+  if (abilitySel && prevAbility && selectHasOption(abilitySel, prevAbility)) abilitySel.value = prevAbility;
+  refreshActivationControls(prefix);
+  for (let i = 0; i < 4; i++) updateMoveHitsDefault(prefix, i);
+  updateSprite(prefix);
+  recalcIfNeeded();
+}
+function updateMegaToggleButtons() {
+  [["atk", ["atk-party-mega-btn", "atk-mega-btn"]], ["def", ["def-mega-btn"]]].forEach(([prefix, ids]) => {
+    const species = el(`${prefix}-species`)?.value;
+    const cycle = getToggleFormCycle(species);
+    ids.forEach(id => {
+      const btn = el(id);
+      if (!btn) return;
+      btn.disabled = !cycle;
+      btn.classList.toggle("active", !!cycle && isToggleForm(species));
+    });
+  });
+}
+function updateTypePills() {
+  ["atk", "def"].forEach(prefix => {
+    ["type1", "type2"].forEach(key => {
+      const sel = el(`${prefix}-${key}`);
+      if (!sel) return;
+      sel.classList.add("type-pill");
+      const color = TYPE_COLORS[sel.value];
+      sel.style.background = color || "var(--bg)";
+      if (!color) { sel.style.color = "var(--muted)"; sel.style.textShadow = "none"; }
+      else { sel.style.color = ""; sel.style.textShadow = ""; }
+    });
+  });
+}
+
 function populateFormSelect(prefix, speciesName) {
   const formRow = el(`${prefix}-form-row`);
   const formSel = el(`${prefix}-form`);
@@ -2696,7 +2832,7 @@ function updateMoveHitsDefault(prefix, idx) {
   const hitsInput = el(`${prefix}-move-hits-${idx}`);
   if (!hitsInput) return;
   if (moveName && moves[moveName]) {
-    hitsInput.value = autoHitCount(moveName, moves[moveName]);
+    hitsInput.value = autoHitCount(moveName, moves[moveName], getSelectedAbility(prefix));
   } else {
     hitsInput.value = 1;
   }
@@ -3300,7 +3436,7 @@ function evaluateImportedMatchup(importedSet, opponentSet, atkCtx, defCtx) {
 
   for (const moveName of (adjustedImportedSet.moves || [])) {
     if (!moveName || moveName === NO_MOVE_OPTION || !moves[moveName]) continue;
-    const hitCount = autoHitCount(moveName, moves[moveName]);
+    const hitCount = autoHitCount(moveName, moves[moveName], adjustedImportedSet.ability);
     const outcome = calculateDamageOutcomeForSets(adjustedImportedSet, opponentSet, moveName, hitCount, atkCtx);
     const rating = getMatchupRating(outcome, true);
     if (rating === "ohko") {
@@ -3583,7 +3719,8 @@ function fillImportedPokemon(prefix, imported) {
   updateItemSprite(prefix);
 
   const statusSel = el(`${prefix}-status`);
-  if (statusSel) statusSel.value = "none";
+  if (statusSel) { statusSel.value = "none"; delete statusSel.dataset.orbStatus; }
+  syncItemStatus(prefix);
 
   STATS.forEach(stat => {
     const ivInput = el(`${prefix}-iv-${stat}`);
@@ -4052,22 +4189,26 @@ function readSet(prefix) {
     moveset.push(moveName === NO_MOVE_OPTION ? "" : moveName);
   }
 
-  return { name: speciesName, level, ability, baseAbility, item, baseItem, nature, status, type1, type2, grounded, iv, boost, stats, currentHP, moves: moveset, data: p };
+  const abilityActive = isAbilityActivationChecked(prefix);
+  return { name: speciesName, level, ability, baseAbility, abilityActive, item, baseItem, nature, status, type1, type2, grounded, iv, boost, stats, currentHP, moves: moveset, data: p };
 }
 
 /* ── Move helpers ── */
-function autoHitCount(moveName, move) {
+const NON_MULTI_HIT_MOVES = new Set(["Magma Storm", "Sand Tomb", "Entangle", "Bind", "Fire Spin", "Infestation", "Maelstrom"]);
+function autoHitCount(moveName, move, ability) {
+  if (NON_MULTI_HIT_MOVES.has(moveName)) return 1;
+  const skillLink = ability === "Skill Link";
   const hitRange = getMoveHitRange(move);
   if (hitRange.minHits !== null && hitRange.maxHits !== null) {
     if (hitRange.minHits === 0 && hitRange.maxHits === 0) return 1;
     if (hitRange.minHits === hitRange.maxHits) return Math.max(1, hitRange.minHits);
-    if (hitRange.minHits !== hitRange.maxHits) return 3;
+    if (hitRange.minHits !== hitRange.maxHits) return skillLink ? hitRange.maxHits : 3;
   }
   const desc = String(move?.Description || "");
-  if (/two to five times/i.test(desc)) return 3;
+  if (/two to five times/i.test(desc)) return skillLink ? 5 : 3;
   if (/three times/i.test(desc)) return 3;
   if (/twice|two times|two strikes|hit twice/i.test(desc)) return 2;
-  if (/2 to 3 turns|2 to 3 times|2-3 times/i.test(desc)) return 3;
+  if (/2 to 3 times|2-3 times/i.test(desc)) return 3;
   if (/five times/i.test(desc)) return 5;
   if (/Triple Kick/i.test(moveName)) return 3;
   if (/Double Kick|Twineedle/i.test(moveName)) return 2;
@@ -4086,6 +4227,11 @@ function applyAbilityItemMoveTypePower(moveName, moveType, basePower, attacker, 
   if (aAbility === "Pixilate" && type === "Normal") { type = "Fairy";  power *= 1.3; notes.push("Pixilate: Normal→Fairy ×1.3"); }
   if (aAbility === "Refrigerate" && type === "Normal") { type = "Ice";  power *= 1.3; notes.push("Refrigerate: Normal→Ice ×1.3"); }
   if (aAbility === "Galvanize" && type === "Normal") { type = "Electric"; power *= 1.3; notes.push("Galvanize: Normal→Electric ×1.3"); }
+  const weightPower = getWeightBasedPower(moveName, attacker, defender);
+  if (weightPower !== null) {
+    power = weightPower;
+    notes.push(`${moveName} weight-based BP ${weightPower}`);
+  }
   if (moveName === "Facade" && attacker.status !== "none") { power *= 2; notes.push("Facade (status) ×2 BP"); }
   if (moveName === "Acrobatics" && attacker.item === "None") { power *= 2; notes.push("Acrobatics (no item) ×2 BP"); }
   if (moveName === "Weather Ball") {
@@ -4239,6 +4385,8 @@ function modForFieldAndSpecialCases(moveName, moveCategory, moveType, attacker, 
   if (attacker.ability === "Strong Jaw" && isBiteMove) { mod *= 1.5; notes.push("Strong Jaw ×1.5"); }
   if (attacker.ability === "Sharpness" && isSliceMove) { mod *= 1.3; notes.push("Sharpness ×1.3"); }
   if (attacker.ability === "Cyclone" && isSpinMove) { mod *= 1.3; notes.push("Cyclone ×1.3"); }
+  if (attacker.ability === "Flash Fire" && attacker.abilityActive && moveType === "Fire") { mod *= 1.5; notes.push("Flash Fire ×1.5"); }
+  if (attacker.ability === "Rivalry" && attacker.abilityActive) { mod *= 1.3; notes.push("Rivalry ×1.3"); }
   if (attacker.ability === "Sheer Force" && hasSecondaryEffect) { mod *= 1.3; notes.push("Sheer Force ×1.3"); }
   if (attacker.ability === "Sand Force" && ctx.weather === "sand" && ["Ground","Rock","Steel"].includes(moveType)) { mod *= 1.3; notes.push("Sand Force ×1.3"); }
   if (attacker.ability === "Overload" && moveType === "Electric" && attacker.currentHP <= Math.floor(attacker.stats.HP / 2)) { mod *= 1.5; notes.push("Overload ×1.5"); }
@@ -4565,6 +4713,8 @@ function calcFromMove(atkPrefix, defPrefix, moveIdx) {
 }
 
 function recalcIfNeeded() {
+  updateTypePills();
+  updateMegaToggleButtons();
   syncAuraTogglesFromAbilities();
   updateStatTotals("atk");
   updateStatTotals("def");
@@ -4625,6 +4775,7 @@ function bindInputs() {
       if (abilityToggle) abilityToggle.checked = false;
       resetTransientAbilityState(prefix, { clearTransformId: true });
       refreshAbilityToggleUI(prefix);
+      for (let i = 0; i < 4; i++) updateMoveHitsDefault(prefix, i);
       const autoWeather = WEATHER_SET_ABILITIES[ability];
       if (autoWeather) setExclusiveToggle("weather-group", autoWeather);
       syncAuraTogglesFromAbilities();
@@ -4862,6 +5013,7 @@ function getFragsheetRows(splitId) {
   const sortedRows = Array.from(rowsByAttacker.values())
     .map(row => ({
       ...row,
+      totalKos,
       koPct: totalKos > 0 ? (row.kos / totalKos) * 100 : 0
     }))
     .sort((a, b) => {
@@ -5027,7 +5179,12 @@ function renderFragsheetLeaderboard() {
     tr.appendChild(koCountCell);
 
     const koPctCell = document.createElement("td");
-    koPctCell.textContent = `${row.koPct.toFixed(1)}%`;
+    const koFraction = document.createElement("div");
+    koFraction.className = "frag-ko-fraction";
+    koFraction.textContent = `${row.kos}/${row.totalKos}`;
+    const koPctText = document.createElement("div");
+    koPctText.textContent = `${row.koPct.toFixed(1)}%`;
+    koPctCell.append(koFraction, koPctText);
     tr.appendChild(koPctCell);
 
     body.appendChild(tr);
