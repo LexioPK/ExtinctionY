@@ -341,10 +341,10 @@ h1 { text-align: center; margin: 8px 0 6px; }
 }
 .info-grid .ia-level input[type="number"] { width: 84px; }
 .slot-form-btn {
-  position: absolute; top: -2px; left: -2px; width: 20px; height: 20px;
+  position: absolute; top: 0; left: 0; width: 20px; height: 20px;
   padding: 0; font-size: 0.6rem; font-weight: 800; line-height: 1; cursor: pointer;
   border: 0; border-radius: 6px 0 6px 0; z-index: 2;
-  background: var(--border); color: var(--text, inherit);
+  background: var(--slot-bg); color: var(--muted); color: var(--text, inherit);
 }
 .slot-form-btn:hover { filter: brightness(1.15); }
 .slot-form-btn.active { background: var(--accent); color: #fff; }
@@ -2796,21 +2796,26 @@ function cycleImportedForm(setData) {
   const cycle = getToggleFormCycle(setData.species);
   if (!cycle) return;
   const next = cycle[(cycle.indexOf(setData.species) + 1) % cycle.length];
-  let targetIdx = importedPartyIds
-    .map(findImportedIndexById)
-    .find(i => i >= 0 && importedPokemonSets[i].species === next);
+  const partySets = importedPartyIds.map(findImportedIndexById).filter(i => i >= 0);
+  let targetIdx = partySets.find(i => importedPokemonSets[i].species === next);
   if (targetIdx === undefined) {
-    const form = pokedex[next] || {};
-    const copy = normalizeImportedSet({
-      ...setData,
-      id: generateImportedSetId(),
-      species: next,
-      nickname: next,
-      ability: form.Ability1 || setData.ability
-    });
-    importedPokemonSets.push(copy);
-    targetIdx = importedPokemonSets.length - 1;
-    if (importedPartyIds.length < 6) importedPartyIds.push(copy.id);
+    targetIdx = importedPokemonSets.findIndex(set => set.species === next);
+    if (targetIdx < 0) {
+      const form = pokedex[next] || {};
+      const copy = normalizeImportedSet({
+        ...setData,
+        id: generateImportedSetId(),
+        species: next,
+        nickname: next,
+        ability: form.Ability1 || setData.ability
+      });
+      importedPokemonSets.push(copy);
+      targetIdx = importedPokemonSets.length - 1;
+    }
+    const slotPos = importedPartyIds.indexOf(setData.id);
+    const targetId = importedPokemonSets[targetIdx].id;
+    if (slotPos >= 0) importedPartyIds[slotPos] = targetId;
+    else if (importedPartyIds.length < 6) importedPartyIds.push(targetId);
     syncImportedPartyIds();
     renderImportedPokemonList();
   }
