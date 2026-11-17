@@ -23625,8 +23625,8 @@
             "Form": "",
             "Gender": "",
             "Level": 76,
-            "Ability": "Poison Heal",
-            "HeldItem": "Toxic Orb",
+            "Ability": "Tinted Lens",
+            "HeldItem": "Focus Sash",
             "Nature": "Naive (\u002BSpe / -SpD)",
             "IVs": 31,
             "Moves": [
@@ -27211,67 +27211,83 @@
         "RewardItem": "Alakazite",
         "Pokemon": [
           {
-            "Name": "Vanilluxe",
+            "Name": "Ferrothorn",
             "Form": "",
             "Gender": "",
             "Level": 78,
-            "Ability": "Snow Warning",
-            "HeldItem": "Ice Gem",
-            "Nature": "Naive (\u002BSpe / -SpD)",
+            "Ability": "Aegis",
+            "HeldItem": "Focus Sash",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Moonblast",
-              "Absolute Zero",
-              "Flash Cannon",
-              "Mirror Coat"
+              "Power Whip",
+              "Iron Tail",
+              "Rock Climb",
+              "Stealth Rock"
             ]
           },
           {
-            "Name": "Slurpuff",
+            "Name": "Whiscash",
             "Form": "",
             "Gender": "",
-            "Level": 78,
-            "Ability": "Unburden",
+            "Level": 79,
+            "Ability": "Water Absorb",
             "HeldItem": "Iapapa Berry",
-            "Nature": "Adamant (\u002BAtk / -SpA)",
+            "Nature": "Quirky (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Belly Drum",
-              "Play Rough",
-              "Drain Punch",
-              "Zen Headbutt"
+              "Earthquake",
+              "Zen Headbutt",
+              "Waterfall",
+              "Dragon Dance"
             ]
           },
           {
-            "Name": "Garbodor",
+            "Name": "Carbink",
             "Form": "",
             "Gender": "",
             "Level": 78,
-            "Ability": "Poison Point",
-            "HeldItem": "Black Sludge",
-            "Nature": "Serious (Neutral)",
+            "Ability": "Solid Rock",
+            "HeldItem": "Eviolite",
+            "Nature": "Docile (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Iron Head",
+              "Diamond Storm",
               "Explosion",
-              "Poison Jab",
-              "Pain Split"
+              "Moonblast",
+              "Power Trick"
+            ]
+          },
+          {
+            "Name": "Kricketune",
+            "Form": "",
+            "Gender": "",
+            "Level": 79,
+            "Ability": "Sharpness",
+            "HeldItem": "Scope Lens",
+            "Nature": "Rash (\u002BSpA / -SpD)",
+            "IVs": 31,
+            "Moves": [
+              "X-Scissor",
+              "Crush Claw",
+              "Leaf Blade",
+              "Sacred Sword"
             ]
           },
           {
             "Name": "Alakazam",
             "Form": "",
             "Gender": "",
-            "Level": 79,
+            "Level": 80,
             "Ability": "Synchronize",
             "HeldItem": "Alakazite",
-            "Nature": "Calm (\u002BSpD / -Atk)",
+            "Nature": "Bashful (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Aura Sphere",
-              "Psycrash",
+              "Psychic",
               "Flash Cannon",
-              "Tri Attack"
+              "Aura Sphere",
+              "Recover"
             ]
           }
         ]
@@ -28394,19 +28410,19 @@
             ]
           },
           {
-            "Name": "Keldeo",
+            "Name": "Virizion",
             "Form": "",
             "Gender": "",
             "Level": 89,
             "Ability": "Justified",
-            "HeldItem": "Water Gem",
-            "Nature": "Quiet (\u002BSpA / -Spe)",
+            "HeldItem": "Grass Gem",
+            "Nature": "Hardy (Neutral)",
             "IVs": 31,
             "Moves": [
-              "Scald",
-              "Vacuum Wave",
-              "Aura Sphere",
-              "Mudslide"
+              "Giga Drain",
+              "Secret Sword",
+              "Air Slash",
+              "Work Up"
             ]
           }
         ]
