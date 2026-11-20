@@ -631,6 +631,48 @@ Promise.all([
 
   const cardDiv = document.getElementById("pokemonCard");
 
+  function renderLevelMoves(list) {
+    return (list || []).map(m => {
+      const mv = movesData[m.Move];
+      if (!mv) {
+        console.warn(`Move data not found for: ${m.Move}`);
+        return `<tr>
+          <td>${m.Level}</td>
+          <td>${m.Move}</td>
+          <td><span class="type type-unknown">Unknown</span></td>
+          <td class="cat">—</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>`;
+      }
+      return `<tr>
+        <td>${m.Level}</td>
+        <td>${m.Move}</td>
+        <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+        <td class="cat"><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
+        <td>${mv.Power ?? "—"}</td>
+        <td>${mv.Acc ?? "—"}%</td>
+      </tr>`;
+    }).join("");
+  }
+
+  function renderTmMoves(tms) {
+    if (!tms || !tms.length) return "<tr><td colspan='5'>No TMs/HMs/Tutor moves</td></tr>";
+    return tms.map(tm => {
+      const mv = movesData[tm.Move];
+      if (!mv) {
+        return `<tr><td>${tm.Label}: ${tm.Move}</td><td><span class="type type-unknown">Unknown</span></td><td class="cat">—</td><td>—</td><td>—</td></tr>`;
+      }
+      return `<tr>
+        <td>${tm.Label}: ${tm.Move}</td>
+        <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
+        <td class="cat"><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
+        <td>${mv.Power ?? "—"}</td>
+        <td>${mv.Acc ?? "—"}%</td>
+      </tr>`;
+    }).join("");
+  }
+
   /* ⭐ Helper for stat bars */
   function createStatRow(label, value, min, max, color, delta = 0) {
       const pct = Math.max(3, Math.min(100, (value - min) / (max - min) * 100));
@@ -741,6 +783,12 @@ Promise.all([
       ${createStatRow('BST', formBst, 250, 600, statColors.BST, formStatDeltas.BST)}
     `;
     
+    // Update moves for this form
+    const levelBody = document.getElementById('level-moves-body');
+    if (levelBody) levelBody.innerHTML = renderLevelMoves(movesetsData[formName] || []);
+    const tmBody = document.getElementById('tm-moves-body');
+    if (tmBody) tmBody.innerHTML = renderTmMoves(currentFormData.TMs);
+
     // Update active tab
     document.querySelectorAll('.form-tab').forEach(tab => {
       tab.classList.toggle('active', tab.dataset.formName === formName);
@@ -852,29 +900,8 @@ Promise.all([
                <th style="text-align:left; width:40px;">Acc</th>
              </tr>
            </thead>
-           <tbody>
-             ${moveList.map(m => {
-               const mv = movesData[m.Move];
-               if (!mv) {
-                 console.warn(`Move data not found for: ${m.Move}`);
-                 return `<tr>
-                   <td>${m.Level}</td>
-                   <td>${m.Move}</td>
-                   <td><span class="type type-unknown">Unknown</span></td>
-                   <td class="cat">—</td>
-                   <td>—</td>
-                   <td>—</td>
-                 </tr>`;
-               }
-               return `<tr>
-                 <td>${m.Level}</td>
-                 <td>${m.Move}</td>
-                 <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                 <td class="cat"><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
-                 <td>${mv.Power ?? "—"}</td>
-                 <td>${mv.Acc ?? "—"}%</td>
-               </tr>`;
-             }).join("")}
+           <tbody id="level-moves-body">
+             ${renderLevelMoves(moveList)}
            </tbody>
          </table>
        </div>
@@ -890,17 +917,8 @@ Promise.all([
                <th style="text-align:left; width:40px;">Acc</th>
              </tr>
            </thead>
-           <tbody>
-             ${mon.TMs ? mon.TMs.map(tm => {
-               const mv = movesData[tm.Move];
-               return `<tr>
-                 <td>${tm.Label}: ${tm.Move}</td>
-                 <td><span class="type type-${mv.Type.toLowerCase()}">${mv.Type}</span></td>
-                 <td class="cat"><img class="category-icon" src="${categoryIcons[mv.Category]}"></td>
-                 <td>${mv.Power ?? "—"}</td>
-                 <td>${mv.Acc ?? "—"}%</td>
-               </tr>`;
-             }).join("") : "<tr><td colspan='5'>No TMs/HMs/Tutor moves</td></tr>"}
+           <tbody id="tm-moves-body">
+             ${renderTmMoves(mon.TMs)}
            </tbody>
          </table>
        </div>
